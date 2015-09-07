@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -139,6 +140,20 @@ type DimensionFilter struct {
 
 	// Value: The value of the dimension to filter for.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DimensionFilter) MarshalJSON() ([]byte, error) {
+	type noMethod DimensionFilter
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValue: Represents a DimensionValue resource.
@@ -158,6 +173,20 @@ type DimensionValue struct {
 
 	// Value: The value of the dimension.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DimensionValue) MarshalJSON() ([]byte, error) {
+	type noMethod DimensionValue
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValueList: Represents the list of DimensionValue resources.
@@ -177,6 +206,20 @@ type DimensionValueList struct {
 	// "pageToken" to the value of this field. The page token is only valid
 	// for a limited amount of time and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DimensionValueList) MarshalJSON() ([]byte, error) {
+	type noMethod DimensionValueList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValueRequest: Represents a DimensionValuesRequest.
@@ -199,6 +242,20 @@ type DimensionValueRequest struct {
 	// StartDate: The start date of the date range for which to retrieve
 	// dimension values. A string of the format: "yyyy-MM-dd".
 	StartDate string `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DimensionValueRequest) MarshalJSON() ([]byte, error) {
+	type noMethod DimensionValueRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // File: Represents a File resource. A File contains the meta-data for a
@@ -237,6 +294,20 @@ type File struct {
 
 	// Urls: The urls where the completed report file can be downloaded.
 	Urls *FileUrls `json:"urls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *File) MarshalJSON() ([]byte, error) {
+	type noMethod File
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileDateRange: The date range for which the file has report data.
@@ -248,12 +319,40 @@ type FileDateRange struct {
 	// StartDate: The start date of the date range, inclusive. A string of
 	// the format: "yyyy-MM-dd".
 	StartDate string `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FileDateRange) MarshalJSON() ([]byte, error) {
+	type noMethod FileDateRange
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileUrls: The urls where the completed report file can be downloaded.
 type FileUrls struct {
 	// Csv: Urls for generated CSV data.
 	Csv *FileUrlsCsv `json:"csv,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Csv") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FileUrls) MarshalJSON() ([]byte, error) {
+	type noMethod FileUrls
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileUrlsCsv: Urls for generated CSV data.
@@ -264,6 +363,20 @@ type FileUrlsCsv struct {
 	// BrowserUrl: The url for downloading the report data through a
 	// browser.
 	BrowserUrl string `json:"browserUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FileUrlsCsv) MarshalJSON() ([]byte, error) {
+	type noMethod FileUrlsCsv
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileList: Represents the list of File resources.
@@ -282,6 +395,20 @@ type FileList struct {
 	// to the value of this field. The page token is only valid for a
 	// limited amount of time and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FileList) MarshalJSON() ([]byte, error) {
+	type noMethod FileList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Report: Represents a Report resource.
@@ -326,6 +453,20 @@ type Report struct {
 
 	// Type: The type of the report, currently only "STANDARD" is supported.
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Report) MarshalJSON() ([]byte, error) {
+	type noMethod Report
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCriteria: The report criteria.
@@ -350,6 +491,20 @@ type ReportCriteria struct {
 
 	// MetricNames: The list of names of metrics the report should include.
 	MetricNames []string `json:"metricNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Activities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReportCriteria) MarshalJSON() ([]byte, error) {
+	type noMethod ReportCriteria
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCriteriaActivities: Activity group.
@@ -360,6 +515,20 @@ type ReportCriteriaActivities struct {
 
 	// MetricNames: List of names of floodlight activity metrics.
 	MetricNames []string `json:"metricNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReportCriteriaActivities) MarshalJSON() ([]byte, error) {
+	type noMethod ReportCriteriaActivities
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCriteriaCustomRichMediaEvents: Custom Rich Media Events group.
@@ -367,6 +536,20 @@ type ReportCriteriaCustomRichMediaEvents struct {
 	// FilteredEventIds: List of custom rich media event IDs. Dimension
 	// values must be all of type dfa:richMediaEventTypeIdAndName.
 	FilteredEventIds []*DimensionValue `json:"filteredEventIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilteredEventIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReportCriteriaCustomRichMediaEvents) MarshalJSON() ([]byte, error) {
+	type noMethod ReportCriteriaCustomRichMediaEvents
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCriteriaDateRange: The date range this report should be run
@@ -398,6 +581,20 @@ type ReportCriteriaDateRange struct {
 	// StartDate: The start date of the date range, inclusive. A string of
 	// the format: "yyyy-MM-dd".
 	StartDate string `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReportCriteriaDateRange) MarshalJSON() ([]byte, error) {
+	type noMethod ReportCriteriaDateRange
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportSchedule: The report's schedule. Can only be set if the
@@ -447,6 +644,20 @@ type ReportSchedule struct {
 	// StartDate: Start date of date range for which scheduled reports
 	// should be run.
 	StartDate string `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Active") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReportSchedule) MarshalJSON() ([]byte, error) {
+	type noMethod ReportSchedule
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportList: Represents the list of reports.
@@ -465,6 +676,20 @@ type ReportList struct {
 	// to the value of this field. The page token is only valid for a
 	// limited amount of time and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReportList) MarshalJSON() ([]byte, error) {
+	type noMethod ReportList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SortedDimension: Represents a sorted dimension.
@@ -481,6 +706,20 @@ type SortedDimension struct {
 	// - "ASCENDING"
 	// - "DESCENDING"
 	SortOrder string `json:"sortOrder,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SortedDimension) MarshalJSON() ([]byte, error) {
+	type noMethod SortedDimension
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserProfile: Represents a UserProfile resource.
@@ -511,6 +750,20 @@ type UserProfile struct {
 
 	// UserName: The user name.
 	UserName string `json:"userName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UserProfile) MarshalJSON() ([]byte, error) {
+	type noMethod UserProfile
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserProfileList: Represents the list of user profiles.
@@ -524,6 +777,20 @@ type UserProfileList struct {
 	// Kind: Kind of list this is, in this case
 	// dfareporting#userProfileList.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UserProfileList) MarshalJSON() ([]byte, error) {
+	type noMethod UserProfileList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "dfareporting.dimensionValues.query":

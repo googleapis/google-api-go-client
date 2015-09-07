@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -224,6 +225,20 @@ type Account struct {
 
 	// WebsiteUrl: The merchant's website.
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdultContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Account) MarshalJSON() ([]byte, error) {
+	type noMethod Account
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountAdwordsLink struct {
@@ -241,6 +256,20 @@ type AccountAdwordsLink struct {
 	// equivalent to not submitting the link at all and will delete the link
 	// if it was active or cancel the link request if it was pending.
 	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdwordsId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountAdwordsLink) MarshalJSON() ([]byte, error) {
+	type noMethod AccountAdwordsLink
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountIdentifier struct {
@@ -251,6 +280,20 @@ type AccountIdentifier struct {
 	// MerchantId: The merchant account ID, set for individual accounts and
 	// subaccounts.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregatorId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountIdentifier) MarshalJSON() ([]byte, error) {
+	type noMethod AccountIdentifier
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShipping: The shipping settings of a merchant account.
@@ -274,6 +317,20 @@ type AccountShipping struct {
 
 	// Services: Shipping services describing shipping fees calculation.
 	Services []*AccountShippingShippingService `json:"services,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShipping) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShipping
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingCarrierRate: A carrier-calculated shipping rate.
@@ -302,6 +359,20 @@ type AccountShippingCarrierRate struct {
 
 	// ShippingOrigin: Shipping origin represented as a postal code.
 	ShippingOrigin string `json:"shippingOrigin,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Carrier") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingCarrierRate) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingCarrierRate
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountShippingCondition struct {
@@ -333,6 +404,21 @@ type AccountShippingCondition struct {
 	// WeightMax: Maximum shipping weight. Forms an interval between the
 	// maximum of smaller weight (exclusive) and this weight (inclusive).
 	WeightMax *Weight `json:"weightMax,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DeliveryLocationGroup") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingCondition) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingCondition
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingLocationGroup: A user-defined locations group in a
@@ -360,6 +446,20 @@ type AccountShippingLocationGroup struct {
 	// - A single postal code (e.g., 12345)
 	// - A postal code prefix followed by a star (e.g., 1234*)
 	PostalCodes []string `json:"postalCodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingLocationGroup) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingLocationGroup
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingPostalCodeRange: A postal code range, that can be
@@ -374,6 +474,20 @@ type AccountShippingPostalCodeRange struct {
 
 	// Start: The first (inclusive) postal code or prefix of the range.
 	Start string `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingPostalCodeRange) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingPostalCodeRange
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingRateTable: A single or bi-dimensional table of
@@ -392,6 +506,20 @@ type AccountShippingRateTable struct {
 	// SaleCountry: The sale country for which this table is valid,
 	// represented as a CLDR territory code.
 	SaleCountry string `json:"saleCountry,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingRateTable) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingRateTable
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountShippingRateTableCell struct {
@@ -404,6 +532,20 @@ type AccountShippingRateTableCell struct {
 
 	// Rate: The rate applicable if the cell conditions are matched.
 	Rate *Price `json:"rate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingRateTableCell) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingRateTableCell
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingShippingService: Shipping services provided in a
@@ -426,6 +568,20 @@ type AccountShippingShippingService struct {
 	// SaleCountry: The CLDR territory code of the sale country for which
 	// this service can be used.
 	SaleCountry string `json:"saleCountry,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Active") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingShippingService) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingShippingService
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingShippingServiceCalculationMethod: Shipping cost
@@ -447,6 +603,20 @@ type AccountShippingShippingServiceCalculationMethod struct {
 
 	// RateTable: Name of the rate table to use for the calculation.
 	RateTable string `json:"rateTable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CarrierRate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingShippingServiceCalculationMethod) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingShippingServiceCalculationMethod
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingShippingServiceCostRule: Building block of the cost
@@ -471,6 +641,20 @@ type AccountShippingShippingServiceCostRule struct {
 	// Condition: Condition for this rule to be applicable. If no condition
 	// is specified, the rule acts as a catch-all.
 	Condition *AccountShippingCondition `json:"condition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CalculationMethod")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountShippingShippingServiceCostRule) MarshalJSON() ([]byte, error) {
+	type noMethod AccountShippingShippingServiceCostRule
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountStatus: The status of an account, i.e., information about its
@@ -486,6 +670,20 @@ type AccountStatus struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accountStatus".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountStatus) MarshalJSON() ([]byte, error) {
+	type noMethod AccountStatus
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountStatusDataQualityIssue struct {
@@ -513,6 +711,20 @@ type AccountStatusDataQualityIssue struct {
 
 	// SubmittedValue: Submitted value that causes the issue.
 	SubmittedValue string `json:"submittedValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountStatusDataQualityIssue) MarshalJSON() ([]byte, error) {
+	type noMethod AccountStatusDataQualityIssue
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountStatusExampleItem: An example of an item that has poor data
@@ -533,6 +745,20 @@ type AccountStatusExampleItem struct {
 
 	// ValueOnLandingPage: The actual value on the landing page.
 	ValueOnLandingPage string `json:"valueOnLandingPage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ItemId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountStatusExampleItem) MarshalJSON() ([]byte, error) {
+	type noMethod AccountStatusExampleItem
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountTax: The tax settings of a merchant account.
@@ -549,6 +775,20 @@ type AccountTax struct {
 	// reversible). Defining no rules is equivalent to not charging tax at
 	// all.
 	Rules []*AccountTaxTaxRule `json:"rules,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountTax) MarshalJSON() ([]byte, error) {
+	type noMethod AccountTax
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountTaxTaxRule: Tax calculation rule to apply in a state or
@@ -571,6 +811,20 @@ type AccountTaxTaxRule struct {
 	// UseGlobalRate: Whether the tax rate is taken from a global tax table
 	// or specified explicitly.
 	UseGlobalRate bool `json:"useGlobalRate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountTaxTaxRule) MarshalJSON() ([]byte, error) {
+	type noMethod AccountTaxTaxRule
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountUser struct {
@@ -579,6 +833,20 @@ type AccountUser struct {
 
 	// EmailAddress: User's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Admin") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountUser) MarshalJSON() ([]byte, error) {
+	type noMethod AccountUser
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountsAuthInfoResponse struct {
@@ -593,11 +861,39 @@ type AccountsAuthInfoResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accountsAuthInfoResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountIdentifiers")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountsAuthInfoResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccountsAuthInfoResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountsCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*AccountsCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountsCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod AccountsCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountsCustomBatchRequestEntry: A batch entry encoding a single
@@ -618,6 +914,20 @@ type AccountsCustomBatchRequestEntry struct {
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
 	Method string `json:"method,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Account") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod AccountsCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountsCustomBatchResponse struct {
@@ -627,6 +937,20 @@ type AccountsCustomBatchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accountsCustomBatchResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountsCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccountsCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountsCustomBatchResponseEntry: A batch entry encoding a single
@@ -645,6 +969,20 @@ type AccountsCustomBatchResponseEntry struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accountsCustomBatchResponseEntry".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Account") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod AccountsCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountsListResponse struct {
@@ -657,11 +995,39 @@ type AccountsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*Account `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountsListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccountsListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountshippingCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*AccountshippingCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountshippingCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod AccountshippingCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountshippingCustomBatchRequestEntry: A batch entry encoding a
@@ -682,6 +1048,20 @@ type AccountshippingCustomBatchRequestEntry struct {
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
 	Method string `json:"method,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountshippingCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod AccountshippingCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountshippingCustomBatchResponse struct {
@@ -691,6 +1071,20 @@ type AccountshippingCustomBatchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accountshippingCustomBatchResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountshippingCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccountshippingCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountshippingCustomBatchResponseEntry: A batch entry encoding a
@@ -708,6 +1102,20 @@ type AccountshippingCustomBatchResponseEntry struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accountshippingCustomBatchResponseEntry".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountShipping") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountshippingCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod AccountshippingCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountshippingListResponse struct {
@@ -720,11 +1128,39 @@ type AccountshippingListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*AccountShipping `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountshippingListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccountshippingListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountstatusesCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*AccountstatusesCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountstatusesCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod AccountstatusesCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountstatusesCustomBatchRequestEntry: A batch entry encoding a
@@ -741,6 +1177,20 @@ type AccountstatusesCustomBatchRequestEntry struct {
 
 	// Method: The method (get).
 	Method string `json:"method,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountstatusesCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod AccountstatusesCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountstatusesCustomBatchResponse struct {
@@ -750,6 +1200,20 @@ type AccountstatusesCustomBatchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accountstatusesCustomBatchResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountstatusesCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccountstatusesCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountstatusesCustomBatchResponseEntry: A batch entry encoding a
@@ -764,6 +1228,20 @@ type AccountstatusesCustomBatchResponseEntry struct {
 
 	// Errors: A list of errors defined if and only if the request failed.
 	Errors *Errors `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountstatusesCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod AccountstatusesCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountstatusesListResponse struct {
@@ -776,11 +1254,39 @@ type AccountstatusesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*AccountStatus `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccountstatusesListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccountstatusesListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccounttaxCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*AccounttaxCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccounttaxCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod AccounttaxCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccounttaxCustomBatchRequestEntry: A batch entry encoding a single
@@ -801,6 +1307,20 @@ type AccounttaxCustomBatchRequestEntry struct {
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
 	Method string `json:"method,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccounttaxCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod AccounttaxCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccounttaxCustomBatchResponse struct {
@@ -810,6 +1330,20 @@ type AccounttaxCustomBatchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accounttaxCustomBatchResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccounttaxCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccounttaxCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccounttaxCustomBatchResponseEntry: A batch entry encoding a single
@@ -827,6 +1361,20 @@ type AccounttaxCustomBatchResponseEntry struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#accounttaxCustomBatchResponseEntry".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountTax") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccounttaxCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod AccounttaxCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccounttaxListResponse struct {
@@ -839,6 +1387,20 @@ type AccounttaxListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*AccountTax `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AccounttaxListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AccounttaxListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Datafeed: Datafeed data.
@@ -881,6 +1443,20 @@ type Datafeed struct {
 	// TargetCountry: The country where the items in the feed will be
 	// included in the search index, represented as a CLDR territory code.
 	TargetCountry string `json:"targetCountry,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributeLanguage")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Datafeed) MarshalJSON() ([]byte, error) {
+	type noMethod Datafeed
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedFetchSchedule: The required fields vary based on the
@@ -913,6 +1489,20 @@ type DatafeedFetchSchedule struct {
 
 	// Weekday: The day of the week the feed file should be fetched.
 	Weekday string `json:"weekday,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DayOfMonth") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedFetchSchedule) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedFetchSchedule
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedFormat struct {
@@ -929,6 +1519,20 @@ type DatafeedFormat struct {
 	// specified, the mode will be auto-detected. Ignored for non-DSV data
 	// feeds.
 	QuotingMode string `json:"quotingMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnDelimiter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedFormat) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedFormat
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedStatus: The status of a datafeed, i.e., the result of the
@@ -959,6 +1563,20 @@ type DatafeedStatus struct {
 
 	// Warnings: The list of errors occurring in the feed.
 	Warnings []*DatafeedStatusError `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatafeedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedStatus) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedStatus
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedStatusError: An error occurring in the feed, like "invalid
@@ -976,6 +1594,20 @@ type DatafeedStatusError struct {
 
 	// Message: The error message, e.g., "Invalid price".
 	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedStatusError) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedStatusError
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedStatusExample: An example occurrence for a particular error.
@@ -988,11 +1620,39 @@ type DatafeedStatusExample struct {
 
 	// Value: The problematic value.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ItemId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedStatusExample) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedStatusExample
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedsCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*DatafeedsCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedsCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedsCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedsCustomBatchRequestEntry: A batch entry encoding a single
@@ -1011,6 +1671,20 @@ type DatafeedsCustomBatchRequestEntry struct {
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
 	Method string `json:"method,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedsCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedsCustomBatchResponse struct {
@@ -1020,6 +1694,20 @@ type DatafeedsCustomBatchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#datafeedsCustomBatchResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedsCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedsCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedsCustomBatchResponseEntry: A batch entry encoding a single
@@ -1034,6 +1722,20 @@ type DatafeedsCustomBatchResponseEntry struct {
 
 	// Errors: A list of errors defined if and only if the request failed.
 	Errors *Errors `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedsCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedsListResponse struct {
@@ -1046,11 +1748,39 @@ type DatafeedsListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*Datafeed `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedsListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedsListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedstatusesCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*DatafeedstatusesCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedstatusesCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedstatusesCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedstatusesCustomBatchRequestEntry: A batch entry encoding a
@@ -1066,6 +1796,20 @@ type DatafeedstatusesCustomBatchRequestEntry struct {
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
 	Method string `json:"method,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedstatusesCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedstatusesCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedstatusesCustomBatchResponse struct {
@@ -1075,6 +1819,20 @@ type DatafeedstatusesCustomBatchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#datafeedstatusesCustomBatchResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedstatusesCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedstatusesCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedstatusesCustomBatchResponseEntry: A batch entry encoding a
@@ -1089,6 +1847,20 @@ type DatafeedstatusesCustomBatchResponseEntry struct {
 
 	// Errors: A list of errors defined if and only if the request failed.
 	Errors *Errors `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedstatusesCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedstatusesCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedstatusesListResponse struct {
@@ -1101,6 +1873,20 @@ type DatafeedstatusesListResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	Resources []*DatafeedStatus `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatafeedstatusesListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DatafeedstatusesListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Error: An error returned by the API.
@@ -1113,6 +1899,20 @@ type Error struct {
 
 	// Reason: The error code.
 	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Error) MarshalJSON() ([]byte, error) {
+	type noMethod Error
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Errors: A list of errors returned by a failed batch entry.
@@ -1125,6 +1925,20 @@ type Errors struct {
 
 	// Message: The message of the first error in errors.
 	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Errors) MarshalJSON() ([]byte, error) {
+	type noMethod Errors
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Inventory struct {
@@ -1154,11 +1968,39 @@ type Inventory struct {
 	// SellOnGoogleQuantity: The quantity of the product that is reserved
 	// for sell-on-google ads. Supported only for online products.
 	SellOnGoogleQuantity int64 `json:"sellOnGoogleQuantity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Availability") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Inventory) MarshalJSON() ([]byte, error) {
+	type noMethod Inventory
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventoryCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*InventoryCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InventoryCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InventoryCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InventoryCustomBatchRequestEntry: A batch entry encoding a single
@@ -1181,6 +2023,20 @@ type InventoryCustomBatchRequestEntry struct {
 	// availability. Use online to update price and availability of an
 	// online product.
 	StoreCode string `json:"storeCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InventoryCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod InventoryCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventoryCustomBatchResponse struct {
@@ -1190,6 +2046,20 @@ type InventoryCustomBatchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#inventoryCustomBatchResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InventoryCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod InventoryCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InventoryCustomBatchResponseEntry: A batch entry encoding a single
@@ -1204,6 +2074,20 @@ type InventoryCustomBatchResponseEntry struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#inventoryCustomBatchResponseEntry".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod InventoryCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventorySetRequest struct {
@@ -1229,12 +2113,40 @@ type InventorySetRequest struct {
 	// SellOnGoogleQuantity: The quantity of the product that is reserved
 	// for sell-on-google ads. Supported only for online products.
 	SellOnGoogleQuantity int64 `json:"sellOnGoogleQuantity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Availability") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InventorySetRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InventorySetRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventorySetResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#inventorySetResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InventorySetResponse) MarshalJSON() ([]byte, error) {
+	type noMethod InventorySetResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LoyaltyPoints struct {
@@ -1249,14 +2161,48 @@ type LoyaltyPoints struct {
 	// assumes currency based on Merchant Center settings. If ratio is left
 	// out, it defaults to 1.0.
 	Ratio float64 `json:"ratio,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LoyaltyPoints) MarshalJSON() ([]byte, error) {
+	type noMethod LoyaltyPoints
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Order struct {
 	// Acknowledged: Whether the order was acknowledged.
 	Acknowledged bool `json:"acknowledged,omitempty"`
 
+<<<<<<< HEAD
 	// Customer: The details of the customer who placed the order.
 	Customer *OrderCustomer `json:"customer,omitempty"`
+=======
+	// Value: The price represented as a number.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Currency") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Price) MarshalJSON() ([]byte, error) {
+	type noMethod Price
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 
 	// DeliveryDetails: The details for the delivery.
 	DeliveryDetails *OrderDeliveryDetails `json:"deliveryDetails,omitempty"`
@@ -1538,6 +2484,7 @@ type OrderPaymentMethod struct {
 	// ExpirationYear: The card expiration year (4-digit, e.g. 2015).
 	ExpirationYear int64 `json:"expirationYear,omitempty"`
 
+<<<<<<< HEAD
 	// LastFourDigits: The last four digits of the card number.
 	LastFourDigits string `json:"lastFourDigits,omitempty"`
 
@@ -1546,6 +2493,25 @@ type OrderPaymentMethod struct {
 
 	// Type: The type of instrument (VISA, Mastercard, etc).
 	Type string `json:"type,omitempty"`
+=======
+	// Warnings: Read-only warnings.
+	Warnings []*Error `json:"warnings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditionalImageLinks") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Product) MarshalJSON() ([]byte, error) {
+	type noMethod Product
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrderRefund struct {
@@ -1555,6 +2521,7 @@ type OrderRefund struct {
 	// Amount: The amount that is refunded.
 	Amount *Price `json:"amount,omitempty"`
 
+<<<<<<< HEAD
 	// CreationDate: Date on which the item has been created, in ISO 8601
 	// format.
 	CreationDate string `json:"creationDate,omitempty"`
@@ -1564,6 +2531,25 @@ type OrderRefund struct {
 
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
+=======
+	// Intention: Whether the aspect is required, excluded or should be
+	// validated.
+	Intention string `json:"intention,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AspectName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductAspect) MarshalJSON() ([]byte, error) {
+	type noMethod ProductAspect
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrderReturn struct {
@@ -1577,25 +2563,66 @@ type OrderReturn struct {
 	// Quantity: Quantity that is returned.
 	Quantity int64 `json:"quantity,omitempty"`
 
+<<<<<<< HEAD
 	// Reason: The reason for the return.
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
+=======
+	// Value: The value of the attribute.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductCustomAttribute) MarshalJSON() ([]byte, error) {
+	type noMethod ProductCustomAttribute
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrderShipment struct {
 	// Carrier: The carrier handling the shipment.
 	Carrier string `json:"carrier,omitempty"`
 
+<<<<<<< HEAD
 	// CreationDate: Date on which the shipment has been created, in ISO
 	// 8601 format.
 	CreationDate string `json:"creationDate,omitempty"`
+=======
+	// Name: The name of the group. Underscores will be replaced by spaces
+	// upon insertion.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductCustomGroup) MarshalJSON() ([]byte, error) {
+	type noMethod ProductCustomGroup
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 
 	// DeliveryDate: Date on which the shipment has been delivered, in ISO
 	// 8601 format. Present only if status is delievered
 	DeliveryDate string `json:"deliveryDate,omitempty"`
 
+<<<<<<< HEAD
 	// Id: The id of the shipment.
 	Id string `json:"id,omitempty"`
 
@@ -1607,14 +2634,52 @@ type OrderShipment struct {
 
 	// TrackingId: The tracking id for the shipment.
 	TrackingId string `json:"trackingId,omitempty"`
+=======
+	// Intention: Whether the destination is required, excluded or should be
+	// validated.
+	Intention string `json:"intention,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductDestination) MarshalJSON() ([]byte, error) {
+	type noMethod ProductDestination
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrderShipmentLineItemShipment struct {
 	// LineItemId: The id of the line item that is shipped.
 	LineItemId string `json:"lineItemId,omitempty"`
 
+<<<<<<< HEAD
 	// Quantity: The quantity that is shipped.
 	Quantity int64 `json:"quantity,omitempty"`
+=======
+	// Months: The number of installments the buyer has to pay.
+	Months int64 `json:"months,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Amount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductInstallment) MarshalJSON() ([]byte, error) {
+	type noMethod ProductInstallment
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersAcknowledgeRequest struct {
@@ -1646,23 +2711,84 @@ type OrdersCancelLineItemRequest struct {
 	// for a given order.
 	OperationId string `json:"operationId,omitempty"`
 
+<<<<<<< HEAD
 	// Quantity: The quantity to cancel.
 	Quantity int64 `json:"quantity,omitempty"`
+=======
+	// Service: A free-form description of the service class or delivery
+	// speed.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductShipping) MarshalJSON() ([]byte, error) {
+	type noMethod ProductShipping
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 
 	// Reason: The reason for the cancellation.
 	Reason string `json:"reason,omitempty"`
 
+<<<<<<< HEAD
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
+=======
+	// Value: The dimension of the product used to calculate the shipping
+	// cost of the item.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Unit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductShippingDimension) MarshalJSON() ([]byte, error) {
+	type noMethod ProductShippingDimension
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersCancelLineItemResponse struct {
 	// ExecutionStatus: The status of the execution.
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
+<<<<<<< HEAD
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#ordersCancelLineItemResponse".
 	Kind string `json:"kind,omitempty"`
+=======
+	// Value: The weight of the product used to calculate the shipping cost
+	// of the item.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Unit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductShippingWeight) MarshalJSON() ([]byte, error) {
+	type noMethod ProductShippingWeight
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersCancelRequest struct {
@@ -1701,8 +2827,27 @@ type OrdersCreateTestOrderResponse struct {
 	// string "content#ordersCreateTestOrderResponse".
 	Kind string `json:"kind,omitempty"`
 
+<<<<<<< HEAD
 	// OrderId: The ID of the newly created test order.
 	OrderId string `json:"orderId,omitempty"`
+=======
+	// Title: The title of the product.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductStatus) MarshalJSON() ([]byte, error) {
+	type noMethod ProductStatus
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersCustomBatchRequest struct {
@@ -1730,10 +2875,30 @@ type OrdersCustomBatchRequestEntry struct {
 	// Method: The method to apply.
 	Method string `json:"method,omitempty"`
 
+<<<<<<< HEAD
 	// OperationId: The ID of the operation. Unique across all operations
 	// for a given order. Required for all methods beside get and
 	// getByMerchantOrderId.
 	OperationId string `json:"operationId,omitempty"`
+=======
+	// ValueProvided: The value the attribute had at time of evaluation.
+	ValueProvided string `json:"valueProvided,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Detail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductStatusDataQualityIssue) MarshalJSON() ([]byte, error) {
+	type noMethod ProductStatusDataQualityIssue
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 
 	// OrderId: The ID of the order. Required for all methods beside
 	// getByMerchantOrderId.
@@ -1742,6 +2907,7 @@ type OrdersCustomBatchRequestEntry struct {
 	// Refund: Required for refund method.
 	Refund *OrdersCustomBatchRequestEntryRefund `json:"refund,omitempty"`
 
+<<<<<<< HEAD
 	// ReturnLineItem: Required for returnLineItem method.
 	ReturnLineItem *OrdersCustomBatchRequestEntryReturnLineItem `json:"returnLineItem,omitempty"`
 
@@ -1750,6 +2916,25 @@ type OrdersCustomBatchRequestEntry struct {
 
 	// UpdateShipment: Required for updateShipment method.
 	UpdateShipment *OrdersCustomBatchRequestEntryUpdateShipment `json:"updateShipment,omitempty"`
+=======
+	// Intention: Whether the destination is required, excluded, selected by
+	// default or should be validated.
+	Intention string `json:"intention,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApprovalStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductStatusDestinationStatus) MarshalJSON() ([]byte, error) {
+	type noMethod ProductStatusDestinationStatus
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersCustomBatchRequestEntryCancel struct {
@@ -1770,25 +2955,64 @@ type OrdersCustomBatchRequestEntryCancelLineItem struct {
 	// Reason: The reason for the cancellation.
 	Reason string `json:"reason,omitempty"`
 
+<<<<<<< HEAD
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
+=======
+	// TaxShip: Set to true if tax is charged on shipping.
+	TaxShip bool `json:"taxShip,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductTax) MarshalJSON() ([]byte, error) {
+	type noMethod ProductTax
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersCustomBatchRequestEntryRefund struct {
 	// Amount: The amount that is refunded.
 	Amount *Price `json:"amount,omitempty"`
 
+<<<<<<< HEAD
 	// Reason: The reason for the refund.
 	Reason string `json:"reason,omitempty"`
 
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
+=======
+	// Value: The denominator of the unit price.
+	Value int64 `json:"value,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Unit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductUnitPricingBaseMeasure) MarshalJSON() ([]byte, error) {
+	type noMethod ProductUnitPricingBaseMeasure
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersCustomBatchRequestEntryReturnLineItem struct {
 	// LineItemId: The ID of the line item to return.
 	LineItemId string `json:"lineItemId,omitempty"`
 
+<<<<<<< HEAD
 	// Quantity: The quantity to return.
 	Quantity int64 `json:"quantity,omitempty"`
 
@@ -1797,6 +3021,43 @@ type OrdersCustomBatchRequestEntryReturnLineItem struct {
 
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
+=======
+	// Value: The measure of an item.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Unit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductUnitPricingMeasure) MarshalJSON() ([]byte, error) {
+	type noMethod ProductUnitPricingMeasure
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ProductsCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
+	Entries []*ProductsCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductsCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ProductsCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersCustomBatchRequestEntryShipLineItems struct {
@@ -1813,6 +3074,7 @@ type OrdersCustomBatchRequestEntryShipLineItems struct {
 	TrackingId string `json:"trackingId,omitempty"`
 }
 
+<<<<<<< HEAD
 type OrdersCustomBatchRequestEntryUpdateShipment struct {
 	// Carrier: The carrier handling the shipment. Not updated if missing.
 	Carrier string `json:"carrier,omitempty"`
@@ -1825,6 +3087,25 @@ type OrdersCustomBatchRequestEntryUpdateShipment struct {
 
 	// TrackingId: The tracking id for the shipment. Not updated if missing.
 	TrackingId string `json:"trackingId,omitempty"`
+=======
+	// ProductId: The ID of the product to get or delete. Only defined if
+	// the method is get or delete.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod ProductsCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersCustomBatchResponse struct {
@@ -1834,6 +3115,20 @@ type OrdersCustomBatchResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#ordersCustomBatchResponse".
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductsCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ProductsCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchResponseEntry struct {
@@ -1852,9 +3147,29 @@ type OrdersCustomBatchResponseEntry struct {
 	// string "content#ordersCustomBatchResponseEntry".
 	Kind string `json:"kind,omitempty"`
 
+<<<<<<< HEAD
 	// Order: The retrieved order. Only defined if the method is get and if
 	// the request was successful.
 	Order *Order `json:"order,omitempty"`
+=======
+	// Product: The inserted product. Only defined if the method is insert
+	// and if the request was successful.
+	Product *Product `json:"product,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod ProductsCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersGetByMerchantOrderIdResponse struct {
@@ -1866,6 +3181,7 @@ type OrdersGetByMerchantOrderIdResponse struct {
 	Order *Order `json:"order,omitempty"`
 }
 
+<<<<<<< HEAD
 type OrdersGetTestOrderTemplateResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#ordersGetTestOrderTemplateResponse".
@@ -1873,6 +3189,23 @@ type OrdersGetTestOrderTemplateResponse struct {
 
 	// Template: The requested test order template.
 	Template *TestOrder `json:"template,omitempty"`
+=======
+	Resources []*Product `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductsListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ProductsListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 type OrdersListResponse struct {
@@ -2559,6 +3892,20 @@ type ProductsListResponse struct {
 type ProductstatusesCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*ProductstatusesCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductstatusesCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ProductstatusesCustomBatchRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductstatusesCustomBatchRequestEntry: A batch entry encoding a
@@ -4332,16 +5679,55 @@ func (c *AccountstatusesCustombatchCall) Do() (*AccountstatusesCustomBatchRespon
 	//   ]
 	// }
 
+<<<<<<< HEAD
+=======
+	// ProductId: The ID of the product whose status to get.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductstatusesCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type noMethod ProductstatusesCustomBatchRequestEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 // method id "content.accountstatuses.get":
 
+<<<<<<< HEAD
 type AccountstatusesGetCall struct {
 	s          *Service
 	merchantId uint64
 	accountId  uint64
 	opt_       map[string]interface{}
 	ctx_       context.Context
+=======
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#productstatusesCustomBatchResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductstatusesCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ProductstatusesCustomBatchResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 // Get: Retrieves the status of a Merchant Center account.
@@ -4360,12 +5746,32 @@ func (c *AccountstatusesGetCall) Fields(s ...googleapi.Field) *AccountstatusesGe
 	return c
 }
 
+<<<<<<< HEAD
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
 func (c *AccountstatusesGetCall) Context(ctx context.Context) *AccountstatusesGetCall {
 	c.ctx_ = ctx
 	return c
+=======
+	// ProductStatus: The requested product status. Only defined if the
+	// request was successful.
+	ProductStatus *ProductStatus `json:"productStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductstatusesCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type noMethod ProductstatusesCustomBatchResponseEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 func (c *AccountstatusesGetCall) doRequest(alt string) (*http.Response, error) {
@@ -4436,15 +5842,52 @@ func (c *AccountstatusesGetCall) Do() (*AccountStatus, error) {
 	//   ]
 	// }
 
+<<<<<<< HEAD
+=======
+	Resources []*ProductStatus `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ProductstatusesListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 // method id "content.accountstatuses.list":
 
+<<<<<<< HEAD
 type AccountstatusesListCall struct {
 	s          *Service
 	merchantId uint64
 	opt_       map[string]interface{}
 	ctx_       context.Context
+=======
+	// Value: The weight represented as a number.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Unit") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Weight) MarshalJSON() ([]byte, error) {
+	type noMethod Weight
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+>>>>>>> google-api-go-generator: Allow users to nominate fields that should be
 }
 
 // List: Lists the statuses of the sub-accounts in your Merchant Center

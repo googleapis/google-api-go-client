@@ -707,7 +707,8 @@ var pointerFields = []fieldName{
 	{api: "datastore:v1beta2", schema: "Property", field: "DateTimeValue"},
 	{api: "datastore:v1beta2", schema: "Property", field: "DoubleValue"},
 	{api: "datastore:v1beta2", schema: "Property", field: "Indexed"},
-	{api: "datastore:v1beta2", schema: "Property", field: "IntegerValue"},
+	// Note: disable IntegerValue until we can handle string-encoded pointer values.
+	// {api: "datastore:v1beta2", schema: "Property", field: "IntegerValue"},
 	{api: "datastore:v1beta2", schema: "Property", field: "StringValue"},
 	{api: "genomics:v1beta2", schema: "Dataset", field: "IsPublic"},
 	{api: "tasks:v1", schema: "Task", field: "Completed"},
@@ -1222,7 +1223,12 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		}
 		typ := p.Type().AsGo()
 		if p.forcePointerType() {
-			typ = "*" + typ
+			if p.Type().isIntAsString() {
+				log.Printf("String-encoded pointer fields are not supported\n")
+				log.Printf("TODO(mcgreevy): support string-encoded pointer fields.\n")
+			} else {
+				typ = "*" + typ
+			}
 		}
 		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", p.GoName(), typ, p.APIName(), extraOpt)
 	}

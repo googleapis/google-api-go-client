@@ -107,9 +107,10 @@ type Thing struct {
 	// NumericNonemptyDefaultA:
 	// Nonempty default: yes
 	// Unfortunate default: yes
+	// string encoded, so will not be represented as pointer.
 	//
 	// Default: 1
-	NumericNonemptyDefaultA *int64 `json:"numeric_nonempty_default_a,omitempty,string"`
+	NumericNonemptyDefaultA int64 `json:"numeric_nonempty_default_a,omitempty,string"`
 
 	// NumericNonemptyDefaultB:
 	// Nonempty default: yes

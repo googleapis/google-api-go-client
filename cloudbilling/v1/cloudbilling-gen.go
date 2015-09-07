@@ -124,6 +124,28 @@ type BillingAccount struct {
 	// account is closed, and therefore projects associated with it will be
 	// unable to use paid services.
 	Open bool `json:"open,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s BillingAccount) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ListBillingAccountsResponse: Response message for
@@ -137,6 +159,28 @@ type ListBillingAccountsResponse struct {
 	// `page_token` field set to this value. This field is empty if there
 	// are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingAccounts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s ListBillingAccountsResponse) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ListProjectBillingInfoResponse: Request message for
@@ -151,6 +195,28 @@ type ListProjectBillingInfoResponse struct {
 	// ProjectBillingInfo: A list of `ProjectBillingInfo` resources
 	// representing the projects associated with the billing account.
 	ProjectBillingInfo []*ProjectBillingInfo `json:"projectBillingInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s ListProjectBillingInfoResponse) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ProjectBillingInfo: Encapsulation of billing information for a
@@ -181,6 +247,28 @@ type ProjectBillingInfo struct {
 	// that you don't need to parse the `name` field to obtain a project ID.
 	// This field is read-only.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingAccountName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s ProjectBillingInfo) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "cloudbilling.billingAccounts.get":

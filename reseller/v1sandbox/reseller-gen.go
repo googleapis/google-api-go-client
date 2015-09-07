@@ -129,6 +129,28 @@ type Address struct {
 	// Region: Name of the region. This is in accordance with -
 	// http://portablecontacts.net/draft-spec.html#address_element.
 	Region string `json:"region,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddressLine1") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s Address) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ChangePlanRequest: JSON template for the ChangePlan rpc request.
@@ -144,6 +166,28 @@ type ChangePlanRequest struct {
 
 	// Seats: Number/Limit of seats in the new plan.
 	Seats *Seats `json:"seats,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s ChangePlanRequest) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Customer: JSON template for a customer.
@@ -168,6 +212,28 @@ type Customer struct {
 
 	// ResourceUiUrl: Ui url for customer resource.
 	ResourceUiUrl string `json:"resourceUiUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s Customer) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // RenewalSettings: JSON template for a subscription renewal settings.
@@ -177,6 +243,28 @@ type RenewalSettings struct {
 
 	// RenewalType: Subscription renewal type.
 	RenewalType string `json:"renewalType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s RenewalSettings) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Seats: JSON template for subscription seats.
@@ -197,6 +285,28 @@ type Seats struct {
 	// NumberOfSeats: Number of seats to purchase. This is applicable only
 	// for a commitment plan.
 	NumberOfSeats int64 `json:"numberOfSeats,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s Seats) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Subscription: JSON template for a subscription.
@@ -246,6 +356,28 @@ type Subscription struct {
 
 	// TrialSettings: Trial Settings of the subscription.
 	TrialSettings *SubscriptionTrialSettings `json:"trialSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingMethod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s Subscription) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // SubscriptionPlan: Plan details of the subscription
@@ -259,6 +391,28 @@ type SubscriptionPlan struct {
 
 	// PlanName: The plan name of this subscription's plan.
 	PlanName string `json:"planName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommitmentInterval")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s SubscriptionPlan) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // SubscriptionPlanCommitmentInterval: Interval of the commitment if it
@@ -271,6 +425,28 @@ type SubscriptionPlanCommitmentInterval struct {
 	// StartTime: Start time of the commitment interval in milliseconds
 	// since Unix epoch.
 	StartTime int64 `json:"startTime,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s SubscriptionPlanCommitmentInterval) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // SubscriptionTransferInfo: Transfer related information for the
@@ -281,6 +457,29 @@ type SubscriptionTransferInfo struct {
 	// TransferabilityExpirationTime: Time when transfer token or intent to
 	// transfer will expire.
 	TransferabilityExpirationTime int64 `json:"transferabilityExpirationTime,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MinimumTransferableSeats") to unconditionally include in API
+	// requests. By default, fields with empty values are ommitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s SubscriptionTransferInfo) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // SubscriptionTrialSettings: Trial Settings of the subscription.
@@ -290,6 +489,28 @@ type SubscriptionTrialSettings struct {
 
 	// TrialEndTime: End time of the trial in milliseconds since Unix epoch.
 	TrialEndTime int64 `json:"trialEndTime,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "IsInTrial") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s SubscriptionTrialSettings) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Subscriptions: JSON template for a subscription list.
@@ -304,6 +525,28 @@ type Subscriptions struct {
 
 	// Subscriptions: The subscriptions in this page of results.
 	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are ommitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarhsalJSON is for internal use. It is not used by developers
+// directly.
+func (s Subscriptions) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "reseller.customers.get":

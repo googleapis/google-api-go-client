@@ -140,6 +140,28 @@ type Activities struct {
 
 	// MetricNames: List of names of floodlight activity metrics.
 	MetricNames []string `json:"metricNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s Activities) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // CustomRichMediaEvents: Represents a Custom Rich Media Events group.
@@ -151,6 +173,28 @@ type CustomRichMediaEvents struct {
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#customRichMediaEvents.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilteredEventIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s CustomRichMediaEvents) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DateRange: Represents a date range.
@@ -185,6 +229,28 @@ type DateRange struct {
 	// StartDate: The start date of the date range, inclusive. A string of
 	// the format: "yyyy-MM-dd".
 	StartDate string `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s DateRange) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DimensionFilter: Represents a dimension filter.
@@ -198,6 +264,28 @@ type DimensionFilter struct {
 
 	// Value: The value of the dimension to filter.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s DimensionFilter) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DimensionValue: Represents a DimensionValue resource.
@@ -217,6 +305,28 @@ type DimensionValue struct {
 
 	// Value: The value of the dimension.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s DimensionValue) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DimensionValueList: Represents the list of DimensionValue resources.
@@ -236,6 +346,28 @@ type DimensionValueList struct {
 	// "pageToken" to the value of this field. The page token is only valid
 	// for a limited amount of time and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s DimensionValueList) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DimensionValueRequest: Represents a DimensionValuesRequest.
@@ -259,6 +391,28 @@ type DimensionValueRequest struct {
 	// StartDate: The start date of the date range for which to retrieve
 	// dimension values. A string of the format: "yyyy-MM-dd".
 	StartDate string `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s DimensionValueRequest) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // File: Represents a File resource. A File contains the meta-data for a
@@ -303,6 +457,28 @@ type File struct {
 
 	// Urls: The urls where the completed report file can be downloaded.
 	Urls *FileUrls `json:"urls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s File) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // FileUrls: The urls where the completed report file can be downloaded.
@@ -313,6 +489,28 @@ type FileUrls struct {
 	// BrowserUrl: The url for downloading the report data through a
 	// browser.
 	BrowserUrl string `json:"browserUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s FileUrls) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // FileList: Represents the list of File resources.
@@ -331,6 +529,28 @@ type FileList struct {
 	// to the value of this field. The page token is only valid for a
 	// limited amount of time and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s FileList) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Recipient: Represents a recipient.
@@ -346,6 +566,28 @@ type Recipient struct {
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#recipient.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeliveryType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s Recipient) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Report: Represents a Report resource.
@@ -426,6 +668,28 @@ type Report struct {
 	// - FLOODLIGHT
 	// - CROSS_DIMENSION_REACH
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s Report) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportActiveGrpCriteria: The report criteria for a report of type
@@ -448,6 +712,28 @@ type ReportActiveGrpCriteria struct {
 
 	// MetricNames: The list of names of metrics the report should include.
 	MetricNames []string `json:"metricNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportActiveGrpCriteria) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportCriteria: The report criteria for a report of type "STANDARD".
@@ -473,6 +759,28 @@ type ReportCriteria struct {
 
 	// MetricNames: The list of names of metrics the report should include.
 	MetricNames []string `json:"metricNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Activities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportCriteria) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportCrossDimensionReachCriteria: The report criteria for a report
@@ -504,6 +812,28 @@ type ReportCrossDimensionReachCriteria struct {
 
 	// Pivoted: Whether the report is pivoted or not. Defaults to true.
 	Pivoted bool `json:"pivoted,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Breakdown") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportCrossDimensionReachCriteria) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportDelivery: The report's email delivery settings.
@@ -522,6 +852,28 @@ type ReportDelivery struct {
 
 	// Recipients: The list of recipients to which to email the report.
 	Recipients []*Recipient `json:"recipients,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EmailOwner") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportDelivery) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportFloodlightCriteria: The report criteria for a report of type
@@ -550,6 +902,28 @@ type ReportFloodlightCriteria struct {
 
 	// ReportProperties: The properties of the report.
 	ReportProperties *ReportFloodlightCriteriaReportProperties `json:"reportProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportFloodlightCriteria) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportFloodlightCriteriaReportProperties: The properties of the
@@ -571,6 +945,29 @@ type ReportFloodlightCriteriaReportProperties struct {
 	// know how the user was exposed to your ads during the lookback window
 	// prior to a conversion.
 	IncludeUnattributedIPConversions bool `json:"includeUnattributedIPConversions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IncludeAttributedIPConversions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportFloodlightCriteriaReportProperties) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportPathToConversionCriteria: The report criteria for a report of
@@ -605,6 +1002,28 @@ type ReportPathToConversionCriteria struct {
 
 	// ReportProperties: The properties of the report.
 	ReportProperties *ReportPathToConversionCriteriaReportProperties `json:"reportProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActivityFilters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportPathToConversionCriteria) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportPathToConversionCriteriaReportProperties: The properties of the
@@ -660,6 +1079,29 @@ type ReportPathToConversionCriteriaReportProperties struct {
 
 	// PivotOnInteractionPath: Enable pivoting on interaction path.
 	PivotOnInteractionPath bool `json:"pivotOnInteractionPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ClicksLookbackWindow") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportPathToConversionCriteriaReportProperties) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportReachCriteria: The report criteria for a report of type
@@ -689,6 +1131,28 @@ type ReportReachCriteria struct {
 	// ReachByFrequencyMetricNames: The list of names of  Reach By Frequency
 	// metrics the report should include.
 	ReachByFrequencyMetricNames []string `json:"reachByFrequencyMetricNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Activities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportReachCriteria) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportSchedule: The report's schedule. Can only be set if the
@@ -738,6 +1202,28 @@ type ReportSchedule struct {
 	// StartDate: Start date of date range for which scheduled reports
 	// should be run.
 	StartDate string `json:"startDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Active") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportSchedule) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ReportList: Represents the list of reports.
@@ -756,6 +1242,28 @@ type ReportList struct {
 	// to the value of this field. The page token is only valid for a
 	// limited amount of time and should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s ReportList) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // SortedDimension: Represents a sorted dimension.
@@ -772,6 +1280,28 @@ type SortedDimension struct {
 	// - "ASCENDING"
 	// - "DESCENDING"
 	SortOrder string `json:"sortOrder,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s SortedDimension) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // UserProfile: Represents a UserProfile resource.
@@ -802,6 +1332,28 @@ type UserProfile struct {
 
 	// UserName: The user name.
 	UserName string `json:"userName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s UserProfile) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // UserProfileList: Represents the list of user profiles.
@@ -815,6 +1367,28 @@ type UserProfileList struct {
 	// Kind: The kind of list this is, in this case
 	// dfareporting#userProfileList.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+// MarshalJSON implements json.Marshaler. It encodes s as a JSON struct
+// in the usual way, but additionally respects s.ForceSendFields.
+func (s UserProfileList) MarshalJSON() ([]byte, error) {
+	mustInclude := make(map[string]struct{})
+	for _, f := range s.ForceSendFields {
+		mustInclude[f] = struct{}{}
+	}
+	dataMap, err := googleapi.SchemaToMap(s, mustInclude)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "dfareporting.dimensionValues.query":

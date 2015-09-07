@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -308,6 +309,20 @@ type AchievementDefinition struct {
 
 	// UnlockedIconUrl: The image URL for the unlocked achievement icon.
 	UnlockedIconUrl string `json:"unlockedIconUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AchievementType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementDefinition) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementDefinition
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementDefinitionsListResponse: This is a JSON template for a
@@ -322,6 +337,20 @@ type AchievementDefinitionsListResponse struct {
 
 	// NextPageToken: Token corresponding to the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementDefinitionsListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementDefinitionsListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementIncrementResponse: This is a JSON template for an
@@ -338,6 +367,20 @@ type AchievementIncrementResponse struct {
 	// NewlyUnlocked: Whether the the current steps for the achievement has
 	// reached the number of steps required to unlock.
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentSteps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementIncrementResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementIncrementResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementRevealResponse: This is a JSON template for an achievement
@@ -354,6 +397,20 @@ type AchievementRevealResponse struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#achievementRevealResponse.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementRevealResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementRevealResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementSetStepsAtLeastResponse: This is a JSON template for an
@@ -370,6 +427,20 @@ type AchievementSetStepsAtLeastResponse struct {
 	// NewlyUnlocked: Whether the the current steps for the achievement has
 	// reached the number of steps required to unlock.
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentSteps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementSetStepsAtLeastResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementSetStepsAtLeastResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUnlockResponse: This is a JSON template for an achievement
@@ -383,6 +454,20 @@ type AchievementUnlockResponse struct {
 	// whether the unlock request for the achievement was the first for the
 	// player).
 	NewlyUnlocked bool `json:"newlyUnlocked,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementUnlockResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementUnlockResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUpdateMultipleRequest: This is a JSON template for a list
@@ -394,6 +479,20 @@ type AchievementUpdateMultipleRequest struct {
 
 	// Updates: The individual achievement update requests.
 	Updates []*AchievementUpdateRequest `json:"updates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementUpdateMultipleRequest) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementUpdateMultipleRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUpdateMultipleResponse: This is a JSON template for an
@@ -405,6 +504,20 @@ type AchievementUpdateMultipleResponse struct {
 
 	// UpdatedAchievements: The updated state of the achievements.
 	UpdatedAchievements []*AchievementUpdateResponse `json:"updatedAchievements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementUpdateMultipleResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementUpdateMultipleResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUpdateRequest: This is a JSON template for a request to
@@ -433,6 +546,20 @@ type AchievementUpdateRequest struct {
 	// - "SET_STEPS_AT_LEAST" - Achievement progress is set to at least the
 	// passed value.
 	UpdateType string `json:"updateType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AchievementId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementUpdateRequest) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementUpdateRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUpdateResponse: This is a JSON template for an achievement
@@ -464,6 +591,20 @@ type AchievementUpdateResponse struct {
 	// UpdateOccurred: Whether the requested updates actually affected the
 	// achievement.
 	UpdateOccurred bool `json:"updateOccurred,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AchievementId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AchievementUpdateResponse) MarshalJSON() ([]byte, error) {
+	type noMethod AchievementUpdateResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AggregateStats: This is a JSON template for aggregate stats.
@@ -484,6 +625,20 @@ type AggregateStats struct {
 	// Sum: The total number of bytes sent for messages between a pair of
 	// peers.
 	Sum int64 `json:"sum,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AggregateStats) MarshalJSON() ([]byte, error) {
+	type noMethod AggregateStats
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnonymousPlayer: This is a JSON template for an anonymous player
@@ -498,6 +653,20 @@ type AnonymousPlayer struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#anonymousPlayer.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvatarImageUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *AnonymousPlayer) MarshalJSON() ([]byte, error) {
+	type noMethod AnonymousPlayer
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Application: This is a JSON template for the Application resource.
@@ -548,6 +717,20 @@ type Application struct {
 	// app-themed color. The color is given as an RGB triplet (e.g.
 	// "E0E0E0").
 	ThemeColor string `json:"themeColor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AchievementCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Application) MarshalJSON() ([]byte, error) {
+	type noMethod Application
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApplicationCategory: This is a JSON template for an application
@@ -562,6 +745,20 @@ type ApplicationCategory struct {
 
 	// Secondary: The secondary category.
 	Secondary string `json:"secondary,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *ApplicationCategory) MarshalJSON() ([]byte, error) {
+	type noMethod ApplicationCategory
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Category: This is a JSON template for data related to individual game
@@ -576,6 +773,20 @@ type Category struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#category.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Category) MarshalJSON() ([]byte, error) {
+	type noMethod Category
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CategoryListResponse: This is a JSON template for a list of category
@@ -590,6 +801,20 @@ type CategoryListResponse struct {
 
 	// NextPageToken: Token corresponding to the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *CategoryListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod CategoryListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventBatchRecordFailure: This is a JSON template for a batch update
@@ -618,6 +843,20 @@ type EventBatchRecordFailure struct {
 	// Range: The time range which was rejected; empty for a request-wide
 	// failure.
 	Range *EventPeriodRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailureCause") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventBatchRecordFailure) MarshalJSON() ([]byte, error) {
+	type noMethod EventBatchRecordFailure
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventChild: This is a JSON template for an event child relationship
@@ -629,6 +868,20 @@ type EventChild struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#eventChild.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChildId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventChild) MarshalJSON() ([]byte, error) {
+	type noMethod EventChild
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventDefinition: This is a JSON template for an event definition
@@ -664,6 +917,20 @@ type EventDefinition struct {
 	// - "HIDDEN": This event should only be shown to users that have
 	// recorded this event at least once.
 	Visibility string `json:"visibility,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChildEvents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventDefinition) MarshalJSON() ([]byte, error) {
+	type noMethod EventDefinition
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventDefinitionListResponse: This is a JSON template for a
@@ -678,6 +945,20 @@ type EventDefinitionListResponse struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventDefinitionListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod EventDefinitionListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventPeriodRange: This is a JSON template for an event period time
@@ -694,6 +975,20 @@ type EventPeriodRange struct {
 	// PeriodStartMillis: The time when this update period begins, in
 	// millis, since 1970 UTC (Unix Epoch).
 	PeriodStartMillis int64 `json:"periodStartMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventPeriodRange) MarshalJSON() ([]byte, error) {
+	type noMethod EventPeriodRange
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventPeriodUpdate: This is a JSON template for an event period update
@@ -708,6 +1003,20 @@ type EventPeriodUpdate struct {
 
 	// Updates: The updates being made for this time period.
 	Updates []*EventUpdateRequest `json:"updates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventPeriodUpdate) MarshalJSON() ([]byte, error) {
+	type noMethod EventPeriodUpdate
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventRecordFailure: This is a JSON template for an event update
@@ -727,6 +1036,20 @@ type EventRecordFailure struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#eventRecordFailure.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventRecordFailure) MarshalJSON() ([]byte, error) {
+	type noMethod EventRecordFailure
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventRecordRequest: This is a JSON template for an event period
@@ -747,6 +1070,20 @@ type EventRecordRequest struct {
 	// TimePeriods: A list of the time period updates being made in this
 	// request.
 	TimePeriods []*EventPeriodUpdate `json:"timePeriods,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentTimeMillis")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventRecordRequest) MarshalJSON() ([]byte, error) {
+	type noMethod EventRecordRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventUpdateRequest: This is a JSON template for an event period
@@ -762,6 +1099,20 @@ type EventUpdateRequest struct {
 	// UpdateCount: The number of times this event occurred in this time
 	// period.
 	UpdateCount int64 `json:"updateCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DefinitionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventUpdateRequest) MarshalJSON() ([]byte, error) {
+	type noMethod EventUpdateRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventUpdateResponse: This is a JSON template for an event period
@@ -780,6 +1131,20 @@ type EventUpdateResponse struct {
 
 	// PlayerEvents: The current status of any updated events
 	PlayerEvents []*PlayerEvent `json:"playerEvents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchFailures") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *EventUpdateResponse) MarshalJSON() ([]byte, error) {
+	type noMethod EventUpdateResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesAchievementIncrement: This is a JSON template for the payload to
@@ -795,6 +1160,20 @@ type GamesAchievementIncrement struct {
 
 	// Steps: The number of steps to be incremented.
 	Steps int64 `json:"steps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *GamesAchievementIncrement) MarshalJSON() ([]byte, error) {
+	type noMethod GamesAchievementIncrement
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesAchievementSetStepsAtLeast: This is a JSON template for the
@@ -806,6 +1185,20 @@ type GamesAchievementSetStepsAtLeast struct {
 
 	// Steps: The minimum number of steps for the achievement to be set to.
 	Steps int64 `json:"steps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *GamesAchievementSetStepsAtLeast) MarshalJSON() ([]byte, error) {
+	type noMethod GamesAchievementSetStepsAtLeast
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImageAsset: This is a JSON template for an image asset object.
@@ -825,6 +1218,20 @@ type ImageAsset struct {
 
 	// Width: The width of the asset.
 	Width int64 `json:"width,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Height") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *ImageAsset) MarshalJSON() ([]byte, error) {
+	type noMethod ImageAsset
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Instance: This is a JSON template for the Instance resource.
@@ -863,6 +1270,20 @@ type Instance struct {
 
 	// WebInstance: Platform dependent details for Web.
 	WebInstance *InstanceWebDetails `json:"webInstance,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcquisitionUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Instance) MarshalJSON() ([]byte, error) {
+	type noMethod Instance
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceAndroidDetails: This is a JSON template for the Android
@@ -882,6 +1303,20 @@ type InstanceAndroidDetails struct {
 	// Preferred: Indicates that this instance is the default for new
 	// installations.
 	Preferred bool `json:"preferred,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnablePiracyCheck")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *InstanceAndroidDetails) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceAndroidDetails
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceIosDetails: This is a JSON template for the iOS details
@@ -910,6 +1345,20 @@ type InstanceIosDetails struct {
 
 	// SupportIphone: Flag to indicate if this instance supports iPhone.
 	SupportIphone bool `json:"supportIphone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BundleIdentifier") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *InstanceIosDetails) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceIosDetails
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceWebDetails: This is a JSON template for the Web details
@@ -925,6 +1374,20 @@ type InstanceWebDetails struct {
 	// Preferred: Indicates that this instance is the default for new
 	// installations.
 	Preferred bool `json:"preferred,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *InstanceWebDetails) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceWebDetails
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Leaderboard: This is a JSON template for the Leaderboard resource.
@@ -953,6 +1416,20 @@ type Leaderboard struct {
 	// - "SMALLER_IS_BETTER" - Smaller values are better; scores are sorted
 	// in ascending order.
 	Order string `json:"order,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IconUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Leaderboard) MarshalJSON() ([]byte, error) {
+	type noMethod Leaderboard
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardEntry: This is a JSON template for the Leaderboard Entry
@@ -994,6 +1471,20 @@ type LeaderboardEntry struct {
 	// WriteTimestampMillis: The timestamp at which this score was recorded,
 	// in milliseconds since the epoch in UTC.
 	WriteTimestampMillis int64 `json:"writeTimestampMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "FormattedScore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *LeaderboardEntry) MarshalJSON() ([]byte, error) {
+	type noMethod LeaderboardEntry
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardListResponse: This is a JSON template for a list of
@@ -1008,6 +1499,20 @@ type LeaderboardListResponse struct {
 
 	// NextPageToken: Token corresponding to the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *LeaderboardListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod LeaderboardListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardScoreRank: This is a JSON template for a score rank in a
@@ -1029,6 +1534,20 @@ type LeaderboardScoreRank struct {
 
 	// Rank: The rank in the leaderboard.
 	Rank int64 `json:"rank,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "FormattedNumScores")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *LeaderboardScoreRank) MarshalJSON() ([]byte, error) {
+	type noMethod LeaderboardScoreRank
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardScores: This is a JSON template for a ListScores response.
@@ -1055,6 +1574,20 @@ type LeaderboardScores struct {
 
 	// PrevPageToken: The pagination token for the previous page of results.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *LeaderboardScores) MarshalJSON() ([]byte, error) {
+	type noMethod LeaderboardScores
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetagameConfig: This is a JSON template for the metagame config
@@ -1071,6 +1604,20 @@ type MetagameConfig struct {
 
 	// PlayerLevels: The list of player levels.
 	PlayerLevels []*PlayerLevel `json:"playerLevels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *MetagameConfig) MarshalJSON() ([]byte, error) {
+	type noMethod MetagameConfig
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NetworkDiagnostics: This is a JSON template for network diagnostics
@@ -1104,6 +1651,21 @@ type NetworkDiagnostics struct {
 	// RegistrationLatencyMillis: The amount of time in milliseconds it took
 	// for the client to establish a connection with the XMPP server.
 	RegistrationLatencyMillis int64 `json:"registrationLatencyMillis,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AndroidNetworkSubtype") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *NetworkDiagnostics) MarshalJSON() ([]byte, error) {
+	type noMethod NetworkDiagnostics
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ParticipantResult: This is a JSON template for a result for a match
@@ -1134,6 +1696,20 @@ type ParticipantResult struct {
 	// - "MATCH_RESULT_DISAGREED" - Different clients reported different
 	// results for this participant.
 	Result string `json:"result,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *ParticipantResult) MarshalJSON() ([]byte, error) {
+	type noMethod ParticipantResult
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PeerChannelDiagnostics: This is a JSON template for peer channel
@@ -1163,6 +1739,20 @@ type PeerChannelDiagnostics struct {
 
 	// RoundtripLatencyMillis: Roundtrip latency stats in milliseconds.
 	RoundtripLatencyMillis *AggregateStats `json:"roundtripLatencyMillis,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BytesReceived") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PeerChannelDiagnostics) MarshalJSON() ([]byte, error) {
+	type noMethod PeerChannelDiagnostics
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PeerSessionDiagnostics: This is a JSON template for peer session
@@ -1183,6 +1773,21 @@ type PeerSessionDiagnostics struct {
 
 	// UnreliableChannel: Unreliable channel diagnostics.
 	UnreliableChannel *PeerChannelDiagnostics `json:"unreliableChannel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConnectedTimestampMillis") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PeerSessionDiagnostics) MarshalJSON() ([]byte, error) {
+	type noMethod PeerSessionDiagnostics
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Played: This is a JSON template for metadata about a player playing a
@@ -1199,6 +1804,20 @@ type Played struct {
 	// TimeMillis: The last time the player played the game in milliseconds
 	// since the epoch in UTC.
 	TimeMillis int64 `json:"timeMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoMatched") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Played) MarshalJSON() ([]byte, error) {
+	type noMethod Played
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Player: This is a JSON template for a Player resource.
@@ -1232,6 +1851,20 @@ type Player struct {
 
 	// Title: The player's title rewarded for their game activities.
 	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvatarImageUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Player) MarshalJSON() ([]byte, error) {
+	type noMethod Player
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerName: An object representation of the individual components of
@@ -1244,6 +1877,20 @@ type PlayerName struct {
 	// GivenName: The given name of this player. In some places, this is
 	// known as the first name.
 	GivenName string `json:"givenName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FamilyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerName) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerName
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerAchievement: This is a JSON template for an achievement object.
@@ -1278,6 +1925,20 @@ type PlayerAchievement struct {
 	// LastUpdatedTimestamp: The timestamp of the last modification to this
 	// achievement's state.
 	LastUpdatedTimestamp int64 `json:"lastUpdatedTimestamp,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AchievementState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerAchievement) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerAchievement
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerAchievementListResponse: This is a JSON template for a list of
@@ -1292,6 +1953,20 @@ type PlayerAchievementListResponse struct {
 
 	// NextPageToken: Token corresponding to the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerAchievementListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerAchievementListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerEvent: This is a JSON template for an event status resource.
@@ -1313,6 +1988,20 @@ type PlayerEvent struct {
 
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefinitionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerEvent) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerEvent
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerEventListResponse: This is a JSON template for a ListByPlayer
@@ -1327,6 +2016,20 @@ type PlayerEventListResponse struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerEventListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerEventListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerExperienceInfo: This is a JSON template for 1P/3P metadata
@@ -1350,6 +2053,21 @@ type PlayerExperienceInfo struct {
 	// NextLevel: The next level of the player. If the current level is the
 	// maximum level, this should be same as the current level.
 	NextLevel *PlayerLevel `json:"nextLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CurrentExperiencePoints") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerExperienceInfo) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerExperienceInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerLeaderboardScore: This is a JSON template for a player
@@ -1391,6 +2109,20 @@ type PlayerLeaderboardScore struct {
 	// WriteTimestamp: The timestamp at which this score was recorded, in
 	// milliseconds since the epoch in UTC.
 	WriteTimestamp int64 `json:"writeTimestamp,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerLeaderboardScore) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerLeaderboardScore
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerLeaderboardScoreListResponse: This is a JSON template for a
@@ -1408,6 +2140,20 @@ type PlayerLeaderboardScoreListResponse struct {
 
 	// Player: The Player resources for the owner of this score.
 	Player *Player `json:"player,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerLeaderboardScoreListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerLeaderboardScoreListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerLevel: This is a JSON template for 1P/3P metadata about a
@@ -1425,6 +2171,20 @@ type PlayerLevel struct {
 
 	// MinExperiencePoints: The minimum experience points for this level.
 	MinExperiencePoints int64 `json:"minExperiencePoints,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerLevel) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerLevel
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerListResponse: This is a JSON template for a third party player
@@ -1439,6 +2199,20 @@ type PlayerListResponse struct {
 
 	// NextPageToken: Token corresponding to the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScore: This is a JSON template for a player score.
@@ -1464,6 +2238,20 @@ type PlayerScore struct {
 	// - "WEEKLY" - The score is a weekly score.
 	// - "DAILY" - The score is a daily score.
 	TimeSpan string `json:"timeSpan,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FormattedScore") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerScore) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerScore
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScoreListResponse: This is a JSON template for a list of score
@@ -1475,6 +2263,20 @@ type PlayerScoreListResponse struct {
 
 	// SubmittedScores: The score submissions statuses.
 	SubmittedScores []*PlayerScoreResponse `json:"submittedScores,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerScoreListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerScoreListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScoreResponse: This is a JSON template for a list of
@@ -1508,6 +2310,21 @@ type PlayerScoreResponse struct {
 	// DAILY score, but not better than the player's scores for the WEEKLY
 	// or ALL_TIME time spans.
 	UnbeatenScores []*PlayerScore `json:"unbeatenScores,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BeatenScoreTimeSpans") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerScoreResponse) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerScoreResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScoreSubmissionList: This is a JSON template for a list of
@@ -1519,6 +2336,20 @@ type PlayerScoreSubmissionList struct {
 
 	// Scores: The score submissions.
 	Scores []*ScoreSubmission `json:"scores,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PlayerScoreSubmissionList) MarshalJSON() ([]byte, error) {
+	type noMethod PlayerScoreSubmissionList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PushToken: This is a JSON template for a push token resource.
@@ -1541,6 +2372,20 @@ type PushToken struct {
 	// Language: The preferred language for notifications that are sent
 	// using this token.
 	Language string `json:"language,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientRevision") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PushToken) MarshalJSON() ([]byte, error) {
+	type noMethod PushToken
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PushTokenId: This is a JSON template for a push token ID resource.
@@ -1551,6 +2396,20 @@ type PushTokenId struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#pushTokenId.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ios") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PushTokenId) MarshalJSON() ([]byte, error) {
+	type noMethod PushTokenId
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PushTokenIdIos: A push token ID for iOS devices.
@@ -1563,6 +2422,20 @@ type PushTokenIdIos struct {
 	// ApnsEnvironment: Indicates whether this token should be used for the
 	// production or sandbox APNS server.
 	ApnsEnvironment string `json:"apns_environment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApnsDeviceToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *PushTokenIdIos) MarshalJSON() ([]byte, error) {
+	type noMethod PushTokenIdIos
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Quest: This is a JSON template for a Quest resource.
@@ -1636,6 +2509,21 @@ type Quest struct {
 	// - "EXPIRED": The quest has expired and was not accepted.
 	// - "DELETED": The quest should be deleted from the local database.
 	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AcceptedTimestampMillis") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Quest) MarshalJSON() ([]byte, error) {
+	type noMethod Quest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestContribution: This is a JSON template for a Quest Criterion
@@ -1652,6 +2540,20 @@ type QuestContribution struct {
 
 	// Value: The value of the contribution.
 	Value int64 `json:"value,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "FormattedValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *QuestContribution) MarshalJSON() ([]byte, error) {
+	type noMethod QuestContribution
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestCriterion: This is a JSON template for a Quest Criterion
@@ -1682,6 +2584,21 @@ type QuestCriterion struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#questCriterion.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CompletionContribution") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *QuestCriterion) MarshalJSON() ([]byte, error) {
+	type noMethod QuestCriterion
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestListResponse: This is a JSON template for a list of quest
@@ -1696,6 +2613,20 @@ type QuestListResponse struct {
 
 	// NextPageToken: Token corresponding to the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *QuestListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod QuestListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestMilestone: This is a JSON template for a Quest Milestone
@@ -1725,6 +2656,21 @@ type QuestMilestone struct {
 	// - "NOT_STARTED" - The milestone is for a quest that has not yet been
 	// accepted.
 	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CompletionRewardData") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *QuestMilestone) MarshalJSON() ([]byte, error) {
+	type noMethod QuestMilestone
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RevisionCheckResponse: This is a JSON template for the result of
@@ -1746,6 +2692,20 @@ type RevisionCheckResponse struct {
 	// - "INVALID" - The revision being used is not supported in any
 	// released version.
 	RevisionStatus string `json:"revisionStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RevisionCheckResponse) MarshalJSON() ([]byte, error) {
+	type noMethod RevisionCheckResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Room: This is a JSON template for a room resource object.
@@ -1812,6 +2772,20 @@ type Room struct {
 	// Variant: The variant / mode of the application being played; can be
 	// any integer value, or left blank.
 	Variant int64 `json:"variant,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Room) MarshalJSON() ([]byte, error) {
+	type noMethod Room
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomAutoMatchStatus: This is a JSON template for status of room
@@ -1824,6 +2798,20 @@ type RoomAutoMatchStatus struct {
 	// WaitEstimateSeconds: An estimate for the amount of time (in seconds)
 	// that auto-matching is expected to take to complete.
 	WaitEstimateSeconds int64 `json:"waitEstimateSeconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomAutoMatchStatus) MarshalJSON() ([]byte, error) {
+	type noMethod RoomAutoMatchStatus
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomAutoMatchingCriteria: This is a JSON template for a room
@@ -1845,6 +2833,20 @@ type RoomAutoMatchingCriteria struct {
 	// MinAutoMatchingPlayers: The minimum number of players that should be
 	// added to the room by auto-matching.
 	MinAutoMatchingPlayers int64 `json:"minAutoMatchingPlayers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExclusiveBitmask") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomAutoMatchingCriteria) MarshalJSON() ([]byte, error) {
+	type noMethod RoomAutoMatchingCriteria
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomClientAddress: This is a JSON template for the client address
@@ -1857,6 +2859,20 @@ type RoomClientAddress struct {
 	// XmppAddress: The XMPP address of the client on the Google Games XMPP
 	// network.
 	XmppAddress string `json:"xmppAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomClientAddress) MarshalJSON() ([]byte, error) {
+	type noMethod RoomClientAddress
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomCreateRequest: This is a JSON template for a room creation
@@ -1893,6 +2909,21 @@ type RoomCreateRequest struct {
 	// be any integer value, or left blank. You should use a small number of
 	// variants to keep the auto-matching pool as large as possible.
 	Variant int64 `json:"variant,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AutoMatchingCriteria") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomCreateRequest) MarshalJSON() ([]byte, error) {
+	type noMethod RoomCreateRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomJoinRequest: This is a JSON template for a join room request.
@@ -1911,6 +2942,20 @@ type RoomJoinRequest struct {
 	// NetworkDiagnostics: Network diagnostics for the client joining the
 	// room.
 	NetworkDiagnostics *NetworkDiagnostics `json:"networkDiagnostics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Capabilities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomJoinRequest) MarshalJSON() ([]byte, error) {
+	type noMethod RoomJoinRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomLeaveDiagnostics: This is a JSON template for room leave
@@ -1948,6 +2993,21 @@ type RoomLeaveDiagnostics struct {
 
 	// SocketsUsed: Whether or not sockets were used.
 	SocketsUsed bool `json:"socketsUsed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AndroidNetworkSubtype") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomLeaveDiagnostics) MarshalJSON() ([]byte, error) {
+	type noMethod RoomLeaveDiagnostics
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomLeaveRequest: This is a JSON template for a leave room request.
@@ -1984,6 +3044,20 @@ type RoomLeaveRequest struct {
 	// - "REALTIME_SAME_CLIENT_ROOM_OPERATION" - The same client is trying
 	// to enter a new room.
 	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomLeaveRequest) MarshalJSON() ([]byte, error) {
+	type noMethod RoomLeaveRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomList: This is a JSON template for a list of rooms.
@@ -1997,6 +3071,20 @@ type RoomList struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomList) MarshalJSON() ([]byte, error) {
+	type noMethod RoomList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomModification: This is a JSON template for room modification
@@ -2012,6 +3100,20 @@ type RoomModification struct {
 
 	// ParticipantId: The ID of the participant that modified the room.
 	ParticipantId string `json:"participantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomModification) MarshalJSON() ([]byte, error) {
+	type noMethod RoomModification
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomP2PStatus: This is a JSON template for an update on the status of
@@ -2054,6 +3156,21 @@ type RoomP2PStatus struct {
 	// it took to send packets back and forth on the unreliable channel with
 	// this peer.
 	UnreliableRoundtripLatencyMillis int64 `json:"unreliableRoundtripLatencyMillis,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConnectionSetupLatencyMillis") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomP2PStatus) MarshalJSON() ([]byte, error) {
+	type noMethod RoomP2PStatus
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomP2PStatuses: This is a JSON template for an update on the status
@@ -2065,6 +3182,20 @@ type RoomP2PStatuses struct {
 
 	// Updates: The updates for the peers.
 	Updates []*RoomP2PStatus `json:"updates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomP2PStatuses) MarshalJSON() ([]byte, error) {
+	type noMethod RoomP2PStatuses
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomParticipant: This is a JSON template for a participant in a room.
@@ -2131,6 +3262,20 @@ type RoomParticipant struct {
 	// - "PARTICIPANT_LEFT" - The participant joined the room and then left
 	// it.
 	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoMatched") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomParticipant) MarshalJSON() ([]byte, error) {
+	type noMethod RoomParticipant
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomStatus: This is a JSON template for the status of a room that the
@@ -2169,6 +3314,20 @@ type RoomStatus struct {
 	// counter, used by the client to ignore out-of-order updates to room
 	// status.
 	StatusVersion int64 `json:"statusVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoMatchingStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *RoomStatus) MarshalJSON() ([]byte, error) {
+	type noMethod RoomStatus
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ScoreSubmission: This is a JSON template for a request to submit a
@@ -2192,6 +3351,20 @@ type ScoreSubmission struct {
 	// Signature: Signature Values will contain URI-safe characters as
 	// defined by section 2.3 of RFC 3986.
 	Signature string `json:"signature,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *ScoreSubmission) MarshalJSON() ([]byte, error) {
+	type noMethod ScoreSubmission
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Snapshot: This is a JSON template for an snapshot object.
@@ -2237,6 +3410,20 @@ type Snapshot struct {
 
 	// UniqueName: The unique name provided when the snapshot was created.
 	UniqueName string `json:"uniqueName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CoverImage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *Snapshot) MarshalJSON() ([]byte, error) {
+	type noMethod Snapshot
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SnapshotImage: This is a JSON template for an image of a snapshot.
@@ -2257,6 +3444,20 @@ type SnapshotImage struct {
 
 	// Width: The width of the image.
 	Width int64 `json:"width,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Height") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *SnapshotImage) MarshalJSON() ([]byte, error) {
+	type noMethod SnapshotImage
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SnapshotListResponse: This is a JSON template for a list of snapshot
@@ -2272,6 +3473,20 @@ type SnapshotListResponse struct {
 	// NextPageToken: Token corresponding to the next page of results. If
 	// there are no more results, the token is omitted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *SnapshotListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SnapshotListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedAutoMatchingCriteria: This is a JSON template for an
@@ -2293,6 +3508,20 @@ type TurnBasedAutoMatchingCriteria struct {
 	// MinAutoMatchingPlayers: The minimum number of players that should be
 	// added to the match by auto-matching.
 	MinAutoMatchingPlayers int64 `json:"minAutoMatchingPlayers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExclusiveBitmask") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedAutoMatchingCriteria) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedAutoMatchingCriteria
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatch: This is a JSON template for a turn-based match
@@ -2392,6 +3621,20 @@ type TurnBasedMatch struct {
 	// can be used when describing the participants the user is playing
 	// with.
 	WithParticipantId string `json:"withParticipantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatch) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatch
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchCreateRequest: This is a JSON template for a turn-based
@@ -2417,6 +3660,21 @@ type TurnBasedMatchCreateRequest struct {
 	// be any integer value, or left blank. You should use a small number of
 	// variants to keep the auto-matching pool as large as possible.
 	Variant int64 `json:"variant,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AutoMatchingCriteria") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchCreateRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchCreateRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchData: This is a JSON template for a turn-based match
@@ -2434,6 +3692,20 @@ type TurnBasedMatchData struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#turnBasedMatchData.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchData) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchData
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchDataRequest: This is a JSON template for sending a
@@ -2446,6 +3718,20 @@ type TurnBasedMatchDataRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string games#turnBasedMatchDataRequest.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchDataRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchDataRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchList: This is a JSON template for a list of turn-based
@@ -2460,6 +3746,20 @@ type TurnBasedMatchList struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchList) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchModification: This is a JSON template for turn-based
@@ -2475,6 +3775,20 @@ type TurnBasedMatchModification struct {
 
 	// ParticipantId: The ID of the participant that modified the match.
 	ParticipantId string `json:"participantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchModification) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchModification
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchParticipant: This is a JSON template for a participant
@@ -2522,6 +3836,20 @@ type TurnBasedMatchParticipant struct {
 	// - "PARTICIPANT_UNRESPONSIVE" - The participant did not take their
 	// turn in the allotted time.
 	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoMatched") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchParticipant) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchParticipant
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchRematch: This is a JSON template for a rematch
@@ -2538,6 +3866,20 @@ type TurnBasedMatchRematch struct {
 	// Rematch: The newly created match; a rematch of the old match with the
 	// same participants.
 	Rematch *TurnBasedMatch `json:"rematch,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchRematch) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchRematch
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchResults: This is a JSON template for a turn-based match
@@ -2555,6 +3897,20 @@ type TurnBasedMatchResults struct {
 
 	// Results: The match results for the participants in the match.
 	Results []*ParticipantResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchResults) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchResults
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchSync: This is a JSON template for a list of turn-based
@@ -2574,6 +3930,20 @@ type TurnBasedMatchSync struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchSync) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchSync
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchTurn: This is a JSON template for the object
@@ -2600,6 +3970,20 @@ type TurnBasedMatchTurn struct {
 
 	// Results: The match results for the participants in the match.
 	Results []*ParticipantResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Data") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *TurnBasedMatchTurn) MarshalJSON() ([]byte, error) {
+	type noMethod TurnBasedMatchTurn
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "games.achievementDefinitions.list":

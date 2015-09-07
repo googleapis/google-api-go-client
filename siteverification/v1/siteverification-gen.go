@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -91,6 +92,20 @@ type SiteVerificationWebResourceGettokenRequest struct {
 	// verify this site. For sites, 'FILE' or 'META' methods may be used.
 	// For domains, only 'DNS' may be used.
 	VerificationMethod string `json:"verificationMethod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Site") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *SiteVerificationWebResourceGettokenRequest) MarshalJSON() ([]byte, error) {
+	type noMethod SiteVerificationWebResourceGettokenRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SiteVerificationWebResourceGettokenRequestSite: The site for which a
@@ -104,6 +119,20 @@ type SiteVerificationWebResourceGettokenRequestSite struct {
 	// Type: The type of resource to be verified. Can be SITE or INET_DOMAIN
 	// (domain name).
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identifier") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *SiteVerificationWebResourceGettokenRequestSite) MarshalJSON() ([]byte, error) {
+	type noMethod SiteVerificationWebResourceGettokenRequestSite
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SiteVerificationWebResourceGettokenResponse struct {
@@ -118,11 +147,39 @@ type SiteVerificationWebResourceGettokenResponse struct {
 	// Token: The verification token. The token must be placed appropriately
 	// in order for verification to succeed.
 	Token string `json:"token,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Method") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *SiteVerificationWebResourceGettokenResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SiteVerificationWebResourceGettokenResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SiteVerificationWebResourceListResponse struct {
 	// Items: The list of sites that are owned by the authenticated user.
 	Items []*SiteVerificationWebResourceResource `json:"items,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *SiteVerificationWebResourceListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SiteVerificationWebResourceListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SiteVerificationWebResourceResource struct {
@@ -137,6 +194,20 @@ type SiteVerificationWebResourceResource struct {
 	// Site: The address and type of a site that is verified or will be
 	// verified.
 	Site *SiteVerificationWebResourceResourceSite `json:"site,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *SiteVerificationWebResourceResource) MarshalJSON() ([]byte, error) {
+	type noMethod SiteVerificationWebResourceResource
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SiteVerificationWebResourceResourceSite: The address and type of a
@@ -149,6 +220,20 @@ type SiteVerificationWebResourceResourceSite struct {
 
 	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identifier") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s *SiteVerificationWebResourceResourceSite) MarshalJSON() ([]byte, error) {
+	type noMethod SiteVerificationWebResourceResourceSite
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "siteVerification.webResource.delete":

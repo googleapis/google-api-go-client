@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -158,6 +159,20 @@ type Bucket struct {
 
 	// Website: The bucket's website configuration.
 	Website *BucketWebsite `json:"website,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Acl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Bucket) MarshalJSON() ([]byte, error) {
+	type noMethod Bucket
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketOwner: The owner of the bucket. This will always be the project
@@ -168,6 +183,20 @@ type BucketOwner struct {
 
 	// EntityId: The ID for the entity.
 	EntityId string `json:"entityId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BucketOwner) MarshalJSON() ([]byte, error) {
+	type noMethod BucketOwner
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketWebsite: The bucket's website configuration.
@@ -179,6 +208,20 @@ type BucketWebsite struct {
 	// NotFoundPage: The custom object to return when a requested resource
 	// is not found.
 	NotFoundPage string `json:"notFoundPage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MainPageSuffix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BucketWebsite) MarshalJSON() ([]byte, error) {
+	type noMethod BucketWebsite
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketAccessControl: An access-control entry.
@@ -224,6 +267,20 @@ type BucketAccessControl struct {
 
 	// SelfLink: The link to this access-control entry.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BucketAccessControl) MarshalJSON() ([]byte, error) {
+	type noMethod BucketAccessControl
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketAccessControls: An access-control list.
@@ -234,6 +291,20 @@ type BucketAccessControls struct {
 	// Kind: The kind of item this is. For lists of bucket access control
 	// entries, this is always storage#bucketAccessControls.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *BucketAccessControls) MarshalJSON() ([]byte, error) {
+	type noMethod BucketAccessControls
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Buckets: A list of buckets.
@@ -249,6 +320,20 @@ type Buckets struct {
 	// result sets. Provide this value in a subsequent request to return the
 	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Buckets) MarshalJSON() ([]byte, error) {
+	type noMethod Buckets
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Object: An object.
@@ -295,6 +380,20 @@ type Object struct {
 
 	// SelfLink: The link to this object.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Acl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Object) MarshalJSON() ([]byte, error) {
+	type noMethod Object
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectMedia: Object media data. Provided on your behalf when
@@ -325,6 +424,20 @@ type ObjectMedia struct {
 
 	// TimeCreated: Creation time of the data in RFC 3339 format.
 	TimeCreated string `json:"timeCreated,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Algorithm") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ObjectMedia) MarshalJSON() ([]byte, error) {
+	type noMethod ObjectMedia
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectOwner: The owner of the object. This will always be the
@@ -335,6 +448,20 @@ type ObjectOwner struct {
 
 	// EntityId: The ID for the entity.
 	EntityId string `json:"entityId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ObjectOwner) MarshalJSON() ([]byte, error) {
+	type noMethod ObjectOwner
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectAccessControl: An access-control entry.
@@ -382,6 +509,20 @@ type ObjectAccessControl struct {
 
 	// SelfLink: The link to this access-control entry.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ObjectAccessControl) MarshalJSON() ([]byte, error) {
+	type noMethod ObjectAccessControl
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectAccessControls: An access-control list.
@@ -392,6 +533,20 @@ type ObjectAccessControls struct {
 	// Kind: The kind of item this is. For lists of object access control
 	// entries, this is always storage#objectAccessControls.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ObjectAccessControls) MarshalJSON() ([]byte, error) {
+	type noMethod ObjectAccessControls
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Objects: A list of objects.
@@ -411,6 +566,20 @@ type Objects struct {
 	// Prefixes: The list of prefixes of objects matching-but-not-listed up
 	// to and including the requested delimiter.
 	Prefixes []string `json:"prefixes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Objects) MarshalJSON() ([]byte, error) {
+	type noMethod Objects
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "storage.bucketAccessControls.delete":

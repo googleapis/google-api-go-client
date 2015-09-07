@@ -15,7 +15,9 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -34,7 +36,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "script:v1"
 const apiName = "script"
@@ -127,6 +128,20 @@ type ExecutionError struct {
 	// trace through the script to show where the execution failed, with the
 	// deepest call first.
 	ScriptStackTraceElements []*ScriptStackTraceElement `json:"scriptStackTraceElements,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ExecutionError) MarshalJSON() ([]byte, error) {
+	type noMethod ExecutionError
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExecutionRequest: A request to run the function in a script. The
@@ -154,6 +169,20 @@ type ExecutionRequest struct {
 
 	// SessionState: This field is not used.
 	SessionState string `json:"sessionState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DevMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ExecutionRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ExecutionRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExecutionResponse: An object that provides the return value of a
@@ -168,6 +197,20 @@ type ExecutionResponse struct {
 	// `Document` or `Calendar`); they can only return primitive types such
 	// as a `string`, `number`, `array`, `object`, or `boolean`.
 	Result interface{} `json:"result,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Result") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ExecutionResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ExecutionResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: The response will not arrive until the function finishes
@@ -211,6 +254,20 @@ type Operation struct {
 	// will contain an `ExecutionResponse` object with the function's return
 	// value as the object's `result` field.
 	Response OperationResponse `json:"response,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type noMethod Operation
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationMetadata interface{}
@@ -225,6 +282,20 @@ type ScriptStackTraceElement struct {
 
 	// LineNumber: The line number where the script failed.
 	LineNumber int64 `json:"lineNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Function") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ScriptStackTraceElement) MarshalJSON() ([]byte, error) {
+	type noMethod ScriptStackTraceElement
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Status: If a `run` call succeeds but the script function (or Apps
@@ -243,6 +314,20 @@ type Status struct {
 	// English. Any user-facing error message should be localized and sent
 	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type noMethod Status
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatusDetails interface{}
@@ -254,6 +339,7 @@ type ScriptsRunCall struct {
 	scriptId         string
 	executionrequest *ExecutionRequest
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Run: Runs a function in an Apps Script project that has been deployed
@@ -279,6 +365,14 @@ func (c *ScriptsRunCall) Fields(s ...googleapi.Field) *ScriptsRunCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ScriptsRunCall) Context(ctx context.Context) *ScriptsRunCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ScriptsRunCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.executionrequest)
@@ -299,6 +393,9 @@ func (c *ScriptsRunCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

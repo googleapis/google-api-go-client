@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -240,6 +241,20 @@ type Breakpoint struct {
 	// variable is a merge of the referencing veariable and the referenced
 	// variable.
 	VariableTable []*Variable `json:"variableTable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Breakpoint) MarshalJSON() ([]byte, error) {
+	type noMethod Breakpoint
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CloudRepoSourceContext: A CloudRepoSourceContext denotes a particular
@@ -254,6 +269,20 @@ type CloudRepoSourceContext struct {
 
 	// RevisionId: A revision ID.
 	RevisionId string `json:"revisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AliasName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CloudRepoSourceContext) MarshalJSON() ([]byte, error) {
+	type noMethod CloudRepoSourceContext
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CloudWorkspaceId: A CloudWorkspaceId is a unique identifier for a
@@ -266,6 +295,20 @@ type CloudWorkspaceId struct {
 
 	// RepoId: The ID of the repo containing the workspace.
 	RepoId *RepoId `json:"repoId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CloudWorkspaceId) MarshalJSON() ([]byte, error) {
+	type noMethod CloudWorkspaceId
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CloudWorkspaceSourceContext: A CloudWorkspaceSourceContext denotes a
@@ -277,6 +320,20 @@ type CloudWorkspaceSourceContext struct {
 
 	// WorkspaceId: The ID of the workspace.
 	WorkspaceId *CloudWorkspaceId `json:"workspaceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SnapshotId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CloudWorkspaceSourceContext) MarshalJSON() ([]byte, error) {
+	type noMethod CloudWorkspaceSourceContext
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Debuggee: Represents the application to debug. The application may
@@ -329,6 +386,20 @@ type Debuggee struct {
 	// that id the application within the project can be used. Recomended to
 	// include environement and version or build id's.
 	Uniquifier string `json:"uniquifier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Debuggee) MarshalJSON() ([]byte, error) {
+	type noMethod Debuggee
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -351,6 +422,20 @@ type FormatMessage struct {
 
 	// Parameters: Optional parameters to be embedded into the message.
 	Parameters []string `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FormatMessage) MarshalJSON() ([]byte, error) {
+	type noMethod FormatMessage
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GerritSourceContext: A SourceContext referring to a Gerrit project.
@@ -368,6 +453,20 @@ type GerritSourceContext struct {
 
 	// RevisionId: A revision (commit) ID.
 	RevisionId string `json:"revisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AliasName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GerritSourceContext) MarshalJSON() ([]byte, error) {
+	type noMethod GerritSourceContext
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetBreakpointResponse: The response of getting breakpoint
@@ -376,6 +475,20 @@ type GetBreakpointResponse struct {
 	// Breakpoint: The complete breakpoint state. The fields 'id' and
 	// 'location' are guranteed to be set.
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Breakpoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GetBreakpointResponse) MarshalJSON() ([]byte, error) {
+	type noMethod GetBreakpointResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GitSourceContext: A GitSourceContext denotes a particular revision in
@@ -386,6 +499,20 @@ type GitSourceContext struct {
 
 	// Url: Git repository URL.
 	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RevisionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *GitSourceContext) MarshalJSON() ([]byte, error) {
+	type noMethod GitSourceContext
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListActiveBreakpointsResponse: The response of listing active
@@ -398,6 +525,20 @@ type ListActiveBreakpointsResponse struct {
 	// NextWaitToken: A wait token that can be used in the next method call
 	// to block until the list of breakpoints changes.
 	NextWaitToken string `json:"nextWaitToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Breakpoints") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListActiveBreakpointsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListActiveBreakpointsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListBreakpointsResponse: The response of listing breakpoints.
@@ -409,6 +550,20 @@ type ListBreakpointsResponse struct {
 	// NextWaitToken: A wait token that can be used in the next call to
 	// ListBreakpoints to block until the list of breakpoints has changes.
 	NextWaitToken string `json:"nextWaitToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Breakpoints") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListBreakpointsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListBreakpointsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListDebuggeesResponse: The response of listing debuggees.
@@ -418,6 +573,20 @@ type ListDebuggeesResponse struct {
 	// should be displayed to the user. The fields 'debuggee.id' and
 	// 'description' are guranteed to be set on each debuggee.
 	Debuggees []*Debuggee `json:"debuggees,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Debuggees") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListDebuggeesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListDebuggeesResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProjectRepoId: Selects a repo using a Google Cloud Platform project
@@ -428,6 +597,20 @@ type ProjectRepoId struct {
 
 	// RepoName: The name of the repo. Leave empty for the default repo.
 	RepoName string `json:"repoName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ProjectRepoId) MarshalJSON() ([]byte, error) {
+	type noMethod ProjectRepoId
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegisterDebuggeeRequest: The request to register a debuggee.
@@ -436,6 +619,20 @@ type RegisterDebuggeeRequest struct {
 	// 'uniquifier', 'description' and 'agent_version' of the debuggee must
 	// be set.
 	Debuggee *Debuggee `json:"debuggee,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Debuggee") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RegisterDebuggeeRequest) MarshalJSON() ([]byte, error) {
+	type noMethod RegisterDebuggeeRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegisterDebuggeeResponse: The response of registering a debuggee.
@@ -443,6 +640,20 @@ type RegisterDebuggeeResponse struct {
 	// Debuggee: The debuggee resource. The field 'id' is guranteed to be
 	// set (in addition to the echoed fields).
 	Debuggee *Debuggee `json:"debuggee,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Debuggee") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RegisterDebuggeeResponse) MarshalJSON() ([]byte, error) {
+	type noMethod RegisterDebuggeeResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RepoId: A unique identifier for a cloud repo.
@@ -452,6 +663,20 @@ type RepoId struct {
 
 	// Uid: A server-assigned, globally unique identifier.
 	Uid string `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectRepoId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RepoId) MarshalJSON() ([]byte, error) {
+	type noMethod RepoId
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SetBreakpointResponse: The response of setting a breakpoint.
@@ -459,6 +684,20 @@ type SetBreakpointResponse struct {
 	// Breakpoint: The breakpoint resource. The field 'id' is guranteed to
 	// be set (in addition to the echoed fileds).
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Breakpoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SetBreakpointResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SetBreakpointResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceContext: A SourceContext is a reference to a tree of files. A
@@ -478,6 +717,20 @@ type SourceContext struct {
 	// Git: A SourceContext referring to any third party Git repo (e.g.
 	// GitHub).
 	Git *GitSourceContext `json:"git,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudRepo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SourceContext) MarshalJSON() ([]byte, error) {
+	type noMethod SourceContext
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceLocation: Represents a location in the source code.
@@ -488,6 +741,20 @@ type SourceLocation struct {
 	// Path: A path to the source file within the source context of the
 	// target binary.
 	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Line") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SourceLocation) MarshalJSON() ([]byte, error) {
+	type noMethod SourceLocation
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StackFrame: Represents a stack frame context.
@@ -505,6 +772,20 @@ type StackFrame struct {
 
 	// Location: The source location of the call site.
 	Location *SourceLocation `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StackFrame) MarshalJSON() ([]byte, error) {
+	type noMethod StackFrame
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StatusMessage: Represents a contextual status message. The message
@@ -529,6 +810,20 @@ type StatusMessage struct {
 	//   "VARIABLE_NAME"
 	//   "VARIABLE_VALUE"
 	RefersTo string `json:"refersTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StatusMessage) MarshalJSON() ([]byte, error) {
+	type noMethod StatusMessage
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateActiveBreakpointRequest: The request to update an active
@@ -537,6 +832,20 @@ type UpdateActiveBreakpointRequest struct {
 	// Breakpoint: The updated breakpoint information. The field 'id' must
 	// be set.
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Breakpoint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UpdateActiveBreakpointRequest) MarshalJSON() ([]byte, error) {
+	type noMethod UpdateActiveBreakpointRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateActiveBreakpointResponse: The response of updating an active
@@ -605,6 +914,20 @@ type Variable struct {
 	// variable in the table. The var_index field is an index into
 	// variable_table in Breakpoint.
 	VarTableIndex int64 `json:"varTableIndex,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Members") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Variable) MarshalJSON() ([]byte, error) {
+	type noMethod Variable
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "clouddebugger.controller.debuggees.register":

@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -168,6 +169,20 @@ type InstanceGroupManager struct {
 	// attempting to maintain. Deleting or abandoning instances affects this
 	// number, as does resizing the group.
 	TargetSize int64 `json:"targetSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoHealingPolicies")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManager) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManager
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InstanceGroupManagerList struct {
@@ -187,6 +202,20 @@ type InstanceGroupManagerList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagerList) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagerList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InstanceGroupManagersAbandonInstancesRequest struct {
@@ -194,6 +223,20 @@ type InstanceGroupManagersAbandonInstancesRequest struct {
 	// example:
 	// { 'instances': [ 'instance-c3po', 'instance-r2d2' ] }
 	Instances []string `json:"instances,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Instances") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagersAbandonInstancesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagersAbandonInstancesRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InstanceGroupManagersDeleteInstancesRequest struct {
@@ -201,6 +244,20 @@ type InstanceGroupManagersDeleteInstancesRequest struct {
 	//
 	// Example: 'instance-foo', 'instance-bar'
 	Instances []string `json:"instances,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Instances") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagersDeleteInstancesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagersDeleteInstancesRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InstanceGroupManagersRecreateInstancesRequest struct {
@@ -208,12 +265,40 @@ type InstanceGroupManagersRecreateInstancesRequest struct {
 	// example:
 	// { 'instances': [ 'instance-c3po', 'instance-r2d2' ] }
 	Instances []string `json:"instances,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Instances") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagersRecreateInstancesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagersRecreateInstancesRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InstanceGroupManagersSetInstanceTemplateRequest struct {
 	// InstanceTemplate: The full URL to an Instance Template from which all
 	// new instances will be created.
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceTemplate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagersSetInstanceTemplateRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagersSetInstanceTemplateRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InstanceGroupManagersSetTargetPoolsRequest struct {
@@ -226,6 +311,20 @@ type InstanceGroupManagersSetTargetPoolsRequest struct {
 	// resources. New instances in the Instance Group Manager will be added
 	// to the specified target pools; existing instances are not affected.
 	TargetPools []string `json:"targetPools,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fingerprint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstanceGroupManagersSetTargetPoolsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstanceGroupManagersSetTargetPoolsRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: An operation resource, used to manage asynchronous API
@@ -324,6 +423,20 @@ type Operation struct {
 	// Zone: [Output Only] URL of the zone where the operation resides. Only
 	// available when performing per-zone operations.
 	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientOperationId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type noMethod Operation
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationError: [Output Only] If errors occurred during processing of
@@ -332,6 +445,20 @@ type OperationError struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
 	Errors []*OperationErrorErrors `json:"errors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *OperationError) MarshalJSON() ([]byte, error) {
+	type noMethod OperationError
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationErrorErrors struct {
@@ -344,6 +471,20 @@ type OperationErrorErrors struct {
 
 	// Message: [Output Only] An optional, human-readable error message.
 	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *OperationErrorErrors) MarshalJSON() ([]byte, error) {
+	type noMethod OperationErrorErrors
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarnings struct {
@@ -371,6 +512,20 @@ type OperationWarnings struct {
 	// Message: [Output only] Optional human-readable details for this
 	// warning.
 	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *OperationWarnings) MarshalJSON() ([]byte, error) {
+	type noMethod OperationWarnings
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarningsData struct {
@@ -379,6 +534,20 @@ type OperationWarningsData struct {
 
 	// Value: [Output Only] Metadata value for this warning.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *OperationWarningsData) MarshalJSON() ([]byte, error) {
+	type noMethod OperationWarningsData
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationList struct {
@@ -398,6 +567,20 @@ type OperationList struct {
 
 	// SelfLink: Server defined URL for this resource (output only).
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *OperationList) MarshalJSON() ([]byte, error) {
+	type noMethod OperationList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReplicaPoolAutoHealingPolicy struct {
@@ -415,6 +598,20 @@ type ReplicaPoolAutoHealingPolicy struct {
 
 	// HealthCheck: The URL for the HealthCheck that signals autohealing.
 	HealthCheck string `json:"healthCheck,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ReplicaPoolAutoHealingPolicy) MarshalJSON() ([]byte, error) {
+	type noMethod ReplicaPoolAutoHealingPolicy
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "replicapool.instanceGroupManagers.abandonInstances":

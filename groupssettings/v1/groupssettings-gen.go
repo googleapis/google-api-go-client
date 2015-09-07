@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -187,6 +188,21 @@ type Groups struct {
 	// are: ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW
 	// ALL_MANAGERS_CAN_VIEW
 	WhoCanViewMembership string `json:"whoCanViewMembership,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowExternalMembers") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Groups) MarshalJSON() ([]byte, error) {
+	type noMethod Groups
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "groupsSettings.groups.get":

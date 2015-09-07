@@ -15,7 +15,9 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -34,7 +36,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "container:v1beta1"
 const apiName = "container"
@@ -237,32 +238,116 @@ type Cluster struct {
 	// Zone: [Output only] The name of the Google Compute Engine zone in
 	// which the cluster resides.
 	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterApiVersion")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Cluster) MarshalJSON() ([]byte, error) {
+	type noMethod Cluster
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreateClusterRequest struct {
 	// Cluster: A cluster resource.
 	Cluster *Cluster `json:"cluster,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CreateClusterRequest) MarshalJSON() ([]byte, error) {
+	type noMethod CreateClusterRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListAggregatedClustersResponse struct {
 	// Clusters: A list of clusters in the project, across all zones.
 	Clusters []*Cluster `json:"clusters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Clusters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListAggregatedClustersResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListAggregatedClustersResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListAggregatedOperationsResponse struct {
 	// Operations: A list of operations in the project, across all zones.
 	Operations []*Operation `json:"operations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListAggregatedOperationsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListAggregatedOperationsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListClustersResponse struct {
 	// Clusters: A list of clusters in the project in the specified zone.
 	Clusters []*Cluster `json:"clusters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Clusters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListClustersResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListOperationsResponse struct {
 	// Operations: A list of operations in the project in the specified
 	// zone.
 	Operations []*Operation `json:"operations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListOperationsResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MasterAuth: The authentication information for accessing the master.
@@ -295,6 +380,20 @@ type MasterAuth struct {
 	// User: The username to use for HTTP basic authentication when
 	// accessing the Kubernetes master endpoint.
 	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BearerToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *MasterAuth) MarshalJSON() ([]byte, error) {
+	type noMethod MasterAuth
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type NodeConfig struct {
@@ -322,6 +421,20 @@ type NodeConfig struct {
 	// this field blank to accept the default backports-debian-7-wheezy
 	// value.
 	SourceImage string `json:"sourceImage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *NodeConfig) MarshalJSON() ([]byte, error) {
+	type noMethod NodeConfig
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: Defines the operation resource. All fields are output
@@ -362,6 +475,20 @@ type Operation struct {
 	// Zone: The name of the Google Compute Engine zone in which the
 	// operation is taking place.
 	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type noMethod Operation
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ServiceAccount: A Compute Engine service account.
@@ -372,6 +499,20 @@ type ServiceAccount struct {
 	// Scopes: The list of scopes to be made available for this service
 	// account.
 	Scopes []string `json:"scopes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
+	type noMethod ServiceAccount
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "container.projects.clusters.list":
@@ -380,6 +521,7 @@ type ProjectsClustersListCall struct {
 	s         *Service
 	projectId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all clusters owned by a project across all zones.
@@ -397,6 +539,14 @@ func (c *ProjectsClustersListCall) Fields(s ...googleapi.Field) *ProjectsCluster
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsClustersListCall) Context(ctx context.Context) *ProjectsClustersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsClustersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -411,6 +561,9 @@ func (c *ProjectsClustersListCall) doRequest(alt string) (*http.Response, error)
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -460,6 +613,7 @@ type ProjectsOperationsListCall struct {
 	s         *Service
 	projectId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all operations in a project, across all zones.
@@ -477,6 +631,14 @@ func (c *ProjectsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsOpera
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsOperationsListCall) Context(ctx context.Context) *ProjectsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -491,6 +653,9 @@ func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, erro
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -542,6 +707,7 @@ type ProjectsZonesClustersCreateCall struct {
 	zoneId               string
 	createclusterrequest *CreateClusterRequest
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Create: Creates a cluster, consisting of the specified number and
@@ -573,6 +739,14 @@ func (c *ProjectsZonesClustersCreateCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsZonesClustersCreateCall) Context(ctx context.Context) *ProjectsZonesClustersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createclusterrequest)
@@ -594,6 +768,9 @@ func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -655,6 +832,7 @@ type ProjectsZonesClustersDeleteCall struct {
 	zoneId    string
 	clusterId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the cluster, including the Kubernetes master and all
@@ -678,6 +856,14 @@ func (c *ProjectsZonesClustersDeleteCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsZonesClustersDeleteCall) Context(ctx context.Context) *ProjectsZonesClustersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -694,6 +880,9 @@ func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response,
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -759,6 +948,7 @@ type ProjectsZonesClustersGetCall struct {
 	zoneId    string
 	clusterId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a specific cluster.
@@ -778,6 +968,14 @@ func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZon
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsZonesClustersGetCall) Context(ctx context.Context) *ProjectsZonesClustersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -794,6 +992,9 @@ func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, er
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -858,6 +1059,7 @@ type ProjectsZonesClustersListCall struct {
 	projectId string
 	zoneId    string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all clusters owned by a project in the specified zone.
@@ -876,6 +1078,14 @@ func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZo
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsZonesClustersListCall) Context(ctx context.Context) *ProjectsZonesClustersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -891,6 +1101,9 @@ func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, e
 		"zoneId":    c.zoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -949,6 +1162,7 @@ type ProjectsZonesOperationsGetCall struct {
 	zoneId      string
 	operationId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets the specified operation.
@@ -968,6 +1182,14 @@ func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZ
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsZonesOperationsGetCall) Context(ctx context.Context) *ProjectsZonesOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -984,6 +1206,9 @@ func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, 
 		"operationId": c.operationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1048,6 +1273,7 @@ type ProjectsZonesOperationsListCall struct {
 	projectId string
 	zoneId    string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all operations in a project in a specific zone.
@@ -1066,6 +1292,14 @@ func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsZonesOperationsListCall) Context(ctx context.Context) *ProjectsZonesOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1081,6 +1315,9 @@ func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response,
 		"zoneId":    c.zoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

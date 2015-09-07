@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -155,6 +156,22 @@ type Task struct {
 	// Updated: Last modification time of the task (as a RFC 3339
 	// timestamp).
 	Updated string `json:"updated,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Completed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Task) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type TaskLinks struct {
@@ -167,6 +184,22 @@ type TaskLinks struct {
 
 	// Type: Type of the link, e.g. "email".
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s TaskLinks) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type TaskList struct {
@@ -189,6 +222,22 @@ type TaskList struct {
 	// Updated: Last modification time of the task list (as a RFC 3339
 	// timestamp).
 	Updated string `json:"updated,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s TaskList) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type TaskLists struct {
@@ -204,6 +253,22 @@ type TaskLists struct {
 	// NextPageToken: Token that can be used to request the next page of
 	// this result.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s TaskLists) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type Tasks struct {
@@ -218,6 +283,22 @@ type Tasks struct {
 
 	// NextPageToken: Token used to access the next page of this result.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Tasks) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "tasks.tasklists.delete":

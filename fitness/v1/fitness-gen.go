@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -172,6 +173,22 @@ type AggregateBucket struct {
 	//   "time"
 	//   "unknown"
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Activity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AggregateBucket) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // AggregateBy: The specification of which data to aggregate.
@@ -188,6 +205,22 @@ type AggregateBy struct {
 	// will have a data source ID of
 	// derived:com.google.:com.google.android.gms:aggregated
 	DataTypeName string `json:"dataTypeName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AggregateBy) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type AggregateRequest struct {
@@ -231,11 +264,43 @@ type AggregateRequest struct {
 	// with this time window will be aggregated. The time is in milliseconds
 	// since epoch, inclusive.
 	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregateBy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AggregateRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type AggregateResponse struct {
 	// Bucket: A list of buckets containing the aggregated data.
 	Bucket []*AggregateBucket `json:"bucket,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AggregateResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Application: See:
@@ -263,6 +328,22 @@ type Application struct {
 	// whenever the application changes in a way that affects the
 	// computation of the data.
 	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetailsUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Application) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type BucketByActivity struct {
@@ -274,6 +355,23 @@ type BucketByActivity struct {
 	// longer than minDurationMillis are considered and used as a container
 	// for aggregated data.
 	MinDurationMillis int64 `json:"minDurationMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ActivityDataSourceId") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s BucketByActivity) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type BucketBySession struct {
@@ -281,6 +379,22 @@ type BucketBySession struct {
 	// than minDurationMillis are considered and used as a container for
 	// aggregated data.
 	MinDurationMillis int64 `json:"minDurationMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MinDurationMillis")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s BucketBySession) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type BucketByTime struct {
@@ -288,6 +402,22 @@ type BucketByTime struct {
 	// exactly durationMillis time frames. Time frames that contain no data
 	// will be included in the response with an empty dataset.
 	DurationMillis int64 `json:"durationMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DurationMillis") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s BucketByTime) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DataPoint: Represents a single data point, generated by a particular
@@ -341,6 +471,23 @@ type DataPoint struct {
 	// Only one of integer and floating point fields will be populated,
 	// depending on the format enum value within data source's type field.
 	Value []*Value `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ComputationTimeMillis") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s DataPoint) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DataSource: Definition of a unique source of sensor data. Data
@@ -430,6 +577,22 @@ type DataSource struct {
 	//   "derived"
 	//   "raw"
 	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Application") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s DataSource) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DataType: See:
@@ -441,6 +604,22 @@ type DataType struct {
 	// Name: Each data type has a unique, namespaced, name. All data types
 	// in the com.google namespace are shared as part of the platform.
 	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s DataType) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // DataTypeField: In case of multi-dimensional data (such as an
@@ -470,6 +649,22 @@ type DataTypeField struct {
 	Name string `json:"name,omitempty"`
 
 	Optional bool `json:"optional,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Format") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s DataTypeField) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Dataset: A dataset represents a projection container for data points.
@@ -505,6 +700,22 @@ type Dataset struct {
 	// dataset or retrieving a dataset that is too large to include in a
 	// single response.
 	Point []*DataPoint `json:"point,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Dataset) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Device: Representation of an integrated device (such as a phone or a
@@ -547,11 +758,43 @@ type Device struct {
 
 	// Version: Version string for the device hardware/software.
 	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Manufacturer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Device) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type ListDataSourcesResponse struct {
 	// DataSource: A previously created data source.
 	DataSource []*DataSource `json:"dataSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ListDataSourcesResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type ListSessionsResponse struct {
@@ -568,6 +811,22 @@ type ListSessionsResponse struct {
 	// Session: Sessions with an end time that is between startTime and
 	// endTime of the request.
 	Session []*Session `json:"session,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeletedSession") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ListSessionsResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // MapValue: Holder object for the value of an entry in a map field of a
@@ -578,6 +837,22 @@ type ListSessionsResponse struct {
 type MapValue struct {
 	// FpVal: Floating point value.
 	FpVal float64 `json:"fpVal,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FpVal") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s MapValue) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Session: Sessions contain metadata, such as a user-friendly name and
@@ -616,6 +891,22 @@ type Session struct {
 	// StartTimeMillis: A start time, in milliseconds since epoch,
 	// inclusive.
 	StartTimeMillis int64 `json:"startTimeMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveTimeMillis") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Session) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Value: Holder object for the value of a single field in a data
@@ -643,12 +934,44 @@ type Value struct {
 	// set. Strings should be kept small whenever possible. Data streams
 	// with large string values and high data frequency may be down sampled.
 	StringVal string `json:"stringVal,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FpVal") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Value) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type ValueMapValEntry struct {
 	Key string `json:"key,omitempty"`
 
 	Value *MapValue `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ValueMapValEntry) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "fitness.users.dataSources.create":

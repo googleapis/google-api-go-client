@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -230,6 +231,22 @@ type Cluster struct {
 	// Zone: [Output only] The name of the Google Compute Engine
 	// [zone](/compute/docs/zones#available) in which the cluster resides.
 	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterIpv4Cidr") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Cluster) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ClusterUpdate: ClusterUpdate describes an update to the cluster.
@@ -238,6 +255,22 @@ type ClusterUpdate struct {
 	// (typically an upgrade). Use "-" to upgrade to the latest version
 	// supported by the server.
 	DesiredNodeVersion string `json:"desiredNodeVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DesiredNodeVersion")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ClusterUpdate) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // CreateClusterRequest: CreateClusterRequest creates a cluster.
@@ -245,6 +278,22 @@ type CreateClusterRequest struct {
 	// Cluster: A [cluster
 	// resource](/container-engine/reference/rest/v1/projects.zones.clusters)
 	Cluster *Cluster `json:"cluster,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s CreateClusterRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ListClustersResponse: ListClustersResponse is the result of
@@ -253,6 +302,22 @@ type ListClustersResponse struct {
 	// Clusters: A list of clusters in the project in the specified zone, or
 	// across all ones.
 	Clusters []*Cluster `json:"clusters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Clusters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ListClustersResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ListOperationsResponse: ListOperationsResponse is the result of
@@ -261,6 +326,22 @@ type ListOperationsResponse struct {
 	// Operations: A list of operations in the project in the specified
 	// zone.
 	Operations []*Operation `json:"operations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // MasterAuth: The authentication information for accessing the master
@@ -287,6 +368,22 @@ type MasterAuth struct {
 	// Username: The username to use for HTTP basic authentication when
 	// accessing the Kubernetes master endpoint.
 	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientCertificate")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s MasterAuth) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // NodeConfig: Per-node parameters.
@@ -309,6 +406,22 @@ type NodeConfig struct {
 	// `https://www.googleapis.com/auth/devstorage.read_only` is required
 	// for communicating with *gcr.io*. If unspecified, no scopes are added.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s NodeConfig) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Operation: Defines the operation resource. All fields are output
@@ -351,6 +464,22 @@ type Operation struct {
 	// [zone](/compute/docs/zones#available) in which the operation is
 	// taking place.
 	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Operation) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ServerConfig: Container Engine Server configuration.
@@ -360,12 +489,45 @@ type ServerConfig struct {
 
 	// ValidNodeVersions: List of valid node upgrade target versions.
 	ValidNodeVersions []string `json:"validNodeVersions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultClusterVersion") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s ServerConfig) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // UpdateClusterRequest: UpdateClusterRequest updates a cluster.
 type UpdateClusterRequest struct {
 	// Update: A description of the update.
 	Update *ClusterUpdate `json:"update,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Update") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s UpdateClusterRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "container.projects.zones.getServerconfig":

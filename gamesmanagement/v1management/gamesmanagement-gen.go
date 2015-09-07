@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -177,6 +178,22 @@ type AchievementResetAllResponse struct {
 
 	// Results: The achievement reset results.
 	Results []*AchievementResetResponse `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AchievementResetAllResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // AchievementResetMultipleForAllRequest: This is a JSON template for
@@ -189,6 +206,22 @@ type AchievementResetMultipleForAllRequest struct {
 	// the fixed string
 	// gamesManagement#achievementResetMultipleForAllRequest.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AchievementIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AchievementResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // AchievementResetResponse: This is a JSON template for an achievement
@@ -213,6 +246,22 @@ type AchievementResetResponse struct {
 	// UpdateOccurred: Flag to indicate if the requested update actually
 	// occurred.
 	UpdateOccurred bool `json:"updateOccurred,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AchievementResetResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // EventsResetMultipleForAllRequest: This is a JSON template for
@@ -224,6 +273,22 @@ type EventsResetMultipleForAllRequest struct {
 	// Kind: Uniquely identifies the type of this resource. Value is always
 	// the fixed string gamesManagement#eventsResetMultipleForAllRequest.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s EventsResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // GamesPlayedResource: This is a JSON template for metadata about a
@@ -236,6 +301,22 @@ type GamesPlayedResource struct {
 	// TimeMillis: The last time the player played the game in milliseconds
 	// since the epoch in UTC.
 	TimeMillis int64 `json:"timeMillis,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoMatched") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s GamesPlayedResource) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // GamesPlayerExperienceInfoResource: This is a JSON template for 1P/3P
@@ -255,6 +336,23 @@ type GamesPlayerExperienceInfoResource struct {
 	// NextLevel: The next level of the player. If the current level is the
 	// maximum level, this should be same as the current level.
 	NextLevel *GamesPlayerLevelResource `json:"nextLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CurrentExperiencePoints") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string
+}
+
+func (s GamesPlayerExperienceInfoResource) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // GamesPlayerLevelResource: This is a JSON template for 1P/3P metadata
@@ -268,6 +366,22 @@ type GamesPlayerLevelResource struct {
 
 	// MinExperiencePoints: The minimum experience points for this level.
 	MinExperiencePoints int64 `json:"minExperiencePoints,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Level") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s GamesPlayerLevelResource) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // HiddenPlayer: This is a JSON template for the HiddenPlayer resource.
@@ -281,6 +395,22 @@ type HiddenPlayer struct {
 
 	// Player: The player information.
 	Player *Player `json:"player,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HiddenTimeMillis") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s HiddenPlayer) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // HiddenPlayerList: This is a JSON template for a list of hidden
@@ -295,6 +425,22 @@ type HiddenPlayerList struct {
 
 	// NextPageToken: The pagination token for the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s HiddenPlayerList) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Player: This is a JSON template for a Player resource.
@@ -328,6 +474,22 @@ type Player struct {
 
 	// Title: The player's title rewarded for their game activities.
 	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvatarImageUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Player) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // PlayerName: An object representation of the individual components of
@@ -340,6 +502,22 @@ type PlayerName struct {
 	// GivenName: The given name of this player. In some places, this is
 	// known as the first name.
 	GivenName string `json:"givenName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FamilyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s PlayerName) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // PlayerScoreResetAllResponse: This is a JSON template for a list of
@@ -351,6 +529,22 @@ type PlayerScoreResetAllResponse struct {
 
 	// Results: The leaderboard reset results.
 	Results []*PlayerScoreResetResponse `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s PlayerScoreResetAllResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // PlayerScoreResetResponse: This is a JSON template for a list of reset
@@ -370,6 +564,22 @@ type PlayerScoreResetResponse struct {
 	// - "WEEKLY" - The score is a weekly score.
 	// - "DAILY" - The score is a daily score.
 	ResetScoreTimeSpans []string `json:"resetScoreTimeSpans,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefinitionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s PlayerScoreResetResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // QuestsResetMultipleForAllRequest: This is a JSON template for
@@ -381,6 +591,22 @@ type QuestsResetMultipleForAllRequest struct {
 
 	// QuestIds: The IDs of quests to reset.
 	QuestIds []string `json:"quest_ids,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s QuestsResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ScoresResetMultipleForAllRequest: This is a JSON template for
@@ -392,6 +618,22 @@ type ScoresResetMultipleForAllRequest struct {
 
 	// LeaderboardIds: The IDs of leaderboards to reset.
 	LeaderboardIds []string `json:"leaderboard_ids,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ScoresResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "gamesManagement.achievements.reset":

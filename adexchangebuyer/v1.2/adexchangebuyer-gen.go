@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -125,6 +126,22 @@ type Account struct {
 	// NumberActiveCreatives: The number of creatives that this account
 	// inserted or bid with in the last 30 days.
 	NumberActiveCreatives int64 `json:"numberActiveCreatives,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BidderLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Account) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type AccountBidderLocation struct {
@@ -142,6 +159,22 @@ type AccountBidderLocation struct {
 
 	// Url: The URL to which the Ad Exchange will send bid requests.
 	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaximumQps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AccountBidderLocation) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // AccountsList: An account feed lists Ad Exchange buyer accounts that
@@ -153,6 +186,22 @@ type AccountsList struct {
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s AccountsList) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // Creative: A creative and its classification data.
@@ -248,6 +297,22 @@ type Creative struct {
 
 	// Width: Ad width.
 	Width int64 `json:"width,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HTMLSnippet") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Creative) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type CreativeCorrections struct {
@@ -256,6 +321,22 @@ type CreativeCorrections struct {
 
 	// Reason: The type of correction that was applied to the creative.
 	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s CreativeCorrections) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type CreativeDisapprovalReasons struct {
@@ -264,6 +345,22 @@ type CreativeDisapprovalReasons struct {
 
 	// Reason: The categorized reason for disapproval.
 	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s CreativeDisapprovalReasons) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // CreativeFilteringReasons: The filtering reasons for the creative.
@@ -275,6 +372,22 @@ type CreativeFilteringReasons struct {
 
 	// Reasons: The filtering reasons.
 	Reasons []*CreativeFilteringReasonsReasons `json:"reasons,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Date") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s CreativeFilteringReasons) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 type CreativeFilteringReasonsReasons struct {
@@ -286,6 +399,22 @@ type CreativeFilteringReasonsReasons struct {
 	// FilteringStatus: The filtering status code. Please refer to the
 	// creative-status-codes.txt file for different statuses.
 	FilteringStatus int64 `json:"filteringStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilteringCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s CreativeFilteringReasonsReasons) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // CreativesList: The creatives feed lists the active creatives for the
@@ -302,6 +431,22 @@ type CreativesList struct {
 	// retrieve the next page of results, set the next request's "pageToken"
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s CreativesList) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "adexchangebuyer.accounts.get":

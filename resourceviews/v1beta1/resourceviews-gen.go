@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -117,6 +118,22 @@ type Label struct {
 
 	// Value: Value of the label.
 	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s Label) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // RegionViewsAddResourcesRequest: The request to add resources to the
@@ -124,6 +141,22 @@ type Label struct {
 type RegionViewsAddResourcesRequest struct {
 	// Resources: The list of resources to be added.
 	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s RegionViewsAddResourcesRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // RegionViewsInsertResponse: The response to a resource view insert
@@ -131,6 +164,22 @@ type RegionViewsAddResourcesRequest struct {
 type RegionViewsInsertResponse struct {
 	// Resource: The resource view object inserted.
 	Resource *ResourceView `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s RegionViewsInsertResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // RegionViewsListResourcesResponse: The response to the list resource
@@ -141,6 +190,22 @@ type RegionViewsListResourcesResponse struct {
 
 	// NextPageToken: A token used for pagination.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Members") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s RegionViewsListResourcesResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // RegionViewsListResponse: The response to the list resource view
@@ -151,6 +216,22 @@ type RegionViewsListResponse struct {
 
 	// ResourceViews: The list of resource views that meet the criteria.
 	ResourceViews []*ResourceView `json:"resourceViews,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s RegionViewsListResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // RegionViewsRemoveResourcesRequest: The request to remove resources
@@ -158,6 +239,22 @@ type RegionViewsListResponse struct {
 type RegionViewsRemoveResourcesRequest struct {
 	// Resources: The list of resources to be removed.
 	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s RegionViewsRemoveResourcesRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ResourceView: The resource view object.
@@ -191,6 +288,22 @@ type ResourceView struct {
 
 	// SelfLink: [Output Only] A self-link to the resource view.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ResourceView) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ZoneViewsAddResourcesRequest: The request to add resources to the
@@ -198,12 +311,44 @@ type ResourceView struct {
 type ZoneViewsAddResourcesRequest struct {
 	// Resources: The list of resources to be added.
 	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ZoneViewsAddResourcesRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ZoneViewsInsertResponse: The response to an insert request.
 type ZoneViewsInsertResponse struct {
 	// Resource: The resource view object that has been inserted.
 	Resource *ResourceView `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ZoneViewsInsertResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ZoneViewsListResourcesResponse: The response to a list resource
@@ -214,6 +359,22 @@ type ZoneViewsListResourcesResponse struct {
 
 	// NextPageToken: A token used for pagination.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Members") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ZoneViewsListResourcesResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ZoneViewsListResponse: The response to a list request.
@@ -224,6 +385,22 @@ type ZoneViewsListResponse struct {
 	// ResourceViews: The result that contains all resource views that meet
 	// the criteria.
 	ResourceViews []*ResourceView `json:"resourceViews,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ZoneViewsListResponse) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // ZoneViewsRemoveResourcesRequest: The request to remove resources from
@@ -231,6 +408,22 @@ type ZoneViewsListResponse struct {
 type ZoneViewsRemoveResourcesRequest struct {
 	// Resources: The list of resources to be removed.
 	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string
+}
+
+func (s ZoneViewsRemoveResourcesRequest) MarshalJSON() ([]byte, error) {
+	dataMap, err := internal.SchemaToMap(s, s.ForceSendFields)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(dataMap)
 }
 
 // method id "resourceviews.regionViews.addresources":

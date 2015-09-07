@@ -379,7 +379,7 @@ type Property struct {
 	Indexed *bool `json:"indexed,omitempty"`
 
 	// IntegerValue: An integer value.
-	IntegerValue *int64 `json:"integerValue,omitempty,string"`
+	IntegerValue int64 `json:"integerValue,omitempty,string"`
 
 	// KeyValue: A key value.
 	KeyValue *Key `json:"keyValue,omitempty"`

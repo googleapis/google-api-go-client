@@ -144,7 +144,7 @@
     "numeric_nonempty_default_a":{
      "type": "string",
      "format": "int64",
-     "description": "\nNonempty default: yes\nUnfortunate default: yes",
+     "description": "\nNonempty default: yes\nUnfortunate default: yes\nstring encoded, so will not be represented as pointer.",
      "default": "1"
     },
     "numeric_nonempty_default_b":{

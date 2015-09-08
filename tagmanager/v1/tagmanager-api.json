@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/LbLzPv65qQp3dOE7QCbBe3EGElQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/N2n1iYnDyuh2rPS2JpjnBtCuGt0\"",
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",
  "canonicalName": "Tag Manager",
  "version": "v1",
- "revision": "20150730",
+ "revision": "20150831",
  "title": "Tag Manager API",
  "description": "API for accessing Tag Manager accounts and containers.",
  "ownerDomain": "google.com",
@@ -1089,6 +1089,20 @@
      "items": {
       "$ref": "SetupTag"
      }
+    },
+    "tagFiringOption": {
+     "type": "string",
+     "description": "Option to fire this tag.",
+     "enum": [
+      "oncePerEvent",
+      "oncePerLoad",
+      "unlimited"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
     },
     "tagId": {
      "type": "string",

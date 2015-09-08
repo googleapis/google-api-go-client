@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ORVtBcGWEB-nbtUzzP27Hw2wQdQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QdYDjcUqG0q-JcD5cct0JnvA9Ps\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1a",
  "name": "pubsub",
@@ -17,7 +17,7 @@
  "documentationLink": "https://cloud.google.com/pubsub/docs",
  "protocol": "rest",
  "baseUrl": "https://pubsub.googleapis.com/",
- "basePath": "",
+ "basePath": "/",
  "rootUrl": "https://pubsub.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

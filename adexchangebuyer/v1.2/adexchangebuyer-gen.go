@@ -205,6 +205,10 @@ type Creative struct {
 	// Height: Ad height.
 	Height int64 `json:"height,omitempty"`
 
+	// ImpressionTrackingUrl: The set of urls to be called to record an
+	// impression.
+	ImpressionTrackingUrl []string `json:"impressionTrackingUrl,omitempty"`
+
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
@@ -227,6 +231,10 @@ type Creative struct {
 	// VendorType: All vendor types for the ads that may be shown from this
 	// snippet.
 	VendorType []int64 `json:"vendorType,omitempty"`
+
+	// Version: The version for this creative. Read-only. This field should
+	// not be set in requests.
+	Version int64 `json:"version,omitempty"`
 
 	// VideoURL: The url to fetch a video ad. If set, HTMLSnippet should not
 	// be set.

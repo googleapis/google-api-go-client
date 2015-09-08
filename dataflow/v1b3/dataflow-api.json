@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/tjir0NSBUJPbjWGXQgblQTQtnAA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5KuD_AhxWtT--XElMYogfy5V-SU\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
  "version": "v1b3",
- "revision": "20150303",
+ "revision": "20150401",
  "title": "Google Dataflow API",
  "description": "Google Dataflow API.",
  "ownerDomain": "google.com",
@@ -17,7 +17,7 @@
  "documentationLink": "https://cloud.google.com/dataflow",
  "protocol": "rest",
  "baseUrl": "https://dataflow.googleapis.com/",
- "basePath": "",
+ "basePath": "/",
  "rootUrl": "https://dataflow.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
@@ -903,6 +903,26 @@
     "shufflePosition": {
      "type": "string",
      "description": "CloudPosition is a base64 encoded BatchShufflePosition (with FIXED sharding)."
+    },
+    "concatPosition": {
+     "$ref": "ConcatPosition",
+     "description": "CloudPosition is a concat position."
+    }
+   }
+  },
+  "ConcatPosition": {
+   "id": "ConcatPosition",
+   "type": "object",
+   "description": "A position that encapsulates an inner position and an index for the inner position. A ConcatPosition can be used by a reader of a source that encapsulates a set of other sources.",
+   "properties": {
+    "index": {
+     "type": "integer",
+     "description": "Index of the inner source.",
+     "format": "int32"
+    },
+    "position": {
+     "$ref": "Position",
+     "description": "Position within the inner source."
     }
    }
   },
@@ -1523,6 +1543,10 @@
     "name": {
      "type": "string",
      "description": "The user-provided name of this output."
+    },
+    "systemName": {
+     "type": "string",
+     "description": "System-defined name of this output. Unique across the workflow."
     },
     "codec": {
      "type": "object",

@@ -7305,15 +7305,6 @@ func (r *CommentThreadsService) Insert(part string, commentthread *CommentThread
 	return c
 }
 
-// ShareOnGooglePlus sets the optional parameter "shareOnGooglePlus":
-// The shareOnGooglePlus parameter indicates whether the top-level
-// comment and any replies that are made to that comment should also be
-// posted to the author's Google+ profile.
-func (c *CommentThreadsInsertCall) ShareOnGooglePlus(shareOnGooglePlus bool) *CommentThreadsInsertCall {
-	c.opt_["shareOnGooglePlus"] = shareOnGooglePlus
-	return c
-}
-
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7332,9 +7323,6 @@ func (c *CommentThreadsInsertCall) doRequest(alt string) (*http.Response, error)
 	params := make(url.Values)
 	params.Set("alt", alt)
 	params.Set("part", fmt.Sprintf("%v", c.part))
-	if v, ok := c.opt_["shareOnGooglePlus"]; ok {
-		params.Set("shareOnGooglePlus", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -7374,12 +7362,6 @@ func (c *CommentThreadsInsertCall) Do() (*CommentThread, error) {
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "shareOnGooglePlus": {
-	//       "default": "false",
-	//       "description": "The shareOnGooglePlus parameter indicates whether the top-level comment and any replies that are made to that comment should also be posted to the author's Google+ profile.",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "commentThreads",

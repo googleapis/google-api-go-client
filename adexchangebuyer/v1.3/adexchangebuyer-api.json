@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ekf6O2lwsP92coEGgGA2ge5cRGA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FAPpLW1Ujfy6AKjixZl25akuukg\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
- "revision": "20150520",
+ "revision": "20150822",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -389,6 +389,13 @@
       ]
      }
     },
+    "impressionTrackingUrl": {
+     "type": "array",
+     "description": "The set of urls to be called to record an impression.",
+     "items": {
+      "type": "string"
+     }
+    },
     "kind": {
      "type": "string",
      "description": "Resource type.",
@@ -429,6 +436,11 @@
       "type": "integer",
       "format": "int32"
      }
+    },
+    "version": {
+     "type": "integer",
+     "description": "The version for this creative. Read-only. This field should not be set in requests.",
+     "format": "int32"
     },
     "videoURL": {
      "type": "string",

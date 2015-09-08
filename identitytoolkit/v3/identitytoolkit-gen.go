@@ -612,6 +612,15 @@ type VerifyPasswordResponse struct {
 	// account identified by the federated ID.
 	LocalId string `json:"localId,omitempty"`
 
+	// OauthAccessToken: The OAuth2 access token.
+	OauthAccessToken string `json:"oauthAccessToken,omitempty"`
+
+	// OauthAuthorizationCode: The OAuth2 authorization code.
+	OauthAuthorizationCode string `json:"oauthAuthorizationCode,omitempty"`
+
+	// OauthExpireIn: The lifetime in seconds of the OAuth2 access token.
+	OauthExpireIn int64 `json:"oauthExpireIn,omitempty"`
+
 	// PhotoUrl: The URI of the user's photo at IdP
 	PhotoUrl string `json:"photoUrl,omitempty"`
 

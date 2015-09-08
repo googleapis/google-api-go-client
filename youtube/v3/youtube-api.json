@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/W5t9TOfEJ0i1qWNP9JX0Xv9x3ws\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/6OzqKvjjWBUG3GDeUDY3a5aInr4\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20150727",
+ "revision": "20150810",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -7106,12 +7106,6 @@
        "type": "string",
        "description": "The part parameter identifies the properties that the API response will include. Set the parameter value to snippet. The snippet part has a quota cost of 2 units.",
        "required": true,
-       "location": "query"
-      },
-      "shareOnGooglePlus": {
-       "type": "boolean",
-       "description": "The shareOnGooglePlus parameter indicates whether the top-level comment and any replies that are made to that comment should also be posted to the author's Google+ profile.",
-       "default": "false",
        "location": "query"
       }
      },

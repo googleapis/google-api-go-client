@@ -182,10 +182,11 @@ type Application struct {
 	Id string `json:"id,omitempty"`
 
 	// Location: The location from which the application will be run.
-	// Choices are "us" for United States and "eu" for European Union.
-	// Application instances will run out of data centers in the chosen
-	// location and all of the application's End User Content will be stored
-	// at rest in the chosen location. The default is "us".
+	// Choices are "us-central" for United States and "europe-west" for
+	// European Union. Application instances will run out of data centers in
+	// the chosen location and all of the application's End User Content
+	// will be stored at rest in the chosen location. The default is
+	// "us-central".
 	Location string `json:"location,omitempty"`
 
 	// Name: The full path to the application in the API. Example:
@@ -262,9 +263,6 @@ type ContainerInfo struct {
 	// tag or digest. e.g. gcr.io/my-project/image:tag or
 	// gcr.io/my-project/image@digest
 	Image string `json:"image,omitempty"`
-
-	// Sha256: The SHA256 hash of the image in hex.
-	Sha256 string `json:"sha256,omitempty"`
 }
 
 // CpuUtilization: Target scaling by CPU usage.
@@ -314,65 +312,6 @@ type ErrorHandler struct {
 
 	// StaticFile: Static file content to be served for this error.
 	StaticFile string `json:"staticFile,omitempty"`
-}
-
-// Field: Field represents a single field of a message type.
-type Field struct {
-	// Cardinality: The field cardinality, i.e. optional/required/repeated.
-	//
-	// Possible values:
-	//   "CARDINALITY_UNKNOWN"
-	//   "CARDINALITY_OPTIONAL"
-	//   "CARDINALITY_REQUIRED"
-	//   "CARDINALITY_REPEATED"
-	Cardinality string `json:"cardinality,omitempty"`
-
-	// JsonName: The JSON name for this field.
-	JsonName string `json:"jsonName,omitempty"`
-
-	// Kind: The field kind.
-	//
-	// Possible values:
-	//   "TYPE_UNKNOWN"
-	//   "TYPE_DOUBLE"
-	//   "TYPE_FLOAT"
-	//   "TYPE_INT64"
-	//   "TYPE_UINT64"
-	//   "TYPE_INT32"
-	//   "TYPE_FIXED64"
-	//   "TYPE_FIXED32"
-	//   "TYPE_BOOL"
-	//   "TYPE_STRING"
-	//   "TYPE_GROUP"
-	//   "TYPE_MESSAGE"
-	//   "TYPE_BYTES"
-	//   "TYPE_UINT32"
-	//   "TYPE_ENUM"
-	//   "TYPE_SFIXED32"
-	//   "TYPE_SFIXED64"
-	//   "TYPE_SINT32"
-	//   "TYPE_SINT64"
-	Kind string `json:"kind,omitempty"`
-
-	// Name: The field name.
-	Name string `json:"name,omitempty"`
-
-	// Number: The proto field number.
-	Number int64 `json:"number,omitempty"`
-
-	// OneofIndex: Index in Type.oneofs. Starts at 1. Zero means no oneof
-	// mapping.
-	OneofIndex int64 `json:"oneofIndex,omitempty"`
-
-	// Options: The proto options.
-	Options []*Option `json:"options,omitempty"`
-
-	// Packed: Whether to use alternative packed wire representation.
-	Packed bool `json:"packed,omitempty"`
-
-	// TypeUrl: The type URL (without the scheme) when the type is MESSAGE
-	// or ENUM, such as `type.googleapis.com/google.protobuf.Empty`.
-	TypeUrl string `json:"typeUrl,omitempty"`
 }
 
 // FileInfo: A single source file which is part of the application to be
@@ -504,7 +443,7 @@ type Network struct {
 	InstanceTag string `json:"instanceTag,omitempty"`
 
 	// Name: The Google Compute Engine network where the VMs will be
-	// created. If not specified, or empty, the network named 'default' will
+	// created. If not specified, or empty, the network named "default" will
 	// be used. (The short name should be specified, not the resource path.)
 	Name string `json:"name,omitempty"`
 }
@@ -513,8 +452,8 @@ type Network struct {
 // the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress. If true, the operation is completed and the `result` is
-	// available.
+	// progress. If true, the operation is completed, and either `error` or
+	// `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure.
@@ -558,24 +497,21 @@ type OperationMetadata1 struct {
 	// InsertTime: Timestamp that this operation was received. @OutputOnly
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// OperationType: The type of the operation, e.g. 'deployment'.
-	// @OutputOnly
+	// Method: API method name that initiated the operation. Example:
+	// "google.appengine.v1beta4.Version.CreateVersion". @OutputOnly
+	Method string `json:"method,omitempty"`
+
+	// OperationType: The type of the operation (deprecated, use method
+	// field instead). Example: "create_version". @OutputOnly
 	OperationType string `json:"operationType,omitempty"`
+
+	// Target: Resource that this operation is acting on. Example:
+	// "apps/myapp/modules/default". @OutputOnly
+	Target string `json:"target,omitempty"`
 
 	// User: The user who requested this operation. @OutputOnly
 	User string `json:"user,omitempty"`
 }
-
-// Option: Proto option attached to messages/fields/enums etc.
-type Option struct {
-	// Name: Proto option name.
-	Name string `json:"name,omitempty"`
-
-	// Value: Proto option value.
-	Value OptionValue `json:"value,omitempty"`
-}
-
-type OptionValue interface{}
 
 // Resources: Used to specify how many machine resources an app version
 // needs.
@@ -596,15 +532,6 @@ type ScriptHandler struct {
 	// ScriptPath: Specifies the path to the script from the application
 	// root directory.
 	ScriptPath string `json:"scriptPath,omitempty"`
-}
-
-// SourceContext: `SourceContext` represents information about the
-// source of a protobuf element, like the file in which it is defined.
-type SourceContext struct {
-	// FileName: The path-qualified name of the .proto file that contained
-	// the associated protobuf element. For example:
-	// "google/protobuf/source.proto".
-	FileName string `json:"fileName,omitempty"`
 }
 
 // SourceReference: A reference to a particular snapshot of the source
@@ -702,21 +629,21 @@ type StaticFilesHandler struct {
 	UploadPathRegex string `json:"uploadPathRegex,omitempty"`
 }
 
-// Status: The `Status` defines a logical error model that is suitable
-// for different programming environments, including REST APIs and RPC
-// APIs. It is used by [gRPC](https://github.com/grpc). The error model
-// is designed to be: - Simple to use and understand for most users. -
-// Flexible enough to meet unexpected needs. # Overview The `Status`
-// message contains 3 pieces of data: error code, error message, and
-// error details. The error code should be an enum value of
+// Status: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). The
+// error model is designed to be: - Simple to use and understand for
+// most users - Flexible enough to meet unexpected needs # Overview The
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. The error code should be an enum value of
 // [google.rpc.Code][google.rpc.Code], but it may accept additional
 // error codes if needed. The error message should be a developer-facing
 // English message that helps developers *understand* and *resolve* the
-// error. If a localized user-facing error message is needed, it can be
-// sent in the error details or localized by the client. The optional
-// error details may contain arbitrary information about the error.
-// There is a predefined set of error detail types in the package
-// `google.rpc` which can be used for common error conditions. #
+// error. If a localized user-facing error message is needed, put the
+// localized message in the error details or localize it in the client.
+// The optional error details may contain arbitrary information about
+// the error. There is a predefined set of error detail types in the
+// package `google.rpc` which can be used for common error conditions. #
 // Language mapping The `Status` message is the logical representation
 // of the error model, but it is not necessarily the actual wire format.
 // When the `Status` message is exposed in different client libraries
@@ -724,7 +651,7 @@ type StaticFilesHandler struct {
 // example, it will likely be mapped to some exceptions in Java, but
 // more likely mapped to some error codes in C. # Other uses The error
 // model and the `Status` message can be used in a variety of
-// environments - either with or without APIs - to provide consistent
+// environments, either with or without APIs, to provide a consistent
 // developer experience across different environments. Example uses of
 // this error model include: - Partial errors. If a service needs to
 // return partial errors to the client, it may embed the `Status` in the
@@ -792,32 +719,6 @@ type TrafficSplit struct {
 // sum to 1. Supports precision up to two decimal places for IP-based
 // splits and up to three decimal places for cookie-based splits.
 type TrafficSplitAllocations struct {
-}
-
-// Type: A light-weight descriptor for a proto message type.
-type Type struct {
-	// Fields: The list of fields.
-	Fields []*Field `json:"fields,omitempty"`
-
-	// Name: The fully qualified message name.
-	Name string `json:"name,omitempty"`
-
-	// Oneofs: The list of oneof definitions. The list of oneofs declared in
-	// this Type
-	Oneofs []string `json:"oneofs,omitempty"`
-
-	// Options: The proto options.
-	Options []*Option `json:"options,omitempty"`
-
-	// SourceContext: The source context.
-	SourceContext *SourceContext `json:"sourceContext,omitempty"`
-
-	// Syntax: The source syntax.
-	//
-	// Possible values:
-	//   "SYNTAX_PROTO2"
-	//   "SYNTAX_PROTO3"
-	Syntax string `json:"syntax,omitempty"`
 }
 
 // UrlDispatchRule: Rules to match an HTTP request and dispatch that
@@ -930,6 +831,11 @@ type Version struct {
 	// BetaSettings: Beta settings supplied to the application via metadata.
 	BetaSettings map[string]string `json:"betaSettings,omitempty"`
 
+	// CreationTime: Creation time of this version. This will be between the
+	// start and end times of the operation that creates this version.
+	// @OutputOnly
+	CreationTime string `json:"creationTime,omitempty"`
+
 	// DefaultExpiration: The length of time a static file served by a
 	// static file handler ought to be cached by web proxies and browsers,
 	// if the handler does not specify its own expiration. Only returned in
@@ -937,10 +843,18 @@ type Version struct {
 	// requests; once created, is immutable.
 	DefaultExpiration string `json:"defaultExpiration,omitempty"`
 
+	// Deployer: The email address of the user who created this version.
+	// @OutputOnly
+	Deployer string `json:"deployer,omitempty"`
+
 	// Deployment: Code and application artifacts that make up this version.
 	// Only returned in `GET` requests if `view=FULL` is set. May only be
 	// set on create requests; once created, is immutable.
 	Deployment *Deployment `json:"deployment,omitempty"`
+
+	// Env: The App Engine execution environment to use for this version.
+	// Default: "1"
+	Env string `json:"env,omitempty"`
 
 	// EnvVariables: Environment variables made available to the
 	// application. Only returned in `GET` requests if `view=FULL` is set.
@@ -967,7 +881,9 @@ type Version struct {
 	HealthCheck *HealthCheck `json:"healthCheck,omitempty"`
 
 	// Id: The relative name/path of the Version within the module. Example:
-	// "v1"
+	// "v1". Version specifiers can contain lowercase letters, digits, and
+	// hyphens. It cannot begin with the prefix `ah-` and the names
+	// `default` and `latest` are reserved and cannot be used.
 	Id string `json:"id,omitempty"`
 
 	// InboundServices: Before an application can receive email or XMPP
@@ -992,7 +908,7 @@ type Version struct {
 	InboundServices []string `json:"inboundServices,omitempty"`
 
 	// InstanceClass: The frontend instance class to use to run this app.
-	// Valid values are `[F1, F2, F4, F4_1G]`.
+	// Valid values are `[F1, F2, F4, F4_1G]`. Default: "F1"
 	InstanceClass string `json:"instanceClass,omitempty"`
 
 	// Libraries: Configuration for Python runtime third-party libraries
@@ -1026,11 +942,24 @@ type Version struct {
 	// etc.
 	Runtime string `json:"runtime,omitempty"`
 
+	// ServingStatus: The current serving status of this version. Only
+	// `SERVING` versions will have instances created or billed for. If this
+	// field is unset when a version is created, `SERVING` status will be
+	// assumed. It is an error to explicitly set this field to
+	// `SERVING_STATUS_UNSPECIFIED`.
+	//
+	// Possible values:
+	//   "SERVING_STATUS_UNSPECIFIED"
+	//   "SERVING"
+	//   "STOPPED"
+	ServingStatus string `json:"servingStatus,omitempty"`
+
 	// Threadsafe: If true, multiple requests can be dispatched to the app
 	// at once.
 	Threadsafe bool `json:"threadsafe,omitempty"`
 
-	// Vm: Whether to deploy this app in a VM container.
+	// Vm: Whether to deploy this app in a VM container (deprecated, use
+	// "env":"2").
 	Vm bool `json:"vm,omitempty"`
 }
 
@@ -1290,7 +1219,7 @@ func (c *AppsModulesGetCall) Do() (*Module, error) {
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"/apps/myapp/modules/default\".",
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp/modules/default\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1396,7 +1325,7 @@ func (c *AppsModulesListCall) Do() (*ListModulesResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "appsId": {
-	//       "description": "Part of `name`. Name of the resource requested. For example: \"/apps/myapp\".",
+	//       "description": "Part of `name`. Name of the resource requested. For example: \"apps/myapp\".",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2135,21 +2064,21 @@ func (r *AppsOperationsService) List(appsId string) *AppsOperationsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard List
+// Filter sets the optional parameter "filter": The standard list
 // filter.
 func (c *AppsOperationsListCall) Filter(filter string) *AppsOperationsListCall {
 	c.opt_["filter"] = filter
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard List
+// PageSize sets the optional parameter "pageSize": The standard list
 // page size.
 func (c *AppsOperationsListCall) PageSize(pageSize int64) *AppsOperationsListCall {
 	c.opt_["pageSize"] = pageSize
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard List
+// PageToken sets the optional parameter "pageToken": The standard list
 // page token.
 func (c *AppsOperationsListCall) PageToken(pageToken string) *AppsOperationsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -2219,18 +2148,18 @@ func (c *AppsOperationsListCall) Do() (*ListOperationsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "The standard List filter.",
+	//       "description": "The standard list filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard List page size.",
+	//       "description": "The standard list page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard List page token.",
+	//       "description": "The standard list page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -1169,10 +1169,10 @@ type Experiment struct {
 	// creating an experiment.
 	Status string `json:"status,omitempty"`
 
-	// TrafficCoverage: A floating-point number between 0 and 1. Specifies
-	// the fraction of the traffic that participates in the experiment. Can
-	// be changed for a running experiment. This field may not be changed
-	// for an experiments whose status is ENDED.
+	// TrafficCoverage: A floating-point number in (0, 1]. Specifies the
+	// fraction of the traffic that participates in the experiment. Can be
+	// changed for a running experiment. This field may not be changed for
+	// an experiments whose status is ENDED.
 	TrafficCoverage float64 `json:"trafficCoverage,omitempty"`
 
 	// Updated: Time the experiment was last modified. This field is
@@ -1189,9 +1189,9 @@ type Experiment struct {
 	// web property ID is of the form UA-XXXXX-YY. This field is read-only.
 	WebPropertyId string `json:"webPropertyId,omitempty"`
 
-	// WinnerConfidenceLevel: A floating-point number between 0 and 1.
-	// Specifies the necessary confidence level to choose a winner. This
-	// field may not be changed for an experiments whose status is ENDED.
+	// WinnerConfidenceLevel: A floating-point number in (0, 1). Specifies
+	// the necessary confidence level to choose a winner. This field may not
+	// be changed for an experiments whose status is ENDED.
 	WinnerConfidenceLevel float64 `json:"winnerConfidenceLevel,omitempty"`
 
 	// WinnerFound: Boolean specifying whether a winner has been found for
@@ -1525,12 +1525,9 @@ type FilterExpression struct {
 	Kind string `json:"kind,omitempty"`
 
 	// MatchType: Match type for this filter. Possible values are
-	// BEGINS_WITH, EQUAL, ENDS_WITH, CONTAINS, MATCHES. Include and Exclude
-	// filters can use any match type. Match type is not applicable to Upper
-	// case and Lower case filters. Search and Replace expressions in the
-	// Search and Replace filter and all filter expressions in the Advanced
-	// filter default to MATCHES. User should not set match type for those
-	// filters.
+	// BEGINS_WITH, EQUAL, ENDS_WITH, CONTAINS, or MATCHES. GEO_DOMAIN,
+	// GEO_IP_ADDRESS, PAGE_REQUEST_URI, or PAGE_HOSTNAME filters can use
+	// any match type; all other filters must use MATCHES.
 	MatchType string `json:"matchType,omitempty"`
 }
 
@@ -2106,8 +2103,8 @@ type Profile struct {
 	// Created: Time this view (profile) was created.
 	Created string `json:"created,omitempty"`
 
-	// Currency: The currency type associated with this view (profile). The
-	// supported values are:
+	// Currency: The currency type associated with this view (profile),
+	// defaults to USD. The supported values are:
 	// ARS, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR,
 	// INR, JPY, KRW, LTL, MXN, NOK, NZD, PHP, PLN, RUB, SEK, THB, TRY, TWD,
 	// USD, VND, ZAR

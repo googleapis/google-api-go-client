@@ -55,7 +55,16 @@ func New(client *http.Client) (*Service, error) {
 	s.Accounts = NewAccountsService(s)
 	s.BillingInfo = NewBillingInfoService(s)
 	s.Budget = NewBudgetService(s)
+	s.Clientaccess = NewClientaccessService(s)
 	s.Creatives = NewCreativesService(s)
+	s.Deals = NewDealsService(s)
+	s.Marketplacedeals = NewMarketplacedealsService(s)
+	s.Marketplacenotes = NewMarketplacenotesService(s)
+	s.Marketplaceoffers = NewMarketplaceoffersService(s)
+	s.Marketplaceorders = NewMarketplaceordersService(s)
+	s.Negotiationrounds = NewNegotiationroundsService(s)
+	s.Negotiations = NewNegotiationsService(s)
+	s.Offers = NewOffersService(s)
 	s.PerformanceReport = NewPerformanceReportService(s)
 	s.PretargetingConfig = NewPretargetingConfigService(s)
 	return s, nil
@@ -72,7 +81,25 @@ type Service struct {
 
 	Budget *BudgetService
 
+	Clientaccess *ClientaccessService
+
 	Creatives *CreativesService
+
+	Deals *DealsService
+
+	Marketplacedeals *MarketplacedealsService
+
+	Marketplacenotes *MarketplacenotesService
+
+	Marketplaceoffers *MarketplaceoffersService
+
+	Marketplaceorders *MarketplaceordersService
+
+	Negotiationrounds *NegotiationroundsService
+
+	Negotiations *NegotiationsService
+
+	Offers *OffersService
 
 	PerformanceReport *PerformanceReportService
 
@@ -113,12 +140,93 @@ type BudgetService struct {
 	s *Service
 }
 
+func NewClientaccessService(s *Service) *ClientaccessService {
+	rs := &ClientaccessService{s: s}
+	return rs
+}
+
+type ClientaccessService struct {
+	s *Service
+}
+
 func NewCreativesService(s *Service) *CreativesService {
 	rs := &CreativesService{s: s}
 	return rs
 }
 
 type CreativesService struct {
+	s *Service
+}
+
+func NewDealsService(s *Service) *DealsService {
+	rs := &DealsService{s: s}
+	return rs
+}
+
+type DealsService struct {
+	s *Service
+}
+
+func NewMarketplacedealsService(s *Service) *MarketplacedealsService {
+	rs := &MarketplacedealsService{s: s}
+	return rs
+}
+
+type MarketplacedealsService struct {
+	s *Service
+}
+
+func NewMarketplacenotesService(s *Service) *MarketplacenotesService {
+	rs := &MarketplacenotesService{s: s}
+	return rs
+}
+
+type MarketplacenotesService struct {
+	s *Service
+}
+
+func NewMarketplaceoffersService(s *Service) *MarketplaceoffersService {
+	rs := &MarketplaceoffersService{s: s}
+	return rs
+}
+
+type MarketplaceoffersService struct {
+	s *Service
+}
+
+func NewMarketplaceordersService(s *Service) *MarketplaceordersService {
+	rs := &MarketplaceordersService{s: s}
+	return rs
+}
+
+type MarketplaceordersService struct {
+	s *Service
+}
+
+func NewNegotiationroundsService(s *Service) *NegotiationroundsService {
+	rs := &NegotiationroundsService{s: s}
+	return rs
+}
+
+type NegotiationroundsService struct {
+	s *Service
+}
+
+func NewNegotiationsService(s *Service) *NegotiationsService {
+	rs := &NegotiationsService{s: s}
+	return rs
+}
+
+type NegotiationsService struct {
+	s *Service
+}
+
+func NewOffersService(s *Service) *OffersService {
+	rs := &OffersService{s: s}
+	return rs
+}
+
+type OffersService struct {
 	s *Service
 }
 
@@ -203,6 +311,75 @@ type AccountsList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+type AdSize struct {
+	Height int64 `json:"height,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
+}
+
+type AdSlotDto struct {
+	ChannelCode string `json:"channelCode,omitempty"`
+
+	ChannelId int64 `json:"channelId,omitempty"`
+
+	Description string `json:"description,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	Size string `json:"size,omitempty"`
+
+	WebPropertyId int64 `json:"webPropertyId,omitempty"`
+}
+
+type AddOrderDealsRequest struct {
+	// Deals: The list of deals to add
+	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+
+	// OrderRevisionNumber: The last known order revision number.
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+
+	// UpdateAction: Indicates an optional action to take on the order
+	UpdateAction string `json:"updateAction,omitempty"`
+}
+
+type AddOrderDealsResponse struct {
+	// Deals: List of deals added (in the same order as passed in the
+	// request)
+	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+
+	// OrderRevisionNumber: The updated revision number for the order.
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+}
+
+type AddOrderNotesRequest struct {
+	// Notes: The list of notes to add.
+	Notes []*MarketplaceNote `json:"notes,omitempty"`
+}
+
+type AddOrderNotesResponse struct {
+	Notes []*MarketplaceNote `json:"notes,omitempty"`
+}
+
+type AdvertiserDto struct {
+	Brands []*BrandDto `json:"brands,omitempty"`
+
+	Id int64 `json:"id,omitempty,string"`
+
+	Name string `json:"name,omitempty"`
+
+	Status string `json:"status,omitempty"`
+}
+
+type AudienceSegment struct {
+	Description string `json:"description,omitempty"`
+
+	Id int64 `json:"id,omitempty,string"`
+
+	Name string `json:"name,omitempty"`
+
+	NumCookies int64 `json:"numCookies,omitempty,string"`
+}
+
 // BillingInfo: The configuration data for an Ad Exchange billing info.
 type BillingInfo struct {
 	// AccountId: Account id.
@@ -231,6 +408,14 @@ type BillingInfoList struct {
 	Kind string `json:"kind,omitempty"`
 }
 
+type BrandDto struct {
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	Id int64 `json:"id,omitempty,string"`
+
+	Name string `json:"name,omitempty"`
+}
+
 // Budget: The configuration data for Ad Exchange RTB - Budget API.
 type Budget struct {
 	// AccountId: The id of the account. This is required for get and update
@@ -254,6 +439,51 @@ type Budget struct {
 
 	// Kind: The kind of the resource, i.e. "adexchangebuyer#budget".
 	Kind string `json:"kind,omitempty"`
+}
+
+type Buyer struct {
+	// AccountId: Adx account id of the buyer.
+	AccountId string `json:"accountId,omitempty"`
+}
+
+type BuyerDto struct {
+	AccountId int64 `json:"accountId,omitempty"`
+
+	CustomerId int64 `json:"customerId,omitempty"`
+
+	DisplayName string `json:"displayName,omitempty"`
+
+	EnabledForInterestTargetingDeals bool `json:"enabledForInterestTargetingDeals,omitempty"`
+
+	EnabledForPreferredDeals bool `json:"enabledForPreferredDeals,omitempty"`
+
+	Id int64 `json:"id,omitempty"`
+
+	SponsorAccountId int64 `json:"sponsorAccountId,omitempty"`
+}
+
+type ClientAccessCapabilities struct {
+	Capabilities []int64 `json:"capabilities,omitempty"`
+
+	ClientAccountId int64 `json:"clientAccountId,omitempty,string"`
+}
+
+type ContactInformation struct {
+	// Email: Email address of the contact.
+	Email string `json:"email,omitempty"`
+
+	// Name: The name of the contact.
+	Name string `json:"name,omitempty"`
+}
+
+type CreateOrdersRequest struct {
+	// Orders: The list of orders to create.
+	Orders []*MarketplaceOrder `json:"orders,omitempty"`
+}
+
+type CreateOrdersResponse struct {
+	// Orders: The list of orders successfully created.
+	Orders []*MarketplaceOrder `json:"orders,omitempty"`
 }
 
 // Creative: A creative and its classification data.
@@ -306,6 +536,10 @@ type Creative struct {
 	// Height: Ad height.
 	Height int64 `json:"height,omitempty"`
 
+	// ImpressionTrackingUrl: The set of urls to be called to record an
+	// impression.
+	ImpressionTrackingUrl []string `json:"impressionTrackingUrl,omitempty"`
+
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
@@ -339,6 +573,10 @@ type Creative struct {
 	// VendorType: All vendor types for the ads that may be shown from this
 	// snippet.
 	VendorType []int64 `json:"vendorType,omitempty"`
+
+	// Version: The version for this creative. Read-only. This field should
+	// not be set in requests.
+	Version int64 `json:"version,omitempty"`
 
 	// VideoURL: The url to fetch a video ad. If set, HTMLSnippet should not
 	// be set.
@@ -435,6 +673,711 @@ type CreativesList struct {
 	// retrieve the next page of results, set the next request's "pageToken"
 	// value to this.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+type DateTime struct {
+	Day int64 `json:"day,omitempty"`
+
+	Hour int64 `json:"hour,omitempty"`
+
+	Minute int64 `json:"minute,omitempty"`
+
+	Month int64 `json:"month,omitempty"`
+
+	Second int64 `json:"second,omitempty"`
+
+	TimeZoneId string `json:"timeZoneId,omitempty"`
+
+	Year int64 `json:"year,omitempty"`
+}
+
+type DealPartyDto struct {
+	Buyer *BuyerDto `json:"buyer,omitempty"`
+
+	BuyerSellerRole string `json:"buyerSellerRole,omitempty"`
+
+	CustomerId int64 `json:"customerId,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	WebProperty *WebPropertyDto `json:"webProperty,omitempty"`
+}
+
+type DealTerms struct {
+	// Description: Description for the proposed terms of the deal.
+	Description string `json:"description,omitempty"`
+
+	// GuaranteedFixedPriceTerms: The terms for guaranteed fixed price
+	// deals.
+	GuaranteedFixedPriceTerms *DealTermsGuaranteedFixedPriceTerms `json:"guaranteedFixedPriceTerms,omitempty"`
+
+	// NonGuaranteedAuctionTerms: The terms for non-guaranteed auction
+	// deals.
+	NonGuaranteedAuctionTerms *DealTermsNonGuaranteedAuctionTerms `json:"nonGuaranteedAuctionTerms,omitempty"`
+
+	// NonGuaranteedFixedPriceTerms: The terms for non-guaranteed fixed
+	// price deals.
+	NonGuaranteedFixedPriceTerms *DealTermsNonGuaranteedFixedPriceTerms `json:"nonGuaranteedFixedPriceTerms,omitempty"`
+}
+
+type DealTermsGuaranteedFixedPriceTerms struct {
+	// FixedPrices: Fixed price for the specified buyer.
+	FixedPrices []*PricePerBuyer `json:"fixedPrices,omitempty"`
+
+	// GuaranteedImpressions: Guaranteed impressions as a percentage. This
+	// is the percentage of guaranteed looks that the buyer is guaranteeing
+	// to buy.
+	GuaranteedImpressions int64 `json:"guaranteedImpressions,omitempty,string"`
+
+	// GuaranteedLooks: Count of guaranteed looks. Required for deal,
+	// optional for offer.
+	GuaranteedLooks int64 `json:"guaranteedLooks,omitempty,string"`
+}
+
+type DealTermsNonGuaranteedAuctionTerms struct {
+	// PrivateAuctionId: Id of the corresponding private auction.
+	PrivateAuctionId string `json:"privateAuctionId,omitempty"`
+
+	// ReservePricePerBuyers: Reserve price for the specified buyer.
+	ReservePricePerBuyers []*PricePerBuyer `json:"reservePricePerBuyers,omitempty"`
+}
+
+type DealTermsNonGuaranteedFixedPriceTerms struct {
+	// FixedPrices: Fixed price for the specified buyer.
+	FixedPrices []*PricePerBuyer `json:"fixedPrices,omitempty"`
+}
+
+type DeleteOrderDealsRequest struct {
+	// DealIds: List of deals to delete for a given order
+	DealIds []string `json:"dealIds,omitempty"`
+
+	// OrderRevisionNumber: The last known order revision number.
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+
+	UpdateAction string `json:"updateAction,omitempty"`
+}
+
+type DeleteOrderDealsResponse struct {
+	// Deals: List of deals deleted (in the same order as passed in the
+	// request)
+	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+
+	// OrderRevisionNumber: The updated revision number for the order.
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+}
+
+type DeliveryControl struct {
+	DeliveryRateType string `json:"deliveryRateType,omitempty"`
+
+	FrequencyCaps []*DeliveryControlFrequencyCap `json:"frequencyCaps,omitempty"`
+}
+
+type DeliveryControlFrequencyCap struct {
+	MaxImpressions int64 `json:"maxImpressions,omitempty"`
+
+	NumTimeUnits int64 `json:"numTimeUnits,omitempty"`
+
+	TimeUnitType string `json:"timeUnitType,omitempty"`
+}
+
+type EditAllOrderDealsRequest struct {
+	// Deals: List of deals to edit. Service may perform 3 different
+	// operations based on comparison of deals in this list vs deals already
+	// persisted in database: 1. Add new deal to order If a deal in this
+	// list does not exist in the order, the service will create a new deal
+	// and add it to the order. Validation will follow AddOrderDealsRequest.
+	// 2. Update existing deal in the order If a deal in this list already
+	// exist in the order, the service will update that existing deal to
+	// this new deal in the request. Validation will follow
+	// UpdateOrderDealsRequest. 3. Delete deals from the order (just need
+	// the id) If a existing deal in the order is not present in this list,
+	// the service will delete that deal from the order. Validation will
+	// follow DeleteOrderDealsRequest.
+	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+
+	// Order: If specified, also updates the order in the batch transaction.
+	// This is useful when the order and the deals need to be updated in one
+	// transaction.
+	Order *MarketplaceOrder `json:"order,omitempty"`
+
+	// OrderRevisionNumber: The last known revision number for the order.
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+
+	// UpdateAction: Indicates an optional action to take on the order
+	UpdateAction string `json:"updateAction,omitempty"`
+
+	// UpdateFinalizedView: True, if the finalized view of the deal should
+	// be updated.
+	UpdateFinalizedView bool `json:"updateFinalizedView,omitempty"`
+}
+
+type EditAllOrderDealsResponse struct {
+	// Deals: List of all deals in the order after edit.
+	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+}
+
+type EditHistoryDto struct {
+	CreatedByLoginName string `json:"createdByLoginName,omitempty"`
+
+	CreatedTimeStamp int64 `json:"createdTimeStamp,omitempty,string"`
+
+	LastUpdateTimeStamp int64 `json:"lastUpdateTimeStamp,omitempty,string"`
+
+	LastUpdatedByLoginName string `json:"lastUpdatedByLoginName,omitempty"`
+}
+
+type GetFinalizedNegotiationByExternalDealIdRequest struct {
+	IncludePrivateAuctions bool `json:"includePrivateAuctions,omitempty"`
+}
+
+type GetNegotiationByIdRequest struct {
+	IncludePrivateAuctions bool `json:"includePrivateAuctions,omitempty"`
+}
+
+type GetNegotiationsRequest struct {
+	Finalized bool `json:"finalized,omitempty"`
+
+	IncludePrivateAuctions bool `json:"includePrivateAuctions,omitempty"`
+
+	SinceTimestampMillis int64 `json:"sinceTimestampMillis,omitempty,string"`
+}
+
+type GetNegotiationsResponse struct {
+	Kind string `json:"kind,omitempty"`
+
+	Negotiations []*NegotiationDto `json:"negotiations,omitempty"`
+}
+
+type GetOffersResponse struct {
+	// Offers: The returned list of offers.
+	Offers []*MarketplaceOffer `json:"offers,omitempty"`
+}
+
+type GetOrderDealsResponse struct {
+	// Deals: List of deals for the order
+	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+}
+
+type GetOrderNotesResponse struct {
+	// Notes: The list of matching notes.
+	Notes []*MarketplaceNote `json:"notes,omitempty"`
+}
+
+type GetOrdersResponse struct {
+	// Orders: The list of matching orders.
+	Orders []*MarketplaceOrder `json:"orders,omitempty"`
+}
+
+type InventorySegmentTargeting struct {
+	NegativeAdSizes []*AdSize `json:"negativeAdSizes,omitempty"`
+
+	NegativeAdTypeSegments []string `json:"negativeAdTypeSegments,omitempty"`
+
+	NegativeAudienceSegments googleapi.Int64s `json:"negativeAudienceSegments,omitempty"`
+
+	NegativeDeviceCategories googleapi.Int64s `json:"negativeDeviceCategories,omitempty"`
+
+	NegativeIcmBrands googleapi.Int64s `json:"negativeIcmBrands,omitempty"`
+
+	NegativeIcmInterests googleapi.Int64s `json:"negativeIcmInterests,omitempty"`
+
+	NegativeInventorySlots []string `json:"negativeInventorySlots,omitempty"`
+
+	NegativeKeyValues []*RuleKeyValuePair `json:"negativeKeyValues,omitempty"`
+
+	NegativeLocations googleapi.Int64s `json:"negativeLocations,omitempty"`
+
+	NegativeMobileApps []string `json:"negativeMobileApps,omitempty"`
+
+	NegativeOperatingSystemVersions googleapi.Int64s `json:"negativeOperatingSystemVersions,omitempty"`
+
+	NegativeOperatingSystems googleapi.Int64s `json:"negativeOperatingSystems,omitempty"`
+
+	NegativeSiteUrls []string `json:"negativeSiteUrls,omitempty"`
+
+	NegativeSizes googleapi.Int64s `json:"negativeSizes,omitempty"`
+
+	NegativeVideoAdPositionSegments []string `json:"negativeVideoAdPositionSegments,omitempty"`
+
+	NegativeVideoDurationSegments googleapi.Int64s `json:"negativeVideoDurationSegments,omitempty"`
+
+	NegativeXfpAdSlots googleapi.Int64s `json:"negativeXfpAdSlots,omitempty"`
+
+	NegativeXfpPlacements googleapi.Int64s `json:"negativeXfpPlacements,omitempty"`
+
+	PositiveAdSizes []*AdSize `json:"positiveAdSizes,omitempty"`
+
+	PositiveAdTypeSegments []string `json:"positiveAdTypeSegments,omitempty"`
+
+	PositiveAudienceSegments googleapi.Int64s `json:"positiveAudienceSegments,omitempty"`
+
+	PositiveDeviceCategories googleapi.Int64s `json:"positiveDeviceCategories,omitempty"`
+
+	PositiveIcmBrands googleapi.Int64s `json:"positiveIcmBrands,omitempty"`
+
+	PositiveIcmInterests googleapi.Int64s `json:"positiveIcmInterests,omitempty"`
+
+	PositiveInventorySlots []string `json:"positiveInventorySlots,omitempty"`
+
+	PositiveKeyValues []*RuleKeyValuePair `json:"positiveKeyValues,omitempty"`
+
+	PositiveLocations googleapi.Int64s `json:"positiveLocations,omitempty"`
+
+	PositiveMobileApps []string `json:"positiveMobileApps,omitempty"`
+
+	PositiveOperatingSystemVersions googleapi.Int64s `json:"positiveOperatingSystemVersions,omitempty"`
+
+	PositiveOperatingSystems googleapi.Int64s `json:"positiveOperatingSystems,omitempty"`
+
+	PositiveSiteUrls []string `json:"positiveSiteUrls,omitempty"`
+
+	PositiveSizes googleapi.Int64s `json:"positiveSizes,omitempty"`
+
+	PositiveVideoAdPositionSegments []string `json:"positiveVideoAdPositionSegments,omitempty"`
+
+	PositiveVideoDurationSegments googleapi.Int64s `json:"positiveVideoDurationSegments,omitempty"`
+
+	PositiveXfpAdSlots googleapi.Int64s `json:"positiveXfpAdSlots,omitempty"`
+
+	PositiveXfpPlacements googleapi.Int64s `json:"positiveXfpPlacements,omitempty"`
+}
+
+type ListClientAccessCapabilitiesRequest struct {
+	SponsorAccountId int64 `json:"sponsorAccountId,omitempty,string"`
+}
+
+type ListClientAccessCapabilitiesResponse struct {
+	ClientAccessPermissions []*ClientAccessCapabilities `json:"clientAccessPermissions,omitempty"`
+}
+
+type ListOffersRequest struct {
+	SinceTimestampMillis int64 `json:"sinceTimestampMillis,omitempty,string"`
+}
+
+type ListOffersResponse struct {
+	Kind string `json:"kind,omitempty"`
+
+	Offers []*OfferDto `json:"offers,omitempty"`
+}
+
+// MarketplaceDeal: An order can contain multiple deals. A deal contains
+// the terms and targeting information that is used for serving.
+type MarketplaceDeal struct {
+	// BuyerPrivateData: Buyer private data (hidden from seller).
+	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
+
+	// CreationTimeMs: The time (ms since epoch) of the deal creation.
+	// (readonly)
+	CreationTimeMs int64 `json:"creationTimeMs,omitempty,string"`
+
+	// DealId: A unique deal=id for the deal (readonly).
+	DealId string `json:"dealId,omitempty"`
+
+	// DeliveryControl: The set of fields around delivery control that are
+	// interesting for a buyer to see but are non-negotiable. These are set
+	// by the publisher. This message is assigned an id of 100 since some
+	// day we would want to model this as a protobuf extension.
+	DeliveryControl *DeliveryControl `json:"deliveryControl,omitempty"`
+
+	// ExternalDealId: The external deal id assigned to this deal once the
+	// deal is finalized. This is the deal-id that shows up in
+	// serving/reporting etc. (readonly)
+	ExternalDealId string `json:"externalDealId,omitempty"`
+
+	// FlightEndTimeMs: Proposed flight end time of the deal (ms since
+	// epoch) This will generally be stored in a granularity of a second.
+	// (updatable)
+	FlightEndTimeMs int64 `json:"flightEndTimeMs,omitempty,string"`
+
+	// FlightStartTimeMs: Proposed flight start time of the deal (ms since
+	// epoch) This will generally be stored in a granularity of a second.
+	// (updatable)
+	FlightStartTimeMs int64 `json:"flightStartTimeMs,omitempty,string"`
+
+	// InventoryDescription: Description for the deal terms. (updatable)
+	InventoryDescription string `json:"inventoryDescription,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "adexchangebuyer#marketplaceDeal".
+	Kind string `json:"kind,omitempty"`
+
+	// LastUpdateTimeMs: The time (ms since epoch) when the deal was last
+	// updated. (readonly)
+	LastUpdateTimeMs int64 `json:"lastUpdateTimeMs,omitempty,string"`
+
+	// Name: The name of the deal. (updatable)
+	Name string `json:"name,omitempty"`
+
+	// OfferId: The offer-id from which this deal was created. (readonly,
+	// except on create)
+	OfferId string `json:"offerId,omitempty"`
+
+	// OfferRevisionNumber: The revision number of the offer that the deal
+	// was created from (readonly, except on create)
+	OfferRevisionNumber int64 `json:"offerRevisionNumber,omitempty,string"`
+
+	OrderId string `json:"orderId,omitempty"`
+
+	// SellerContacts: Optional Seller contact information for the deal
+	// (buyer-readonly)
+	SellerContacts []*ContactInformation `json:"sellerContacts,omitempty"`
+
+	// SharedTargetings: The shared targeting visible to buyers and sellers.
+	// (updatable)
+	SharedTargetings []*SharedTargeting `json:"sharedTargetings,omitempty"`
+
+	// SyndicationProduct: The syndication product associated with the deal.
+	// (readonly, except on create)
+	SyndicationProduct string `json:"syndicationProduct,omitempty"`
+
+	// Terms: The negotiable terms of the deal. (updatable)
+	Terms *DealTerms `json:"terms,omitempty"`
+}
+
+type MarketplaceDealParty struct {
+	// Buyer: The buyer/seller associated with the deal. One of buyer/seller
+	// is specified for a deal-party.
+	Buyer *Buyer `json:"buyer,omitempty"`
+
+	// Seller: The buyer/seller associated with the deal. One of
+	// buyer/seller is specified for a deal party.
+	Seller *Seller `json:"seller,omitempty"`
+}
+
+type MarketplaceLabel struct {
+	// AccountId: The accountId of the party that created the label.
+	AccountId string `json:"accountId,omitempty"`
+
+	// CreateTimeMs: The creation time (in ms since epoch) for the label.
+	CreateTimeMs int64 `json:"createTimeMs,omitempty,string"`
+
+	// DeprecatedMarketplaceDealParty: Information about the party that
+	// created the label.
+	DeprecatedMarketplaceDealParty *MarketplaceDealParty `json:"deprecatedMarketplaceDealParty,omitempty"`
+
+	// Label: The label to use.
+	Label string `json:"label,omitempty"`
+}
+
+// MarketplaceNote: An order is associated with a bunch of notes which
+// may optionally be associated with a deal and/or revision number.
+type MarketplaceNote struct {
+	// CreatorRole: The role of the person (buyer/seller) creating the note.
+	// (readonly)
+	CreatorRole string `json:"creatorRole,omitempty"`
+
+	// DealId: Notes can optionally be associated with a deal. (readonly,
+	// except on create)
+	DealId string `json:"dealId,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "adexchangebuyer#marketplaceNote".
+	Kind string `json:"kind,omitempty"`
+
+	// Note: The actual note to attach. (readonly, except on create)
+	Note string `json:"note,omitempty"`
+
+	// NoteId: The unique id for the note. (readonly)
+	NoteId string `json:"noteId,omitempty"`
+
+	// OrderId: The order_id that a note is attached to. (readonly)
+	OrderId string `json:"orderId,omitempty"`
+
+	// OrderRevisionNumber: If the note is associated with an order revision
+	// number, then store that here. (readonly, except on create)
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+
+	// TimestampMs: The timestamp (ms since epoch) that this note was
+	// created. (readonly)
+	TimestampMs int64 `json:"timestampMs,omitempty,string"`
+}
+
+// MarketplaceOffer: An offer is segment of inventory that a seller
+// wishes to sell. It is associated with certain terms and targeting
+// information which helps buyer know more about the inventory. Each
+// field in an order can have one of the following setting:
+//
+// (readonly) - It is an error to try and set this field.
+// (buyer-readonly) - Only the seller can set this field.
+// (seller-readonly) - Only the buyer can set this field. (updatable) -
+// The field is updatable at all times by either buyer or the seller.
+type MarketplaceOffer struct {
+	// CreationTimeMs: Creation time in ms. since epoch (readonly)
+	CreationTimeMs int64 `json:"creationTimeMs,omitempty,string"`
+
+	// CreatorContacts: Optional contact information for the creator of this
+	// offer. (buyer-readonly)
+	CreatorContacts []*ContactInformation `json:"creatorContacts,omitempty"`
+
+	// FlightEndTimeMs: The proposed end time for the deal (ms since epoch)
+	// (buyer-readonly)
+	FlightEndTimeMs int64 `json:"flightEndTimeMs,omitempty,string"`
+
+	// FlightStartTimeMs: Inventory availability dates. (times are in ms
+	// since epoch) The granularity is generally in the order of seconds.
+	// (buyer-readonly)
+	FlightStartTimeMs int64 `json:"flightStartTimeMs,omitempty,string"`
+
+	// HasCreatorSignedOff: If the creator has already signed off on the
+	// offer, then the buyer can finalize the deal by accepting the offer as
+	// is. When copying to an order, if any of the terms are changed, then
+	// auto_finalize is automatically set to false.
+	HasCreatorSignedOff bool `json:"hasCreatorSignedOff,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "adexchangebuyer#marketplaceOffer".
+	Kind string `json:"kind,omitempty"`
+
+	// Labels: Optional List of labels for the offer (optional,
+	// buyer-readonly).
+	Labels []*MarketplaceLabel `json:"labels,omitempty"`
+
+	// LastUpdateTimeMs: Time of last update in ms. since epoch (readonly)
+	LastUpdateTimeMs int64 `json:"lastUpdateTimeMs,omitempty,string"`
+
+	// Name: The name for this offer as set by the seller. (buyer-readonly)
+	Name string `json:"name,omitempty"`
+
+	// OfferId: The unique id for the offer (readonly)
+	OfferId string `json:"offerId,omitempty"`
+
+	// RevisionNumber: The revision number of the offer. (readonly)
+	RevisionNumber int64 `json:"revisionNumber,omitempty,string"`
+
+	// Seller: Information about the seller that created this offer
+	// (readonly, except on create)
+	Seller *Seller `json:"seller,omitempty"`
+
+	// SharedTargetings: Targeting that is shared between the buyer and the
+	// seller. Each targeting criteria has a specified key and for each key
+	// there is a list of inclusion value or exclusion values.
+	// (buyer-readonly)
+	SharedTargetings []*SharedTargeting `json:"sharedTargetings,omitempty"`
+
+	// State: The state of the offer. (buyer-readonly)
+	State string `json:"state,omitempty"`
+
+	// SyndicationProduct: The syndication product associated with the deal.
+	// (readonly, except on create)
+	SyndicationProduct string `json:"syndicationProduct,omitempty"`
+
+	// Terms: The negotiable terms of the deal (buyer-readonly)
+	Terms *DealTerms `json:"terms,omitempty"`
+}
+
+// MarketplaceOrder: Represents an order in the marketplace. An order is
+// the unit of negotiation between a seller and a buyer and contains
+// deals which are served. Each field in an order can have one of the
+// following setting:
+//
+// (readonly) - It is an error to try and set this field.
+// (buyer-readonly) - Only the seller can set this field.
+// (seller-readonly) - Only the buyer can set this field. (updatable) -
+// The field is updatable at all times by either buyer or the seller.
+type MarketplaceOrder struct {
+	// BilledBuyer: Reference to the buyer that will get billed for this
+	// order. (readonly)
+	BilledBuyer *Buyer `json:"billedBuyer,omitempty"`
+
+	// Buyer: Reference to the buyer on the order. (readonly, except on
+	// create)
+	Buyer *Buyer `json:"buyer,omitempty"`
+
+	// BuyerContacts: Optional contact information fort the buyer.
+	// (seller-readonly)
+	BuyerContacts []*ContactInformation `json:"buyerContacts,omitempty"`
+
+	// BuyerPrivateData: Private data for buyer. (hidden from seller).
+	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
+
+	// HasBuyerSignedOff: When an order is in an accepted state, indicates
+	// whether the buyer has signed off Once both sides have signed off on a
+	// deal, the order can be finalized by the seller. (seller-readonly)
+	HasBuyerSignedOff bool `json:"hasBuyerSignedOff,omitempty"`
+
+	// HasSellerSignedOff: When an order is in an accepted state, indicates
+	// whether the buyer has signed off Once both sides have signed off on a
+	// deal, the order can be finalized by the seller. (buyer-readonly)
+	HasSellerSignedOff bool `json:"hasSellerSignedOff,omitempty"`
+
+	// IsRenegotiating: True if the order is being renegotiated (readonly).
+	IsRenegotiating bool `json:"isRenegotiating,omitempty"`
+
+	// IsSetupComplete: True, if the buyside inventory setup is complete for
+	// this order. (readonly)
+	IsSetupComplete bool `json:"isSetupComplete,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "adexchangebuyer#marketplaceOrder".
+	Kind string `json:"kind,omitempty"`
+
+	// Labels: List of labels associated with the order. (readonly)
+	Labels []*MarketplaceLabel `json:"labels,omitempty"`
+
+	// LastUpdaterOrCommentorRole: The role of the last user that either
+	// updated the order or left a comment. (readonly)
+	LastUpdaterOrCommentorRole string `json:"lastUpdaterOrCommentorRole,omitempty"`
+
+	LastUpdaterRole string `json:"lastUpdaterRole,omitempty"`
+
+	// Name: The name for the order (updatable)
+	Name string `json:"name,omitempty"`
+
+	// OrderId: The unique id of the order. (readonly).
+	OrderId string `json:"orderId,omitempty"`
+
+	// OrderState: The current state of the order. (readonly)
+	OrderState string `json:"orderState,omitempty"`
+
+	// OriginatorRole: Indicates whether the buyer/seller created the
+	// offer.(readonly)
+	OriginatorRole string `json:"originatorRole,omitempty"`
+
+	// RevisionNumber: The revision number for the order (readonly).
+	RevisionNumber int64 `json:"revisionNumber,omitempty,string"`
+
+	// RevisionTimeMs: The time (ms since epoch) when the order was last
+	// revised (readonly).
+	RevisionTimeMs int64 `json:"revisionTimeMs,omitempty,string"`
+
+	// Seller: Reference to the seller on the order. (readonly, except on
+	// create)
+	Seller *Seller `json:"seller,omitempty"`
+
+	// SellerContacts: Optional contact information for the seller
+	// (buyer-readonly).
+	SellerContacts []*ContactInformation `json:"sellerContacts,omitempty"`
+}
+
+type MoneyDto struct {
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	Micros int64 `json:"micros,omitempty,string"`
+}
+
+type NegotiationDto struct {
+	// BilledBuyer: The billed buyer; Specified by a buyer buying through an
+	// intermediary.
+	BilledBuyer *DealPartyDto `json:"billedBuyer,omitempty"`
+
+	// Buyer: Details of the buyer party in this negotiation.
+	Buyer *DealPartyDto `json:"buyer,omitempty"`
+
+	// BuyerEmailContacts: The buyer party's contact email.
+	BuyerEmailContacts []string `json:"buyerEmailContacts,omitempty"`
+
+	// DealType: The type of this deal.
+	DealType string `json:"dealType,omitempty"`
+
+	// ExternalDealId: For finalized negotiations, the ID of the finalized
+	// deal.
+	ExternalDealId int64 `json:"externalDealId,omitempty,string"`
+
+	Kind string `json:"kind,omitempty"`
+
+	// LabelNames: A list of label names applicable to this negotiation.
+	LabelNames []string `json:"labelNames,omitempty"`
+
+	// NegotiationId: The unique ID of this negotiation.
+	NegotiationId int64 `json:"negotiationId,omitempty,string"`
+
+	// NegotiationRounds: The series of negotiation rounds for this
+	// negotiation.
+	NegotiationRounds []*NegotiationRoundDto `json:"negotiationRounds,omitempty"`
+
+	// NegotiationState: The state of this negotiation.
+	NegotiationState string `json:"negotiationState,omitempty"`
+
+	// OfferId: The ID of this negotiation's original offer.
+	OfferId int64 `json:"offerId,omitempty,string"`
+
+	// Seller: Details of the seller party in this negotiation.
+	Seller *DealPartyDto `json:"seller,omitempty"`
+
+	// SellerEmailContacts: The seller party's contact email.
+	SellerEmailContacts []string `json:"sellerEmailContacts,omitempty"`
+
+	// Stats: The stats for this negotiation.
+	Stats *StatsDto `json:"stats,omitempty"`
+
+	// Status: The status of this negotiation.
+	Status string `json:"status,omitempty"`
+}
+
+type NegotiationRoundDto struct {
+	// Action: The action performed by this negotiation round.
+	Action string `json:"action,omitempty"`
+
+	// DbmPartnerId: Stores DBM partner ID for use by DBM
+	DbmPartnerId int64 `json:"dbmPartnerId,omitempty,string"`
+
+	// EditHistory: The edit history of this negotiation round.
+	EditHistory *EditHistoryDto `json:"editHistory,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	// NegotiationId: The ID of the negotiation to which this negotiation
+	// round applies.
+	NegotiationId int64 `json:"negotiationId,omitempty,string"`
+
+	// Notes: Notes regarding this negotiation round.
+	Notes string `json:"notes,omitempty"`
+
+	// OriginatorRole: The role, either buyer or seller, initiating this
+	// negotiation round.
+	OriginatorRole string `json:"originatorRole,omitempty"`
+
+	// RoundNumber: The number of this negotiation round, in sequence.
+	RoundNumber int64 `json:"roundNumber,omitempty,string"`
+
+	// Terms: The detailed terms proposed in this negotiation round.
+	Terms *TermsDto `json:"terms,omitempty"`
+}
+
+type OfferDto struct {
+	// Anonymous: Whether this offer is anonymous.
+	Anonymous bool `json:"anonymous,omitempty"`
+
+	// BilledBuyer: The billed buyer; For buyer initiated offers, buying
+	// through an intermediary.
+	BilledBuyer *DealPartyDto `json:"billedBuyer,omitempty"`
+
+	// ClosedToDealParties: The list of buyer or seller parties this offer
+	// is closed to.
+	ClosedToDealParties []*DealPartyDto `json:"closedToDealParties,omitempty"`
+
+	// Creator: The creator of this offer.
+	Creator *DealPartyDto `json:"creator,omitempty"`
+
+	// EmailContacts: The list of email contacts for this offer.
+	EmailContacts []string `json:"emailContacts,omitempty"`
+
+	// IsOpen: Whether this offer is open.
+	IsOpen bool `json:"isOpen,omitempty"`
+
+	Kind string `json:"kind,omitempty"`
+
+	// LabelNames: The list of label names applicable to this offer.
+	LabelNames []string `json:"labelNames,omitempty"`
+
+	// OfferId: The unique ID of this offer.
+	OfferId int64 `json:"offerId,omitempty,string"`
+
+	// OfferState: The state of this offer.
+	OfferState string `json:"offerState,omitempty"`
+
+	// OpenToDealParties: The list of buyer or seller parties this offer is
+	// open to.
+	OpenToDealParties []*DealPartyDto `json:"openToDealParties,omitempty"`
+
+	// PointOfContact: The point of contact for this offer.
+	PointOfContact string `json:"pointOfContact,omitempty"`
+
+	// Status: The status of this offer.
+	Status string `json:"status,omitempty"`
+
+	// Terms: The terms of this offer.
+	Terms *TermsDto `json:"terms,omitempty"`
 }
 
 // PerformanceReport: The configuration data for an Ad Exchange
@@ -670,6 +1613,256 @@ type PretargetingConfigList struct {
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+}
+
+type Price struct {
+	// AmountMicros: The CPM value in micros.
+	AmountMicros float64 `json:"amountMicros,omitempty"`
+
+	// CurrencyCode: The currency code for the price.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+}
+
+// PricePerBuyer: Used to specify pricing rules for buyers/advertisers.
+// Each PricePerBuyer in an offer can become [0,1] deals. To check if
+// there is a PricePerBuyer for a particular buyer or buyer/advertiser
+// pair, we look for the most specific matching rule - we first look for
+// a rule matching the buyer and advertiser, next a rule with the buyer
+// but an empty advertiser list, and otherwise look for a matching rule
+// where no buyer is set.
+type PricePerBuyer struct {
+	// Buyer: The buyer who will pay this price. If unset, all buyers can
+	// pay this price (if the advertisers match, and there's no more
+	// specific rule matching the buyer).
+	Buyer *Buyer `json:"buyer,omitempty"`
+
+	// Price: The specified price
+	Price *Price `json:"price,omitempty"`
+}
+
+type PrivateData struct {
+	ReferenceId string `json:"referenceId,omitempty"`
+
+	ReferencePayload string `json:"referencePayload,omitempty"`
+}
+
+type RuleKeyValuePair struct {
+	KeyName string `json:"keyName,omitempty"`
+
+	Value string `json:"value,omitempty"`
+}
+
+type Seller struct {
+	// AccountId: The unique id for the seller. The seller fills in this
+	// field. The seller account id is then available to buyer in the offer.
+	AccountId string `json:"accountId,omitempty"`
+
+	// SubAccountId: Optional sub-account id for the seller.
+	SubAccountId string `json:"subAccountId,omitempty"`
+}
+
+type SharedTargeting struct {
+	// Exclusions: The list of values to exclude from targeting.
+	Exclusions []*TargetingValue `json:"exclusions,omitempty"`
+
+	// Inclusions: The list of value to include as part of the targeting.
+	Inclusions []*TargetingValue `json:"inclusions,omitempty"`
+
+	// Key: The key representing the shared targeting criterion.
+	Key string `json:"key,omitempty"`
+}
+
+type StatsDto struct {
+	Bids int64 `json:"bids,omitempty,string"`
+
+	GoodBids int64 `json:"goodBids,omitempty,string"`
+
+	Impressions int64 `json:"impressions,omitempty,string"`
+
+	Requests int64 `json:"requests,omitempty,string"`
+
+	Revenue *MoneyDto `json:"revenue,omitempty"`
+
+	Spend *MoneyDto `json:"spend,omitempty"`
+}
+
+type TargetingValue struct {
+	// CreativeSizeValue: The creative size value to exclude/include.
+	CreativeSizeValue *TargetingValueCreativeSize `json:"creativeSizeValue,omitempty"`
+
+	// DayPartTargetingValue: The daypart targeting to include / exclude.
+	// Filled in when the key is GOOG_DAYPART_TARGETING.
+	DayPartTargetingValue *TargetingValueDayPartTargeting `json:"dayPartTargetingValue,omitempty"`
+
+	// LongValue: The long value to exclude/include.
+	LongValue int64 `json:"longValue,omitempty,string"`
+
+	// StringValue: The string value to exclude/include.
+	StringValue string `json:"stringValue,omitempty"`
+}
+
+type TargetingValueCreativeSize struct {
+	// CompanionSizes: For video size type, the list of companion sizes.
+	CompanionSizes []*TargetingValueSize `json:"companionSizes,omitempty"`
+
+	// CreativeSizeType: The Creative size type.
+	CreativeSizeType string `json:"creativeSizeType,omitempty"`
+
+	// Size: For regular creative size type, specifies the size of the
+	// creative.
+	Size *TargetingValueSize `json:"size,omitempty"`
+}
+
+type TargetingValueDayPartTargeting struct {
+	DayParts []*TargetingValueDayPartTargetingDayPart `json:"dayParts,omitempty"`
+
+	TimeZoneType string `json:"timeZoneType,omitempty"`
+}
+
+type TargetingValueDayPartTargetingDayPart struct {
+	DayOfWeek string `json:"dayOfWeek,omitempty"`
+
+	EndHour int64 `json:"endHour,omitempty"`
+
+	EndMinute int64 `json:"endMinute,omitempty"`
+
+	StartHour int64 `json:"startHour,omitempty"`
+
+	StartMinute int64 `json:"startMinute,omitempty"`
+}
+
+type TargetingValueSize struct {
+	// Height: The height of the creative.
+	Height int64 `json:"height,omitempty"`
+
+	// Width: The width of the creative.
+	Width int64 `json:"width,omitempty"`
+}
+
+type TermsDto struct {
+	// AdSlots: The particular ad slots targeted by the offer.
+	AdSlots []*AdSlotDto `json:"adSlots,omitempty"`
+
+	// Advertisers: A list of advertisers for this offer.
+	Advertisers []*AdvertiserDto `json:"advertisers,omitempty"`
+
+	// AudienceSegment: The audience segment for the offer.
+	AudienceSegment *AudienceSegment `json:"audienceSegment,omitempty"`
+
+	// AudienceSegmentDescription: A description of the audience segment for
+	// the offer.
+	AudienceSegmentDescription string `json:"audienceSegmentDescription,omitempty"`
+
+	// BillingTerms: The billing terms.
+	BillingTerms string `json:"billingTerms,omitempty"`
+
+	// BuyerBillingType: The buyer billing type.
+	BuyerBillingType string `json:"buyerBillingType,omitempty"`
+
+	// Cpm: The cpm terms.
+	Cpm *MoneyDto `json:"cpm,omitempty"`
+
+	// CreativeBlockingLevel: Whether to use or ignore publisher blocking
+	// rules.
+	CreativeBlockingLevel string `json:"creativeBlockingLevel,omitempty"`
+
+	// CreativeReviewPolicy: Whether to use publisher review policy or AdX
+	// review policy.
+	CreativeReviewPolicy string `json:"creativeReviewPolicy,omitempty"`
+
+	// DealPremium: The premium terms.
+	DealPremium *MoneyDto `json:"dealPremium,omitempty"`
+
+	// Description: A description for these terms.
+	Description string `json:"description,omitempty"`
+
+	// DescriptiveName: A descriptive name for these terms.
+	DescriptiveName string `json:"descriptiveName,omitempty"`
+
+	// EndDate: The end date for the offer.
+	EndDate *DateTime `json:"endDate,omitempty"`
+
+	// EstimatedImpressionsPerDay: The estimated daily impressions for the
+	// offer.
+	EstimatedImpressionsPerDay int64 `json:"estimatedImpressionsPerDay,omitempty,string"`
+
+	// EstimatedSpend: The estimated spend for the offer.
+	EstimatedSpend *MoneyDto `json:"estimatedSpend,omitempty"`
+
+	// FinalizeAutomatically: If true, the offer will finalize automatically
+	// when accepted.
+	FinalizeAutomatically bool `json:"finalizeAutomatically,omitempty"`
+
+	// InventorySegmentTargeting: The inventory segment targeting for the
+	// offer.
+	InventorySegmentTargeting *InventorySegmentTargeting `json:"inventorySegmentTargeting,omitempty"`
+
+	// IsReservation: Whether the offer is a reservation.
+	IsReservation bool `json:"isReservation,omitempty"`
+
+	// MinimumSpendMicros: The minimum spend for the offer.
+	MinimumSpendMicros int64 `json:"minimumSpendMicros,omitempty,string"`
+
+	// MinimumTrueLooks: The minimum true looks for the offer.
+	MinimumTrueLooks int64 `json:"minimumTrueLooks,omitempty,string"`
+
+	// MonetizerType: The monetizer type.
+	MonetizerType string `json:"monetizerType,omitempty"`
+
+	// SemiTransparent: Whether this offer is semi-transparent.
+	SemiTransparent bool `json:"semiTransparent,omitempty"`
+
+	// StartDate: The start date for the offer.
+	StartDate *DateTime `json:"startDate,omitempty"`
+
+	// TargetByDealId: Whether to target by deal id.
+	TargetByDealId bool `json:"targetByDealId,omitempty"`
+
+	// TargetingAllAdSlots: If true, the offer targets all ad slots.
+	TargetingAllAdSlots bool `json:"targetingAllAdSlots,omitempty"`
+
+	// TermsAttributes: A list of terms attributes.
+	TermsAttributes []string `json:"termsAttributes,omitempty"`
+
+	// Urls: The urls applicable to the offer.
+	Urls []string `json:"urls,omitempty"`
+}
+
+type UpdateOrderDealsRequest struct {
+	// Deals: List of deals to update
+	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+
+	// OrderRevisionNumber: The last known revision number for the order.
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+
+	UpdateAction string `json:"updateAction,omitempty"`
+
+	UpdatedFinalizedView bool `json:"updatedFinalizedView,omitempty"`
+}
+
+type UpdateOrderDealsResponse struct {
+	// Deals: List of deals updated (in the same order as passed in the
+	// request)
+	Deals []*MarketplaceDeal `json:"deals,omitempty"`
+
+	// OrderRevisionNumber: The updated revision number for the order.
+	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
+}
+
+type WebPropertyDto struct {
+	AllowInterestTargetedAds bool `json:"allowInterestTargetedAds,omitempty"`
+
+	EnabledForPreferredDeals bool `json:"enabledForPreferredDeals,omitempty"`
+
+	Id int64 `json:"id,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	PropertyCode string `json:"propertyCode,omitempty"`
+
+	SiteUrls []string `json:"siteUrls,omitempty"`
+
+	SyndicationProduct string `json:"syndicationProduct,omitempty"`
 }
 
 // method id "adexchangebuyer.accounts.get":
@@ -1454,6 +2647,551 @@ func (c *BudgetUpdateCall) Do() (*Budget, error) {
 
 }
 
+// method id "adexchangebuyer.clientaccess.delete":
+
+type ClientaccessDeleteCall struct {
+	s                *Service
+	clientAccountId  int64
+	sponsorAccountId int64
+	opt_             map[string]interface{}
+}
+
+// Delete:
+func (r *ClientaccessService) Delete(clientAccountId int64, sponsorAccountId int64) *ClientaccessDeleteCall {
+	c := &ClientaccessDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.clientAccountId = clientAccountId
+	c.sponsorAccountId = sponsorAccountId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ClientaccessDeleteCall) Fields(s ...googleapi.Field) *ClientaccessDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ClientaccessDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("sponsorAccountId", fmt.Sprintf("%v", c.sponsorAccountId))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "clientAccess/{clientAccountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *ClientaccessDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "httpMethod": "DELETE",
+	//   "id": "adexchangebuyer.clientaccess.delete",
+	//   "parameterOrder": [
+	//     "clientAccountId",
+	//     "sponsorAccountId"
+	//   ],
+	//   "parameters": {
+	//     "clientAccountId": {
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sponsorAccountId": {
+	//       "format": "int32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "clientAccess/{clientAccountId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.clientaccess.get":
+
+type ClientaccessGetCall struct {
+	s                *Service
+	clientAccountId  int64
+	sponsorAccountId int64
+	opt_             map[string]interface{}
+}
+
+// Get:
+func (r *ClientaccessService) Get(clientAccountId int64, sponsorAccountId int64) *ClientaccessGetCall {
+	c := &ClientaccessGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.clientAccountId = clientAccountId
+	c.sponsorAccountId = sponsorAccountId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ClientaccessGetCall) Fields(s ...googleapi.Field) *ClientaccessGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ClientaccessGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("sponsorAccountId", fmt.Sprintf("%v", c.sponsorAccountId))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "clientAccess/{clientAccountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *ClientaccessGetCall) Do() (*ClientAccessCapabilities, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ClientAccessCapabilities
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.clientaccess.get",
+	//   "parameterOrder": [
+	//     "clientAccountId",
+	//     "sponsorAccountId"
+	//   ],
+	//   "parameters": {
+	//     "clientAccountId": {
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sponsorAccountId": {
+	//       "format": "int32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "clientAccess/{clientAccountId}",
+	//   "response": {
+	//     "$ref": "ClientAccessCapabilities"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.clientaccess.insert":
+
+type ClientaccessInsertCall struct {
+	s                        *Service
+	clientaccesscapabilities *ClientAccessCapabilities
+	opt_                     map[string]interface{}
+}
+
+// Insert:
+func (r *ClientaccessService) Insert(clientaccesscapabilities *ClientAccessCapabilities) *ClientaccessInsertCall {
+	c := &ClientaccessInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.clientaccesscapabilities = clientaccesscapabilities
+	return c
+}
+
+// ClientAccountId sets the optional parameter "clientAccountId":
+func (c *ClientaccessInsertCall) ClientAccountId(clientAccountId int64) *ClientaccessInsertCall {
+	c.opt_["clientAccountId"] = clientAccountId
+	return c
+}
+
+// SponsorAccountId sets the optional parameter "sponsorAccountId":
+func (c *ClientaccessInsertCall) SponsorAccountId(sponsorAccountId int64) *ClientaccessInsertCall {
+	c.opt_["sponsorAccountId"] = sponsorAccountId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ClientaccessInsertCall) Fields(s ...googleapi.Field) *ClientaccessInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ClientaccessInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clientaccesscapabilities)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["clientAccountId"]; ok {
+		params.Set("clientAccountId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sponsorAccountId"]; ok {
+		params.Set("sponsorAccountId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "clientAccess")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *ClientaccessInsertCall) Do() (*ClientAccessCapabilities, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ClientAccessCapabilities
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.clientaccess.insert",
+	//   "parameters": {
+	//     "clientAccountId": {
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sponsorAccountId": {
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "clientAccess",
+	//   "request": {
+	//     "$ref": "ClientAccessCapabilities"
+	//   },
+	//   "response": {
+	//     "$ref": "ClientAccessCapabilities"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.clientaccess.list":
+
+type ClientaccessListCall struct {
+	s                                   *Service
+	listclientaccesscapabilitiesrequest *ListClientAccessCapabilitiesRequest
+	opt_                                map[string]interface{}
+}
+
+// List:
+func (r *ClientaccessService) List(listclientaccesscapabilitiesrequest *ListClientAccessCapabilitiesRequest) *ClientaccessListCall {
+	c := &ClientaccessListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.listclientaccesscapabilitiesrequest = listclientaccesscapabilitiesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ClientaccessListCall) Fields(s ...googleapi.Field) *ClientaccessListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ClientaccessListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "clientAccess")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *ClientaccessListCall) Do() (*ListClientAccessCapabilitiesResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ListClientAccessCapabilitiesResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.clientaccess.list",
+	//   "path": "clientAccess",
+	//   "request": {
+	//     "$ref": "ListClientAccessCapabilitiesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ListClientAccessCapabilitiesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.clientaccess.patch":
+
+type ClientaccessPatchCall struct {
+	s                        *Service
+	clientAccountId          int64
+	sponsorAccountId         int64
+	clientaccesscapabilities *ClientAccessCapabilities
+	opt_                     map[string]interface{}
+}
+
+// Patch:
+func (r *ClientaccessService) Patch(clientAccountId int64, sponsorAccountId int64, clientaccesscapabilities *ClientAccessCapabilities) *ClientaccessPatchCall {
+	c := &ClientaccessPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.clientAccountId = clientAccountId
+	c.sponsorAccountId = sponsorAccountId
+	c.clientaccesscapabilities = clientaccesscapabilities
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ClientaccessPatchCall) Fields(s ...googleapi.Field) *ClientaccessPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ClientaccessPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clientaccesscapabilities)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("sponsorAccountId", fmt.Sprintf("%v", c.sponsorAccountId))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "clientAccess/{clientAccountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *ClientaccessPatchCall) Do() (*ClientAccessCapabilities, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ClientAccessCapabilities
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "PATCH",
+	//   "id": "adexchangebuyer.clientaccess.patch",
+	//   "parameterOrder": [
+	//     "clientAccountId",
+	//     "sponsorAccountId"
+	//   ],
+	//   "parameters": {
+	//     "clientAccountId": {
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sponsorAccountId": {
+	//       "format": "int32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "clientAccess/{clientAccountId}",
+	//   "request": {
+	//     "$ref": "ClientAccessCapabilities"
+	//   },
+	//   "response": {
+	//     "$ref": "ClientAccessCapabilities"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.clientaccess.update":
+
+type ClientaccessUpdateCall struct {
+	s                        *Service
+	clientAccountId          int64
+	sponsorAccountId         int64
+	clientaccesscapabilities *ClientAccessCapabilities
+	opt_                     map[string]interface{}
+}
+
+// Update:
+func (r *ClientaccessService) Update(clientAccountId int64, sponsorAccountId int64, clientaccesscapabilities *ClientAccessCapabilities) *ClientaccessUpdateCall {
+	c := &ClientaccessUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.clientAccountId = clientAccountId
+	c.sponsorAccountId = sponsorAccountId
+	c.clientaccesscapabilities = clientaccesscapabilities
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ClientaccessUpdateCall) Fields(s ...googleapi.Field) *ClientaccessUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ClientaccessUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clientaccesscapabilities)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("sponsorAccountId", fmt.Sprintf("%v", c.sponsorAccountId))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "clientAccess/{clientAccountId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"clientAccountId": strconv.FormatInt(c.clientAccountId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *ClientaccessUpdateCall) Do() (*ClientAccessCapabilities, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ClientAccessCapabilities
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "httpMethod": "PUT",
+	//   "id": "adexchangebuyer.clientaccess.update",
+	//   "parameterOrder": [
+	//     "clientAccountId",
+	//     "sponsorAccountId"
+	//   ],
+	//   "parameters": {
+	//     "clientAccountId": {
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sponsorAccountId": {
+	//       "format": "int32",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "clientAccess/{clientAccountId}",
+	//   "request": {
+	//     "$ref": "ClientAccessCapabilities"
+	//   },
+	//   "response": {
+	//     "$ref": "ClientAccessCapabilities"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
 // method id "adexchangebuyer.creatives.get":
 
 type CreativesGetCall struct {
@@ -1828,6 +3566,1837 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	//   "path": "creatives",
 	//   "response": {
 	//     "$ref": "CreativesList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.deals.get":
+
+type DealsGetCall struct {
+	s                                              *Service
+	dealId                                         int64
+	getfinalizednegotiationbyexternaldealidrequest *GetFinalizedNegotiationByExternalDealIdRequest
+	opt_                                           map[string]interface{}
+}
+
+// Get: Gets the requested deal.
+func (r *DealsService) Get(dealId int64, getfinalizednegotiationbyexternaldealidrequest *GetFinalizedNegotiationByExternalDealIdRequest) *DealsGetCall {
+	c := &DealsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.dealId = dealId
+	c.getfinalizednegotiationbyexternaldealidrequest = getfinalizednegotiationbyexternaldealidrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DealsGetCall) Fields(s ...googleapi.Field) *DealsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *DealsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "deals/{dealId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"dealId": strconv.FormatInt(c.dealId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *DealsGetCall) Do() (*NegotiationDto, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *NegotiationDto
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested deal.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.deals.get",
+	//   "parameterOrder": [
+	//     "dealId"
+	//   ],
+	//   "parameters": {
+	//     "dealId": {
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "deals/{dealId}",
+	//   "request": {
+	//     "$ref": "GetFinalizedNegotiationByExternalDealIdRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "NegotiationDto"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplacedeals.create":
+
+type MarketplacedealsCreateCall struct {
+	s                    *Service
+	orderId              string
+	addorderdealsrequest *AddOrderDealsRequest
+	opt_                 map[string]interface{}
+}
+
+// Create: Add new deals for the specified order
+func (r *MarketplacedealsService) Create(orderId string, addorderdealsrequest *AddOrderDealsRequest) *MarketplacedealsCreateCall {
+	c := &MarketplacedealsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	c.addorderdealsrequest = addorderdealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplacedealsCreateCall) Fields(s ...googleapi.Field) *MarketplacedealsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplacedealsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addorderdealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/create")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplacedealsCreateCall) Do() (*AddOrderDealsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AddOrderDealsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add new deals for the specified order",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplacedeals.create",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "OrderId for which deals need to be added.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}/deals/create",
+	//   "request": {
+	//     "$ref": "AddOrderDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AddOrderDealsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplacedeals.delete":
+
+type MarketplacedealsDeleteCall struct {
+	s                       *Service
+	orderId                 string
+	deleteorderdealsrequest *DeleteOrderDealsRequest
+	opt_                    map[string]interface{}
+}
+
+// Delete: Delete the specified deals from the order
+func (r *MarketplacedealsService) Delete(orderId string, deleteorderdealsrequest *DeleteOrderDealsRequest) *MarketplacedealsDeleteCall {
+	c := &MarketplacedealsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	c.deleteorderdealsrequest = deleteorderdealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplacedealsDeleteCall) Fields(s ...googleapi.Field) *MarketplacedealsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplacedealsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deleteorderdealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/delete")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplacedealsDeleteCall) Do() (*DeleteOrderDealsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *DeleteOrderDealsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete the specified deals from the order",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplacedeals.delete",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The orderId to delete deals from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}/deals/delete",
+	//   "request": {
+	//     "$ref": "DeleteOrderDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DeleteOrderDealsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplacedeals.list":
+
+type MarketplacedealsListCall struct {
+	s       *Service
+	orderId string
+	opt_    map[string]interface{}
+}
+
+// List: List all the deals for a given order
+func (r *MarketplacedealsService) List(orderId string) *MarketplacedealsListCall {
+	c := &MarketplacedealsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplacedealsListCall) Fields(s ...googleapi.Field) *MarketplacedealsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplacedealsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplacedealsListCall) Do() (*GetOrderDealsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GetOrderDealsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all the deals for a given order",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.marketplacedeals.list",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The orderId to get deals for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}/deals",
+	//   "response": {
+	//     "$ref": "GetOrderDealsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplacedeals.replace":
+
+type MarketplacedealsReplaceCall struct {
+	s                        *Service
+	orderId                  string
+	editallorderdealsrequest *EditAllOrderDealsRequest
+	opt_                     map[string]interface{}
+}
+
+// Replace: Replaces all the deals in the order with the passed in deals
+func (r *MarketplacedealsService) Replace(orderId string, editallorderdealsrequest *EditAllOrderDealsRequest) *MarketplacedealsReplaceCall {
+	c := &MarketplacedealsReplaceCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	c.editallorderdealsrequest = editallorderdealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplacedealsReplaceCall) Fields(s ...googleapi.Field) *MarketplacedealsReplaceCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplacedealsReplaceCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.editallorderdealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/replace")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplacedealsReplaceCall) Do() (*EditAllOrderDealsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *EditAllOrderDealsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces all the deals in the order with the passed in deals",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplacedeals.replace",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The orderId to edit deals on.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}/deals/replace",
+	//   "request": {
+	//     "$ref": "EditAllOrderDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "EditAllOrderDealsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplacedeals.update":
+
+type MarketplacedealsUpdateCall struct {
+	s                       *Service
+	orderId                 string
+	updateorderdealsrequest *UpdateOrderDealsRequest
+	opt_                    map[string]interface{}
+}
+
+// Update: Update the specified deals on the order
+func (r *MarketplacedealsService) Update(orderId string, updateorderdealsrequest *UpdateOrderDealsRequest) *MarketplacedealsUpdateCall {
+	c := &MarketplacedealsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	c.updateorderdealsrequest = updateorderdealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplacedealsUpdateCall) Fields(s ...googleapi.Field) *MarketplacedealsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplacedealsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateorderdealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/update")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplacedealsUpdateCall) Do() (*UpdateOrderDealsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *UpdateOrderDealsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the specified deals on the order",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplacedeals.update",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The orderId to update deals for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}/deals/update",
+	//   "request": {
+	//     "$ref": "UpdateOrderDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UpdateOrderDealsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplacenotes.create":
+
+type MarketplacenotesCreateCall struct {
+	s                    *Service
+	orderId              string
+	addordernotesrequest *AddOrderNotesRequest
+	opt_                 map[string]interface{}
+}
+
+// Create: Add notes to the order
+func (r *MarketplacenotesService) Create(orderId string, addordernotesrequest *AddOrderNotesRequest) *MarketplacenotesCreateCall {
+	c := &MarketplacenotesCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	c.addordernotesrequest = addordernotesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplacenotesCreateCall) Fields(s ...googleapi.Field) *MarketplacenotesCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplacenotesCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addordernotesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/notes/add")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplacenotesCreateCall) Do() (*AddOrderNotesResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AddOrderNotesResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add notes to the order",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplacenotes.create",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The orderId to add notes for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}/notes/add",
+	//   "request": {
+	//     "$ref": "AddOrderNotesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AddOrderNotesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplacenotes.list":
+
+type MarketplacenotesListCall struct {
+	s       *Service
+	orderId string
+	opt_    map[string]interface{}
+}
+
+// List: Get all the notes associated with an order
+func (r *MarketplacenotesService) List(orderId string) *MarketplacenotesListCall {
+	c := &MarketplacenotesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplacenotesListCall) Fields(s ...googleapi.Field) *MarketplacenotesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplacenotesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/notes")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplacenotesListCall) Do() (*GetOrderNotesResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GetOrderNotesResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get all the notes associated with an order",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.marketplacenotes.list",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The orderId to get notes for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}/notes",
+	//   "response": {
+	//     "$ref": "GetOrderNotesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplaceoffers.get":
+
+type MarketplaceoffersGetCall struct {
+	s       *Service
+	offerId string
+	opt_    map[string]interface{}
+}
+
+// Get: Gets the requested negotiation.
+func (r *MarketplaceoffersService) Get(offerId string) *MarketplaceoffersGetCall {
+	c := &MarketplaceoffersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.offerId = offerId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceoffersGetCall) Fields(s ...googleapi.Field) *MarketplaceoffersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplaceoffersGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOffers/{offerId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"offerId": c.offerId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplaceoffersGetCall) Do() (*MarketplaceOffer, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *MarketplaceOffer
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested negotiation.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.marketplaceoffers.get",
+	//   "parameterOrder": [
+	//     "offerId"
+	//   ],
+	//   "parameters": {
+	//     "offerId": {
+	//       "description": "The offerId for the offer to get the head revision for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOffers/{offerId}",
+	//   "response": {
+	//     "$ref": "MarketplaceOffer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplaceoffers.search":
+
+type MarketplaceoffersSearchCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Search: Gets the requested negotiation.
+func (r *MarketplaceoffersService) Search() *MarketplaceoffersSearchCall {
+	c := &MarketplaceoffersSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// PqlQuery sets the optional parameter "pqlQuery": The pql query used
+// to query for offers.
+func (c *MarketplaceoffersSearchCall) PqlQuery(pqlQuery string) *MarketplaceoffersSearchCall {
+	c.opt_["pqlQuery"] = pqlQuery
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceoffersSearchCall) Fields(s ...googleapi.Field) *MarketplaceoffersSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplaceoffersSearchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["pqlQuery"]; ok {
+		params.Set("pqlQuery", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOffers/search")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplaceoffersSearchCall) Do() (*GetOffersResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GetOffersResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested negotiation.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.marketplaceoffers.search",
+	//   "parameters": {
+	//     "pqlQuery": {
+	//       "description": "The pql query used to query for offers.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOffers/search",
+	//   "response": {
+	//     "$ref": "GetOffersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplaceorders.create":
+
+type MarketplaceordersCreateCall struct {
+	s                   *Service
+	createordersrequest *CreateOrdersRequest
+	opt_                map[string]interface{}
+}
+
+// Create: Create the given list of orders
+func (r *MarketplaceordersService) Create(createordersrequest *CreateOrdersRequest) *MarketplaceordersCreateCall {
+	c := &MarketplaceordersCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.createordersrequest = createordersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceordersCreateCall) Fields(s ...googleapi.Field) *MarketplaceordersCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplaceordersCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createordersrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/create")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplaceordersCreateCall) Do() (*CreateOrdersResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CreateOrdersResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create the given list of orders",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplaceorders.create",
+	//   "path": "marketplaceOrders/create",
+	//   "request": {
+	//     "$ref": "CreateOrdersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CreateOrdersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplaceorders.get":
+
+type MarketplaceordersGetCall struct {
+	s       *Service
+	orderId string
+	opt_    map[string]interface{}
+}
+
+// Get: Get an order given its id
+func (r *MarketplaceordersService) Get(orderId string) *MarketplaceordersGetCall {
+	c := &MarketplaceordersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceordersGetCall) Fields(s ...googleapi.Field) *MarketplaceordersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplaceordersGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplaceordersGetCall) Do() (*MarketplaceOrder, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *MarketplaceOrder
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get an order given its id",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.marketplaceorders.get",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "Id of the order to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}",
+	//   "response": {
+	//     "$ref": "MarketplaceOrder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplaceorders.patch":
+
+type MarketplaceordersPatchCall struct {
+	s                *Service
+	orderId          string
+	marketplaceorder *MarketplaceOrder
+	opt_             map[string]interface{}
+}
+
+// Patch: Update the given order. This method supports patch semantics.
+func (r *MarketplaceordersService) Patch(orderId string, marketplaceorder *MarketplaceOrder) *MarketplaceordersPatchCall {
+	c := &MarketplaceordersPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	c.marketplaceorder = marketplaceorder
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceordersPatchCall) Fields(s ...googleapi.Field) *MarketplaceordersPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplaceordersPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.marketplaceorder)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplaceordersPatchCall) Do() (*MarketplaceOrder, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *MarketplaceOrder
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the given order. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "adexchangebuyer.marketplaceorders.patch",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The order id to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}",
+	//   "request": {
+	//     "$ref": "MarketplaceOrder"
+	//   },
+	//   "response": {
+	//     "$ref": "MarketplaceOrder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplaceorders.search":
+
+type MarketplaceordersSearchCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// Search: Search for orders using pql query
+func (r *MarketplaceordersService) Search() *MarketplaceordersSearchCall {
+	c := &MarketplaceordersSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// PqlQuery sets the optional parameter "pqlQuery": Query string to
+// retrieve specific orders.
+func (c *MarketplaceordersSearchCall) PqlQuery(pqlQuery string) *MarketplaceordersSearchCall {
+	c.opt_["pqlQuery"] = pqlQuery
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceordersSearchCall) Fields(s ...googleapi.Field) *MarketplaceordersSearchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplaceordersSearchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["pqlQuery"]; ok {
+		params.Set("pqlQuery", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/search")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplaceordersSearchCall) Do() (*GetOrdersResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GetOrdersResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Search for orders using pql query",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.marketplaceorders.search",
+	//   "parameters": {
+	//     "pqlQuery": {
+	//       "description": "Query string to retrieve specific orders.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/search",
+	//   "response": {
+	//     "$ref": "GetOrdersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.marketplaceorders.update":
+
+type MarketplaceordersUpdateCall struct {
+	s                *Service
+	orderId          string
+	marketplaceorder *MarketplaceOrder
+	opt_             map[string]interface{}
+}
+
+// Update: Update the given order
+func (r *MarketplaceordersService) Update(orderId string, marketplaceorder *MarketplaceOrder) *MarketplaceordersUpdateCall {
+	c := &MarketplaceordersUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	c.marketplaceorder = marketplaceorder
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceordersUpdateCall) Fields(s ...googleapi.Field) *MarketplaceordersUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplaceordersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.marketplaceorder)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplaceordersUpdateCall) Do() (*MarketplaceOrder, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *MarketplaceOrder
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the given order",
+	//   "httpMethod": "PUT",
+	//   "id": "adexchangebuyer.marketplaceorders.update",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The order id to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}",
+	//   "request": {
+	//     "$ref": "MarketplaceOrder"
+	//   },
+	//   "response": {
+	//     "$ref": "MarketplaceOrder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.negotiationrounds.insert":
+
+type NegotiationroundsInsertCall struct {
+	s                   *Service
+	negotiationId       int64
+	negotiationrounddto *NegotiationRoundDto
+	opt_                map[string]interface{}
+}
+
+// Insert: Adds the requested negotiationRound to the requested
+// negotiation.
+func (r *NegotiationroundsService) Insert(negotiationId int64, negotiationrounddto *NegotiationRoundDto) *NegotiationroundsInsertCall {
+	c := &NegotiationroundsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.negotiationId = negotiationId
+	c.negotiationrounddto = negotiationrounddto
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NegotiationroundsInsertCall) Fields(s ...googleapi.Field) *NegotiationroundsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *NegotiationroundsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.negotiationrounddto)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "negotiations/{negotiationId}/negotiationrounds")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"negotiationId": strconv.FormatInt(c.negotiationId, 10),
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *NegotiationroundsInsertCall) Do() (*NegotiationRoundDto, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *NegotiationRoundDto
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds the requested negotiationRound to the requested negotiation.",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.negotiationrounds.insert",
+	//   "parameterOrder": [
+	//     "negotiationId"
+	//   ],
+	//   "parameters": {
+	//     "negotiationId": {
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "negotiations/{negotiationId}/negotiationrounds",
+	//   "request": {
+	//     "$ref": "NegotiationRoundDto"
+	//   },
+	//   "response": {
+	//     "$ref": "NegotiationRoundDto"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.negotiations.get":
+
+type NegotiationsGetCall struct {
+	s                         *Service
+	negotiationId             int64
+	getnegotiationbyidrequest *GetNegotiationByIdRequest
+	opt_                      map[string]interface{}
+}
+
+// Get: Gets the requested negotiation.
+func (r *NegotiationsService) Get(negotiationId int64, getnegotiationbyidrequest *GetNegotiationByIdRequest) *NegotiationsGetCall {
+	c := &NegotiationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.negotiationId = negotiationId
+	c.getnegotiationbyidrequest = getnegotiationbyidrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NegotiationsGetCall) Fields(s ...googleapi.Field) *NegotiationsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *NegotiationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "negotiations/{negotiationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"negotiationId": strconv.FormatInt(c.negotiationId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *NegotiationsGetCall) Do() (*NegotiationDto, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *NegotiationDto
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested negotiation.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.negotiations.get",
+	//   "parameterOrder": [
+	//     "negotiationId"
+	//   ],
+	//   "parameters": {
+	//     "negotiationId": {
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "negotiations/{negotiationId}",
+	//   "request": {
+	//     "$ref": "GetNegotiationByIdRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "NegotiationDto"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.negotiations.insert":
+
+type NegotiationsInsertCall struct {
+	s              *Service
+	negotiationdto *NegotiationDto
+	opt_           map[string]interface{}
+}
+
+// Insert: Creates or updates the requested negotiation.
+func (r *NegotiationsService) Insert(negotiationdto *NegotiationDto) *NegotiationsInsertCall {
+	c := &NegotiationsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.negotiationdto = negotiationdto
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NegotiationsInsertCall) Fields(s ...googleapi.Field) *NegotiationsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *NegotiationsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.negotiationdto)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "negotiations")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *NegotiationsInsertCall) Do() (*NegotiationDto, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *NegotiationDto
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates or updates the requested negotiation.",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.negotiations.insert",
+	//   "path": "negotiations",
+	//   "request": {
+	//     "$ref": "NegotiationDto"
+	//   },
+	//   "response": {
+	//     "$ref": "NegotiationDto"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.negotiations.list":
+
+type NegotiationsListCall struct {
+	s                      *Service
+	getnegotiationsrequest *GetNegotiationsRequest
+	opt_                   map[string]interface{}
+}
+
+// List: Lists all negotiations the authenticated user has access to.
+func (r *NegotiationsService) List(getnegotiationsrequest *GetNegotiationsRequest) *NegotiationsListCall {
+	c := &NegotiationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.getnegotiationsrequest = getnegotiationsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NegotiationsListCall) Fields(s ...googleapi.Field) *NegotiationsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *NegotiationsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "negotiations")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *NegotiationsListCall) Do() (*GetNegotiationsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *GetNegotiationsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all negotiations the authenticated user has access to.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.negotiations.list",
+	//   "path": "negotiations",
+	//   "request": {
+	//     "$ref": "GetNegotiationsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GetNegotiationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.offers.get":
+
+type OffersGetCall struct {
+	s       *Service
+	offerId int64
+	opt_    map[string]interface{}
+}
+
+// Get: Gets the requested offer.
+func (r *OffersService) Get(offerId int64) *OffersGetCall {
+	c := &OffersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.offerId = offerId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OffersGetCall) Fields(s ...googleapi.Field) *OffersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OffersGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "offers/{offerId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"offerId": strconv.FormatInt(c.offerId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OffersGetCall) Do() (*OfferDto, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *OfferDto
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the requested offer.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.offers.get",
+	//   "parameterOrder": [
+	//     "offerId"
+	//   ],
+	//   "parameters": {
+	//     "offerId": {
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "offers/{offerId}",
+	//   "response": {
+	//     "$ref": "OfferDto"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.offers.insert":
+
+type OffersInsertCall struct {
+	s        *Service
+	offerdto *OfferDto
+	opt_     map[string]interface{}
+}
+
+// Insert: Creates or updates the requested offer.
+func (r *OffersService) Insert(offerdto *OfferDto) *OffersInsertCall {
+	c := &OffersInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.offerdto = offerdto
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OffersInsertCall) Fields(s ...googleapi.Field) *OffersInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OffersInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.offerdto)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "offers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OffersInsertCall) Do() (*OfferDto, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *OfferDto
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates or updates the requested offer.",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.offers.insert",
+	//   "path": "offers",
+	//   "request": {
+	//     "$ref": "OfferDto"
+	//   },
+	//   "response": {
+	//     "$ref": "OfferDto"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.offers.list":
+
+type OffersListCall struct {
+	s                 *Service
+	listoffersrequest *ListOffersRequest
+	opt_              map[string]interface{}
+}
+
+// List: Lists all offers the authenticated user has access to.
+func (r *OffersService) List(listoffersrequest *ListOffersRequest) *OffersListCall {
+	c := &OffersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.listoffersrequest = listoffersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OffersListCall) Fields(s ...googleapi.Field) *OffersListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OffersListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "offers")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OffersListCall) Do() (*ListOffersResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ListOffersResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all offers the authenticated user has access to.",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer.offers.list",
+	//   "path": "offers",
+	//   "request": {
+	//     "$ref": "ListOffersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ListOffersResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

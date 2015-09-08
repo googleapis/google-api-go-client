@@ -1122,7 +1122,8 @@ type FileLabels struct {
 	// Hidden: Deprecated.
 	Hidden bool `json:"hidden,omitempty"`
 
-	// Restricted: Whether viewers are prevented from downloading this file.
+	// Restricted: Whether viewers and commenters are prevented from
+	// downloading, printing, and copying this file.
 	Restricted bool `json:"restricted,omitempty"`
 
 	// Starred: Whether this file is starred by the user.
@@ -2631,6 +2632,20 @@ func (c *ChildrenListCall) MaxResults(maxResults int64) *ChildrenListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": A comma-separated list
+// of sort keys. Valid keys are 'createdDate', 'folder',
+// 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate',
+// 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and
+// 'title'. Each key sorts ascending by default, but may be reversed
+// with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate
+// desc,title. Please note that there is a current limitation for users
+// with approximately one million files in which the requested sort
+// order is ignored.
+func (c *ChildrenListCall) OrderBy(orderBy string) *ChildrenListCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Page token for
 // children.
 func (c *ChildrenListCall) PageToken(pageToken string) *ChildrenListCall {
@@ -2659,6 +2674,9 @@ func (c *ChildrenListCall) doRequest(alt string) (*http.Response, error) {
 	params.Set("alt", alt)
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -2714,6 +2732,11 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "A comma-separated list of sort keys. Valid keys are 'createdDate', 'folder', 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate', 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and 'title'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate desc,title. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Page token for children.",
@@ -4369,6 +4392,20 @@ func (c *FilesListCall) MaxResults(maxResults int64) *FilesListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": A comma-separated list
+// of sort keys. Valid keys are 'createdDate', 'folder',
+// 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate',
+// 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and
+// 'title'. Each key sorts ascending by default, but may be reversed
+// with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate
+// desc,title. Please note that there is a current limitation for users
+// with approximately one million files in which the requested sort
+// order is ignored.
+func (c *FilesListCall) OrderBy(orderBy string) *FilesListCall {
+	c.opt_["orderBy"] = orderBy
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Page token for
 // files.
 func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
@@ -4418,6 +4455,9 @@ func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -4481,6 +4521,11 @@ func (c *FilesListCall) Do() (*FileList, error) {
 	//       "location": "query",
 	//       "minimum": "0",
 	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "A comma-separated list of sort keys. Valid keys are 'createdDate', 'folder', 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate', 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and 'title'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate desc,title. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.",
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Page token for files.",
@@ -4554,16 +4599,16 @@ func (c *FilesPatchCall) AddParents(addParents string) *FilesPatchCall {
 	return c
 }
 
-// Convert sets the optional parameter "convert": Whether to convert
-// this file to the corresponding Google Docs format.
+// Convert sets the optional parameter "convert": This parameter is
+// deprecated and has no function.
 func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
 	c.opt_["convert"] = convert
 	return c
 }
 
 // ModifiedDateBehavior sets the optional parameter
-// "modifiedDateBehavior": How the modifiedDate field should be updated.
-// This overrides setModifiedDate.
+// "modifiedDateBehavior": Determines the behavior in which modifiedDate
+// is updated. This overrides setModifiedDate.
 //
 // Possible values:
 //   "fromBody" - Set modifiedDate to the value provided in the body of
@@ -4587,7 +4632,8 @@ func (c *FilesPatchCall) ModifiedDateBehavior(modifiedDateBehavior string) *File
 // created as head revision, and previous unpinned revisions are
 // preserved for a short period of time. Pinned revisions are stored
 // indefinitely, using additional storage quota, up to a maximum of 200
-// revisions.
+// revisions. For details on how revisions are retained, see the Drive
+// Help Center.
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -4756,7 +4802,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     },
 	//     "convert": {
 	//       "default": "false",
-	//       "description": "Whether to convert this file to the corresponding Google Docs format.",
+	//       "description": "This parameter is deprecated and has no function.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4767,7 +4813,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//       "type": "string"
 	//     },
 	//     "modifiedDateBehavior": {
-	//       "description": "How the modifiedDate field should be updated. This overrides setModifiedDate.",
+	//       "description": "Determines the behavior in which modifiedDate is updated. This overrides setModifiedDate.",
 	//       "enum": [
 	//         "fromBody",
 	//         "fromBodyIfNeeded",
@@ -4789,7 +4835,7 @@ func (c *FilesPatchCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions. For details on how revisions are retained, see the Drive Help Center.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5143,16 +5189,16 @@ func (c *FilesUpdateCall) AddParents(addParents string) *FilesUpdateCall {
 	return c
 }
 
-// Convert sets the optional parameter "convert": Whether to convert
-// this file to the corresponding Google Docs format.
+// Convert sets the optional parameter "convert": This parameter is
+// deprecated and has no function.
 func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
 	c.opt_["convert"] = convert
 	return c
 }
 
 // ModifiedDateBehavior sets the optional parameter
-// "modifiedDateBehavior": How the modifiedDate field should be updated.
-// This overrides setModifiedDate.
+// "modifiedDateBehavior": Determines the behavior in which modifiedDate
+// is updated. This overrides setModifiedDate.
 //
 // Possible values:
 //   "fromBody" - Set modifiedDate to the value provided in the body of
@@ -5176,7 +5222,8 @@ func (c *FilesUpdateCall) ModifiedDateBehavior(modifiedDateBehavior string) *Fil
 // created as head revision, and previous unpinned revisions are
 // preserved for a short period of time. Pinned revisions are stored
 // indefinitely, using additional storage quota, up to a maximum of 200
-// revisions.
+// revisions. For details on how revisions are retained, see the Drive
+// Help Center.
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
 	c.opt_["newRevision"] = newRevision
 	return c
@@ -5431,7 +5478,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     },
 	//     "convert": {
 	//       "default": "false",
-	//       "description": "Whether to convert this file to the corresponding Google Docs format.",
+	//       "description": "This parameter is deprecated and has no function.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5442,7 +5489,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//       "type": "string"
 	//     },
 	//     "modifiedDateBehavior": {
-	//       "description": "How the modifiedDate field should be updated. This overrides setModifiedDate.",
+	//       "description": "Determines the behavior in which modifiedDate is updated. This overrides setModifiedDate.",
 	//       "enum": [
 	//         "fromBody",
 	//         "fromBodyIfNeeded",
@@ -5464,7 +5511,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	//     },
 	//     "newRevision": {
 	//       "default": "true",
-	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
+	//       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions. For details on how revisions are retained, see the Drive Help Center.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

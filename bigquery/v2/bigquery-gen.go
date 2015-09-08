@@ -52,8 +52,7 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
-	// Platform services
+	// View your data across Google Cloud Platform services
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// Manage your data and permissions in Google Cloud Storage
@@ -367,7 +366,8 @@ type ExternalDataConfiguration struct {
 	// are treated as bad records, and if there are too many bad records, an
 	// invalid error is returned in the job result. The default value is
 	// false. The sourceFormat property determines what BigQuery treats as
-	// an extra value: CSV: Trailing columns
+	// an extra value: CSV: Trailing columns JSON: Named values that don't
+	// match any column names
 	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
 
 	// MaxBadRecords: [Optional] The maximum number of bad records that
@@ -379,13 +379,13 @@ type ExternalDataConfiguration struct {
 	// Schema: [Required] The schema for the data.
 	Schema *TableSchema `json:"schema,omitempty"`
 
-	// SourceFormat: [Optional] The data format. External data sources must
-	// be in CSV format. The default value is CSV.
+	// SourceFormat: [Required] The data format. For CSV files, specify
+	// "CSV". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON".
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
 	// data in Google Cloud Storage. Each URI can contain one '*' wildcard
-	// character and it must come after the 'bucket' name. CSV limits
+	// character and it must come after the 'bucket' name. Size limits
 	// related to load jobs apply to external data sources, plus an
 	// additional limit of 10 GB maximum size across all URIs.
 	SourceUris []string `json:"sourceUris,omitempty"`
@@ -914,7 +914,7 @@ type JobStatistics3 struct {
 }
 
 type JobStatistics4 struct {
-	// DestinationUriFileCounts: [Experimental] Number of files per
+	// DestinationUriFileCounts: [Output-only] Number of files per
 	// destination URI or URI pattern specified in the extract
 	// configuration. These values will be in the same order as the URIs
 	// specified in the 'destinationUris' field.
@@ -1967,7 +1967,8 @@ type JobsCancelCall struct {
 
 // Cancel: Requests that a job be cancelled. This call will return
 // immediately, and the client will need to poll for the job status to
-// see if the cancel completed successfully.
+// see if the cancel completed successfully. Cancelled jobs may still
+// incur costs.
 func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 	c := &JobsCancelCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
@@ -2016,7 +2017,7 @@ func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully.",
+	//   "description": "Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.jobs.cancel",
 	//   "parameterOrder": [

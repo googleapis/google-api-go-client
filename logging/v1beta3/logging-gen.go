@@ -46,6 +46,9 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
+	// View your data across Google Cloud Platform services
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
+
 	// Administrate log data for your projects
 	LoggingAdminScope = "https://www.googleapis.com/auth/logging.admin"
 
@@ -173,213 +176,6 @@ type ProjectsSinksService struct {
 	s *Service
 }
 
-// AuditData: BigQuery request and response messages for audit log.
-type AuditData struct {
-	// DatasetInsertRequest: Dataset insert request.
-	DatasetInsertRequest *DatasetInsertRequest `json:"datasetInsertRequest,omitempty"`
-
-	// DatasetInsertResponse: Dataset insert response.
-	DatasetInsertResponse *DatasetInsertResponse `json:"datasetInsertResponse,omitempty"`
-
-	// DatasetListRequest: Dataset list request.
-	DatasetListRequest *DatasetListRequest `json:"datasetListRequest,omitempty"`
-
-	// DatasetUpdateRequest: Dataset update request.
-	DatasetUpdateRequest *DatasetUpdateRequest `json:"datasetUpdateRequest,omitempty"`
-
-	// DatasetUpdateResponse: Dataset update response.
-	DatasetUpdateResponse *DatasetUpdateResponse `json:"datasetUpdateResponse,omitempty"`
-
-	// JobGetQueryResultsRequest: Job get query results request.
-	JobGetQueryResultsRequest *JobGetQueryResultsRequest `json:"jobGetQueryResultsRequest,omitempty"`
-
-	// JobGetQueryResultsResponse: Job get query results response.
-	JobGetQueryResultsResponse *JobGetQueryResultsResponse `json:"jobGetQueryResultsResponse,omitempty"`
-
-	// JobInsertRequest: Job insert request.
-	JobInsertRequest *JobInsertRequest `json:"jobInsertRequest,omitempty"`
-
-	// JobQueryDoneResponse: Job query-done response. Use this information
-	// for usage analysis.
-	JobQueryDoneResponse *JobQueryDoneResponse `json:"jobQueryDoneResponse,omitempty"`
-
-	// JobQueryRequest: Job query request.
-	JobQueryRequest *JobQueryRequest `json:"jobQueryRequest,omitempty"`
-
-	// JobQueryResponse: Job query response.
-	JobQueryResponse *JobQueryResponse `json:"jobQueryResponse,omitempty"`
-
-	// TableDataListRequest: Table data-list request.
-	TableDataListRequest *TableDataListRequest `json:"tableDataListRequest,omitempty"`
-
-	// TableInsertRequest: Table insert request.
-	TableInsertRequest *TableInsertRequest `json:"tableInsertRequest,omitempty"`
-
-	// TableInsertResponse: Table insert response.
-	TableInsertResponse *TableInsertResponse `json:"tableInsertResponse,omitempty"`
-
-	// TableUpdateRequest: Table update request.
-	TableUpdateRequest *TableUpdateRequest `json:"tableUpdateRequest,omitempty"`
-
-	// TableUpdateResponse: Table update response.
-	TableUpdateResponse *TableUpdateResponse `json:"tableUpdateResponse,omitempty"`
-}
-
-// AuditLog: Common audit log format for Google Cloud Platform API
-// calls.
-type AuditLog struct {
-	// AuthenticationInfo: Authentication information about the call.
-	AuthenticationInfo *AuthenticationInfo `json:"authenticationInfo,omitempty"`
-
-	// AuthorizationInfo: Authorization information about the call. If there
-	// are multiple resources or permissions involved in authorizing the
-	// request, there will be one AuthorizationInfo element for each
-	// {resource, permission} tuple.
-	AuthorizationInfo []*AuthorizationInfo `json:"authorizationInfo,omitempty"`
-
-	// BigqueryData: Service-specific data for BigQuery.
-	BigqueryData *AuditData `json:"bigqueryData,omitempty"`
-
-	// MethodName: Name of the service method or operation. Defined by the
-	// service. For API call events, should match the name of the API
-	// method. For example, `google.datastore.v1.Datastore.RunQuery`
-	// `google.logging.v1.LoggingService.DeleteLog`
-	MethodName string `json:"methodName,omitempty"`
-
-	// NumResponseItems: If applicable, the number of items returned from a
-	// List or Query API method.
-	NumResponseItems int64 `json:"numResponseItems,omitempty,string"`
-
-	// RequestMetadata: Metadata about the request.
-	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
-
-	// ResourceName: Resource name of the resource or collection that is the
-	// target of this request, as a scheme-less URI, not including the API
-	// service name. For example: shelves/shelf_id/books
-	// shelves/shelf_id/books/book_id
-	ResourceName string `json:"resourceName,omitempty"`
-
-	// ServiceData: Service specific data about the request, response, and
-	// other event data. This should include all request parameters or
-	// response elements, except for parameters that are large or
-	// privacy-sensitive. It should never contain user-generated data (such
-	// as file contents).
-	ServiceData AuditLogServiceData `json:"serviceData,omitempty"`
-
-	// ServiceName: Name of the API service for the request. e.g.,
-	// datastore.googleapis.com
-	ServiceName string `json:"serviceName,omitempty"`
-
-	// Status: The status of the overall API call.
-	Status *Status `json:"status,omitempty"`
-}
-
-type AuditLogServiceData interface{}
-
-// AuthenticationInfo: Authentication information for the call.
-type AuthenticationInfo struct {
-	// PrincipalEmail: Email address of the authenticated user making the
-	// request
-	PrincipalEmail string `json:"principalEmail,omitempty"`
-}
-
-// AuthorizationInfo: Authorization information for the call.
-type AuthorizationInfo struct {
-	// Granted: Whether or not authorization for this resource and
-	// permission was granted.
-	Granted bool `json:"granted,omitempty"`
-
-	// Permission: The required IAM permission.
-	Permission string `json:"permission,omitempty"`
-
-	// Resource: The resource being accessed, as a REST-style string. For
-	// example:
-	// `bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID`
-	Resource string `json:"resource,omitempty"`
-}
-
-// BigQueryAcl: Access control list.
-type BigQueryAcl struct {
-	// Entries: Access control entry list.
-	Entries []*Entry `json:"entries,omitempty"`
-}
-
-// Dataset: BigQuery dataset information.
-type Dataset struct {
-	// Acl: Access contol list for this dataset.
-	Acl *BigQueryAcl `json:"acl,omitempty"`
-
-	// CreateTime: The creation time for this dataset.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// DatasetName: The name of this dataset.
-	DatasetName *DatasetName `json:"datasetName,omitempty"`
-
-	// DefaultTableExpireDuration: The number of milliseconds which should
-	// be added to the creation time to determine the expiration time for
-	// newly created tables. If this value is null then no expiration time
-	// will be set for new tables.
-	DefaultTableExpireDuration string `json:"defaultTableExpireDuration,omitempty"`
-
-	// Info: User-modifiable metadata for this dataset.
-	Info *DatasetInfo `json:"info,omitempty"`
-
-	// UpdateTime: The last modified time for this dataset.
-	UpdateTime string `json:"updateTime,omitempty"`
-}
-
-// DatasetInfo: User-provided metadata for a dataset, primarily for
-// display in the UI.
-type DatasetInfo struct {
-	// Description: The description of a dataset. This can be several
-	// sentences or paragraphs describing the dataset contents in detail.
-	Description string `json:"description,omitempty"`
-
-	// FriendlyName: The human-readable name of a dataset. This should be a
-	// short phrase identifying the dataset (e.g., "Analytics Data 2011").
-	FriendlyName string `json:"friendlyName,omitempty"`
-}
-
-// DatasetInsertRequest: Dataset insert request.
-type DatasetInsertRequest struct {
-	// Resource: Dataset insert payload.
-	Resource *Dataset `json:"resource,omitempty"`
-}
-
-// DatasetInsertResponse: Dataset insert response.
-type DatasetInsertResponse struct {
-	// Resource: Final state of inserted dataset.
-	Resource *Dataset `json:"resource,omitempty"`
-}
-
-// DatasetListRequest: Dataset list request.
-type DatasetListRequest struct {
-	// ListAll: Whether to list all datasets, including hidden ones.
-	ListAll bool `json:"listAll,omitempty"`
-}
-
-// DatasetName: Fully qualified name for a dataset.
-type DatasetName struct {
-	// DatasetId: The ID of the dataset (scoped to the project above).
-	DatasetId string `json:"datasetId,omitempty"`
-
-	// ProjectId: A string containing the id of this project. The id may be
-	// the alphanumeric project ID, or the project number.
-	ProjectId string `json:"projectId,omitempty"`
-}
-
-// DatasetUpdateRequest: Dataset update request.
-type DatasetUpdateRequest struct {
-	// Resource: Dataset update payload.
-	Resource *Dataset `json:"resource,omitempty"`
-}
-
-// DatasetUpdateResponse: Dataset update response.
-type DatasetUpdateResponse struct {
-	// Resource: Final state of updated dataset.
-	Resource *Dataset `json:"resource,omitempty"`
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -387,60 +183,6 @@ type DatasetUpdateResponse struct {
 // (google.protobuf.Empty); } The JSON representation for `Empty` is
 // empty JSON object `{}`.
 type Empty struct {
-}
-
-// Entry: Access control entry.
-type Entry struct {
-	// Domain: Grants access to all members of a domain.
-	Domain string `json:"domain,omitempty"`
-
-	// GroupEmail: Grants access to a group, by e-mail.
-	GroupEmail string `json:"groupEmail,omitempty"`
-
-	// Role: Granted role. Valid roles are READER, WRITER, OWNER.
-	Role string `json:"role,omitempty"`
-
-	// SpecialGroup: Grants access to special groups. Valid groups are
-	// PROJECT_OWNERS, PROJECT_READERS, PROJECT_WRITERS and
-	// ALL_AUTHENTICATED_USERS.
-	SpecialGroup string `json:"specialGroup,omitempty"`
-
-	// UserEmail: Grants access to a user, by e-mail.
-	UserEmail string `json:"userEmail,omitempty"`
-
-	// ViewName: Grants access to a BigQuery View.
-	ViewName *TableName `json:"viewName,omitempty"`
-}
-
-// Extract: Describes an extract job, which exports data to an external
-// source via the export pipeline.
-type Extract struct {
-	// DestinationUris: URI or URIs where extracted data should be written.
-	// Currently, only Bigstore URIs are supported (e.g.,
-	// "gs://bucket/object"). If more than one URI given, output will be
-	// divided into 'partitions' of data, with each partition containing one
-	// or more files. If more than one URI is given, each URI must contain
-	// exactly one '*' which will be replaced with the file number (within
-	// the partition) padded out to 9 digits.
-	DestinationUris []string `json:"destinationUris,omitempty"`
-
-	// SourceTable: Source table.
-	SourceTable *TableName `json:"sourceTable,omitempty"`
-}
-
-// FieldSchema: BigQuery field schema.
-type FieldSchema struct {
-	// Mode: Column mode
-	Mode string `json:"mode,omitempty"`
-
-	// Name: Column name Matches: [A-Za-z_][A-Za-z_0-9]{0,127}
-	Name string `json:"name,omitempty"`
-
-	// Schema: Present iff type == RECORD.
-	Schema *TableSchema `json:"schema,omitempty"`
-
-	// Type: Column type
-	Type string `json:"type,omitempty"`
 }
 
 // HttpRequest: A common proto for logging HTTP requests.
@@ -477,140 +219,6 @@ type HttpRequest struct {
 	UserAgent string `json:"userAgent,omitempty"`
 }
 
-// Job: Combines all of the information about a job.
-type Job struct {
-	// JobConfiguration: Job configuration.
-	JobConfiguration *JobConfiguration `json:"jobConfiguration,omitempty"`
-
-	// JobName: Job name.
-	JobName *JobName `json:"jobName,omitempty"`
-
-	// JobStatistics: Job statistics.
-	JobStatistics *JobStatistics `json:"jobStatistics,omitempty"`
-
-	// JobStatus: Job status.
-	JobStatus *JobStatus `json:"jobStatus,omitempty"`
-}
-
-// JobConfiguration: Job configuration information.
-type JobConfiguration struct {
-	// DryRun: If set, don't actually run the job. Just check that it would
-	// run.
-	DryRun bool `json:"dryRun,omitempty"`
-
-	// Extract: Extract job information.
-	Extract *Extract `json:"extract,omitempty"`
-
-	// Load: Load job information.
-	Load *Load `json:"load,omitempty"`
-
-	// Query: Query job information.
-	Query *Query `json:"query,omitempty"`
-
-	// TableCopy: TableCopy job information.
-	TableCopy *TableCopy `json:"tableCopy,omitempty"`
-}
-
-// JobGetQueryResultsRequest: Job get-query-results request.
-type JobGetQueryResultsRequest struct {
-	// MaxResults: Maximum number of results to return.
-	MaxResults int64 `json:"maxResults,omitempty"`
-
-	// StartRow: Row number to start returning results from.
-	StartRow uint64 `json:"startRow,omitempty,string"`
-}
-
-// JobGetQueryResultsResponse: Job get-query-results response.
-type JobGetQueryResultsResponse struct {
-	// Job: Job that was created to run the query. Includes job state, job
-	// statistics, and job errors (if any). To determine whether the job has
-	// completed, check that job.status.state == DONE. If
-	// job.status.error_result is set, then the job failed. If the job has
-	// not yet completed, call GetQueryResults again.
-	Job *Job `json:"job,omitempty"`
-
-	// TotalResults: Total number of results in query results.
-	TotalResults uint64 `json:"totalResults,omitempty,string"`
-}
-
-// JobInsertRequest: Job insert request.
-type JobInsertRequest struct {
-	// Resource: Job insert payload.
-	Resource *Job `json:"resource,omitempty"`
-}
-
-// JobName: Fully-qualified name for a job.
-type JobName struct {
-	// JobId: The ID of the job (scoped to the project above).
-	JobId string `json:"jobId,omitempty"`
-
-	// ProjectId: A string containing the id of this project.
-	ProjectId string `json:"projectId,omitempty"`
-}
-
-// JobQueryDoneResponse: Job get query-done response.
-type JobQueryDoneResponse struct {
-	// Job: Usage information about completed job.
-	Job *Job `json:"job,omitempty"`
-}
-
-// JobQueryRequest: Job query request.
-type JobQueryRequest struct {
-	// DefaultDataset: Default dataset to use when tables in a query do not
-	// have a dataset specified.
-	DefaultDataset *DatasetName `json:"defaultDataset,omitempty"`
-
-	// DryRun: If set, don't actually run the query.
-	DryRun bool `json:"dryRun,omitempty"`
-
-	// MaxResults: Maximum number of results to return.
-	MaxResults int64 `json:"maxResults,omitempty"`
-
-	// ProjectId: Project that the query should be charged to.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// Query: The query to execute.
-	Query string `json:"query,omitempty"`
-}
-
-// JobQueryResponse: Job query response.
-type JobQueryResponse struct {
-	// Job: Information about queried job.
-	Job *Job `json:"job,omitempty"`
-
-	// TotalResults: The total number of rows in the complete query result
-	// set.
-	TotalResults uint64 `json:"totalResults,omitempty,string"`
-}
-
-// JobStatistics: Job statistics that may change after a job starts.
-type JobStatistics struct {
-	// CreateTime: Time when the job was created (in milliseconds since the
-	// POSIX epoch).
-	CreateTime string `json:"createTime,omitempty"`
-
-	// EndTime: Time when the job ended.
-	EndTime string `json:"endTime,omitempty"`
-
-	// StartTime: Time when the job started.
-	StartTime string `json:"startTime,omitempty"`
-
-	// TotalProcessedBytes: Total bytes processed for a job.
-	TotalProcessedBytes int64 `json:"totalProcessedBytes,omitempty,string"`
-}
-
-// JobStatus: Running state of a job (whether it is running, failed,
-// etc).
-type JobStatus struct {
-	// Error: If the job did not complete successfully, this will contain an
-	// error.
-	Error *Status `json:"error,omitempty"`
-
-	// State: State of a job: PENDING, RUNNING, DONE. Includes no
-	// information about whether the job was successful or not.
-	State string `json:"state,omitempty"`
-}
-
 // ListLogServiceIndexesResponse: Result returned from
 // ListLogServiceIndexesRequest.
 type ListLogServiceIndexesResponse struct {
@@ -621,16 +229,19 @@ type ListLogServiceIndexesResponse struct {
 	// no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServiceIndexPrefixes: A list of log service index prefixes.
+	// ServiceIndexPrefixes: A list of log service index values. Each index
+	// value has the form "/value1/value2/...", where `value1` is a value
+	// in the primary index, `value2` is a value in the secondary index, and
+	// so forth.
 	ServiceIndexPrefixes []string `json:"serviceIndexPrefixes,omitempty"`
 }
 
 // ListLogServiceSinksResponse: Result returned from
 // `ListLogServiceSinks`.
 type ListLogServiceSinksResponse struct {
-	// Sinks: The requested log service sinks. If any of the returned
-	// `LogSink` objects have an empty `destination` field, then call
-	// `logServices.sinks.get` to retrieve the complete `LogSink` object.
+	// Sinks: The requested log service sinks. If a returned `LogSink`
+	// object has an empty `destination` field, the client can retrieve the
+	// complete `LogSink` object by calling `logServices.sinks.get`.
 	Sinks []*LogSink `json:"sinks,omitempty"`
 }
 
@@ -650,15 +261,15 @@ type ListLogServicesResponse struct {
 
 // ListLogSinksResponse: Result returned from `ListLogSinks`.
 type ListLogSinksResponse struct {
-	// Sinks: The requested log sinks. If any of the returned `LogSink`
-	// objects have an empty `destination` field, then call
-	// `logServices.sinks.get` to retrieve the complete `LogSink` object.
+	// Sinks: The requested log sinks. If a returned `LogSink` object has an
+	// empty `destination` field, the client can retrieve the complete
+	// `LogSink` object by calling `log.sinks.get`.
 	Sinks []*LogSink `json:"sinks,omitempty"`
 }
 
 // ListLogsResponse: Result returned from ListLogs.
 type ListLogsResponse struct {
-	// Logs: A list of log resources.
+	// Logs: A list of log descriptions matching the criteria.
 	Logs []*Log `json:"logs,omitempty"`
 
 	// NextPageToken: If there are more results, then `nextPageToken` is
@@ -671,43 +282,31 @@ type ListLogsResponse struct {
 
 // ListSinksResponse: Result returned from `ListSinks`.
 type ListSinksResponse struct {
-	// Sinks: The requested sinks.
+	// Sinks: The requested sinks. If a returned `LogSink` object has an
+	// empty `destination` field, the client can retrieve the complete
+	// `LogSink` object by calling `projects.sinks.get`.
 	Sinks []*LogSink `json:"sinks,omitempty"`
 }
 
-// Load: Describes a load job, which loads data from an external source
-// via the import pipeline.
-type Load struct {
-	// CreateDisposition: Describes when a job should create a table.
-	CreateDisposition string `json:"createDisposition,omitempty"`
-
-	// DestinationTable: table where the imported data should be written.
-	DestinationTable *TableName `json:"destinationTable,omitempty"`
-
-	// Schema: Schema for the data to be imported.
-	Schema *TableSchema `json:"schema,omitempty"`
-
-	// SourceUris: URIs for the data to be imported. Only Bigstore URIs are
-	// supported (e.g., "gs://bucket/object").
-	SourceUris []string `json:"sourceUris,omitempty"`
-
-	// WriteDisposition: Describes how writes should affect the table
-	// associated with the job.
-	WriteDisposition string `json:"writeDisposition,omitempty"`
-}
-
-// Log: A log object.
+// Log: _Output only._ Describes a log, which is a named stream of log
+// entries.
 type Log struct {
-	// DisplayName: Name used when displaying the log to the user (for
-	// example, in a UI). Example: "activity_log"
+	// DisplayName: _Optional._ The common name of the log. Example:
+	// "request_log".
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: REQUIRED: The log's name. Example:
-	// "compute.googleapis.com/activity_log".
+	// Name: The resource name of the log. Example:
+	// "/projects/my-gcp-project-id/logs/LOG_NAME", where `LOG_NAME` is
+	// the URL-encoded given name of the log. The log includes those log
+	// entries whose `LogEntry.log` field contains this given name. To avoid
+	// name collisions, it is a best practice to prefix the given log name
+	// with the service name, but this is not required. Examples of log
+	// given names: "appengine.googleapis.com/request_log",
+	// "apache-access".
 	Name string `json:"name,omitempty"`
 
-	// PayloadType: Type URL describing the expected payload type for the
-	// log.
+	// PayloadType: _Optional_. A URI representing the expected payload type
+	// for log entries.
 	PayloadType string `json:"payloadType,omitempty"`
 }
 
@@ -803,19 +402,19 @@ type LogEntryMetadata struct {
 	Zone string `json:"zone,omitempty"`
 }
 
-// LogError: A problem in a sink or the sink's configuration.
+// LogError: Describes a problem with a logging resource or operation.
 type LogError struct {
-	// Resource: The resource associated with the error. It may be different
-	// from the sink destination. For example, the sink may point to a
-	// BigQuery dataset, but the error may refer to a table resource inside
-	// the dataset.
+	// Resource: A resource name associated with this error. For example,
+	// the name of a Cloud Storage bucket that has insufficient permissions
+	// to be a destination for log entries.
 	Resource string `json:"resource,omitempty"`
 
-	// Status: The description of the last error observed.
+	// Status: The error description, including a classification code, an
+	// error message, and other details.
 	Status *Status `json:"status,omitempty"`
 
-	// TimeNanos: The last time the error was observed, in nanoseconds since
-	// the Unix epoch.
+	// TimeNanos: The time the error was observed, in nanoseconds since the
+	// Unix epoch.
 	TimeNanos int64 `json:"timeNanos,omitempty,string"`
 }
 
@@ -845,82 +444,46 @@ type LogLine struct {
 	Time string `json:"time,omitempty"`
 }
 
-// LogService: A log service object.
+// LogService: _Output only._ Describes a service that writes log
+// entries.
 type LogService struct {
-	// IndexKeys: Label keys used when labeling log entries for this
-	// service. The order of the keys is significant, with higher priority
-	// keys coming earlier in the list.
+	// IndexKeys: A list of the names of the keys used to index and label
+	// individual log entries from this service. The first two keys are used
+	// as the primary and secondary index, respectively. Additional keys may
+	// be used to label the entries. For example, App Engine indexes its
+	// entries by module and by version, so its `indexKeys` field is the
+	// following: [ "appengine.googleapis.com/module_id",
+	// "appengine.googleapis.com/version_id" ]
 	IndexKeys []string `json:"indexKeys,omitempty"`
 
-	// Name: The service's name.
+	// Name: The service's name. Example: "appengine.googleapis.com". Log
+	// names beginning with this string are reserved for this service. This
+	// value can appear in the `LogEntry.metadata.serviceName` field of log
+	// entries associated with this log service.
 	Name string `json:"name,omitempty"`
 }
 
-// LogSink: An object that describes where a log may be written.
+// LogSink: Describes where log entries are written outside of Cloud
+// Logging.
 type LogSink struct {
-	// Destination: The resource to send log entries to. The supported sink
-	// resource types are: + Google Cloud Storage:
-	// `storage.googleapis.com/BUCKET` or `BUCKET.storage.googleapis.com/` +
-	// Google BigQuery:
-	// `bigquery.googleapis.com/projects/PROJECT/datasets/DATASET` Currently
-	// the Cloud Logging API supports at most one sink for each resource
-	// type per log or log service resource.
+	// Destination: The resource name of the destination. Cloud Logging
+	// writes designated log entries to this destination. For example,
+	// "storage.googleapis.com/my-output-bucket".
 	Destination string `json:"destination,omitempty"`
 
-	// Errors: _Output only._ All active errors found for this sink.
+	// Errors: _Output only._ If any errors occur when invoking a sink
+	// method, then this field contains descriptions of the errors.
 	Errors []*LogError `json:"errors,omitempty"`
 
-	// Filter: One Platform filter expression. If provided, only the
-	// messages matching the filter will be published.
+	// Filter: An advanced logs filter. If present, only log entries
+	// matching the filter are written. Only project sinks use this field;
+	// log sinks and log service sinks must not include a filter.
 	Filter string `json:"filter,omitempty"`
 
-	// Name: The name of this sink. This is a client-assigned identifier for
-	// the resource. This is ignored by UpdateLogSink and
-	// UpdateLogServicesSink.
+	// Name: The client-assigned name of this sink. For example,
+	// "my-syslog-sink". The name must be unique among the sinks of a
+	// similar kind in the project.
 	Name string `json:"name,omitempty"`
-}
-
-// Money: Represents an amount of money with its currency type.
-type Money struct {
-	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
-	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Nanos: Number of nano (10^-9) units of the amount. The value must be
-	// between -999,999,999 and +999,999,999 inclusive. If `units` is
-	// positive, `nanos` must be positive or zero. If `units` is zero,
-	// `nanos` can be positive, zero, or negative. If `units` is negative,
-	// `nanos` must be negative or zero. For example $-1.75 is represented
-	// as `units`=-1 and `nanos`=-750,000,000.
-	Nanos int64 `json:"nanos,omitempty"`
-
-	// Units: The whole units of the amount. For example if `currencyCode`
-	// is "USD", then 1 unit is one US dollar.
-	Units int64 `json:"units,omitempty,string"`
-}
-
-// Query: Describes a query job, which executes a SQL-like query.
-type Query struct {
-	// CreateDisposition: Describe when a job should create a table.
-	CreateDisposition string `json:"createDisposition,omitempty"`
-
-	// DefaultDataset: If a table name is specified without a dataset in a
-	// query, this dataset will be added to table name.
-	DefaultDataset *DatasetName `json:"defaultDataset,omitempty"`
-
-	// DestinationTable: table where results should be written.
-	DestinationTable *TableName `json:"destinationTable,omitempty"`
-
-	// Query: SQL query to run.
-	Query string `json:"query,omitempty"`
-
-	// TableDefinitions: Additional tables that this query might reference
-	// beyond the tables already defined in BigQuery. This is typically used
-	// to provide external data references for this query.
-	TableDefinitions []*TableDefinition `json:"tableDefinitions,omitempty"`
-
-	// WriteDisposition: Describes how writes should affect the table
-	// associated with the job.
-	WriteDisposition string `json:"writeDisposition,omitempty"`
 }
 
 // RequestLog: Complete log information about a single request to an
@@ -1048,22 +611,6 @@ type RequestLog struct {
 	WasLoadingRequest bool `json:"wasLoadingRequest,omitempty"`
 }
 
-// RequestMetadata: Metadata about the request.
-type RequestMetadata struct {
-	// CallerIp: IP address of the caller
-	CallerIp string `json:"callerIp,omitempty"`
-
-	// CallerSuppliedUserAgent: User-Agent of the caller. This is not
-	// authenticated, so a malicious caller could provide a misleading
-	// value. For example: `google-api-python-client/1.4.0` The request was
-	// made by the Google API client for Python. `Cloud SDK Command Line
-	// Tool apitools-client/1.0 gcloud/0.9.62` The request was made by the
-	// Google Cloud SDK CLI (gcloud). `AppEngine-Google;
-	// (+http://code.google.com/appengine; appid: s~my-project` The request
-	// was made from the `my-project` App Engine app.
-	CallerSuppliedUserAgent string `json:"callerSuppliedUserAgent,omitempty"`
-}
-
 // SourceLocation: Specifies a location in a source file.
 type SourceLocation struct {
 	// File: Source file name. May or may not be a fully qualified name,
@@ -1149,139 +696,6 @@ type Status struct {
 
 type StatusDetails interface{}
 
-// Table: Message containing BigQuery table information.
-type Table struct {
-	// CreateTime: The creation time for this table.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// ExpireTime: The expiration date for this table. After this time, the
-	// table will not be externally visible and all storage associated with
-	// the table may be garbage collected. If this field is not present, the
-	// HelixDataset.default_table_expiration_ms value will be used to
-	// calculate the expiration time. Otherwise, the table will live until
-	// explicitly deleted.
-	ExpireTime string `json:"expireTime,omitempty"`
-
-	// Info: User-modifiable metadata for this table.
-	Info *TableInfo `json:"info,omitempty"`
-
-	// Schema: The table schema.
-	Schema *TableSchema `json:"schema,omitempty"`
-
-	// TableName: The table and dataset IDs uniquely describing this table.
-	TableName *TableName `json:"tableName,omitempty"`
-
-	// TruncateTime: The last truncation time for this table. This will only
-	// be updated when operation specified with WRITE_TRUNCATE.
-	TruncateTime string `json:"truncateTime,omitempty"`
-
-	// View: The table provides a Database View behavior and functionality
-	// based on a query.
-	View *TableViewDefinition `json:"view,omitempty"`
-}
-
-// TableCopy: Describes a copy job, which copies an existing table to
-// another table.
-type TableCopy struct {
-	// CreateDisposition: Describe when a job should create a table.
-	CreateDisposition string `json:"createDisposition,omitempty"`
-
-	// DestinationTable: Destination table.
-	DestinationTable *TableName `json:"destinationTable,omitempty"`
-
-	// SourceTables: Source tables.
-	SourceTables []*TableName `json:"sourceTables,omitempty"`
-
-	// WriteDisposition: Describe whether the copy operation should append
-	// or not.
-	WriteDisposition string `json:"writeDisposition,omitempty"`
-}
-
-// TableDataListRequest: Table data-list request.
-type TableDataListRequest struct {
-	// MaxResults: Maximum number of results to return.
-	MaxResults int64 `json:"maxResults,omitempty"`
-
-	// StartRow: Starting row offset.
-	StartRow uint64 `json:"startRow,omitempty,string"`
-}
-
-// TableDefinition: Per Query external tables. These tables can be
-// referenced with 'name' in the query and can be read just like any
-// other table.
-type TableDefinition struct {
-	// Name: Name of the table. This will be used to reference this table in
-	// the query.
-	Name string `json:"name,omitempty"`
-
-	// SourceUris: URIs for the data to be imported.
-	SourceUris []string `json:"sourceUris,omitempty"`
-}
-
-// TableInfo: User-provided metadata for a table, primarily for display
-// in the UI.
-type TableInfo struct {
-	// Description: The description of a table. This can be several
-	// sentences or paragraphs describing the table contents in detail.
-	Description string `json:"description,omitempty"`
-
-	// FriendlyName: The human-readable name of a table. This should be a
-	// short phrase identifying the table (e.g., "Analytics Data - Jan
-	// 2011").
-	FriendlyName string `json:"friendlyName,omitempty"`
-}
-
-// TableInsertRequest: ==== Table =======// Table insert request.
-type TableInsertRequest struct {
-	// Resource: Table insert payload.
-	Resource *Table `json:"resource,omitempty"`
-}
-
-// TableInsertResponse: Table insert response.
-type TableInsertResponse struct {
-	// Resource: Final state of inserted table.
-	Resource *Table `json:"resource,omitempty"`
-}
-
-// TableName: Fully-qualified name for a table -- referenced through a
-// dataset.
-type TableName struct {
-	// DatasetId: The ID of the dataset (scoped to the project above).
-	DatasetId string `json:"datasetId,omitempty"`
-
-	// ProjectId: A string containing the id of this project. The id be the
-	// alphanumeric project ID, or the project number.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// TableId: The ID of the table (scoped to the dataset above).
-	TableId string `json:"tableId,omitempty"`
-}
-
-// TableSchema: BigQuery table schema.
-type TableSchema struct {
-	// Fields: One field per column in the table
-	Fields []*FieldSchema `json:"fields,omitempty"`
-}
-
-// TableUpdateRequest: Table update request.
-type TableUpdateRequest struct {
-	// Resource: Table update payload.
-	Resource *Table `json:"resource,omitempty"`
-}
-
-// TableUpdateResponse: Table update response.
-type TableUpdateResponse struct {
-	// Resource: Final state of updated table.
-	Resource *Table `json:"resource,omitempty"`
-}
-
-// TableViewDefinition: Metadata for a table to become like a Database
-// View based on a SQL-like query.
-type TableViewDefinition struct {
-	// Query: Sql query to run.
-	Query string `json:"query,omitempty"`
-}
-
 // WriteLogEntriesRequest: The parameters to WriteLogEntries.
 type WriteLogEntriesRequest struct {
 	// CommonLabels: Metadata labels that apply to all log entries in this
@@ -1307,17 +721,20 @@ type ProjectsLogServicesListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: Lists log services associated with log entries ingested for a
-// project.
+// List: Lists the log services that have log entries in this project.
 func (r *ProjectsLogServicesService) List(projectsId string) *ProjectsLogServicesListCall {
 	c := &ProjectsLogServicesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
 	return c
 }
 
-// Log sets the optional parameter "log": The name of the log resource
-// whose services are to be listed. log for which to list services. When
-// empty, all services are listed.
+// Log sets the optional parameter "log": If empty, all log services
+// contributing log entries to the project are listed. Otherwise, this
+// field must be the resource name of a log, such as
+// "projects/my-project/appengine.googleapis.com%2Frequest_log", and
+// then the only services listed are those associated with entries in
+// the log. A service is associated with an entry if its name is in the
+// entry's `LogEntryMetadata.serviceName` field.
 func (c *ProjectsLogServicesListCall) Log(log string) *ProjectsLogServicesListCall {
 	c.opt_["log"] = log
 	return c
@@ -1389,7 +806,7 @@ func (c *ProjectsLogServicesListCall) Do() (*ListLogServicesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists log services associated with log entries ingested for a project.",
+	//   "description": "Lists the log services that have log entries in this project.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.logServices.list",
 	//   "parameterOrder": [
@@ -1397,7 +814,7 @@ func (c *ProjectsLogServicesListCall) Do() (*ListLogServicesResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "log": {
-	//       "description": "The name of the log resource whose services are to be listed. log for which to list services. When empty, all services are listed.",
+	//       "description": "If empty, all log services contributing log entries to the project are listed. Otherwise, this field must be the resource name of a log, such as `\"projects/my-project/appengine.googleapis.com%2Frequest_log\"`, and then the only services listed are those associated with entries in the log. A service is associated with an entry if its name is in the entry's `LogEntryMetadata.serviceName` field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1413,7 +830,7 @@ func (c *ProjectsLogServicesListCall) Do() (*ListLogServicesResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `projectName`. The project resource whose services are to be listed.",
+	//       "description": "Part of `projectName`. The resource name of the project whose services are to be listed.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1425,6 +842,7 @@ func (c *ProjectsLogServicesListCall) Do() (*ListLogServicesResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -1441,7 +859,7 @@ type ProjectsLogServicesIndexesListCall struct {
 	opt_          map[string]interface{}
 }
 
-// List: Lists log service indexes associated with a log service.
+// List: Lists the current index values for a log service.
 func (r *ProjectsLogServicesIndexesService) List(projectsId string, logServicesId string) *ProjectsLogServicesIndexesListCall {
 	c := &ProjectsLogServicesIndexesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -1449,35 +867,42 @@ func (r *ProjectsLogServicesIndexesService) List(projectsId string, logServicesI
 	return c
 }
 
-// Depth sets the optional parameter "depth": A limit to the number of
-// levels of the index hierarchy that are expanded. If `depth` is 0, it
-// defaults to the level specified by the prefix field (the number of
-// slash separators). The default empty prefix implies a `depth` of 1.
-// It is an error for `depth` to be any non-zero value less than the
-// number of components in `indexPrefix`.
+// Depth sets the optional parameter "depth": A non-negative integer
+// that limits the number of levels of the index hierarchy that are
+// returned. If `depth` is 1 (default), only the first index key value
+// is returned. If `depth` is 2, both primary and secondary key values
+// are returned. If `depth` is 0, the depth is the number of
+// slash-separators in the `indexPrefix` field, not counting a slash
+// appearing as the last character of the prefix. If the `indexPrefix`
+// field is empty, the default depth is 1. It is an error for `depth` to
+// be any positive value less than the number of components in
+// `indexPrefix`.
 func (c *ProjectsLogServicesIndexesListCall) Depth(depth int64) *ProjectsLogServicesIndexesListCall {
 	c.opt_["depth"] = depth
 	return c
 }
 
 // IndexPrefix sets the optional parameter "indexPrefix": Restricts the
-// indexes returned to be those with a specified prefix. The prefix has
-// the form "/label_value/label_value/...", in order corresponding to
-// the [`LogService
+// index values returned to be those with a specified prefix for each
+// index key. This field has the form "/prefix1/prefix2/...", in order
+// corresponding to the [`LogService
 // indexKeys`][google.logging.v1.LogService.index_keys]. Non-empty
-// prefixes must begin with `/` . Example prefixes: + "/myModule/"
-// retrieves App Engine versions associated with `myModule`. The
-// trailing slash terminates the value. + "/myModule" retrieves App
-// Engine modules with names beginning with `myModule`. + "" retrieves
-// all indexes.
+// prefixes must begin with `/`. For example, App Engine's two keys are
+// the module ID and the version ID. Following is the effect of using
+// various values for `indexPrefix`: + "/Mod/" retrieves `/Mod/10` and
+// `/Mod/11` but not `/ModA/10`. + "/Mod` retrieves `/Mod/10`,
+// `/Mod/11` and `/ModA/10` but not `/XXX/33`. + "/Mod/1" retrieves
+// `/Mod/10` and `/Mod/11` but not `/ModA/10`. + "/Mod/10/" retrieves
+// `/Mod/10` only. + An empty prefix or "/" retrieves all values.
 func (c *ProjectsLogServicesIndexesListCall) IndexPrefix(indexPrefix string) *ProjectsLogServicesIndexesListCall {
 	c.opt_["indexPrefix"] = indexPrefix
 	return c
 }
 
-// Log sets the optional parameter "log": A log resource like
-// `/projects/project_id/logs/log_name`, identifying the log for which
-// to list service indexes.
+// Log sets the optional parameter "log": _Optional_. The resource name
+// of a log, such as "projects/project_id/logs/log_name". If present,
+// indexes are returned for any service associated with entries in the
+// log.
 func (c *ProjectsLogServicesIndexesListCall) Log(log string) *ProjectsLogServicesIndexesListCall {
 	c.opt_["log"] = log
 	return c
@@ -1556,7 +981,7 @@ func (c *ProjectsLogServicesIndexesListCall) Do() (*ListLogServiceIndexesRespons
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists log service indexes associated with a log service.",
+	//   "description": "Lists the current index values for a log service.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.logServices.indexes.list",
 	//   "parameterOrder": [
@@ -1565,18 +990,18 @@ func (c *ProjectsLogServicesIndexesListCall) Do() (*ListLogServiceIndexesRespons
 	//   ],
 	//   "parameters": {
 	//     "depth": {
-	//       "description": "A limit to the number of levels of the index hierarchy that are expanded. If `depth` is 0, it defaults to the level specified by the prefix field (the number of slash separators). The default empty prefix implies a `depth` of 1. It is an error for `depth` to be any non-zero value less than the number of components in `indexPrefix`.",
+	//       "description": "A non-negative integer that limits the number of levels of the index hierarchy that are returned. If `depth` is 1 (default), only the first index key value is returned. If `depth` is 2, both primary and secondary key values are returned. If `depth` is 0, the depth is the number of slash-separators in the `indexPrefix` field, not counting a slash appearing as the last character of the prefix. If the `indexPrefix` field is empty, the default depth is 1. It is an error for `depth` to be any positive value less than the number of components in `indexPrefix`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "indexPrefix": {
-	//       "description": "Restricts the indexes returned to be those with a specified prefix. The prefix has the form `\"/label_value/label_value/...\"`, in order corresponding to the [`LogService indexKeys`][google.logging.v1.LogService.index_keys]. Non-empty prefixes must begin with `/` . Example prefixes: + `\"/myModule/\"` retrieves App Engine versions associated with `myModule`. The trailing slash terminates the value. + `\"/myModule\"` retrieves App Engine modules with names beginning with `myModule`. + `\"\"` retrieves all indexes.",
+	//       "description": "Restricts the index values returned to be those with a specified prefix for each index key. This field has the form `\"/prefix1/prefix2/...\"`, in order corresponding to the [`LogService indexKeys`][google.logging.v1.LogService.index_keys]. Non-empty prefixes must begin with `/`. For example, App Engine's two keys are the module ID and the version ID. Following is the effect of using various values for `indexPrefix`: + `\"/Mod/\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod` retrieves `/Mod/10`, `/Mod/11` and `/ModA/10` but not `/XXX/33`. + `\"/Mod/1\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod/10/\"` retrieves `/Mod/10` only. + An empty prefix or `\"/\"` retrieves all values.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "log": {
-	//       "description": "A log resource like `/projects/project_id/logs/log_name`, identifying the log for which to list service indexes.",
+	//       "description": "_Optional_. The resource name of a log, such as `\"projects/project_id/logs/log_name\"`. If present, indexes are returned for any service associated with entries in the log.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1598,7 +1023,7 @@ func (c *ProjectsLogServicesIndexesListCall) Do() (*ListLogServiceIndexesRespons
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `serviceName`. A log service resource of the form `/projects/*/logServices/*`. The service indexes of the log service are returned. Example: `\"/projects/myProj/logServices/appengine.googleapis.com\"`.",
+	//       "description": "Part of `serviceName`. The resource name of a log service whose service indexes are requested. Example: `\"projects/my-project-id/logServices/appengine.googleapis.com\"`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1610,6 +1035,7 @@ func (c *ProjectsLogServicesIndexesListCall) Do() (*ListLogServiceIndexesRespons
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -1627,7 +1053,8 @@ type ProjectsLogServicesSinksCreateCall struct {
 	opt_          map[string]interface{}
 }
 
-// Create: Creates the specified log service sink resource.
+// Create: Creates a log service sink. All log entries from a specified
+// log service are written to the destination.
 func (r *ProjectsLogServicesSinksService) Create(projectsId string, logServicesId string, logsink *LogSink) *ProjectsLogServicesSinksCreateCall {
 	c := &ProjectsLogServicesSinksCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -1683,7 +1110,7 @@ func (c *ProjectsLogServicesSinksCreateCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the specified log service sink resource.",
+	//   "description": "Creates a log service sink. All log entries from a specified log service are written to the destination.",
 	//   "httpMethod": "POST",
 	//   "id": "logging.projects.logServices.sinks.create",
 	//   "parameterOrder": [
@@ -1698,7 +1125,7 @@ func (c *ProjectsLogServicesSinksCreateCall) Do() (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `serviceName`. The name of the service in which to create a sink.",
+	//       "description": "Part of `serviceName`. The resource name of the log service to which the sink is bound.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1729,7 +1156,8 @@ type ProjectsLogServicesSinksDeleteCall struct {
 	opt_          map[string]interface{}
 }
 
-// Delete: Deletes the specified log service sink.
+// Delete: Deletes a log service sink. After deletion, no new log
+// entries are written to the destination.
 func (r *ProjectsLogServicesSinksService) Delete(projectsId string, logServicesId string, sinksId string) *ProjectsLogServicesSinksDeleteCall {
 	c := &ProjectsLogServicesSinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -1780,7 +1208,7 @@ func (c *ProjectsLogServicesSinksDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified log service sink.",
+	//   "description": "Deletes a log service sink. After deletion, no new log entries are written to the destination.",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.projects.logServices.sinks.delete",
 	//   "parameterOrder": [
@@ -1796,7 +1224,7 @@ func (c *ProjectsLogServicesSinksDeleteCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink to delete.",
+	//       "description": "Part of `sinkName`. The resource name of the log service sink to delete.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1830,7 +1258,7 @@ type ProjectsLogServicesSinksGetCall struct {
 	opt_          map[string]interface{}
 }
 
-// Get: Gets the specified log service sink resource.
+// Get: Gets a log service sink.
 func (r *ProjectsLogServicesSinksService) Get(projectsId string, logServicesId string, sinksId string) *ProjectsLogServicesSinksGetCall {
 	c := &ProjectsLogServicesSinksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -1881,7 +1309,7 @@ func (c *ProjectsLogServicesSinksGetCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified log service sink resource.",
+	//   "description": "Gets a log service sink.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.logServices.sinks.get",
 	//   "parameterOrder": [
@@ -1897,7 +1325,7 @@ func (c *ProjectsLogServicesSinksGetCall) Do() (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink to return.",
+	//       "description": "Part of `sinkName`. The resource name of the log service sink to return.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1915,6 +1343,7 @@ func (c *ProjectsLogServicesSinksGetCall) Do() (*LogSink, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -1931,7 +1360,7 @@ type ProjectsLogServicesSinksListCall struct {
 	opt_          map[string]interface{}
 }
 
-// List: Lists log service sinks associated with the specified service.
+// List: Lists log service sinks associated with a log service.
 func (r *ProjectsLogServicesSinksService) List(projectsId string, logServicesId string) *ProjectsLogServicesSinksListCall {
 	c := &ProjectsLogServicesSinksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -1980,7 +1409,7 @@ func (c *ProjectsLogServicesSinksListCall) Do() (*ListLogServiceSinksResponse, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists log service sinks associated with the specified service.",
+	//   "description": "Lists log service sinks associated with a log service.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.logServices.sinks.list",
 	//   "parameterOrder": [
@@ -1995,7 +1424,7 @@ func (c *ProjectsLogServicesSinksListCall) Do() (*ListLogServiceSinksResponse, e
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `serviceName`. The name of the service for which to list sinks.",
+	//       "description": "Part of `serviceName`. The log service whose sinks are wanted.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2007,6 +1436,7 @@ func (c *ProjectsLogServicesSinksListCall) Do() (*ListLogServiceSinksResponse, e
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -2025,7 +1455,8 @@ type ProjectsLogServicesSinksUpdateCall struct {
 	opt_          map[string]interface{}
 }
 
-// Update: Creates or update the specified log service sink resource.
+// Update: Updates a log service sink. If the sink does not exist, it is
+// created.
 func (r *ProjectsLogServicesSinksService) Update(projectsId string, logServicesId string, sinksId string, logsink *LogSink) *ProjectsLogServicesSinksUpdateCall {
 	c := &ProjectsLogServicesSinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2083,7 +1514,7 @@ func (c *ProjectsLogServicesSinksUpdateCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates or update the specified log service sink resource.",
+	//   "description": "Updates a log service sink. If the sink does not exist, it is created.",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.projects.logServices.sinks.update",
 	//   "parameterOrder": [
@@ -2099,7 +1530,7 @@ func (c *ProjectsLogServicesSinksUpdateCall) Do() (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink to update.",
+	//       "description": "Part of `sinkName`. The resource name of the log service sink to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2135,8 +1566,8 @@ type ProjectsLogsDeleteCall struct {
 	opt_       map[string]interface{}
 }
 
-// Delete: Deletes the specified log resource and all log entries
-// contained in it.
+// Delete: Deletes a log and all its log entries. The log will reappear
+// if it receives new entries.
 func (r *ProjectsLogsService) Delete(projectsId string, logsId string) *ProjectsLogsDeleteCall {
 	c := &ProjectsLogsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2185,7 +1616,7 @@ func (c *ProjectsLogsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified log resource and all log entries contained in it.",
+	//   "description": "Deletes a log and all its log entries. The log will reappear if it receives new entries.",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.projects.logs.delete",
 	//   "parameterOrder": [
@@ -2200,7 +1631,7 @@ func (c *ProjectsLogsDeleteCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `logName`. The log resource to delete.",
+	//       "description": "Part of `logName`. The resource name of the log to be deleted.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2226,7 +1657,8 @@ type ProjectsLogsListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: Lists log resources belonging to the specified project.
+// List: Lists the logs in the project. Only logs that have entries are
+// listed.
 func (r *ProjectsLogsService) List(projectsId string) *ProjectsLogsListCall {
 	c := &ProjectsLogsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2250,25 +1682,23 @@ func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall
 }
 
 // ServiceIndexPrefix sets the optional parameter "serviceIndexPrefix":
-// A log service index prefix for which to list logs. Only logs
-// containing entries whose metadata that includes these label values
-// (associated with index keys) are returned. The prefix is a slash
-// separated list of values, and need not specify all index labels. An
-// empty index (or a single slash) matches all log service indexes.
+// The purpose of this field is to restrict the listed logs to those
+// with entries of a certain kind. If `serviceName` is the name of a log
+// service, then this field may contain values for the log service's
+// indexes. Only logs that have entries whose indexes include the values
+// are listed. The format for this field is "/val1/val2.../valN",
+// where `val1` is a value for the first index, `val2` for the second
+// index, etc. An empty value (a single slash) for an index matches all
+// values, and you can omit values for later indexes entirely.
 func (c *ProjectsLogsListCall) ServiceIndexPrefix(serviceIndexPrefix string) *ProjectsLogsListCall {
 	c.opt_["serviceIndexPrefix"] = serviceIndexPrefix
 	return c
 }
 
-// ServiceName sets the optional parameter "serviceName": A service name
-// for which to list logs. Only logs containing entries whose metadata
-// includes this service name are returned. If `serviceName` and
-// `serviceIndexPrefix` are both empty, then all log names are returned.
-// To list all log names, regardless of service, leave both the
-// `serviceName` and `serviceIndexPrefix` empty. To list log names
-// containing entries with a particular service name (or explicitly
-// empty service name) set `serviceName` to the desired value and
-// `serviceIndexPrefix` to "/".
+// ServiceName sets the optional parameter "serviceName": If not empty,
+// this field must be a log service name such as
+// "compute.googleapis.com". Only logs associated with that that log
+// service are listed.
 func (c *ProjectsLogsListCall) ServiceName(serviceName string) *ProjectsLogsListCall {
 	c.opt_["serviceName"] = serviceName
 	return c
@@ -2326,7 +1756,7 @@ func (c *ProjectsLogsListCall) Do() (*ListLogsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists log resources belonging to the specified project.",
+	//   "description": "Lists the logs in the project. Only logs that have entries are listed.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.logs.list",
 	//   "parameterOrder": [
@@ -2345,18 +1775,18 @@ func (c *ProjectsLogsListCall) Do() (*ListLogsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `projectName`. The project name for which to list the log resources.",
+	//       "description": "Part of `projectName`. The resource name of the project whose logs are requested. If both `serviceName` and `serviceIndexPrefix` are empty, then all logs with entries in this project are listed.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "serviceIndexPrefix": {
-	//       "description": "A log service index prefix for which to list logs. Only logs containing entries whose metadata that includes these label values (associated with index keys) are returned. The prefix is a slash separated list of values, and need not specify all index labels. An empty index (or a single slash) matches all log service indexes.",
+	//       "description": "The purpose of this field is to restrict the listed logs to those with entries of a certain kind. If `serviceName` is the name of a log service, then this field may contain values for the log service's indexes. Only logs that have entries whose indexes include the values are listed. The format for this field is `\"/val1/val2.../valN\"`, where `val1` is a value for the first index, `val2` for the second index, etc. An empty value (a single slash) for an index matches all values, and you can omit values for later indexes entirely.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "serviceName": {
-	//       "description": "A service name for which to list logs. Only logs containing entries whose metadata includes this service name are returned. If `serviceName` and `serviceIndexPrefix` are both empty, then all log names are returned. To list all log names, regardless of service, leave both the `serviceName` and `serviceIndexPrefix` empty. To list log names containing entries with a particular service name (or explicitly empty service name) set `serviceName` to the desired value and `serviceIndexPrefix` to `\"/\"`.",
+	//       "description": "If not empty, this field must be a log service name such as `\"compute.googleapis.com\"`. Only logs associated with that that log service are listed.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2367,6 +1797,7 @@ func (c *ProjectsLogsListCall) Do() (*ListLogsResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -2384,14 +1815,12 @@ type ProjectsLogsEntriesWriteCall struct {
 	opt_                   map[string]interface{}
 }
 
-// Write: Creates one or more log entries in a log. You must supply a
-// list of `LogEntry` objects, named `entries`. Each `LogEntry` object
-// must contain a payload object and a `LogEntryMetadata` object that
-// describes the entry. You must fill in all the fields of the entry,
-// metadata, and payload. You can also supply a map, `commonLabels`,
-// that supplies default (key, value) data for the
-// `entries[].metadata.labels` maps, saving you the trouble of creating
-// identical copies for each entry.
+// Write: Writes log entries to Cloud Logging. Each entry consists of a
+// `LogEntry` object. You must fill in all the fields of the object,
+// including one of the payload fields. You may supply a map,
+// `commonLabels`, that holds default (key, value) data for the
+// `entries[].metadata.labels` map in each entry, saving you the trouble
+// of creating identical copies for each entry.
 func (r *ProjectsLogsEntriesService) Write(projectsId string, logsId string, writelogentriesrequest *WriteLogEntriesRequest) *ProjectsLogsEntriesWriteCall {
 	c := &ProjectsLogsEntriesWriteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2447,7 +1876,7 @@ func (c *ProjectsLogsEntriesWriteCall) Do() (*WriteLogEntriesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates one or more log entries in a log. You must supply a list of `LogEntry` objects, named `entries`. Each `LogEntry` object must contain a payload object and a `LogEntryMetadata` object that describes the entry. You must fill in all the fields of the entry, metadata, and payload. You can also supply a map, `commonLabels`, that supplies default (key, value) data for the `entries[].metadata.labels` maps, saving you the trouble of creating identical copies for each entry.",
+	//   "description": "Writes log entries to Cloud Logging. Each entry consists of a `LogEntry` object. You must fill in all the fields of the object, including one of the payload fields. You may supply a map, `commonLabels`, that holds default (key, value) data for the `entries[].metadata.labels` map in each entry, saving you the trouble of creating identical copies for each entry.",
 	//   "httpMethod": "POST",
 	//   "id": "logging.projects.logs.entries.write",
 	//   "parameterOrder": [
@@ -2462,7 +1891,7 @@ func (c *ProjectsLogsEntriesWriteCall) Do() (*WriteLogEntriesResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `logName`. The name of the log resource into which to insert the log entries.",
+	//       "description": "Part of `logName`. The resource name of the log that will receive the log entries.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2494,7 +1923,8 @@ type ProjectsLogsSinksCreateCall struct {
 	opt_       map[string]interface{}
 }
 
-// Create: Creates the specified log sink resource.
+// Create: Creates a log sink. All log entries for a specified log are
+// written to the destination.
 func (r *ProjectsLogsSinksService) Create(projectsId string, logsId string, logsink *LogSink) *ProjectsLogsSinksCreateCall {
 	c := &ProjectsLogsSinksCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2550,7 +1980,7 @@ func (c *ProjectsLogsSinksCreateCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the specified log sink resource.",
+	//   "description": "Creates a log sink. All log entries for a specified log are written to the destination.",
 	//   "httpMethod": "POST",
 	//   "id": "logging.projects.logs.sinks.create",
 	//   "parameterOrder": [
@@ -2565,7 +1995,7 @@ func (c *ProjectsLogsSinksCreateCall) Do() (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `logName`. The log in which to create a sink resource.",
+	//       "description": "Part of `logName`. The resource name of the log to which to the sink is bound.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2596,7 +2026,8 @@ type ProjectsLogsSinksDeleteCall struct {
 	opt_       map[string]interface{}
 }
 
-// Delete: Deletes the specified log sink resource.
+// Delete: Deletes a log sink. After deletion, no new log entries are
+// written to the destination.
 func (r *ProjectsLogsSinksService) Delete(projectsId string, logsId string, sinksId string) *ProjectsLogsSinksDeleteCall {
 	c := &ProjectsLogsSinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2647,7 +2078,7 @@ func (c *ProjectsLogsSinksDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified log sink resource.",
+	//   "description": "Deletes a log sink. After deletion, no new log entries are written to the destination.",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.projects.logs.sinks.delete",
 	//   "parameterOrder": [
@@ -2663,7 +2094,7 @@ func (c *ProjectsLogsSinksDeleteCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink to delete.",
+	//       "description": "Part of `sinkName`. The resource name of the log sink to delete.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2697,7 +2128,7 @@ type ProjectsLogsSinksGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Gets the specified log sink resource.
+// Get: Gets a log sink.
 func (r *ProjectsLogsSinksService) Get(projectsId string, logsId string, sinksId string) *ProjectsLogsSinksGetCall {
 	c := &ProjectsLogsSinksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2748,7 +2179,7 @@ func (c *ProjectsLogsSinksGetCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified log sink resource.",
+	//   "description": "Gets a log sink.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.logs.sinks.get",
 	//   "parameterOrder": [
@@ -2764,7 +2195,7 @@ func (c *ProjectsLogsSinksGetCall) Do() (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink resource to return.",
+	//       "description": "Part of `sinkName`. The resource name of the log sink to return.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2782,6 +2213,7 @@ func (c *ProjectsLogsSinksGetCall) Do() (*LogSink, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -2798,7 +2230,7 @@ type ProjectsLogsSinksListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: Lists log sinks associated with the specified log.
+// List: Lists log sinks associated with a log.
 func (r *ProjectsLogsSinksService) List(projectsId string, logsId string) *ProjectsLogsSinksListCall {
 	c := &ProjectsLogsSinksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2847,7 +2279,7 @@ func (c *ProjectsLogsSinksListCall) Do() (*ListLogSinksResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists log sinks associated with the specified log.",
+	//   "description": "Lists log sinks associated with a log.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.logs.sinks.list",
 	//   "parameterOrder": [
@@ -2862,7 +2294,7 @@ func (c *ProjectsLogsSinksListCall) Do() (*ListLogSinksResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `logName`. The log for which to list sinks.",
+	//       "description": "Part of `logName`. The log whose sinks are wanted. For example, `\"compute.google.com/syslog\"`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2874,6 +2306,7 @@ func (c *ProjectsLogsSinksListCall) Do() (*ListLogSinksResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -2892,7 +2325,8 @@ type ProjectsLogsSinksUpdateCall struct {
 	opt_       map[string]interface{}
 }
 
-// Update: Creates or updates the specified log sink resource.
+// Update: Updates a log sink. If the sink does not exist, it is
+// created.
 func (r *ProjectsLogsSinksService) Update(projectsId string, logsId string, sinksId string, logsink *LogSink) *ProjectsLogsSinksUpdateCall {
 	c := &ProjectsLogsSinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -2950,7 +2384,7 @@ func (c *ProjectsLogsSinksUpdateCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates or updates the specified log sink resource.",
+	//   "description": "Updates a log sink. If the sink does not exist, it is created.",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.projects.logs.sinks.update",
 	//   "parameterOrder": [
@@ -2966,7 +2400,7 @@ func (c *ProjectsLogsSinksUpdateCall) Do() (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink to update.",
+	//       "description": "Part of `sinkName`. The resource name of the sink to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3002,7 +2436,8 @@ type ProjectsSinksCreateCall struct {
 	opt_       map[string]interface{}
 }
 
-// Create: Creates the specified sink resource.
+// Create: Creates a project sink. A logs filter determines which log
+// entries are written to the destination.
 func (r *ProjectsSinksService) Create(projectsId string, logsink *LogSink) *ProjectsSinksCreateCall {
 	c := &ProjectsSinksCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3056,7 +2491,7 @@ func (c *ProjectsSinksCreateCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the specified sink resource.",
+	//   "description": "Creates a project sink. A logs filter determines which log entries are written to the destination.",
 	//   "httpMethod": "POST",
 	//   "id": "logging.projects.sinks.create",
 	//   "parameterOrder": [
@@ -3064,7 +2499,7 @@ func (c *ProjectsSinksCreateCall) Do() (*LogSink, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectsId": {
-	//       "description": "Part of `projectName`. The name of the project in which to create a sink.",
+	//       "description": "Part of `projectName`. The resource name of the project to which the sink is bound.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3094,7 +2529,8 @@ type ProjectsSinksDeleteCall struct {
 	opt_       map[string]interface{}
 }
 
-// Delete: Deletes the specified sink.
+// Delete: Deletes a project sink. After deletion, no new log entries
+// are written to the destination.
 func (r *ProjectsSinksService) Delete(projectsId string, sinksId string) *ProjectsSinksDeleteCall {
 	c := &ProjectsSinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3143,7 +2579,7 @@ func (c *ProjectsSinksDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified sink.",
+	//   "description": "Deletes a project sink. After deletion, no new log entries are written to the destination.",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.projects.sinks.delete",
 	//   "parameterOrder": [
@@ -3152,7 +2588,7 @@ func (c *ProjectsSinksDeleteCall) Do() (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink to delete.",
+	//       "description": "Part of `sinkName`. The resource name of the project sink to delete.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3185,7 +2621,7 @@ type ProjectsSinksGetCall struct {
 	opt_       map[string]interface{}
 }
 
-// Get: Gets the specified sink resource.
+// Get: Gets a project sink.
 func (r *ProjectsSinksService) Get(projectsId string, sinksId string) *ProjectsSinksGetCall {
 	c := &ProjectsSinksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3234,7 +2670,7 @@ func (c *ProjectsSinksGetCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified sink resource.",
+	//   "description": "Gets a project sink.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.sinks.get",
 	//   "parameterOrder": [
@@ -3243,7 +2679,7 @@ func (c *ProjectsSinksGetCall) Do() (*LogSink, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink to return.",
+	//       "description": "Part of `sinkName`. The resource name of the project sink to return.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3261,6 +2697,7 @@ func (c *ProjectsSinksGetCall) Do() (*LogSink, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -3276,7 +2713,7 @@ type ProjectsSinksListCall struct {
 	opt_       map[string]interface{}
 }
 
-// List: Lists sinks associated with the specified project.
+// List: Lists project sinks associated with a project.
 func (r *ProjectsSinksService) List(projectsId string) *ProjectsSinksListCall {
 	c := &ProjectsSinksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3323,7 +2760,7 @@ func (c *ProjectsSinksListCall) Do() (*ListSinksResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists sinks associated with the specified project.",
+	//   "description": "Lists project sinks associated with a project.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.sinks.list",
 	//   "parameterOrder": [
@@ -3331,7 +2768,7 @@ func (c *ProjectsSinksListCall) Do() (*ListSinksResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectsId": {
-	//       "description": "Part of `projectName`. The name of the project for which to list sinks.",
+	//       "description": "Part of `projectName`. The project whose sinks are wanted.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3343,6 +2780,7 @@ func (c *ProjectsSinksListCall) Do() (*ListSinksResponse, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/logging.admin",
 	//     "https://www.googleapis.com/auth/logging.read"
 	//   ]
@@ -3360,7 +2798,8 @@ type ProjectsSinksUpdateCall struct {
 	opt_       map[string]interface{}
 }
 
-// Update: Creates or update the specified sink resource.
+// Update: Updates a project sink. If the sink does not exist, it is
+// created. The destination, filter, or both may be updated.
 func (r *ProjectsSinksService) Update(projectsId string, sinksId string, logsink *LogSink) *ProjectsSinksUpdateCall {
 	c := &ProjectsSinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3416,7 +2855,7 @@ func (c *ProjectsSinksUpdateCall) Do() (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates or update the specified sink resource.",
+	//   "description": "Updates a project sink. If the sink does not exist, it is created. The destination, filter, or both may be updated.",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.projects.sinks.update",
 	//   "parameterOrder": [
@@ -3425,7 +2864,7 @@ func (c *ProjectsSinksUpdateCall) Do() (*LogSink, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectsId": {
-	//       "description": "Part of `sinkName`. The name of the sink to update.",
+	//       "description": "Part of `sinkName`. The resource name of the project sink to update.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

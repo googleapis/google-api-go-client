@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/qMCHMKeJQxbErur94_YIqV8WAbQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/DxnE4TNUGn7fmGw0kTlvolIQtuA\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20150807",
+ "revision": "20150831",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -2076,7 +2076,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for this resource."
+     "description": "[Output Only] Server defined URL for this resource."
     },
     "serviceAccounts": {
      "type": "array",
@@ -2150,7 +2150,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for this resource."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -2282,15 +2282,8 @@
   "InstanceGroupManager": {
    "id": "InstanceGroupManager",
    "type": "object",
-   "description": "InstanceGroupManagers\n\nNext available tag: 17",
+   "description": "InstanceGroupManagers\n\nNext available tag: 19",
    "properties": {
-    "autoHealingPolicies": {
-     "type": "array",
-     "description": "The autohealing policy for this managed instance group. You can specify only one value.",
-     "items": {
-      "$ref": "InstanceGroupManagerAutoHealingPolicy"
-     }
-    },
     "baseInstanceName": {
      "type": "string",
      "description": "The base instance name to use for instances in this group. The value must be 1-58 characters long. Instances are named by appending a hyphen and a random four-character string to the base instance name. The base instance name must comply with RFC1035.",
@@ -2447,28 +2440,6 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] The URL for this aggregated list of managed instance groups. The server defines this URL."
-    }
-   }
-  },
-  "InstanceGroupManagerAutoHealingPolicy": {
-   "id": "InstanceGroupManagerAutoHealingPolicy",
-   "type": "object",
-   "properties": {
-    "actionType": {
-     "type": "string",
-     "description": "The action to perform when an instance becomes unhealthy. Possible values are RECREATE or RESTART. RECREATE replaces an unhealthy instance with a new instance that is based on the instance template for this managed instance group. RESTART performs a soft restart on an instance. If the instance cannot restart softly, the instance performs a hard restart.",
-     "enum": [
-      "RECREATE",
-      "RESTART"
-     ],
-     "enumDescriptions": [
-      "",
-      ""
-     ]
-    },
-    "healthCheck": {
-     "type": "string",
-     "description": "The URL for the HealthCheck that signals autohealing."
     }
    }
   },
@@ -2854,7 +2825,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for this resource."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -3145,7 +3116,7 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource. The name must be 1-63 characters long, and comply with RFC1035.",
+     "description": "[Output Only] Name of the resource. The name is 1-63 characters long and complies with RFC1035.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
@@ -4468,11 +4439,11 @@
    "properties": {
     "automaticRestart": {
      "type": "boolean",
-     "description": "Specifies whether the instance should be automatically restarted if it is terminated by Compute Engine (not terminated by a user)."
+     "description": "Specifies whether the instance should be automatically restarted if it is terminated by Compute Engine (not terminated by a user). You can only set the automatic restart option for standard instances. Preemptible instances cannot be automatically restarted."
     },
     "onHostMaintenance": {
      "type": "string",
-     "description": "Defines the maintenance behavior for this instance. The default behavior is MIGRATE. For more information, see Setting maintenance behavior.",
+     "description": "Defines the maintenance behavior for this instance. For standard instances, the default behavior is MIGRATE. For preemptible instances, the default and only possible behavior is TERMINATE. For more information, see Setting maintenance behavior.",
      "enum": [
       "MIGRATE",
       "TERMINATE"
@@ -4484,7 +4455,7 @@
     },
     "preemptible": {
      "type": "boolean",
-     "description": "Whether the Instance is preemptible."
+     "description": "Whether the instance is preemptible."
     }
    }
   },
@@ -4504,7 +4475,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for the resource."
+     "description": "[Output Only] Server defined URL for the resource."
     }
    }
   },

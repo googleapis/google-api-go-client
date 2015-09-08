@@ -808,6 +808,14 @@ type Tag struct {
 	// SetupTag: The list of setup tags. Currently we only allow one.
 	SetupTag []*SetupTag `json:"setupTag,omitempty"`
 
+	// TagFiringOption: Option to fire this tag.
+	//
+	// Possible values:
+	//   "oncePerEvent"
+	//   "oncePerLoad"
+	//   "unlimited"
+	TagFiringOption string `json:"tagFiringOption,omitempty"`
+
 	// TagId: The Tag ID uniquely identifies the GTM Tag.
 	TagId string `json:"tagId,omitempty"`
 

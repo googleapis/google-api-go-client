@@ -560,6 +560,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "content:v2sandbox",
+   "name": "content",
+   "version": "v2sandbox",
+   "title": "Content API for Shopping",
+   "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/content/v2sandbox/rest",
+   "discoveryLink": "./apis/content/v2sandbox/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/shopping-content",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "content:v2",
    "name": "content",
    "version": "v2",
@@ -571,7 +587,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "https://developers.google.com/shopping-content/v2/",
+   "documentationLink": "https://developers.google.com/shopping-content",
    "preferred": true
   },
   {
@@ -1114,7 +1130,7 @@
    "name": "appengine",
    "version": "v1beta4",
    "title": "Google App Engine Admin API",
-   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+   "description": "The Google App Engine Admin API enables developers to provision and manage their App Engine applications.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appengine/v1beta4/rest",
    "discoveryLink": "./apis/appengine/v1beta4/rest",
    "icons": {
@@ -1282,6 +1298,22 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://developers.google.com/playmoviespartner/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "proximitybeacon:v1beta1",
+   "name": "proximitybeacon",
+   "version": "v1beta1",
+   "title": "Google Proximity Beacon API",
+   "description": "This API provides services to register, manage, index, and search beacons.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/proximitybeacon/v1beta1/rest",
+   "discoveryLink": "./apis/proximitybeacon/v1beta1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/beacons/proximity/",
    "preferred": true
   },
   {

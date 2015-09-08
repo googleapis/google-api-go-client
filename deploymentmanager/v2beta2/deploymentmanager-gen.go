@@ -46,8 +46,7 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
-	// Platform services
+	// View your data across Google Cloud Platform services
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// View and manage your Google Cloud Platform management resources and
@@ -527,8 +526,19 @@ type TargetConfiguration struct {
 
 // Type: A resource type supported by Deployment Manager.
 type Type struct {
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// InsertTime: [Output Only] Timestamp when the type was created, in
+	// RFC3339 text format.
+	InsertTime string `json:"insertTime,omitempty"`
+
 	// Name: Name of the type.
 	Name string `json:"name,omitempty"`
+
+	// SelfLink: [Output Only] Self link for the type.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 // TypesListResponse: A response that returns all Types supported by

@@ -269,6 +269,14 @@ type CreateLeadResponse struct {
 
 // DebugInfo: Debug information about this request.
 type DebugInfo struct {
+	// ServerInfo: Info about the server that serviced this request.
+	ServerInfo string `json:"serverInfo,omitempty"`
+
+	// ServerTraceInfo: Server-side debug stack trace.
+	ServerTraceInfo string `json:"serverTraceInfo,omitempty"`
+
+	// ServiceUrl: URL of the service that handled this request.
+	ServiceUrl string `json:"serviceUrl,omitempty"`
 }
 
 // EventData: Key value data pair for an event.
@@ -780,12 +788,44 @@ type RequestMetadata struct {
 
 	// PartnersSessionId: Google Partners session ID.
 	PartnersSessionId string `json:"partnersSessionId,omitempty"`
+
+	// TrafficSource: Source of traffic for the current request.
+	TrafficSource *TrafficSource `json:"trafficSource,omitempty"`
+
+	// UserOverrides: Values to use instead of the user's respective
+	// defaults for the current request. These are only honored by
+	// whitelisted products.
+	UserOverrides *UserOverrides `json:"userOverrides,omitempty"`
 }
 
 // ResponseMetadata: Common data that is in each API response.
 type ResponseMetadata struct {
 	// DebugInfo: Debug information about this request.
 	DebugInfo *DebugInfo `json:"debugInfo,omitempty"`
+}
+
+// TrafficSource: Source of traffic for the current request.
+type TrafficSource struct {
+	// TrafficSourceId: Identifier to indicate where the traffic comes from.
+	// An identifier has multiple letters created by a team which redirected
+	// the traffic to us.
+	TrafficSourceId string `json:"trafficSourceId,omitempty"`
+
+	// TrafficSubId: Second level identifier to indicate where the traffic
+	// comes from. An identifier has multiple letters created by a team
+	// which redirected the traffic to us.
+	TrafficSubId string `json:"trafficSubId,omitempty"`
+}
+
+// UserOverrides: Values to use instead of the user's respective
+// defaults. These are only honored by whitelisted products.
+type UserOverrides struct {
+	// IpAddress: IP address to use instead of the user's geo-located IP
+	// address.
+	IpAddress string `json:"ipAddress,omitempty"`
+
+	// UserId: Logged-in user ID to impersonate instead of the user's ID.
+	UserId string `json:"userId,omitempty"`
 }
 
 // method id "partners.clientMessages.log":
@@ -927,6 +967,40 @@ func (c *CompaniesGetCall) RequestMetadataPartnersSessionId(requestMetadataPartn
 	return c
 }
 
+// RequestMetadataTrafficSourceTrafficSourceId sets the optional
+// parameter "requestMetadata.trafficSource.trafficSourceId": Identifier
+// to indicate where the traffic comes from. An identifier has multiple
+// letters created by a team which redirected the traffic to us.
+func (c *CompaniesGetCall) RequestMetadataTrafficSourceTrafficSourceId(requestMetadataTrafficSourceTrafficSourceId string) *CompaniesGetCall {
+	c.opt_["requestMetadata.trafficSource.trafficSourceId"] = requestMetadataTrafficSourceTrafficSourceId
+	return c
+}
+
+// RequestMetadataTrafficSourceTrafficSubId sets the optional parameter
+// "requestMetadata.trafficSource.trafficSubId": Second level identifier
+// to indicate where the traffic comes from. An identifier has multiple
+// letters created by a team which redirected the traffic to us.
+func (c *CompaniesGetCall) RequestMetadataTrafficSourceTrafficSubId(requestMetadataTrafficSourceTrafficSubId string) *CompaniesGetCall {
+	c.opt_["requestMetadata.trafficSource.trafficSubId"] = requestMetadataTrafficSourceTrafficSubId
+	return c
+}
+
+// RequestMetadataUserOverridesIpAddress sets the optional parameter
+// "requestMetadata.userOverrides.ipAddress": IP address to use instead
+// of the user's geo-located IP address.
+func (c *CompaniesGetCall) RequestMetadataUserOverridesIpAddress(requestMetadataUserOverridesIpAddress string) *CompaniesGetCall {
+	c.opt_["requestMetadata.userOverrides.ipAddress"] = requestMetadataUserOverridesIpAddress
+	return c
+}
+
+// RequestMetadataUserOverridesUserId sets the optional parameter
+// "requestMetadata.userOverrides.userId": Logged-in user ID to
+// impersonate instead of the user's ID.
+func (c *CompaniesGetCall) RequestMetadataUserOverridesUserId(requestMetadataUserOverridesUserId string) *CompaniesGetCall {
+	c.opt_["requestMetadata.userOverrides.userId"] = requestMetadataUserOverridesUserId
+	return c
+}
+
 // View sets the optional parameter "view": The view of `Company`
 // resource to be returned. This must not be `COMPANY_VIEW_UNSPECIFIED`.
 //
@@ -967,6 +1041,18 @@ func (c *CompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	if v, ok := c.opt_["requestMetadata.partnersSessionId"]; ok {
 		params.Set("requestMetadata.partnersSessionId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSourceId"]; ok {
+		params.Set("requestMetadata.trafficSource.trafficSourceId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSubId"]; ok {
+		params.Set("requestMetadata.trafficSource.trafficSubId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.userOverrides.ipAddress"]; ok {
+		params.Set("requestMetadata.userOverrides.ipAddress", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.userOverrides.userId"]; ok {
+		params.Set("requestMetadata.userOverrides.userId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -1040,6 +1126,26 @@ func (c *CompaniesGetCall) Do() (*GetCompanyResponse, error) {
 	//     },
 	//     "requestMetadata.partnersSessionId": {
 	//       "description": "Google Partners session ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.trafficSource.trafficSourceId": {
+	//       "description": "Identifier to indicate where the traffic comes from. An identifier has multiple letters created by a team which redirected the traffic to us.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.trafficSource.trafficSubId": {
+	//       "description": "Second level identifier to indicate where the traffic comes from. An identifier has multiple letters created by a team which redirected the traffic to us.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.userOverrides.ipAddress": {
+	//       "description": "IP address to use instead of the user's geo-located IP address.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.userOverrides.userId": {
+	//       "description": "Logged-in user ID to impersonate instead of the user's ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1237,6 +1343,40 @@ func (c *CompaniesListCall) RequestMetadataPartnersSessionId(requestMetadataPart
 	return c
 }
 
+// RequestMetadataTrafficSourceTrafficSourceId sets the optional
+// parameter "requestMetadata.trafficSource.trafficSourceId": Identifier
+// to indicate where the traffic comes from. An identifier has multiple
+// letters created by a team which redirected the traffic to us.
+func (c *CompaniesListCall) RequestMetadataTrafficSourceTrafficSourceId(requestMetadataTrafficSourceTrafficSourceId string) *CompaniesListCall {
+	c.opt_["requestMetadata.trafficSource.trafficSourceId"] = requestMetadataTrafficSourceTrafficSourceId
+	return c
+}
+
+// RequestMetadataTrafficSourceTrafficSubId sets the optional parameter
+// "requestMetadata.trafficSource.trafficSubId": Second level identifier
+// to indicate where the traffic comes from. An identifier has multiple
+// letters created by a team which redirected the traffic to us.
+func (c *CompaniesListCall) RequestMetadataTrafficSourceTrafficSubId(requestMetadataTrafficSourceTrafficSubId string) *CompaniesListCall {
+	c.opt_["requestMetadata.trafficSource.trafficSubId"] = requestMetadataTrafficSourceTrafficSubId
+	return c
+}
+
+// RequestMetadataUserOverridesIpAddress sets the optional parameter
+// "requestMetadata.userOverrides.ipAddress": IP address to use instead
+// of the user's geo-located IP address.
+func (c *CompaniesListCall) RequestMetadataUserOverridesIpAddress(requestMetadataUserOverridesIpAddress string) *CompaniesListCall {
+	c.opt_["requestMetadata.userOverrides.ipAddress"] = requestMetadataUserOverridesIpAddress
+	return c
+}
+
+// RequestMetadataUserOverridesUserId sets the optional parameter
+// "requestMetadata.userOverrides.userId": Logged-in user ID to
+// impersonate instead of the user's ID.
+func (c *CompaniesListCall) RequestMetadataUserOverridesUserId(requestMetadataUserOverridesUserId string) *CompaniesListCall {
+	c.opt_["requestMetadata.userOverrides.userId"] = requestMetadataUserOverridesUserId
+	return c
+}
+
 // Services sets the optional parameter "services": List of services the
 // company can help with.
 //
@@ -1332,6 +1472,18 @@ func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	}
 	if v, ok := c.opt_["requestMetadata.partnersSessionId"]; ok {
 		params.Set("requestMetadata.partnersSessionId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSourceId"]; ok {
+		params.Set("requestMetadata.trafficSource.trafficSourceId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSubId"]; ok {
+		params.Set("requestMetadata.trafficSource.trafficSubId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.userOverrides.ipAddress"]; ok {
+		params.Set("requestMetadata.userOverrides.ipAddress", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.userOverrides.userId"]; ok {
+		params.Set("requestMetadata.userOverrides.userId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["services"]; ok {
 		params.Set("services", fmt.Sprintf("%v", v))
@@ -1482,6 +1634,26 @@ func (c *CompaniesListCall) Do() (*ListCompaniesResponse, error) {
 	//     },
 	//     "requestMetadata.partnersSessionId": {
 	//       "description": "Google Partners session ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.trafficSource.trafficSourceId": {
+	//       "description": "Identifier to indicate where the traffic comes from. An identifier has multiple letters created by a team which redirected the traffic to us.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.trafficSource.trafficSubId": {
+	//       "description": "Second level identifier to indicate where the traffic comes from. An identifier has multiple letters created by a team which redirected the traffic to us.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.userOverrides.ipAddress": {
+	//       "description": "IP address to use instead of the user's geo-located IP address.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.userOverrides.userId": {
+	//       "description": "Logged-in user ID to impersonate instead of the user's ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1718,6 +1890,40 @@ func (c *UserStatesListCall) RequestMetadataPartnersSessionId(requestMetadataPar
 	return c
 }
 
+// RequestMetadataTrafficSourceTrafficSourceId sets the optional
+// parameter "requestMetadata.trafficSource.trafficSourceId": Identifier
+// to indicate where the traffic comes from. An identifier has multiple
+// letters created by a team which redirected the traffic to us.
+func (c *UserStatesListCall) RequestMetadataTrafficSourceTrafficSourceId(requestMetadataTrafficSourceTrafficSourceId string) *UserStatesListCall {
+	c.opt_["requestMetadata.trafficSource.trafficSourceId"] = requestMetadataTrafficSourceTrafficSourceId
+	return c
+}
+
+// RequestMetadataTrafficSourceTrafficSubId sets the optional parameter
+// "requestMetadata.trafficSource.trafficSubId": Second level identifier
+// to indicate where the traffic comes from. An identifier has multiple
+// letters created by a team which redirected the traffic to us.
+func (c *UserStatesListCall) RequestMetadataTrafficSourceTrafficSubId(requestMetadataTrafficSourceTrafficSubId string) *UserStatesListCall {
+	c.opt_["requestMetadata.trafficSource.trafficSubId"] = requestMetadataTrafficSourceTrafficSubId
+	return c
+}
+
+// RequestMetadataUserOverridesIpAddress sets the optional parameter
+// "requestMetadata.userOverrides.ipAddress": IP address to use instead
+// of the user's geo-located IP address.
+func (c *UserStatesListCall) RequestMetadataUserOverridesIpAddress(requestMetadataUserOverridesIpAddress string) *UserStatesListCall {
+	c.opt_["requestMetadata.userOverrides.ipAddress"] = requestMetadataUserOverridesIpAddress
+	return c
+}
+
+// RequestMetadataUserOverridesUserId sets the optional parameter
+// "requestMetadata.userOverrides.userId": Logged-in user ID to
+// impersonate instead of the user's ID.
+func (c *UserStatesListCall) RequestMetadataUserOverridesUserId(requestMetadataUserOverridesUserId string) *UserStatesListCall {
+	c.opt_["requestMetadata.userOverrides.userId"] = requestMetadataUserOverridesUserId
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1738,6 +1944,18 @@ func (c *UserStatesListCall) doRequest(alt string) (*http.Response, error) {
 	}
 	if v, ok := c.opt_["requestMetadata.partnersSessionId"]; ok {
 		params.Set("requestMetadata.partnersSessionId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSourceId"]; ok {
+		params.Set("requestMetadata.trafficSource.trafficSourceId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSubId"]; ok {
+		params.Set("requestMetadata.trafficSource.trafficSubId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.userOverrides.ipAddress"]; ok {
+		params.Set("requestMetadata.userOverrides.ipAddress", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["requestMetadata.userOverrides.userId"]; ok {
+		params.Set("requestMetadata.userOverrides.userId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -1782,6 +2000,26 @@ func (c *UserStatesListCall) Do() (*ListUserStatesResponse, error) {
 	//     },
 	//     "requestMetadata.partnersSessionId": {
 	//       "description": "Google Partners session ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.trafficSource.trafficSourceId": {
+	//       "description": "Identifier to indicate where the traffic comes from. An identifier has multiple letters created by a team which redirected the traffic to us.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.trafficSource.trafficSubId": {
+	//       "description": "Second level identifier to indicate where the traffic comes from. An identifier has multiple letters created by a team which redirected the traffic to us.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.userOverrides.ipAddress": {
+	//       "description": "IP address to use instead of the user's geo-located IP address.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestMetadata.userOverrides.userId": {
+	//       "description": "Logged-in user ID to impersonate instead of the user's ID.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

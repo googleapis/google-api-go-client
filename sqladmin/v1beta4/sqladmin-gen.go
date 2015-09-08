@@ -467,6 +467,9 @@ type ExportContextCsvExportOptions struct {
 // ExportContextSqlExportOptions: Options for exporting data as SQL
 // statements.
 type ExportContextSqlExportOptions struct {
+	// SchemaOnly: Export only schema.
+	SchemaOnly bool `json:"schemaOnly,omitempty"`
+
 	// Tables: Tables to export, or that were exported, from the specified
 	// database. If you specify tables, specify one and only one database.
 	Tables []string `json:"tables,omitempty"`
@@ -919,6 +922,14 @@ type SslCertDetail struct {
 	CertPrivateKey string `json:"certPrivateKey,omitempty"`
 }
 
+// SslCertsCreateEphemeralRequest: SslCerts create ephemeral certificate
+// request.
+type SslCertsCreateEphemeralRequest struct {
+	// PublicKey: PEM encoded public key to include in the signed
+	// certificate.
+	PublicKey string `json:"public_key,omitempty"`
+}
+
 // SslCertsInsertRequest: SslCerts insert request.
 type SslCertsInsertRequest struct {
 	// CommonName: User supplied name. Must be a distinct name from the
@@ -949,13 +960,6 @@ type SslCertsListResponse struct {
 
 	// Kind: This is always sql#sslCertsList.
 	Kind string `json:"kind,omitempty"`
-}
-
-// SslCertsSignRequest: SslCerts sign request.
-type SslCertsSignRequest struct {
-	// PublicKey: PEM encoded public key to include in the signed
-	// certificate.
-	PublicKey string `json:"public_key,omitempty"`
 }
 
 // Tier: A Google Cloud SQL service tier resource.
@@ -1031,6 +1035,108 @@ type UsersListResponse struct {
 	// You can use this identifier to retrieve the Operations resource that
 	// has information about the operation.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+}
+
+// method id "sql.backupRuns.delete":
+
+type BackupRunsDeleteCall struct {
+	s        *Service
+	project  string
+	instance string
+	id       int64
+	opt_     map[string]interface{}
+}
+
+// Delete: Deletes the backup taken by a backup run.
+func (r *BackupRunsService) Delete(project string, instance string, id int64) *BackupRunsDeleteCall {
+	c := &BackupRunsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.instance = instance
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BackupRunsDeleteCall) Fields(s ...googleapi.Field) *BackupRunsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/backupRuns/{id}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+		"id":       strconv.FormatInt(c.id, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *BackupRunsDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the backup taken by a backup run.",
+	//   "httpMethod": "DELETE",
+	//   "id": "sql.backupRuns.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The ID of the Backup Run to delete.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "instance": {
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID of the project that contains the instance.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{project}/instances/{instance}/backupRuns/{id}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
 }
 
 // method id "sql.backupRuns.get":
@@ -3636,6 +3742,111 @@ func (c *OperationsListCall) Do() (*OperationsListResponse, error) {
 
 }
 
+// method id "sql.sslCerts.createEphemeral":
+
+type SslCertsCreateEphemeralCall struct {
+	s                              *Service
+	project                        string
+	instance                       string
+	sslcertscreateephemeralrequest *SslCertsCreateEphemeralRequest
+	opt_                           map[string]interface{}
+}
+
+// CreateEphemeral: Generates a short-lived X509 certificate containing
+// the provided public key and signed by a private key specific to the
+// target instance. Users may use the certificate to authenticate as
+// themselves when connecting to the database.
+func (r *SslCertsService) CreateEphemeral(project string, instance string, sslcertscreateephemeralrequest *SslCertsCreateEphemeralRequest) *SslCertsCreateEphemeralCall {
+	c := &SslCertsCreateEphemeralCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.instance = instance
+	c.sslcertscreateephemeralrequest = sslcertscreateephemeralrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertsCreateEphemeralCall) Fields(s ...googleapi.Field) *SslCertsCreateEphemeralCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sslcertscreateephemeralrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/createEphemeral")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *SslCertsCreateEphemeralCall) Do() (*SslCert, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *SslCert
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.",
+	//   "httpMethod": "POST",
+	//   "id": "sql.sslCerts.createEphemeral",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID of the Cloud SQL project.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{project}/instances/{instance}/createEphemeral",
+	//   "request": {
+	//     "$ref": "SslCertsCreateEphemeralRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SslCert"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
 // method id "sql.sslCerts.delete":
 
 type SslCertsDeleteCall struct {
@@ -4027,111 +4238,6 @@ func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 	//   "path": "projects/{project}/instances/{instance}/sslCerts",
 	//   "response": {
 	//     "$ref": "SslCertsListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/sqlservice.admin"
-	//   ]
-	// }
-
-}
-
-// method id "sql.sslCerts.sign":
-
-type SslCertsSignCall struct {
-	s                   *Service
-	project             string
-	instance            string
-	sslcertssignrequest *SslCertsSignRequest
-	opt_                map[string]interface{}
-}
-
-// Sign: Generates a short-lived X509 certificate containing the
-// provided public key and signed by a private key specific to the
-// target instance. Users may use the certificate to authenticate as
-// themselves when connecting to the database.
-func (r *SslCertsService) Sign(project string, instance string, sslcertssignrequest *SslCertsSignRequest) *SslCertsSignCall {
-	c := &SslCertsSignCall{s: r.s, opt_: make(map[string]interface{})}
-	c.project = project
-	c.instance = instance
-	c.sslcertssignrequest = sslcertssignrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *SslCertsSignCall) Fields(s ...googleapi.Field) *SslCertsSignCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *SslCertsSignCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sslcertssignrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/certSign")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"project":  c.project,
-		"instance": c.instance,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	return c.s.client.Do(req)
-}
-
-func (c *SslCertsSignCall) Do() (*SslCert, error) {
-	res, err := c.doRequest("json")
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *SslCert
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.",
-	//   "httpMethod": "POST",
-	//   "id": "sql.sslCerts.sign",
-	//   "parameterOrder": [
-	//     "project",
-	//     "instance"
-	//   ],
-	//   "parameters": {
-	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "project": {
-	//       "description": "Project ID of the Cloud SQL project.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "projects/{project}/instances/{instance}/certSign",
-	//   "request": {
-	//     "$ref": "SslCertsSignRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "SslCert"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

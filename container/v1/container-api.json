@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Vmrv21Kwmp4yTwV0XSOuz_5Y67k\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FD4oCwspiZqN6eCjsBmxDzsj5B8\"",
  "discoveryVersion": "v1",
  "id": "container:v1",
  "name": "container",
@@ -17,7 +17,7 @@
  "documentationLink": "https://cloud.google.com/container-engine/",
  "protocol": "rest",
  "baseUrl": "https://container.googleapis.com/",
- "basePath": "",
+ "basePath": "/",
  "rootUrl": "https://container.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

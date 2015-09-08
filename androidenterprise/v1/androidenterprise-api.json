@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/iV3v-C_yUys3U_llqVYPlrZ-gmI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/G6EgYjNU-ojgndBQyBgS2Y6o-AY\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20150729",
+ "revision": "20150902",
  "title": "Google Play EMM API",
  "description": "Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -269,7 +269,7 @@
    "properties": {
     "collection": {
      "type": "array",
-     "description": "An ordered collection of products which can be made visible on the Google Play Store app to a selected group of users.",
+     "description": "An ordered collection of products which can be made visible on the Google Play Store to a selected group of users.",
      "items": {
       "$ref": "Collection"
      }
@@ -397,6 +397,20 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#enterprisesListResponse\".",
      "default": "androidenterprise#enterprisesListResponse"
+    }
+   }
+  },
+  "EnterprisesSendTestPushNotificationResponse": {
+   "id": "EnterprisesSendTestPushNotificationResponse",
+   "type": "object",
+   "properties": {
+    "messageId": {
+     "type": "string",
+     "description": "The message ID of the test push notification that was sent."
+    },
+    "topicName": {
+     "type": "string",
+     "description": "The name of the Cloud Pubsub topic to which notifications for this enterprise's enrolled account will be sent."
     }
    }
   },
@@ -1397,6 +1411,29 @@
      ],
      "response": {
       "$ref": "EnterprisesListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "sendTestPushNotification": {
+     "id": "androidenterprise.enterprises.sendTestPushNotification",
+     "path": "enterprises/{enterpriseId}/sendTestPushNotification",
+     "httpMethod": "POST",
+     "description": "Sends a test push notification to validate the MDM integration with the Google Cloud Pubsub service for this enterprise.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "response": {
+      "$ref": "EnterprisesSendTestPushNotificationResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"

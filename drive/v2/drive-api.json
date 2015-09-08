@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/plQwzVIDWGtIGduRkjd1Yo9v3ps\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FuKfBgqWMugOHYGywxsOsf7Vfb4\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150806",
+ "revision": "20150827",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -1113,7 +1113,7 @@
       },
       "restricted": {
        "type": "boolean",
-       "description": "Whether viewers are prevented from downloading this file."
+       "description": "Whether viewers and commenters are prevented from downloading, printing, and copying this file."
       },
       "starred": {
        "type": "boolean",
@@ -2164,6 +2164,11 @@
        "minimum": "0",
        "location": "query"
       },
+      "orderBy": {
+       "type": "string",
+       "description": "A comma-separated list of sort keys. Valid keys are 'createdDate', 'folder', 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate', 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and 'title'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate desc,title. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.",
+       "location": "query"
+      },
       "pageToken": {
        "type": "string",
        "description": "Page token for children.",
@@ -2729,6 +2734,11 @@
        "minimum": "0",
        "location": "query"
       },
+      "orderBy": {
+       "type": "string",
+       "description": "A comma-separated list of sort keys. Valid keys are 'createdDate', 'folder', 'lastViewedByMeDate', 'modifiedByMeDate', 'modifiedDate', 'quotaBytesUsed', 'recency', 'sharedWithMeDate', 'starred', and 'title'. Each key sorts ascending by default, but may be reversed with the 'desc' modifier. Example usage: ?orderBy=folder,modifiedDate desc,title. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.",
+       "location": "query"
+      },
       "pageToken": {
        "type": "string",
        "description": "Page token for files.",
@@ -2785,7 +2795,7 @@
       },
       "convert": {
        "type": "boolean",
-       "description": "Whether to convert this file to the corresponding Google Docs format.",
+       "description": "This parameter is deprecated and has no function.",
        "default": "false",
        "location": "query"
       },
@@ -2797,7 +2807,7 @@
       },
       "modifiedDateBehavior": {
        "type": "string",
-       "description": "How the modifiedDate field should be updated. This overrides setModifiedDate.",
+       "description": "Determines the behavior in which modifiedDate is updated. This overrides setModifiedDate.",
        "enum": [
         "fromBody",
         "fromBodyIfNeeded",
@@ -2818,7 +2828,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions. For details on how revisions are retained, see the Drive Help Center.",
        "default": "true",
        "location": "query"
       },
@@ -2983,7 +2993,7 @@
       },
       "convert": {
        "type": "boolean",
-       "description": "Whether to convert this file to the corresponding Google Docs format.",
+       "description": "This parameter is deprecated and has no function.",
        "default": "false",
        "location": "query"
       },
@@ -2995,7 +3005,7 @@
       },
       "modifiedDateBehavior": {
        "type": "string",
-       "description": "How the modifiedDate field should be updated. This overrides setModifiedDate.",
+       "description": "Determines the behavior in which modifiedDate is updated. This overrides setModifiedDate.",
        "enum": [
         "fromBody",
         "fromBodyIfNeeded",
@@ -3016,7 +3026,7 @@
       },
       "newRevision": {
        "type": "boolean",
-       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions.",
+       "description": "Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions. For details on how revisions are retained, see the Drive Help Center.",
        "default": "true",
        "location": "query"
       },

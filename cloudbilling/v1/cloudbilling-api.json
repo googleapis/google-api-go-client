@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/2xpTQokSmGy8pGl0PMKEH0hgYFg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-C-cocmB3hdYP8G1pbP8mxOVUcw\"",
  "discoveryVersion": "v1",
  "id": "cloudbilling:v1",
  "name": "cloudbilling",
@@ -17,7 +17,7 @@
  "documentationLink": "https://cloud.google.com/billing/",
  "protocol": "rest",
  "baseUrl": "https://cloudbilling.googleapis.com/",
- "basePath": "",
+ "basePath": "/",
  "rootUrl": "https://cloudbilling.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

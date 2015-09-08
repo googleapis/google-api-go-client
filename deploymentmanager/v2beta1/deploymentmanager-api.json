@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/t0V9siTlTV0Mvn1pOduLWsDDLF0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/u5FQM4I03EZTfBK_pxzZ11vNzAs\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2beta1",
  "name": "deploymentmanager",
  "version": "v2beta1",
- "revision": "20150807",
+ "revision": "20150831",
  "title": "Google Cloud Deployment Manager API",
  "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -76,7 +76,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+     "description": "View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/ndev.cloudman": {
      "description": "View and manage your Google Cloud Platform management resources and deployment status information"

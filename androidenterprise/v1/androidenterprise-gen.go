@@ -339,7 +339,7 @@ type CollectionViewersListResponse struct {
 // CollectionsListResponse: The collection resources for the enterprise.
 type CollectionsListResponse struct {
 	// Collection: An ordered collection of products which can be made
-	// visible on the Google Play Store app to a selected group of users.
+	// visible on the Google Play Store to a selected group of users.
 	Collection []*Collection `json:"collection,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -460,6 +460,16 @@ type EnterprisesListResponse struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "androidenterprise#enterprisesListResponse".
 	Kind string `json:"kind,omitempty"`
+}
+
+type EnterprisesSendTestPushNotificationResponse struct {
+	// MessageId: The message ID of the test push notification that was
+	// sent.
+	MessageId string `json:"messageId,omitempty"`
+
+	// TopicName: The name of the Cloud Pubsub topic to which notifications
+	// for this enterprise's enrolled account will be sent.
+	TopicName string `json:"topicName,omitempty"`
 }
 
 // Entitlement: The existence of an entitlement resource means that a
@@ -2735,6 +2745,88 @@ func (c *EnterprisesListCall) Do() (*EnterprisesListResponse, error) {
 	//   "path": "enterprises",
 	//   "response": {
 	//     "$ref": "EnterprisesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.enterprises.sendTestPushNotification":
+
+type EnterprisesSendTestPushNotificationCall struct {
+	s            *Service
+	enterpriseId string
+	opt_         map[string]interface{}
+}
+
+// SendTestPushNotification: Sends a test push notification to validate
+// the MDM integration with the Google Cloud Pubsub service for this
+// enterprise.
+func (r *EnterprisesService) SendTestPushNotification(enterpriseId string) *EnterprisesSendTestPushNotificationCall {
+	c := &EnterprisesSendTestPushNotificationCall{s: r.s, opt_: make(map[string]interface{})}
+	c.enterpriseId = enterpriseId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesSendTestPushNotificationCall) Fields(s ...googleapi.Field) *EnterprisesSendTestPushNotificationCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *EnterprisesSendTestPushNotificationCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/sendTestPushNotification")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *EnterprisesSendTestPushNotificationCall) Do() (*EnterprisesSendTestPushNotificationResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *EnterprisesSendTestPushNotificationResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sends a test push notification to validate the MDM integration with the Google Cloud Pubsub service for this enterprise.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.enterprises.sendTestPushNotification",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/sendTestPushNotification",
+	//   "response": {
+	//     "$ref": "EnterprisesSendTestPushNotificationResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"

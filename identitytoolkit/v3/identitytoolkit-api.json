@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/0UthvGQqQqHJHLht0Zicmoq2uPc\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/EhuUOPPlYPrmY4sLFYuHLiUXEXw\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20150508",
+ "revision": "20150902",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -840,6 +840,19 @@
     "localId": {
      "type": "string",
      "description": "The RP local ID if it's already been mapped to the IdP account identified by the federated ID."
+    },
+    "oauthAccessToken": {
+     "type": "string",
+     "description": "The OAuth2 access token."
+    },
+    "oauthAuthorizationCode": {
+     "type": "string",
+     "description": "The OAuth2 authorization code."
+    },
+    "oauthExpireIn": {
+     "type": "integer",
+     "description": "The lifetime in seconds of the OAuth2 access token.",
+     "format": "int32"
     },
     "photoUrl": {
      "type": "string",

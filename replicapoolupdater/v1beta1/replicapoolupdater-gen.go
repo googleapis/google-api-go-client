@@ -46,8 +46,7 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
-	// Platform services
+	// View your data across Google Cloud Platform services
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// View and manage replica pools
@@ -185,8 +184,8 @@ type Operation struct {
 	// This is in RFC 3339 format.
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always kind#operation for
-	// Operation resources.
+	// Kind: [Output Only] Type of the resource. Always
+	// replicapoolupdater#operation for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: [Output Only] Name of the resource.
@@ -268,6 +267,26 @@ type OperationWarningsData struct {
 
 	// Value: [Output Only] Metadata value for this warning.
 	Value string `json:"value,omitempty"`
+}
+
+// OperationList: Contains a list of Operation resources.
+type OperationList struct {
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id string `json:"id,omitempty"`
+
+	// Items: [Output Only] The Operation resources.
+	Items []*Operation `json:"items,omitempty"`
+
+	// Kind: [Output Only] Type of resource. Always
+	// replicapoolupdater#operations for Operations resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token used to continue a truncate.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
 }
 
 // RollingUpdate: The following represents a resource describing a
@@ -1444,6 +1463,150 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 	//   "path": "{project}/zones/{zone}/operations/{operation}",
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/replicapool"
+	//   ]
+	// }
+
+}
+
+// method id "replicapoolupdater.zoneOperations.list":
+
+type ZoneOperationsListCall struct {
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
+}
+
+// List: Retrieves the list of Operation resources contained within the
+// specified zone.
+func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperationsListCall {
+	c := &ZoneOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression for
+// filtering listed resources.
+func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned. Maximum value is 500 and default value is
+// 500.
+func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Tag returned by a
+// previous list request truncated by maxResults. Used to continue a
+// previous list request.
+func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"zone":    c.zone,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *OperationList
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of Operation resources contained within the specified zone.",
+	//   "httpMethod": "GET",
+	//   "id": "replicapoolupdater.zoneOperations.list",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression for filtering listed resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Optional. Maximum count of results to be returned. Maximum value is 500 and default value is 500.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Tag returned by a previous list request truncated by maxResults. Used to continue a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "Name of the zone scoping this request.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/operations",
+	//   "response": {
+	//     "$ref": "OperationList"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

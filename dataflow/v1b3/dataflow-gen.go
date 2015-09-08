@@ -173,6 +173,17 @@ type ComputationTopology struct {
 	UserStageName string `json:"userStageName,omitempty"`
 }
 
+// ConcatPosition: A position that encapsulates an inner position and an
+// index for the inner position. A ConcatPosition can be used by a
+// reader of a source that encapsulates a set of other sources.
+type ConcatPosition struct {
+	// Index: Index of the inner source.
+	Index int64 `json:"index,omitempty"`
+
+	// Position: Position within the inner source.
+	Position *Position `json:"position,omitempty"`
+}
+
 // CustomSourceLocation: Identifies the location of a custom souce.
 type CustomSourceLocation struct {
 	// Stateful: Whether this source is stateful.
@@ -336,6 +347,10 @@ type InstructionOutput struct {
 
 	// Name: The user-provided name of this output.
 	Name string `json:"name,omitempty"`
+
+	// SystemName: System-defined name of this output. Unique across the
+	// workflow.
+	SystemName string `json:"systemName,omitempty"`
 }
 
 type InstructionOutputCodec interface{}
@@ -786,6 +801,9 @@ type PartialGroupByKeyInstructionValueCombiningFn interface{}
 type Position struct {
 	// ByteOffset: Position is a byte offset.
 	ByteOffset int64 `json:"byteOffset,omitempty,string"`
+
+	// ConcatPosition: CloudPosition is a concat position.
+	ConcatPosition *ConcatPosition `json:"concatPosition,omitempty"`
 
 	// End: Position is past all other positions. Also useful for the end
 	// position of an unbounded range.

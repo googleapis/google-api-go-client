@@ -99,66 +99,6 @@ type Binding struct {
 	Role string `json:"role,omitempty"`
 }
 
-// CloudAuditOptions: Write a Cloud Audit log
-type CloudAuditOptions struct {
-}
-
-// Condition: A condition to be met.
-type Condition struct {
-	// Iam: Trusted attributes supplied by the IAM system.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "AUTHORITY"
-	//   "ATTRIBUTION"
-	Iam string `json:"iam,omitempty"`
-
-	// Op: An operator to apply the subject with.
-	//
-	// Possible values:
-	//   "NO_OP"
-	//   "EQUALS"
-	//   "NOT_EQUALS"
-	//   "IN"
-	//   "NOT_IN"
-	//   "DISCHARGED"
-	Op string `json:"op,omitempty"`
-
-	// Svc: Trusted attributes discharged by the service.
-	Svc string `json:"svc,omitempty"`
-
-	// Sys: Trusted attributes supplied by any service that owns resources
-	// and uses the IAM system for access control.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "REGION"
-	//   "SERVICE"
-	//   "NAME"
-	//   "IP"
-	Sys string `json:"sys,omitempty"`
-
-	// Value: The object of the condition. Exactly one of these must be set.
-	Value string `json:"value,omitempty"`
-
-	// Values: The objects of the condition. This is mutually exclusive with
-	// 'value'.
-	Values []string `json:"values,omitempty"`
-}
-
-// CounterOptions: Options for counters
-type CounterOptions struct {
-	// Field: The field value to attribute.
-	Field string `json:"field,omitempty"`
-
-	// Metric: The metric to update.
-	Metric string `json:"metric,omitempty"`
-}
-
-// DataAccessOptions: Write a Data Access (Gin) log
-type DataAccessOptions struct {
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -193,30 +133,6 @@ type ListProjectsResponse struct {
 	Projects []*Project `json:"projects,omitempty"`
 }
 
-// LogConfig: Specifies what kind of log the caller must write Increment
-// a streamz counter with the specified metric and field names. Metric
-// names should start with a '/', generally be lowercase-only, and end
-// in "_count". Field names should not contain an initial slash. The
-// actual exported metric names will have "/iam/policy" prepended. Field
-// names correspond to IAM request parameters and field values are their
-// respective values. At present only "iam_principal", corresponding to
-// IAMContext.principal, is supported. Examples: counter { metric:
-// "/debug_access_count" field: "iam_principal" } ==> increment counter
-// /iam/policy/backend_debug_access_count {iam_principal=[value of
-// IAMContext.principal]} At this time we do not support: * multiple
-// field names (though this may be supported in the future) *
-// decrementing the counter * incrementing it by anything other than 1
-type LogConfig struct {
-	// CloudAudit: Cloud audit options.
-	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
-
-	// Counter: Counter options.
-	Counter *CounterOptions `json:"counter,omitempty"`
-
-	// DataAccess: Data access options.
-	DataAccess *DataAccessOptions `json:"dataAccess,omitempty"`
-}
-
 // Policy: # Overview The `Policy` defines an access control policy
 // language. It is used to define policies that are attached to
 // resources like files, folders, VMs, etc. # Policy structure A
@@ -241,8 +157,6 @@ type Policy struct {
 
 	// Etag: Can be used to perform a read-modify-write.
 	Etag string `json:"etag,omitempty"`
-
-	Rules []*Rule `json:"rules,omitempty"`
 
 	// Version: The policy language version. The version of the policy is
 	// represented by the etag. The default version is 0.
@@ -291,44 +205,6 @@ type Project struct {
 	// ProjectNumber: The number uniquely identifying the project. Example:
 	// 415104041262 Read-only.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
-}
-
-// Rule: A rule to be applied in a Policy.
-type Rule struct {
-	// Action: Required
-	//
-	// Possible values:
-	//   "NO_ACTION"
-	//   "ALLOW"
-	//   "ALLOW_WITH_LOG"
-	//   "DENY"
-	//   "DENY_WITH_LOG"
-	//   "LOG"
-	Action string `json:"action,omitempty"`
-
-	// Conditions: Additional restrictions that must be met
-	Conditions []*Condition `json:"conditions,omitempty"`
-
-	// Description: Human-readable description of the rule.
-	Description string `json:"description,omitempty"`
-
-	// In: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this
-	// set of entries.
-	In []string `json:"in,omitempty"`
-
-	// LogConfig: The config returned to callers of tech.iam.IAM.CheckPolicy
-	// for any entries that match the LOG action.
-	LogConfig []*LogConfig `json:"logConfig,omitempty"`
-
-	// NotIn: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in
-	// this set of entries. The formation for in and not_in entries is the
-	// same as members in a Binding above.
-	NotIn []string `json:"notIn,omitempty"`
-
-	// Permissions: A permission is a string of form '..' (e.g.,
-	// 'storage.buckets.list'). A value of '*' matches all permissions, and
-	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
-	Permissions []string `json:"permissions,omitempty"`
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.

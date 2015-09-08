@@ -2070,7 +2070,7 @@ type Instance struct {
 	// Scheduling: Scheduling options for this instance.
 	Scheduling *Scheduling `json:"scheduling,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource.
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServiceAccounts: A list of service accounts, with their specified
@@ -2127,7 +2127,7 @@ type InstanceAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource.
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2226,12 +2226,8 @@ type InstanceGroupList struct {
 
 // InstanceGroupManager: InstanceGroupManagers
 //
-// Next available tag: 17
+// Next available tag: 19
 type InstanceGroupManager struct {
-	// AutoHealingPolicies: The autohealing policy for this managed instance
-	// group. You can specify only one value.
-	AutoHealingPolicies []*InstanceGroupManagerAutoHealingPolicy `json:"autoHealingPolicies,omitempty"`
-
 	// BaseInstanceName: The base instance name to use for instances in this
 	// group. The value must be 1-58 characters long. Instances are named by
 	// appending a hyphen and a random four-character string to the base
@@ -2355,23 +2351,6 @@ type InstanceGroupManagerAggregatedList struct {
 	// SelfLink: [Output Only] The URL for this aggregated list of managed
 	// instance groups. The server defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
-}
-
-type InstanceGroupManagerAutoHealingPolicy struct {
-	// ActionType: The action to perform when an instance becomes unhealthy.
-	// Possible values are RECREATE or RESTART. RECREATE replaces an
-	// unhealthy instance with a new instance that is based on the instance
-	// template for this managed instance group. RESTART performs a soft
-	// restart on an instance. If the instance cannot restart softly, the
-	// instance performs a hard restart.
-	//
-	// Possible values:
-	//   "RECREATE"
-	//   "RESTART"
-	ActionType string `json:"actionType,omitempty"`
-
-	// HealthCheck: The URL for the HealthCheck that signals autohealing.
-	HealthCheck string `json:"healthCheck,omitempty"`
 }
 
 // InstanceGroupManagerList: [Output Only] A list of
@@ -2611,7 +2590,7 @@ type InstanceList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource.
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2821,8 +2800,8 @@ type License struct {
 	// licenses.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource. The name must be 1-63 characters long,
-	// and comply with RFC1035.
+	// Name: [Output Only] Name of the resource. The name is 1-63 characters
+	// long and complies with RFC1035.
 	Name string `json:"name,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -3756,19 +3735,22 @@ type RouteList struct {
 type Scheduling struct {
 	// AutomaticRestart: Specifies whether the instance should be
 	// automatically restarted if it is terminated by Compute Engine (not
-	// terminated by a user).
+	// terminated by a user). You can only set the automatic restart option
+	// for standard instances. Preemptible instances cannot be automatically
+	// restarted.
 	AutomaticRestart bool `json:"automaticRestart,omitempty"`
 
 	// OnHostMaintenance: Defines the maintenance behavior for this
-	// instance. The default behavior is MIGRATE. For more information, see
-	// Setting maintenance behavior.
+	// instance. For standard instances, the default behavior is MIGRATE.
+	// For preemptible instances, the default and only possible behavior is
+	// TERMINATE. For more information, see Setting maintenance behavior.
 	//
 	// Possible values:
 	//   "MIGRATE"
 	//   "TERMINATE"
 	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
 
-	// Preemptible: Whether the Instance is preemptible.
+	// Preemptible: Whether the instance is preemptible.
 	Preemptible bool `json:"preemptible,omitempty"`
 }
 
@@ -3781,7 +3763,7 @@ type SerialPortOutput struct {
 	// compute#serialPortOutput for serial port output.
 	Kind string `json:"kind,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 

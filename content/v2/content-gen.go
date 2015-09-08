@@ -1,6 +1,6 @@
 // Package content provides access to the Content API for Shopping.
 //
-// See https://developers.google.com/shopping-content/v2/
+// See https://developers.google.com/shopping-content
 //
 // Usage example:
 //
@@ -1438,6 +1438,10 @@ type Product struct {
 	// SalePriceEffectiveDate: Date range during which the item is on sale
 	// (see product feed specifications).
 	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
+
+	// SellOnGoogleQuantity: The quantity of the product that is reserved
+	// for sell-on-google ads.
+	SellOnGoogleQuantity int64 `json:"sellOnGoogleQuantity,omitempty,string"`
 
 	// Shipping: Shipping rules.
 	Shipping []*ProductShipping `json:"shipping,omitempty"`
@@ -5931,7 +5935,10 @@ func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCal
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of product statuses to return in the response, used for
-// paging.
+// paging. The default value is 25 and the maximum allowed value is
+// 250.
+// Known issue: Note that for the time being all List calls will return
+// by default all orders without limit.
 func (c *ProductstatusesListCall) MaxResults(maxResults int64) *ProductstatusesListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
@@ -5998,7 +6005,7 @@ func (c *ProductstatusesListCall) Do() (*ProductstatusesListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "description": "The maximum number of product statuses to return in the response, used for paging.",
+	//       "description": "The maximum number of product statuses to return in the response, used for paging. The default value is 25 and the maximum allowed value is 250.\nKnown issue: Note that for the time being all List calls will return by default all orders without limit.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"

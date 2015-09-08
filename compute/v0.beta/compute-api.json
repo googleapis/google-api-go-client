@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/3EYMVoqHk8CntsmQw86m8gnHjUs\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/oe_uAbNFvATEqqDNaTW9Cv7GCgo\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20150807",
+ "revision": "20150831",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -2233,7 +2233,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for this resource."
+     "description": "[Output Only] Server defined URL for this resource."
     },
     "serviceAccounts": {
      "type": "array",
@@ -2307,7 +2307,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for this resource."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -2439,7 +2439,7 @@
   "InstanceGroupManager": {
    "id": "InstanceGroupManager",
    "type": "object",
-   "description": "InstanceGroupManagers\n\nNext available tag: 17",
+   "description": "InstanceGroupManagers\n\nNext available tag: 19",
    "properties": {
     "autoHealingPolicies": {
      "type": "array",
@@ -2788,6 +2788,18 @@
     }
    }
   },
+  "InstanceGroupManagersSetAutoHealingRequest": {
+   "id": "InstanceGroupManagersSetAutoHealingRequest",
+   "type": "object",
+   "properties": {
+    "autoHealingPolicies": {
+     "type": "array",
+     "items": {
+      "$ref": "InstanceGroupManagerAutoHealingPolicy"
+     }
+    }
+   }
+  },
   "InstanceGroupManagersSetInstanceTemplateRequest": {
    "id": "InstanceGroupManagersSetInstanceTemplateRequest",
    "type": "object",
@@ -3011,7 +3023,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for this resource."
+     "description": "[Output Only] Server defined URL for this resource."
     }
    }
   },
@@ -3288,7 +3300,7 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource. The name must be 1-63 characters long, and comply with RFC1035.",
+     "description": "[Output Only] Name of the resource. The name is 1-63 characters long and complies with RFC1035.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
@@ -4592,11 +4604,11 @@
    "properties": {
     "automaticRestart": {
      "type": "boolean",
-     "description": "Specifies whether the instance should be automatically restarted if it is terminated by Compute Engine (not terminated by a user)."
+     "description": "Specifies whether the instance should be automatically restarted if it is terminated by Compute Engine (not terminated by a user). You can only set the automatic restart option for standard instances. Preemptible instances cannot be automatically restarted."
     },
     "onHostMaintenance": {
      "type": "string",
-     "description": "Defines the maintenance behavior for this instance. The default behavior is MIGRATE. For more information, see Setting maintenance behavior.",
+     "description": "Defines the maintenance behavior for this instance. For standard instances, the default behavior is MIGRATE. For preemptible instances, the default and only possible behavior is TERMINATE. For more information, see Setting maintenance behavior.",
      "enum": [
       "MIGRATE",
       "TERMINATE"
@@ -4608,7 +4620,7 @@
     },
     "preemptible": {
      "type": "boolean",
-     "description": "Whether the Instance is preemptible."
+     "description": "Whether the instance is preemptible."
     }
    }
   },
@@ -4628,7 +4640,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for the resource."
+     "description": "[Output Only] Server defined URL for the resource."
     }
    }
   },
@@ -9580,6 +9592,48 @@
       "instanceGroupManager",
       "size"
      ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setAutoHealingPolicies": {
+     "id": "compute.instanceGroupManagers.setAutoHealingPolicies",
+     "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setAutoHealingPolicies",
+     "httpMethod": "POST",
+     "description": "Modifies the autohealing policy.",
+     "parameters": {
+      "instanceGroupManager": {
+       "type": "string",
+       "description": "The name of the instance group manager.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "The project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The URL of the zone where the managed instance group is located.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instanceGroupManager"
+     ],
+     "request": {
+      "$ref": "InstanceGroupManagersSetAutoHealingRequest"
+     },
      "response": {
       "$ref": "Operation"
      },

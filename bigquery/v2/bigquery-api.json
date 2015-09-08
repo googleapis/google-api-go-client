@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ovkdPsOHcZEpYM40IgRvTc9GjXY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rEmA2yoZ-r0GbIlsej0X1zq5DTY\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20150811",
+ "revision": "20150828",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -81,7 +81,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+     "description": "View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/devstorage.full_control": {
      "description": "Manage your data and permissions in Google Cloud Storage"
@@ -321,7 +321,7 @@
     },
     "ignoreUnknownValues": {
      "type": "boolean",
-     "description": "[Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns"
+     "description": "[Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names"
     },
     "maxBadRecords": {
      "type": "integer",
@@ -334,11 +334,11 @@
     },
     "sourceFormat": {
      "type": "string",
-     "description": "[Optional] The data format. External data sources must be in CSV format. The default value is CSV."
+     "description": "[Required] The data format. For CSV files, specify \"CSV\". For newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\"."
     },
     "sourceUris": {
      "type": "array",
-     "description": "[Required] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. CSV limits related to load jobs apply to external data sources, plus an additional limit of 10 GB maximum size across all URIs.",
+     "description": "[Required] The fully-qualified URIs that point to your data in Google Cloud Storage. Each URI can contain one '*' wildcard character and it must come after the 'bucket' name. Size limits related to load jobs apply to external data sources, plus an additional limit of 10 GB maximum size across all URIs.",
      "items": {
       "type": "string"
      }
@@ -904,7 +904,7 @@
    "properties": {
     "destinationUriFileCounts": {
      "type": "array",
-     "description": "[Experimental] Number of files per destination URI or URI pattern specified in the extract configuration. These values will be in the same order as the URIs specified in the 'destinationUris' field.",
+     "description": "[Output-only] Number of files per destination URI or URI pattern specified in the extract configuration. These values will be in the same order as the URIs specified in the 'destinationUris' field.",
      "items": {
       "type": "string",
       "format": "int64"
@@ -1704,7 +1704,7 @@
      "id": "bigquery.jobs.cancel",
      "path": "project/{projectId}/jobs/{jobId}/cancel",
      "httpMethod": "POST",
-     "description": "Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully.",
+     "description": "Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.",
      "parameters": {
       "jobId": {
        "type": "string",

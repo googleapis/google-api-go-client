@@ -270,8 +270,8 @@ type Contest struct {
 	ReferendumBallotResponses []string `json:"referendumBallotResponses,omitempty"`
 
 	// ReferendumBrief: Specifies a short summary of the referendum that is
-	// on the ballot below the title but above the text. This field is only
-	// populated for contests of type 'Referendum'.
+	// typically on the ballot below the title but above the text. This
+	// field is only populated for contests of type 'Referendum'.
 	ReferendumBrief string `json:"referendumBrief,omitempty"`
 
 	// ReferendumConStatement: A statement in opposition to the referendum.
@@ -365,6 +365,13 @@ type Election struct {
 
 	// Name: A displayable name for the election.
 	Name string `json:"name,omitempty"`
+
+	// OcdDivisionId: The political division of the election. Represented as
+	// an OCD Division ID. Voters within these political jurisdictions are
+	// covered by this election. This is typically a state such as
+	// ocd-division/country:us/state:ca or for the midterms or general
+	// election the entire US (i.e. ocd-division/country:us).
+	OcdDivisionId string `json:"ocdDivisionId,omitempty"`
 }
 
 // ElectionOfficial: Information about individual election officials.

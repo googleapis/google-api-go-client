@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZAuSmUAbFNvYXmaVB650IqBc6qA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fvxGsTn8YU-BmqskQflC-B1XoIM\"",
  "discoveryVersion": "v1",
  "id": "clouduseraccounts:alpha",
  "name": "clouduseraccounts",
@@ -74,7 +74,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+     "description": "View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud.useraccounts": {
      "description": "Manage your Google Cloud User Accounts"

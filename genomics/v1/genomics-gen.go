@@ -210,22 +210,27 @@ type VariantsetsService struct {
 	s *Service
 }
 
-// Binding: Associates members with roles. See below for allowed formats
-// of members.
+// Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Members: Format of member entries: 1. allUsers Matches any requesting
-	// principal (users, service accounts or anonymous). 2.
-	// allAuthenticatedUsers Matches any requesting authenticated principal
-	// (users or service accounts). 3. user:{emailid} A google user account
-	// using an email address. For example alice@gmail.com, joe@example.com
-	// 4. serviceAccount:{emailid} An service account email. 5.
-	// group:{emailid} A google group with an email address. For example
-	// auth-ti-cloud@google.com 6. domain:{domain} A Google Apps domain
-	// name. For example google.com, example.com
+	// Members: Specifies the identities requesting access for a Cloud
+	// Platform resource. `members` can have the following formats: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@gmail.com` or `joe@example.com`. *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `domain:{domain}`: A Google Apps domain name
+	// that represents all the users of that domain. For example,
+	// `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: The name of the role to which the members should be bound.
-	// Examples: "roles/viewer", "roles/editor", "roles/owner". Required
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`. Required
 	Role string `json:"role,omitempty"`
 }
 
@@ -295,62 +300,6 @@ type CigarUnit struct {
 	ReferenceSequence string `json:"referenceSequence,omitempty"`
 }
 
-// CloudAuditOptions: Write a Cloud Audit log
-type CloudAuditOptions struct {
-}
-
-// Condition: A condition to be met.
-type Condition struct {
-	// Iam: Trusted attributes supplied by the IAM system.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "AUTHORITY"
-	//   "ATTRIBUTION"
-	Iam string `json:"iam,omitempty"`
-
-	// Op: An operator to apply the subject with.
-	//
-	// Possible values:
-	//   "NO_OP"
-	//   "EQUALS"
-	//   "NOT_EQUALS"
-	//   "IN"
-	//   "NOT_IN"
-	//   "DISCHARGED"
-	Op string `json:"op,omitempty"`
-
-	// Svc: Trusted attributes discharged by the service.
-	Svc string `json:"svc,omitempty"`
-
-	// Sys: Trusted attributes supplied by any service that owns resources
-	// and uses the IAM system for access control.
-	//
-	// Possible values:
-	//   "NO_ATTR"
-	//   "REGION"
-	//   "SERVICE"
-	//   "NAME"
-	//   "IP"
-	Sys string `json:"sys,omitempty"`
-
-	// Value: The object of the condition. Exactly one of these must be set.
-	Value string `json:"value,omitempty"`
-
-	// Values: The objects of the condition. This is mutually exclusive with
-	// 'value'.
-	Values []string `json:"values,omitempty"`
-}
-
-// CounterOptions: Options for counters
-type CounterOptions struct {
-	// Field: The field value to attribute.
-	Field string `json:"field,omitempty"`
-
-	// Metric: The metric to update.
-	Metric string `json:"metric,omitempty"`
-}
-
 // CoverageBucket: A bucket over which read coverage has been
 // precomputed. A bucket corresponds to a specific range of the
 // reference sequence.
@@ -361,10 +310,6 @@ type CoverageBucket struct {
 
 	// Range: The genomic coordinate range spanned by this bucket.
 	Range *Range `json:"range,omitempty"`
-}
-
-// DataAccessOptions: Write a Data Access (Gin) log
-type DataAccessOptions struct {
 }
 
 // Dataset: A Dataset is a collection of genomic data.
@@ -611,36 +556,12 @@ type ListOperationsResponse struct {
 	Operations []*Operation `json:"operations,omitempty"`
 }
 
-// LogConfig: Specifies what kind of log the caller must write Increment
-// a streamz counter with the specified metric and field names. Metric
-// names should start with a '/', generally be lowercase-only, and end
-// in "_count". Field names should not contain an initial slash. The
-// actual exported metric names will have "/iam/policy" prepended. Field
-// names correspond to IAM request parameters and field values are their
-// respective values. At present only "iam_principal", corresponding to
-// IAMContext.principal, is supported. Examples: counter { metric:
-// "/debug_access_count" field: "iam_principal" } ==> increment counter
-// /iam/policy/backend_debug_access_count {iam_principal=[value of
-// IAMContext.principal]} At this time we do not support: * multiple
-// field names (though this may be supported in the future) *
-// decrementing the counter * incrementing it by anything other than 1
-type LogConfig struct {
-	// CloudAudit: Cloud audit options.
-	CloudAudit *CloudAuditOptions `json:"cloudAudit,omitempty"`
-
-	// Counter: Counter options.
-	Counter *CounterOptions `json:"counter,omitempty"`
-
-	// DataAccess: Data access options.
-	DataAccess *DataAccessOptions `json:"dataAccess,omitempty"`
-}
-
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress. If true, the operation is completed and the `result` is
-	// available.
+	// progress. If true, the operation is completed, and either `error` or
+	// `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure.
@@ -702,35 +623,29 @@ type OperationMetadata1 struct {
 
 type OperationMetadataRequest interface{}
 
-// Policy: # Overview The `Policy` defines an access control policy
-// language. It is used to define policies that are attached to
-// resources like files, folders, VMs, etc. # Policy structure A
-// `Policy` consists of a list of bindings. A `Binding` binds a set of
-// members to a role, where the members include user accounts, user
-// groups, user domains, and service accounts. A 'role' is a named set
-// of permissions, defined by IAM. The definition of a role is outside
-// the policy. A permission check first determines the roles that
-// include the specified permission, and then determines if the
-// principal specified is a member of a binding to at least one of these
-// roles. The membership check is recursive when a group is bound to a
-// role. Policy examples: ``` { "bindings": [ { "role": "roles/owner",
-// "members": [ "user:mike@example.com", "group:admins@example.com",
+// Policy: Defines an Identity and Access Management (IAM) policy. It is
+// used to specify access control policies for Cloud Platform resources.
+// A `Policy` consists of a list of `bindings`. A `Binding` binds a list
+// of `members` to a `role`, where the members can be user accounts,
+// Google groups, Google domains, and service accounts. A `role` is a
+// named list of permissions defined by IAM. **Example** ``` {
+// "bindings": [ { "role": "roles/owner", "members": [
+// "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
-// "serviceAccount:frontend@example.iam.gserviceaccounts.com"] }, {
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com"] }, {
 // "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
-// ```
+// ``` For a description of IAM and its features, see the [IAM
+// developer's guide][https://cloud.google.com/iam].
 type Policy struct {
-	// Bindings: It is an error to specify multiple bindings for the same
-	// role. It is an error to specify a binding with no members.
+	// Bindings: Associates a list of `members` to a `role`. Multiple
+	// `bindings` must not be specified for the same `role`. `bindings` with
+	// no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: Can be used to perform a read-modify-write.
 	Etag string `json:"etag,omitempty"`
 
-	Rules []*Rule `json:"rules,omitempty"`
-
-	// Version: The policy language version. The version of the policy is
-	// represented by the etag. The default version is 0.
+	// Version: Version of the `Policy`. The default version is 0.
 	Version int64 `json:"version,omitempty"`
 }
 
@@ -1093,44 +1008,6 @@ type ReferenceSet struct {
 	SourceUri string `json:"sourceUri,omitempty"`
 }
 
-// Rule: A rule to be applied in a Policy.
-type Rule struct {
-	// Action: Required
-	//
-	// Possible values:
-	//   "NO_ACTION"
-	//   "ALLOW"
-	//   "ALLOW_WITH_LOG"
-	//   "DENY"
-	//   "DENY_WITH_LOG"
-	//   "LOG"
-	Action string `json:"action,omitempty"`
-
-	// Conditions: Additional restrictions that must be met
-	Conditions []*Condition `json:"conditions,omitempty"`
-
-	// Description: Human-readable description of the rule.
-	Description string `json:"description,omitempty"`
-
-	// In: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this
-	// set of entries.
-	In []string `json:"in,omitempty"`
-
-	// LogConfig: The config returned to callers of tech.iam.IAM.CheckPolicy
-	// for any entries that match the LOG action.
-	LogConfig []*LogConfig `json:"logConfig,omitempty"`
-
-	// NotIn: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in
-	// this set of entries. The formation for in and not_in entries is the
-	// same as members in a Binding above.
-	NotIn []string `json:"notIn,omitempty"`
-
-	// Permissions: A permission is a string of form '..' (e.g.,
-	// 'storage.buckets.list'). A value of '*' matches all permissions, and
-	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
-	Permissions []string `json:"permissions,omitempty"`
-}
-
 // SearchCallSetsRequest: The call set search request.
 type SearchCallSetsRequest struct {
 	// Name: Only return call sets for which a substring of the name matches
@@ -1409,9 +1286,9 @@ type SearchVariantsResponse struct {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// 'resource'. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is in general a valid policy but certain services (like
-	// Projects) might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 }
 

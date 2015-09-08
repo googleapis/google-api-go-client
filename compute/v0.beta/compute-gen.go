@@ -2290,7 +2290,7 @@ type Instance struct {
 	// Scheduling: Scheduling options for this instance.
 	Scheduling *Scheduling `json:"scheduling,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource.
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServiceAccounts: A list of service accounts, with their specified
@@ -2347,7 +2347,7 @@ type InstanceAggregatedList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource.
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -2446,7 +2446,7 @@ type InstanceGroupList struct {
 
 // InstanceGroupManager: InstanceGroupManagers
 //
-// Next available tag: 17
+// Next available tag: 19
 type InstanceGroupManager struct {
 	// AutoHealingPolicies: The autohealing policy for this managed instance
 	// group. You can specify only one value.
@@ -2689,6 +2689,10 @@ type InstanceGroupManagersScopedListWarningData struct {
 	Value string `json:"value,omitempty"`
 }
 
+type InstanceGroupManagersSetAutoHealingRequest struct {
+	AutoHealingPolicies []*InstanceGroupManagerAutoHealingPolicy `json:"autoHealingPolicies,omitempty"`
+}
+
 type InstanceGroupManagersSetInstanceTemplateRequest struct {
 	// InstanceTemplate: The URL of the instance template that is specified
 	// for this managed instance group. The group uses this template to
@@ -2831,7 +2835,7 @@ type InstanceList struct {
 	// list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource.
+	// SelfLink: [Output Only] Server defined URL for this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -3021,8 +3025,8 @@ type License struct {
 	// licenses.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Name of the resource. The name must be 1-63 characters long,
-	// and comply with RFC1035.
+	// Name: [Output Only] Name of the resource. The name is 1-63 characters
+	// long and complies with RFC1035.
 	Name string `json:"name,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -3943,19 +3947,22 @@ type RouteList struct {
 type Scheduling struct {
 	// AutomaticRestart: Specifies whether the instance should be
 	// automatically restarted if it is terminated by Compute Engine (not
-	// terminated by a user).
+	// terminated by a user). You can only set the automatic restart option
+	// for standard instances. Preemptible instances cannot be automatically
+	// restarted.
 	AutomaticRestart bool `json:"automaticRestart,omitempty"`
 
 	// OnHostMaintenance: Defines the maintenance behavior for this
-	// instance. The default behavior is MIGRATE. For more information, see
-	// Setting maintenance behavior.
+	// instance. For standard instances, the default behavior is MIGRATE.
+	// For preemptible instances, the default and only possible behavior is
+	// TERMINATE. For more information, see Setting maintenance behavior.
 	//
 	// Possible values:
 	//   "MIGRATE"
 	//   "TERMINATE"
 	OnHostMaintenance string `json:"onHostMaintenance,omitempty"`
 
-	// Preemptible: Whether the Instance is preemptible.
+	// Preemptible: Whether the instance is preemptible.
 	Preemptible bool `json:"preemptible,omitempty"`
 }
 
@@ -3968,7 +3975,7 @@ type SerialPortOutput struct {
 	// compute#serialPortOutput for serial port output.
 	Kind string `json:"kind,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for the resource.
+	// SelfLink: [Output Only] Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
@@ -14949,6 +14956,119 @@ func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
 	//     }
 	//   },
 	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/resize",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.instanceGroupManagers.setAutoHealingPolicies":
+
+type InstanceGroupManagersSetAutoHealingPoliciesCall struct {
+	s                                          *Service
+	project                                    string
+	zone                                       string
+	instanceGroupManager                       string
+	instancegroupmanagerssetautohealingrequest *InstanceGroupManagersSetAutoHealingRequest
+	opt_                                       map[string]interface{}
+}
+
+// SetAutoHealingPolicies: Modifies the autohealing policy.
+func (r *InstanceGroupManagersService) SetAutoHealingPolicies(project string, zone string, instanceGroupManager string, instancegroupmanagerssetautohealingrequest *InstanceGroupManagersSetAutoHealingRequest) *InstanceGroupManagersSetAutoHealingPoliciesCall {
+	c := &InstanceGroupManagersSetAutoHealingPoliciesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.zone = zone
+	c.instanceGroupManager = instanceGroupManager
+	c.instancegroupmanagerssetautohealingrequest = instancegroupmanagerssetautohealingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstanceGroupManagersSetAutoHealingPoliciesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetAutoHealingPoliciesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *InstanceGroupManagersSetAutoHealingPoliciesCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupmanagerssetautohealingrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setAutoHealingPolicies")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":              c.project,
+		"zone":                 c.zone,
+		"instanceGroupManager": c.instanceGroupManager,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *InstanceGroupManagersSetAutoHealingPoliciesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Operation
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Modifies the autohealing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instanceGroupManagers.setAutoHealingPolicies",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "instanceGroupManager"
+	//   ],
+	//   "parameters": {
+	//     "instanceGroupManager": {
+	//       "description": "The name of the instance group manager.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "The project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setAutoHealingPolicies",
+	//   "request": {
+	//     "$ref": "InstanceGroupManagersSetAutoHealingRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

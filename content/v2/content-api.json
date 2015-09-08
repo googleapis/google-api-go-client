@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ienJtHXSgvp2PqTI_8QrrraJ4bU\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KECVKrXPpZO8tdVw90R6MG2pveY\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20150729",
+ "revision": "20150831",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -15,7 +15,7 @@
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
- "documentationLink": "https://developers.google.com/shopping-content/v2/",
+ "documentationLink": "https://developers.google.com/shopping-content",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/content/v2/",
  "basePath": "/content/v2/",
@@ -2057,6 +2057,11 @@
      "type": "string",
      "description": "Date range during which the item is on sale (see product feed specifications)."
     },
+    "sellOnGoogleQuantity": {
+     "type": "string",
+     "description": "The quantity of the product that is reserved for sell-on-google ads.",
+     "format": "int64"
+    },
     "shipping": {
      "type": "array",
      "description": "Shipping rules.",
@@ -3973,7 +3978,7 @@
      "parameters": {
       "maxResults": {
        "type": "integer",
-       "description": "The maximum number of product statuses to return in the response, used for paging.",
+       "description": "The maximum number of product statuses to return in the response, used for paging. The default value is 25 and the maximum allowed value is 250.\nKnown issue: Note that for the time being all List calls will return by default all orders without limit.",
        "format": "uint32",
        "location": "query"
       },

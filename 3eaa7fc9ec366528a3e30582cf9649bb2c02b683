@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0484e2ca_3ab0e0bf",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-08T16:39:53Z",
+      "side": 1,
+      "message": "What about making this huge string a const either in this function or right before it so that this line is more readable?",
+      "revId": "3eaa7fc9ec366528a3e30582cf9649bb2c02b683",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0484e2ca_5ad044df",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-08T16:39:53Z",
+      "side": 1,
+      "message": "Can you add a comment for the MarshalJSON function?\nWhen/how would the user call this?\nOr would its use be automatic by googleapi.XXX?",
+      "revId": "3eaa7fc9ec366528a3e30582cf9649bb2c02b683",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0484e2ca_1acabc2d",
+        "filename": "googleapi/json.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-08T16:39:53Z",
+      "side": 1,
+      "message": "parseJSONTag ?",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 17
+      },
+      "revId": "3eaa7fc9ec366528a3e30582cf9649bb2c02b683",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

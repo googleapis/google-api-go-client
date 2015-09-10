@@ -34,6 +34,75 @@
       "revId": "d443b298806a64628788a6f11191ef3279242175",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "244c8613_b5bed099",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-10T18:42:12Z",
+      "side": 1,
+      "message": "Yes, less code and less garbage. I don\u0027t have a main concern.\n\nI don\u0027t like to justify waste by saying that it\u0027s relatively small waste compared to other waste. It\u0027s so often the case that slowness is tons of little things.",
+      "parentUuid": "a467969e_47748ec7",
+      "revId": "d443b298806a64628788a6f11191ef3279242175",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "244c8613_951f1468",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-10T18:42:12Z",
+      "side": 1,
+      "message": "omitted (typo)",
+      "revId": "d443b298806a64628788a6f11191ef3279242175",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "244c8613_7597e808",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-10T18:42:12Z",
+      "side": 1,
+      "message": "I wonder if this could even just be a string instead of a []string, and document it as comma-separated. Less garbage at runtime creating all those slices, lighter on the page to type, (no need to write []string{...} for what\u0027s usually going to be one field), and it\u0027s not like we lose any type safety either way. We can still return a runtime-error either way if the field names or format are garbage.  It also gives us the flexibility to encode new meaning to the same field in the future, similar to how the json:\"\" struct tag has various things like the name, \",omitempty\", \",string\", etc. Maybe that last reason is a weak reason (we could just add a new struct field here for new reasons), but",
+      "revId": "d443b298806a64628788a6f11191ef3279242175",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "244c8613_d5da7c02",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-10T18:42:12Z",
+      "side": 1,
+      "message": "unnecessary warning. It\u0027s never used directly so much as it\u0027s used by encoding/json.\n\nIf you want to say anything (we often don\u0027t document methods implementing well-known interfaces), you can just say:\n\n  // MarshalJSON implements json.Marshaler. It\n  // encodes s as a JSON struct in the usual way,\n  // but additionally respects s.ForceSendFields.",
+      "revId": "d443b298806a64628788a6f11191ef3279242175",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

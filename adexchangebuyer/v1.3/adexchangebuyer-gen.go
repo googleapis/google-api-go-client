@@ -288,6 +288,12 @@ type Creative struct {
 	// AgencyId: The agency id for this creative.
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
+	// ApiUploadTimestamp: The last upload timestamp of this creative if it
+	// was uploaded via API. Read-only. The value of this field is
+	// generated, and will be ignored for uploads. (formatted RFC 3339
+	// timestamp).
+	ApiUploadTimestamp string `json:"api_upload_timestamp,omitempty"`
+
 	// Attribute: All attributes for the ads that may be shown from this
 	// snippet.
 	Attribute []int64 `json:"attribute,omitempty"`
@@ -324,6 +330,10 @@ type Creative struct {
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+
+	// NativeAd: If nativeAd is set, HTMLSnippet and videoURL should not be
+	// set.
+	NativeAd *CreativeNativeAd `json:"nativeAd,omitempty"`
 
 	// ProductCategories: Detected product categories, if any. Read-only.
 	// This field should not be set in requests.
@@ -393,6 +403,76 @@ type CreativeFilteringReasonsReasons struct {
 	// FilteringStatus: The filtering status code. Please refer to the
 	// creative-status-codes.txt file for different statuses.
 	FilteringStatus int64 `json:"filteringStatus,omitempty"`
+}
+
+// CreativeNativeAd: If nativeAd is set, HTMLSnippet and videoURL should
+// not be set.
+type CreativeNativeAd struct {
+	Advertiser string `json:"advertiser,omitempty"`
+
+	// AppIcon: The app icon, for app download ads.
+	AppIcon *CreativeNativeAdAppIcon `json:"appIcon,omitempty"`
+
+	// Body: A long description of the ad.
+	Body string `json:"body,omitempty"`
+
+	// CallToAction: A label for the button that the user is supposed to
+	// click.
+	CallToAction string `json:"callToAction,omitempty"`
+
+	// ClickTrackingUrl: The URL to use for click tracking.
+	ClickTrackingUrl string `json:"clickTrackingUrl,omitempty"`
+
+	// Headline: A short title for the ad.
+	Headline string `json:"headline,omitempty"`
+
+	// Image: A large image.
+	Image *CreativeNativeAdImage `json:"image,omitempty"`
+
+	// ImpressionTrackingUrl: The URLs are called when the impression is
+	// rendered.
+	ImpressionTrackingUrl []string `json:"impressionTrackingUrl,omitempty"`
+
+	// Logo: A smaller image, for the advertiser logo.
+	Logo *CreativeNativeAdLogo `json:"logo,omitempty"`
+
+	// Price: The price of the promoted app including the currency info.
+	Price string `json:"price,omitempty"`
+
+	// StarRating: The app rating in the app store. Must be in the range
+	// [0-5].
+	StarRating float64 `json:"starRating,omitempty"`
+
+	// Store: The URL to the app store to purchase/download the promoted
+	// app.
+	Store string `json:"store,omitempty"`
+}
+
+// CreativeNativeAdAppIcon: The app icon, for app download ads.
+type CreativeNativeAdAppIcon struct {
+	Height int64 `json:"height,omitempty"`
+
+	Url string `json:"url,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
+}
+
+// CreativeNativeAdImage: A large image.
+type CreativeNativeAdImage struct {
+	Height int64 `json:"height,omitempty"`
+
+	Url string `json:"url,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
+}
+
+// CreativeNativeAdLogo: A smaller image, for the advertiser logo.
+type CreativeNativeAdLogo struct {
+	Height int64 `json:"height,omitempty"`
+
+	Url string `json:"url,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
 }
 
 // CreativesList: The creatives feed lists the active creatives for the

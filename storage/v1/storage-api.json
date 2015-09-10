@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/m_kQ1sEpRjiD32b_p8yVsqGVp3I\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/9Bg7_QKT-vp8XVgawS-R0QOOugY\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
  "version": "v1",
- "revision": "20150818",
+ "revision": "20150826",
  "title": "Cloud Storage API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
@@ -76,7 +76,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "View your data across Google Cloud Platform services"
+     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/devstorage.full_control": {
      "description": "Manage your data and permissions in Google Cloud Storage"
@@ -1646,7 +1646,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -1686,7 +1686,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -1723,7 +1723,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -1762,7 +1762,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -1804,7 +1804,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -1850,7 +1850,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -1888,7 +1888,7 @@
       },
       "destinationObject": {
        "type": "string",
-       "description": "Name of the new object.",
+       "description": "Name of the new object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       },
@@ -1951,7 +1951,7 @@
      "parameters": {
       "destinationBucket": {
        "type": "string",
-       "description": "Name of the bucket in which to store the new object. Overrides the provided object metadata's bucket value, if any.",
+       "description": "Name of the bucket in which to store the new object. Overrides the provided object metadata's bucket value, if any.For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       },
@@ -2057,7 +2057,7 @@
       },
       "sourceObject": {
        "type": "string",
-       "description": "Name of the source object.",
+       "description": "Name of the source object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -2125,7 +2125,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -2184,7 +2184,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       },
@@ -2261,7 +2261,7 @@
       },
       "name": {
        "type": "string",
-       "description": "Name of the object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any.",
+       "description": "Name of the object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "location": "query"
       },
       "predefinedAcl": {
@@ -2443,7 +2443,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       },
@@ -2512,7 +2512,7 @@
       },
       "destinationObject": {
        "type": "string",
-       "description": "Name of the new object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any.",
+       "description": "Name of the new object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       },
@@ -2623,7 +2623,7 @@
       },
       "sourceObject": {
        "type": "string",
-       "description": "Name of the source object.",
+       "description": "Name of the source object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       }
@@ -2690,7 +2690,7 @@
       },
       "object": {
        "type": "string",
-       "description": "Name of the object.",
+       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
        "required": true,
        "location": "path"
       },

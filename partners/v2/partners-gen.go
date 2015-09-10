@@ -669,6 +669,7 @@ type LogUserEventRequest struct {
 	//   "AGENCY_CLICKED_INSIGHTS_DOWNLOAD_CONTENT"
 	//   "AGENCY_PROGRESS_INSIGHTS_VIEW_CONTENT"
 	//   "AGENCY_CLICKED_CANCEL_ACCEPT_TOS_BUTTON"
+	//   "SMB_ENTERED_WEBSITE_IN_CONTACT_PARTNER_FORM"
 	EventAction string `json:"eventAction,omitempty"`
 
 	// EventCategory: The category the action belongs to.

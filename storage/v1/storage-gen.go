@@ -46,7 +46,8 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud Platform services
+	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
+	// Platform services
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// Manage your data and permissions in Google Cloud Storage
@@ -3125,7 +3126,7 @@ func (c *ObjectAccessControlsDeleteCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3240,7 +3241,7 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3355,7 +3356,7 @@ func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3465,7 +3466,7 @@ func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3591,7 +3592,7 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3719,7 +3720,7 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3882,7 +3883,7 @@ func (c *ObjectsComposeCall) Do() (*Object, error) {
 	//       "type": "string"
 	//     },
 	//     "destinationObject": {
-	//       "description": "Name of the new object.",
+	//       "description": "Name of the new object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4181,7 +4182,7 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 	//   ],
 	//   "parameters": {
 	//     "destinationBucket": {
-	//       "description": "Name of the bucket in which to store the new object. Overrides the provided object metadata's bucket value, if any.",
+	//       "description": "Name of the bucket in which to store the new object. Overrides the provided object metadata's bucket value, if any.For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4287,7 +4288,7 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 	//       "type": "string"
 	//     },
 	//     "sourceObject": {
-	//       "description": "Name of the source object.",
+	//       "description": "Name of the source object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4467,7 +4468,7 @@ func (c *ObjectsDeleteCall) Do() error {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4671,7 +4672,7 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4774,7 +4775,8 @@ func (c *ObjectsInsertCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch in
 
 // Name sets the optional parameter "name": Name of the object. Required
 // when the object metadata is not otherwise provided. Overrides the
-// object metadata's name value, if any.
+// object metadata's name value, if any. For information about how to
+// URL encode object names to be path safe, see Encoding URI Path Parts.
 func (c *ObjectsInsertCall) Name(name string) *ObjectsInsertCall {
 	c.opt_["name"] = name
 	return c
@@ -5010,7 +5012,7 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Name of the object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any.",
+	//       "description": "Name of the object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5469,7 +5471,7 @@ func (c *ObjectsPatchCall) Do() (*Object, error) {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5790,7 +5792,7 @@ func (c *ObjectsRewriteCall) Do() (*RewriteResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "destinationObject": {
-	//       "description": "Name of the new object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any.",
+	//       "description": "Name of the new object. Required when the object metadata is not otherwise provided. Overrides the object metadata's name value, if any. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5901,7 +5903,7 @@ func (c *ObjectsRewriteCall) Do() (*RewriteResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "sourceObject": {
-	//       "description": "Name of the source object.",
+	//       "description": "Name of the source object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6142,7 +6144,7 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	//       "type": "string"
 	//     },
 	//     "object": {
-	//       "description": "Name of the object.",
+	//       "description": "Name of the object. For information about how to URL encode object names to be path safe, see Encoding URI Path Parts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

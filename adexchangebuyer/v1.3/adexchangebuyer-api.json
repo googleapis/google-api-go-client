@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FAPpLW1Ujfy6AKjixZl25akuukg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/s43VGxh95gMJhn2XULgCPUEFl2w\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.3",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.3",
- "revision": "20150822",
+ "revision": "20150909",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -281,6 +281,11 @@
      "description": "The agency id for this creative.",
      "format": "int64"
     },
+    "api_upload_timestamp": {
+     "type": "string",
+     "description": "The last upload timestamp of this creative if it was uploaded via API. Read-only. The value of this field is generated, and will be ignored for uploads. (formatted RFC 3339 timestamp).",
+     "format": "date-time"
+    },
     "attribute": {
      "type": "array",
      "description": "All attributes for the ads that may be shown from this snippet.",
@@ -400,6 +405,102 @@
      "type": "string",
      "description": "Resource type.",
      "default": "adexchangebuyer#creative"
+    },
+    "nativeAd": {
+     "type": "object",
+     "description": "If nativeAd is set, HTMLSnippet and videoURL should not be set.",
+     "properties": {
+      "advertiser": {
+       "type": "string"
+      },
+      "appIcon": {
+       "type": "object",
+       "description": "The app icon, for app download ads.",
+       "properties": {
+        "height": {
+         "type": "integer",
+         "format": "int32"
+        },
+        "url": {
+         "type": "string"
+        },
+        "width": {
+         "type": "integer",
+         "format": "int32"
+        }
+       }
+      },
+      "body": {
+       "type": "string",
+       "description": "A long description of the ad."
+      },
+      "callToAction": {
+       "type": "string",
+       "description": "A label for the button that the user is supposed to click."
+      },
+      "clickTrackingUrl": {
+       "type": "string",
+       "description": "The URL to use for click tracking."
+      },
+      "headline": {
+       "type": "string",
+       "description": "A short title for the ad."
+      },
+      "image": {
+       "type": "object",
+       "description": "A large image.",
+       "properties": {
+        "height": {
+         "type": "integer",
+         "format": "int32"
+        },
+        "url": {
+         "type": "string"
+        },
+        "width": {
+         "type": "integer",
+         "format": "int32"
+        }
+       }
+      },
+      "impressionTrackingUrl": {
+       "type": "array",
+       "description": "The URLs are called when the impression is rendered.",
+       "items": {
+        "type": "string"
+       }
+      },
+      "logo": {
+       "type": "object",
+       "description": "A smaller image, for the advertiser logo.",
+       "properties": {
+        "height": {
+         "type": "integer",
+         "format": "int32"
+        },
+        "url": {
+         "type": "string"
+        },
+        "width": {
+         "type": "integer",
+         "format": "int32"
+        }
+       }
+      },
+      "price": {
+       "type": "string",
+       "description": "The price of the promoted app including the currency info."
+      },
+      "starRating": {
+       "type": "number",
+       "description": "The app rating in the app store. Must be in the range [0-5].",
+       "format": "double"
+      },
+      "store": {
+       "type": "string",
+       "description": "The URL to the app store to purchase/download the promoted app."
+      }
+     }
     },
     "productCategories": {
      "type": "array",

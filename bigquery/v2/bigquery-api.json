@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rEmA2yoZ-r0GbIlsej0X1zq5DTY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Z4Mq-N2hxzXoiWGo0RMQpmYYkZE\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
@@ -81,7 +81,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "View your data across Google Cloud Platform services"
+     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/devstorage.full_control": {
      "description": "Manage your data and permissions in Google Cloud Storage"

@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-C-cocmB3hdYP8G1pbP8mxOVUcw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/vc2WYrePuDcqazgNVjmdzE5Mns4\"",
  "discoveryVersion": "v1",
  "id": "cloudbilling:v1",
  "name": "cloudbilling",
  "version": "v1",
- "revision": "20150812",
+ "revision": "20150903",
  "title": "Google Cloud Billing API",
- "description": "",
+ "description": "Retrieves Google Developers Console billing accounts and associates them with projects.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

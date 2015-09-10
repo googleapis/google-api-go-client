@@ -241,7 +241,7 @@ type Calendar struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: Identifier of the calendar. To retrieve IDs you call the
+	// Id: Identifier of the calendar. To retrieve IDs call the
 	// calendarList.list() method.
 	Id string `json:"id,omitempty"`
 

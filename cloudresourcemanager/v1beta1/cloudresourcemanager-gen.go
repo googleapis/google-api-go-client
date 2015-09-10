@@ -52,6 +52,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -60,6 +61,8 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Organizations *OrganizationsService
 
 	Projects *ProjectsService
 }
@@ -71,6 +74,15 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	return rs
+}
+
+type OrganizationsService struct {
+	s *Service
+}
+
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	return rs
@@ -80,22 +92,27 @@ type ProjectsService struct {
 	s *Service
 }
 
-// Binding: Associates members with roles. See below for allowed formats
-// of members.
+// Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Members: Format of member entries: 1. allUsers Matches any requesting
-	// principal (users, service accounts or anonymous). 2.
-	// allAuthenticatedUsers Matches any requesting authenticated principal
-	// (users or service accounts). 3. user:{emailid} A google user account
-	// using an email address. For example alice@gmail.com, joe@example.com
-	// 4. serviceAccount:{emailid} An service account email. 5.
-	// group:{emailid} A google group with an email address. For example
-	// auth-ti-cloud@google.com 6. domain:{domain} A Google Apps domain
-	// name. For example google.com, example.com
+	// Members: Specifies the identities requesting access for a Cloud
+	// Platform resource. `members` can have the following formats: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@gmail.com` or `joe@example.com`. *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `domain:{domain}`: A Google Apps domain name
+	// that represents all the users of that domain. For example,
+	// `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: The name of the role to which the members should be bound.
-	// Examples: "roles/viewer", "roles/editor", "roles/owner". Required
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`. Required
 	Role string `json:"role,omitempty"`
 }
 
@@ -110,6 +127,22 @@ type Empty struct {
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
+}
+
+// ListOrganizationsResponse: The response returned from the
+// ListOrganizations method.
+type ListOrganizationsResponse struct {
+	// NextPageToken: A pagination token to be used to retrieve the next
+	// page of results. If the result is too large to fit within the page
+	// size specified in the request, this field will be set with a token
+	// that can be used to fetch the next page of results. If this field is
+	// empty, it indicates that this response contains the last page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Organizations: The list of Organizations that matched the list query,
+	// possibly paginated.
+	Organizations []*Organization `json:"organizations,omitempty"`
 }
 
 // ListProjectsResponse: A page of the response received from the
@@ -133,33 +166,57 @@ type ListProjectsResponse struct {
 	Projects []*Project `json:"projects,omitempty"`
 }
 
-// Policy: # Overview The `Policy` defines an access control policy
-// language. It is used to define policies that are attached to
-// resources like files, folders, VMs, etc. # Policy structure A
-// `Policy` consists of a list of bindings. A `Binding` binds a set of
-// members to a role, where the members include user accounts, user
-// groups, user domains, and service accounts. A 'role' is a named set
-// of permissions, defined by IAM. The definition of a role is outside
-// the policy. A permission check first determines the roles that
-// include the specified permission, and then determines if the
-// principal specified is a member of a binding to at least one of these
-// roles. The membership check is recursive when a group is bound to a
-// role. Policy examples: ``` { "bindings": [ { "role": "roles/owner",
-// "members": [ "user:mike@example.com", "group:admins@example.com",
+// Organization: The root node in the resource hierarchy to which a
+// particular entity's (e.g., company) resources belong.
+type Organization struct {
+	// DisplayName: A friendly string to be used to refer to the
+	// Organization in the UI. This field is required.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// OrganizationId: An immutable id for the Organization that is assigned
+	// on creation. This should be omitted when creating a new Organization.
+	// This field is read-only.
+	OrganizationId string `json:"organizationId,omitempty"`
+
+	// Owner: The owner of this Organization. The owner should be specified
+	// upon creation. Once set, it cannot be changed. This field is
+	// required.
+	Owner *OrganizationOwner `json:"owner,omitempty"`
+}
+
+// OrganizationOwner: The entity that owns an Organization. The lifetime
+// of the Organization and all of its descendants are bound to the
+// OrganizationOwner. If the OrganizationOwner is deleted, the
+// Organization and all its descendants will be deleted.
+type OrganizationOwner struct {
+	// DirectoryCustomerId: The Google for Work customer id used in the
+	// Directory API.
+	DirectoryCustomerId string `json:"directoryCustomerId,omitempty"`
+}
+
+// Policy: Defines an Identity and Access Management (IAM) policy. It is
+// used to specify access control policies for Cloud Platform resources.
+// A `Policy` consists of a list of `bindings`. A `Binding` binds a list
+// of `members` to a `role`, where the members can be user accounts,
+// Google groups, Google domains, and service accounts. A `role` is a
+// named list of permissions defined by IAM. **Example** ``` {
+// "bindings": [ { "role": "roles/owner", "members": [
+// "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
-// "serviceAccount:frontend@example.iam.gserviceaccounts.com"] }, {
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com"] }, {
 // "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
-// ```
+// ``` For a description of IAM and its features, see the [IAM
+// developer's guide][https://cloud.google.com/iam].
 type Policy struct {
-	// Bindings: It is an error to specify multiple bindings for the same
-	// role. It is an error to specify a binding with no members.
+	// Bindings: Associates a list of `members` to a `role`. Multiple
+	// `bindings` must not be specified for the same `role`. `bindings` with
+	// no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: Can be used to perform a read-modify-write.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: The policy language version. The version of the policy is
-	// represented by the etag. The default version is 0.
+	// Version: Version of the `Policy`. The default version is 0.
 	Version int64 `json:"version,omitempty"`
 }
 
@@ -190,11 +247,16 @@ type Project struct {
 	//   "DELETE_IN_PROGRESS"
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Name: The user-assigned name of the project. This field is optional
-	// and can remain unset. Allowed characters are: lowercase and uppercase
-	// letters, numbers, hyphen, single-quote, double-quote, space, and
-	// exclamation point. Example: My Project Read-write.
+	// Name: The user-assigned name of the project. It must be 4 to 30
+	// characters. Allowed characters are: lowercase and uppercase letters,
+	// numbers, hyphen, single-quote, double-quote, space, and exclamation
+	// point. Example: My Project Read-write.
 	Name string `json:"name,omitempty"`
+
+	// Parent: An optional reference to a parent Resource. The only
+	// supported parent type is "organization". Once set, the parent cannot
+	// be modified. Read-write.
+	Parent *ResourceId `json:"parent,omitempty"`
 
 	// ProjectId: The unique, user-assigned ID of the project. It must be 6
 	// to 30 lowercase letters, digits, or hyphens. It must start with a
@@ -207,19 +269,34 @@ type Project struct {
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 }
 
+// ResourceId: A container to reference an id for any resource type. A
+// 'resource' in Google Cloud Platform is a generic term for something
+// you (a developer) may want to interact with through one of our API's.
+// Some examples are an AppEngine app, a Compute Engine instance, Cloud
+// SQL database, ...
+type ResourceId struct {
+	// Id: Required field for the type-specific id. This should correspond
+	// to the id used in the type-specific API's.
+	Id string `json:"id,omitempty"`
+
+	// Type: Required field representing the resource type this id is for.
+	// At present, the only valid type is "organization".
+	Type string `json:"type,omitempty"`
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// 'resource'. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is in general a valid policy but certain services (like
-	// Projects) might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
 // method.
 type TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the 'resource'.
+	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
 	// allowed.
 	Permissions []string `json:"permissions,omitempty"`
@@ -231,6 +308,575 @@ type TestIamPermissionsResponse struct {
 	// Permissions: A subset of `TestPermissionsRequest.permissions` that
 	// the caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
+}
+
+// method id "cloudresourcemanager.organizations.get":
+
+type OrganizationsGetCall struct {
+	s              *Service
+	organizationId string
+	opt_           map[string]interface{}
+}
+
+// Get: Fetches an Organization resource by id.
+func (r *OrganizationsService) Get(organizationId string) *OrganizationsGetCall {
+	c := &OrganizationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.organizationId = organizationId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetCall) Fields(s ...googleapi.Field) *OrganizationsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{organizationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"organizationId": c.organizationId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OrganizationsGetCall) Do() (*Organization, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Organization
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Fetches an Organization resource by id.",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.organizations.get",
+	//   "parameterOrder": [
+	//     "organizationId"
+	//   ],
+	//   "parameters": {
+	//     "organizationId": {
+	//       "description": "The id of the Organization resource to fetch.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/organizations/{organizationId}",
+	//   "response": {
+	//     "$ref": "Organization"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.organizations.getIamPolicy":
+
+type OrganizationsGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	opt_                map[string]interface{}
+}
+
+// GetIamPolicy: Gets the access control policy for a Organization
+// resource. May be empty if no such policy or resource exists.
+func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
+	c := &OrganizationsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsGetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsGetIamPolicyCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OrganizationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:getIamPolicy")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OrganizationsGetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Policy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a Organization resource. May be empty if no such policy or resource exists.",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.organizations.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, `projects/{project}`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/organizations/{resource}:getIamPolicy",
+	//   "request": {
+	//     "$ref": "GetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.organizations.list":
+
+type OrganizationsListCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+}
+
+// List: Query Organization resources.
+func (r *OrganizationsService) List() *OrganizationsListCall {
+	c := &OrganizationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Filter sets the optional parameter "filter": An optional query string
+// used to filter the Organizations to be return in the response. Filter
+// rules are case-insensitive. Organizations may be filtered by
+// `owner.directoryCustomerId` or by `domain`, where the domain is a
+// Google for Work domain, for example: |Filter|Description|
+// |------|-----------|
+// |owner.directorycustomerid:123456789|Organizations with
+// `owner.directory_customer_id` equal to `123456789`.|
+// |domain:google.com|Organizations corresponding to the domain
+// `google.com`.| This field is optional.
+func (c *OrganizationsListCall) Filter(filter string) *OrganizationsListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of Organizations to return in the response. This field is optional.
+func (c *OrganizationsListCall) PageSize(pageSize int64) *OrganizationsListCall {
+	c.opt_["pageSize"] = pageSize
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to ListOrganizations that indicates
+// from where listing should continue. This field is optional.
+func (c *OrganizationsListCall) PageToken(pageToken string) *OrganizationsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsListCall) Fields(s ...googleapi.Field) *OrganizationsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OrganizationsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageSize"]; ok {
+		params.Set("pageSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OrganizationsListCall) Do() (*ListOrganizationsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *ListOrganizationsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Query Organization resources.",
+	//   "httpMethod": "GET",
+	//   "id": "cloudresourcemanager.organizations.list",
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "An optional query string used to filter the Organizations to be return in the response. Filter rules are case-insensitive. Organizations may be filtered by `owner.directoryCustomerId` or by `domain`, where the domain is a Google for Work domain, for example: |Filter|Description| |------|-----------| |owner.directorycustomerid:123456789|Organizations with `owner.directory_customer_id` equal to `123456789`.| |domain:google.com|Organizations corresponding to the domain `google.com`.| This field is optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of Organizations to return in the response. This field is optional.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A pagination token returned from a previous call to ListOrganizations that indicates from where listing should continue. This field is optional.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/organizations",
+	//   "response": {
+	//     "$ref": "ListOrganizationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.organizations.setIamPolicy":
+
+type OrganizationsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	opt_                map[string]interface{}
+}
+
+// SetIamPolicy: Sets the access control policy on a Organization
+// resource. Replaces any existing policy.
+func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
+	c := &OrganizationsSetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsSetIamPolicyCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OrganizationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:setIamPolicy")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OrganizationsSetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Policy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on a Organization resource. Replaces any existing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.organizations.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/organizations/{resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.organizations.testIamPermissions":
+
+type OrganizationsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	opt_                      map[string]interface{}
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified Organization.
+func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
+	c := &OrganizationsTestIamPermissionsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsTestIamPermissionsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OrganizationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:testIamPermissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OrganizationsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TestIamPermissionsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified Organization.",
+	//   "httpMethod": "POST",
+	//   "id": "cloudresourcemanager.organizations.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/organizations/{resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudresourcemanager.organizations.update":
+
+type OrganizationsUpdateCall struct {
+	s              *Service
+	organizationId string
+	organization   *Organization
+	opt_           map[string]interface{}
+}
+
+// Update: Updates an Organization resource.
+func (r *OrganizationsService) Update(organizationId string, organization *Organization) *OrganizationsUpdateCall {
+	c := &OrganizationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.organizationId = organizationId
+	c.organization = organization
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsUpdateCall) Fields(s ...googleapi.Field) *OrganizationsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *OrganizationsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.organization)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{organizationId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"organizationId": c.organizationId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *OrganizationsUpdateCall) Do() (*Organization, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Organization
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an Organization resource.",
+	//   "httpMethod": "PUT",
+	//   "id": "cloudresourcemanager.organizations.update",
+	//   "parameterOrder": [
+	//     "organizationId"
+	//   ],
+	//   "parameters": {
+	//     "organizationId": {
+	//       "description": "An immutable id for the Organization that is assigned on creation. This should be omitted when creating a new Organization. This field is read-only.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/organizations/{organizationId}",
+	//   "request": {
+	//     "$ref": "Organization"
+	//   },
+	//   "response": {
+	//     "$ref": "Organization"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudresourcemanager.projects.create":
@@ -571,7 +1217,7 @@ func (c *ProjectsGetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, projects/{project}.",
+	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, `projects/{project}`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -794,7 +1440,7 @@ func (c *ProjectsSetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. Resource is usually specified as a path, such as, projects/{project}/zones/{zone}/disks/{disk}.",
+	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -886,7 +1532,7 @@ func (c *ProjectsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy detail is being requested. Resource is usually specified as a path, such as, projects/{project}.",
+	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

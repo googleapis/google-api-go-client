@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/1mZqecM-TBcvMz8DeykD5V-x60E\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/l_k1z-nMnRAcKQK6zuQvkZvA4dI\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20150729",
+ "revision": "20150902",
  "title": "Calendar API",
  "description": "Lets you manipulate events and other calendar data.",
  "ownerDomain": "google.com",
@@ -175,7 +175,7 @@
     },
     "id": {
      "type": "string",
-     "description": "Identifier of the calendar. To retrieve IDs you call the calendarList.list() method."
+     "description": "Identifier of the calendar. To retrieve IDs call the calendarList.list() method."
     },
     "kind": {
      "type": "string",

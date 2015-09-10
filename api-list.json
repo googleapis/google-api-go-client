@@ -544,22 +544,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "computeaccounts:alpha",
-   "name": "computeaccounts",
-   "version": "alpha",
-   "title": "Compute Accounts API",
-   "description": "API for the Google Compute Accounts service.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/computeaccounts/alpha/rest",
-   "discoveryLink": "./apis/computeaccounts/alpha/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
-    "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
-   },
-   "documentationLink": "https://cloud.google.com/compute/docs/access/user-accounts/api/latest/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "content:v2sandbox",
    "name": "content",
    "version": "v2sandbox",
@@ -1162,7 +1146,7 @@
    "name": "cloudbilling",
    "version": "v1",
    "title": "Google Cloud Billing API",
-   "description": "",
+   "description": "Retrieves Google Developers Console billing accounts and associates them with projects.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudbilling/v1/rest",
    "discoveryLink": "./apis/cloudbilling/v1/rest",
    "icons": {

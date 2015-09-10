@@ -175,6 +175,12 @@ type Creative struct {
 	// AgencyId: The agency id for this creative.
 	AgencyId int64 `json:"agencyId,omitempty,string"`
 
+	// ApiUploadTimestamp: The last upload timestamp of this creative if it
+	// was uploaded via API. Read-only. The value of this field is
+	// generated, and will be ignored for uploads. (formatted RFC 3339
+	// timestamp).
+	ApiUploadTimestamp string `json:"api_upload_timestamp,omitempty"`
+
 	// Attribute: All attributes for the ads that may be shown from this
 	// snippet.
 	Attribute []int64 `json:"attribute,omitempty"`

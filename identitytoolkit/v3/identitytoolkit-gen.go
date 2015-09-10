@@ -396,6 +396,9 @@ type SetAccountInfoResponse struct {
 	// Kind: The fixed string "identitytoolkit#SetAccountInfoResponse".
 	Kind string `json:"kind,omitempty"`
 
+	// NewEmail: The new email the user attempts to change to.
+	NewEmail string `json:"newEmail,omitempty"`
+
 	// ProviderUserInfo: The user's profiles at the associated IdPs.
 	ProviderUserInfo []*SetAccountInfoResponseProviderUserInfo `json:"providerUserInfo,omitempty"`
 }

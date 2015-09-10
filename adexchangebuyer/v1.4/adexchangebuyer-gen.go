@@ -479,6 +479,8 @@ type ContactInformation struct {
 type CreateOrdersRequest struct {
 	// Orders: The list of orders to create.
 	Orders []*MarketplaceOrder `json:"orders,omitempty"`
+
+	WebPropertyCode string `json:"webPropertyCode,omitempty"`
 }
 
 type CreateOrdersResponse struct {
@@ -505,6 +507,12 @@ type Creative struct {
 
 	// AgencyId: The agency id for this creative.
 	AgencyId int64 `json:"agencyId,omitempty,string"`
+
+	// ApiUploadTimestamp: The last upload timestamp of this creative if it
+	// was uploaded via API. Read-only. The value of this field is
+	// generated, and will be ignored for uploads. (formatted RFC 3339
+	// timestamp).
+	ApiUploadTimestamp string `json:"api_upload_timestamp,omitempty"`
 
 	// Attribute: All attributes for the ads that may be shown from this
 	// snippet.
@@ -542,6 +550,10 @@ type Creative struct {
 
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
+
+	// NativeAd: If nativeAd is set, HTMLSnippet and videoURL should not be
+	// set.
+	NativeAd *CreativeNativeAd `json:"nativeAd,omitempty"`
 
 	// OpenAuctionStatus: Top-level open auction status. Read-only. This
 	// field should not be set in requests. If disapproved, an entry for
@@ -614,6 +626,76 @@ type CreativeFilteringReasonsReasons struct {
 	// FilteringStatus: The filtering status code. Please refer to the
 	// creative-status-codes.txt file for different statuses.
 	FilteringStatus int64 `json:"filteringStatus,omitempty"`
+}
+
+// CreativeNativeAd: If nativeAd is set, HTMLSnippet and videoURL should
+// not be set.
+type CreativeNativeAd struct {
+	Advertiser string `json:"advertiser,omitempty"`
+
+	// AppIcon: The app icon, for app download ads.
+	AppIcon *CreativeNativeAdAppIcon `json:"appIcon,omitempty"`
+
+	// Body: A long description of the ad.
+	Body string `json:"body,omitempty"`
+
+	// CallToAction: A label for the button that the user is supposed to
+	// click.
+	CallToAction string `json:"callToAction,omitempty"`
+
+	// ClickTrackingUrl: The URL to use for click tracking.
+	ClickTrackingUrl string `json:"clickTrackingUrl,omitempty"`
+
+	// Headline: A short title for the ad.
+	Headline string `json:"headline,omitempty"`
+
+	// Image: A large image.
+	Image *CreativeNativeAdImage `json:"image,omitempty"`
+
+	// ImpressionTrackingUrl: The URLs are called when the impression is
+	// rendered.
+	ImpressionTrackingUrl []string `json:"impressionTrackingUrl,omitempty"`
+
+	// Logo: A smaller image, for the advertiser logo.
+	Logo *CreativeNativeAdLogo `json:"logo,omitempty"`
+
+	// Price: The price of the promoted app including the currency info.
+	Price string `json:"price,omitempty"`
+
+	// StarRating: The app rating in the app store. Must be in the range
+	// [0-5].
+	StarRating float64 `json:"starRating,omitempty"`
+
+	// Store: The URL to the app store to purchase/download the promoted
+	// app.
+	Store string `json:"store,omitempty"`
+}
+
+// CreativeNativeAdAppIcon: The app icon, for app download ads.
+type CreativeNativeAdAppIcon struct {
+	Height int64 `json:"height,omitempty"`
+
+	Url string `json:"url,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
+}
+
+// CreativeNativeAdImage: A large image.
+type CreativeNativeAdImage struct {
+	Height int64 `json:"height,omitempty"`
+
+	Url string `json:"url,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
+}
+
+// CreativeNativeAdLogo: A smaller image, for the advertiser logo.
+type CreativeNativeAdLogo struct {
+	Height int64 `json:"height,omitempty"`
+
+	Url string `json:"url,omitempty"`
+
+	Width int64 `json:"width,omitempty"`
 }
 
 type CreativeServingRestrictions struct {
@@ -805,10 +887,6 @@ type EditAllOrderDealsRequest struct {
 
 	// UpdateAction: Indicates an optional action to take on the order
 	UpdateAction string `json:"updateAction,omitempty"`
-
-	// UpdateFinalizedView: True, if the finalized view of the deal should
-	// be updated.
-	UpdateFinalizedView bool `json:"updateFinalizedView,omitempty"`
 }
 
 type EditAllOrderDealsResponse struct {
@@ -1032,6 +1110,8 @@ type MarketplaceDeal struct {
 
 	// Terms: The negotiable terms of the deal. (updatable)
 	Terms *DealTerms `json:"terms,omitempty"`
+
+	WebPropertyCode string `json:"webPropertyCode,omitempty"`
 }
 
 type MarketplaceDealParty struct {
@@ -1163,6 +1243,8 @@ type MarketplaceOffer struct {
 
 	// Terms: The negotiable terms of the deal (buyer-readonly)
 	Terms *DealTerms `json:"terms,omitempty"`
+
+	WebPropertyCode string `json:"webPropertyCode,omitempty"`
 }
 
 // MarketplaceOrder: Represents an order in the marketplace. An order is
@@ -1826,27 +1908,6 @@ type TermsDto struct {
 
 	// Urls: The urls applicable to the offer.
 	Urls []string `json:"urls,omitempty"`
-}
-
-type UpdateOrderDealsRequest struct {
-	// Deals: List of deals to update
-	Deals []*MarketplaceDeal `json:"deals,omitempty"`
-
-	// OrderRevisionNumber: The last known revision number for the order.
-	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
-
-	UpdateAction string `json:"updateAction,omitempty"`
-
-	UpdatedFinalizedView bool `json:"updatedFinalizedView,omitempty"`
-}
-
-type UpdateOrderDealsResponse struct {
-	// Deals: List of deals updated (in the same order as passed in the
-	// request)
-	Deals []*MarketplaceDeal `json:"deals,omitempty"`
-
-	// OrderRevisionNumber: The updated revision number for the order.
-	OrderRevisionNumber int64 `json:"orderRevisionNumber,omitempty,string"`
 }
 
 type WebPropertyDto struct {
@@ -3659,97 +3720,6 @@ func (c *DealsGetCall) Do() (*NegotiationDto, error) {
 
 }
 
-// method id "adexchangebuyer.marketplacedeals.create":
-
-type MarketplacedealsCreateCall struct {
-	s                    *Service
-	orderId              string
-	addorderdealsrequest *AddOrderDealsRequest
-	opt_                 map[string]interface{}
-}
-
-// Create: Add new deals for the specified order
-func (r *MarketplacedealsService) Create(orderId string, addorderdealsrequest *AddOrderDealsRequest) *MarketplacedealsCreateCall {
-	c := &MarketplacedealsCreateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.orderId = orderId
-	c.addorderdealsrequest = addorderdealsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplacedealsCreateCall) Fields(s ...googleapi.Field) *MarketplacedealsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *MarketplacedealsCreateCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addorderdealsrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/create")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	return c.s.client.Do(req)
-}
-
-func (c *MarketplacedealsCreateCall) Do() (*AddOrderDealsResponse, error) {
-	res, err := c.doRequest("json")
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *AddOrderDealsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Add new deals for the specified order",
-	//   "httpMethod": "POST",
-	//   "id": "adexchangebuyer.marketplacedeals.create",
-	//   "parameterOrder": [
-	//     "orderId"
-	//   ],
-	//   "parameters": {
-	//     "orderId": {
-	//       "description": "OrderId for which deals need to be added.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "marketplaceOrders/{orderId}/deals/create",
-	//   "request": {
-	//     "$ref": "AddOrderDealsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "AddOrderDealsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
 // method id "adexchangebuyer.marketplacedeals.delete":
 
 type MarketplacedealsDeleteCall struct {
@@ -3841,6 +3811,97 @@ func (c *MarketplacedealsDeleteCall) Do() (*DeleteOrderDealsResponse, error) {
 
 }
 
+// method id "adexchangebuyer.marketplacedeals.insert":
+
+type MarketplacedealsInsertCall struct {
+	s                    *Service
+	orderId              string
+	addorderdealsrequest *AddOrderDealsRequest
+	opt_                 map[string]interface{}
+}
+
+// Insert: Add new deals for the specified order
+func (r *MarketplacedealsService) Insert(orderId string, addorderdealsrequest *AddOrderDealsRequest) *MarketplacedealsInsertCall {
+	c := &MarketplacedealsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.orderId = orderId
+	c.addorderdealsrequest = addorderdealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplacedealsInsertCall) Fields(s ...googleapi.Field) *MarketplacedealsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplacedealsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addorderdealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/insert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"orderId": c.orderId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplacedealsInsertCall) Do() (*AddOrderDealsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *AddOrderDealsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Add new deals for the specified order",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplacedeals.insert",
+	//   "parameterOrder": [
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "OrderId for which deals need to be added.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "marketplaceOrders/{orderId}/deals/insert",
+	//   "request": {
+	//     "$ref": "AddOrderDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AddOrderDealsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
 // method id "adexchangebuyer.marketplacedeals.list":
 
 type MarketplacedealsListCall struct {
@@ -3921,111 +3982,20 @@ func (c *MarketplacedealsListCall) Do() (*GetOrderDealsResponse, error) {
 
 }
 
-// method id "adexchangebuyer.marketplacedeals.replace":
+// method id "adexchangebuyer.marketplacedeals.update":
 
-type MarketplacedealsReplaceCall struct {
+type MarketplacedealsUpdateCall struct {
 	s                        *Service
 	orderId                  string
 	editallorderdealsrequest *EditAllOrderDealsRequest
 	opt_                     map[string]interface{}
 }
 
-// Replace: Replaces all the deals in the order with the passed in deals
-func (r *MarketplacedealsService) Replace(orderId string, editallorderdealsrequest *EditAllOrderDealsRequest) *MarketplacedealsReplaceCall {
-	c := &MarketplacedealsReplaceCall{s: r.s, opt_: make(map[string]interface{})}
-	c.orderId = orderId
-	c.editallorderdealsrequest = editallorderdealsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplacedealsReplaceCall) Fields(s ...googleapi.Field) *MarketplacedealsReplaceCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *MarketplacedealsReplaceCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.editallorderdealsrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/deals/replace")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
-	})
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	return c.s.client.Do(req)
-}
-
-func (c *MarketplacedealsReplaceCall) Do() (*EditAllOrderDealsResponse, error) {
-	res, err := c.doRequest("json")
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *EditAllOrderDealsResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Replaces all the deals in the order with the passed in deals",
-	//   "httpMethod": "POST",
-	//   "id": "adexchangebuyer.marketplacedeals.replace",
-	//   "parameterOrder": [
-	//     "orderId"
-	//   ],
-	//   "parameters": {
-	//     "orderId": {
-	//       "description": "The orderId to edit deals on.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "marketplaceOrders/{orderId}/deals/replace",
-	//   "request": {
-	//     "$ref": "EditAllOrderDealsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "EditAllOrderDealsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer.marketplacedeals.update":
-
-type MarketplacedealsUpdateCall struct {
-	s                       *Service
-	orderId                 string
-	updateorderdealsrequest *UpdateOrderDealsRequest
-	opt_                    map[string]interface{}
-}
-
-// Update: Update the specified deals on the order
-func (r *MarketplacedealsService) Update(orderId string, updateorderdealsrequest *UpdateOrderDealsRequest) *MarketplacedealsUpdateCall {
+// Update: Replaces all the deals in the order with the passed in deals
+func (r *MarketplacedealsService) Update(orderId string, editallorderdealsrequest *EditAllOrderDealsRequest) *MarketplacedealsUpdateCall {
 	c := &MarketplacedealsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.orderId = orderId
-	c.updateorderdealsrequest = updateorderdealsrequest
+	c.editallorderdealsrequest = editallorderdealsrequest
 	return c
 }
 
@@ -4039,7 +4009,7 @@ func (c *MarketplacedealsUpdateCall) Fields(s ...googleapi.Field) *Marketplacede
 
 func (c *MarketplacedealsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateorderdealsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.editallorderdealsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -4060,7 +4030,7 @@ func (c *MarketplacedealsUpdateCall) doRequest(alt string) (*http.Response, erro
 	return c.s.client.Do(req)
 }
 
-func (c *MarketplacedealsUpdateCall) Do() (*UpdateOrderDealsResponse, error) {
+func (c *MarketplacedealsUpdateCall) Do() (*EditAllOrderDealsResponse, error) {
 	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
@@ -4069,13 +4039,13 @@ func (c *MarketplacedealsUpdateCall) Do() (*UpdateOrderDealsResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *UpdateOrderDealsResponse
+	var ret *EditAllOrderDealsResponse
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the specified deals on the order",
+	//   "description": "Replaces all the deals in the order with the passed in deals",
 	//   "httpMethod": "POST",
 	//   "id": "adexchangebuyer.marketplacedeals.update",
 	//   "parameterOrder": [
@@ -4083,7 +4053,7 @@ func (c *MarketplacedealsUpdateCall) Do() (*UpdateOrderDealsResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "orderId": {
-	//       "description": "The orderId to update deals for.",
+	//       "description": "The orderId to edit deals on.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4091,10 +4061,10 @@ func (c *MarketplacedealsUpdateCall) Do() (*UpdateOrderDealsResponse, error) {
 	//   },
 	//   "path": "marketplaceOrders/{orderId}/deals/update",
 	//   "request": {
-	//     "$ref": "UpdateOrderDealsRequest"
+	//     "$ref": "EditAllOrderDealsRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "UpdateOrderDealsResponse"
+	//     "$ref": "EditAllOrderDealsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"
@@ -4103,18 +4073,18 @@ func (c *MarketplacedealsUpdateCall) Do() (*UpdateOrderDealsResponse, error) {
 
 }
 
-// method id "adexchangebuyer.marketplacenotes.create":
+// method id "adexchangebuyer.marketplacenotes.insert":
 
-type MarketplacenotesCreateCall struct {
+type MarketplacenotesInsertCall struct {
 	s                    *Service
 	orderId              string
 	addordernotesrequest *AddOrderNotesRequest
 	opt_                 map[string]interface{}
 }
 
-// Create: Add notes to the order
-func (r *MarketplacenotesService) Create(orderId string, addordernotesrequest *AddOrderNotesRequest) *MarketplacenotesCreateCall {
-	c := &MarketplacenotesCreateCall{s: r.s, opt_: make(map[string]interface{})}
+// Insert: Add notes to the order
+func (r *MarketplacenotesService) Insert(orderId string, addordernotesrequest *AddOrderNotesRequest) *MarketplacenotesInsertCall {
+	c := &MarketplacenotesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.orderId = orderId
 	c.addordernotesrequest = addordernotesrequest
 	return c
@@ -4123,12 +4093,12 @@ func (r *MarketplacenotesService) Create(orderId string, addordernotesrequest *A
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *MarketplacenotesCreateCall) Fields(s ...googleapi.Field) *MarketplacenotesCreateCall {
+func (c *MarketplacenotesInsertCall) Fields(s ...googleapi.Field) *MarketplacenotesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-func (c *MarketplacenotesCreateCall) doRequest(alt string) (*http.Response, error) {
+func (c *MarketplacenotesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addordernotesrequest)
 	if err != nil {
@@ -4140,7 +4110,7 @@ func (c *MarketplacenotesCreateCall) doRequest(alt string) (*http.Response, erro
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/notes/add")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/notes/insert")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -4151,7 +4121,7 @@ func (c *MarketplacenotesCreateCall) doRequest(alt string) (*http.Response, erro
 	return c.s.client.Do(req)
 }
 
-func (c *MarketplacenotesCreateCall) Do() (*AddOrderNotesResponse, error) {
+func (c *MarketplacenotesInsertCall) Do() (*AddOrderNotesResponse, error) {
 	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
@@ -4168,7 +4138,7 @@ func (c *MarketplacenotesCreateCall) Do() (*AddOrderNotesResponse, error) {
 	// {
 	//   "description": "Add notes to the order",
 	//   "httpMethod": "POST",
-	//   "id": "adexchangebuyer.marketplacenotes.create",
+	//   "id": "adexchangebuyer.marketplacenotes.insert",
 	//   "parameterOrder": [
 	//     "orderId"
 	//   ],
@@ -4180,7 +4150,7 @@ func (c *MarketplacenotesCreateCall) Do() (*AddOrderNotesResponse, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}/notes/add",
+	//   "path": "marketplaceOrders/{orderId}/notes/insert",
 	//   "request": {
 	//     "$ref": "AddOrderNotesRequest"
 	//   },
@@ -4436,82 +4406,6 @@ func (c *MarketplaceoffersSearchCall) Do() (*GetOffersResponse, error) {
 
 }
 
-// method id "adexchangebuyer.marketplaceorders.create":
-
-type MarketplaceordersCreateCall struct {
-	s                   *Service
-	createordersrequest *CreateOrdersRequest
-	opt_                map[string]interface{}
-}
-
-// Create: Create the given list of orders
-func (r *MarketplaceordersService) Create(createordersrequest *CreateOrdersRequest) *MarketplaceordersCreateCall {
-	c := &MarketplaceordersCreateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.createordersrequest = createordersrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *MarketplaceordersCreateCall) Fields(s ...googleapi.Field) *MarketplaceordersCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
-	return c
-}
-
-func (c *MarketplaceordersCreateCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createordersrequest)
-	if err != nil {
-		return nil, err
-	}
-	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/create")
-	urls += "?" + params.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("Content-Type", ctype)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	return c.s.client.Do(req)
-}
-
-func (c *MarketplaceordersCreateCall) Do() (*CreateOrdersResponse, error) {
-	res, err := c.doRequest("json")
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	var ret *CreateOrdersResponse
-	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Create the given list of orders",
-	//   "httpMethod": "POST",
-	//   "id": "adexchangebuyer.marketplaceorders.create",
-	//   "path": "marketplaceOrders/create",
-	//   "request": {
-	//     "$ref": "CreateOrdersRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "CreateOrdersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
 // method id "adexchangebuyer.marketplaceorders.get":
 
 type MarketplaceordersGetCall struct {
@@ -4592,19 +4486,99 @@ func (c *MarketplaceordersGetCall) Do() (*MarketplaceOrder, error) {
 
 }
 
+// method id "adexchangebuyer.marketplaceorders.insert":
+
+type MarketplaceordersInsertCall struct {
+	s                   *Service
+	createordersrequest *CreateOrdersRequest
+	opt_                map[string]interface{}
+}
+
+// Insert: Create the given list of orders
+func (r *MarketplaceordersService) Insert(createordersrequest *CreateOrdersRequest) *MarketplaceordersInsertCall {
+	c := &MarketplaceordersInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.createordersrequest = createordersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MarketplaceordersInsertCall) Fields(s ...googleapi.Field) *MarketplaceordersInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *MarketplaceordersInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createordersrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/insert")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *MarketplaceordersInsertCall) Do() (*CreateOrdersResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *CreateOrdersResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create the given list of orders",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.marketplaceorders.insert",
+	//   "path": "marketplaceOrders/insert",
+	//   "request": {
+	//     "$ref": "CreateOrdersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CreateOrdersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
 // method id "adexchangebuyer.marketplaceorders.patch":
 
 type MarketplaceordersPatchCall struct {
 	s                *Service
 	orderId          string
+	revisionNumber   int64
+	updateAction     string
 	marketplaceorder *MarketplaceOrder
 	opt_             map[string]interface{}
 }
 
 // Patch: Update the given order. This method supports patch semantics.
-func (r *MarketplaceordersService) Patch(orderId string, marketplaceorder *MarketplaceOrder) *MarketplaceordersPatchCall {
+func (r *MarketplaceordersService) Patch(orderId string, revisionNumber int64, updateAction string, marketplaceorder *MarketplaceOrder) *MarketplaceordersPatchCall {
 	c := &MarketplaceordersPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.orderId = orderId
+	c.revisionNumber = revisionNumber
+	c.updateAction = updateAction
 	c.marketplaceorder = marketplaceorder
 	return c
 }
@@ -4629,11 +4603,13 @@ func (c *MarketplaceordersPatchCall) doRequest(alt string) (*http.Response, erro
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/{revisionNumber}/{updateAction}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
+		"orderId":        c.orderId,
+		"revisionNumber": strconv.FormatInt(c.revisionNumber, 10),
+		"updateAction":   c.updateAction,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4659,7 +4635,9 @@ func (c *MarketplaceordersPatchCall) Do() (*MarketplaceOrder, error) {
 	//   "httpMethod": "PATCH",
 	//   "id": "adexchangebuyer.marketplaceorders.patch",
 	//   "parameterOrder": [
-	//     "orderId"
+	//     "orderId",
+	//     "revisionNumber",
+	//     "updateAction"
 	//   ],
 	//   "parameters": {
 	//     "orderId": {
@@ -4667,9 +4645,36 @@ func (c *MarketplaceordersPatchCall) Do() (*MarketplaceOrder, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "revisionNumber": {
+	//       "description": "The last known revision number to update. If the head revision in the marketplace database has since changed, an error will be thrown. The caller should then fetch the lastest order at head revision and retry the update at that revision.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateAction": {
+	//       "description": "The proposed action to take on the order.",
+	//       "enum": [
+	//         "accept",
+	//         "cancel",
+	//         "propose",
+	//         "unknownAction",
+	//         "updateFinalized"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}",
+	//   "path": "marketplaceOrders/{orderId}/{revisionNumber}/{updateAction}",
 	//   "request": {
 	//     "$ref": "MarketplaceOrder"
 	//   },
@@ -4770,14 +4775,18 @@ func (c *MarketplaceordersSearchCall) Do() (*GetOrdersResponse, error) {
 type MarketplaceordersUpdateCall struct {
 	s                *Service
 	orderId          string
+	revisionNumber   int64
+	updateAction     string
 	marketplaceorder *MarketplaceOrder
 	opt_             map[string]interface{}
 }
 
 // Update: Update the given order
-func (r *MarketplaceordersService) Update(orderId string, marketplaceorder *MarketplaceOrder) *MarketplaceordersUpdateCall {
+func (r *MarketplaceordersService) Update(orderId string, revisionNumber int64, updateAction string, marketplaceorder *MarketplaceOrder) *MarketplaceordersUpdateCall {
 	c := &MarketplaceordersUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.orderId = orderId
+	c.revisionNumber = revisionNumber
+	c.updateAction = updateAction
 	c.marketplaceorder = marketplaceorder
 	return c
 }
@@ -4802,11 +4811,13 @@ func (c *MarketplaceordersUpdateCall) doRequest(alt string) (*http.Response, err
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
-	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "marketplaceOrders/{orderId}/{revisionNumber}/{updateAction}")
 	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
-		"orderId": c.orderId,
+		"orderId":        c.orderId,
+		"revisionNumber": strconv.FormatInt(c.revisionNumber, 10),
+		"updateAction":   c.updateAction,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4832,7 +4843,9 @@ func (c *MarketplaceordersUpdateCall) Do() (*MarketplaceOrder, error) {
 	//   "httpMethod": "PUT",
 	//   "id": "adexchangebuyer.marketplaceorders.update",
 	//   "parameterOrder": [
-	//     "orderId"
+	//     "orderId",
+	//     "revisionNumber",
+	//     "updateAction"
 	//   ],
 	//   "parameters": {
 	//     "orderId": {
@@ -4840,9 +4853,36 @@ func (c *MarketplaceordersUpdateCall) Do() (*MarketplaceOrder, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "revisionNumber": {
+	//       "description": "The last known revision number to update. If the head revision in the marketplace database has since changed, an error will be thrown. The caller should then fetch the lastest order at head revision and retry the update at that revision.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateAction": {
+	//       "description": "The proposed action to take on the order.",
+	//       "enum": [
+	//         "accept",
+	//         "cancel",
+	//         "propose",
+	//         "unknownAction",
+	//         "updateFinalized"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "marketplaceOrders/{orderId}",
+	//   "path": "marketplaceOrders/{orderId}/{revisionNumber}/{updateAction}",
 	//   "request": {
 	//     "$ref": "MarketplaceOrder"
 	//   },

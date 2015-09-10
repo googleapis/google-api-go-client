@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fvxGsTn8YU-BmqskQflC-B1XoIM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/V0P_EZt4cOWzDdF6eJ9DXY_hW4s\"",
  "discoveryVersion": "v1",
  "id": "clouduseraccounts:alpha",
  "name": "clouduseraccounts",
  "canonicalName": "Cloud User Accounts",
  "version": "alpha",
- "revision": "20150810",
+ "revision": "20150909",
  "title": "Cloud User Accounts API",
  "description": "API for the Google Cloud User Accounts service.",
  "ownerDomain": "google.com",
@@ -74,19 +74,13 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "View your data across Google Cloud Platform services"
+     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud.useraccounts": {
      "description": "Manage your Google Cloud User Accounts"
     },
     "https://www.googleapis.com/auth/cloud.useraccounts.readonly": {
      "description": "View your Google Cloud User Accounts"
-    },
-    "https://www.googleapis.com/auth/computeaccounts": {
-     "description": "Manage your Google Compute Accounts"
-    },
-    "https://www.googleapis.com/auth/computeaccounts.readonly": {
-     "description": "View your Google Compute Accounts"
     }
    }
   }
@@ -100,6 +94,98 @@
     "keys": {
      "type": "array",
      "description": "[Output Only] The list of authorized public keys in SSH format.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "Binding": {
+   "id": "Binding",
+   "type": "object",
+   "description": "Associates `members` with a `role`.",
+   "properties": {
+    "members": {
+     "type": "array",
+     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following formats:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "role": {
+     "type": "string",
+     "description": "Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`, or `roles/owner`."
+    }
+   }
+  },
+  "Condition": {
+   "id": "Condition",
+   "type": "object",
+   "description": "A condition to be met.",
+   "properties": {
+    "iam": {
+     "type": "string",
+     "description": "Trusted attributes supplied by the IAM system.",
+     "enum": [
+      "ATTRIBUTION",
+      "AUTHORITY",
+      "NO_ATTR"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
+    "op": {
+     "type": "string",
+     "description": "An operator to apply the subject with.",
+     "enum": [
+      "DISCHARGED",
+      "EQUALS",
+      "IN",
+      "NOT_EQUALS",
+      "NOT_IN",
+      "NO_OP"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "svc": {
+     "type": "string",
+     "description": "Trusted attributes discharged by the service."
+    },
+    "sys": {
+     "type": "string",
+     "description": "Trusted attributes supplied by any service that owns resources and uses the IAM system for access control.",
+     "enum": [
+      "IP",
+      "NAME",
+      "NO_ATTR",
+      "REGION",
+      "SERVICE"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "value": {
+     "type": "string",
+     "description": "The object of the condition. Exactly one of these must be set."
+    },
+    "values": {
+     "type": "array",
+     "description": "The objects of the condition. This is mutually exclusive with 'value'.",
      "items": {
       "type": "string"
      }
@@ -307,6 +393,32 @@
     "username": {
      "type": "string",
      "description": "[Output Only] The username of the account."
+    }
+   }
+  },
+  "LogConfig": {
+   "id": "LogConfig",
+   "type": "object",
+   "description": "Specifies what kind of log the caller must write",
+   "properties": {
+    "counter": {
+     "$ref": "LogConfigCounterOptions",
+     "description": "Counter options."
+    }
+   }
+  },
+  "LogConfigCounterOptions": {
+   "id": "LogConfigCounterOptions",
+   "type": "object",
+   "description": "Options for counters",
+   "properties": {
+    "field": {
+     "type": "string",
+     "description": "The field value to attribute."
+    },
+    "metric": {
+     "type": "string",
+     "description": "The metric to update."
     }
    }
   },
@@ -536,6 +648,37 @@
     }
    }
   },
+  "Policy": {
+   "id": "Policy",
+   "type": "object",
+   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.\n\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM.\n\n**Example**\n\n{ \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\"] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] }\n\nFor a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
+   "properties": {
+    "bindings": {
+     "type": "array",
+     "description": "Associates a list of `members` to a `role`. Multiple `bindings` must not be specified for the same `role`. `bindings` with no members will result in an error.",
+     "items": {
+      "$ref": "Binding"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "Can be used to perform a read-modify-write.",
+     "format": "byte"
+    },
+    "rules": {
+     "type": "array",
+     "description": "",
+     "items": {
+      "$ref": "Rule"
+     }
+    },
+    "version": {
+     "type": "integer",
+     "description": "Version of the `Policy`. The default version is 0.",
+     "format": "int32"
+    }
+   }
+  },
   "PublicKey": {
    "id": "PublicKey",
    "type": "object",
@@ -560,6 +703,98 @@
     "key": {
      "type": "string",
      "description": "Public key text in SSH format, defined by RFC4253 section 6.6."
+    }
+   }
+  },
+  "Rule": {
+   "id": "Rule",
+   "type": "object",
+   "description": "A rule to be applied in a Policy.",
+   "properties": {
+    "action": {
+     "type": "string",
+     "description": "Required",
+     "enum": [
+      "ALLOW",
+      "ALLOW_WITH_LOG",
+      "DENY",
+      "DENY_WITH_LOG",
+      "LOG",
+      "NO_ACTION"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    "conditions": {
+     "type": "array",
+     "description": "Additional restrictions that must be met",
+     "items": {
+      "$ref": "Condition"
+     }
+    },
+    "description": {
+     "type": "string",
+     "description": "Human-readable description of the rule."
+    },
+    "ins": {
+     "type": "array",
+     "description": "The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this set of entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "logConfigs": {
+     "type": "array",
+     "description": "The config returned to callers of tech.iam.IAM.CheckPolicy for any entries that match the LOG action.",
+     "items": {
+      "$ref": "LogConfig"
+     }
+    },
+    "notIns": {
+     "type": "array",
+     "description": "The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not in this set of entries.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "permissions": {
+     "type": "array",
+     "description": "A permission is a string of form '..' (e.g., 'storage.buckets.list'). A value of '*' matches all permissions, and a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TestPermissionsRequest": {
+   "id": "TestPermissionsRequest",
+   "type": "object",
+   "properties": {
+    "permissions": {
+     "type": "array",
+     "description": "The set of permissions to check for the 'resource'. Permissions with wildcards (such as '*' or 'storage.*') are not allowed.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TestPermissionsResponse": {
+   "id": "TestPermissionsResponse",
+   "type": "object",
+   "properties": {
+    "permissions": {
+     "type": "array",
+     "description": "A subset of `TestPermissionsRequest.permissions` that the caller is allowed.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -686,8 +921,7 @@
      ],
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts"
      ]
     },
     "get": {
@@ -722,9 +956,7 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-      "https://www.googleapis.com/auth/computeaccounts",
-      "https://www.googleapis.com/auth/computeaccounts.readonly"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     },
     "list": {
@@ -775,9 +1007,7 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-      "https://www.googleapis.com/auth/computeaccounts",
-      "https://www.googleapis.com/auth/computeaccounts.readonly"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     }
    }
@@ -817,8 +1047,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts"
      ]
     },
     "delete": {
@@ -851,8 +1080,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts"
      ]
     },
     "get": {
@@ -887,9 +1115,42 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-      "https://www.googleapis.com/auth/computeaccounts",
-      "https://www.googleapis.com/auth/computeaccounts.readonly"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
+     ]
+    },
+    "getIamPolicy": {
+     "id": "clouduseraccounts.groups.getIamPolicy",
+     "path": "{project}/global/groups/{resource}/getIamPolicy",
+     "httpMethod": "GET",
+     "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
+      "https://www.googleapis.com/auth/cloud.useraccounts",
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     },
     "insert": {
@@ -917,8 +1178,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts"
      ]
     },
     "list": {
@@ -969,9 +1229,7 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-      "https://www.googleapis.com/auth/computeaccounts",
-      "https://www.googleapis.com/auth/computeaccounts.readonly"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     },
     "removeMember": {
@@ -1007,8 +1265,83 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud.useraccounts"
+     ]
+    },
+    "setIamPolicy": {
+     "id": "clouduseraccounts.groups.setIamPolicy",
+     "path": "{project}/global/groups/{resource}/setIamPolicy",
+     "httpMethod": "POST",
+     "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "Policy"
+     },
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "clouduseraccounts.groups.testIamPermissions",
+     "path": "{project}/global/groups/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
+      "https://www.googleapis.com/auth/cloud.useraccounts",
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     }
    }
@@ -1062,9 +1395,7 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-      "https://www.googleapis.com/auth/computeaccounts",
-      "https://www.googleapis.com/auth/computeaccounts.readonly"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     },
     "getLinuxAccountViews": {
@@ -1130,9 +1461,7 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-      "https://www.googleapis.com/auth/computeaccounts",
-      "https://www.googleapis.com/auth/computeaccounts.readonly"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     }
    }
@@ -1172,8 +1501,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts"
      ]
     },
     "delete": {
@@ -1206,8 +1534,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts"
      ]
     },
     "get": {
@@ -1242,9 +1569,42 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-      "https://www.googleapis.com/auth/computeaccounts",
-      "https://www.googleapis.com/auth/computeaccounts.readonly"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
+     ]
+    },
+    "getIamPolicy": {
+     "id": "clouduseraccounts.users.getIamPolicy",
+     "path": "{project}/global/users/{resource}/getIamPolicy",
+     "httpMethod": "GET",
+     "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
+      "https://www.googleapis.com/auth/cloud.useraccounts",
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     },
     "insert": {
@@ -1272,8 +1632,7 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts"
      ]
     },
     "list": {
@@ -1324,9 +1683,7 @@
       "https://www.googleapis.com/auth/cloud-platform",
       "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-      "https://www.googleapis.com/auth/computeaccounts",
-      "https://www.googleapis.com/auth/computeaccounts.readonly"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     },
     "removePublicKey": {
@@ -1367,8 +1724,83 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud.useraccounts"
+     ]
+    },
+    "setIamPolicy": {
+     "id": "clouduseraccounts.users.setIamPolicy",
+     "path": "{project}/global/users/{resource}/setIamPolicy",
+     "httpMethod": "POST",
+     "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "Policy"
+     },
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
       "https://www.googleapis.com/auth/cloud.useraccounts",
-      "https://www.googleapis.com/auth/computeaccounts"
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "clouduseraccounts.users.testIamPermissions",
+     "path": "{project}/global/users/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/cloud-platform.read-only",
+      "https://www.googleapis.com/auth/cloud.useraccounts",
+      "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
      ]
     }
    }

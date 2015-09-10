@@ -46,7 +46,8 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud Platform services
+	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
+	// Platform services
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// Manage your Google Cloud User Accounts
@@ -54,12 +55,6 @@ const (
 
 	// View your Google Cloud User Accounts
 	CloudUseraccountsReadonlyScope = "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
-
-	// Manage your Google Compute Accounts
-	ComputeaccountsScope = "https://www.googleapis.com/auth/computeaccounts"
-
-	// View your Google Compute Accounts
-	ComputeaccountsReadonlyScope = "https://www.googleapis.com/auth/computeaccounts.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -136,6 +131,81 @@ type UsersService struct {
 type AuthorizedKeysView struct {
 	// Keys: [Output Only] The list of authorized public keys in SSH format.
 	Keys []string `json:"keys,omitempty"`
+}
+
+// Binding: Associates `members` with a `role`.
+type Binding struct {
+	// Members: Specifies the identities requesting access for a Cloud
+	// Platform resource. `members` can have the following formats:
+	//
+	// * `allUsers`: A special identifier that represents anyone who is on
+	// the internet; with or without a Google account.
+	//
+	// * `allAuthenticatedUsers`: A special identifier that represents
+	// anyone who is authenticated with a Google account or a service
+	// account.
+	//
+	// * `user:{emailid}`: An email address that represents a specific
+	// Google account. For example, `alice@gmail.com` or
+	// `joe@example.com`.
+	//
+	// * `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`.
+	//
+	// * `group:{emailid}`: An email address that represents a Google group.
+	// For example, `admins@example.com`.
+	//
+	// * `domain:{domain}`: A Google Apps domain name that represents all
+	// the users of that domain. For example, `google.com` or `example.com`.
+	Members []string `json:"members,omitempty"`
+
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	Role string `json:"role,omitempty"`
+}
+
+// Condition: A condition to be met.
+type Condition struct {
+	// Iam: Trusted attributes supplied by the IAM system.
+	//
+	// Possible values:
+	//   "ATTRIBUTION"
+	//   "AUTHORITY"
+	//   "NO_ATTR"
+	Iam string `json:"iam,omitempty"`
+
+	// Op: An operator to apply the subject with.
+	//
+	// Possible values:
+	//   "DISCHARGED"
+	//   "EQUALS"
+	//   "IN"
+	//   "NOT_EQUALS"
+	//   "NOT_IN"
+	//   "NO_OP"
+	Op string `json:"op,omitempty"`
+
+	// Svc: Trusted attributes discharged by the service.
+	Svc string `json:"svc,omitempty"`
+
+	// Sys: Trusted attributes supplied by any service that owns resources
+	// and uses the IAM system for access control.
+	//
+	// Possible values:
+	//   "IP"
+	//   "NAME"
+	//   "NO_ATTR"
+	//   "REGION"
+	//   "SERVICE"
+	Sys string `json:"sys,omitempty"`
+
+	// Value: The object of the condition. Exactly one of these must be set.
+	Value string `json:"value,omitempty"`
+
+	// Values: The objects of the condition. This is mutually exclusive with
+	// 'value'.
+	Values []string `json:"values,omitempty"`
 }
 
 // Group: A Group resource.
@@ -260,6 +330,21 @@ type LinuxUserView struct {
 
 	// Username: [Output Only] The username of the account.
 	Username string `json:"username,omitempty"`
+}
+
+// LogConfig: Specifies what kind of log the caller must write
+type LogConfig struct {
+	// Counter: Counter options.
+	Counter *LogConfigCounterOptions `json:"counter,omitempty"`
+}
+
+// LogConfigCounterOptions: Options for counters
+type LogConfigCounterOptions struct {
+	// Field: The field value to attribute.
+	Field string `json:"field,omitempty"`
+
+	// Metric: The metric to update.
+	Metric string `json:"metric,omitempty"`
 }
 
 // Operation: An Operation resource, used to manage asynchronous API
@@ -436,6 +521,43 @@ type OperationList struct {
 	SelfLink string `json:"selfLink,omitempty"`
 }
 
+// Policy: Defines an Identity and Access Management (IAM) policy. It is
+// used to specify access control policies for Cloud Platform
+// resources.
+//
+//
+//
+// A `Policy` consists of a list of `bindings`. A `Binding` binds a list
+// of `members` to a `role`, where the members can be user accounts,
+// Google groups, Google domains, and service accounts. A `role` is a
+// named list of permissions defined by IAM.
+//
+// **Example**
+//
+// { "bindings": [ { "role": "roles/owner", "members": [
+// "user:mike@example.com", "group:admins@example.com",
+// "domain:google.com",
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com"] }, {
+// "role": "roles/viewer", "members": ["user:sean@example.com"] } ]
+// }
+//
+// For a description of IAM and its features, see the [IAM developer's
+// guide](https://cloud.google.com/iam).
+type Policy struct {
+	// Bindings: Associates a list of `members` to a `role`. Multiple
+	// `bindings` must not be specified for the same `role`. `bindings` with
+	// no members will result in an error.
+	Bindings []*Binding `json:"bindings,omitempty"`
+
+	// Etag: Can be used to perform a read-modify-write.
+	Etag string `json:"etag,omitempty"`
+
+	Rules []*Rule `json:"rules,omitempty"`
+
+	// Version: Version of the `Policy`. The default version is 0.
+	Version int64 `json:"version,omitempty"`
+}
+
 // PublicKey: A public key for authenticating to guests.
 type PublicKey struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -457,6 +579,56 @@ type PublicKey struct {
 
 	// Key: Public key text in SSH format, defined by RFC4253 section 6.6.
 	Key string `json:"key,omitempty"`
+}
+
+// Rule: A rule to be applied in a Policy.
+type Rule struct {
+	// Action: Required
+	//
+	// Possible values:
+	//   "ALLOW"
+	//   "ALLOW_WITH_LOG"
+	//   "DENY"
+	//   "DENY_WITH_LOG"
+	//   "LOG"
+	//   "NO_ACTION"
+	Action string `json:"action,omitempty"`
+
+	// Conditions: Additional restrictions that must be met
+	Conditions []*Condition `json:"conditions,omitempty"`
+
+	// Description: Human-readable description of the rule.
+	Description string `json:"description,omitempty"`
+
+	// Ins: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in this
+	// set of entries.
+	Ins []string `json:"ins,omitempty"`
+
+	// LogConfigs: The config returned to callers of
+	// tech.iam.IAM.CheckPolicy for any entries that match the LOG action.
+	LogConfigs []*LogConfig `json:"logConfigs,omitempty"`
+
+	// NotIns: The rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is not
+	// in this set of entries.
+	NotIns []string `json:"notIns,omitempty"`
+
+	// Permissions: A permission is a string of form '..' (e.g.,
+	// 'storage.buckets.list'). A value of '*' matches all permissions, and
+	// a verb part of '*' (e.g., 'storage.buckets.*') matches all verbs.
+	Permissions []string `json:"permissions,omitempty"`
+}
+
+type TestPermissionsRequest struct {
+	// Permissions: The set of permissions to check for the 'resource'.
+	// Permissions with wildcards (such as '*' or 'storage.*') are not
+	// allowed.
+	Permissions []string `json:"permissions,omitempty"`
+}
+
+type TestPermissionsResponse struct {
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that
+	// the caller is allowed.
+	Permissions []string `json:"permissions,omitempty"`
 }
 
 // User: A User resource.
@@ -598,8 +770,7 @@ func (c *GlobalAccountsOperationsDeleteCall) Do() error {
 	//   "path": "{project}/global/operations/{operation}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
 	//   ]
 	// }
 
@@ -694,9 +865,7 @@ func (c *GlobalAccountsOperationsGetCall) Do() (*Operation, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-	//     "https://www.googleapis.com/auth/computeaccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts.readonly"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -870,9 +1039,7 @@ func (c *GlobalAccountsOperationsListCall) Do() (*OperationList, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-	//     "https://www.googleapis.com/auth/computeaccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts.readonly"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -976,8 +1143,7 @@ func (c *GroupsAddMemberCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
 	//   ]
 	// }
 
@@ -1070,8 +1236,7 @@ func (c *GroupsDeleteCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
 	//   ]
 	// }
 
@@ -1166,9 +1331,103 @@ func (c *GroupsGetCall) Do() (*Group, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-	//     "https://www.googleapis.com/auth/computeaccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts.readonly"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "clouduseraccounts.groups.getIamPolicy":
+
+type GroupsGetIamPolicyCall struct {
+	s        *Service
+	project  string
+	resource string
+	opt_     map[string]interface{}
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. May be
+// empty if no such policy or resource exists.
+func (r *GroupsService) GetIamPolicy(project string, resource string) *GroupsGetIamPolicyCall {
+	c := &GroupsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsGetIamPolicyCall) Fields(s ...googleapi.Field) *GroupsGetIamPolicyCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{resource}/getIamPolicy")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *GroupsGetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Policy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+	//   "httpMethod": "GET",
+	//   "id": "clouduseraccounts.groups.getIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/groups/{resource}/getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -1262,8 +1521,7 @@ func (c *GroupsInsertCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
 	//   ]
 	// }
 
@@ -1437,9 +1695,7 @@ func (c *GroupsListCall) Do() (*GroupList, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-	//     "https://www.googleapis.com/auth/computeaccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts.readonly"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -1543,8 +1799,221 @@ func (c *GroupsRemoveMemberCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
+	//   ]
+	// }
+
+}
+
+// method id "clouduseraccounts.groups.setIamPolicy":
+
+type GroupsSetIamPolicyCall struct {
+	s        *Service
+	project  string
+	resource string
+	policy   *Policy
+	opt_     map[string]interface{}
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy.
+func (r *GroupsService) SetIamPolicy(project string, resource string, policy *Policy) *GroupsSetIamPolicyCall {
+	c := &GroupsSetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.resource = resource
+	c.policy = policy
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsSetIamPolicyCall) Fields(s ...googleapi.Field) *GroupsSetIamPolicyCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{resource}/setIamPolicy")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *GroupsSetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Policy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "clouduseraccounts.groups.setIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/groups/{resource}/setIamPolicy",
+	//   "request": {
+	//     "$ref": "Policy"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "clouduseraccounts.groups.testIamPermissions":
+
+type GroupsTestIamPermissionsCall struct {
+	s                      *Service
+	project                string
+	resource               string
+	testpermissionsrequest *TestPermissionsRequest
+	opt_                   map[string]interface{}
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+func (r *GroupsService) TestIamPermissions(project string, resource string, testpermissionsrequest *TestPermissionsRequest) *GroupsTestIamPermissionsCall {
+	c := &GroupsTestIamPermissionsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.resource = resource
+	c.testpermissionsrequest = testpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GroupsTestIamPermissionsCall) Fields(s ...googleapi.Field) *GroupsTestIamPermissionsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *GroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/groups/{resource}/testIamPermissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *GroupsTestIamPermissionsCall) Do() (*TestPermissionsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TestPermissionsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource.",
+	//   "httpMethod": "POST",
+	//   "id": "clouduseraccounts.groups.testIamPermissions",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/groups/{resource}/testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -1661,9 +2130,7 @@ func (c *LinuxGetAuthorizedKeysViewCall) Do() (*LinuxGetAuthorizedKeysViewRespon
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-	//     "https://www.googleapis.com/auth/computeaccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts.readonly"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -1858,9 +2325,7 @@ func (c *LinuxGetLinuxAccountViewsCall) Do() (*LinuxGetLinuxAccountViewsResponse
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-	//     "https://www.googleapis.com/auth/computeaccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts.readonly"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -1965,8 +2430,7 @@ func (c *UsersAddPublicKeyCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
 	//   ]
 	// }
 
@@ -2059,8 +2523,7 @@ func (c *UsersDeleteCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
 	//   ]
 	// }
 
@@ -2155,9 +2618,103 @@ func (c *UsersGetCall) Do() (*User, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-	//     "https://www.googleapis.com/auth/computeaccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts.readonly"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "clouduseraccounts.users.getIamPolicy":
+
+type UsersGetIamPolicyCall struct {
+	s        *Service
+	project  string
+	resource string
+	opt_     map[string]interface{}
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. May be
+// empty if no such policy or resource exists.
+func (r *UsersService) GetIamPolicy(project string, resource string) *UsersGetIamPolicyCall {
+	c := &UsersGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersGetIamPolicyCall) Fields(s ...googleapi.Field) *UsersGetIamPolicyCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *UsersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{resource}/getIamPolicy")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *UsersGetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Policy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+	//   "httpMethod": "GET",
+	//   "id": "clouduseraccounts.users.getIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/users/{resource}/getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -2251,8 +2808,7 @@ func (c *UsersInsertCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
 	//   ]
 	// }
 
@@ -2426,9 +2982,7 @@ func (c *UsersListCall) Do() (*UserList, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly",
-	//     "https://www.googleapis.com/auth/computeaccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts.readonly"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 
@@ -2532,8 +3086,221 @@ func (c *UsersRemovePublicKeyCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts"
+	//   ]
+	// }
+
+}
+
+// method id "clouduseraccounts.users.setIamPolicy":
+
+type UsersSetIamPolicyCall struct {
+	s        *Service
+	project  string
+	resource string
+	policy   *Policy
+	opt_     map[string]interface{}
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy.
+func (r *UsersService) SetIamPolicy(project string, resource string, policy *Policy) *UsersSetIamPolicyCall {
+	c := &UsersSetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.resource = resource
+	c.policy = policy
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersSetIamPolicyCall) Fields(s ...googleapi.Field) *UsersSetIamPolicyCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *UsersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{resource}/setIamPolicy")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *UsersSetIamPolicyCall) Do() (*Policy, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *Policy
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+	//   "httpMethod": "POST",
+	//   "id": "clouduseraccounts.users.setIamPolicy",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/users/{resource}/setIamPolicy",
+	//   "request": {
+	//     "$ref": "Policy"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
 	//     "https://www.googleapis.com/auth/cloud.useraccounts",
-	//     "https://www.googleapis.com/auth/computeaccounts"
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "clouduseraccounts.users.testIamPermissions":
+
+type UsersTestIamPermissionsCall struct {
+	s                      *Service
+	project                string
+	resource               string
+	testpermissionsrequest *TestPermissionsRequest
+	opt_                   map[string]interface{}
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+func (r *UsersService) TestIamPermissions(project string, resource string, testpermissionsrequest *TestPermissionsRequest) *UsersTestIamPermissionsCall {
+	c := &UsersTestIamPermissionsCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.resource = resource
+	c.testpermissionsrequest = testpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersTestIamPermissionsCall) Fields(s ...googleapi.Field) *UsersTestIamPermissionsCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+func (c *UsersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/users/{resource}/testIamPermissions")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"resource": c.resource,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	return c.s.client.Do(req)
+}
+
+func (c *UsersTestIamPermissionsCall) Do() (*TestPermissionsResponse, error) {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	var ret *TestPermissionsResponse
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource.",
+	//   "httpMethod": "POST",
+	//   "id": "clouduseraccounts.users.testIamPermissions",
+	//   "parameterOrder": [
+	//     "project",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/users/{resource}/testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts",
+	//     "https://www.googleapis.com/auth/cloud.useraccounts.readonly"
 	//   ]
 	// }
 

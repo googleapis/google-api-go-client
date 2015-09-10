@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/3wCGcnGwi3iQywGP6Ncdo6mexyQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/PdE5ZrqEyWwzzJ5ypC41_n0Qz8I\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2",
  "name": "deploymentmanager",
@@ -74,7 +74,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "View your data across Google Cloud Platform services"
+     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/ndev.cloudman": {
      "description": "View and manage your Google Cloud Platform management resources and deployment status information"

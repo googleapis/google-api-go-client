@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/xZsnzXoHMxo__HCG9-5q9Z9kx5M\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Oex6IdRfx1XIrUSRqNsJm2G1ago\"",
  "discoveryVersion": "v1",
  "id": "partners:v2",
  "name": "partners",
@@ -265,7 +265,8 @@
       "AGENCY_DISMISSED_AFFILIATION_WIDGET",
       "AGENCY_CLICKED_INSIGHTS_DOWNLOAD_CONTENT",
       "AGENCY_PROGRESS_INSIGHTS_VIEW_CONTENT",
-      "AGENCY_CLICKED_CANCEL_ACCEPT_TOS_BUTTON"
+      "AGENCY_CLICKED_CANCEL_ACCEPT_TOS_BUTTON",
+      "SMB_ENTERED_WEBSITE_IN_CONTACT_PARTNER_FORM"
      ]
     },
     "eventCategory": {

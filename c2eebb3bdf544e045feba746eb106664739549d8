@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "244c8613_705ff659",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-10T21:34:41Z",
+      "side": 1,
+      "message": "Use context.Background()\n\nAnd :\u003d isn\u0027t valid at global scope\n\nmaybe just put this all in a:\n\n   func main() {",
+      "revId": "c2eebb3bdf544e045feba746eb106664739549d8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "244c8613_f031c624",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-10T21:34:41Z",
+      "side": 1,
+      "message": "just // ...\n\nor log.Fatal(err)\n\nis enough",
+      "revId": "c2eebb3bdf544e045feba746eb106664739549d8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "244c8613_10379218",
+        "filename": "README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-10T21:34:41Z",
+      "side": 1,
+      "message": "why httpClient here but client above?  pick either.",
+      "revId": "c2eebb3bdf544e045feba746eb106664739549d8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

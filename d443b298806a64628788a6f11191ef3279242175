@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a467969e_6773d270",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-09-11T01:04:25Z",
+      "side": 1,
+      "message": "I\u0027m not so sure that it is usually going to be one field.  I can imagine a lot of callers populating this with every field that they are modifying (for patch calls), to avoid having to care about which values are empty.  Whether users typically modify more than one field at once in patch calls, I don\u0027t know.\n\nThis could be addressed by adding a method for setting force-send fields which takes a variable number of arguments (and under the hood it could create a slice only if the user added more than one field name), but perhaps adding a method for this is too much overhead.\n\nRe: encoding new meaning in the field later: I think that storing that extra information in another field as you suggest would be preferable.  Struct tags are limited in how they can encode information (i.e. it has to be in a single string), but in our case we are not limited by that; we have a proper programming language at our disposal, and I think we should use it (another reason why I\u0027m not in favour of a comma-separated list).\n\n\u003e , but\n\ndid you mean to write more here?",
+      "parentUuid": "244c8613_7597e808",
+      "revId": "d443b298806a64628788a6f11191ef3279242175",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "244c8613_d5da7c02",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 5

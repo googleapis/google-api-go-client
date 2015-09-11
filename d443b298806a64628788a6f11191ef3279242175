@@ -175,6 +175,24 @@
       "revId": "d443b298806a64628788a6f11191ef3279242175",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "244c8613_64289b48",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-11T01:35:24Z",
+      "side": 1,
+      "message": "Sorry, that was my fault... I asked Michael to add a comment here.",
+      "parentUuid": "a467969e_47bd6e3b",
+      "revId": "d443b298806a64628788a6f11191ef3279242175",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

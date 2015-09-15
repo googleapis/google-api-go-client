@@ -52,6 +52,24 @@
       "revId": "92d887524bf555dce6e11a96023948c81e178462",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "241ba65c_06f1fccf",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-09-15T01:45:20Z",
+      "side": 1,
+      "message": "Ignore that question.",
+      "parentUuid": "241ba65c_c606045c",
+      "revId": "92d887524bf555dce6e11a96023948c81e178462",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

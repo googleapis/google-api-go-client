@@ -34,6 +34,24 @@
       "revId": "f22f4cfc14288af54479699bface62f62b7f00bc",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a46156bd_b92cd263",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-16T03:33:14Z",
+      "side": 1,
+      "message": "Oh. I guess we can do something like this, which wouldn\u0027t bloat the API:\n\n    http://play.golang.org/p/UM9fKqxneb",
+      "parentUuid": "241ba65c_464f7455",
+      "revId": "f22f4cfc14288af54479699bface62f62b7f00bc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

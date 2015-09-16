@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a46156bd_54a9bd5d",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-16T16:41:07Z",
+      "side": 1,
+      "message": "doesn\u0027t this line also need `json:\",omitempty\"` for the fast path to not include it?",
+      "revId": "ad22586d75b217bf8bfd7fbac70e74a0fa462286",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a46156bd_94b355ce",
+        "filename": "internal/json.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-16T16:41:07Z",
+      "side": 1,
+      "message": "Package doc, even for internal packages.",
+      "revId": "ad22586d75b217bf8bfd7fbac70e74a0fa462286",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a46156bd_b4b059c2",
+        "filename": "internal/json.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-16T16:41:07Z",
+      "side": 1,
+      "message": "wrong func name",
+      "revId": "ad22586d75b217bf8bfd7fbac70e74a0fa462286",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a46156bd_d4db0d08",
+        "filename": "internal/json.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-16T16:41:07Z",
+      "side": 1,
+      "message": "add a test for the fast path? Oh, I guess you do. I\u0027m confused why we don\u0027t see ForceSendFields in any of the output without the omitempty on it.",
+      "revId": "ad22586d75b217bf8bfd7fbac70e74a0fa462286",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a46156bd_d4822dca",
+        "filename": "internal/json.go",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-16T16:41:07Z",
+      "side": 1,
+      "message": "might be nice to do this without allocations.\n\nstrings.Count(val, \",\") can count the commas, and omitempty can be checked with val[strings.LastIndex(val, \",\")+1:] \u003d\u003d \"omitempty\"\n\nProbably not super important, though.",
+      "revId": "ad22586d75b217bf8bfd7fbac70e74a0fa462286",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

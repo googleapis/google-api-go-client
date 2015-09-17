@@ -186,7 +186,7 @@ func getAPIs() []*API {
 	apiListFile := filepath.Join(genDirRoot(), "api-list.json")
 	if *useCache {
 		if !*publicOnly {
-			log.Fatalf("-cached=true not compatible with -publiconly=false")
+			log.Fatalf("-cache=true not compatible with -publiconly=false")
 		}
 		var err error
 		disco, err = ioutil.ReadFile(apiListFile)

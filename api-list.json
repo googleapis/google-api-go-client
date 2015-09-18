@@ -100,6 +100,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "admin:datatransfer_v1",
+   "name": "admin",
+   "version": "datatransfer_v1",
+   "title": "Admin Data Transfer API",
+   "description": "Admin Data Transfer API lets you transfer user data from one user to another.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/admin/datatransfer_v1/rest",
+   "discoveryLink": "./apis/admin/datatransfer_v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/admin-sdk/data-transfer/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "admin:directory_v1",
    "name": "admin",
    "version": "directory_v1",
@@ -512,6 +528,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "clouduseraccounts:beta",
+   "name": "clouduseraccounts",
+   "version": "beta",
+   "title": "Cloud User Accounts API",
+   "description": "API for the Google Cloud User Accounts service.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/clouduseraccounts/beta/rest",
+   "discoveryLink": "./apis/clouduseraccounts/beta/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
+    "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
+   },
+   "documentationLink": "https://cloud.google.com/compute/docs/access/user-accounts/api/latest/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "clouduseraccounts:vm_alpha",
    "name": "clouduseraccounts",
    "version": "vm_alpha",
@@ -525,6 +557,22 @@
    },
    "documentationLink": "https://cloud.google.com/compute/docs/access/user-accounts/api/latest/",
    "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "clouduseraccounts:vm_beta",
+   "name": "clouduseraccounts",
+   "version": "vm_beta",
+   "title": "Cloud User Accounts API",
+   "description": "API for the Google Cloud User Accounts service.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/clouduseraccounts/vm_beta/rest",
+   "discoveryLink": "./apis/clouduseraccounts/vm_beta/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
+    "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
+   },
+   "documentationLink": "https://cloud.google.com/compute/docs/access/user-accounts/api/latest/",
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1137,7 +1185,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "",
+   "documentationLink": "https://developers.google.com/classroom/",
    "preferred": true
   },
   {
@@ -1879,7 +1927,7 @@
    "id": "storage:v1",
    "name": "storage",
    "version": "v1",
-   "title": "Cloud Storage API",
+   "title": "Cloud Storage JSON API",
    "description": "Lets you store and retrieve potentially-large, immutable data objects.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/storage/v1/rest",
    "discoveryLink": "./apis/storage/v1/rest",

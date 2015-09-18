@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Oex6IdRfx1XIrUSRqNsJm2G1ago\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Z1ZjKJtkBj9ZEYgBJhjBFfjbM3I\"",
  "discoveryVersion": "v1",
  "id": "partners:v2",
  "name": "partners",
  "version": "v2",
- "revision": "20150901",
+ "revision": "20150915",
  "title": "Google Partners API",
  "description": "Lets advertisers search certified companies and create contact leads with them, and also audits the usage of clients.",
  "ownerDomain": "google.com",
@@ -104,7 +104,7 @@
   "LogUserEventRequest": {
    "id": "LogUserEventRequest",
    "type": "object",
-   "description": "Request message for [LogUserEvent][google.partners.v2.ClientAuditor.LogUserEvent].",
+   "description": "Request message for LogUserEvent.",
    "properties": {
     "requestMetadata": {
      "$ref": "RequestMetadata",
@@ -526,7 +526,7 @@
   "LogUserEventResponse": {
    "id": "LogUserEventResponse",
    "type": "object",
-   "description": "Response message for [LogUserEvent][google.partners.v2.ClientAuditor.LogUserEvent].",
+   "description": "Response message for LogUserEvent.",
    "properties": {
     "responseMetadata": {
      "$ref": "ResponseMetadata",
@@ -567,7 +567,7 @@
   "LogMessageRequest": {
    "id": "LogMessageRequest",
    "type": "object",
-   "description": "Request message for [LogClientMessage][google.partners.v2.ClientAuditor.LogClientMessage].",
+   "description": "Request message for LogClientMessage.",
    "properties": {
     "requestMetadata": {
      "$ref": "RequestMetadata",
@@ -600,7 +600,7 @@
   "LogMessageResponse": {
    "id": "LogMessageResponse",
    "type": "object",
-   "description": "Response message for [LogClientMessage][google.partners.v2.ClientAuditor.LogClientMessage].",
+   "description": "Response message for LogClientMessage.",
    "properties": {
     "responseMetadata": {
      "$ref": "ResponseMetadata",
@@ -611,7 +611,7 @@
   "ListUserStatesResponse": {
    "id": "ListUserStatesResponse",
    "type": "object",
-   "description": "Response message for [ListUserStates][google.partners.v2.ClientAuditor.ListUserStates].",
+   "description": "Response message for ListUserStates.",
    "properties": {
     "responseMetadata": {
      "$ref": "ResponseMetadata",
@@ -637,7 +637,7 @@
   "GetCompanyResponse": {
    "id": "GetCompanyResponse",
    "type": "object",
-   "description": "Response message for [GetCompany][google.partners.v2.Partner.GetCompany].",
+   "description": "Response message for GetCompany.",
    "properties": {
     "responseMetadata": {
      "$ref": "ResponseMetadata",
@@ -926,7 +926,7 @@
   "ListCompaniesResponse": {
    "id": "ListCompaniesResponse",
    "type": "object",
-   "description": "Response message for [ListCompanies][google.partners.v2.Partner.ListCompanies].",
+   "description": "Response message for ListCompanies.",
    "properties": {
     "responseMetadata": {
      "$ref": "ResponseMetadata",
@@ -941,14 +941,14 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "A token to retrieve next page of results. Pass this value in the `ListCompaniesRequest.page_token` field in the subsequent call to [ListCompanies][google.partners.v2.Partner.ListCompanies] to retrieve the next page of results."
+     "description": "A token to retrieve next page of results. Pass this value in the `ListCompaniesRequest.page_token` field in the subsequent call to ListCompanies to retrieve the next page of results."
     }
    }
   },
   "CreateLeadRequest": {
    "id": "CreateLeadRequest",
    "type": "object",
-   "description": "Request message for [CreateLead][google.partners.v2.Partner.CreateLead].",
+   "description": "Request message for CreateLead.",
    "properties": {
     "requestMetadata": {
      "$ref": "RequestMetadata",
@@ -982,7 +982,7 @@
   "CreateLeadResponse": {
    "id": "CreateLeadResponse",
    "type": "object",
-   "description": "Response message for [CreateLead][google.partners.v2.Partner.CreateLead]. Debug information about this request.",
+   "description": "Response message for CreateLead. Debug information about this request.",
    "properties": {
     "responseMetadata": {
      "$ref": "ResponseMetadata",
@@ -1221,7 +1221,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "A token identifying a page of results that the server returns. Typically, this is the value of `ListCompaniesResponse.next_page_token` returned from the previous call to [ListCompanies][google.partners.v2.Partner.ListCompanies].",
+       "description": "A token identifying a page of results that the server returns. Typically, this is the value of `ListCompaniesResponse.next_page_token` returned from the previous call to ListCompanies.",
        "location": "query"
       },
       "companyName": {

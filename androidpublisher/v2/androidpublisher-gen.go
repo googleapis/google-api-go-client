@@ -484,9 +484,9 @@ type InAppProduct struct {
 
 	Status string `json:"status,omitempty"`
 
-	// SubscriptionPeriod: The period of the subscription (if any), i.e.
-	// period at which payments must happen. Defined as ISO 8601 duration,
-	// i.e. "P1M" for 1 month period.
+	// SubscriptionPeriod: Subscription period, specified in ISO 8601
+	// format. Acceptable values are "P1W" (one week), "P1M" (one month) and
+	// "P1Y" (one year).
 	SubscriptionPeriod string `json:"subscriptionPeriod,omitempty"`
 
 	// TrialPeriod: Trial period, specified in ISO 8601 format. Acceptable
@@ -3197,9 +3197,11 @@ func (c *EditsImagesDeleteCall) Do() error {
 	//         "sevenInchScreenshots",
 	//         "tenInchScreenshots",
 	//         "tvBanner",
-	//         "tvScreenshots"
+	//         "tvScreenshots",
+	//         "wearScreenshots"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -3324,9 +3326,11 @@ func (c *EditsImagesDeleteallCall) Do() (*ImagesDeleteAllResponse, error) {
 	//         "sevenInchScreenshots",
 	//         "tenInchScreenshots",
 	//         "tvBanner",
-	//         "tvScreenshots"
+	//         "tvScreenshots",
+	//         "wearScreenshots"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -3453,9 +3457,11 @@ func (c *EditsImagesListCall) Do() (*ImagesListResponse, error) {
 	//         "sevenInchScreenshots",
 	//         "tenInchScreenshots",
 	//         "tvBanner",
-	//         "tvScreenshots"
+	//         "tvScreenshots",
+	//         "wearScreenshots"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -3677,9 +3683,11 @@ func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 	//         "sevenInchScreenshots",
 	//         "tenInchScreenshots",
 	//         "tvBanner",
-	//         "tvScreenshots"
+	//         "tvScreenshots",
+	//         "wearScreenshots"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",

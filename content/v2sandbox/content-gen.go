@@ -330,8 +330,8 @@ type OrderLineItemProduct struct {
 	Title string `json:"title,omitempty"`
 
 	// VariantAttributes: Variant attributes for the item. These are
-	// dimensions of the product, like like color, gender, material,
-	// pattern, and size. See the comprehensive list of variant attributes
+	// dimensions of the product, such as color, gender, material, pattern,
+	// and size. You can find a comprehensive list of variant attributes
 	// here.
 	VariantAttributes []*OrderLineItemProductVariantAttribute `json:"variantAttributes,omitempty"`
 }
@@ -884,6 +884,9 @@ type TestOrder struct {
 	// be provided.
 	LineItems []*TestOrderLineItem `json:"lineItems,omitempty"`
 
+	// PaymentMethod: The details of the payment method.
+	PaymentMethod *TestOrderPaymentMethod `json:"paymentMethod,omitempty"`
+
 	// PredefinedDeliveryAddress: Identifier of one of the predefined
 	// delivery addresses for the delivery.
 	PredefinedDeliveryAddress string `json:"predefinedDeliveryAddress,omitempty"`
@@ -947,6 +950,13 @@ type TestOrderLineItemProduct struct {
 	// Gtin: Global Trade Item Number (GTIN) of the item. Optional.
 	Gtin string `json:"gtin,omitempty"`
 
+	// ImageLink: URL of an image of the item.
+	ImageLink string `json:"imageLink,omitempty"`
+
+	// ItemGroupId: Shared identifier for all variants of the same product.
+	// Optional.
+	ItemGroupId string `json:"itemGroupId,omitempty"`
+
 	// Mpn: Manufacturer Part Number (MPN) of the item. Optional.
 	Mpn string `json:"mpn,omitempty"`
 
@@ -965,6 +975,25 @@ type TestOrderLineItemProduct struct {
 
 	// VariantAttributes: Variant attributes for the item. Optional.
 	VariantAttributes []*OrderLineItemProductVariantAttribute `json:"variantAttributes,omitempty"`
+}
+
+type TestOrderPaymentMethod struct {
+	// ExpirationMonth: The card expiration month (January = 1, February = 2
+	// etc.).
+	ExpirationMonth int64 `json:"expirationMonth,omitempty"`
+
+	// ExpirationYear: The card expiration year (4-digit, e.g. 2015).
+	ExpirationYear int64 `json:"expirationYear,omitempty"`
+
+	// LastFourDigits: The last four digits of the card number.
+	LastFourDigits string `json:"lastFourDigits,omitempty"`
+
+	// PredefinedBillingAddress: The billing address.
+	PredefinedBillingAddress string `json:"predefinedBillingAddress,omitempty"`
+
+	// Type: The type of instrument. Note that real orders might have
+	// different values than the four values accepted by createTestOrder.
+	Type string `json:"type,omitempty"`
 }
 
 // method id "content.orders.acknowledge":
@@ -1834,27 +1863,36 @@ func (r *OrdersService) List(merchantId uint64) *OrdersListCall {
 // Acknowledged sets the optional parameter "acknowledged": Obtains
 // orders that match the acknowledgement status. When set to true,
 // obtains orders that have been acknowledged. When false, obtains
-// orders that have not been acknowledged. We recommend using this
-// filter set to true, in conjunction with the acknowledge call, such
-// that orders that have already been ingested in the merchant's Order
-// Management System, are not returned in future list calls.
+// orders that have not been acknowledged.
+// We recommend using this filter set to false, in conjunction with the
+// acknowledge call, such that only un-acknowledged orders are returned.
 func (c *OrdersListCall) Acknowledged(acknowledged bool) *OrdersListCall {
 	c.opt_["acknowledged"] = acknowledged
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of orders to return in the response, used for paging.
+// number of orders to return in the response, used for paging. The
+// default value is 25 orders per page, and the maximum allowed value is
+// 250 orders per page.
+// Known issue: All List calls will return all Orders without limit
+// regardless of the value of this field.
 func (c *OrdersListCall) MaxResults(maxResults int64) *OrdersListCall {
 	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": The ordering of the
-// returned list. The only supported value is placedDate desc for now,
-// which returns orders sorted by placement date, in descending order
-// (oldest first). In future releases we'll support other sorting
-// criteria and direction.
+// returned list. The only supported value are placedDate desc and
+// placedDate asc for now, which returns orders sorted by placement
+// date. "placedDate desc" stands for listing orders by placement date,
+// from oldest to most recent. "placedDate asc" stands for listing
+// orders by placement date, from most recent to oldest. In future
+// releases we'll support other sorting criteria.
+//
+// Possible values:
+//   "placedDate asc"
+//   "placedDate desc"
 func (c *OrdersListCall) OrderBy(orderBy string) *OrdersListCall {
 	c.opt_["orderBy"] = orderBy
 	return c
@@ -1884,8 +1922,8 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 
 // Statuses sets the optional parameter "statuses": Obtains orders that
 // match any of the specified statuses. Multiple values can be specified
-// using comma as a separator. Additionally, please note that active is
-// a shortcut for pendingShipment, partiallyShipped and completed is a
+// with comma separation. Additionally, please note that active is a
+// shortcut for pendingShipment and partiallyShipped, and completed is a
 // shortcut for shipped , partiallyDelivered, delivered,
 // partiallyReturned, returned, and canceled.
 //
@@ -1975,12 +2013,12 @@ func (c *OrdersListCall) Do() (*OrdersListResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "acknowledged": {
-	//       "description": "Obtains orders that match the acknowledgement status. When set to true, obtains orders that have been acknowledged. When false, obtains orders that have not been acknowledged. We recommend using this filter set to true, in conjunction with the acknowledge call, such that orders that have already been ingested in the merchant's Order Management System, are not returned in future list calls.",
+	//       "description": "Obtains orders that match the acknowledgement status. When set to true, obtains orders that have been acknowledged. When false, obtains orders that have not been acknowledged.\nWe recommend using this filter set to false, in conjunction with the acknowledge call, such that only un-acknowledged orders are returned.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of orders to return in the response, used for paging.",
+	//       "description": "The maximum number of orders to return in the response, used for paging. The default value is 25 orders per page, and the maximum allowed value is 250 orders per page.\nKnown issue: All List calls will return all Orders without limit regardless of the value of this field.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1993,7 +2031,15 @@ func (c *OrdersListCall) Do() (*OrdersListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "The ordering of the returned list. The only supported value is placedDate desc for now, which returns orders sorted by placement date, in descending order (oldest first). In future releases we'll support other sorting criteria and direction.",
+	//       "description": "The ordering of the returned list. The only supported value are placedDate desc and placedDate asc for now, which returns orders sorted by placement date. \"placedDate desc\" stands for listing orders by placement date, from oldest to most recent. \"placedDate asc\" stands for listing orders by placement date, from most recent to oldest. In future releases we'll support other sorting criteria.",
+	//       "enum": [
+	//         "placedDate asc",
+	//         "placedDate desc"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2013,7 +2059,7 @@ func (c *OrdersListCall) Do() (*OrdersListResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "statuses": {
-	//       "description": "Obtains orders that match any of the specified statuses. Multiple values can be specified using comma as a separator. Additionally, please note that active is a shortcut for pendingShipment, partiallyShipped and completed is a shortcut for shipped , partiallyDelivered, delivered, partiallyReturned, returned, and canceled.",
+	//       "description": "Obtains orders that match any of the specified statuses. Multiple values can be specified with comma separation. Additionally, please note that active is a shortcut for pendingShipment and partiallyShipped, and completed is a shortcut for shipped , partiallyDelivered, delivered, partiallyReturned, returned, and canceled.",
 	//       "enum": [
 	//         "active",
 	//         "canceled",

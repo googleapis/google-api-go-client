@@ -231,8 +231,7 @@ type Company struct {
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
-// CreateLeadRequest: Request message for
-// [CreateLead][google.partners.v2.Partner.CreateLead].
+// CreateLeadRequest: Request message for CreateLead.
 type CreateLeadRequest struct {
 	// Lead: The lead resource. The `LeadType` must not be
 	// `LEAD_TYPE_UNSPECIFIED` and either `email` or `phone_number` must be
@@ -246,8 +245,7 @@ type CreateLeadRequest struct {
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
 }
 
-// CreateLeadResponse: Response message for
-// [CreateLead][google.partners.v2.Partner.CreateLead]. Debug
+// CreateLeadResponse: Response message for CreateLead. Debug
 // information about this request.
 type CreateLeadResponse struct {
 	// Lead: Lead that was created depending on the outcome of reCaptcha
@@ -328,8 +326,7 @@ type EventData struct {
 	Values []string `json:"values,omitempty"`
 }
 
-// GetCompanyResponse: Response message for
-// [GetCompany][google.partners.v2.Partner.GetCompany].
+// GetCompanyResponse: Response message for GetCompany.
 type GetCompanyResponse struct {
 	// Company: The company.
 	Company *Company `json:"company,omitempty"`
@@ -421,25 +418,22 @@ type Lead struct {
 	WebsiteUrl string `json:"websiteUrl,omitempty"`
 }
 
-// ListCompaniesResponse: Response message for
-// [ListCompanies][google.partners.v2.Partner.ListCompanies].
+// ListCompaniesResponse: Response message for ListCompanies.
 type ListCompaniesResponse struct {
 	// Companies: The list of companies.
 	Companies []*Company `json:"companies,omitempty"`
 
 	// NextPageToken: A token to retrieve next page of results. Pass this
 	// value in the `ListCompaniesRequest.page_token` field in the
-	// subsequent call to
-	// [ListCompanies][google.partners.v2.Partner.ListCompanies] to retrieve
-	// the next page of results.
+	// subsequent call to ListCompanies to retrieve the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ResponseMetadata: Current response metadata.
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
 }
 
-// ListUserStatesResponse: Response message for
-// [ListUserStates][google.partners.v2.ClientAuditor.ListUserStates].
+// ListUserStatesResponse: Response message for ListUserStates.
 type ListUserStatesResponse struct {
 	// ResponseMetadata: Current response metadata.
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
@@ -479,8 +473,7 @@ type Location struct {
 	LatLng *LatLng `json:"latLng,omitempty"`
 }
 
-// LogMessageRequest: Request message for
-// [LogClientMessage][google.partners.v2.ClientAuditor.LogClientMessage].
+// LogMessageRequest: Request message for LogClientMessage.
 type LogMessageRequest struct {
 	// ClientInfo: Map of client info, such as URL, browser navigator,
 	// browser platform, etc.
@@ -503,15 +496,13 @@ type LogMessageRequest struct {
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
 }
 
-// LogMessageResponse: Response message for
-// [LogClientMessage][google.partners.v2.ClientAuditor.LogClientMessage].
+// LogMessageResponse: Response message for LogClientMessage.
 type LogMessageResponse struct {
 	// ResponseMetadata: Current response metadata.
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
 }
 
-// LogUserEventRequest: Request message for
-// [LogUserEvent][google.partners.v2.ClientAuditor.LogUserEvent].
+// LogUserEventRequest: Request message for LogUserEvent.
 type LogUserEventRequest struct {
 	// EventAction: The action that occurred.
 	//
@@ -715,8 +706,7 @@ type LogUserEventRequest struct {
 	Url string `json:"url,omitempty"`
 }
 
-// LogUserEventResponse: Response message for
-// [LogUserEvent][google.partners.v2.ClientAuditor.LogUserEvent].
+// LogUserEventResponse: Response message for LogUserEvent.
 type LogUserEventResponse struct {
 	// ResponseMetadata: Current response metadata.
 	ResponseMetadata *ResponseMetadata `json:"responseMetadata,omitempty"`
@@ -1315,8 +1305,7 @@ func (c *CompaniesListCall) PageSize(pageSize int64) *CompaniesListCall {
 // PageToken sets the optional parameter "pageToken": A token
 // identifying a page of results that the server returns. Typically,
 // this is the value of `ListCompaniesResponse.next_page_token` returned
-// from the previous call to
-// [ListCompanies][google.partners.v2.Partner.ListCompanies].
+// from the previous call to ListCompanies.
 func (c *CompaniesListCall) PageToken(pageToken string) *CompaniesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1618,7 +1607,7 @@ func (c *CompaniesListCall) Do() (*ListCompaniesResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results that the server returns. Typically, this is the value of `ListCompaniesResponse.next_page_token` returned from the previous call to [ListCompanies][google.partners.v2.Partner.ListCompanies].",
+	//       "description": "A token identifying a page of results that the server returns. Typically, this is the value of `ListCompaniesResponse.next_page_token` returned from the previous call to ListCompanies.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

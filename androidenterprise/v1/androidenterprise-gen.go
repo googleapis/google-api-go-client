@@ -467,7 +467,7 @@ type EnterprisesSendTestPushNotificationResponse struct {
 	// sent.
 	MessageId string `json:"messageId,omitempty"`
 
-	// TopicName: The name of the Cloud Pubsub topic to which notifications
+	// TopicName: The name of the Cloud Pub/Sub topic to which notifications
 	// for this enterprise's enrolled account will be sent.
 	TopicName string `json:"topicName,omitempty"`
 }
@@ -2762,7 +2762,7 @@ type EnterprisesSendTestPushNotificationCall struct {
 }
 
 // SendTestPushNotification: Sends a test push notification to validate
-// the MDM integration with the Google Cloud Pubsub service for this
+// the MDM integration with the Google Cloud Pub/Sub service for this
 // enterprise.
 func (r *EnterprisesService) SendTestPushNotification(enterpriseId string) *EnterprisesSendTestPushNotificationCall {
 	c := &EnterprisesSendTestPushNotificationCall{s: r.s, opt_: make(map[string]interface{})}
@@ -2810,7 +2810,7 @@ func (c *EnterprisesSendTestPushNotificationCall) Do() (*EnterprisesSendTestPush
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends a test push notification to validate the MDM integration with the Google Cloud Pubsub service for this enterprise.",
+	//   "description": "Sends a test push notification to validate the MDM integration with the Google Cloud Pub/Sub service for this enterprise.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.sendTestPushNotification",
 	//   "parameterOrder": [

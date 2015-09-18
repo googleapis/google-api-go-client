@@ -52,8 +52,7 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
-	// Platform services
+	// View your data across Google Cloud Platform services
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// Manage your data and permissions in Google Cloud Storage
@@ -886,26 +885,30 @@ type JobStatistics struct {
 }
 
 type JobStatistics2 struct {
+	// BillingTier: [Output-only] Billing tier for the job.
+	BillingTier int64 `json:"billingTier,omitempty"`
+
 	// CacheHit: [Output-only] Whether the query result was fetched from the
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// TotalBytesProcessed: [Output-only] Total bytes processed for this
-	// job.
+	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
+	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
+
+	// TotalBytesProcessed: [Output-only] Total bytes processed for the job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 }
 
 type JobStatistics3 struct {
 	// InputFileBytes: [Output-only] Number of bytes of source data in a
-	// joad job.
+	// load job.
 	InputFileBytes int64 `json:"inputFileBytes,omitempty,string"`
 
 	// InputFiles: [Output-only] Number of source files in a load job.
 	InputFiles int64 `json:"inputFiles,omitempty,string"`
 
 	// OutputBytes: [Output-only] Size of the loaded data in bytes. Note
-	// that while an import job is in the running state, this value may
-	// change.
+	// that while a load job is in the running state, this value may change.
 	OutputBytes int64 `json:"outputBytes,omitempty,string"`
 
 	// OutputRows: [Output-only] Number of rows imported in a load job. Note

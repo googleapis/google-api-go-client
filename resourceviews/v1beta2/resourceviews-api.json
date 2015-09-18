@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/yzlGzUdfFMQ070LA1GWey4JnOPY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Q2Fm4OHaHKaTfeWzlGIBAoc7BO8\"",
  "discoveryVersion": "v1",
  "id": "resourceviews:v1beta2",
  "name": "resourceviews",
@@ -76,7 +76,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+     "description": "View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/compute": {
      "description": "View and manage your Google Compute Engine resources"

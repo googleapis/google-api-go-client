@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/54upTNg4YSEURzEuXrqfgXCJwJE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5nMv6T9tApKbBeNZEQlnf4XjGl0\"",
  "discoveryVersion": "v1",
  "id": "clouduseraccounts:vm_alpha",
  "name": "clouduseraccounts",
  "canonicalName": "Cloud User Accounts",
  "version": "vm_alpha",
- "revision": "20150909",
+ "revision": "20150917",
  "title": "Cloud User Accounts API",
  "description": "API for the Google Cloud User Accounts service.",
  "ownerDomain": "google.com",
@@ -74,7 +74,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+     "description": "View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud.useraccounts": {
      "description": "Manage your Google Cloud User Accounts"
@@ -97,6 +97,10 @@
      "items": {
       "type": "string"
      }
+    },
+    "sudoer": {
+     "type": "boolean",
+     "description": "[Output Only] Whether the user has the ability to elevate on the instance that requested the authorized keys."
     }
    }
   },
@@ -486,7 +490,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of the resource. Always compute#Operation for Operation resources.",
+     "description": "[Output Only] Type of the resource. Always compute#operation for Operation resources.",
      "default": "clouduseraccounts#operation"
     },
     "name": {
@@ -495,7 +499,7 @@
     },
     "operationType": {
      "type": "string",
-     "description": "[Output Only] Type of the operation, such as insert, update, and delete."
+     "description": "[Output Only] Type of the operation, such as insert, compute.instanceGroups.update, or compute.instanceGroups.delete."
     },
     "progress": {
      "type": "integer",
@@ -1358,6 +1362,11 @@
        "type": "string",
        "description": "The fully-qualified URL of the virtual machine requesting the view.",
        "required": true,
+       "location": "query"
+      },
+      "login": {
+       "type": "boolean",
+       "description": "Whether the view was requested as part of a user-initiated login.",
        "location": "query"
       },
       "project": {

@@ -3909,8 +3909,8 @@ func (c *FilesGetCall) RevisionId(revisionId string) *FilesGetCall {
 }
 
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
-// Whether to update the view date after successfully retrieving the
-// file.
+// Deprecated: Use files.update with modifiedDateBehavior=noChange,
+// updateViewedDate=true and an empty request body.
 func (c *FilesGetCall) UpdateViewedDate(updateViewedDate bool) *FilesGetCall {
 	c.opt_["updateViewedDate"] = updateViewedDate
 	return c
@@ -4022,7 +4022,7 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//     },
 	//     "updateViewedDate": {
 	//       "default": "false",
-	//       "description": "Whether to update the view date after successfully retrieving the file.",
+	//       "description": "Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5631,8 +5631,8 @@ func (c *FilesWatchCall) RevisionId(revisionId string) *FilesWatchCall {
 }
 
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
-// Whether to update the view date after successfully retrieving the
-// file.
+// Deprecated: Use files.update with modifiedDateBehavior=noChange,
+// updateViewedDate=true and an empty request body.
 func (c *FilesWatchCall) UpdateViewedDate(updateViewedDate bool) *FilesWatchCall {
 	c.opt_["updateViewedDate"] = updateViewedDate
 	return c
@@ -5750,7 +5750,7 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//     },
 	//     "updateViewedDate": {
 	//       "default": "false",
-	//       "description": "Whether to update the view date after successfully retrieving the file.",
+	//       "description": "Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6624,7 +6624,7 @@ type PermissionsPatchCall struct {
 	opt_         map[string]interface{}
 }
 
-// Patch: Updates a permission. This method supports patch semantics.
+// Patch: Updates a permission using patch semantics.
 func (r *PermissionsService) Patch(fileId string, permissionId string, permission *Permission) *PermissionsPatchCall {
 	c := &PermissionsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
@@ -6691,7 +6691,7 @@ func (c *PermissionsPatchCall) Do() (*Permission, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a permission. This method supports patch semantics.",
+	//   "description": "Updates a permission using patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "drive.permissions.patch",
 	//   "parameterOrder": [

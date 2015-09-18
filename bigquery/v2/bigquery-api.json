@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Z4Mq-N2hxzXoiWGo0RMQpmYYkZE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_4HD2Yk5KBJwf4ZwHLl0cnazBI0\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20150828",
+ "revision": "20150911",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -81,7 +81,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+     "description": "View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/devstorage.full_control": {
      "description": "Manage your data and permissions in Google Cloud Storage"
@@ -861,13 +861,23 @@
    "id": "JobStatistics2",
    "type": "object",
    "properties": {
+    "billingTier": {
+     "type": "integer",
+     "description": "[Output-only] Billing tier for the job.",
+     "format": "int32"
+    },
     "cacheHit": {
      "type": "boolean",
      "description": "[Output-only] Whether the query result was fetched from the query cache."
     },
+    "totalBytesBilled": {
+     "type": "string",
+     "description": "[Output-only] Total bytes billed for the job.",
+     "format": "int64"
+    },
     "totalBytesProcessed": {
      "type": "string",
-     "description": "[Output-only] Total bytes processed for this job.",
+     "description": "[Output-only] Total bytes processed for the job.",
      "format": "int64"
     }
    }
@@ -878,7 +888,7 @@
    "properties": {
     "inputFileBytes": {
      "type": "string",
-     "description": "[Output-only] Number of bytes of source data in a joad job.",
+     "description": "[Output-only] Number of bytes of source data in a load job.",
      "format": "int64"
     },
     "inputFiles": {
@@ -888,7 +898,7 @@
     },
     "outputBytes": {
      "type": "string",
-     "description": "[Output-only] Size of the loaded data in bytes. Note that while an import job is in the running state, this value may change.",
+     "description": "[Output-only] Size of the loaded data in bytes. Note that while a load job is in the running state, this value may change.",
      "format": "int64"
     },
     "outputRows": {

@@ -269,8 +269,7 @@ type CallSetInfo struct {
 }
 
 // CancelOperationRequest: The request message for
-// [Operations.CancelOperation][google.longrunning.Operations.CancelOpera
-// tion].
+// Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
 
@@ -545,8 +544,7 @@ type ListDatasetsResponse struct {
 }
 
 // ListOperationsResponse: The response message for
-// [Operations.ListOperations][google.longrunning.Operations.ListOperatio
-// ns].
+// Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -567,10 +565,8 @@ type Operation struct {
 	// Error: The error result of the operation in case of failure.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: An
-	// [OperationMetadata][google.genomics.v1.OperationMetadata] object.
-	// This will always be returned with the
-	// [Operation][google.longrunning.Operation].
+	// Metadata: An OperationMetadata object. This will always be returned
+	// with the Operation.
 	Metadata OperationMetadata `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
@@ -578,13 +574,9 @@ type Operation struct {
 	// `operations/CJHU7Oi_ChDrveSpBRjfuL-qzoWAgEw`
 	Name string `json:"name,omitempty"`
 
-	// Response: If importing
-	// [ReadGroupSets][google.genomics.v1.ReadGroupSet], an
-	// [ImportReadGroupSetsResponse][google.genomics.v1.ImportReadGroupSetsRe
-	// sponse] is returned. If importing
-	// [Variants][google.genomics.v1.Variant], an
-	// [ImportVariantsResponse][google.genomics.v1.ImportVariantsResponse]
-	// is returned. For exports, an empty response is returned.
+	// Response: If importing ReadGroupSets, an ImportReadGroupSetsResponse
+	// is returned. If importing Variants, an ImportVariantsResponse is
+	// returned. For exports, an empty response is returned.
 	Response OperationResponse `json:"response,omitempty"`
 }
 
@@ -592,15 +584,13 @@ type OperationMetadata interface{}
 
 type OperationResponse interface{}
 
-// OperationEvent: An event that occurred during an
-// [Operation][google.longrunning.Operation].
+// OperationEvent: An event that occurred during an Operation.
 type OperationEvent struct {
 	// Description: Required description of event.
 	Description string `json:"description,omitempty"`
 }
 
-// OperationMetadata1: Metadata describing an
-// [Operation][google.longrunning.Operation].
+// OperationMetadata1: Metadata describing an Operation.
 type OperationMetadata1 struct {
 	// CreateTime: The time at which the job was submitted to the Genomics
 	// service.
@@ -628,14 +618,13 @@ type OperationMetadataRequest interface{}
 // A `Policy` consists of a list of `bindings`. A `Binding` binds a list
 // of `members` to a `role`, where the members can be user accounts,
 // Google groups, Google domains, and service accounts. A `role` is a
-// named list of permissions defined by IAM. **Example** ``` {
-// "bindings": [ { "role": "roles/owner", "members": [
-// "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
+// named list of permissions defined by IAM. **Example** { "bindings": [
+// { "role": "roles/owner", "members": [ "user:mike@example.com",
+// "group:admins@example.com", "domain:google.com",
 // "serviceAccount:my-other-app@appspot.gserviceaccount.com"] }, {
 // "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
-// ``` For a description of IAM and its features, see the [IAM
-// developer's guide][https://cloud.google.com/iam].
+// For a description of IAM and its features, see the [IAM developer's
+// guide](https://cloud.google.com/iam).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Multiple
 	// `bindings` must not be specified for the same `role`. `bindings` with
@@ -702,18 +691,16 @@ type Range struct {
 }
 
 // Read: A read alignment describes a linear alignment of a string of
-// DNA to a [reference sequence][google.genomics.v1.Reference], in
-// addition to metadata about the fragment (the molecule of DNA
-// sequenced) and the read (the bases which were read by the sequencer).
-// A read is equivalent to a line in a SAM file. A read belongs to
-// exactly one read group and exactly one [read group
-// set][google.genomics.v1.ReadGroupSet]. ### Generating a
-// reference-aligned sequence string When interacting with mapped reads,
-// it's often useful to produce a string representing the local
-// alignment of the read to reference. The following pseudocode
-// demonstrates one way of doing this: out = "" offset = 0 for c in
-// read.alignment.cigar { switch c.operation { case "ALIGNMENT_MATCH",
-// "SEQUENCE_MATCH", "SEQUENCE_MISMATCH": out +=
+// DNA to a reference sequence, in addition to metadata about the
+// fragment (the molecule of DNA sequenced) and the read (the bases
+// which were read by the sequencer). A read is equivalent to a line in
+// a SAM file. A read belongs to exactly one read group and exactly one
+// read group set. ### Generating a reference-aligned sequence string
+// When interacting with mapped reads, it's often useful to produce a
+// string representing the local alignment of the read to reference. The
+// following pseudocode demonstrates one way of doing this: out = ""
+// offset = 0 for c in read.alignment.cigar { switch c.operation { case
+// "ALIGNMENT_MATCH", "SEQUENCE_MATCH", "SEQUENCE_MISMATCH": out +=
 // read.alignedSequence[offset:offset+c.operationLength] offset +=
 // c.operationLength break case "CLIP_SOFT", "INSERT": offset +=
 // c.operationLength break case "PAD": out += repeat("*",
@@ -1299,39 +1286,38 @@ type SetIamPolicyRequest struct {
 // most users - Flexible enough to meet unexpected needs # Overview The
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. The error code should be an enum value of
-// [google.rpc.Code][google.rpc.Code], but it may accept additional
-// error codes if needed. The error message should be a developer-facing
-// English message that helps developers *understand* and *resolve* the
-// error. If a localized user-facing error message is needed, put the
-// localized message in the error details or localize it in the client.
-// The optional error details may contain arbitrary information about
-// the error. There is a predefined set of error detail types in the
-// package `google.rpc` which can be used for common error conditions. #
-// Language mapping The `Status` message is the logical representation
-// of the error model, but it is not necessarily the actual wire format.
-// When the `Status` message is exposed in different client libraries
-// and different wire protocols, it can be mapped differently. For
-// example, it will likely be mapped to some exceptions in Java, but
-// more likely mapped to some error codes in C. # Other uses The error
-// model and the `Status` message can be used in a variety of
-// environments, either with or without APIs, to provide a consistent
-// developer experience across different environments. Example uses of
-// this error model include: - Partial errors. If a service needs to
-// return partial errors to the client, it may embed the `Status` in the
-// normal response to indicate the partial errors. - Workflow errors. A
-// typical workflow has multiple steps. Each step may have a `Status`
-// message for error reporting purpose. - Batch operations. If a client
-// uses batch request and batch response, the `Status` message should be
-// used directly inside batch response, one for each error sub-response.
-// - Asynchronous operations. If an API call embeds asynchronous
-// operation results in its response, the status of those operations
-// should be represented directly using the `Status` message. - Logging.
-// If some API errors are stored in logs, the message `Status` could be
-// used directly after any stripping needed for security/privacy
-// reasons.
+// google.rpc.Code, but it may accept additional error codes if needed.
+// The error message should be a developer-facing English message that
+// helps developers *understand* and *resolve* the error. If a localized
+// user-facing error message is needed, put the localized message in the
+// error details or localize it in the client. The optional error
+// details may contain arbitrary information about the error. There is a
+// predefined set of error detail types in the package `google.rpc`
+// which can be used for common error conditions. # Language mapping The
+// `Status` message is the logical representation of the error model,
+// but it is not necessarily the actual wire format. When the `Status`
+// message is exposed in different client libraries and different wire
+// protocols, it can be mapped differently. For example, it will likely
+// be mapped to some exceptions in Java, but more likely mapped to some
+// error codes in C. # Other uses The error model and the `Status`
+// message can be used in a variety of environments, either with or
+// without APIs, to provide a consistent developer experience across
+// different environments. Example uses of this error model include: -
+// Partial errors. If a service needs to return partial errors to the
+// client, it may embed the `Status` in the normal response to indicate
+// the partial errors. - Workflow errors. A typical workflow has
+// multiple steps. Each step may have a `Status` message for error
+// reporting purpose. - Batch operations. If a client uses batch request
+// and batch response, the `Status` message should be used directly
+// inside batch response, one for each error sub-response. -
+// Asynchronous operations. If an API call embeds asynchronous operation
+// results in its response, the status of those operations should be
+// represented directly using the `Status` message. - Logging. If some
+// API errors are stored in logs, the message `Status` could be used
+// directly after any stripping needed for security/privacy reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
-	// [google.rpc.Code][google.rpc.Code].
+	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
 	// Details: A list of messages that carry the error details. There will
@@ -1340,8 +1326,7 @@ type Status struct {
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
-	// in the [google.rpc.Status.details][google.rpc.Status.details] field,
-	// or localized by the client.
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 }
 
@@ -1813,8 +1798,8 @@ func (r *CallsetsService) Patch(callSetId string, callset *CallSet) *CallsetsPat
 
 // UpdateMask sets the optional parameter "updateMask": An optional mask
 // specifying which fields to update. At this time, the only mutable
-// field is [name][google.genomics.v1.CallSet.name]. The only acceptable
-// value is "name". If unspecified, all mutable fields will be updated.
+// field is name. The only acceptable value is "name". If unspecified,
+// all mutable fields will be updated.
 func (c *CallsetsPatchCall) UpdateMask(updateMask string) *CallsetsPatchCall {
 	c.opt_["updateMask"] = updateMask
 	return c
@@ -1883,7 +1868,7 @@ func (c *CallsetsPatchCall) Do() (*CallSet, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "An optional mask specifying which fields to update. At this time, the only mutable field is [name][google.genomics.v1.CallSet.name]. The only acceptable value is \"name\". If unspecified, all mutable fields will be updated.",
+	//       "description": "An optional mask specifying which fields to update. At this time, the only mutable field is name. The only acceptable value is \"name\". If unspecified, all mutable fields will be updated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2232,7 +2217,9 @@ type DatasetsGetIamPolicyCall struct {
 	opt_                map[string]interface{}
 }
 
-// GetIamPolicy:
+// GetIamPolicy: Gets the access control policy for the dataset. Is
+// empty if the policy or the resource does not exist. See Getting a
+// Policy for more information.
 func (r *DatasetsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *DatasetsGetIamPolicyCall {
 	c := &DatasetsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
 	c.resource = resource
@@ -2286,7 +2273,7 @@ func (c *DatasetsGetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Gets the access control policy for the dataset. Is empty if the policy or the resource does not exist. See Getting a Policy for more information.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.getIamPolicy",
 	//   "parameterOrder": [
@@ -2453,8 +2440,8 @@ func (r *DatasetsService) Patch(datasetId string, dataset *Dataset) *DatasetsPat
 
 // UpdateMask sets the optional parameter "updateMask": An optional mask
 // specifying which fields to update. At this time, the only mutable
-// field is [name][google.genomics.v1.Dataset.name]. The only acceptable
-// value is "name". If unspecified, all mutable fields will be updated.
+// field is name. The only acceptable value is "name". If unspecified,
+// all mutable fields will be updated.
 func (c *DatasetsPatchCall) UpdateMask(updateMask string) *DatasetsPatchCall {
 	c.opt_["updateMask"] = updateMask
 	return c
@@ -2523,7 +2510,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "An optional mask specifying which fields to update. At this time, the only mutable field is [name][google.genomics.v1.Dataset.name]. The only acceptable value is \"name\". If unspecified, all mutable fields will be updated.",
+	//       "description": "An optional mask specifying which fields to update. At this time, the only mutable field is name. The only acceptable value is \"name\". If unspecified, all mutable fields will be updated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2552,7 +2539,9 @@ type DatasetsSetIamPolicyCall struct {
 	opt_                map[string]interface{}
 }
 
-// SetIamPolicy:
+// SetIamPolicy: Sets the access control policy on the specified
+// dataset. Replaces any existing policy. See Setting a Policy for more
+// information.
 func (r *DatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *DatasetsSetIamPolicyCall {
 	c := &DatasetsSetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
 	c.resource = resource
@@ -2606,7 +2595,7 @@ func (c *DatasetsSetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Sets the access control policy on the specified dataset. Replaces any existing policy. See Setting a Policy for more information.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.setIamPolicy",
 	//   "parameterOrder": [
@@ -2645,7 +2634,8 @@ type DatasetsTestIamPermissionsCall struct {
 	opt_                      map[string]interface{}
 }
 
-// TestIamPermissions:
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource. See Testing Permissions for more information.
 func (r *DatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *DatasetsTestIamPermissionsCall {
 	c := &DatasetsTestIamPermissionsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.resource = resource
@@ -2699,7 +2689,7 @@ func (c *DatasetsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "",
+	//   "description": "Returns permissions that a caller has on the specified resource. See Testing Permissions for more information.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.testIamPermissions",
 	//   "parameterOrder": [
@@ -2834,12 +2824,9 @@ type OperationsCancelCall struct {
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
 // The server makes a best effort to cancel the operation, but success
-// is not guaranteed. Clients may use
-// [Operations.GetOperation][google.longrunning.Operations.GetOperation]
-// or
-// [Operations.ListOperations][google.longrunning.Operations.ListOperatio
-// ns] to check whether the cancellation succeeded or the operation
-// completed despite cancellation.
+// is not guaranteed. Clients may use Operations.GetOperation or
+// Operations.ListOperations to check whether the cancellation succeeded
+// or the operation completed despite cancellation.
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, opt_: make(map[string]interface{})}
 	c.name = name
@@ -2893,7 +2880,7 @@ func (c *OperationsCancelCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. Clients may use [Operations.GetOperation][google.longrunning.Operations.GetOperation] or [Operations.ListOperations][google.longrunning.Operations.ListOperations] to check whether the cancellation succeeded or the operation completed despite cancellation.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. Clients may use Operations.GetOperation or Operations.ListOperations to check whether the cancellation succeeded or the operation completed despite cancellation.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.operations.cancel",
 	//   "parameterOrder": [
@@ -2932,9 +2919,7 @@ type OperationsDeleteCall struct {
 }
 
 // Delete: This method is not implemented. To cancel an operation,
-// please use
-// [Operations.CancelOperation][google.longrunning.Operations.CancelOpera
-// tion].
+// please use Operations.CancelOperation.
 func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	c := &OperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.name = name
@@ -2981,7 +2966,7 @@ func (c *OperationsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "This method is not implemented. To cancel an operation, please use [Operations.CancelOperation][google.longrunning.Operations.CancelOperation].",
+	//   "description": "This method is not implemented. To cancel an operation, please use Operations.CancelOperation.",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.operations.delete",
 	//   "parameterOrder": [
@@ -3109,13 +3094,12 @@ func (r *OperationsService) List(name string) *OperationsListCall {
 }
 
 // Filter sets the optional parameter "filter": A string for filtering
-// [Operations][google.longrunning.Operation]. The following filter
-// fields are supported: * projectId: Required. Corresponds to
-// [OperationMetadata.projectId][google.genomics.v1.OperationMetadata.pro
-// ject_id]. * createTime: The time this job was created, in seconds
-// from the [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use
-// `>=` and/or `= 1432140000` * `projectId = my-project AND createTime
-// >= 1432140000 AND createTime <= 1432150000 AND status = RUNNING`
+// Operations. The following filter fields are supported: * projectId:
+// Required. Corresponds to OperationMetadata.projectId. * createTime:
+// The time this job was created, in seconds from the
+// [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `>=` and/or
+// `= 1432140000` * `projectId = my-project AND createTime >= 1432140000
+// AND createTime <= 1432150000 AND status = RUNNING`
 func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 	c.opt_["filter"] = filter
 	return c
@@ -3193,7 +3177,7 @@ func (c *OperationsListCall) Do() (*ListOperationsResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A string for filtering [Operations][google.longrunning.Operation]. The following filter fields are supported: * projectId: Required. Corresponds to [OperationMetadata.projectId][google.genomics.v1.OperationMetadata.project_id]. * createTime: The time this job was created, in seconds from the [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `\u003e=` and/or `= 1432140000` * `projectId = my-project AND createTime \u003e= 1432140000 AND createTime \u003c= 1432150000 AND status = RUNNING`",
+	//       "description": "A string for filtering Operations. The following filter fields are supported: * projectId: Required. Corresponds to OperationMetadata.projectId. * createTime: The time this job was created, in seconds from the [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `\u003e=` and/or `= 1432140000` * `projectId = my-project AND createTime \u003e= 1432140000 AND createTime \u003c= 1432150000 AND status = RUNNING`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3597,10 +3581,8 @@ func (r *ReadgroupsetsService) Patch(readGroupSetId string, readgroupset *ReadGr
 
 // UpdateMask sets the optional parameter "updateMask": An optional mask
 // specifying which fields to update. At this time, mutable fields are
-// [referenceSetId][google.genomics.v1.ReadGroupSet.reference_set_id]
-// and [name][google.genomics.v1.ReadGroupSet.name]. Acceptable values
-// are "referenceSetId" and "name". If unspecified, all mutable fields
-// will be updated.
+// referenceSetId and name. Acceptable values are "referenceSetId" and
+// "name". If unspecified, all mutable fields will be updated.
 func (c *ReadgroupsetsPatchCall) UpdateMask(updateMask string) *ReadgroupsetsPatchCall {
 	c.opt_["updateMask"] = updateMask
 	return c
@@ -3669,7 +3651,7 @@ func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "An optional mask specifying which fields to update. At this time, mutable fields are [referenceSetId][google.genomics.v1.ReadGroupSet.reference_set_id] and [name][google.genomics.v1.ReadGroupSet.name]. Acceptable values are \"referenceSetId\" and \"name\". If unspecified, all mutable fields will be updated.",
+	//       "description": "An optional mask specifying which fields to update. At this time, mutable fields are referenceSetId and name. Acceptable values are \"referenceSetId\" and \"name\". If unspecified, all mutable fields will be updated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4786,13 +4768,16 @@ type VariantsImportCall struct {
 
 // Import: Creates variant data by asynchronously importing the provided
 // information. The variants for import will be merged with any existing
-// data and each other according to the behavior of mergeVariants. In
-// particular, this means for merged VCF variants that have conflicting
-// INFO fields, some data will be arbitrarily discarded. As a special
-// case, for single-sample VCF files, QUAL and FILTER fields will be
-// moved to the call level; these are sometimes interpreted in a
-// call-specific context. Imported VCF headers are appended to the
-// metadata already in a variant set.
+// variant that matches its reference sequence, start, end, reference
+// bases, and alternative bases. If no such variant exists, a new one
+// will be created. When variants are merged, the call information from
+// the new variant is added to the existing variant, and other fields
+// (such as key/value pairs) are discarded. In particular, this means
+// for merged VCF variants that have conflicting INFO fields, some data
+// will be arbitrarily discarded. As a special case, for single-sample
+// VCF files, QUAL and FILTER fields will be moved to the call level;
+// these are sometimes interpreted in a call-specific context. Imported
+// VCF headers are appended to the metadata already in a variant set.
 func (r *VariantsService) Import(importvariantsrequest *ImportVariantsRequest) *VariantsImportCall {
 	c := &VariantsImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.importvariantsrequest = importvariantsrequest
@@ -4843,7 +4828,7 @@ func (c *VariantsImportCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates variant data by asynchronously importing the provided information. The variants for import will be merged with any existing data and each other according to the behavior of mergeVariants. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
+	//   "description": "Creates variant data by asynchronously importing the provided information. The variants for import will be merged with any existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.import",
 	//   "path": "v1/variants:import",
@@ -4882,10 +4867,8 @@ func (r *VariantsService) Patch(variantId string, variant *Variant) *VariantsPat
 
 // UpdateMask sets the optional parameter "updateMask": An optional mask
 // specifying which fields to update. At this time, mutable fields are
-// [names][google.genomics.v1.Variant.names] and
-// [info][google.genomics.v1.Variant.info]. Acceptable values are
-// "names" and "info". If unspecified, all mutable fields will be
-// updated.
+// names and info. Acceptable values are "names" and "info". If
+// unspecified, all mutable fields will be updated.
 func (c *VariantsPatchCall) UpdateMask(updateMask string) *VariantsPatchCall {
 	c.opt_["updateMask"] = updateMask
 	return c
@@ -4948,7 +4931,7 @@ func (c *VariantsPatchCall) Do() (*Variant, error) {
 	//   ],
 	//   "parameters": {
 	//     "updateMask": {
-	//       "description": "An optional mask specifying which fields to update. At this time, mutable fields are [names][google.genomics.v1.Variant.names] and [info][google.genomics.v1.Variant.info]. Acceptable values are \"names\" and \"info\". If unspecified, all mutable fields will be updated.",
+	//       "description": "An optional mask specifying which fields to update. At this time, mutable fields are names and info. Acceptable values are \"names\" and \"info\". If unspecified, all mutable fields will be updated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5409,9 +5392,8 @@ func (r *VariantsetsService) Patch(variantSetId string, variantset *VariantSet) 
 
 // UpdateMask sets the optional parameter "updateMask": An optional mask
 // specifying which fields to update. At this time, the only mutable
-// field is [metadata][google.genomics.v1.VariantSet.metadata]. The only
-// acceptable value is "metadata". If unspecified, all mutable fields
-// will be updated.
+// field is metadata. The only acceptable value is "metadata". If
+// unspecified, all mutable fields will be updated.
 func (c *VariantsetsPatchCall) UpdateMask(updateMask string) *VariantsetsPatchCall {
 	c.opt_["updateMask"] = updateMask
 	return c
@@ -5474,7 +5456,7 @@ func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
 	//   ],
 	//   "parameters": {
 	//     "updateMask": {
-	//       "description": "An optional mask specifying which fields to update. At this time, the only mutable field is [metadata][google.genomics.v1.VariantSet.metadata]. The only acceptable value is \"metadata\". If unspecified, all mutable fields will be updated.",
+	//       "description": "An optional mask specifying which fields to update. At this time, the only mutable field is metadata. The only acceptable value is \"metadata\". If unspecified, all mutable fields will be updated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

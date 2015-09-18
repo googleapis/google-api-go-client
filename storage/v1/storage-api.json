@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/9Bg7_QKT-vp8XVgawS-R0QOOugY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/OK_cUEY_NOfFazu7VbcsL_tulGg\"",
  "discoveryVersion": "v1",
  "id": "storage:v1",
  "name": "storage",
  "version": "v1",
- "revision": "20150826",
- "title": "Cloud Storage API",
+ "revision": "20150909",
+ "title": "Cloud Storage JSON API",
  "description": "Lets you store and retrieve potentially-large, immutable data objects.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
@@ -76,7 +76,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+     "description": "View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/devstorage.full_control": {
      "description": "Manage your data and permissions in Google Cloud Storage"

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/yEqioG13hgB9CKZfUD4BSg0Tp9Q\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zoueaaoAZQGFJohVmI5skQDTvqg\"",
  "discoveryVersion": "v1",
  "id": "dns:v1",
  "name": "dns",
@@ -73,7 +73,7 @@
      "description": "View and manage your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/cloud-platform.read-only": {
-     "description": "MESSAGE UNDER CONSTRUCTION View your data across Google Cloud Platform services"
+     "description": "View your data across Google Cloud Platform services"
     },
     "https://www.googleapis.com/auth/ndev.clouddns.readonly": {
      "description": "View your DNS records hosted by Google Cloud DNS"

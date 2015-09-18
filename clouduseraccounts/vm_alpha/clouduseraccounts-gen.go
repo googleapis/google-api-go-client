@@ -46,8 +46,7 @@ const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// MESSAGE UNDER CONSTRUCTION View your data across Google Cloud
-	// Platform services
+	// View your data across Google Cloud Platform services
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// Manage your Google Cloud User Accounts
@@ -131,6 +130,10 @@ type UsersService struct {
 type AuthorizedKeysView struct {
 	// Keys: [Output Only] The list of authorized public keys in SSH format.
 	Keys []string `json:"keys,omitempty"`
+
+	// Sudoer: [Output Only] Whether the user has the ability to elevate on
+	// the instance that requested the authorized keys.
+	Sudoer bool `json:"sudoer,omitempty"`
 }
 
 // Binding: Associates `members` with a `role`.
@@ -383,7 +386,7 @@ type Operation struct {
 	// This is in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always compute#Operation
+	// Kind: [Output Only] Type of the resource. Always compute#operation
 	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
@@ -391,7 +394,7 @@ type Operation struct {
 	Name string `json:"name,omitempty"`
 
 	// OperationType: [Output Only] Type of the operation, such as insert,
-	// update, and delete.
+	// compute.instanceGroups.update, or compute.instanceGroups.delete.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Progress: [Output Only] An optional progress indicator that ranges
@@ -2041,6 +2044,13 @@ func (r *LinuxService) GetAuthorizedKeysView(project string, zone string, user s
 	return c
 }
 
+// Login sets the optional parameter "login": Whether the view was
+// requested as part of a user-initiated login.
+func (c *LinuxGetAuthorizedKeysViewCall) Login(login bool) *LinuxGetAuthorizedKeysViewCall {
+	c.opt_["login"] = login
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2054,6 +2064,9 @@ func (c *LinuxGetAuthorizedKeysViewCall) doRequest(alt string) (*http.Response, 
 	params := make(url.Values)
 	params.Set("alt", alt)
 	params.Set("instance", fmt.Sprintf("%v", c.instance))
+	if v, ok := c.opt_["login"]; ok {
+		params.Set("login", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
 	}
@@ -2099,6 +2112,11 @@ func (c *LinuxGetAuthorizedKeysViewCall) Do() (*LinuxGetAuthorizedKeysViewRespon
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "login": {
+	//       "description": "Whether the view was requested as part of a user-initiated login.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "project": {
 	//       "description": "Project ID for this request.",

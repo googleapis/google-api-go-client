@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/FuKfBgqWMugOHYGywxsOsf7Vfb4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/vDvRzc2SjVzG9hrGn8HU-kRVxfE\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150827",
+ "revision": "20150910",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -2592,7 +2592,7 @@
       },
       "updateViewedDate": {
        "type": "boolean",
-       "description": "Whether to update the view date after successfully retrieving the file.",
+       "description": "Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.",
        "default": "false",
        "location": "query"
       }
@@ -3154,7 +3154,7 @@
       },
       "updateViewedDate": {
        "type": "boolean",
-       "description": "Whether to update the view date after successfully retrieving the file.",
+       "description": "Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.",
        "default": "false",
        "location": "query"
       }
@@ -3474,7 +3474,7 @@
      "id": "drive.permissions.patch",
      "path": "files/{fileId}/permissions/{permissionId}",
      "httpMethod": "PATCH",
-     "description": "Updates a permission. This method supports patch semantics.",
+     "description": "Updates a permission using patch semantics.",
      "parameters": {
       "fileId": {
        "type": "string",

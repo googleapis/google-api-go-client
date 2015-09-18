@@ -1540,8 +1540,9 @@ type CommentThreadSnippet struct {
 // ContentRating: Ratings schemes. The country-specific ratings are
 // mostly for movies and shows. NEXT_ID: 66
 type ContentRating struct {
-	// AcbRating: Rating system in Australia - Australian Classification
-	// Board
+	// AcbRating: The video's Australian Classification Board (ACB) or
+	// Australian Communications and Media Authority (ACMA) rating. ACMA
+	// ratings are used to classify children's television programming.
 	//
 	// Possible values:
 	//   "acbC"
@@ -1555,8 +1556,8 @@ type ContentRating struct {
 	//   "acbUnrated"
 	AcbRating string `json:"acbRating,omitempty"`
 
-	// AgcomRating: Rating system for Italy - Autorit� per le Garanzie
-	// nelle Comunicazioni
+	// AgcomRating: The video's rating from Italy's Autorità per le
+	// Garanzie nelle Comunicazioni (AGCOM).
 	//
 	// Possible values:
 	//   "agcomT"
@@ -1565,8 +1566,8 @@ type ContentRating struct {
 	//   "agcomVm18"
 	AgcomRating string `json:"agcomRating,omitempty"`
 
-	// AnatelRating: Rating system for Chile - Asociaci�n Nacional de
-	// Televisi�n
+	// AnatelRating: The video's Anatel (Asociación Nacional de
+	// Televisión) rating for Chilean television.
 	//
 	// Possible values:
 	//   "anatelA"
@@ -1579,7 +1580,8 @@ type ContentRating struct {
 	//   "anatelUnrated"
 	AnatelRating string `json:"anatelRating,omitempty"`
 
-	// BbfcRating: British Board of Film Classification
+	// BbfcRating: The video's British Board of Film Classification (BBFC)
+	// rating.
 	//
 	// Possible values:
 	//   "bbfc12"
@@ -1592,8 +1594,8 @@ type ContentRating struct {
 	//   "bbfcUnrated"
 	BbfcRating string `json:"bbfcRating,omitempty"`
 
-	// BfvcRating: Rating system for Thailand - Board of Filmand Video
-	// Censors
+	// BfvcRating: The video's rating from Thailand's Board of Film and
+	// Video Censors.
 	//
 	// Possible values:
 	//   "bfvc13"
@@ -1606,8 +1608,8 @@ type ContentRating struct {
 	//   "bfvcUnrated"
 	BfvcRating string `json:"bfvcRating,omitempty"`
 
-	// BmukkRating: Rating system for Austria - Bundesministerium f�r
-	// Unterricht, Kunst und Kultur
+	// BmukkRating: The video's rating from the Austrian Board of Media
+	// Classification (Bundesministerium für Unterricht, Kunst und Kultur).
 	//
 	// Possible values:
 	//   "bmukk10"
@@ -1621,7 +1623,10 @@ type ContentRating struct {
 	BmukkRating string `json:"bmukkRating,omitempty"`
 
 	// CatvRating: Rating system for Canadian TV - Canadian TV
-	// Classification System
+	// Classification System The video's rating from the Canadian
+	// Radio-Television and Telecommunications Commission (CRTC) for
+	// Canadian English-language broadcasts. For more information, see the
+	// Canadian Broadcast Standards Council website.
 	//
 	// Possible values:
 	//   "catv14plus"
@@ -1633,7 +1638,10 @@ type ContentRating struct {
 	//   "catvUnrated"
 	CatvRating string `json:"catvRating,omitempty"`
 
-	// CatvfrRating: Rating system for French Canadian TV - Regie du cinema
+	// CatvfrRating: The video's rating from the Canadian Radio-Television
+	// and Telecommunications Commission (CRTC) for Canadian French-language
+	// broadcasts. For more information, see the Canadian Broadcast
+	// Standards Council website.
 	//
 	// Possible values:
 	//   "catvfr13plus"
@@ -1644,8 +1652,8 @@ type ContentRating struct {
 	//   "catvfrUnrated"
 	CatvfrRating string `json:"catvfrRating,omitempty"`
 
-	// CbfcRating: Rating system in India - Central Board of Film
-	// Certification
+	// CbfcRating: The video's Central Board of Film Certification (CBFC -
+	// India) rating.
 	//
 	// Possible values:
 	//   "cbfcA"
@@ -1655,8 +1663,8 @@ type ContentRating struct {
 	//   "cbfcUnrated"
 	CbfcRating string `json:"cbfcRating,omitempty"`
 
-	// CccRating: Rating system for Chile - Consejo de Calificaci�n
-	// Cinematogr�fica
+	// CccRating: The video's Consejo de Calificación Cinematográfica
+	// (Chile) rating.
 	//
 	// Possible values:
 	//   "ccc14"
@@ -1668,8 +1676,8 @@ type ContentRating struct {
 	//   "cccUnrated"
 	CccRating string `json:"cccRating,omitempty"`
 
-	// CceRating: Rating system for Portugal - Comiss�o de
-	// Classifica��o de Espect�culos
+	// CceRating: The video's rating from Portugal's Comissão de
+	// Classificação de Espect´culos.
 	//
 	// Possible values:
 	//   "cceM12"
@@ -1680,8 +1688,7 @@ type ContentRating struct {
 	//   "cceUnrated"
 	CceRating string `json:"cceRating,omitempty"`
 
-	// ChfilmRating: Rating system for Switzerland - Switzerland Rating
-	// System
+	// ChfilmRating: The video's rating in Switzerland.
 	//
 	// Possible values:
 	//   "chfilm0"
@@ -1692,7 +1699,8 @@ type ContentRating struct {
 	//   "chfilmUnrated"
 	ChfilmRating string `json:"chfilmRating,omitempty"`
 
-	// ChvrsRating: Canadian Home Video Rating System
+	// ChvrsRating: The video's Canadian Home Video Rating System (CHVRS)
+	// rating.
 	//
 	// Possible values:
 	//   "chvrs14a"
@@ -1704,7 +1712,8 @@ type ContentRating struct {
 	//   "chvrsUnrated"
 	ChvrsRating string `json:"chvrsRating,omitempty"`
 
-	// CicfRating: Rating system for Belgium - Belgium Rating System
+	// CicfRating: The video's rating from the Commission de Contrôle des
+	// Films (Belgium).
 	//
 	// Possible values:
 	//   "cicfE"
@@ -1713,8 +1722,8 @@ type ContentRating struct {
 	//   "cicfUnrated"
 	CicfRating string `json:"cicfRating,omitempty"`
 
-	// CnaRating: Rating system for Romania - CONSILIUL NATIONAL AL
-	// AUDIOVIZUALULUI - CNA
+	// CnaRating: The video's rating from Romania's CONSILIUL NATIONAL AL
+	// AUDIOVIZUALULUI (CNA).
 	//
 	// Possible values:
 	//   "cna12"
@@ -1738,8 +1747,8 @@ type ContentRating struct {
 	//   "cncUnrated"
 	CncRating string `json:"cncRating,omitempty"`
 
-	// CsaRating: Rating system for France - Conseil sup�rieur de
-	// l?audiovisuel
+	// CsaRating: The video's rating from France's Conseil supérieur de
+	// l?audiovisuel, which rates broadcast content.
 	//
 	// Possible values:
 	//   "csa10"
@@ -1751,8 +1760,8 @@ type ContentRating struct {
 	//   "csaUnrated"
 	CsaRating string `json:"csaRating,omitempty"`
 
-	// CscfRating: Rating system for Luxembourg - Commission de surveillance
-	// de la classification des films
+	// CscfRating: The video's rating from Luxembourg's Commission de
+	// surveillance de la classification des films (CSCF).
 	//
 	// Possible values:
 	//   "cscf12"
@@ -1765,8 +1774,7 @@ type ContentRating struct {
 	//   "cscfUnrated"
 	CscfRating string `json:"cscfRating,omitempty"`
 
-	// CzfilmRating: Rating system for Czech republic - Czech republic
-	// Rating System
+	// CzfilmRating: The video's rating in the Czech Republic.
 	//
 	// Possible values:
 	//   "czfilm12"
@@ -1776,8 +1784,8 @@ type ContentRating struct {
 	//   "czfilmUnrated"
 	CzfilmRating string `json:"czfilmRating,omitempty"`
 
-	// DjctqRating: Rating system in Brazil - Department of Justice, Rating,
-	// Titles and Qualification
+	// DjctqRating: The video's Departamento de Justiça, Classificação,
+	// Qualificação e Títulos (DJCQT - Brazil) rating.
 	//
 	// Possible values:
 	//   "djctq10"
@@ -1789,6 +1797,9 @@ type ContentRating struct {
 	//   "djctqUnrated"
 	DjctqRating string `json:"djctqRating,omitempty"`
 
+	// DjctqRatingReasons: Reasons that explain why the video received its
+	// DJCQT (Brazil) rating.
+	//
 	// Possible values:
 	//   "djctqCriminalActs"
 	//   "djctqDrugs"
@@ -1804,7 +1815,7 @@ type ContentRating struct {
 	//   "djctqViolence"
 	DjctqRatingReasons []string `json:"djctqRatingReasons,omitempty"`
 
-	// EefilmRating: Rating system for Estonia - Estonia Rating System
+	// EefilmRating: The video's rating in Estonia.
 	//
 	// Possible values:
 	//   "eefilmK12"
@@ -1818,7 +1829,7 @@ type ContentRating struct {
 	//   "eefilmUnrated"
 	EefilmRating string `json:"eefilmRating,omitempty"`
 
-	// EgfilmRating: Rating system for Egypt - Egypt Rating System
+	// EgfilmRating: The video's rating in Egypt.
 	//
 	// Possible values:
 	//   "egfilm18"
@@ -1827,7 +1838,8 @@ type ContentRating struct {
 	//   "egfilmUnrated"
 	EgfilmRating string `json:"egfilmRating,omitempty"`
 
-	// EirinRating: Rating system in Japan - Eiga Rinri Kanri Iinkai
+	// EirinRating: The video's Eirin (映倫) rating. Eirin is the Japanese
+	// rating system.
 	//
 	// Possible values:
 	//   "eirinG"
@@ -1837,8 +1849,7 @@ type ContentRating struct {
 	//   "eirinUnrated"
 	EirinRating string `json:"eirinRating,omitempty"`
 
-	// FcbmRating: Rating system for Malaysia - Film Censorship Board of
-	// Malaysia
+	// FcbmRating: The video's rating from Malaysia's Film Censorship Board.
 	//
 	// Possible values:
 	//   "fcbm18"
@@ -1852,18 +1863,20 @@ type ContentRating struct {
 	//   "fcbmUnrated"
 	FcbmRating string `json:"fcbmRating,omitempty"`
 
-	// FcoRating: Rating system for Hong kong - Office for Film, Newspaper
-	// and Article Administration
+	// FcoRating: The video's rating from Hong Kong's Office for Film,
+	// Newspaper and Article Administration.
 	//
 	// Possible values:
 	//   "fcoI"
+	//   "fcoIi"
 	//   "fcoIia"
 	//   "fcoIib"
 	//   "fcoIii"
 	//   "fcoUnrated"
 	FcoRating string `json:"fcoRating,omitempty"`
 
-	// FmocRating: Deprecated use CNC rating instead
+	// FmocRating: This property has been deprecated. Use the
+	// contentDetails.contentRating.cncRating instead.
 	//
 	// Possible values:
 	//   "fmoc10"
@@ -1875,7 +1888,8 @@ type ContentRating struct {
 	//   "fmocUnrated"
 	FmocRating string `json:"fmocRating,omitempty"`
 
-	// FpbRating: Rating system for South africa - Film & Publication Board
+	// FpbRating: The video's rating from South Africa's Film and
+	// Publication Board.
 	//
 	// Possible values:
 	//   "fpb1012Pg"
@@ -1890,8 +1904,8 @@ type ContentRating struct {
 	//   "fpbXx"
 	FpbRating string `json:"fpbRating,omitempty"`
 
-	// FskRating: Rating system in Germany - Voluntary Self Regulation of
-	// the Movie Industry
+	// FskRating: The video's Freiwillige Selbstkontrolle der Filmwirtschaft
+	// (FSK - Germany) rating.
 	//
 	// Possible values:
 	//   "fsk0"
@@ -1902,7 +1916,7 @@ type ContentRating struct {
 	//   "fskUnrated"
 	FskRating string `json:"fskRating,omitempty"`
 
-	// GrfilmRating: Rating system for Greece - Greece Rating System
+	// GrfilmRating: The video's rating in Greece.
 	//
 	// Possible values:
 	//   "grfilmE"
@@ -1912,8 +1926,8 @@ type ContentRating struct {
 	//   "grfilmUnrated"
 	GrfilmRating string `json:"grfilmRating,omitempty"`
 
-	// IcaaRating: Rating system in Spain - Instituto de Cinematografia y de
-	// las Artes Audiovisuales
+	// IcaaRating: The video's Instituto de la Cinematografía y de las
+	// Artes Audiovisuales (ICAA - Spain) rating.
 	//
 	// Possible values:
 	//   "icaa12"
@@ -1926,8 +1940,8 @@ type ContentRating struct {
 	//   "icaaX"
 	IcaaRating string `json:"icaaRating,omitempty"`
 
-	// IfcoRating: Rating system in Ireland - Irish Film Classification
-	// Office
+	// IfcoRating: The video's Irish Film Classification Office (IFCO -
+	// Ireland) rating. See the IFCO website for more information.
 	//
 	// Possible values:
 	//   "ifco12"
@@ -1941,7 +1955,7 @@ type ContentRating struct {
 	//   "ifcoUnrated"
 	IfcoRating string `json:"ifcoRating,omitempty"`
 
-	// IlfilmRating: Rating system for Israel - Israel Rating System
+	// IlfilmRating: The video's rating in Israel.
 	//
 	// Possible values:
 	//   "ilfilm12"
@@ -1951,8 +1965,8 @@ type ContentRating struct {
 	//   "ilfilmUnrated"
 	IlfilmRating string `json:"ilfilmRating,omitempty"`
 
-	// IncaaRating: Rating system for Argentina - Instituto Nacional de Cine
-	// y Artes Audiovisuales
+	// IncaaRating: The video's INCAA (Instituto Nacional de Cine y Artes
+	// Audiovisuales - Argentina) rating.
 	//
 	// Possible values:
 	//   "incaaAtp"
@@ -1963,7 +1977,8 @@ type ContentRating struct {
 	//   "incaaUnrated"
 	IncaaRating string `json:"incaaRating,omitempty"`
 
-	// KfcbRating: Rating system for Kenya - Kenya Film Classification Board
+	// KfcbRating: The video's rating from the Kenya Film Classification
+	// Board.
 	//
 	// Possible values:
 	//   "kfcb16plus"
@@ -1973,8 +1988,8 @@ type ContentRating struct {
 	//   "kfcbUnrated"
 	KfcbRating string `json:"kfcbRating,omitempty"`
 
-	// KijkwijzerRating: Rating system for Netherlands - Nederlands
-	// Instituut voor de Classificatie van Audiovisuele Media
+	// KijkwijzerRating: voor de Classificatie van Audiovisuele Media
+	// (Netherlands).
 	//
 	// Possible values:
 	//   "kijkwijzer12"
@@ -1986,7 +2001,9 @@ type ContentRating struct {
 	//   "kijkwijzerUnrated"
 	KijkwijzerRating string `json:"kijkwijzerRating,omitempty"`
 
-	// KmrbRating: Rating system in South Korea - Korea Media Rating Board
+	// KmrbRating: The video's Korea Media Rating Board
+	// (영상물등급위원회) rating. The KMRB rates videos in South
+	// Korea.
 	//
 	// Possible values:
 	//   "kmrb12plus"
@@ -1997,7 +2014,7 @@ type ContentRating struct {
 	//   "kmrbUnrated"
 	KmrbRating string `json:"kmrbRating,omitempty"`
 
-	// LsfRating: Rating system for Indonesia - Lembaga Sensor Film
+	// LsfRating: The video's rating from Indonesia's Lembaga Sensor Film.
 	//
 	// Possible values:
 	//   "lsf13"
@@ -2011,7 +2028,8 @@ type ContentRating struct {
 	//   "lsfUnrated"
 	LsfRating string `json:"lsfRating,omitempty"`
 
-	// MccaaRating: Rating system for Malta - Film Age-Classification Board
+	// MccaaRating: The video's rating from Malta's Film Age-Classification
+	// Board.
 	//
 	// Possible values:
 	//   "mccaa12"
@@ -2025,8 +2043,8 @@ type ContentRating struct {
 	//   "mccaaUnrated"
 	MccaaRating string `json:"mccaaRating,omitempty"`
 
-	// MccypRating: Rating system for Denmark - The Media Council for
-	// Children and Young People
+	// MccypRating: The video's rating from the Danish Film Institute's (Det
+	// Danske Filminstitut) Media Council for Children and Young People.
 	//
 	// Possible values:
 	//   "mccyp11"
@@ -2036,7 +2054,8 @@ type ContentRating struct {
 	//   "mccypUnrated"
 	MccypRating string `json:"mccypRating,omitempty"`
 
-	// MdaRating: Rating system for Singapore - Media Development Authority
+	// MdaRating: The video's rating from Singapore's Media Development
+	// Authority (MDA) and, specifically, it's Board of Film Censors (BFC).
 	//
 	// Possible values:
 	//   "mdaG"
@@ -2048,19 +2067,23 @@ type ContentRating struct {
 	//   "mdaUnrated"
 	MdaRating string `json:"mdaRating,omitempty"`
 
-	// MedietilsynetRating: Rating system for Norway - Medietilsynet
+	// MedietilsynetRating: The video's rating from Medietilsynet, the
+	// Norwegian Media Authority.
 	//
 	// Possible values:
 	//   "medietilsynet11"
+	//   "medietilsynet12"
 	//   "medietilsynet15"
 	//   "medietilsynet18"
+	//   "medietilsynet6"
 	//   "medietilsynet7"
+	//   "medietilsynet9"
 	//   "medietilsynetA"
 	//   "medietilsynetUnrated"
 	MedietilsynetRating string `json:"medietilsynetRating,omitempty"`
 
-	// MekuRating: Rating system for Finland - Finnish Centre for Media
-	// Education and Audiovisual Media
+	// MekuRating: The video's rating from Finland's Kansallinen
+	// Audiovisuaalinen Instituutti (National Audiovisual Institute).
 	//
 	// Possible values:
 	//   "meku12"
@@ -2071,8 +2094,8 @@ type ContentRating struct {
 	//   "mekuUnrated"
 	MekuRating string `json:"mekuRating,omitempty"`
 
-	// MibacRating: Rating system in Italy - Ministero dei Beni e delle
-	// Attivita Culturali e del Turismo
+	// MibacRating: The video's rating from the Ministero dei Beni e delle
+	// Attività Culturali e del Turismo (Italy).
 	//
 	// Possible values:
 	//   "mibacT"
@@ -2083,7 +2106,7 @@ type ContentRating struct {
 	//   "mibacVm18"
 	MibacRating string `json:"mibacRating,omitempty"`
 
-	// MocRating: Rating system for Colombia - MoC
+	// MocRating: The video's Ministerio de Cultura (Colombia) rating.
 	//
 	// Possible values:
 	//   "moc12"
@@ -2097,7 +2120,8 @@ type ContentRating struct {
 	//   "mocX"
 	MocRating string `json:"mocRating,omitempty"`
 
-	// MoctwRating: Rating system for Taiwan - Ministry of Culture - Tawan
+	// MoctwRating: The video's rating from Taiwan's Ministry of Culture
+	// (文化部).
 	//
 	// Possible values:
 	//   "moctwG"
@@ -2107,8 +2131,8 @@ type ContentRating struct {
 	//   "moctwUnrated"
 	MoctwRating string `json:"moctwRating,omitempty"`
 
-	// MpaaRating: Motion Picture Association of America rating for the
-	// content.
+	// MpaaRating: The video's Motion Picture Association of America (MPAA)
+	// rating.
 	//
 	// Possible values:
 	//   "mpaaG"
@@ -2119,8 +2143,8 @@ type ContentRating struct {
 	//   "mpaaUnrated"
 	MpaaRating string `json:"mpaaRating,omitempty"`
 
-	// MtrcbRating: Rating system for Philippines - MOVIE AND TELEVISION
-	// REVIEW AND CLASSIFICATION BOARD
+	// MtrcbRating: The video's rating from the Movie and Television Review
+	// and Classification Board (Philippines).
 	//
 	// Possible values:
 	//   "mtrcbG"
@@ -2132,8 +2156,8 @@ type ContentRating struct {
 	//   "mtrcbX"
 	MtrcbRating string `json:"mtrcbRating,omitempty"`
 
-	// NbcRating: Rating system for Maldives - National Bureau of
-	// Classification
+	// NbcRating: The video's rating from the Maldives National Bureau of
+	// Classification.
 	//
 	// Possible values:
 	//   "nbc12plus"
@@ -2146,7 +2170,7 @@ type ContentRating struct {
 	//   "nbcUnrated"
 	NbcRating string `json:"nbcRating,omitempty"`
 
-	// NbcplRating: Rating system for Poland - National Broadcasting Council
+	// NbcplRating: The video's rating in Poland.
 	//
 	// Possible values:
 	//   "nbcpl18plus"
@@ -2157,7 +2181,8 @@ type ContentRating struct {
 	//   "nbcplUnrated"
 	NbcplRating string `json:"nbcplRating,omitempty"`
 
-	// NfrcRating: Rating system for Bulgaria - National Film Centre
+	// NfrcRating: The video's rating from the Bulgarian National Film
+	// Center.
 	//
 	// Possible values:
 	//   "nfrcA"
@@ -2168,8 +2193,8 @@ type ContentRating struct {
 	//   "nfrcX"
 	NfrcRating string `json:"nfrcRating,omitempty"`
 
-	// NfvcbRating: Rating system for Nigeria - National Film and Video
-	// Censors Board
+	// NfvcbRating: The video's rating from Nigeria's National Film and
+	// Video Censors Board.
 	//
 	// Possible values:
 	//   "nfvcb12"
@@ -2182,8 +2207,8 @@ type ContentRating struct {
 	//   "nfvcbUnrated"
 	NfvcbRating string `json:"nfvcbRating,omitempty"`
 
-	// NkclvRating: Rating system for Latvia - National Film Center of
-	// Latvia
+	// NkclvRating: The video's rating from the Nacionãlais Kino centrs
+	// (National Film Centre of Latvia).
 	//
 	// Possible values:
 	//   "nkclv12plus"
@@ -2193,8 +2218,8 @@ type ContentRating struct {
 	//   "nkclvUnrated"
 	NkclvRating string `json:"nkclvRating,omitempty"`
 
-	// OflcRating: Rating system in New Zealand - Office of Film and
-	// Literature Classification
+	// OflcRating: The video's Office of Film and Literature Classification
+	// (OFLC - New Zealand) rating.
 	//
 	// Possible values:
 	//   "oflcG"
@@ -2209,7 +2234,7 @@ type ContentRating struct {
 	//   "oflcUnrated"
 	OflcRating string `json:"oflcRating,omitempty"`
 
-	// PefilmRating: Rating system for Peru - Peru Rating System
+	// PefilmRating: The video's rating in Peru.
 	//
 	// Possible values:
 	//   "pefilm14"
@@ -2219,8 +2244,8 @@ type ContentRating struct {
 	//   "pefilmUnrated"
 	PefilmRating string `json:"pefilmRating,omitempty"`
 
-	// RcnofRating: Rating system for Hungary - Rating Committee of the
-	// National Office of Film
+	// RcnofRating: The video's rating from the Hungarian Nemzeti Filmiroda,
+	// the Rating Committee of the National Office of Film.
 	//
 	// Possible values:
 	//   "rcnofI"
@@ -2232,7 +2257,7 @@ type ContentRating struct {
 	//   "rcnofVi"
 	RcnofRating string `json:"rcnofRating,omitempty"`
 
-	// ResorteviolenciaRating: Rating system for Venezuela - SiBCI
+	// ResorteviolenciaRating: The video's rating in Venezuela.
 	//
 	// Possible values:
 	//   "resorteviolenciaA"
@@ -2243,8 +2268,8 @@ type ContentRating struct {
 	//   "resorteviolenciaUnrated"
 	ResorteviolenciaRating string `json:"resorteviolenciaRating,omitempty"`
 
-	// RtcRating: Rating system in Mexico - General Directorate of Radio,
-	// Television and Cinematography
+	// RtcRating: The video's General Directorate of Radio, Television and
+	// Cinematography (Mexico) rating.
 	//
 	// Possible values:
 	//   "rtcA"
@@ -2256,7 +2281,8 @@ type ContentRating struct {
 	//   "rtcUnrated"
 	RtcRating string `json:"rtcRating,omitempty"`
 
-	// RteRating: Rating system for Ireland - Raidi� Teilif�s �ireann
+	// RteRating: The video's rating from Ireland's Raidió Teilifís
+	// Éireann.
 	//
 	// Possible values:
 	//   "rteCh"
@@ -2266,7 +2292,8 @@ type ContentRating struct {
 	//   "rteUnrated"
 	RteRating string `json:"rteRating,omitempty"`
 
-	// RussiaRating: Rating system in Russia
+	// RussiaRating: The video's National Film Registry of the Russian
+	// Federation (MKRF - Russia) rating.
 	//
 	// Possible values:
 	//   "russia0"
@@ -2277,7 +2304,7 @@ type ContentRating struct {
 	//   "russiaUnrated"
 	RussiaRating string `json:"russiaRating,omitempty"`
 
-	// SkfilmRating: Rating system for Slovakia - Slovakia Rating System
+	// SkfilmRating: The video's rating in Slovakia.
 	//
 	// Possible values:
 	//   "skfilmG"
@@ -2287,7 +2314,7 @@ type ContentRating struct {
 	//   "skfilmUnrated"
 	SkfilmRating string `json:"skfilmRating,omitempty"`
 
-	// SmaisRating: Rating system for Iceland - SMAIS
+	// SmaisRating: The video's rating in Iceland.
 	//
 	// Possible values:
 	//   "smais12"
@@ -2299,8 +2326,8 @@ type ContentRating struct {
 	//   "smaisUnrated"
 	SmaisRating string `json:"smaisRating,omitempty"`
 
-	// SmsaRating: Rating system for Sweden - Statens medier�d (National
-	// Media Council)
+	// SmsaRating: The video's rating from Statens medieråd (Sweden's
+	// National Media Council).
 	//
 	// Possible values:
 	//   "smsa11"
@@ -2310,7 +2337,7 @@ type ContentRating struct {
 	//   "smsaUnrated"
 	SmsaRating string `json:"smsaRating,omitempty"`
 
-	// TvpgRating: TV Parental Guidelines rating of the content.
+	// TvpgRating: The video's TV Parental Guidelines (TVPG) rating.
 	//
 	// Possible values:
 	//   "pg14"
@@ -2323,7 +2350,8 @@ type ContentRating struct {
 	//   "tvpgY7Fv"
 	TvpgRating string `json:"tvpgRating,omitempty"`
 
-	// YtRating: Internal YouTube rating.
+	// YtRating: A rating that YouTube uses to identify age-restricted
+	// content.
 	//
 	// Possible values:
 	//   "ytAgeRestricted"
@@ -2860,6 +2888,9 @@ type LiveBroadcastSnippet struct {
 	Description string `json:"description,omitempty"`
 
 	IsDefaultBroadcast bool `json:"isDefaultBroadcast,omitempty"`
+
+	// LiveChatId: The id of the live chat for this broadcast.
+	LiveChatId string `json:"liveChatId,omitempty"`
 
 	// PublishedAt: The date and time that the broadcast was added to
 	// YouTube's live broadcast schedule. The value is specified in ISO 8601

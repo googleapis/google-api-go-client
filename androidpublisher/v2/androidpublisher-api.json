@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/gtEzcfWnBY9EC00QyZ_jjrGf9Io\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QvChBL9zzkcDEEIqZpwPMr9_TRs\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v2",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v2",
- "revision": "20150316",
+ "revision": "20150910",
  "title": "Google Play Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",
@@ -474,7 +474,7 @@
     },
     "subscriptionPeriod": {
      "type": "string",
-     "description": "The period of the subscription (if any), i.e. period at which payments must happen. Defined as ISO 8601 duration, i.e. \"P1M\" for 1 month period."
+     "description": "Subscription period, specified in ISO 8601 format. Acceptable values are \"P1W\" (one week), \"P1M\" (one month) and \"P1Y\" (one year)."
     },
     "trialPeriod": {
      "type": "string",
@@ -1772,9 +1772,11 @@
           "sevenInchScreenshots",
           "tenInchScreenshots",
           "tvBanner",
-          "tvScreenshots"
+          "tvScreenshots",
+          "wearScreenshots"
          ],
          "enumDescriptions": [
+          "",
           "",
           "",
           "",
@@ -1833,9 +1835,11 @@
           "sevenInchScreenshots",
           "tenInchScreenshots",
           "tvBanner",
-          "tvScreenshots"
+          "tvScreenshots",
+          "wearScreenshots"
          ],
          "enumDescriptions": [
+          "",
           "",
           "",
           "",
@@ -1896,9 +1900,11 @@
           "sevenInchScreenshots",
           "tenInchScreenshots",
           "tvBanner",
-          "tvScreenshots"
+          "tvScreenshots",
+          "wearScreenshots"
          ],
          "enumDescriptions": [
+          "",
           "",
           "",
           "",
@@ -1959,9 +1965,11 @@
           "sevenInchScreenshots",
           "tenInchScreenshots",
           "tvBanner",
-          "tvScreenshots"
+          "tvScreenshots",
+          "wearScreenshots"
          ],
          "enumDescriptions": [
+          "",
           "",
           "",
           "",

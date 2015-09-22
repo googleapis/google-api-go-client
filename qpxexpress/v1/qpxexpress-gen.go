@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "qpxExpress:v1"
 const apiName = "qpxExpress"
@@ -710,6 +710,7 @@ type TripsSearchCall struct {
 	s                  *Service
 	tripssearchrequest *TripsSearchRequest
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Search: Returns a list of flights.
@@ -724,6 +725,14 @@ func (r *TripsService) Search(tripssearchrequest *TripsSearchRequest) *TripsSear
 // for more information.
 func (c *TripsSearchCall) Fields(s ...googleapi.Field) *TripsSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TripsSearchCall) Context(ctx context.Context) *TripsSearchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -745,6 +754,9 @@ func (c *TripsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

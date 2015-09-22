@@ -13,6 +13,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -32,7 +33,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "genomics:v1"
 const apiName = "genomics"
@@ -1545,6 +1545,7 @@ type CallsetsCreateCall struct {
 	s       *Service
 	callset *CallSet
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Create: Creates a new call set.
@@ -1559,6 +1560,14 @@ func (r *CallsetsService) Create(callset *CallSet) *CallsetsCreateCall {
 // for more information.
 func (c *CallsetsCreateCall) Fields(s ...googleapi.Field) *CallsetsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CallsetsCreateCall) Context(ctx context.Context) *CallsetsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1580,6 +1589,9 @@ func (c *CallsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1622,6 +1634,7 @@ type CallsetsDeleteCall struct {
 	s         *Service
 	callSetId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes a call set.
@@ -1639,6 +1652,14 @@ func (c *CallsetsDeleteCall) Fields(s ...googleapi.Field) *CallsetsDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CallsetsDeleteCall) Context(ctx context.Context) *CallsetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CallsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1653,6 +1674,9 @@ func (c *CallsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"callSetId": c.callSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1703,6 +1727,7 @@ type CallsetsGetCall struct {
 	s         *Service
 	callSetId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a call set by ID.
@@ -1720,6 +1745,14 @@ func (c *CallsetsGetCall) Fields(s ...googleapi.Field) *CallsetsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CallsetsGetCall) Context(ctx context.Context) *CallsetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CallsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1734,6 +1767,9 @@ func (c *CallsetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"callSetId": c.callSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1786,6 +1822,7 @@ type CallsetsPatchCall struct {
 	callSetId string
 	callset   *CallSet
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates a call set. This method supports patch semantics.
@@ -1813,6 +1850,14 @@ func (c *CallsetsPatchCall) Fields(s ...googleapi.Field) *CallsetsPatchCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CallsetsPatchCall) Context(ctx context.Context) *CallsetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CallsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.callset)
@@ -1836,6 +1881,9 @@ func (c *CallsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1894,6 +1942,7 @@ type CallsetsSearchCall struct {
 	s                     *Service
 	searchcallsetsrequest *SearchCallSetsRequest
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // Search: Gets a list of call sets matching the criteria. Implements
@@ -1910,6 +1959,14 @@ func (r *CallsetsService) Search(searchcallsetsrequest *SearchCallSetsRequest) *
 // for more information.
 func (c *CallsetsSearchCall) Fields(s ...googleapi.Field) *CallsetsSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CallsetsSearchCall) Context(ctx context.Context) *CallsetsSearchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1931,6 +1988,9 @@ func (c *CallsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1974,6 +2034,7 @@ type DatasetsCreateCall struct {
 	s       *Service
 	dataset *Dataset
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Create: Creates a new dataset.
@@ -1988,6 +2049,14 @@ func (r *DatasetsService) Create(dataset *Dataset) *DatasetsCreateCall {
 // for more information.
 func (c *DatasetsCreateCall) Fields(s ...googleapi.Field) *DatasetsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsCreateCall) Context(ctx context.Context) *DatasetsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2009,6 +2078,9 @@ func (c *DatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2051,6 +2123,7 @@ type DatasetsDeleteCall struct {
 	s         *Service
 	datasetId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes a dataset.
@@ -2068,6 +2141,14 @@ func (c *DatasetsDeleteCall) Fields(s ...googleapi.Field) *DatasetsDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsDeleteCall) Context(ctx context.Context) *DatasetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2082,6 +2163,9 @@ func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2132,6 +2216,7 @@ type DatasetsGetCall struct {
 	s         *Service
 	datasetId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a dataset by ID.
@@ -2149,6 +2234,14 @@ func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsGetCall) Context(ctx context.Context) *DatasetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2163,6 +2256,9 @@ func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2215,6 +2311,7 @@ type DatasetsGetIamPolicyCall struct {
 	resource            string
 	getiampolicyrequest *GetIamPolicyRequest
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // GetIamPolicy: Gets the access control policy for the dataset. Is
@@ -2232,6 +2329,14 @@ func (r *DatasetsService) GetIamPolicy(resource string, getiampolicyrequest *Get
 // for more information.
 func (c *DatasetsGetIamPolicyCall) Fields(s ...googleapi.Field) *DatasetsGetIamPolicyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsGetIamPolicyCall) Context(ctx context.Context) *DatasetsGetIamPolicyCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2255,6 +2360,9 @@ func (c *DatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2308,6 +2416,7 @@ func (c *DatasetsGetIamPolicyCall) Do() (*Policy, error) {
 type DatasetsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists datasets within a project.
@@ -2348,6 +2457,14 @@ func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsListCall) Context(ctx context.Context) *DatasetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2369,6 +2486,9 @@ func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2428,6 +2548,7 @@ type DatasetsPatchCall struct {
 	datasetId string
 	dataset   *Dataset
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates a dataset. This method supports patch semantics.
@@ -2455,6 +2576,14 @@ func (c *DatasetsPatchCall) Fields(s ...googleapi.Field) *DatasetsPatchCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsPatchCall) Context(ctx context.Context) *DatasetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -2478,6 +2607,9 @@ func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2537,6 +2669,7 @@ type DatasetsSetIamPolicyCall struct {
 	resource            string
 	setiampolicyrequest *SetIamPolicyRequest
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
@@ -2554,6 +2687,14 @@ func (r *DatasetsService) SetIamPolicy(resource string, setiampolicyrequest *Set
 // for more information.
 func (c *DatasetsSetIamPolicyCall) Fields(s ...googleapi.Field) *DatasetsSetIamPolicyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsSetIamPolicyCall) Context(ctx context.Context) *DatasetsSetIamPolicyCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2577,6 +2718,9 @@ func (c *DatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2632,6 +2776,7 @@ type DatasetsTestIamPermissionsCall struct {
 	resource                  string
 	testiampermissionsrequest *TestIamPermissionsRequest
 	opt_                      map[string]interface{}
+	ctx_                      context.Context
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
@@ -2648,6 +2793,14 @@ func (r *DatasetsService) TestIamPermissions(resource string, testiampermissions
 // for more information.
 func (c *DatasetsTestIamPermissionsCall) Fields(s ...googleapi.Field) *DatasetsTestIamPermissionsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsTestIamPermissionsCall) Context(ctx context.Context) *DatasetsTestIamPermissionsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2671,6 +2824,9 @@ func (c *DatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2726,6 +2882,7 @@ type DatasetsUndeleteCall struct {
 	datasetId              string
 	undeletedatasetrequest *UndeleteDatasetRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // Undelete: Undeletes a dataset by restoring a dataset which was
@@ -2743,6 +2900,14 @@ func (r *DatasetsService) Undelete(datasetId string, undeletedatasetrequest *Und
 // for more information.
 func (c *DatasetsUndeleteCall) Fields(s ...googleapi.Field) *DatasetsUndeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsUndeleteCall) Context(ctx context.Context) *DatasetsUndeleteCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2766,6 +2931,9 @@ func (c *DatasetsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2820,6 +2988,7 @@ type OperationsCancelCall struct {
 	name                   string
 	canceloperationrequest *CancelOperationRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
@@ -2839,6 +3008,14 @@ func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOp
 // for more information.
 func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2862,6 +3039,9 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2916,6 +3096,7 @@ type OperationsDeleteCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: This method is not implemented. To cancel an operation,
@@ -2934,6 +3115,14 @@ func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OperationsDeleteCall) Context(ctx context.Context) *OperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2948,6 +3137,9 @@ func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2999,6 +3191,7 @@ type OperationsGetCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Gets the latest state of a long-running operation. Clients can
@@ -3018,6 +3211,14 @@ func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3032,6 +3233,9 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3083,6 +3287,7 @@ type OperationsListCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists operations that match the specified filter in the
@@ -3128,6 +3333,14 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3151,6 +3364,9 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3218,6 +3434,7 @@ type ReadgroupsetsDeleteCall struct {
 	s              *Service
 	readGroupSetId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Delete: Deletes a read group set.
@@ -3235,6 +3452,14 @@ func (c *ReadgroupsetsDeleteCall) Fields(s ...googleapi.Field) *ReadgroupsetsDel
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReadgroupsetsDeleteCall) Context(ctx context.Context) *ReadgroupsetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReadgroupsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3249,6 +3474,9 @@ func (c *ReadgroupsetsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3300,6 +3528,7 @@ type ReadgroupsetsExportCall struct {
 	readGroupSetId            string
 	exportreadgroupsetrequest *ExportReadGroupSetRequest
 	opt_                      map[string]interface{}
+	ctx_                      context.Context
 }
 
 // Export: Exports a read group set to a BAM file in Google Cloud
@@ -3323,6 +3552,14 @@ func (c *ReadgroupsetsExportCall) Fields(s ...googleapi.Field) *ReadgroupsetsExp
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReadgroupsetsExportCall) Context(ctx context.Context) *ReadgroupsetsExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReadgroupsetsExportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportreadgroupsetrequest)
@@ -3343,6 +3580,9 @@ func (c *ReadgroupsetsExportCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3397,6 +3637,7 @@ type ReadgroupsetsGetCall struct {
 	s              *Service
 	readGroupSetId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Gets a read group set by ID.
@@ -3414,6 +3655,14 @@ func (c *ReadgroupsetsGetCall) Fields(s ...googleapi.Field) *ReadgroupsetsGetCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReadgroupsetsGetCall) Context(ctx context.Context) *ReadgroupsetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReadgroupsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3428,6 +3677,9 @@ func (c *ReadgroupsetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3479,6 +3731,7 @@ type ReadgroupsetsImportCall struct {
 	s                          *Service
 	importreadgroupsetsrequest *ImportReadGroupSetsRequest
 	opt_                       map[string]interface{}
+	ctx_                       context.Context
 }
 
 // Import: Creates read group sets by asynchronously importing the
@@ -3506,6 +3759,14 @@ func (c *ReadgroupsetsImportCall) Fields(s ...googleapi.Field) *ReadgroupsetsImp
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReadgroupsetsImportCall) Context(ctx context.Context) *ReadgroupsetsImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReadgroupsetsImportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importreadgroupsetsrequest)
@@ -3524,6 +3785,9 @@ func (c *ReadgroupsetsImportCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3568,6 +3832,7 @@ type ReadgroupsetsPatchCall struct {
 	readGroupSetId string
 	readgroupset   *ReadGroupSet
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Patch: Updates a read group set. This method supports patch
@@ -3596,6 +3861,14 @@ func (c *ReadgroupsetsPatchCall) Fields(s ...googleapi.Field) *ReadgroupsetsPatc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReadgroupsetsPatchCall) Context(ctx context.Context) *ReadgroupsetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReadgroupsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.readgroupset)
@@ -3619,6 +3892,9 @@ func (c *ReadgroupsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3677,6 +3953,7 @@ type ReadgroupsetsSearchCall struct {
 	s                          *Service
 	searchreadgroupsetsrequest *SearchReadGroupSetsRequest
 	opt_                       map[string]interface{}
+	ctx_                       context.Context
 }
 
 // Search: Searches for read group sets matching the criteria.
@@ -3694,6 +3971,14 @@ func (r *ReadgroupsetsService) Search(searchreadgroupsetsrequest *SearchReadGrou
 // for more information.
 func (c *ReadgroupsetsSearchCall) Fields(s ...googleapi.Field) *ReadgroupsetsSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReadgroupsetsSearchCall) Context(ctx context.Context) *ReadgroupsetsSearchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3715,6 +4000,9 @@ func (c *ReadgroupsetsSearchCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3758,6 +4046,7 @@ type ReadgroupsetsCoveragebucketsListCall struct {
 	s              *Service
 	readGroupSetId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // List: Lists fixed width coverage buckets for a read group set, each
@@ -3837,6 +4126,14 @@ func (c *ReadgroupsetsCoveragebucketsListCall) Fields(s ...googleapi.Field) *Rea
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReadgroupsetsCoveragebucketsListCall) Context(ctx context.Context) *ReadgroupsetsCoveragebucketsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReadgroupsetsCoveragebucketsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3869,6 +4166,9 @@ func (c *ReadgroupsetsCoveragebucketsListCall) doRequest(alt string) (*http.Resp
 		"readGroupSetId": c.readGroupSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3954,6 +4254,7 @@ type ReadsSearchCall struct {
 	s                  *Service
 	searchreadsrequest *SearchReadsRequest
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Search: Gets a list of reads for one or more read group sets. Reads
@@ -3983,6 +4284,14 @@ func (c *ReadsSearchCall) Fields(s ...googleapi.Field) *ReadsSearchCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReadsSearchCall) Context(ctx context.Context) *ReadsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReadsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchreadsrequest)
@@ -4001,6 +4310,9 @@ func (c *ReadsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4044,6 +4356,7 @@ type ReferencesGetCall struct {
 	s           *Service
 	referenceId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a reference. Implements
@@ -4063,6 +4376,14 @@ func (c *ReferencesGetCall) Fields(s ...googleapi.Field) *ReferencesGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReferencesGetCall) Context(ctx context.Context) *ReferencesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReferencesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4077,6 +4398,9 @@ func (c *ReferencesGetCall) doRequest(alt string) (*http.Response, error) {
 		"referenceId": c.referenceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4128,6 +4452,7 @@ type ReferencesSearchCall struct {
 	s                       *Service
 	searchreferencesrequest *SearchReferencesRequest
 	opt_                    map[string]interface{}
+	ctx_                    context.Context
 }
 
 // Search: Searches for references which match the given criteria.
@@ -4145,6 +4470,14 @@ func (r *ReferencesService) Search(searchreferencesrequest *SearchReferencesRequ
 // for more information.
 func (c *ReferencesSearchCall) Fields(s ...googleapi.Field) *ReferencesSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReferencesSearchCall) Context(ctx context.Context) *ReferencesSearchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4166,6 +4499,9 @@ func (c *ReferencesSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4209,6 +4545,7 @@ type ReferencesBasesListCall struct {
 	s           *Service
 	referenceId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists the bases in a reference, optionally restricted to a
@@ -4259,6 +4596,14 @@ func (c *ReferencesBasesListCall) Fields(s ...googleapi.Field) *ReferencesBasesL
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReferencesBasesListCall) Context(ctx context.Context) *ReferencesBasesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReferencesBasesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4285,6 +4630,9 @@ func (c *ReferencesBasesListCall) doRequest(alt string) (*http.Response, error) 
 		"referenceId": c.referenceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4359,6 +4707,7 @@ type ReferencesetsGetCall struct {
 	s              *Service
 	referenceSetId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Gets a reference set. Implements
@@ -4378,6 +4727,14 @@ func (c *ReferencesetsGetCall) Fields(s ...googleapi.Field) *ReferencesetsGetCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReferencesetsGetCall) Context(ctx context.Context) *ReferencesetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReferencesetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4392,6 +4749,9 @@ func (c *ReferencesetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"referenceSetId": c.referenceSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4443,6 +4803,7 @@ type ReferencesetsSearchCall struct {
 	s                          *Service
 	searchreferencesetsrequest *SearchReferenceSetsRequest
 	opt_                       map[string]interface{}
+	ctx_                       context.Context
 }
 
 // Search: Searches for reference sets which match the given criteria.
@@ -4460,6 +4821,14 @@ func (r *ReferencesetsService) Search(searchreferencesetsrequest *SearchReferenc
 // for more information.
 func (c *ReferencesetsSearchCall) Fields(s ...googleapi.Field) *ReferencesetsSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReferencesetsSearchCall) Context(ctx context.Context) *ReferencesetsSearchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4481,6 +4850,9 @@ func (c *ReferencesetsSearchCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4524,6 +4896,7 @@ type VariantsCreateCall struct {
 	s       *Service
 	variant *Variant
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Create: Creates a new variant.
@@ -4538,6 +4911,14 @@ func (r *VariantsService) Create(variant *Variant) *VariantsCreateCall {
 // for more information.
 func (c *VariantsCreateCall) Fields(s ...googleapi.Field) *VariantsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsCreateCall) Context(ctx context.Context) *VariantsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4559,6 +4940,9 @@ func (c *VariantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4601,6 +4985,7 @@ type VariantsDeleteCall struct {
 	s         *Service
 	variantId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes a variant.
@@ -4618,6 +5003,14 @@ func (c *VariantsDeleteCall) Fields(s ...googleapi.Field) *VariantsDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsDeleteCall) Context(ctx context.Context) *VariantsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VariantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4632,6 +5025,9 @@ func (c *VariantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"variantId": c.variantId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4682,6 +5078,7 @@ type VariantsGetCall struct {
 	s         *Service
 	variantId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a variant by ID.
@@ -4699,6 +5096,14 @@ func (c *VariantsGetCall) Fields(s ...googleapi.Field) *VariantsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsGetCall) Context(ctx context.Context) *VariantsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VariantsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4713,6 +5118,9 @@ func (c *VariantsGetCall) doRequest(alt string) (*http.Response, error) {
 		"variantId": c.variantId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4764,6 +5172,7 @@ type VariantsImportCall struct {
 	s                     *Service
 	importvariantsrequest *ImportVariantsRequest
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // Import: Creates variant data by asynchronously importing the provided
@@ -4792,6 +5201,14 @@ func (c *VariantsImportCall) Fields(s ...googleapi.Field) *VariantsImportCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsImportCall) Context(ctx context.Context) *VariantsImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VariantsImportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importvariantsrequest)
@@ -4810,6 +5227,9 @@ func (c *VariantsImportCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4854,6 +5274,7 @@ type VariantsPatchCall struct {
 	variantId string
 	variant   *Variant
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates a variant. This method supports patch semantics.
@@ -4882,6 +5303,14 @@ func (c *VariantsPatchCall) Fields(s ...googleapi.Field) *VariantsPatchCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsPatchCall) Context(ctx context.Context) *VariantsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VariantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variant)
@@ -4905,6 +5334,9 @@ func (c *VariantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4963,6 +5395,7 @@ type VariantsSearchCall struct {
 	s                     *Service
 	searchvariantsrequest *SearchVariantsRequest
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // Search: Gets a list of variants matching the criteria. Implements
@@ -4979,6 +5412,14 @@ func (r *VariantsService) Search(searchvariantsrequest *SearchVariantsRequest) *
 // for more information.
 func (c *VariantsSearchCall) Fields(s ...googleapi.Field) *VariantsSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsSearchCall) Context(ctx context.Context) *VariantsSearchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -5000,6 +5441,9 @@ func (c *VariantsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5043,6 +5487,7 @@ type VariantsetsCreateCall struct {
 	s          *Service
 	variantset *VariantSet
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Create: Creates a new variant set. The provided variant set must have
@@ -5059,6 +5504,14 @@ func (r *VariantsetsService) Create(variantset *VariantSet) *VariantsetsCreateCa
 // for more information.
 func (c *VariantsetsCreateCall) Fields(s ...googleapi.Field) *VariantsetsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsetsCreateCall) Context(ctx context.Context) *VariantsetsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -5080,6 +5533,9 @@ func (c *VariantsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5122,6 +5578,7 @@ type VariantsetsDeleteCall struct {
 	s            *Service
 	variantSetId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Delete: Deletes the contents of a variant set. The variant set object
@@ -5140,6 +5597,14 @@ func (c *VariantsetsDeleteCall) Fields(s ...googleapi.Field) *VariantsetsDeleteC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsetsDeleteCall) Context(ctx context.Context) *VariantsetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VariantsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5154,6 +5619,9 @@ func (c *VariantsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"variantSetId": c.variantSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5205,6 +5673,7 @@ type VariantsetsExportCall struct {
 	variantSetId            string
 	exportvariantsetrequest *ExportVariantSetRequest
 	opt_                    map[string]interface{}
+	ctx_                    context.Context
 }
 
 // Export: Exports variant set data to an external destination.
@@ -5220,6 +5689,14 @@ func (r *VariantsetsService) Export(variantSetId string, exportvariantsetrequest
 // for more information.
 func (c *VariantsetsExportCall) Fields(s ...googleapi.Field) *VariantsetsExportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsetsExportCall) Context(ctx context.Context) *VariantsetsExportCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -5243,6 +5720,9 @@ func (c *VariantsetsExportCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5297,6 +5777,7 @@ type VariantsetsGetCall struct {
 	s            *Service
 	variantSetId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Get: Gets a variant set by ID.
@@ -5314,6 +5795,14 @@ func (c *VariantsetsGetCall) Fields(s ...googleapi.Field) *VariantsetsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsetsGetCall) Context(ctx context.Context) *VariantsetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VariantsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5328,6 +5817,9 @@ func (c *VariantsetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"variantSetId": c.variantSetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5380,6 +5872,7 @@ type VariantsetsPatchCall struct {
 	variantSetId string
 	variantset   *VariantSet
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Patch: Updates a variant set. This method supports patch semantics.
@@ -5407,6 +5900,14 @@ func (c *VariantsetsPatchCall) Fields(s ...googleapi.Field) *VariantsetsPatchCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsetsPatchCall) Context(ctx context.Context) *VariantsetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VariantsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variantset)
@@ -5430,6 +5931,9 @@ func (c *VariantsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5488,6 +5992,7 @@ type VariantsetsSearchCall struct {
 	s                        *Service
 	searchvariantsetsrequest *SearchVariantSetsRequest
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Search: Returns a list of all variant sets matching search criteria.
@@ -5505,6 +6010,14 @@ func (r *VariantsetsService) Search(searchvariantsetsrequest *SearchVariantSetsR
 // for more information.
 func (c *VariantsetsSearchCall) Fields(s ...googleapi.Field) *VariantsetsSearchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VariantsetsSearchCall) Context(ctx context.Context) *VariantsetsSearchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -5526,6 +6039,9 @@ func (c *VariantsetsSearchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

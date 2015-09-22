@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "webmasters:v3"
 const apiName = "webmasters"
@@ -373,6 +373,7 @@ type SearchanalyticsQueryCall struct {
 	siteUrl                     string
 	searchanalyticsqueryrequest *SearchAnalyticsQueryRequest
 	opt_                        map[string]interface{}
+	ctx_                        context.Context
 }
 
 // Query: Query your data with filters and parameters that you define.
@@ -398,6 +399,14 @@ func (c *SearchanalyticsQueryCall) Fields(s ...googleapi.Field) *Searchanalytics
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SearchanalyticsQueryCall) Context(ctx context.Context) *SearchanalyticsQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchanalyticsqueryrequest)
@@ -418,6 +427,9 @@ func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -472,6 +484,7 @@ type SitemapsDeleteCall struct {
 	siteUrl  string
 	feedpath string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes a sitemap from this site.
@@ -490,6 +503,14 @@ func (c *SitemapsDeleteCall) Fields(s ...googleapi.Field) *SitemapsDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SitemapsDeleteCall) Context(ctx context.Context) *SitemapsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -505,6 +526,9 @@ func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -555,6 +579,7 @@ type SitemapsGetCall struct {
 	siteUrl  string
 	feedpath string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves information about a specific sitemap.
@@ -573,6 +598,14 @@ func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SitemapsGetCall) Context(ctx context.Context) *SitemapsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -588,6 +621,9 @@ func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -645,6 +681,7 @@ type SitemapsListCall struct {
 	s       *Service
 	siteUrl string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Lists the sitemaps-entries submitted for this site, or included
@@ -672,6 +709,14 @@ func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SitemapsListCall) Context(ctx context.Context) *SitemapsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -689,6 +734,9 @@ func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -745,6 +793,7 @@ type SitemapsSubmitCall struct {
 	siteUrl  string
 	feedpath string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Submit: Submits a sitemap for a site.
@@ -763,6 +812,14 @@ func (c *SitemapsSubmitCall) Fields(s ...googleapi.Field) *SitemapsSubmitCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SitemapsSubmitCall) Context(ctx context.Context) *SitemapsSubmitCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -778,6 +835,9 @@ func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -827,6 +887,7 @@ type SitesAddCall struct {
 	s       *Service
 	siteUrl string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Add: Adds a site to the set of the user's sites in Webmaster Tools.
@@ -844,6 +905,14 @@ func (c *SitesAddCall) Fields(s ...googleapi.Field) *SitesAddCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SitesAddCall) Context(ctx context.Context) *SitesAddCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -858,6 +927,9 @@ func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -900,6 +972,7 @@ type SitesDeleteCall struct {
 	s       *Service
 	siteUrl string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Removes a site from the set of the user's Webmaster Tools
@@ -918,6 +991,14 @@ func (c *SitesDeleteCall) Fields(s ...googleapi.Field) *SitesDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SitesDeleteCall) Context(ctx context.Context) *SitesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -932,6 +1013,9 @@ func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -974,6 +1058,7 @@ type SitesGetCall struct {
 	s       *Service
 	siteUrl string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Retrieves information about specific site.
@@ -991,6 +1076,14 @@ func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SitesGetCall) Context(ctx context.Context) *SitesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1005,6 +1098,9 @@ func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1054,6 +1150,7 @@ func (c *SitesGetCall) Do() (*WmxSite, error) {
 type SitesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the user's Webmaster Tools sites.
@@ -1070,6 +1167,14 @@ func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SitesListCall) Context(ctx context.Context) *SitesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1082,6 +1187,9 @@ func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1121,6 +1229,7 @@ type UrlcrawlerrorscountsQueryCall struct {
 	s       *Service
 	siteUrl string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Query: Retrieves a time series of the number of URL crawl errors per
@@ -1177,6 +1286,14 @@ func (c *UrlcrawlerrorscountsQueryCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlcrawlerrorscountsQueryCall) Context(ctx context.Context) *UrlcrawlerrorscountsQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlcrawlerrorscountsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1200,6 +1317,9 @@ func (c *UrlcrawlerrorscountsQueryCall) doRequest(alt string) (*http.Response, e
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1299,6 +1419,7 @@ type UrlcrawlerrorssamplesGetCall struct {
 	category string
 	platform string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves details about crawl errors for a site's sample URL.
@@ -1319,6 +1440,14 @@ func (c *UrlcrawlerrorssamplesGetCall) Fields(s ...googleapi.Field) *Urlcrawlerr
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlcrawlerrorssamplesGetCall) Context(ctx context.Context) *UrlcrawlerrorssamplesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1336,6 +1465,9 @@ func (c *UrlcrawlerrorssamplesGetCall) doRequest(alt string) (*http.Response, er
 		"url":     c.url,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1439,6 +1571,7 @@ type UrlcrawlerrorssamplesListCall struct {
 	category string
 	platform string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists a site's sample URLs for the specified crawl error
@@ -1459,6 +1592,14 @@ func (c *UrlcrawlerrorssamplesListCall) Fields(s ...googleapi.Field) *Urlcrawler
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlcrawlerrorssamplesListCall) Context(ctx context.Context) *UrlcrawlerrorssamplesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1475,6 +1616,9 @@ func (c *UrlcrawlerrorssamplesListCall) doRequest(alt string) (*http.Response, e
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1572,6 +1716,7 @@ type UrlcrawlerrorssamplesMarkAsFixedCall struct {
 	category string
 	platform string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // MarkAsFixed: Marks the provided site's sample URL as fixed, and
@@ -1593,6 +1738,14 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Fields(s ...googleapi.Field) *Url
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Context(ctx context.Context) *UrlcrawlerrorssamplesMarkAsFixedCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1610,6 +1763,9 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) doRequest(alt string) (*http.Resp
 		"url":     c.url,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "storagetransfer:v1"
 const apiName = "storagetransfer"
@@ -687,6 +687,7 @@ type GoogleServiceAccountsGetCall struct {
 	s         *Service
 	projectId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns the Google service account that is used by Storage
@@ -711,6 +712,14 @@ func (c *GoogleServiceAccountsGetCall) Fields(s ...googleapi.Field) *GoogleServi
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GoogleServiceAccountsGetCall) Context(ctx context.Context) *GoogleServiceAccountsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -725,6 +734,9 @@ func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, er
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -774,6 +786,7 @@ type TransferJobsCreateCall struct {
 	s           *Service
 	transferjob *TransferJob
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Creates a transfer job that runs periodically.
@@ -788,6 +801,14 @@ func (r *TransferJobsService) Create(transferjob *TransferJob) *TransferJobsCrea
 // for more information.
 func (c *TransferJobsCreateCall) Fields(s ...googleapi.Field) *TransferJobsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferJobsCreateCall) Context(ctx context.Context) *TransferJobsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -809,6 +830,9 @@ func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -850,6 +874,7 @@ type TransferJobsGetCall struct {
 	s       *Service
 	jobName string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Gets a transfer job.
@@ -874,6 +899,14 @@ func (c *TransferJobsGetCall) Fields(s ...googleapi.Field) *TransferJobsGetCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferJobsGetCall) Context(ctx context.Context) *TransferJobsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -891,6 +924,9 @@ func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobName": c.jobName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -945,6 +981,7 @@ func (c *TransferJobsGetCall) Do() (*TransferJob, error) {
 type TransferJobsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists transfer jobs.
@@ -989,6 +1026,14 @@ func (c *TransferJobsListCall) Fields(s ...googleapi.Field) *TransferJobsListCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferJobsListCall) Context(ctx context.Context) *TransferJobsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1010,6 +1055,9 @@ func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1067,6 +1115,7 @@ type TransferJobsPatchCall struct {
 	jobName                  string
 	updatetransferjobrequest *UpdateTransferJobRequest
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Patch: Updates a transfer job. Updating a job's transfer spec does
@@ -1084,6 +1133,14 @@ func (r *TransferJobsService) Patch(jobName string, updatetransferjobrequest *Up
 // for more information.
 func (c *TransferJobsPatchCall) Fields(s ...googleapi.Field) *TransferJobsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferJobsPatchCall) Context(ctx context.Context) *TransferJobsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1107,6 +1164,9 @@ func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1160,6 +1220,7 @@ type TransferOperationsCancelCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Cancel: Cancels a transfer. Use the get method to check whether the
@@ -1179,6 +1240,14 @@ func (c *TransferOperationsCancelCall) Fields(s ...googleapi.Field) *TransferOpe
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferOperationsCancelCall) Context(ctx context.Context) *TransferOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1193,6 +1262,9 @@ func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, er
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1243,6 +1315,7 @@ type TransferOperationsDeleteCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: This method is not supported and the server returns
@@ -1261,6 +1334,14 @@ func (c *TransferOperationsDeleteCall) Fields(s ...googleapi.Field) *TransferOpe
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferOperationsDeleteCall) Context(ctx context.Context) *TransferOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TransferOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1275,6 +1356,9 @@ func (c *TransferOperationsDeleteCall) doRequest(alt string) (*http.Response, er
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1325,6 +1409,7 @@ type TransferOperationsGetCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Gets the latest state of a long-running operation. Clients can
@@ -1344,6 +1429,14 @@ func (c *TransferOperationsGetCall) Fields(s ...googleapi.Field) *TransferOperat
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferOperationsGetCall) Context(ctx context.Context) *TransferOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1358,6 +1451,9 @@ func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1408,6 +1504,7 @@ type TransferOperationsListCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists operations that match the specified filter in the
@@ -1450,6 +1547,14 @@ func (c *TransferOperationsListCall) Fields(s ...googleapi.Field) *TransferOpera
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferOperationsListCall) Context(ctx context.Context) *TransferOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1473,6 +1578,9 @@ func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, erro
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1540,6 +1648,7 @@ type TransferOperationsPauseCall struct {
 	name                          string
 	pausetransferoperationrequest *PauseTransferOperationRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // Pause: Pauses a transfer operation.
@@ -1555,6 +1664,14 @@ func (r *TransferOperationsService) Pause(name string, pausetransferoperationreq
 // for more information.
 func (c *TransferOperationsPauseCall) Fields(s ...googleapi.Field) *TransferOperationsPauseCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferOperationsPauseCall) Context(ctx context.Context) *TransferOperationsPauseCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1578,6 +1695,9 @@ func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1632,6 +1752,7 @@ type TransferOperationsResumeCall struct {
 	name                           string
 	resumetransferoperationrequest *ResumeTransferOperationRequest
 	opt_                           map[string]interface{}
+	ctx_                           context.Context
 }
 
 // Resume: Resumes a transfer operation that is paused.
@@ -1647,6 +1768,14 @@ func (r *TransferOperationsService) Resume(name string, resumetransferoperationr
 // for more information.
 func (c *TransferOperationsResumeCall) Fields(s ...googleapi.Field) *TransferOperationsResumeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TransferOperationsResumeCall) Context(ctx context.Context) *TransferOperationsResumeCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1670,6 +1799,9 @@ func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1722,6 +1854,7 @@ func (c *TransferOperationsResumeCall) Do() (*Empty, error) {
 type V1GetGoogleServiceAccountCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetGoogleServiceAccount: Returns the Google service account that is
@@ -1753,6 +1886,14 @@ func (c *V1GetGoogleServiceAccountCall) Fields(s ...googleapi.Field) *V1GetGoogl
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *V1GetGoogleServiceAccountCall) Context(ctx context.Context) *V1GetGoogleServiceAccountCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *V1GetGoogleServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1768,6 +1909,9 @@ func (c *V1GetGoogleServiceAccountCall) doRequest(alt string) (*http.Response, e
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

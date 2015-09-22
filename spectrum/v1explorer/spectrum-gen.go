@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "spectrum:v1explorer"
 const apiName = "spectrum"
@@ -1065,6 +1065,7 @@ type PawsGetSpectrumCall struct {
 	s                      *Service
 	pawsgetspectrumrequest *PawsGetSpectrumRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // GetSpectrum: Requests information about the available spectrum for a
@@ -1081,6 +1082,14 @@ func (r *PawsService) GetSpectrum(pawsgetspectrumrequest *PawsGetSpectrumRequest
 // for more information.
 func (c *PawsGetSpectrumCall) Fields(s ...googleapi.Field) *PawsGetSpectrumCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PawsGetSpectrumCall) Context(ctx context.Context) *PawsGetSpectrumCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1102,6 +1111,9 @@ func (c *PawsGetSpectrumCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1140,6 +1152,7 @@ type PawsGetSpectrumBatchCall struct {
 	s                           *Service
 	pawsgetspectrumbatchrequest *PawsGetSpectrumBatchRequest
 	opt_                        map[string]interface{}
+	ctx_                        context.Context
 }
 
 // GetSpectrumBatch: The Google Spectrum Database does not support batch
@@ -1155,6 +1168,14 @@ func (r *PawsService) GetSpectrumBatch(pawsgetspectrumbatchrequest *PawsGetSpect
 // for more information.
 func (c *PawsGetSpectrumBatchCall) Fields(s ...googleapi.Field) *PawsGetSpectrumBatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PawsGetSpectrumBatchCall) Context(ctx context.Context) *PawsGetSpectrumBatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1176,6 +1197,9 @@ func (c *PawsGetSpectrumBatchCall) doRequest(alt string) (*http.Response, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1214,6 +1238,7 @@ type PawsInitCall struct {
 	s               *Service
 	pawsinitrequest *PawsInitRequest
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Init: Initializes the connection between a white space device and the
@@ -1229,6 +1254,14 @@ func (r *PawsService) Init(pawsinitrequest *PawsInitRequest) *PawsInitCall {
 // for more information.
 func (c *PawsInitCall) Fields(s ...googleapi.Field) *PawsInitCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PawsInitCall) Context(ctx context.Context) *PawsInitCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1250,6 +1283,9 @@ func (c *PawsInitCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1288,6 +1324,7 @@ type PawsNotifySpectrumUseCall struct {
 	s                            *Service
 	pawsnotifyspectrumuserequest *PawsNotifySpectrumUseRequest
 	opt_                         map[string]interface{}
+	ctx_                         context.Context
 }
 
 // NotifySpectrumUse: Notifies the database that the device has selected
@@ -1309,6 +1346,14 @@ func (c *PawsNotifySpectrumUseCall) Fields(s ...googleapi.Field) *PawsNotifySpec
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PawsNotifySpectrumUseCall) Context(ctx context.Context) *PawsNotifySpectrumUseCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PawsNotifySpectrumUseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pawsnotifyspectrumuserequest)
@@ -1327,6 +1372,9 @@ func (c *PawsNotifySpectrumUseCall) doRequest(alt string) (*http.Response, error
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1365,6 +1413,7 @@ type PawsRegisterCall struct {
 	s                   *Service
 	pawsregisterrequest *PawsRegisterRequest
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Register: The Google Spectrum Database implements registration in the
@@ -1381,6 +1430,14 @@ func (r *PawsService) Register(pawsregisterrequest *PawsRegisterRequest) *PawsRe
 // for more information.
 func (c *PawsRegisterCall) Fields(s ...googleapi.Field) *PawsRegisterCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PawsRegisterCall) Context(ctx context.Context) *PawsRegisterCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1402,6 +1459,9 @@ func (c *PawsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1440,6 +1500,7 @@ type PawsVerifyDeviceCall struct {
 	s                       *Service
 	pawsverifydevicerequest *PawsVerifyDeviceRequest
 	opt_                    map[string]interface{}
+	ctx_                    context.Context
 }
 
 // VerifyDevice: Validates a device for white space use in accordance
@@ -1457,6 +1518,14 @@ func (r *PawsService) VerifyDevice(pawsverifydevicerequest *PawsVerifyDeviceRequ
 // for more information.
 func (c *PawsVerifyDeviceCall) Fields(s ...googleapi.Field) *PawsVerifyDeviceCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PawsVerifyDeviceCall) Context(ctx context.Context) *PawsVerifyDeviceCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1478,6 +1547,9 @@ func (c *PawsVerifyDeviceCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

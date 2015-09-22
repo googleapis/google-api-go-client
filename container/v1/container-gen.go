@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "container:v1"
 const apiName = "container"
@@ -375,6 +375,7 @@ type ProjectsZonesGetServerconfigCall struct {
 	projectId string
 	zone      string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // GetServerconfig: Returns configuration info about the Container
@@ -394,6 +395,14 @@ func (c *ProjectsZonesGetServerconfigCall) Fields(s ...googleapi.Field) *Project
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsZonesGetServerconfigCall) Context(ctx context.Context) *ProjectsZonesGetServerconfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesGetServerconfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -409,6 +418,9 @@ func (c *ProjectsZonesGetServerconfigCall) doRequest(alt string) (*http.Response
 		"zone":      c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -467,6 +479,7 @@ type ProjectsZonesClustersCreateCall struct {
 	zone                 string
 	createclusterrequest *CreateClusterRequest
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Create: Creates a cluster, consisting of the specified number and
@@ -494,6 +507,14 @@ func (c *ProjectsZonesClustersCreateCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsZonesClustersCreateCall) Context(ctx context.Context) *ProjectsZonesClustersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createclusterrequest)
@@ -515,6 +536,9 @@ func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -576,6 +600,7 @@ type ProjectsZonesClustersDeleteCall struct {
 	zone      string
 	clusterId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the cluster, including the Kubernetes endpoint and
@@ -597,6 +622,14 @@ func (c *ProjectsZonesClustersDeleteCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsZonesClustersDeleteCall) Context(ctx context.Context) *ProjectsZonesClustersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -613,6 +646,9 @@ func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response,
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -678,6 +714,7 @@ type ProjectsZonesClustersGetCall struct {
 	zone      string
 	clusterId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a specific cluster.
@@ -697,6 +734,14 @@ func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZon
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsZonesClustersGetCall) Context(ctx context.Context) *ProjectsZonesClustersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -713,6 +758,9 @@ func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, er
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -777,6 +825,7 @@ type ProjectsZonesClustersListCall struct {
 	projectId string
 	zone      string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all clusters owned by a project in either the specified
@@ -796,6 +845,14 @@ func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZo
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsZonesClustersListCall) Context(ctx context.Context) *ProjectsZonesClustersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -811,6 +868,9 @@ func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, e
 		"zone":      c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -870,6 +930,7 @@ type ProjectsZonesClustersUpdateCall struct {
 	clusterId            string
 	updateclusterrequest *UpdateClusterRequest
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Update: Update settings of a specific cluster.
@@ -887,6 +948,14 @@ func (r *ProjectsZonesClustersService) Update(projectId string, zone string, clu
 // for more information.
 func (c *ProjectsZonesClustersUpdateCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsZonesClustersUpdateCall) Context(ctx context.Context) *ProjectsZonesClustersUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -912,6 +981,9 @@ func (c *ProjectsZonesClustersUpdateCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -980,6 +1052,7 @@ type ProjectsZonesOperationsGetCall struct {
 	zone        string
 	operationId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets the specified operation.
@@ -999,6 +1072,14 @@ func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZ
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsZonesOperationsGetCall) Context(ctx context.Context) *ProjectsZonesOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1015,6 +1096,9 @@ func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, 
 		"operationId": c.operationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1079,6 +1163,7 @@ type ProjectsZonesOperationsListCall struct {
 	projectId string
 	zone      string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all operations in a project in a specific zone or all
@@ -1098,6 +1183,14 @@ func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsZonesOperationsListCall) Context(ctx context.Context) *ProjectsZonesOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1113,6 +1206,9 @@ func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response,
 		"zone":      c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

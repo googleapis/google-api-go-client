@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "discovery:v1"
 const apiName = "discovery"
@@ -494,6 +494,7 @@ type ApisGetRestCall struct {
 	api     string
 	version string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // GetRest: Retrieve the description of a particular version of an api.
@@ -512,6 +513,14 @@ func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ApisGetRestCall) Context(ctx context.Context) *ApisGetRestCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ApisGetRestCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -527,6 +536,9 @@ func (c *ApisGetRestCall) doRequest(alt string) (*http.Response, error) {
 		"version": c.version,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -579,6 +591,7 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 type ApisListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieve the list of APIs supported at this endpoint.
@@ -609,6 +622,14 @@ func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ApisListCall) Context(ctx context.Context) *ApisListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ApisListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -627,6 +648,9 @@ func (c *ApisListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "doubleclickbidmanager:v1"
 const apiName = "doubleclickbidmanager"
@@ -928,6 +928,7 @@ type LineitemsDownloadlineitemsCall struct {
 	s                        *Service
 	downloadlineitemsrequest *DownloadLineItemsRequest
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Downloadlineitems: Retrieves line items in CSV format.
@@ -942,6 +943,14 @@ func (r *LineitemsService) Downloadlineitems(downloadlineitemsrequest *DownloadL
 // for more information.
 func (c *LineitemsDownloadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsDownloadlineitemsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LineitemsDownloadlineitemsCall) Context(ctx context.Context) *LineitemsDownloadlineitemsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -963,6 +972,9 @@ func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1001,6 +1013,7 @@ type LineitemsUploadlineitemsCall struct {
 	s                      *Service
 	uploadlineitemsrequest *UploadLineItemsRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // Uploadlineitems: Uploads line items in CSV format.
@@ -1015,6 +1028,14 @@ func (r *LineitemsService) Uploadlineitems(uploadlineitemsrequest *UploadLineIte
 // for more information.
 func (c *LineitemsUploadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsUploadlineitemsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LineitemsUploadlineitemsCall) Context(ctx context.Context) *LineitemsUploadlineitemsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1036,6 +1057,9 @@ func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, er
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1074,6 +1098,7 @@ type QueriesCreatequeryCall struct {
 	s     *Service
 	query *Query
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Createquery: Creates a query.
@@ -1088,6 +1113,14 @@ func (r *QueriesService) Createquery(query *Query) *QueriesCreatequeryCall {
 // for more information.
 func (c *QueriesCreatequeryCall) Fields(s ...googleapi.Field) *QueriesCreatequeryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QueriesCreatequeryCall) Context(ctx context.Context) *QueriesCreatequeryCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1109,6 +1142,9 @@ func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1147,6 +1183,7 @@ type QueriesDeletequeryCall struct {
 	s       *Service
 	queryId int64
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Deletequery: Deletes a stored query as well as the associated stored
@@ -1165,6 +1202,14 @@ func (c *QueriesDeletequeryCall) Fields(s ...googleapi.Field) *QueriesDeletequer
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QueriesDeletequeryCall) Context(ctx context.Context) *QueriesDeletequeryCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1179,6 +1224,9 @@ func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1219,6 +1267,7 @@ type QueriesGetqueryCall struct {
 	s       *Service
 	queryId int64
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Getquery: Retrieves a stored query.
@@ -1236,6 +1285,14 @@ func (c *QueriesGetqueryCall) Fields(s ...googleapi.Field) *QueriesGetqueryCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QueriesGetqueryCall) Context(ctx context.Context) *QueriesGetqueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1250,6 +1307,9 @@ func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1296,6 +1356,7 @@ func (c *QueriesGetqueryCall) Do() (*Query, error) {
 type QueriesListqueriesCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Listqueries: Retrieves stored queries.
@@ -1312,6 +1373,14 @@ func (c *QueriesListqueriesCall) Fields(s ...googleapi.Field) *QueriesListquerie
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QueriesListqueriesCall) Context(ctx context.Context) *QueriesListqueriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1324,6 +1393,9 @@ func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1360,6 +1432,7 @@ type QueriesRunqueryCall struct {
 	queryId         int64
 	runqueryrequest *RunQueryRequest
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Runquery: Runs a stored query to generate a report.
@@ -1375,6 +1448,14 @@ func (r *QueriesService) Runquery(queryId int64, runqueryrequest *RunQueryReques
 // for more information.
 func (c *QueriesRunqueryCall) Fields(s ...googleapi.Field) *QueriesRunqueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QueriesRunqueryCall) Context(ctx context.Context) *QueriesRunqueryCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1398,6 +1479,9 @@ func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1441,6 +1525,7 @@ type ReportsListreportsCall struct {
 	s       *Service
 	queryId int64
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Listreports: Retrieves stored reports.
@@ -1458,6 +1543,14 @@ func (c *ReportsListreportsCall) Fields(s ...googleapi.Field) *ReportsListreport
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsListreportsCall) Context(ctx context.Context) *ReportsListreportsCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1472,6 +1565,9 @@ func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

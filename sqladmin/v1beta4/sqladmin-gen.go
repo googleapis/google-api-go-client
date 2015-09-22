@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "sqladmin:v1beta4"
 const apiName = "sqladmin"
@@ -1045,6 +1045,7 @@ type BackupRunsDeleteCall struct {
 	instance string
 	id       int64
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes the backup taken by a backup run.
@@ -1064,6 +1065,14 @@ func (c *BackupRunsDeleteCall) Fields(s ...googleapi.Field) *BackupRunsDeleteCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackupRunsDeleteCall) Context(ctx context.Context) *BackupRunsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1080,6 +1089,9 @@ func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id":       strconv.FormatInt(c.id, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1147,6 +1159,7 @@ type BackupRunsGetCall struct {
 	instance string
 	id       int64
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves a resource containing information about a backup run.
@@ -1166,6 +1179,14 @@ func (c *BackupRunsGetCall) Fields(s ...googleapi.Field) *BackupRunsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackupRunsGetCall) Context(ctx context.Context) *BackupRunsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1182,6 +1203,9 @@ func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id":       strconv.FormatInt(c.id, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1248,6 +1272,7 @@ type BackupRunsListCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists all backup runs associated with a given instance and
@@ -1283,6 +1308,14 @@ func (c *BackupRunsListCall) Fields(s ...googleapi.Field) *BackupRunsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackupRunsListCall) Context(ctx context.Context) *BackupRunsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1304,6 +1337,9 @@ func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1374,6 +1410,7 @@ type DatabasesDeleteCall struct {
 	instance string
 	database string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes a resource containing information about a database
@@ -1394,6 +1431,14 @@ func (c *DatabasesDeleteCall) Fields(s ...googleapi.Field) *DatabasesDeleteCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatabasesDeleteCall) Context(ctx context.Context) *DatabasesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1410,6 +1455,9 @@ func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"database": c.database,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1476,6 +1524,7 @@ type DatabasesGetCall struct {
 	instance string
 	database string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves a resource containing information about a database
@@ -1496,6 +1545,14 @@ func (c *DatabasesGetCall) Fields(s ...googleapi.Field) *DatabasesGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatabasesGetCall) Context(ctx context.Context) *DatabasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1512,6 +1569,9 @@ func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"database": c.database,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1578,6 +1638,7 @@ type DatabasesInsertCall struct {
 	instance string
 	database *Database
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Inserts a resource containing information about a database
@@ -1595,6 +1656,14 @@ func (r *DatabasesService) Insert(project string, instance string, database *Dat
 // for more information.
 func (c *DatabasesInsertCall) Fields(s ...googleapi.Field) *DatabasesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatabasesInsertCall) Context(ctx context.Context) *DatabasesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1619,6 +1688,9 @@ func (c *DatabasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1680,6 +1752,7 @@ type DatabasesListCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists databases in the specified Cloud SQL instance.
@@ -1698,6 +1771,14 @@ func (c *DatabasesListCall) Fields(s ...googleapi.Field) *DatabasesListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatabasesListCall) Context(ctx context.Context) *DatabasesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1713,6 +1794,9 @@ func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1773,6 +1857,7 @@ type DatabasesPatchCall struct {
 	database  string
 	database2 *Database
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates a resource containing information about a database
@@ -1791,6 +1876,14 @@ func (r *DatabasesService) Patch(project string, instance string, database strin
 // for more information.
 func (c *DatabasesPatchCall) Fields(s ...googleapi.Field) *DatabasesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatabasesPatchCall) Context(ctx context.Context) *DatabasesPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1816,6 +1909,9 @@ func (c *DatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1886,6 +1982,7 @@ type DatabasesUpdateCall struct {
 	database  string
 	database2 *Database
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates a resource containing information about a database
@@ -1904,6 +2001,14 @@ func (r *DatabasesService) Update(project string, instance string, database stri
 // for more information.
 func (c *DatabasesUpdateCall) Fields(s ...googleapi.Field) *DatabasesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatabasesUpdateCall) Context(ctx context.Context) *DatabasesUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1929,6 +2034,9 @@ func (c *DatabasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1995,6 +2103,7 @@ func (c *DatabasesUpdateCall) Do() (*Operation, error) {
 type FlagsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: List all available database flags for Google Cloud SQL
@@ -2012,6 +2121,14 @@ func (c *FlagsListCall) Fields(s ...googleapi.Field) *FlagsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FlagsListCall) Context(ctx context.Context) *FlagsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2024,6 +2141,9 @@ func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2065,6 +2185,7 @@ type InstancesCloneCall struct {
 	instance              string
 	instancesclonerequest *InstancesCloneRequest
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // Clone: Creates a Cloud SQL instance as a clone of the source
@@ -2082,6 +2203,14 @@ func (r *InstancesService) Clone(project string, instance string, instancesclone
 // for more information.
 func (c *InstancesCloneCall) Fields(s ...googleapi.Field) *InstancesCloneCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesCloneCall) Context(ctx context.Context) *InstancesCloneCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2106,6 +2235,9 @@ func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2167,6 +2299,7 @@ type InstancesDeleteCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes a Cloud SQL instance.
@@ -2185,6 +2318,14 @@ func (c *InstancesDeleteCall) Fields(s ...googleapi.Field) *InstancesDeleteCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesDeleteCall) Context(ctx context.Context) *InstancesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2200,6 +2341,9 @@ func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2259,6 +2403,7 @@ type InstancesExportCall struct {
 	instance               string
 	instancesexportrequest *InstancesExportRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // Export: Exports data from a Cloud SQL instance to a Google Cloud
@@ -2276,6 +2421,14 @@ func (r *InstancesService) Export(project string, instance string, instancesexpo
 // for more information.
 func (c *InstancesExportCall) Fields(s ...googleapi.Field) *InstancesExportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesExportCall) Context(ctx context.Context) *InstancesExportCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2300,6 +2453,9 @@ func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2360,6 +2516,7 @@ type InstancesGetCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves a resource containing information about a Cloud SQL
@@ -2379,6 +2536,14 @@ func (c *InstancesGetCall) Fields(s ...googleapi.Field) *InstancesGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesGetCall) Context(ctx context.Context) *InstancesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2394,6 +2559,9 @@ func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2453,6 +2621,7 @@ type InstancesImportCall struct {
 	instance               string
 	instancesimportrequest *InstancesImportRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // Import: Imports data into a Cloud SQL instance from a MySQL dump file
@@ -2470,6 +2639,14 @@ func (r *InstancesService) Import(project string, instance string, instancesimpo
 // for more information.
 func (c *InstancesImportCall) Fields(s ...googleapi.Field) *InstancesImportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesImportCall) Context(ctx context.Context) *InstancesImportCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2494,6 +2671,9 @@ func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2554,6 +2734,7 @@ type InstancesInsertCall struct {
 	project          string
 	databaseinstance *DatabaseInstance
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Insert: Creates a new Cloud SQL instance.
@@ -2569,6 +2750,14 @@ func (r *InstancesService) Insert(project string, databaseinstance *DatabaseInst
 // for more information.
 func (c *InstancesInsertCall) Fields(s ...googleapi.Field) *InstancesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesInsertCall) Context(ctx context.Context) *InstancesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2592,6 +2781,9 @@ func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2645,6 +2837,7 @@ type InstancesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Lists instances under a given project in the alphabetical order
@@ -2678,6 +2871,14 @@ func (c *InstancesListCall) Fields(s ...googleapi.Field) *InstancesListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesListCall) Context(ctx context.Context) *InstancesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2698,6 +2899,9 @@ func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2761,6 +2965,7 @@ type InstancesPatchCall struct {
 	instance         string
 	databaseinstance *DatabaseInstance
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Patch: Updates settings of a Cloud SQL instance. Caution: This is not
@@ -2780,6 +2985,14 @@ func (r *InstancesService) Patch(project string, instance string, databaseinstan
 // for more information.
 func (c *InstancesPatchCall) Fields(s ...googleapi.Field) *InstancesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesPatchCall) Context(ctx context.Context) *InstancesPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2804,6 +3017,9 @@ func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2865,6 +3081,7 @@ type InstancesPromoteReplicaCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // PromoteReplica: Promotes the read replica instance to be a
@@ -2884,6 +3101,14 @@ func (c *InstancesPromoteReplicaCall) Fields(s ...googleapi.Field) *InstancesPro
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesPromoteReplicaCall) Context(ctx context.Context) *InstancesPromoteReplicaCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2899,6 +3124,9 @@ func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, err
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2957,6 +3185,7 @@ type InstancesResetSslConfigCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // ResetSslConfig: Deletes all client certificates and generates a new
@@ -2979,6 +3208,14 @@ func (c *InstancesResetSslConfigCall) Fields(s ...googleapi.Field) *InstancesRes
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesResetSslConfigCall) Context(ctx context.Context) *InstancesResetSslConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2994,6 +3231,9 @@ func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, err
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3052,6 +3292,7 @@ type InstancesRestartCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Restart: Restarts a Cloud SQL instance.
@@ -3070,6 +3311,14 @@ func (c *InstancesRestartCall) Fields(s ...googleapi.Field) *InstancesRestartCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesRestartCall) Context(ctx context.Context) *InstancesRestartCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3085,6 +3334,9 @@ func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3144,6 +3396,7 @@ type InstancesRestoreBackupCall struct {
 	instance                      string
 	instancesrestorebackuprequest *InstancesRestoreBackupRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // RestoreBackup: Restores a backup of a Cloud SQL instance.
@@ -3160,6 +3413,14 @@ func (r *InstancesService) RestoreBackup(project string, instance string, instan
 // for more information.
 func (c *InstancesRestoreBackupCall) Fields(s ...googleapi.Field) *InstancesRestoreBackupCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesRestoreBackupCall) Context(ctx context.Context) *InstancesRestoreBackupCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3184,6 +3445,9 @@ func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3245,6 +3509,7 @@ type InstancesStartReplicaCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // StartReplica: Starts the replication in the read replica instance.
@@ -3263,6 +3528,14 @@ func (c *InstancesStartReplicaCall) Fields(s ...googleapi.Field) *InstancesStart
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesStartReplicaCall) Context(ctx context.Context) *InstancesStartReplicaCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3278,6 +3551,9 @@ func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3336,6 +3612,7 @@ type InstancesStopReplicaCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // StopReplica: Stops the replication in the read replica instance.
@@ -3354,6 +3631,14 @@ func (c *InstancesStopReplicaCall) Fields(s ...googleapi.Field) *InstancesStopRe
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesStopReplicaCall) Context(ctx context.Context) *InstancesStopReplicaCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3369,6 +3654,9 @@ func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error)
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3428,6 +3716,7 @@ type InstancesUpdateCall struct {
 	instance         string
 	databaseinstance *DatabaseInstance
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Update: Updates settings of a Cloud SQL instance. Caution: This is
@@ -3446,6 +3735,14 @@ func (r *InstancesService) Update(project string, instance string, databaseinsta
 // for more information.
 func (c *InstancesUpdateCall) Fields(s ...googleapi.Field) *InstancesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesUpdateCall) Context(ctx context.Context) *InstancesUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3470,6 +3767,9 @@ func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3532,6 +3832,7 @@ type OperationsGetCall struct {
 	project   string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves an instance operation that has been performed on an
@@ -3551,6 +3852,14 @@ func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3566,6 +3875,9 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3624,6 +3936,7 @@ type OperationsListCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists all instance operations that have been performed on the
@@ -3659,6 +3972,14 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3680,6 +4001,9 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3750,6 +4074,7 @@ type SslCertsCreateEphemeralCall struct {
 	instance                       string
 	sslcertscreateephemeralrequest *SslCertsCreateEphemeralRequest
 	opt_                           map[string]interface{}
+	ctx_                           context.Context
 }
 
 // CreateEphemeral: Generates a short-lived X509 certificate containing
@@ -3769,6 +4094,14 @@ func (r *SslCertsService) CreateEphemeral(project string, instance string, sslce
 // for more information.
 func (c *SslCertsCreateEphemeralCall) Fields(s ...googleapi.Field) *SslCertsCreateEphemeralCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertsCreateEphemeralCall) Context(ctx context.Context) *SslCertsCreateEphemeralCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3793,6 +4126,9 @@ func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3855,6 +4191,7 @@ type SslCertsDeleteCall struct {
 	instance        string
 	sha1Fingerprint string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Delete: Deletes the SSL certificate. The change will not take effect
@@ -3875,6 +4212,14 @@ func (c *SslCertsDeleteCall) Fields(s ...googleapi.Field) *SslCertsDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertsDeleteCall) Context(ctx context.Context) *SslCertsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3891,6 +4236,9 @@ func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"sha1Fingerprint": c.sha1Fingerprint,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3957,6 +4305,7 @@ type SslCertsGetCall struct {
 	instance        string
 	sha1Fingerprint string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Get: Retrieves a particular SSL certificate. Does not include the
@@ -3978,6 +4327,14 @@ func (c *SslCertsGetCall) Fields(s ...googleapi.Field) *SslCertsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertsGetCall) Context(ctx context.Context) *SslCertsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3994,6 +4351,9 @@ func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 		"sha1Fingerprint": c.sha1Fingerprint,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4060,6 +4420,7 @@ type SslCertsInsertCall struct {
 	instance              string
 	sslcertsinsertrequest *SslCertsInsertRequest
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // Insert: Creates an SSL certificate and returns it along with the
@@ -4078,6 +4439,14 @@ func (r *SslCertsService) Insert(project string, instance string, sslcertsinsert
 // for more information.
 func (c *SslCertsInsertCall) Fields(s ...googleapi.Field) *SslCertsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertsInsertCall) Context(ctx context.Context) *SslCertsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4102,6 +4471,9 @@ func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4163,6 +4535,7 @@ type SslCertsListCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists all of the current SSL certificates for the instance.
@@ -4181,6 +4554,14 @@ func (c *SslCertsListCall) Fields(s ...googleapi.Field) *SslCertsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertsListCall) Context(ctx context.Context) *SslCertsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4196,6 +4577,9 @@ func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4253,6 +4637,7 @@ type TiersListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Lists all available service tiers for Google Cloud SQL, for
@@ -4271,6 +4656,14 @@ func (c *TiersListCall) Fields(s ...googleapi.Field) *TiersListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TiersListCall) Context(ctx context.Context) *TiersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4285,6 +4678,9 @@ func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4338,6 +4734,7 @@ type UsersDeleteCall struct {
 	host     string
 	name     string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes a user from a Cloud SQL instance.
@@ -4358,6 +4755,14 @@ func (c *UsersDeleteCall) Fields(s ...googleapi.Field) *UsersDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersDeleteCall) Context(ctx context.Context) *UsersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4375,6 +4780,9 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4448,6 +4856,7 @@ type UsersInsertCall struct {
 	instance string
 	user     *User
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Creates a new user in a Cloud SQL instance.
@@ -4464,6 +4873,14 @@ func (r *UsersService) Insert(project string, instance string, user *User) *User
 // for more information.
 func (c *UsersInsertCall) Fields(s ...googleapi.Field) *UsersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersInsertCall) Context(ctx context.Context) *UsersInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4488,6 +4905,9 @@ func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4549,6 +4969,7 @@ type UsersListCall struct {
 	project  string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists users in the specified Cloud SQL instance.
@@ -4567,6 +4988,14 @@ func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersListCall) Context(ctx context.Context) *UsersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4582,6 +5011,9 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4643,6 +5075,7 @@ type UsersUpdateCall struct {
 	name     string
 	user     *User
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Update: Updates an existing user in a Cloud SQL instance.
@@ -4661,6 +5094,14 @@ func (r *UsersService) Update(project string, instance string, host string, name
 // for more information.
 func (c *UsersUpdateCall) Fields(s ...googleapi.Field) *UsersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersUpdateCall) Context(ctx context.Context) *UsersUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4687,6 +5128,9 @@ func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

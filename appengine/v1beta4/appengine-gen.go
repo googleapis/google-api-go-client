@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "appengine:v1beta4"
 const apiName = "appengine"
@@ -969,6 +969,7 @@ type AppsGetCall struct {
 	s      *Service
 	appsId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets information about an application.
@@ -997,6 +998,14 @@ func (c *AppsGetCall) Fields(s ...googleapi.Field) *AppsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsGetCall) Context(ctx context.Context) *AppsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1014,6 +1023,9 @@ func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1069,6 +1081,7 @@ type AppsModulesDeleteCall struct {
 	appsId    string
 	modulesId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes a module and all enclosed versions.
@@ -1087,6 +1100,14 @@ func (c *AppsModulesDeleteCall) Fields(s ...googleapi.Field) *AppsModulesDeleteC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsModulesDeleteCall) Context(ctx context.Context) *AppsModulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1102,6 +1123,9 @@ func (c *AppsModulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"modulesId": c.modulesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1159,6 +1183,7 @@ type AppsModulesGetCall struct {
 	appsId    string
 	modulesId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets the current configuration of the module.
@@ -1177,6 +1202,14 @@ func (c *AppsModulesGetCall) Fields(s ...googleapi.Field) *AppsModulesGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsModulesGetCall) Context(ctx context.Context) *AppsModulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsModulesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1192,6 +1225,9 @@ func (c *AppsModulesGetCall) doRequest(alt string) (*http.Response, error) {
 		"modulesId": c.modulesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1248,6 +1284,7 @@ type AppsModulesListCall struct {
 	s      *Service
 	appsId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists all the modules in the application.
@@ -1279,6 +1316,14 @@ func (c *AppsModulesListCall) Fields(s ...googleapi.Field) *AppsModulesListCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsModulesListCall) Context(ctx context.Context) *AppsModulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1299,6 +1344,9 @@ func (c *AppsModulesListCall) doRequest(alt string) (*http.Response, error) {
 		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1361,6 +1409,7 @@ type AppsModulesPatchCall struct {
 	modulesId string
 	module    *Module
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates the configuration of the specified module.
@@ -1395,6 +1444,14 @@ func (c *AppsModulesPatchCall) Fields(s ...googleapi.Field) *AppsModulesPatchCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsModulesPatchCall) Context(ctx context.Context) *AppsModulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsModulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.module)
@@ -1422,6 +1479,9 @@ func (c *AppsModulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1493,6 +1553,7 @@ type AppsModulesVersionsCreateCall struct {
 	modulesId string
 	version   *Version
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Create: Deploys new code and resource files to a version.
@@ -1509,6 +1570,14 @@ func (r *AppsModulesVersionsService) Create(appsId string, modulesId string, ver
 // for more information.
 func (c *AppsModulesVersionsCreateCall) Fields(s ...googleapi.Field) *AppsModulesVersionsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsModulesVersionsCreateCall) Context(ctx context.Context) *AppsModulesVersionsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1533,6 +1602,9 @@ func (c *AppsModulesVersionsCreateCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1594,6 +1666,7 @@ type AppsModulesVersionsDeleteCall struct {
 	modulesId  string
 	versionsId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes an existing version.
@@ -1613,6 +1686,14 @@ func (c *AppsModulesVersionsDeleteCall) Fields(s ...googleapi.Field) *AppsModule
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsModulesVersionsDeleteCall) Context(ctx context.Context) *AppsModulesVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsModulesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1629,6 +1710,9 @@ func (c *AppsModulesVersionsDeleteCall) doRequest(alt string) (*http.Response, e
 		"versionsId": c.versionsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1694,6 +1778,7 @@ type AppsModulesVersionsGetCall struct {
 	modulesId  string
 	versionsId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Gets application deployment information.
@@ -1724,6 +1809,14 @@ func (c *AppsModulesVersionsGetCall) Fields(s ...googleapi.Field) *AppsModulesVe
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsModulesVersionsGetCall) Context(ctx context.Context) *AppsModulesVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsModulesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1743,6 +1836,9 @@ func (c *AppsModulesVersionsGetCall) doRequest(alt string) (*http.Response, erro
 		"versionsId": c.versionsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1816,6 +1912,7 @@ type AppsModulesVersionsListCall struct {
 	appsId    string
 	modulesId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists the versions of a module.
@@ -1859,6 +1956,14 @@ func (c *AppsModulesVersionsListCall) Fields(s ...googleapi.Field) *AppsModulesV
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsModulesVersionsListCall) Context(ctx context.Context) *AppsModulesVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsModulesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1883,6 +1988,9 @@ func (c *AppsModulesVersionsListCall) doRequest(alt string) (*http.Response, err
 		"modulesId": c.modulesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1960,6 +2068,7 @@ type AppsOperationsGetCall struct {
 	appsId       string
 	operationsId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Get: Gets the latest state of a long-running operation. Clients can
@@ -1980,6 +2089,14 @@ func (c *AppsOperationsGetCall) Fields(s ...googleapi.Field) *AppsOperationsGetC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsOperationsGetCall) Context(ctx context.Context) *AppsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1995,6 +2112,9 @@ func (c *AppsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operationsId": c.operationsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2051,6 +2171,7 @@ type AppsOperationsListCall struct {
 	s      *Service
 	appsId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists operations that match the specified filter in the
@@ -2093,6 +2214,14 @@ func (c *AppsOperationsListCall) Fields(s ...googleapi.Field) *AppsOperationsLis
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AppsOperationsListCall) Context(ctx context.Context) *AppsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2116,6 +2245,9 @@ func (c *AppsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"appsId": c.appsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

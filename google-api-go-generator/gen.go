@@ -17,6 +17,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"path"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -492,6 +493,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		"strconv",
 		"strings",
 		*contextPkg,
+		path.Join(*contextPkg, "ctxhttp"),
 	} {
 		p("\t%q\n", pkg)
 	}
@@ -507,7 +509,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = googleapi.Version")
 	pn("var _ = errors.New")
 	pn("var _ = strings.Replace")
-	pn("var _ = context.Background")
 	pn("")
 	pn("const apiId = %q", jstr(m, "id"))
 	pn("const apiName = %q", jstr(m, "name"))
@@ -1455,9 +1456,9 @@ func (meth *Method) generateCode() {
 		p("\tmedia_     io.Reader\n")
 		p("\tresumable_ googleapi.SizeReaderAt\n")
 		p("\tmediaType_ string\n")
-		p("\tctx_       context.Context\n")
 		p("\tprotocol_  string\n")
 	}
+	p("\tctx_ context.Context\n")
 	p("}\n")
 
 	p("\n%s", asComment("", methodName+": "+jstr(meth.m, "description")))
@@ -1532,6 +1533,22 @@ func (meth *Method) generateCode() {
 	pn("// for more information.")
 	pn("func (c *%s) Fields(s ...googleapi.Field) *%s {", callName, callName)
 	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
+	pn("return c")
+	pn("}")
+
+	doMethod := "Do method"
+	if meth.supportsMediaDownload() {
+		doMethod = "Do and Download methods"
+	}
+	pn("\n// Context sets the context to be used in this call's %s.", doMethod)
+	pn("// Any pending HTTP request will be aborted if the provided context")
+	pn("// is cancelled.")
+	if meth.supportsMediaUpload() {
+		pn("// You do not need to provide a context with this method if one was")
+		pn("// specified using the ResumableMedia method.")
+	}
+	pn("func (c *%s) Context(ctx context.Context) *%s {", callName, callName)
+	pn(`c.ctx_ = ctx`)
 	pn("return c")
 	pn("}")
 
@@ -1617,6 +1634,9 @@ func (meth *Method) generateCode() {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
 	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
+	pn("if c.ctx_ != nil {")
+	pn(" return ctxhttp.Do(c.ctx_, c.s.client, req)")
+	pn("}")
 	pn("return c.s.client.Do(req)")
 	pn("}")
 

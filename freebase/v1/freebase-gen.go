@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "freebase:v1"
 const apiName = "freebase"
@@ -138,6 +138,7 @@ type ReconcileGetWarning struct {
 type ReconcileCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Reconcile: Reconcile entities to Freebase open data.
@@ -196,6 +197,14 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReconcileCall) Context(ctx context.Context) *ReconcileCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -226,6 +235,9 @@ func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -303,6 +315,7 @@ func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 type SearchCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Search: Search Freebase open data.
@@ -513,6 +526,14 @@ func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SearchCall) Context(ctx context.Context) *SearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -594,6 +615,9 @@ func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

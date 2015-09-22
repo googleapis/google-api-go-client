@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "pubsub:v1beta1a"
 const apiName = "pubsub"
@@ -360,6 +360,7 @@ type SubscriptionsAcknowledgeCall struct {
 	s                  *Service
 	acknowledgerequest *AcknowledgeRequest
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Acknowledge: Acknowledges a particular received message: the Pub/Sub
@@ -382,6 +383,14 @@ func (c *SubscriptionsAcknowledgeCall) Fields(s ...googleapi.Field) *Subscriptio
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsAcknowledgeCall) Context(ctx context.Context) *SubscriptionsAcknowledgeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.acknowledgerequest)
@@ -400,6 +409,9 @@ func (c *SubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, er
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -442,6 +454,7 @@ type SubscriptionsCreateCall struct {
 	s            *Service
 	subscription *Subscription
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Create: Creates a subscription on a given topic for a given
@@ -464,6 +477,14 @@ func (c *SubscriptionsCreateCall) Fields(s ...googleapi.Field) *SubscriptionsCre
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsCreateCall) Context(ctx context.Context) *SubscriptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
@@ -482,6 +503,9 @@ func (c *SubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -524,6 +548,7 @@ type SubscriptionsDeleteCall struct {
 	s            *Service
 	subscription string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Delete: Deletes an existing subscription. All pending messages in the
@@ -543,6 +568,14 @@ func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDel
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -557,6 +590,9 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"subscription": c.subscription,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -608,6 +644,7 @@ type SubscriptionsGetCall struct {
 	s            *Service
 	subscription string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Get: Gets the configuration details of a subscription.
@@ -625,6 +662,14 @@ func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -639,6 +684,9 @@ func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 		"subscription": c.subscription,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -689,6 +737,7 @@ func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 type SubscriptionsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists matching subscriptions.
@@ -726,6 +775,14 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -747,6 +804,9 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -804,6 +864,7 @@ type SubscriptionsModifyAckDeadlineCall struct {
 	s                        *Service
 	modifyackdeadlinerequest *ModifyAckDeadlineRequest
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // ModifyAckDeadline: Modifies the Ack deadline for a message received
@@ -819,6 +880,14 @@ func (r *SubscriptionsService) ModifyAckDeadline(modifyackdeadlinerequest *Modif
 // for more information.
 func (c *SubscriptionsModifyAckDeadlineCall) Fields(s ...googleapi.Field) *SubscriptionsModifyAckDeadlineCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsModifyAckDeadlineCall) Context(ctx context.Context) *SubscriptionsModifyAckDeadlineCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -840,6 +909,9 @@ func (c *SubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Respon
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -882,6 +954,7 @@ type SubscriptionsModifyPushConfigCall struct {
 	s                       *Service
 	modifypushconfigrequest *ModifyPushConfigRequest
 	opt_                    map[string]interface{}
+	ctx_                    context.Context
 }
 
 // ModifyPushConfig: Modifies the PushConfig for a specified
@@ -903,6 +976,14 @@ func (c *SubscriptionsModifyPushConfigCall) Fields(s ...googleapi.Field) *Subscr
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsModifyPushConfigCall) Context(ctx context.Context) *SubscriptionsModifyPushConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifypushconfigrequest)
@@ -921,6 +1002,9 @@ func (c *SubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Respons
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -963,6 +1047,7 @@ type SubscriptionsPullCall struct {
 	s           *Service
 	pullrequest *PullRequest
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Pull: Pulls a single message from the server. If return_immediately
@@ -984,6 +1069,14 @@ func (c *SubscriptionsPullCall) Fields(s ...googleapi.Field) *SubscriptionsPullC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsPullCall) Context(ctx context.Context) *SubscriptionsPullCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pullrequest)
@@ -1002,6 +1095,9 @@ func (c *SubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1044,6 +1140,7 @@ type SubscriptionsPullBatchCall struct {
 	s                *Service
 	pullbatchrequest *PullBatchRequest
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // PullBatch: Pulls messages from the server. Returns an empty list if
@@ -1061,6 +1158,14 @@ func (r *SubscriptionsService) PullBatch(pullbatchrequest *PullBatchRequest) *Su
 // for more information.
 func (c *SubscriptionsPullBatchCall) Fields(s ...googleapi.Field) *SubscriptionsPullBatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsPullBatchCall) Context(ctx context.Context) *SubscriptionsPullBatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1082,6 +1187,9 @@ func (c *SubscriptionsPullBatchCall) doRequest(alt string) (*http.Response, erro
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1124,6 +1232,7 @@ type TopicsCreateCall struct {
 	s     *Service
 	topic *Topic
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Create: Creates the given topic with the given name.
@@ -1138,6 +1247,14 @@ func (r *TopicsService) Create(topic *Topic) *TopicsCreateCall {
 // for more information.
 func (c *TopicsCreateCall) Fields(s ...googleapi.Field) *TopicsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TopicsCreateCall) Context(ctx context.Context) *TopicsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1159,6 +1276,9 @@ func (c *TopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1201,6 +1321,7 @@ type TopicsDeleteCall struct {
 	s     *Service
 	topic string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Delete: Deletes the topic with the given name. Returns NOT_FOUND if
@@ -1220,6 +1341,14 @@ func (c *TopicsDeleteCall) Fields(s ...googleapi.Field) *TopicsDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TopicsDeleteCall) Context(ctx context.Context) *TopicsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1234,6 +1363,9 @@ func (c *TopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1285,6 +1417,7 @@ type TopicsGetCall struct {
 	s     *Service
 	topic string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Get: Gets the configuration of a topic. Since the topic only has the
@@ -1305,6 +1438,14 @@ func (c *TopicsGetCall) Fields(s ...googleapi.Field) *TopicsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TopicsGetCall) Context(ctx context.Context) *TopicsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1319,6 +1460,9 @@ func (c *TopicsGetCall) doRequest(alt string) (*http.Response, error) {
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1369,6 +1513,7 @@ func (c *TopicsGetCall) Do() (*Topic, error) {
 type TopicsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists matching topics.
@@ -1406,6 +1551,14 @@ func (c *TopicsListCall) Fields(s ...googleapi.Field) *TopicsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TopicsListCall) Context(ctx context.Context) *TopicsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TopicsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1427,6 +1580,9 @@ func (c *TopicsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1484,6 +1640,7 @@ type TopicsPublishCall struct {
 	s              *Service
 	publishrequest *PublishRequest
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Publish: Adds a message to the topic. Returns NOT_FOUND if the topic
@@ -1499,6 +1656,14 @@ func (r *TopicsService) Publish(publishrequest *PublishRequest) *TopicsPublishCa
 // for more information.
 func (c *TopicsPublishCall) Fields(s ...googleapi.Field) *TopicsPublishCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TopicsPublishCall) Context(ctx context.Context) *TopicsPublishCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1520,6 +1685,9 @@ func (c *TopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1562,6 +1730,7 @@ type TopicsPublishBatchCall struct {
 	s                   *Service
 	publishbatchrequest *PublishBatchRequest
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // PublishBatch: Adds one or more messages to the topic. Returns
@@ -1577,6 +1746,14 @@ func (r *TopicsService) PublishBatch(publishbatchrequest *PublishBatchRequest) *
 // for more information.
 func (c *TopicsPublishBatchCall) Fields(s ...googleapi.Field) *TopicsPublishBatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TopicsPublishBatchCall) Context(ctx context.Context) *TopicsPublishBatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1598,6 +1775,9 @@ func (c *TopicsPublishBatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

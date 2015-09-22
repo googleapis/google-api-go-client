@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "replicapool:v1beta1"
 const apiName = "replicapool"
@@ -543,6 +543,7 @@ type PoolsDeleteCall struct {
 	poolName           string
 	poolsdeleterequest *PoolsDeleteRequest
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Delete: Deletes a replica pool.
@@ -560,6 +561,14 @@ func (r *PoolsService) Delete(projectName string, zone string, poolName string, 
 // for more information.
 func (c *PoolsDeleteCall) Fields(s ...googleapi.Field) *PoolsDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PoolsDeleteCall) Ctx(ctx context.Context) *PoolsDeleteCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -585,6 +594,9 @@ func (c *PoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -648,6 +660,7 @@ type PoolsGetCall struct {
 	zone        string
 	poolName    string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets information about a single replica pool.
@@ -667,6 +680,14 @@ func (c *PoolsGetCall) Fields(s ...googleapi.Field) *PoolsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PoolsGetCall) Ctx(ctx context.Context) *PoolsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -683,6 +704,9 @@ func (c *PoolsGetCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -753,6 +777,7 @@ type PoolsInsertCall struct {
 	zone        string
 	pool        *Pool
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Insert: Inserts a new replica pool.
@@ -769,6 +794,14 @@ func (r *PoolsService) Insert(projectName string, zone string, pool *Pool) *Pool
 // for more information.
 func (c *PoolsInsertCall) Fields(s ...googleapi.Field) *PoolsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PoolsInsertCall) Ctx(ctx context.Context) *PoolsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -793,6 +826,9 @@ func (c *PoolsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -855,6 +891,7 @@ type PoolsListCall struct {
 	projectName string
 	zone        string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: List all replica pools.
@@ -889,6 +926,14 @@ func (c *PoolsListCall) Fields(s ...googleapi.Field) *PoolsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PoolsListCall) Ctx(ctx context.Context) *PoolsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PoolsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -910,6 +955,9 @@ func (c *PoolsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":        c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -987,6 +1035,7 @@ type PoolsResizeCall struct {
 	zone        string
 	poolName    string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Resize: Resize a pool. This is an asynchronous operation, and
@@ -1017,6 +1066,14 @@ func (c *PoolsResizeCall) Fields(s ...googleapi.Field) *PoolsResizeCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PoolsResizeCall) Ctx(ctx context.Context) *PoolsResizeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PoolsResizeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1036,6 +1093,9 @@ func (c *PoolsResizeCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1110,6 +1170,7 @@ type PoolsUpdatetemplateCall struct {
 	poolName    string
 	template    *Template
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Updatetemplate: Update the template used by the pool.
@@ -1127,6 +1188,14 @@ func (r *PoolsService) Updatetemplate(projectName string, zone string, poolName 
 // for more information.
 func (c *PoolsUpdatetemplateCall) Fields(s ...googleapi.Field) *PoolsUpdatetemplateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PoolsUpdatetemplateCall) Ctx(ctx context.Context) *PoolsUpdatetemplateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1152,6 +1221,9 @@ func (c *PoolsUpdatetemplateCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1217,6 +1289,7 @@ type ReplicasDeleteCall struct {
 	replicaName           string
 	replicasdeleterequest *ReplicasDeleteRequest
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // Delete: Deletes a replica from the pool.
@@ -1235,6 +1308,14 @@ func (r *ReplicasService) Delete(projectName string, zone string, poolName strin
 // for more information.
 func (c *ReplicasDeleteCall) Fields(s ...googleapi.Field) *ReplicasDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReplicasDeleteCall) Ctx(ctx context.Context) *ReplicasDeleteCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1261,6 +1342,9 @@ func (c *ReplicasDeleteCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1339,6 +1423,7 @@ type ReplicasGetCall struct {
 	poolName    string
 	replicaName string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets information about a specific replica.
@@ -1359,6 +1444,14 @@ func (c *ReplicasGetCall) Fields(s ...googleapi.Field) *ReplicasGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReplicasGetCall) Ctx(ctx context.Context) *ReplicasGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReplicasGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1376,6 +1469,9 @@ func (c *ReplicasGetCall) doRequest(alt string) (*http.Response, error) {
 		"replicaName": c.replicaName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1453,6 +1549,7 @@ type ReplicasListCall struct {
 	zone        string
 	poolName    string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists all replicas in a pool.
@@ -1488,6 +1585,14 @@ func (c *ReplicasListCall) Fields(s ...googleapi.Field) *ReplicasListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReplicasListCall) Ctx(ctx context.Context) *ReplicasListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReplicasListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1510,6 +1615,9 @@ func (c *ReplicasListCall) doRequest(alt string) (*http.Response, error) {
 		"poolName":    c.poolName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1595,6 +1703,7 @@ type ReplicasRestartCall struct {
 	poolName    string
 	replicaName string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Restart: Restarts a replica in a pool.
@@ -1615,6 +1724,14 @@ func (c *ReplicasRestartCall) Fields(s ...googleapi.Field) *ReplicasRestartCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReplicasRestartCall) Ctx(ctx context.Context) *ReplicasRestartCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ReplicasRestartCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1632,6 +1749,9 @@ func (c *ReplicasRestartCall) doRequest(alt string) (*http.Response, error) {
 		"replicaName": c.replicaName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

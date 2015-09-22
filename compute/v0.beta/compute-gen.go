@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "compute:beta"
 const apiName = "compute"
@@ -5191,6 +5191,7 @@ type AddressesAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of addresses grouped by scope.
@@ -5262,6 +5263,14 @@ func (c *AddressesAggregatedListCall) Fields(s ...googleapi.Field) *AddressesAgg
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AddressesAggregatedListCall) Ctx(ctx context.Context) *AddressesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AddressesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5288,6 +5297,9 @@ func (c *AddressesAggregatedListCall) doRequest(alt string) (*http.Response, err
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5366,6 +5378,7 @@ type AddressesDeleteCall struct {
 	region  string
 	address string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Deletes the specified address resource.
@@ -5386,6 +5399,14 @@ func (c *AddressesDeleteCall) Fields(s ...googleapi.Field) *AddressesDeleteCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AddressesDeleteCall) Ctx(ctx context.Context) *AddressesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5402,6 +5423,9 @@ func (c *AddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"address": c.address,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5471,6 +5495,7 @@ type AddressesGetCall struct {
 	region  string
 	address string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified address resource.
@@ -5491,6 +5516,14 @@ func (c *AddressesGetCall) Fields(s ...googleapi.Field) *AddressesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AddressesGetCall) Ctx(ctx context.Context) *AddressesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AddressesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5507,6 +5540,9 @@ func (c *AddressesGetCall) doRequest(alt string) (*http.Response, error) {
 		"address": c.address,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5577,6 +5613,7 @@ type AddressesInsertCall struct {
 	region  string
 	address *Address
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates an address resource in the specified project using
@@ -5595,6 +5632,14 @@ func (r *AddressesService) Insert(project string, region string, address *Addres
 // for more information.
 func (c *AddressesInsertCall) Fields(s ...googleapi.Field) *AddressesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AddressesInsertCall) Ctx(ctx context.Context) *AddressesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -5619,6 +5664,9 @@ func (c *AddressesInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5682,6 +5730,7 @@ type AddressesListCall struct {
 	project string
 	region  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of address resources contained within the
@@ -5755,6 +5804,14 @@ func (c *AddressesListCall) Fields(s ...googleapi.Field) *AddressesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AddressesListCall) Ctx(ctx context.Context) *AddressesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AddressesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5782,6 +5839,9 @@ func (c *AddressesListCall) doRequest(alt string) (*http.Response, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5866,6 +5926,7 @@ type AutoscalersAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of autoscalers grouped by scope.
@@ -5936,6 +5997,14 @@ func (c *AutoscalersAggregatedListCall) Fields(s ...googleapi.Field) *Autoscaler
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersAggregatedListCall) Ctx(ctx context.Context) *AutoscalersAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AutoscalersAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5962,6 +6031,9 @@ func (c *AutoscalersAggregatedListCall) doRequest(alt string) (*http.Response, e
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6040,6 +6112,7 @@ type AutoscalersDeleteCall struct {
 	zone       string
 	autoscaler string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes the specified autoscaler resource.
@@ -6059,6 +6132,14 @@ func (c *AutoscalersDeleteCall) Fields(s ...googleapi.Field) *AutoscalersDeleteC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersDeleteCall) Ctx(ctx context.Context) *AutoscalersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AutoscalersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6075,6 +6156,9 @@ func (c *AutoscalersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"autoscaler": c.autoscaler,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6144,6 +6228,7 @@ type AutoscalersGetCall struct {
 	zone       string
 	autoscaler string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns the specified autoscaler resource.
@@ -6163,6 +6248,14 @@ func (c *AutoscalersGetCall) Fields(s ...googleapi.Field) *AutoscalersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersGetCall) Ctx(ctx context.Context) *AutoscalersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AutoscalersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6179,6 +6272,9 @@ func (c *AutoscalersGetCall) doRequest(alt string) (*http.Response, error) {
 		"autoscaler": c.autoscaler,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6249,6 +6345,7 @@ type AutoscalersInsertCall struct {
 	zone       string
 	autoscaler *Autoscaler
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Creates an autoscaler resource in the specified project using
@@ -6266,6 +6363,14 @@ func (r *AutoscalersService) Insert(project string, zone string, autoscaler *Aut
 // for more information.
 func (c *AutoscalersInsertCall) Fields(s ...googleapi.Field) *AutoscalersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersInsertCall) Ctx(ctx context.Context) *AutoscalersInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -6290,6 +6395,9 @@ func (c *AutoscalersInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6353,6 +6461,7 @@ type AutoscalersListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of autoscaler resources contained within the
@@ -6425,6 +6534,14 @@ func (c *AutoscalersListCall) Fields(s ...googleapi.Field) *AutoscalersListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersListCall) Ctx(ctx context.Context) *AutoscalersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AutoscalersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6452,6 +6569,9 @@ func (c *AutoscalersListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6539,6 +6659,7 @@ type AutoscalersPatchCall struct {
 	autoscaler  string
 	autoscaler2 *Autoscaler
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Patch: Updates an autoscaler resource in the specified project using
@@ -6558,6 +6679,14 @@ func (r *AutoscalersService) Patch(project string, zone string, autoscaler strin
 // for more information.
 func (c *AutoscalersPatchCall) Fields(s ...googleapi.Field) *AutoscalersPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersPatchCall) Ctx(ctx context.Context) *AutoscalersPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -6583,6 +6712,9 @@ func (c *AutoscalersPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6655,6 +6787,7 @@ type AutoscalersUpdateCall struct {
 	zone       string
 	autoscaler *Autoscaler
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates an autoscaler resource in the specified project using
@@ -6682,6 +6815,14 @@ func (c *AutoscalersUpdateCall) Fields(s ...googleapi.Field) *AutoscalersUpdateC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersUpdateCall) Ctx(ctx context.Context) *AutoscalersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AutoscalersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autoscaler)
@@ -6706,6 +6847,9 @@ func (c *AutoscalersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6775,6 +6919,7 @@ type BackendServicesDeleteCall struct {
 	project        string
 	backendService string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Delete: Deletes the specified BackendService resource.
@@ -6794,6 +6939,14 @@ func (c *BackendServicesDeleteCall) Fields(s ...googleapi.Field) *BackendService
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackendServicesDeleteCall) Ctx(ctx context.Context) *BackendServicesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BackendServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6809,6 +6962,9 @@ func (c *BackendServicesDeleteCall) doRequest(alt string) (*http.Response, error
 		"backendService": c.backendService,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6869,6 +7025,7 @@ type BackendServicesGetCall struct {
 	project        string
 	backendService string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Returns the specified BackendService resource.
@@ -6888,6 +7045,14 @@ func (c *BackendServicesGetCall) Fields(s ...googleapi.Field) *BackendServicesGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackendServicesGetCall) Ctx(ctx context.Context) *BackendServicesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BackendServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6903,6 +7068,9 @@ func (c *BackendServicesGetCall) doRequest(alt string) (*http.Response, error) {
 		"backendService": c.backendService,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6965,6 +7133,7 @@ type BackendServicesGetHealthCall struct {
 	backendService         string
 	resourcegroupreference *ResourceGroupReference
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // GetHealth: Gets the most recent health check results for this
@@ -6983,6 +7152,14 @@ func (r *BackendServicesService) GetHealth(project string, backendService string
 // for more information.
 func (c *BackendServicesGetHealthCall) Fields(s ...googleapi.Field) *BackendServicesGetHealthCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackendServicesGetHealthCall) Ctx(ctx context.Context) *BackendServicesGetHealthCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -7007,6 +7184,9 @@ func (c *BackendServicesGetHealthCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7070,6 +7250,7 @@ type BackendServicesInsertCall struct {
 	project        string
 	backendservice *BackendService
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Creates a BackendService resource in the specified project
@@ -7087,6 +7268,14 @@ func (r *BackendServicesService) Insert(project string, backendservice *BackendS
 // for more information.
 func (c *BackendServicesInsertCall) Fields(s ...googleapi.Field) *BackendServicesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackendServicesInsertCall) Ctx(ctx context.Context) *BackendServicesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -7110,6 +7299,9 @@ func (c *BackendServicesInsertCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7164,6 +7356,7 @@ type BackendServicesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of BackendService resources available to the
@@ -7236,6 +7429,14 @@ func (c *BackendServicesListCall) Fields(s ...googleapi.Field) *BackendServicesL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackendServicesListCall) Ctx(ctx context.Context) *BackendServicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BackendServicesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7262,6 +7463,9 @@ func (c *BackendServicesListCall) doRequest(alt string) (*http.Response, error) 
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7340,6 +7544,7 @@ type BackendServicesPatchCall struct {
 	backendService string
 	backendservice *BackendService
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Patch: Update the entire content of the BackendService resource. This
@@ -7358,6 +7563,14 @@ func (r *BackendServicesService) Patch(project string, backendService string, ba
 // for more information.
 func (c *BackendServicesPatchCall) Fields(s ...googleapi.Field) *BackendServicesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackendServicesPatchCall) Ctx(ctx context.Context) *BackendServicesPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -7382,6 +7595,9 @@ func (c *BackendServicesPatchCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7446,6 +7662,7 @@ type BackendServicesUpdateCall struct {
 	backendService string
 	backendservice *BackendService
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Update: Update the entire content of the BackendService resource.
@@ -7463,6 +7680,14 @@ func (r *BackendServicesService) Update(project string, backendService string, b
 // for more information.
 func (c *BackendServicesUpdateCall) Fields(s ...googleapi.Field) *BackendServicesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BackendServicesUpdateCall) Ctx(ctx context.Context) *BackendServicesUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -7487,6 +7712,9 @@ func (c *BackendServicesUpdateCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7549,6 +7777,7 @@ type DiskTypesAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of disk type resources grouped by
@@ -7621,6 +7850,14 @@ func (c *DiskTypesAggregatedListCall) Fields(s ...googleapi.Field) *DiskTypesAgg
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DiskTypesAggregatedListCall) Ctx(ctx context.Context) *DiskTypesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DiskTypesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7647,6 +7884,9 @@ func (c *DiskTypesAggregatedListCall) doRequest(alt string) (*http.Response, err
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7725,6 +7965,7 @@ type DiskTypesGetCall struct {
 	zone     string
 	diskType string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Returns the specified disk type resource.
@@ -7745,6 +7986,14 @@ func (c *DiskTypesGetCall) Fields(s ...googleapi.Field) *DiskTypesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DiskTypesGetCall) Ctx(ctx context.Context) *DiskTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DiskTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7761,6 +8010,9 @@ func (c *DiskTypesGetCall) doRequest(alt string) (*http.Response, error) {
 		"diskType": c.diskType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7830,6 +8082,7 @@ type DiskTypesListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of disk type resources available to the
@@ -7903,6 +8156,14 @@ func (c *DiskTypesListCall) Fields(s ...googleapi.Field) *DiskTypesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DiskTypesListCall) Ctx(ctx context.Context) *DiskTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DiskTypesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7930,6 +8191,9 @@ func (c *DiskTypesListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8014,6 +8278,7 @@ type DisksAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of disks grouped by scope.
@@ -8085,6 +8350,14 @@ func (c *DisksAggregatedListCall) Fields(s ...googleapi.Field) *DisksAggregatedL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DisksAggregatedListCall) Ctx(ctx context.Context) *DisksAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DisksAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8111,6 +8384,9 @@ func (c *DisksAggregatedListCall) doRequest(alt string) (*http.Response, error) 
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8190,6 +8466,7 @@ type DisksCreateSnapshotCall struct {
 	disk     string
 	snapshot *Snapshot
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // CreateSnapshot: Creates a snapshot of this disk.
@@ -8208,6 +8485,14 @@ func (r *DisksService) CreateSnapshot(project string, zone string, disk string, 
 // for more information.
 func (c *DisksCreateSnapshotCall) Fields(s ...googleapi.Field) *DisksCreateSnapshotCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DisksCreateSnapshotCall) Ctx(ctx context.Context) *DisksCreateSnapshotCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -8233,6 +8518,9 @@ func (c *DisksCreateSnapshotCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8305,6 +8593,7 @@ type DisksDeleteCall struct {
 	zone    string
 	disk    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Deletes the specified persistent disk. Deleting a disk
@@ -8328,6 +8617,14 @@ func (c *DisksDeleteCall) Fields(s ...googleapi.Field) *DisksDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DisksDeleteCall) Ctx(ctx context.Context) *DisksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DisksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8344,6 +8641,9 @@ func (c *DisksDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"disk":    c.disk,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8413,6 +8713,7 @@ type DisksGetCall struct {
 	zone    string
 	disk    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns a specified persistent disk.
@@ -8433,6 +8734,14 @@ func (c *DisksGetCall) Fields(s ...googleapi.Field) *DisksGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DisksGetCall) Ctx(ctx context.Context) *DisksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DisksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8449,6 +8758,9 @@ func (c *DisksGetCall) doRequest(alt string) (*http.Response, error) {
 		"disk":    c.disk,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8519,6 +8831,7 @@ type DisksInsertCall struct {
 	zone    string
 	disk    *Disk
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates a persistent disk in the specified project using the
@@ -8547,6 +8860,14 @@ func (c *DisksInsertCall) Fields(s ...googleapi.Field) *DisksInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DisksInsertCall) Ctx(ctx context.Context) *DisksInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DisksInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.disk)
@@ -8571,6 +8892,9 @@ func (c *DisksInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8639,6 +8963,7 @@ type DisksListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of persistent disks contained within the
@@ -8712,6 +9037,14 @@ func (c *DisksListCall) Fields(s ...googleapi.Field) *DisksListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DisksListCall) Ctx(ctx context.Context) *DisksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DisksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8739,6 +9072,9 @@ func (c *DisksListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8824,6 +9160,7 @@ type FirewallsDeleteCall struct {
 	project  string
 	firewall string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes the specified firewall resource.
@@ -8843,6 +9180,14 @@ func (c *FirewallsDeleteCall) Fields(s ...googleapi.Field) *FirewallsDeleteCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FirewallsDeleteCall) Ctx(ctx context.Context) *FirewallsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *FirewallsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8858,6 +9203,9 @@ func (c *FirewallsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"firewall": c.firewall,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8918,6 +9266,7 @@ type FirewallsGetCall struct {
 	project  string
 	firewall string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Returns the specified firewall resource.
@@ -8937,6 +9286,14 @@ func (c *FirewallsGetCall) Fields(s ...googleapi.Field) *FirewallsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FirewallsGetCall) Ctx(ctx context.Context) *FirewallsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *FirewallsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8952,6 +9309,9 @@ func (c *FirewallsGetCall) doRequest(alt string) (*http.Response, error) {
 		"firewall": c.firewall,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9013,6 +9373,7 @@ type FirewallsInsertCall struct {
 	project  string
 	firewall *Firewall
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Creates a firewall resource in the specified project using
@@ -9030,6 +9391,14 @@ func (r *FirewallsService) Insert(project string, firewall *Firewall) *Firewalls
 // for more information.
 func (c *FirewallsInsertCall) Fields(s ...googleapi.Field) *FirewallsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FirewallsInsertCall) Ctx(ctx context.Context) *FirewallsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -9053,6 +9422,9 @@ func (c *FirewallsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9107,6 +9479,7 @@ type FirewallsListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of firewall resources available to the
@@ -9179,6 +9552,14 @@ func (c *FirewallsListCall) Fields(s ...googleapi.Field) *FirewallsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FirewallsListCall) Ctx(ctx context.Context) *FirewallsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *FirewallsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9205,6 +9586,9 @@ func (c *FirewallsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9283,6 +9667,7 @@ type FirewallsPatchCall struct {
 	firewall  string
 	firewall2 *Firewall
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates the specified firewall resource with the data included
@@ -9301,6 +9686,14 @@ func (r *FirewallsService) Patch(project string, firewall string, firewall2 *Fir
 // for more information.
 func (c *FirewallsPatchCall) Fields(s ...googleapi.Field) *FirewallsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FirewallsPatchCall) Ctx(ctx context.Context) *FirewallsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -9325,6 +9718,9 @@ func (c *FirewallsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9389,6 +9785,7 @@ type FirewallsUpdateCall struct {
 	firewall  string
 	firewall2 *Firewall
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates the specified firewall resource with the data
@@ -9407,6 +9804,14 @@ func (r *FirewallsService) Update(project string, firewall string, firewall2 *Fi
 // for more information.
 func (c *FirewallsUpdateCall) Fields(s ...googleapi.Field) *FirewallsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FirewallsUpdateCall) Ctx(ctx context.Context) *FirewallsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -9431,6 +9836,9 @@ func (c *FirewallsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9493,6 +9901,7 @@ type ForwardingRulesAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of forwarding rules grouped by
@@ -9565,6 +9974,14 @@ func (c *ForwardingRulesAggregatedListCall) Fields(s ...googleapi.Field) *Forwar
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ForwardingRulesAggregatedListCall) Ctx(ctx context.Context) *ForwardingRulesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ForwardingRulesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9591,6 +10008,9 @@ func (c *ForwardingRulesAggregatedListCall) doRequest(alt string) (*http.Respons
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9669,6 +10089,7 @@ type ForwardingRulesDeleteCall struct {
 	region         string
 	forwardingRule string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Delete: Deletes the specified ForwardingRule resource.
@@ -9689,6 +10110,14 @@ func (c *ForwardingRulesDeleteCall) Fields(s ...googleapi.Field) *ForwardingRule
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ForwardingRulesDeleteCall) Ctx(ctx context.Context) *ForwardingRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ForwardingRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9705,6 +10134,9 @@ func (c *ForwardingRulesDeleteCall) doRequest(alt string) (*http.Response, error
 		"forwardingRule": c.forwardingRule,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9774,6 +10206,7 @@ type ForwardingRulesGetCall struct {
 	region         string
 	forwardingRule string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Returns the specified ForwardingRule resource.
@@ -9794,6 +10227,14 @@ func (c *ForwardingRulesGetCall) Fields(s ...googleapi.Field) *ForwardingRulesGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ForwardingRulesGetCall) Ctx(ctx context.Context) *ForwardingRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ForwardingRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9810,6 +10251,9 @@ func (c *ForwardingRulesGetCall) doRequest(alt string) (*http.Response, error) {
 		"forwardingRule": c.forwardingRule,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9880,6 +10324,7 @@ type ForwardingRulesInsertCall struct {
 	region         string
 	forwardingrule *ForwardingRule
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Creates a ForwardingRule resource in the specified project
@@ -9898,6 +10343,14 @@ func (r *ForwardingRulesService) Insert(project string, region string, forwardin
 // for more information.
 func (c *ForwardingRulesInsertCall) Fields(s ...googleapi.Field) *ForwardingRulesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ForwardingRulesInsertCall) Ctx(ctx context.Context) *ForwardingRulesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -9922,6 +10375,9 @@ func (c *ForwardingRulesInsertCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9985,6 +10441,7 @@ type ForwardingRulesListCall struct {
 	project string
 	region  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of ForwardingRule resources available to the
@@ -10058,6 +10515,14 @@ func (c *ForwardingRulesListCall) Fields(s ...googleapi.Field) *ForwardingRulesL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ForwardingRulesListCall) Ctx(ctx context.Context) *ForwardingRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ForwardingRulesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10085,6 +10550,9 @@ func (c *ForwardingRulesListCall) doRequest(alt string) (*http.Response, error) 
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10172,6 +10640,7 @@ type ForwardingRulesSetTargetCall struct {
 	forwardingRule  string
 	targetreference *TargetReference
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // SetTarget: Changes target url for forwarding rule.
@@ -10190,6 +10659,14 @@ func (r *ForwardingRulesService) SetTarget(project string, region string, forwar
 // for more information.
 func (c *ForwardingRulesSetTargetCall) Fields(s ...googleapi.Field) *ForwardingRulesSetTargetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ForwardingRulesSetTargetCall) Ctx(ctx context.Context) *ForwardingRulesSetTargetCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -10215,6 +10692,9 @@ func (c *ForwardingRulesSetTargetCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10286,6 +10766,7 @@ type GlobalAddressesDeleteCall struct {
 	project string
 	address string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Deletes the specified address resource.
@@ -10305,6 +10786,14 @@ func (c *GlobalAddressesDeleteCall) Fields(s ...googleapi.Field) *GlobalAddresse
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalAddressesDeleteCall) Ctx(ctx context.Context) *GlobalAddressesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalAddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10320,6 +10809,9 @@ func (c *GlobalAddressesDeleteCall) doRequest(alt string) (*http.Response, error
 		"address": c.address,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10380,6 +10872,7 @@ type GlobalAddressesGetCall struct {
 	project string
 	address string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified address resource.
@@ -10399,6 +10892,14 @@ func (c *GlobalAddressesGetCall) Fields(s ...googleapi.Field) *GlobalAddressesGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalAddressesGetCall) Ctx(ctx context.Context) *GlobalAddressesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalAddressesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10414,6 +10915,9 @@ func (c *GlobalAddressesGetCall) doRequest(alt string) (*http.Response, error) {
 		"address": c.address,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10475,6 +10979,7 @@ type GlobalAddressesInsertCall struct {
 	project string
 	address *Address
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates an address resource in the specified project using
@@ -10492,6 +10997,14 @@ func (r *GlobalAddressesService) Insert(project string, address *Address) *Globa
 // for more information.
 func (c *GlobalAddressesInsertCall) Fields(s ...googleapi.Field) *GlobalAddressesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalAddressesInsertCall) Ctx(ctx context.Context) *GlobalAddressesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -10515,6 +11028,9 @@ func (c *GlobalAddressesInsertCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10569,6 +11085,7 @@ type GlobalAddressesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of global address resources.
@@ -10640,6 +11157,14 @@ func (c *GlobalAddressesListCall) Fields(s ...googleapi.Field) *GlobalAddressesL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalAddressesListCall) Ctx(ctx context.Context) *GlobalAddressesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalAddressesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10666,6 +11191,9 @@ func (c *GlobalAddressesListCall) doRequest(alt string) (*http.Response, error) 
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10743,6 +11271,7 @@ type GlobalForwardingRulesDeleteCall struct {
 	project        string
 	forwardingRule string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Delete: Deletes the specified ForwardingRule resource.
@@ -10762,6 +11291,14 @@ func (c *GlobalForwardingRulesDeleteCall) Fields(s ...googleapi.Field) *GlobalFo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalForwardingRulesDeleteCall) Ctx(ctx context.Context) *GlobalForwardingRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalForwardingRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10777,6 +11314,9 @@ func (c *GlobalForwardingRulesDeleteCall) doRequest(alt string) (*http.Response,
 		"forwardingRule": c.forwardingRule,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10837,6 +11377,7 @@ type GlobalForwardingRulesGetCall struct {
 	project        string
 	forwardingRule string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Returns the specified ForwardingRule resource.
@@ -10856,6 +11397,14 @@ func (c *GlobalForwardingRulesGetCall) Fields(s ...googleapi.Field) *GlobalForwa
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalForwardingRulesGetCall) Ctx(ctx context.Context) *GlobalForwardingRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalForwardingRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10871,6 +11420,9 @@ func (c *GlobalForwardingRulesGetCall) doRequest(alt string) (*http.Response, er
 		"forwardingRule": c.forwardingRule,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10932,6 +11484,7 @@ type GlobalForwardingRulesInsertCall struct {
 	project        string
 	forwardingrule *ForwardingRule
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Creates a ForwardingRule resource in the specified project
@@ -10949,6 +11502,14 @@ func (r *GlobalForwardingRulesService) Insert(project string, forwardingrule *Fo
 // for more information.
 func (c *GlobalForwardingRulesInsertCall) Fields(s ...googleapi.Field) *GlobalForwardingRulesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalForwardingRulesInsertCall) Ctx(ctx context.Context) *GlobalForwardingRulesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -10972,6 +11533,9 @@ func (c *GlobalForwardingRulesInsertCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11026,6 +11590,7 @@ type GlobalForwardingRulesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of ForwardingRule resources available to the
@@ -11098,6 +11663,14 @@ func (c *GlobalForwardingRulesListCall) Fields(s ...googleapi.Field) *GlobalForw
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalForwardingRulesListCall) Ctx(ctx context.Context) *GlobalForwardingRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalForwardingRulesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11124,6 +11697,9 @@ func (c *GlobalForwardingRulesListCall) doRequest(alt string) (*http.Response, e
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11202,6 +11778,7 @@ type GlobalForwardingRulesSetTargetCall struct {
 	forwardingRule  string
 	targetreference *TargetReference
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // SetTarget: Changes target url for forwarding rule.
@@ -11219,6 +11796,14 @@ func (r *GlobalForwardingRulesService) SetTarget(project string, forwardingRule 
 // for more information.
 func (c *GlobalForwardingRulesSetTargetCall) Fields(s ...googleapi.Field) *GlobalForwardingRulesSetTargetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalForwardingRulesSetTargetCall) Ctx(ctx context.Context) *GlobalForwardingRulesSetTargetCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -11243,6 +11828,9 @@ func (c *GlobalForwardingRulesSetTargetCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11305,6 +11893,7 @@ type GlobalOperationsAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of all operations grouped by
@@ -11377,6 +11966,14 @@ func (c *GlobalOperationsAggregatedListCall) Fields(s ...googleapi.Field) *Globa
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalOperationsAggregatedListCall) Ctx(ctx context.Context) *GlobalOperationsAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalOperationsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11403,6 +12000,9 @@ func (c *GlobalOperationsAggregatedListCall) doRequest(alt string) (*http.Respon
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11480,6 +12080,7 @@ type GlobalOperationsDeleteCall struct {
 	project   string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the specified Operations resource.
@@ -11499,6 +12100,14 @@ func (c *GlobalOperationsDeleteCall) Fields(s ...googleapi.Field) *GlobalOperati
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalOperationsDeleteCall) Ctx(ctx context.Context) *GlobalOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11514,6 +12123,9 @@ func (c *GlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, erro
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11567,6 +12179,7 @@ type GlobalOperationsGetCall struct {
 	project   string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves the specified Operations resource.
@@ -11586,6 +12199,14 @@ func (c *GlobalOperationsGetCall) Fields(s ...googleapi.Field) *GlobalOperations
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalOperationsGetCall) Ctx(ctx context.Context) *GlobalOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11601,6 +12222,9 @@ func (c *GlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) 
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11661,6 +12285,7 @@ type GlobalOperationsListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of Operation resources contained within the
@@ -11733,6 +12358,14 @@ func (c *GlobalOperationsListCall) Fields(s ...googleapi.Field) *GlobalOperation
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalOperationsListCall) Ctx(ctx context.Context) *GlobalOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11759,6 +12392,9 @@ func (c *GlobalOperationsListCall) doRequest(alt string) (*http.Response, error)
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11836,6 +12472,7 @@ type HttpHealthChecksDeleteCall struct {
 	project         string
 	httpHealthCheck string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Delete: Deletes the specified HttpHealthCheck resource.
@@ -11855,6 +12492,14 @@ func (c *HttpHealthChecksDeleteCall) Fields(s ...googleapi.Field) *HttpHealthChe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpHealthChecksDeleteCall) Ctx(ctx context.Context) *HttpHealthChecksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *HttpHealthChecksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11870,6 +12515,9 @@ func (c *HttpHealthChecksDeleteCall) doRequest(alt string) (*http.Response, erro
 		"httpHealthCheck": c.httpHealthCheck,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11930,6 +12578,7 @@ type HttpHealthChecksGetCall struct {
 	project         string
 	httpHealthCheck string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Get: Returns the specified HttpHealthCheck resource.
@@ -11949,6 +12598,14 @@ func (c *HttpHealthChecksGetCall) Fields(s ...googleapi.Field) *HttpHealthChecks
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpHealthChecksGetCall) Ctx(ctx context.Context) *HttpHealthChecksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *HttpHealthChecksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11964,6 +12621,9 @@ func (c *HttpHealthChecksGetCall) doRequest(alt string) (*http.Response, error) 
 		"httpHealthCheck": c.httpHealthCheck,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12025,6 +12685,7 @@ type HttpHealthChecksInsertCall struct {
 	project         string
 	httphealthcheck *HttpHealthCheck
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Insert: Creates a HttpHealthCheck resource in the specified project
@@ -12042,6 +12703,14 @@ func (r *HttpHealthChecksService) Insert(project string, httphealthcheck *HttpHe
 // for more information.
 func (c *HttpHealthChecksInsertCall) Fields(s ...googleapi.Field) *HttpHealthChecksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpHealthChecksInsertCall) Ctx(ctx context.Context) *HttpHealthChecksInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -12065,6 +12734,9 @@ func (c *HttpHealthChecksInsertCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12119,6 +12791,7 @@ type HttpHealthChecksListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of HttpHealthCheck resources available to
@@ -12191,6 +12864,14 @@ func (c *HttpHealthChecksListCall) Fields(s ...googleapi.Field) *HttpHealthCheck
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpHealthChecksListCall) Ctx(ctx context.Context) *HttpHealthChecksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *HttpHealthChecksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -12217,6 +12898,9 @@ func (c *HttpHealthChecksListCall) doRequest(alt string) (*http.Response, error)
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12295,6 +12979,7 @@ type HttpHealthChecksPatchCall struct {
 	httpHealthCheck string
 	httphealthcheck *HttpHealthCheck
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Patch: Updates a HttpHealthCheck resource in the specified project
@@ -12314,6 +12999,14 @@ func (r *HttpHealthChecksService) Patch(project string, httpHealthCheck string, 
 // for more information.
 func (c *HttpHealthChecksPatchCall) Fields(s ...googleapi.Field) *HttpHealthChecksPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpHealthChecksPatchCall) Ctx(ctx context.Context) *HttpHealthChecksPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -12338,6 +13031,9 @@ func (c *HttpHealthChecksPatchCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12402,6 +13098,7 @@ type HttpHealthChecksUpdateCall struct {
 	httpHealthCheck string
 	httphealthcheck *HttpHealthCheck
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Update: Updates a HttpHealthCheck resource in the specified project
@@ -12420,6 +13117,14 @@ func (r *HttpHealthChecksService) Update(project string, httpHealthCheck string,
 // for more information.
 func (c *HttpHealthChecksUpdateCall) Fields(s ...googleapi.Field) *HttpHealthChecksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpHealthChecksUpdateCall) Ctx(ctx context.Context) *HttpHealthChecksUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -12444,6 +13149,9 @@ func (c *HttpHealthChecksUpdateCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12507,6 +13215,7 @@ type HttpsHealthChecksDeleteCall struct {
 	project          string
 	httpsHealthCheck string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Delete: Deletes the specified HttpsHealthCheck resource.
@@ -12525,6 +13234,14 @@ func (c *HttpsHealthChecksDeleteCall) Fields(s ...googleapi.Field) *HttpsHealthC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpsHealthChecksDeleteCall) Ctx(ctx context.Context) *HttpsHealthChecksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *HttpsHealthChecksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -12540,6 +13257,9 @@ func (c *HttpsHealthChecksDeleteCall) doRequest(alt string) (*http.Response, err
 		"httpsHealthCheck": c.httpsHealthCheck,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12600,6 +13320,7 @@ type HttpsHealthChecksGetCall struct {
 	project          string
 	httpsHealthCheck string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Get: Returns the specified HttpsHealthCheck resource.
@@ -12618,6 +13339,14 @@ func (c *HttpsHealthChecksGetCall) Fields(s ...googleapi.Field) *HttpsHealthChec
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpsHealthChecksGetCall) Ctx(ctx context.Context) *HttpsHealthChecksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *HttpsHealthChecksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -12633,6 +13362,9 @@ func (c *HttpsHealthChecksGetCall) doRequest(alt string) (*http.Response, error)
 		"httpsHealthCheck": c.httpsHealthCheck,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12694,6 +13426,7 @@ type HttpsHealthChecksInsertCall struct {
 	project          string
 	httpshealthcheck *HttpsHealthCheck
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Insert: Creates a HttpsHealthCheck resource in the specified project
@@ -12710,6 +13443,14 @@ func (r *HttpsHealthChecksService) Insert(project string, httpshealthcheck *Http
 // for more information.
 func (c *HttpsHealthChecksInsertCall) Fields(s ...googleapi.Field) *HttpsHealthChecksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpsHealthChecksInsertCall) Ctx(ctx context.Context) *HttpsHealthChecksInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -12733,6 +13474,9 @@ func (c *HttpsHealthChecksInsertCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12787,6 +13531,7 @@ type HttpsHealthChecksListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of HttpsHealthCheck resources available to
@@ -12858,6 +13603,14 @@ func (c *HttpsHealthChecksListCall) Fields(s ...googleapi.Field) *HttpsHealthChe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpsHealthChecksListCall) Ctx(ctx context.Context) *HttpsHealthChecksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *HttpsHealthChecksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -12884,6 +13637,9 @@ func (c *HttpsHealthChecksListCall) doRequest(alt string) (*http.Response, error
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12962,6 +13718,7 @@ type HttpsHealthChecksPatchCall struct {
 	httpsHealthCheck string
 	httpshealthcheck *HttpsHealthCheck
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Patch: Updates a HttpsHealthCheck resource in the specified project
@@ -12980,6 +13737,14 @@ func (r *HttpsHealthChecksService) Patch(project string, httpsHealthCheck string
 // for more information.
 func (c *HttpsHealthChecksPatchCall) Fields(s ...googleapi.Field) *HttpsHealthChecksPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpsHealthChecksPatchCall) Ctx(ctx context.Context) *HttpsHealthChecksPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -13004,6 +13769,9 @@ func (c *HttpsHealthChecksPatchCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13068,6 +13836,7 @@ type HttpsHealthChecksUpdateCall struct {
 	httpsHealthCheck string
 	httpshealthcheck *HttpsHealthCheck
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Update: Updates a HttpsHealthCheck resource in the specified project
@@ -13085,6 +13854,14 @@ func (r *HttpsHealthChecksService) Update(project string, httpsHealthCheck strin
 // for more information.
 func (c *HttpsHealthChecksUpdateCall) Fields(s ...googleapi.Field) *HttpsHealthChecksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HttpsHealthChecksUpdateCall) Ctx(ctx context.Context) *HttpsHealthChecksUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -13109,6 +13886,9 @@ func (c *HttpsHealthChecksUpdateCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13172,6 +13952,7 @@ type ImagesDeleteCall struct {
 	project string
 	image   string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Deletes the specified image resource.
@@ -13191,6 +13972,14 @@ func (c *ImagesDeleteCall) Fields(s ...googleapi.Field) *ImagesDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ImagesDeleteCall) Ctx(ctx context.Context) *ImagesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13206,6 +13995,9 @@ func (c *ImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"image":   c.image,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13267,6 +14059,7 @@ type ImagesDeprecateCall struct {
 	image             string
 	deprecationstatus *DeprecationStatus
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Deprecate: Sets the deprecation status of an image.
@@ -13287,6 +14080,14 @@ func (r *ImagesService) Deprecate(project string, image string, deprecationstatu
 // for more information.
 func (c *ImagesDeprecateCall) Fields(s ...googleapi.Field) *ImagesDeprecateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ImagesDeprecateCall) Ctx(ctx context.Context) *ImagesDeprecateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -13311,6 +14112,9 @@ func (c *ImagesDeprecateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13374,6 +14178,7 @@ type ImagesGetCall struct {
 	project string
 	image   string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified image resource.
@@ -13393,6 +14198,14 @@ func (c *ImagesGetCall) Fields(s ...googleapi.Field) *ImagesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ImagesGetCall) Ctx(ctx context.Context) *ImagesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ImagesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13408,6 +14221,9 @@ func (c *ImagesGetCall) doRequest(alt string) (*http.Response, error) {
 		"image":   c.image,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13469,6 +14285,7 @@ type ImagesInsertCall struct {
 	project string
 	image   *Image
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates an image resource in the specified project using the
@@ -13486,6 +14303,14 @@ func (r *ImagesService) Insert(project string, image *Image) *ImagesInsertCall {
 // for more information.
 func (c *ImagesInsertCall) Fields(s ...googleapi.Field) *ImagesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ImagesInsertCall) Ctx(ctx context.Context) *ImagesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -13509,6 +14334,9 @@ func (c *ImagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13566,6 +14394,7 @@ type ImagesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of image resources available to the
@@ -13638,6 +14467,14 @@ func (c *ImagesListCall) Fields(s ...googleapi.Field) *ImagesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ImagesListCall) Ctx(ctx context.Context) *ImagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ImagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13664,6 +14501,9 @@ func (c *ImagesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13743,6 +14583,7 @@ type InstanceGroupManagersAbandonInstancesCall struct {
 	instanceGroupManager                         string
 	instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest
 	opt_                                         map[string]interface{}
+	ctx_                                         context.Context
 }
 
 // AbandonInstances: Removes the specified instances from the managed
@@ -13764,6 +14605,14 @@ func (r *InstanceGroupManagersService) AbandonInstances(project string, zone str
 // for more information.
 func (c *InstanceGroupManagersAbandonInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersAbandonInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersAbandonInstancesCall) Ctx(ctx context.Context) *InstanceGroupManagersAbandonInstancesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -13789,6 +14638,9 @@ func (c *InstanceGroupManagersAbandonInstancesCall) doRequest(alt string) (*http
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13857,6 +14709,7 @@ type InstanceGroupManagersAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of managed instance groups, and
@@ -13928,6 +14781,14 @@ func (c *InstanceGroupManagersAggregatedListCall) Fields(s ...googleapi.Field) *
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersAggregatedListCall) Ctx(ctx context.Context) *InstanceGroupManagersAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13954,6 +14815,9 @@ func (c *InstanceGroupManagersAggregatedListCall) doRequest(alt string) (*http.R
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14032,6 +14896,7 @@ type InstanceGroupManagersDeleteCall struct {
 	zone                 string
 	instanceGroupManager string
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Delete: Deletes the specified managed instance group resource.
@@ -14051,6 +14916,14 @@ func (c *InstanceGroupManagersDeleteCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersDeleteCall) Ctx(ctx context.Context) *InstanceGroupManagersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -14067,6 +14940,9 @@ func (c *InstanceGroupManagersDeleteCall) doRequest(alt string) (*http.Response,
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14135,6 +15011,7 @@ type InstanceGroupManagersDeleteInstancesCall struct {
 	instanceGroupManager                        string
 	instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest
 	opt_                                        map[string]interface{}
+	ctx_                                        context.Context
 }
 
 // DeleteInstances: Deletes the specified instances. The instances are
@@ -14156,6 +15033,14 @@ func (r *InstanceGroupManagersService) DeleteInstances(project string, zone stri
 // for more information.
 func (c *InstanceGroupManagersDeleteInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersDeleteInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersDeleteInstancesCall) Ctx(ctx context.Context) *InstanceGroupManagersDeleteInstancesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -14181,6 +15066,9 @@ func (c *InstanceGroupManagersDeleteInstancesCall) doRequest(alt string) (*http.
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14251,6 +15139,7 @@ type InstanceGroupManagersGetCall struct {
 	zone                 string
 	instanceGroupManager string
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Get: Returns the specified managed instance group resource.
@@ -14270,6 +15159,14 @@ func (c *InstanceGroupManagersGetCall) Fields(s ...googleapi.Field) *InstanceGro
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersGetCall) Ctx(ctx context.Context) *InstanceGroupManagersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -14286,6 +15183,9 @@ func (c *InstanceGroupManagersGetCall) doRequest(alt string) (*http.Response, er
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14354,6 +15254,7 @@ type InstanceGroupManagersInsertCall struct {
 	zone                 string
 	instancegroupmanager *InstanceGroupManager
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Insert: Creates a managed instance group resource in the specified
@@ -14371,6 +15272,14 @@ func (r *InstanceGroupManagersService) Insert(project string, zone string, insta
 // for more information.
 func (c *InstanceGroupManagersInsertCall) Fields(s ...googleapi.Field) *InstanceGroupManagersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersInsertCall) Ctx(ctx context.Context) *InstanceGroupManagersInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -14395,6 +15304,9 @@ func (c *InstanceGroupManagersInsertCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14457,6 +15369,7 @@ type InstanceGroupManagersListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves a list of managed instance groups that are contained
@@ -14529,6 +15442,14 @@ func (c *InstanceGroupManagersListCall) Fields(s ...googleapi.Field) *InstanceGr
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersListCall) Ctx(ctx context.Context) *InstanceGroupManagersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -14556,6 +15477,9 @@ func (c *InstanceGroupManagersListCall) doRequest(alt string) (*http.Response, e
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14641,6 +15565,7 @@ type InstanceGroupManagersListManagedInstancesCall struct {
 	zone                 string
 	instanceGroupManager string
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // ListManagedInstances: Lists managed instances.
@@ -14660,6 +15585,14 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Fields(s ...googleapi.Fi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersListManagedInstancesCall) Ctx(ctx context.Context) *InstanceGroupManagersListManagedInstancesCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersListManagedInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -14676,6 +15609,9 @@ func (c *InstanceGroupManagersListManagedInstancesCall) doRequest(alt string) (*
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14745,6 +15681,7 @@ type InstanceGroupManagersRecreateInstancesCall struct {
 	instanceGroupManager                          string
 	instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest
 	opt_                                          map[string]interface{}
+	ctx_                                          context.Context
 }
 
 // RecreateInstances: Recreates the specified instances. The instances
@@ -14764,6 +15701,14 @@ func (r *InstanceGroupManagersService) RecreateInstances(project string, zone st
 // for more information.
 func (c *InstanceGroupManagersRecreateInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersRecreateInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersRecreateInstancesCall) Ctx(ctx context.Context) *InstanceGroupManagersRecreateInstancesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -14789,6 +15734,9 @@ func (c *InstanceGroupManagersRecreateInstancesCall) doRequest(alt string) (*htt
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14860,6 +15808,7 @@ type InstanceGroupManagersResizeCall struct {
 	instanceGroupManager string
 	size                 int64
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Resize: Resizes the managed instance group. If you increase the size,
@@ -14883,6 +15832,14 @@ func (c *InstanceGroupManagersResizeCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersResizeCall) Ctx(ctx context.Context) *InstanceGroupManagersResizeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersResizeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -14900,6 +15857,9 @@ func (c *InstanceGroupManagersResizeCall) doRequest(alt string) (*http.Response,
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14976,6 +15936,7 @@ type InstanceGroupManagersSetAutoHealingPoliciesCall struct {
 	instanceGroupManager                       string
 	instancegroupmanagerssetautohealingrequest *InstanceGroupManagersSetAutoHealingRequest
 	opt_                                       map[string]interface{}
+	ctx_                                       context.Context
 }
 
 // SetAutoHealingPolicies: Modifies the autohealing policy.
@@ -14993,6 +15954,14 @@ func (r *InstanceGroupManagersService) SetAutoHealingPolicies(project string, zo
 // for more information.
 func (c *InstanceGroupManagersSetAutoHealingPoliciesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetAutoHealingPoliciesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersSetAutoHealingPoliciesCall) Ctx(ctx context.Context) *InstanceGroupManagersSetAutoHealingPoliciesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -15018,6 +15987,9 @@ func (c *InstanceGroupManagersSetAutoHealingPoliciesCall) doRequest(alt string) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15089,6 +16061,7 @@ type InstanceGroupManagersSetInstanceTemplateCall struct {
 	instanceGroupManager                            string
 	instancegroupmanagerssetinstancetemplaterequest *InstanceGroupManagersSetInstanceTemplateRequest
 	opt_                                            map[string]interface{}
+	ctx_                                            context.Context
 }
 
 // SetInstanceTemplate: Specifies the instance template to use when
@@ -15108,6 +16081,14 @@ func (r *InstanceGroupManagersService) SetInstanceTemplate(project string, zone 
 // for more information.
 func (c *InstanceGroupManagersSetInstanceTemplateCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetInstanceTemplateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersSetInstanceTemplateCall) Ctx(ctx context.Context) *InstanceGroupManagersSetInstanceTemplateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -15133,6 +16114,9 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) doRequest(alt string) (*h
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15204,6 +16188,7 @@ type InstanceGroupManagersSetTargetPoolsCall struct {
 	instanceGroupManager                       string
 	instancegroupmanagerssettargetpoolsrequest *InstanceGroupManagersSetTargetPoolsRequest
 	opt_                                       map[string]interface{}
+	ctx_                                       context.Context
 }
 
 // SetTargetPools: Modifies the target pools to which all new instances
@@ -15223,6 +16208,14 @@ func (r *InstanceGroupManagersService) SetTargetPools(project string, zone strin
 // for more information.
 func (c *InstanceGroupManagersSetTargetPoolsCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetTargetPoolsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupManagersSetTargetPoolsCall) Ctx(ctx context.Context) *InstanceGroupManagersSetTargetPoolsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -15248,6 +16241,9 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) doRequest(alt string) (*http.R
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15319,6 +16315,7 @@ type InstanceGroupsAddInstancesCall struct {
 	instanceGroup                     string
 	instancegroupsaddinstancesrequest *InstanceGroupsAddInstancesRequest
 	opt_                              map[string]interface{}
+	ctx_                              context.Context
 }
 
 // AddInstances: Adds a list of instances to an instance group. All of
@@ -15337,6 +16334,14 @@ func (r *InstanceGroupsService) AddInstances(project string, zone string, instan
 // for more information.
 func (c *InstanceGroupsAddInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupsAddInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsAddInstancesCall) Ctx(ctx context.Context) *InstanceGroupsAddInstancesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -15362,6 +16367,9 @@ func (c *InstanceGroupsAddInstancesCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15430,6 +16438,7 @@ type InstanceGroupsAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of instance groups, and sorts them
@@ -15501,6 +16510,14 @@ func (c *InstanceGroupsAggregatedListCall) Fields(s ...googleapi.Field) *Instanc
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsAggregatedListCall) Ctx(ctx context.Context) *InstanceGroupsAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -15527,6 +16544,9 @@ func (c *InstanceGroupsAggregatedListCall) doRequest(alt string) (*http.Response
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15605,6 +16625,7 @@ type InstanceGroupsDeleteCall struct {
 	zone          string
 	instanceGroup string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Deletes the specified instance group.
@@ -15624,6 +16645,14 @@ func (c *InstanceGroupsDeleteCall) Fields(s ...googleapi.Field) *InstanceGroupsD
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsDeleteCall) Ctx(ctx context.Context) *InstanceGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -15640,6 +16669,9 @@ func (c *InstanceGroupsDeleteCall) doRequest(alt string) (*http.Response, error)
 		"instanceGroup": c.instanceGroup,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15707,6 +16739,7 @@ type InstanceGroupsGetCall struct {
 	zone          string
 	instanceGroup string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Returns the specified instance group resource.
@@ -15726,6 +16759,14 @@ func (c *InstanceGroupsGetCall) Fields(s ...googleapi.Field) *InstanceGroupsGetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsGetCall) Ctx(ctx context.Context) *InstanceGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -15742,6 +16783,9 @@ func (c *InstanceGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 		"instanceGroup": c.instanceGroup,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15810,6 +16854,7 @@ type InstanceGroupsInsertCall struct {
 	zone          string
 	instancegroup *InstanceGroup
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Creates an instance group in the specified project using the
@@ -15827,6 +16872,14 @@ func (r *InstanceGroupsService) Insert(project string, zone string, instancegrou
 // for more information.
 func (c *InstanceGroupsInsertCall) Fields(s ...googleapi.Field) *InstanceGroupsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsInsertCall) Ctx(ctx context.Context) *InstanceGroupsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -15851,6 +16904,9 @@ func (c *InstanceGroupsInsertCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15913,6 +16969,7 @@ type InstanceGroupsListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of instance groups that are located in the
@@ -15985,6 +17042,14 @@ func (c *InstanceGroupsListCall) Fields(s ...googleapi.Field) *InstanceGroupsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsListCall) Ctx(ctx context.Context) *InstanceGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -16012,6 +17077,9 @@ func (c *InstanceGroupsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -16098,6 +17166,7 @@ type InstanceGroupsListInstancesCall struct {
 	instanceGroup                      string
 	instancegroupslistinstancesrequest *InstanceGroupsListInstancesRequest
 	opt_                               map[string]interface{}
+	ctx_                               context.Context
 }
 
 // ListInstances: Lists instances in an instance group. The parameters
@@ -16173,6 +17242,14 @@ func (c *InstanceGroupsListInstancesCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsListInstancesCall) Ctx(ctx context.Context) *InstanceGroupsListInstancesCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupsListInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancegroupslistinstancesrequest)
@@ -16207,6 +17284,9 @@ func (c *InstanceGroupsListInstancesCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -16303,6 +17383,7 @@ type InstanceGroupsRemoveInstancesCall struct {
 	instanceGroup                        string
 	instancegroupsremoveinstancesrequest *InstanceGroupsRemoveInstancesRequest
 	opt_                                 map[string]interface{}
+	ctx_                                 context.Context
 }
 
 // RemoveInstances: Removes a list of instances from an instance group.
@@ -16320,6 +17401,14 @@ func (r *InstanceGroupsService) RemoveInstances(project string, zone string, ins
 // for more information.
 func (c *InstanceGroupsRemoveInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupsRemoveInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsRemoveInstancesCall) Ctx(ctx context.Context) *InstanceGroupsRemoveInstancesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -16345,6 +17434,9 @@ func (c *InstanceGroupsRemoveInstancesCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -16416,6 +17508,7 @@ type InstanceGroupsSetNamedPortsCall struct {
 	instanceGroup                      string
 	instancegroupssetnamedportsrequest *InstanceGroupsSetNamedPortsRequest
 	opt_                               map[string]interface{}
+	ctx_                               context.Context
 }
 
 // SetNamedPorts: Sets the named ports in an instance group.
@@ -16433,6 +17526,14 @@ func (r *InstanceGroupsService) SetNamedPorts(project string, zone string, insta
 // for more information.
 func (c *InstanceGroupsSetNamedPortsCall) Fields(s ...googleapi.Field) *InstanceGroupsSetNamedPortsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceGroupsSetNamedPortsCall) Ctx(ctx context.Context) *InstanceGroupsSetNamedPortsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -16458,6 +17559,9 @@ func (c *InstanceGroupsSetNamedPortsCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -16527,6 +17631,7 @@ type InstanceTemplatesDeleteCall struct {
 	project          string
 	instanceTemplate string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Delete: Deletes the specified instance template.
@@ -16546,6 +17651,14 @@ func (c *InstanceTemplatesDeleteCall) Fields(s ...googleapi.Field) *InstanceTemp
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceTemplatesDeleteCall) Ctx(ctx context.Context) *InstanceTemplatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -16561,6 +17674,9 @@ func (c *InstanceTemplatesDeleteCall) doRequest(alt string) (*http.Response, err
 		"instanceTemplate": c.instanceTemplate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -16621,6 +17737,7 @@ type InstanceTemplatesGetCall struct {
 	project          string
 	instanceTemplate string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Get: Returns the specified instance template resource.
@@ -16640,6 +17757,14 @@ func (c *InstanceTemplatesGetCall) Fields(s ...googleapi.Field) *InstanceTemplat
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceTemplatesGetCall) Ctx(ctx context.Context) *InstanceTemplatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -16655,6 +17780,9 @@ func (c *InstanceTemplatesGetCall) doRequest(alt string) (*http.Response, error)
 		"instanceTemplate": c.instanceTemplate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -16716,6 +17844,7 @@ type InstanceTemplatesInsertCall struct {
 	project          string
 	instancetemplate *InstanceTemplate
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Insert: Creates an instance template in the specified project using
@@ -16733,6 +17862,14 @@ func (r *InstanceTemplatesService) Insert(project string, instancetemplate *Inst
 // for more information.
 func (c *InstanceTemplatesInsertCall) Fields(s ...googleapi.Field) *InstanceTemplatesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceTemplatesInsertCall) Ctx(ctx context.Context) *InstanceTemplatesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -16756,6 +17893,9 @@ func (c *InstanceTemplatesInsertCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -16810,6 +17950,7 @@ type InstanceTemplatesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves a list of instance templates that are contained
@@ -16882,6 +18023,14 @@ func (c *InstanceTemplatesListCall) Fields(s ...googleapi.Field) *InstanceTempla
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstanceTemplatesListCall) Ctx(ctx context.Context) *InstanceTemplatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -16908,6 +18057,9 @@ func (c *InstanceTemplatesListCall) doRequest(alt string) (*http.Response, error
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -16988,6 +18140,7 @@ type InstancesAddAccessConfigCall struct {
 	networkInterface string
 	accessconfig     *AccessConfig
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // AddAccessConfig: Adds an access config to an instance's network
@@ -17008,6 +18161,14 @@ func (r *InstancesService) AddAccessConfig(project string, zone string, instance
 // for more information.
 func (c *InstancesAddAccessConfigCall) Fields(s ...googleapi.Field) *InstancesAddAccessConfigCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesAddAccessConfigCall) Ctx(ctx context.Context) *InstancesAddAccessConfigCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -17034,6 +18195,9 @@ func (c *InstancesAddAccessConfigCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -17111,6 +18275,7 @@ type InstancesAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList:
@@ -17182,6 +18347,14 @@ func (c *InstancesAggregatedListCall) Fields(s ...googleapi.Field) *InstancesAgg
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesAggregatedListCall) Ctx(ctx context.Context) *InstancesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -17208,6 +18381,9 @@ func (c *InstancesAggregatedListCall) doRequest(alt string) (*http.Response, err
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -17286,6 +18462,7 @@ type InstancesAttachDiskCall struct {
 	instance     string
 	attacheddisk *AttachedDisk
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // AttachDisk: Attaches a Disk resource to an instance.
@@ -17304,6 +18481,14 @@ func (r *InstancesService) AttachDisk(project string, zone string, instance stri
 // for more information.
 func (c *InstancesAttachDiskCall) Fields(s ...googleapi.Field) *InstancesAttachDiskCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesAttachDiskCall) Ctx(ctx context.Context) *InstancesAttachDiskCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -17329,6 +18514,9 @@ func (c *InstancesAttachDiskCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -17401,6 +18589,7 @@ type InstancesDeleteCall struct {
 	zone     string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes the specified Instance resource. For more
@@ -17422,6 +18611,14 @@ func (c *InstancesDeleteCall) Fields(s ...googleapi.Field) *InstancesDeleteCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesDeleteCall) Ctx(ctx context.Context) *InstancesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -17438,6 +18635,9 @@ func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -17509,6 +18709,7 @@ type InstancesDeleteAccessConfigCall struct {
 	accessConfig     string
 	networkInterface string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // DeleteAccessConfig: Deletes an access config from an instance's
@@ -17532,6 +18733,14 @@ func (c *InstancesDeleteAccessConfigCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesDeleteAccessConfigCall) Ctx(ctx context.Context) *InstancesDeleteAccessConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesDeleteAccessConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -17550,6 +18759,9 @@ func (c *InstancesDeleteAccessConfigCall) doRequest(alt string) (*http.Response,
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -17634,6 +18846,7 @@ type InstancesDetachDiskCall struct {
 	instance   string
 	deviceName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // DetachDisk: Detaches a disk from an instance.
@@ -17655,6 +18868,14 @@ func (c *InstancesDetachDiskCall) Fields(s ...googleapi.Field) *InstancesDetachD
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesDetachDiskCall) Ctx(ctx context.Context) *InstancesDetachDiskCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesDetachDiskCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -17672,6 +18893,9 @@ func (c *InstancesDetachDiskCall) doRequest(alt string) (*http.Response, error) 
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -17749,6 +18973,7 @@ type InstancesGetCall struct {
 	zone     string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Returns the specified instance resource.
@@ -17769,6 +18994,14 @@ func (c *InstancesGetCall) Fields(s ...googleapi.Field) *InstancesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesGetCall) Ctx(ctx context.Context) *InstancesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -17785,6 +19018,9 @@ func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -17855,6 +19091,7 @@ type InstancesGetSerialPortOutputCall struct {
 	zone     string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // GetSerialPortOutput: Returns the specified instance's serial port
@@ -17883,6 +19120,14 @@ func (c *InstancesGetSerialPortOutputCall) Fields(s ...googleapi.Field) *Instanc
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesGetSerialPortOutputCall) Ctx(ctx context.Context) *InstancesGetSerialPortOutputCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesGetSerialPortOutputCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -17902,6 +19147,9 @@ func (c *InstancesGetSerialPortOutputCall) doRequest(alt string) (*http.Response
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -17981,6 +19229,7 @@ type InstancesInsertCall struct {
 	zone     string
 	instance *Instance
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Creates an instance resource in the specified project using
@@ -17999,6 +19248,14 @@ func (r *InstancesService) Insert(project string, zone string, instance *Instanc
 // for more information.
 func (c *InstancesInsertCall) Fields(s ...googleapi.Field) *InstancesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesInsertCall) Ctx(ctx context.Context) *InstancesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -18023,6 +19280,9 @@ func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -18086,6 +19346,7 @@ type InstancesListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of instance resources contained within the
@@ -18159,6 +19420,14 @@ func (c *InstancesListCall) Fields(s ...googleapi.Field) *InstancesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesListCall) Ctx(ctx context.Context) *InstancesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -18186,6 +19455,9 @@ func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -18272,6 +19544,7 @@ type InstancesResetCall struct {
 	zone     string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Reset: Performs a hard reset on the instance.
@@ -18292,6 +19565,14 @@ func (c *InstancesResetCall) Fields(s ...googleapi.Field) *InstancesResetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesResetCall) Ctx(ctx context.Context) *InstancesResetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -18308,6 +19589,9 @@ func (c *InstancesResetCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -18379,6 +19663,7 @@ type InstancesSetDiskAutoDeleteCall struct {
 	autoDelete bool
 	deviceName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // SetDiskAutoDelete: Sets the auto-delete flag for a disk attached to
@@ -18402,6 +19687,14 @@ func (c *InstancesSetDiskAutoDeleteCall) Fields(s ...googleapi.Field) *Instances
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesSetDiskAutoDeleteCall) Ctx(ctx context.Context) *InstancesSetDiskAutoDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesSetDiskAutoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -18420,6 +19713,9 @@ func (c *InstancesSetDiskAutoDeleteCall) doRequest(alt string) (*http.Response, 
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -18505,6 +19801,7 @@ type InstancesSetMetadataCall struct {
 	instance string
 	metadata *Metadata
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // SetMetadata: Sets metadata for the specified instance to the data
@@ -18524,6 +19821,14 @@ func (r *InstancesService) SetMetadata(project string, zone string, instance str
 // for more information.
 func (c *InstancesSetMetadataCall) Fields(s ...googleapi.Field) *InstancesSetMetadataCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesSetMetadataCall) Ctx(ctx context.Context) *InstancesSetMetadataCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -18549,6 +19854,9 @@ func (c *InstancesSetMetadataCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -18622,6 +19930,7 @@ type InstancesSetSchedulingCall struct {
 	instance   string
 	scheduling *Scheduling
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // SetScheduling: Sets an instance's scheduling options.
@@ -18640,6 +19949,14 @@ func (r *InstancesService) SetScheduling(project string, zone string, instance s
 // for more information.
 func (c *InstancesSetSchedulingCall) Fields(s ...googleapi.Field) *InstancesSetSchedulingCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesSetSchedulingCall) Ctx(ctx context.Context) *InstancesSetSchedulingCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -18665,6 +19982,9 @@ func (c *InstancesSetSchedulingCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -18738,6 +20058,7 @@ type InstancesSetTagsCall struct {
 	instance string
 	tags     *Tags
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // SetTags: Sets tags for the specified instance to the data included in
@@ -18757,6 +20078,14 @@ func (r *InstancesService) SetTags(project string, zone string, instance string,
 // for more information.
 func (c *InstancesSetTagsCall) Fields(s ...googleapi.Field) *InstancesSetTagsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesSetTagsCall) Ctx(ctx context.Context) *InstancesSetTagsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -18782,6 +20111,9 @@ func (c *InstancesSetTagsCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -18854,6 +20186,7 @@ type InstancesStartCall struct {
 	zone     string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Start: This method starts an instance that was stopped using the
@@ -18876,6 +20209,14 @@ func (c *InstancesStartCall) Fields(s ...googleapi.Field) *InstancesStartCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesStartCall) Ctx(ctx context.Context) *InstancesStartCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesStartCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -18892,6 +20233,9 @@ func (c *InstancesStartCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -18961,6 +20305,7 @@ type InstancesStopCall struct {
 	zone     string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Stop: This method stops a running instance, shutting it down cleanly,
@@ -18987,6 +20332,14 @@ func (c *InstancesStopCall) Fields(s ...googleapi.Field) *InstancesStopCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *InstancesStopCall) Ctx(ctx context.Context) *InstancesStopCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstancesStopCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -19003,6 +20356,9 @@ func (c *InstancesStopCall) doRequest(alt string) (*http.Response, error) {
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -19071,6 +20427,7 @@ type LicensesGetCall struct {
 	project string
 	license string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified license resource.
@@ -19090,6 +20447,14 @@ func (c *LicensesGetCall) Fields(s ...googleapi.Field) *LicensesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LicensesGetCall) Ctx(ctx context.Context) *LicensesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LicensesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -19105,6 +20470,9 @@ func (c *LicensesGetCall) doRequest(alt string) (*http.Response, error) {
 		"license": c.license,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -19165,6 +20533,7 @@ type MachineTypesAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of machine type resources grouped
@@ -19237,6 +20606,14 @@ func (c *MachineTypesAggregatedListCall) Fields(s ...googleapi.Field) *MachineTy
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MachineTypesAggregatedListCall) Ctx(ctx context.Context) *MachineTypesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MachineTypesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -19263,6 +20640,9 @@ func (c *MachineTypesAggregatedListCall) doRequest(alt string) (*http.Response, 
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -19341,6 +20721,7 @@ type MachineTypesGetCall struct {
 	zone        string
 	machineType string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Returns the specified machine type resource.
@@ -19361,6 +20742,14 @@ func (c *MachineTypesGetCall) Fields(s ...googleapi.Field) *MachineTypesGetCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MachineTypesGetCall) Ctx(ctx context.Context) *MachineTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MachineTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -19377,6 +20766,9 @@ func (c *MachineTypesGetCall) doRequest(alt string) (*http.Response, error) {
 		"machineType": c.machineType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -19446,6 +20838,7 @@ type MachineTypesListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of machine type resources available to the
@@ -19519,6 +20912,14 @@ func (c *MachineTypesListCall) Fields(s ...googleapi.Field) *MachineTypesListCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MachineTypesListCall) Ctx(ctx context.Context) *MachineTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MachineTypesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -19546,6 +20947,9 @@ func (c *MachineTypesListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -19631,6 +21035,7 @@ type NetworksDeleteCall struct {
 	project string
 	network string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Deletes the specified network resource.
@@ -19650,6 +21055,14 @@ func (c *NetworksDeleteCall) Fields(s ...googleapi.Field) *NetworksDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *NetworksDeleteCall) Ctx(ctx context.Context) *NetworksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *NetworksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -19665,6 +21078,9 @@ func (c *NetworksDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"network": c.network,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -19725,6 +21141,7 @@ type NetworksGetCall struct {
 	project string
 	network string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified network resource.
@@ -19744,6 +21161,14 @@ func (c *NetworksGetCall) Fields(s ...googleapi.Field) *NetworksGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *NetworksGetCall) Ctx(ctx context.Context) *NetworksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *NetworksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -19759,6 +21184,9 @@ func (c *NetworksGetCall) doRequest(alt string) (*http.Response, error) {
 		"network": c.network,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -19820,6 +21248,7 @@ type NetworksInsertCall struct {
 	project string
 	network *Network
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates a network resource in the specified project using the
@@ -19837,6 +21266,14 @@ func (r *NetworksService) Insert(project string, network *Network) *NetworksInse
 // for more information.
 func (c *NetworksInsertCall) Fields(s ...googleapi.Field) *NetworksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *NetworksInsertCall) Ctx(ctx context.Context) *NetworksInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -19860,6 +21297,9 @@ func (c *NetworksInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -19914,6 +21354,7 @@ type NetworksListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of network resources available to the
@@ -19986,6 +21427,14 @@ func (c *NetworksListCall) Fields(s ...googleapi.Field) *NetworksListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *NetworksListCall) Ctx(ctx context.Context) *NetworksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *NetworksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -20012,6 +21461,9 @@ func (c *NetworksListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20088,6 +21540,7 @@ type ProjectsGetCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified project resource.
@@ -20106,6 +21559,14 @@ func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsGetCall) Ctx(ctx context.Context) *ProjectsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -20120,6 +21581,9 @@ func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20173,6 +21637,7 @@ type ProjectsSetCommonInstanceMetadataCall struct {
 	project  string
 	metadata *Metadata
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // SetCommonInstanceMetadata: Sets metadata common to all instances
@@ -20190,6 +21655,14 @@ func (r *ProjectsService) SetCommonInstanceMetadata(project string, metadata *Me
 // for more information.
 func (c *ProjectsSetCommonInstanceMetadataCall) Fields(s ...googleapi.Field) *ProjectsSetCommonInstanceMetadataCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsSetCommonInstanceMetadataCall) Ctx(ctx context.Context) *ProjectsSetCommonInstanceMetadataCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -20213,6 +21686,9 @@ func (c *ProjectsSetCommonInstanceMetadataCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20268,6 +21744,7 @@ type ProjectsSetUsageExportBucketCall struct {
 	project             string
 	usageexportlocation *UsageExportLocation
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // SetUsageExportBucket: Enables the usage export feature and sets the
@@ -20287,6 +21764,14 @@ func (r *ProjectsService) SetUsageExportBucket(project string, usageexportlocati
 // for more information.
 func (c *ProjectsSetUsageExportBucketCall) Fields(s ...googleapi.Field) *ProjectsSetUsageExportBucketCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsSetUsageExportBucketCall) Ctx(ctx context.Context) *ProjectsSetUsageExportBucketCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -20310,6 +21795,9 @@ func (c *ProjectsSetUsageExportBucketCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20368,6 +21856,7 @@ type ProjectsSetUsageExportCloudStorageBucketCall struct {
 	project             string
 	usageexportlocation *UsageExportLocation
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // SetUsageExportCloudStorageBucket: [Deprecated] Use
@@ -20384,6 +21873,14 @@ func (r *ProjectsService) SetUsageExportCloudStorageBucket(project string, usage
 // for more information.
 func (c *ProjectsSetUsageExportCloudStorageBucketCall) Fields(s ...googleapi.Field) *ProjectsSetUsageExportCloudStorageBucketCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsSetUsageExportCloudStorageBucketCall) Ctx(ctx context.Context) *ProjectsSetUsageExportCloudStorageBucketCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -20407,6 +21904,9 @@ func (c *ProjectsSetUsageExportCloudStorageBucketCall) doRequest(alt string) (*h
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20465,6 +21965,7 @@ type RegionOperationsDeleteCall struct {
 	region    string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the specified region-specific Operations resource.
@@ -20485,6 +21986,14 @@ func (c *RegionOperationsDeleteCall) Fields(s ...googleapi.Field) *RegionOperati
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RegionOperationsDeleteCall) Ctx(ctx context.Context) *RegionOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RegionOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -20501,6 +22010,9 @@ func (c *RegionOperationsDeleteCall) doRequest(alt string) (*http.Response, erro
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20563,6 +22075,7 @@ type RegionOperationsGetCall struct {
 	region    string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves the specified region-specific Operations resource.
@@ -20583,6 +22096,14 @@ func (c *RegionOperationsGetCall) Fields(s ...googleapi.Field) *RegionOperations
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RegionOperationsGetCall) Ctx(ctx context.Context) *RegionOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RegionOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -20599,6 +22120,9 @@ func (c *RegionOperationsGetCall) doRequest(alt string) (*http.Response, error) 
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20668,6 +22192,7 @@ type RegionOperationsListCall struct {
 	project string
 	region  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of Operation resources contained within the
@@ -20741,6 +22266,14 @@ func (c *RegionOperationsListCall) Fields(s ...googleapi.Field) *RegionOperation
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RegionOperationsListCall) Ctx(ctx context.Context) *RegionOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RegionOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -20768,6 +22301,9 @@ func (c *RegionOperationsListCall) doRequest(alt string) (*http.Response, error)
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20853,6 +22389,7 @@ type RegionsGetCall struct {
 	project string
 	region  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified region resource.
@@ -20872,6 +22409,14 @@ func (c *RegionsGetCall) Fields(s ...googleapi.Field) *RegionsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RegionsGetCall) Ctx(ctx context.Context) *RegionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RegionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -20887,6 +22432,9 @@ func (c *RegionsGetCall) doRequest(alt string) (*http.Response, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -20947,6 +22495,7 @@ type RegionsListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of region resources available to the
@@ -21019,6 +22568,14 @@ func (c *RegionsListCall) Fields(s ...googleapi.Field) *RegionsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RegionsListCall) Ctx(ctx context.Context) *RegionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RegionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -21045,6 +22602,9 @@ func (c *RegionsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -21122,6 +22682,7 @@ type RoutesDeleteCall struct {
 	project string
 	route   string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Deletes the specified route resource.
@@ -21141,6 +22702,14 @@ func (c *RoutesDeleteCall) Fields(s ...googleapi.Field) *RoutesDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RoutesDeleteCall) Ctx(ctx context.Context) *RoutesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -21156,6 +22725,9 @@ func (c *RoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"route":   c.route,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -21216,6 +22788,7 @@ type RoutesGetCall struct {
 	project string
 	route   string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified route resource.
@@ -21235,6 +22808,14 @@ func (c *RoutesGetCall) Fields(s ...googleapi.Field) *RoutesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RoutesGetCall) Ctx(ctx context.Context) *RoutesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -21250,6 +22831,9 @@ func (c *RoutesGetCall) doRequest(alt string) (*http.Response, error) {
 		"route":   c.route,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -21311,6 +22895,7 @@ type RoutesInsertCall struct {
 	project string
 	route   *Route
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates a route resource in the specified project using the
@@ -21328,6 +22913,14 @@ func (r *RoutesService) Insert(project string, route *Route) *RoutesInsertCall {
 // for more information.
 func (c *RoutesInsertCall) Fields(s ...googleapi.Field) *RoutesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RoutesInsertCall) Ctx(ctx context.Context) *RoutesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -21351,6 +22944,9 @@ func (c *RoutesInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -21405,6 +23001,7 @@ type RoutesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of route resources available to the
@@ -21477,6 +23074,14 @@ func (c *RoutesListCall) Fields(s ...googleapi.Field) *RoutesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RoutesListCall) Ctx(ctx context.Context) *RoutesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoutesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -21503,6 +23108,9 @@ func (c *RoutesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -21580,6 +23188,7 @@ type SnapshotsDeleteCall struct {
 	project  string
 	snapshot string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes the specified Snapshot resource. Keep in mind that
@@ -21605,6 +23214,14 @@ func (c *SnapshotsDeleteCall) Fields(s ...googleapi.Field) *SnapshotsDeleteCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SnapshotsDeleteCall) Ctx(ctx context.Context) *SnapshotsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -21620,6 +23237,9 @@ func (c *SnapshotsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"snapshot": c.snapshot,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -21680,6 +23300,7 @@ type SnapshotsGetCall struct {
 	project  string
 	snapshot string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Returns the specified Snapshot resource.
@@ -21699,6 +23320,14 @@ func (c *SnapshotsGetCall) Fields(s ...googleapi.Field) *SnapshotsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SnapshotsGetCall) Ctx(ctx context.Context) *SnapshotsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -21714,6 +23343,9 @@ func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 		"snapshot": c.snapshot,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -21774,6 +23406,7 @@ type SnapshotsListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of Snapshot resources contained within the
@@ -21846,6 +23479,14 @@ func (c *SnapshotsListCall) Fields(s ...googleapi.Field) *SnapshotsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SnapshotsListCall) Ctx(ctx context.Context) *SnapshotsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -21872,6 +23513,9 @@ func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -21949,6 +23593,7 @@ type SslCertificatesDeleteCall struct {
 	project        string
 	sslCertificate string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Delete: Deletes the specified SslCertificate resource.
@@ -21967,6 +23612,14 @@ func (c *SslCertificatesDeleteCall) Fields(s ...googleapi.Field) *SslCertificate
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertificatesDeleteCall) Ctx(ctx context.Context) *SslCertificatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SslCertificatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -21982,6 +23635,9 @@ func (c *SslCertificatesDeleteCall) doRequest(alt string) (*http.Response, error
 		"sslCertificate": c.sslCertificate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22042,6 +23698,7 @@ type SslCertificatesGetCall struct {
 	project        string
 	sslCertificate string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Returns the specified SslCertificate resource.
@@ -22060,6 +23717,14 @@ func (c *SslCertificatesGetCall) Fields(s ...googleapi.Field) *SslCertificatesGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertificatesGetCall) Ctx(ctx context.Context) *SslCertificatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SslCertificatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -22075,6 +23740,9 @@ func (c *SslCertificatesGetCall) doRequest(alt string) (*http.Response, error) {
 		"sslCertificate": c.sslCertificate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22136,6 +23804,7 @@ type SslCertificatesInsertCall struct {
 	project        string
 	sslcertificate *SslCertificate
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Creates a SslCertificate resource in the specified project
@@ -22152,6 +23821,14 @@ func (r *SslCertificatesService) Insert(project string, sslcertificate *SslCerti
 // for more information.
 func (c *SslCertificatesInsertCall) Fields(s ...googleapi.Field) *SslCertificatesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertificatesInsertCall) Ctx(ctx context.Context) *SslCertificatesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -22175,6 +23852,9 @@ func (c *SslCertificatesInsertCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22229,6 +23909,7 @@ type SslCertificatesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of SslCertificate resources available to the
@@ -22300,6 +23981,14 @@ func (c *SslCertificatesListCall) Fields(s ...googleapi.Field) *SslCertificatesL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SslCertificatesListCall) Ctx(ctx context.Context) *SslCertificatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SslCertificatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -22326,6 +24015,9 @@ func (c *SslCertificatesListCall) doRequest(alt string) (*http.Response, error) 
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22403,6 +24095,7 @@ type TargetHttpProxiesDeleteCall struct {
 	project         string
 	targetHttpProxy string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Delete: Deletes the specified TargetHttpProxy resource.
@@ -22422,6 +24115,14 @@ func (c *TargetHttpProxiesDeleteCall) Fields(s ...googleapi.Field) *TargetHttpPr
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpProxiesDeleteCall) Ctx(ctx context.Context) *TargetHttpProxiesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetHttpProxiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -22437,6 +24138,9 @@ func (c *TargetHttpProxiesDeleteCall) doRequest(alt string) (*http.Response, err
 		"targetHttpProxy": c.targetHttpProxy,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22497,6 +24201,7 @@ type TargetHttpProxiesGetCall struct {
 	project         string
 	targetHttpProxy string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Get: Returns the specified TargetHttpProxy resource.
@@ -22516,6 +24221,14 @@ func (c *TargetHttpProxiesGetCall) Fields(s ...googleapi.Field) *TargetHttpProxi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpProxiesGetCall) Ctx(ctx context.Context) *TargetHttpProxiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetHttpProxiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -22531,6 +24244,9 @@ func (c *TargetHttpProxiesGetCall) doRequest(alt string) (*http.Response, error)
 		"targetHttpProxy": c.targetHttpProxy,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22592,6 +24308,7 @@ type TargetHttpProxiesInsertCall struct {
 	project         string
 	targethttpproxy *TargetHttpProxy
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Insert: Creates a TargetHttpProxy resource in the specified project
@@ -22609,6 +24326,14 @@ func (r *TargetHttpProxiesService) Insert(project string, targethttpproxy *Targe
 // for more information.
 func (c *TargetHttpProxiesInsertCall) Fields(s ...googleapi.Field) *TargetHttpProxiesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpProxiesInsertCall) Ctx(ctx context.Context) *TargetHttpProxiesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -22632,6 +24357,9 @@ func (c *TargetHttpProxiesInsertCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22686,6 +24414,7 @@ type TargetHttpProxiesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of TargetHttpProxy resources available to
@@ -22758,6 +24487,14 @@ func (c *TargetHttpProxiesListCall) Fields(s ...googleapi.Field) *TargetHttpProx
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpProxiesListCall) Ctx(ctx context.Context) *TargetHttpProxiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetHttpProxiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -22784,6 +24521,9 @@ func (c *TargetHttpProxiesListCall) doRequest(alt string) (*http.Response, error
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22862,6 +24602,7 @@ type TargetHttpProxiesSetUrlMapCall struct {
 	targetHttpProxy string
 	urlmapreference *UrlMapReference
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // SetUrlMap: Changes the URL map for TargetHttpProxy.
@@ -22879,6 +24620,14 @@ func (r *TargetHttpProxiesService) SetUrlMap(project string, targetHttpProxy str
 // for more information.
 func (c *TargetHttpProxiesSetUrlMapCall) Fields(s ...googleapi.Field) *TargetHttpProxiesSetUrlMapCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpProxiesSetUrlMapCall) Ctx(ctx context.Context) *TargetHttpProxiesSetUrlMapCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -22903,6 +24652,9 @@ func (c *TargetHttpProxiesSetUrlMapCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -22966,6 +24718,7 @@ type TargetHttpsProxiesDeleteCall struct {
 	project          string
 	targetHttpsProxy string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Delete: Deletes the specified TargetHttpsProxy resource.
@@ -22984,6 +24737,14 @@ func (c *TargetHttpsProxiesDeleteCall) Fields(s ...googleapi.Field) *TargetHttps
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpsProxiesDeleteCall) Ctx(ctx context.Context) *TargetHttpsProxiesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetHttpsProxiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -22999,6 +24760,9 @@ func (c *TargetHttpsProxiesDeleteCall) doRequest(alt string) (*http.Response, er
 		"targetHttpsProxy": c.targetHttpsProxy,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -23059,6 +24823,7 @@ type TargetHttpsProxiesGetCall struct {
 	project          string
 	targetHttpsProxy string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Get: Returns the specified TargetHttpsProxy resource.
@@ -23077,6 +24842,14 @@ func (c *TargetHttpsProxiesGetCall) Fields(s ...googleapi.Field) *TargetHttpsPro
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpsProxiesGetCall) Ctx(ctx context.Context) *TargetHttpsProxiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetHttpsProxiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -23092,6 +24865,9 @@ func (c *TargetHttpsProxiesGetCall) doRequest(alt string) (*http.Response, error
 		"targetHttpsProxy": c.targetHttpsProxy,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -23153,6 +24929,7 @@ type TargetHttpsProxiesInsertCall struct {
 	project          string
 	targethttpsproxy *TargetHttpsProxy
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Insert: Creates a TargetHttpsProxy resource in the specified project
@@ -23169,6 +24946,14 @@ func (r *TargetHttpsProxiesService) Insert(project string, targethttpsproxy *Tar
 // for more information.
 func (c *TargetHttpsProxiesInsertCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpsProxiesInsertCall) Ctx(ctx context.Context) *TargetHttpsProxiesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -23192,6 +24977,9 @@ func (c *TargetHttpsProxiesInsertCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -23246,6 +25034,7 @@ type TargetHttpsProxiesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of TargetHttpsProxy resources available to
@@ -23317,6 +25106,14 @@ func (c *TargetHttpsProxiesListCall) Fields(s ...googleapi.Field) *TargetHttpsPr
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpsProxiesListCall) Ctx(ctx context.Context) *TargetHttpsProxiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetHttpsProxiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -23343,6 +25140,9 @@ func (c *TargetHttpsProxiesListCall) doRequest(alt string) (*http.Response, erro
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -23421,6 +25221,7 @@ type TargetHttpsProxiesSetSslCertificatesCall struct {
 	targetHttpsProxy                            string
 	targethttpsproxiessetsslcertificatesrequest *TargetHttpsProxiesSetSslCertificatesRequest
 	opt_                                        map[string]interface{}
+	ctx_                                        context.Context
 }
 
 // SetSslCertificates: Replaces SslCertificates for TargetHttpsProxy.
@@ -23437,6 +25238,14 @@ func (r *TargetHttpsProxiesService) SetSslCertificates(project string, targetHtt
 // for more information.
 func (c *TargetHttpsProxiesSetSslCertificatesCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesSetSslCertificatesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpsProxiesSetSslCertificatesCall) Ctx(ctx context.Context) *TargetHttpsProxiesSetSslCertificatesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -23461,6 +25270,9 @@ func (c *TargetHttpsProxiesSetSslCertificatesCall) doRequest(alt string) (*http.
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -23525,6 +25337,7 @@ type TargetHttpsProxiesSetUrlMapCall struct {
 	targetHttpsProxy string
 	urlmapreference  *UrlMapReference
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // SetUrlMap: Changes the URL map for TargetHttpsProxy.
@@ -23541,6 +25354,14 @@ func (r *TargetHttpsProxiesService) SetUrlMap(project string, targetHttpsProxy s
 // for more information.
 func (c *TargetHttpsProxiesSetUrlMapCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesSetUrlMapCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetHttpsProxiesSetUrlMapCall) Ctx(ctx context.Context) *TargetHttpsProxiesSetUrlMapCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -23565,6 +25386,9 @@ func (c *TargetHttpsProxiesSetUrlMapCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -23627,6 +25451,7 @@ type TargetInstancesAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of target instances grouped by
@@ -23699,6 +25524,14 @@ func (c *TargetInstancesAggregatedListCall) Fields(s ...googleapi.Field) *Target
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetInstancesAggregatedListCall) Ctx(ctx context.Context) *TargetInstancesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetInstancesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -23725,6 +25558,9 @@ func (c *TargetInstancesAggregatedListCall) doRequest(alt string) (*http.Respons
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -23803,6 +25639,7 @@ type TargetInstancesDeleteCall struct {
 	zone           string
 	targetInstance string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Delete: Deletes the specified TargetInstance resource.
@@ -23823,6 +25660,14 @@ func (c *TargetInstancesDeleteCall) Fields(s ...googleapi.Field) *TargetInstance
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetInstancesDeleteCall) Ctx(ctx context.Context) *TargetInstancesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -23839,6 +25684,9 @@ func (c *TargetInstancesDeleteCall) doRequest(alt string) (*http.Response, error
 		"targetInstance": c.targetInstance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -23908,6 +25756,7 @@ type TargetInstancesGetCall struct {
 	zone           string
 	targetInstance string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Returns the specified TargetInstance resource.
@@ -23928,6 +25777,14 @@ func (c *TargetInstancesGetCall) Fields(s ...googleapi.Field) *TargetInstancesGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetInstancesGetCall) Ctx(ctx context.Context) *TargetInstancesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -23944,6 +25801,9 @@ func (c *TargetInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 		"targetInstance": c.targetInstance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -24014,6 +25874,7 @@ type TargetInstancesInsertCall struct {
 	zone           string
 	targetinstance *TargetInstance
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Creates a TargetInstance resource in the specified project
@@ -24032,6 +25893,14 @@ func (r *TargetInstancesService) Insert(project string, zone string, targetinsta
 // for more information.
 func (c *TargetInstancesInsertCall) Fields(s ...googleapi.Field) *TargetInstancesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetInstancesInsertCall) Ctx(ctx context.Context) *TargetInstancesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -24056,6 +25925,9 @@ func (c *TargetInstancesInsertCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -24119,6 +25991,7 @@ type TargetInstancesListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of TargetInstance resources available to the
@@ -24192,6 +26065,14 @@ func (c *TargetInstancesListCall) Fields(s ...googleapi.Field) *TargetInstancesL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetInstancesListCall) Ctx(ctx context.Context) *TargetInstancesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -24219,6 +26100,9 @@ func (c *TargetInstancesListCall) doRequest(alt string) (*http.Response, error) 
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -24306,6 +26190,7 @@ type TargetPoolsAddHealthCheckCall struct {
 	targetPool                       string
 	targetpoolsaddhealthcheckrequest *TargetPoolsAddHealthCheckRequest
 	opt_                             map[string]interface{}
+	ctx_                             context.Context
 }
 
 // AddHealthCheck: Adds health check URL to targetPool.
@@ -24324,6 +26209,14 @@ func (r *TargetPoolsService) AddHealthCheck(project string, region string, targe
 // for more information.
 func (c *TargetPoolsAddHealthCheckCall) Fields(s ...googleapi.Field) *TargetPoolsAddHealthCheckCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsAddHealthCheckCall) Ctx(ctx context.Context) *TargetPoolsAddHealthCheckCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -24349,6 +26242,9 @@ func (c *TargetPoolsAddHealthCheckCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -24421,6 +26317,7 @@ type TargetPoolsAddInstanceCall struct {
 	targetPool                    string
 	targetpoolsaddinstancerequest *TargetPoolsAddInstanceRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // AddInstance: Adds instance url to targetPool.
@@ -24439,6 +26336,14 @@ func (r *TargetPoolsService) AddInstance(project string, region string, targetPo
 // for more information.
 func (c *TargetPoolsAddInstanceCall) Fields(s ...googleapi.Field) *TargetPoolsAddInstanceCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsAddInstanceCall) Ctx(ctx context.Context) *TargetPoolsAddInstanceCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -24464,6 +26369,9 @@ func (c *TargetPoolsAddInstanceCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -24533,6 +26441,7 @@ type TargetPoolsAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of target pools grouped by scope.
@@ -24604,6 +26513,14 @@ func (c *TargetPoolsAggregatedListCall) Fields(s ...googleapi.Field) *TargetPool
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsAggregatedListCall) Ctx(ctx context.Context) *TargetPoolsAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetPoolsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -24630,6 +26547,9 @@ func (c *TargetPoolsAggregatedListCall) doRequest(alt string) (*http.Response, e
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -24708,6 +26628,7 @@ type TargetPoolsDeleteCall struct {
 	region     string
 	targetPool string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes the specified TargetPool resource.
@@ -24728,6 +26649,14 @@ func (c *TargetPoolsDeleteCall) Fields(s ...googleapi.Field) *TargetPoolsDeleteC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsDeleteCall) Ctx(ctx context.Context) *TargetPoolsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -24744,6 +26673,9 @@ func (c *TargetPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"targetPool": c.targetPool,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -24813,6 +26745,7 @@ type TargetPoolsGetCall struct {
 	region     string
 	targetPool string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns the specified TargetPool resource.
@@ -24833,6 +26766,14 @@ func (c *TargetPoolsGetCall) Fields(s ...googleapi.Field) *TargetPoolsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsGetCall) Ctx(ctx context.Context) *TargetPoolsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -24849,6 +26790,9 @@ func (c *TargetPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 		"targetPool": c.targetPool,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -24920,6 +26864,7 @@ type TargetPoolsGetHealthCall struct {
 	targetPool        string
 	instancereference *InstanceReference
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // GetHealth: Gets the most recent health check results for each IP for
@@ -24939,6 +26884,14 @@ func (r *TargetPoolsService) GetHealth(project string, region string, targetPool
 // for more information.
 func (c *TargetPoolsGetHealthCall) Fields(s ...googleapi.Field) *TargetPoolsGetHealthCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsGetHealthCall) Ctx(ctx context.Context) *TargetPoolsGetHealthCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -24964,6 +26917,9 @@ func (c *TargetPoolsGetHealthCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -25036,6 +26992,7 @@ type TargetPoolsInsertCall struct {
 	region     string
 	targetpool *TargetPool
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Creates a TargetPool resource in the specified project and
@@ -25054,6 +27011,14 @@ func (r *TargetPoolsService) Insert(project string, region string, targetpool *T
 // for more information.
 func (c *TargetPoolsInsertCall) Fields(s ...googleapi.Field) *TargetPoolsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsInsertCall) Ctx(ctx context.Context) *TargetPoolsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -25078,6 +27043,9 @@ func (c *TargetPoolsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -25141,6 +27109,7 @@ type TargetPoolsListCall struct {
 	project string
 	region  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of TargetPool resources available to the
@@ -25214,6 +27183,14 @@ func (c *TargetPoolsListCall) Fields(s ...googleapi.Field) *TargetPoolsListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsListCall) Ctx(ctx context.Context) *TargetPoolsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -25241,6 +27218,9 @@ func (c *TargetPoolsListCall) doRequest(alt string) (*http.Response, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -25328,6 +27308,7 @@ type TargetPoolsRemoveHealthCheckCall struct {
 	targetPool                          string
 	targetpoolsremovehealthcheckrequest *TargetPoolsRemoveHealthCheckRequest
 	opt_                                map[string]interface{}
+	ctx_                                context.Context
 }
 
 // RemoveHealthCheck: Removes health check URL from targetPool.
@@ -25346,6 +27327,14 @@ func (r *TargetPoolsService) RemoveHealthCheck(project string, region string, ta
 // for more information.
 func (c *TargetPoolsRemoveHealthCheckCall) Fields(s ...googleapi.Field) *TargetPoolsRemoveHealthCheckCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsRemoveHealthCheckCall) Ctx(ctx context.Context) *TargetPoolsRemoveHealthCheckCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -25371,6 +27360,9 @@ func (c *TargetPoolsRemoveHealthCheckCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -25443,6 +27435,7 @@ type TargetPoolsRemoveInstanceCall struct {
 	targetPool                       string
 	targetpoolsremoveinstancerequest *TargetPoolsRemoveInstanceRequest
 	opt_                             map[string]interface{}
+	ctx_                             context.Context
 }
 
 // RemoveInstance: Removes instance URL from targetPool.
@@ -25461,6 +27454,14 @@ func (r *TargetPoolsService) RemoveInstance(project string, region string, targe
 // for more information.
 func (c *TargetPoolsRemoveInstanceCall) Fields(s ...googleapi.Field) *TargetPoolsRemoveInstanceCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsRemoveInstanceCall) Ctx(ctx context.Context) *TargetPoolsRemoveInstanceCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -25486,6 +27487,9 @@ func (c *TargetPoolsRemoveInstanceCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -25558,6 +27562,7 @@ type TargetPoolsSetBackupCall struct {
 	targetPool      string
 	targetreference *TargetReference
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // SetBackup: Changes backup pool configurations.
@@ -25586,6 +27591,14 @@ func (c *TargetPoolsSetBackupCall) Fields(s ...googleapi.Field) *TargetPoolsSetB
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetPoolsSetBackupCall) Ctx(ctx context.Context) *TargetPoolsSetBackupCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetPoolsSetBackupCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targetreference)
@@ -25611,6 +27624,9 @@ func (c *TargetPoolsSetBackupCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -25687,6 +27703,7 @@ type TargetVpnGatewaysAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of target VPN gateways grouped by
@@ -25758,6 +27775,14 @@ func (c *TargetVpnGatewaysAggregatedListCall) Fields(s ...googleapi.Field) *Targ
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetVpnGatewaysAggregatedListCall) Ctx(ctx context.Context) *TargetVpnGatewaysAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetVpnGatewaysAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -25784,6 +27809,9 @@ func (c *TargetVpnGatewaysAggregatedListCall) doRequest(alt string) (*http.Respo
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -25862,6 +27890,7 @@ type TargetVpnGatewaysDeleteCall struct {
 	region           string
 	targetVpnGateway string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Delete: Deletes the specified TargetVpnGateway resource.
@@ -25881,6 +27910,14 @@ func (c *TargetVpnGatewaysDeleteCall) Fields(s ...googleapi.Field) *TargetVpnGat
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetVpnGatewaysDeleteCall) Ctx(ctx context.Context) *TargetVpnGatewaysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetVpnGatewaysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -25897,6 +27934,9 @@ func (c *TargetVpnGatewaysDeleteCall) doRequest(alt string) (*http.Response, err
 		"targetVpnGateway": c.targetVpnGateway,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -25966,6 +28006,7 @@ type TargetVpnGatewaysGetCall struct {
 	region           string
 	targetVpnGateway string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Get: Returns the specified TargetVpnGateway resource.
@@ -25985,6 +28026,14 @@ func (c *TargetVpnGatewaysGetCall) Fields(s ...googleapi.Field) *TargetVpnGatewa
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetVpnGatewaysGetCall) Ctx(ctx context.Context) *TargetVpnGatewaysGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetVpnGatewaysGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -26001,6 +28050,9 @@ func (c *TargetVpnGatewaysGetCall) doRequest(alt string) (*http.Response, error)
 		"targetVpnGateway": c.targetVpnGateway,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -26071,6 +28123,7 @@ type TargetVpnGatewaysInsertCall struct {
 	region           string
 	targetvpngateway *TargetVpnGateway
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Insert: Creates a TargetVpnGateway resource in the specified project
@@ -26088,6 +28141,14 @@ func (r *TargetVpnGatewaysService) Insert(project string, region string, targetv
 // for more information.
 func (c *TargetVpnGatewaysInsertCall) Fields(s ...googleapi.Field) *TargetVpnGatewaysInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetVpnGatewaysInsertCall) Ctx(ctx context.Context) *TargetVpnGatewaysInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -26112,6 +28173,9 @@ func (c *TargetVpnGatewaysInsertCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -26175,6 +28239,7 @@ type TargetVpnGatewaysListCall struct {
 	project string
 	region  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of TargetVpnGateway resources available to
@@ -26247,6 +28312,14 @@ func (c *TargetVpnGatewaysListCall) Fields(s ...googleapi.Field) *TargetVpnGatew
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TargetVpnGatewaysListCall) Ctx(ctx context.Context) *TargetVpnGatewaysListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TargetVpnGatewaysListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -26274,6 +28347,9 @@ func (c *TargetVpnGatewaysListCall) doRequest(alt string) (*http.Response, error
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -26359,6 +28435,7 @@ type UrlMapsDeleteCall struct {
 	project string
 	urlMap  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Deletes the specified UrlMap resource.
@@ -26378,6 +28455,14 @@ func (c *UrlMapsDeleteCall) Fields(s ...googleapi.Field) *UrlMapsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlMapsDeleteCall) Ctx(ctx context.Context) *UrlMapsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlMapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -26393,6 +28478,9 @@ func (c *UrlMapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"urlMap":  c.urlMap,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -26453,6 +28541,7 @@ type UrlMapsGetCall struct {
 	project string
 	urlMap  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified UrlMap resource.
@@ -26472,6 +28561,14 @@ func (c *UrlMapsGetCall) Fields(s ...googleapi.Field) *UrlMapsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlMapsGetCall) Ctx(ctx context.Context) *UrlMapsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlMapsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -26487,6 +28584,9 @@ func (c *UrlMapsGetCall) doRequest(alt string) (*http.Response, error) {
 		"urlMap":  c.urlMap,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -26548,6 +28648,7 @@ type UrlMapsInsertCall struct {
 	project string
 	urlmap  *UrlMap
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates a UrlMap resource in the specified project using the
@@ -26565,6 +28666,14 @@ func (r *UrlMapsService) Insert(project string, urlmap *UrlMap) *UrlMapsInsertCa
 // for more information.
 func (c *UrlMapsInsertCall) Fields(s ...googleapi.Field) *UrlMapsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlMapsInsertCall) Ctx(ctx context.Context) *UrlMapsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -26588,6 +28697,9 @@ func (c *UrlMapsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -26642,6 +28754,7 @@ type UrlMapsListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of UrlMap resources available to the
@@ -26714,6 +28827,14 @@ func (c *UrlMapsListCall) Fields(s ...googleapi.Field) *UrlMapsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlMapsListCall) Ctx(ctx context.Context) *UrlMapsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlMapsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -26740,6 +28861,9 @@ func (c *UrlMapsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -26818,6 +28942,7 @@ type UrlMapsPatchCall struct {
 	urlMap  string
 	urlmap  *UrlMap
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Patch: Update the entire content of the UrlMap resource. This method
@@ -26836,6 +28961,14 @@ func (r *UrlMapsService) Patch(project string, urlMap string, urlmap *UrlMap) *U
 // for more information.
 func (c *UrlMapsPatchCall) Fields(s ...googleapi.Field) *UrlMapsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlMapsPatchCall) Ctx(ctx context.Context) *UrlMapsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -26860,6 +28993,9 @@ func (c *UrlMapsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -26924,6 +29060,7 @@ type UrlMapsUpdateCall struct {
 	urlMap  string
 	urlmap  *UrlMap
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Update: Update the entire content of the UrlMap resource.
@@ -26941,6 +29078,14 @@ func (r *UrlMapsService) Update(project string, urlMap string, urlmap *UrlMap) *
 // for more information.
 func (c *UrlMapsUpdateCall) Fields(s ...googleapi.Field) *UrlMapsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlMapsUpdateCall) Ctx(ctx context.Context) *UrlMapsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -26965,6 +29110,9 @@ func (c *UrlMapsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -27029,6 +29177,7 @@ type UrlMapsValidateCall struct {
 	urlMap                 string
 	urlmapsvalidaterequest *UrlMapsValidateRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // Validate: Run static validation for the UrlMap. In particular, the
@@ -27048,6 +29197,14 @@ func (r *UrlMapsService) Validate(project string, urlMap string, urlmapsvalidate
 // for more information.
 func (c *UrlMapsValidateCall) Fields(s ...googleapi.Field) *UrlMapsValidateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlMapsValidateCall) Ctx(ctx context.Context) *UrlMapsValidateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -27072,6 +29229,9 @@ func (c *UrlMapsValidateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -27134,6 +29294,7 @@ type VpnTunnelsAggregatedListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // AggregatedList: Retrieves the list of VPN tunnels grouped by scope.
@@ -27204,6 +29365,14 @@ func (c *VpnTunnelsAggregatedListCall) Fields(s ...googleapi.Field) *VpnTunnelsA
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VpnTunnelsAggregatedListCall) Ctx(ctx context.Context) *VpnTunnelsAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VpnTunnelsAggregatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -27230,6 +29399,9 @@ func (c *VpnTunnelsAggregatedListCall) doRequest(alt string) (*http.Response, er
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -27308,6 +29480,7 @@ type VpnTunnelsDeleteCall struct {
 	region    string
 	vpnTunnel string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the specified VpnTunnel resource.
@@ -27327,6 +29500,14 @@ func (c *VpnTunnelsDeleteCall) Fields(s ...googleapi.Field) *VpnTunnelsDeleteCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VpnTunnelsDeleteCall) Ctx(ctx context.Context) *VpnTunnelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VpnTunnelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -27343,6 +29524,9 @@ func (c *VpnTunnelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"vpnTunnel": c.vpnTunnel,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -27412,6 +29596,7 @@ type VpnTunnelsGetCall struct {
 	region    string
 	vpnTunnel string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns the specified VpnTunnel resource.
@@ -27431,6 +29616,14 @@ func (c *VpnTunnelsGetCall) Fields(s ...googleapi.Field) *VpnTunnelsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VpnTunnelsGetCall) Ctx(ctx context.Context) *VpnTunnelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VpnTunnelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -27447,6 +29640,9 @@ func (c *VpnTunnelsGetCall) doRequest(alt string) (*http.Response, error) {
 		"vpnTunnel": c.vpnTunnel,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -27517,6 +29713,7 @@ type VpnTunnelsInsertCall struct {
 	region    string
 	vpntunnel *VpnTunnel
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Insert: Creates a VpnTunnel resource in the specified project and
@@ -27534,6 +29731,14 @@ func (r *VpnTunnelsService) Insert(project string, region string, vpntunnel *Vpn
 // for more information.
 func (c *VpnTunnelsInsertCall) Fields(s ...googleapi.Field) *VpnTunnelsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VpnTunnelsInsertCall) Ctx(ctx context.Context) *VpnTunnelsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -27558,6 +29763,9 @@ func (c *VpnTunnelsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -27621,6 +29829,7 @@ type VpnTunnelsListCall struct {
 	project string
 	region  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of VpnTunnel resources contained in the
@@ -27693,6 +29902,14 @@ func (c *VpnTunnelsListCall) Fields(s ...googleapi.Field) *VpnTunnelsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VpnTunnelsListCall) Ctx(ctx context.Context) *VpnTunnelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VpnTunnelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -27720,6 +29937,9 @@ func (c *VpnTunnelsListCall) doRequest(alt string) (*http.Response, error) {
 		"region":  c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -27806,6 +30026,7 @@ type ZoneOperationsDeleteCall struct {
 	zone      string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the specified zone-specific Operations resource.
@@ -27826,6 +30047,14 @@ func (c *ZoneOperationsDeleteCall) Fields(s ...googleapi.Field) *ZoneOperationsD
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZoneOperationsDeleteCall) Ctx(ctx context.Context) *ZoneOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZoneOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -27842,6 +30071,9 @@ func (c *ZoneOperationsDeleteCall) doRequest(alt string) (*http.Response, error)
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -27904,6 +30136,7 @@ type ZoneOperationsGetCall struct {
 	zone      string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves the specified zone-specific Operations resource.
@@ -27924,6 +30157,14 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZoneOperationsGetCall) Ctx(ctx context.Context) *ZoneOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -27940,6 +30181,9 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -28009,6 +30253,7 @@ type ZoneOperationsListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of Operation resources contained within the
@@ -28082,6 +30327,14 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZoneOperationsListCall) Ctx(ctx context.Context) *ZoneOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -28109,6 +30362,9 @@ func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -28194,6 +30450,7 @@ type ZonesGetCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified zone resource.
@@ -28213,6 +30470,14 @@ func (c *ZonesGetCall) Fields(s ...googleapi.Field) *ZonesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZonesGetCall) Ctx(ctx context.Context) *ZonesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -28228,6 +30493,9 @@ func (c *ZonesGetCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -28288,6 +30556,7 @@ type ZonesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of zone resources available to the specified
@@ -28360,6 +30629,14 @@ func (c *ZonesListCall) Fields(s ...googleapi.Field) *ZonesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZonesListCall) Ctx(ctx context.Context) *ZonesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZonesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -28386,6 +30663,9 @@ func (c *ZonesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

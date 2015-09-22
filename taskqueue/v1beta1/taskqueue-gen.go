@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "taskqueue:v1beta1"
 const apiName = "taskqueue"
@@ -195,6 +195,7 @@ type TaskqueuesGetCall struct {
 	project   string
 	taskqueue string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get detailed information about a TaskQueue.
@@ -220,6 +221,14 @@ func (c *TaskqueuesGetCall) Fields(s ...googleapi.Field) *TaskqueuesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TaskqueuesGetCall) Ctx(ctx context.Context) *TaskqueuesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TaskqueuesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -238,6 +247,9 @@ func (c *TaskqueuesGetCall) doRequest(alt string) (*http.Response, error) {
 		"taskqueue": c.taskqueue,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -302,6 +314,7 @@ type TasksDeleteCall struct {
 	taskqueue string
 	task      string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Delete a task from a TaskQueue.
@@ -321,6 +334,14 @@ func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksDeleteCall) Ctx(ctx context.Context) *TasksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -337,6 +358,9 @@ func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"task":      c.task,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -396,6 +420,7 @@ type TasksGetCall struct {
 	taskqueue string
 	task      string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get a particular task from a TaskQueue.
@@ -415,6 +440,14 @@ func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksGetCall) Ctx(ctx context.Context) *TasksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -431,6 +464,9 @@ func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 		"task":      c.task,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -498,6 +534,7 @@ type TasksLeaseCall struct {
 	numTasks  int64
 	leaseSecs int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Lease: Lease 1 or more tasks from a TaskQueue.
@@ -518,6 +555,14 @@ func (c *TasksLeaseCall) Fields(s ...googleapi.Field) *TasksLeaseCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksLeaseCall) Ctx(ctx context.Context) *TasksLeaseCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TasksLeaseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -535,6 +580,9 @@ func (c *TasksLeaseCall) doRequest(alt string) (*http.Response, error) {
 		"taskqueue": c.taskqueue,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -609,6 +657,7 @@ type TasksListCall struct {
 	project   string
 	taskqueue string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: List Tasks in a TaskQueue
@@ -627,6 +676,14 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksListCall) Ctx(ctx context.Context) *TasksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -642,6 +699,9 @@ func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 		"taskqueue": c.taskqueue,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

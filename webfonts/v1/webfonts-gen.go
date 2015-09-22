@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "webfonts:v1"
 const apiName = "webfonts"
@@ -116,6 +116,7 @@ type WebfontList struct {
 type WebfontsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieves the list of fonts currently served by the Google
@@ -146,6 +147,14 @@ func (c *WebfontsListCall) Fields(s ...googleapi.Field) *WebfontsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WebfontsListCall) Ctx(ctx context.Context) *WebfontsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *WebfontsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -161,6 +170,9 @@ func (c *WebfontsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

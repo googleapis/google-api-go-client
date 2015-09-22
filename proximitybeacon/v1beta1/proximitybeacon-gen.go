@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "proximitybeacon:v1beta1"
 const apiName = "proximitybeacon"
@@ -470,6 +470,7 @@ type BeaconinfoGetforobservedCall struct {
 	s                                *Service
 	getinfoforobservedbeaconsrequest *GetInfoForObservedBeaconsRequest
 	opt_                             map[string]interface{}
+	ctx_                             context.Context
 }
 
 // Getforobserved: Given one or more beacon observations, returns any
@@ -485,6 +486,14 @@ func (r *BeaconinfoService) Getforobserved(getinfoforobservedbeaconsrequest *Get
 // for more information.
 func (c *BeaconinfoGetforobservedCall) Fields(s ...googleapi.Field) *BeaconinfoGetforobservedCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconinfoGetforobservedCall) Context(ctx context.Context) *BeaconinfoGetforobservedCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -506,6 +515,9 @@ func (c *BeaconinfoGetforobservedCall) doRequest(alt string) (*http.Response, er
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -544,6 +556,7 @@ type BeaconsActivateCall struct {
 	s          *Service
 	beaconName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Activate: (Re)activates a beacon. A beacon that is active will return
@@ -564,6 +577,14 @@ func (c *BeaconsActivateCall) Fields(s ...googleapi.Field) *BeaconsActivateCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsActivateCall) Context(ctx context.Context) *BeaconsActivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsActivateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -578,6 +599,9 @@ func (c *BeaconsActivateCall) doRequest(alt string) (*http.Response, error) {
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -625,6 +649,7 @@ type BeaconsDeactivateCall struct {
 	s          *Service
 	beaconName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Deactivate: Deactivates a beacon. Once deactivated, the API will not
@@ -646,6 +671,14 @@ func (c *BeaconsDeactivateCall) Fields(s ...googleapi.Field) *BeaconsDeactivateC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsDeactivateCall) Context(ctx context.Context) *BeaconsDeactivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -660,6 +693,9 @@ func (c *BeaconsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -707,6 +743,7 @@ type BeaconsDecommissionCall struct {
 	s          *Service
 	beaconName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Decommission: Decommissions the specified beacon in the service. This
@@ -727,6 +764,14 @@ func (c *BeaconsDecommissionCall) Fields(s ...googleapi.Field) *BeaconsDecommiss
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsDecommissionCall) Context(ctx context.Context) *BeaconsDecommissionCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsDecommissionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -741,6 +786,9 @@ func (c *BeaconsDecommissionCall) doRequest(alt string) (*http.Response, error) 
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -788,6 +836,7 @@ type BeaconsGetCall struct {
 	s          *Service
 	beaconName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns detailed information about the specified beacon.
@@ -805,6 +854,14 @@ func (c *BeaconsGetCall) Fields(s ...googleapi.Field) *BeaconsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsGetCall) Context(ctx context.Context) *BeaconsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -819,6 +876,9 @@ func (c *BeaconsGetCall) doRequest(alt string) (*http.Response, error) {
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -865,6 +925,7 @@ func (c *BeaconsGetCall) Do() (*Beacon, error) {
 type BeaconsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Searches the beacon registry for beacons that match the given
@@ -950,6 +1011,14 @@ func (c *BeaconsListCall) Fields(s ...googleapi.Field) *BeaconsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsListCall) Context(ctx context.Context) *BeaconsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -971,6 +1040,9 @@ func (c *BeaconsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1024,6 +1096,7 @@ type BeaconsRegisterCall struct {
 	s      *Service
 	beacon *Beacon
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Register: Registers a previously unregistered beacon given its
@@ -1040,6 +1113,14 @@ func (r *BeaconsService) Register(beacon *Beacon) *BeaconsRegisterCall {
 // for more information.
 func (c *BeaconsRegisterCall) Fields(s ...googleapi.Field) *BeaconsRegisterCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsRegisterCall) Context(ctx context.Context) *BeaconsRegisterCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1061,6 +1142,9 @@ func (c *BeaconsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1100,6 +1184,7 @@ type BeaconsUpdateCall struct {
 	beaconName string
 	beacon     *Beacon
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates the information about the specified beacon. **Any
@@ -1124,6 +1209,14 @@ func (c *BeaconsUpdateCall) Fields(s ...googleapi.Field) *BeaconsUpdateCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsUpdateCall) Context(ctx context.Context) *BeaconsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.beacon)
@@ -1144,6 +1237,9 @@ func (c *BeaconsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1194,6 +1290,7 @@ type BeaconsAttachmentsBatchDeleteCall struct {
 	s          *Service
 	beaconName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // BatchDelete: Deletes multiple attachments on a given beacon. This
@@ -1225,6 +1322,14 @@ func (c *BeaconsAttachmentsBatchDeleteCall) Fields(s ...googleapi.Field) *Beacon
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsAttachmentsBatchDeleteCall) Context(ctx context.Context) *BeaconsAttachmentsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsAttachmentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1242,6 +1347,9 @@ func (c *BeaconsAttachmentsBatchDeleteCall) doRequest(alt string) (*http.Respons
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1295,6 +1403,7 @@ type BeaconsAttachmentsCreateCall struct {
 	beaconName       string
 	beaconattachment *BeaconAttachment
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Create: Associates the given data with the specified beacon.
@@ -1321,6 +1430,14 @@ func (c *BeaconsAttachmentsCreateCall) Fields(s ...googleapi.Field) *BeaconsAtta
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsAttachmentsCreateCall) Context(ctx context.Context) *BeaconsAttachmentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.beaconattachment)
@@ -1341,6 +1458,9 @@ func (c *BeaconsAttachmentsCreateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1391,6 +1511,7 @@ type BeaconsAttachmentsDeleteCall struct {
 	s              *Service
 	attachmentName string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Delete: Deletes the specified attachment for the given beacon. Each
@@ -1412,6 +1533,14 @@ func (c *BeaconsAttachmentsDeleteCall) Fields(s ...googleapi.Field) *BeaconsAtta
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsAttachmentsDeleteCall) Context(ctx context.Context) *BeaconsAttachmentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1426,6 +1555,9 @@ func (c *BeaconsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, er
 		"attachmentName": c.attachmentName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1473,6 +1605,7 @@ type BeaconsAttachmentsListCall struct {
 	s          *Service
 	beaconName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Returns the attachments for the specified beacon that match the
@@ -1504,6 +1637,14 @@ func (c *BeaconsAttachmentsListCall) Fields(s ...googleapi.Field) *BeaconsAttach
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsAttachmentsListCall) Context(ctx context.Context) *BeaconsAttachmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1521,6 +1662,9 @@ func (c *BeaconsAttachmentsListCall) doRequest(alt string) (*http.Response, erro
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1573,6 +1717,7 @@ type BeaconsDiagnosticsListCall struct {
 	s          *Service
 	beaconName string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List the diagnostics for a single beacon. You can also list
@@ -1620,6 +1765,14 @@ func (c *BeaconsDiagnosticsListCall) Fields(s ...googleapi.Field) *BeaconsDiagno
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BeaconsDiagnosticsListCall) Context(ctx context.Context) *BeaconsDiagnosticsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BeaconsDiagnosticsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1643,6 +1796,9 @@ func (c *BeaconsDiagnosticsListCall) doRequest(alt string) (*http.Response, erro
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1710,6 +1866,7 @@ func (c *BeaconsDiagnosticsListCall) Do() (*ListDiagnosticsResponse, error) {
 type NamespacesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all attachment namespaces owned by your Google Developers
@@ -1729,6 +1886,14 @@ func (c *NamespacesListCall) Fields(s ...googleapi.Field) *NamespacesListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *NamespacesListCall) Context(ctx context.Context) *NamespacesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *NamespacesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1741,6 +1906,9 @@ func (c *NamespacesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

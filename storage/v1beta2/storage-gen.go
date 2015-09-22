@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "storage:v1beta2"
 const apiName = "storage"
@@ -653,6 +653,7 @@ type BucketAccessControlsDeleteCall struct {
 	bucket string
 	entity string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Permanently deletes the ACL entry for the specified entity on
@@ -672,6 +673,14 @@ func (c *BucketAccessControlsDeleteCall) Fields(s ...googleapi.Field) *BucketAcc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketAccessControlsDeleteCall) Context(ctx context.Context) *BucketAccessControlsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketAccessControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -687,6 +696,9 @@ func (c *BucketAccessControlsDeleteCall) doRequest(alt string) (*http.Response, 
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -737,6 +749,7 @@ type BucketAccessControlsGetCall struct {
 	bucket string
 	entity string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Returns the ACL entry for the specified entity on the specified
@@ -756,6 +769,14 @@ func (c *BucketAccessControlsGetCall) Fields(s ...googleapi.Field) *BucketAccess
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketAccessControlsGetCall) Context(ctx context.Context) *BucketAccessControlsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketAccessControlsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -771,6 +792,9 @@ func (c *BucketAccessControlsGetCall) doRequest(alt string) (*http.Response, err
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -828,6 +852,7 @@ type BucketAccessControlsInsertCall struct {
 	bucket              string
 	bucketaccesscontrol *BucketAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Insert: Creates a new ACL entry on the specified bucket.
@@ -843,6 +868,14 @@ func (r *BucketAccessControlsService) Insert(bucket string, bucketaccesscontrol 
 // for more information.
 func (c *BucketAccessControlsInsertCall) Fields(s ...googleapi.Field) *BucketAccessControlsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketAccessControlsInsertCall) Context(ctx context.Context) *BucketAccessControlsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -866,6 +899,9 @@ func (c *BucketAccessControlsInsertCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -918,6 +954,7 @@ type BucketAccessControlsListCall struct {
 	s      *Service
 	bucket string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves ACL entries on the specified bucket.
@@ -935,6 +972,14 @@ func (c *BucketAccessControlsListCall) Fields(s ...googleapi.Field) *BucketAcces
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketAccessControlsListCall) Context(ctx context.Context) *BucketAccessControlsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketAccessControlsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -949,6 +994,9 @@ func (c *BucketAccessControlsListCall) doRequest(alt string) (*http.Response, er
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1000,6 +1048,7 @@ type BucketAccessControlsPatchCall struct {
 	entity              string
 	bucketaccesscontrol *BucketAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Patch: Updates an ACL entry on the specified bucket. This method
@@ -1017,6 +1066,14 @@ func (r *BucketAccessControlsService) Patch(bucket string, entity string, bucket
 // for more information.
 func (c *BucketAccessControlsPatchCall) Fields(s ...googleapi.Field) *BucketAccessControlsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketAccessControlsPatchCall) Context(ctx context.Context) *BucketAccessControlsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1041,6 +1098,9 @@ func (c *BucketAccessControlsPatchCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1102,6 +1162,7 @@ type BucketAccessControlsUpdateCall struct {
 	entity              string
 	bucketaccesscontrol *BucketAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Update: Updates an ACL entry on the specified bucket.
@@ -1118,6 +1179,14 @@ func (r *BucketAccessControlsService) Update(bucket string, entity string, bucke
 // for more information.
 func (c *BucketAccessControlsUpdateCall) Fields(s ...googleapi.Field) *BucketAccessControlsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketAccessControlsUpdateCall) Context(ctx context.Context) *BucketAccessControlsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1142,6 +1211,9 @@ func (c *BucketAccessControlsUpdateCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1201,6 +1273,7 @@ type BucketsDeleteCall struct {
 	s      *Service
 	bucket string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Permanently deletes an empty bucket.
@@ -1236,6 +1309,14 @@ func (c *BucketsDeleteCall) Fields(s ...googleapi.Field) *BucketsDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketsDeleteCall) Context(ctx context.Context) *BucketsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1256,6 +1337,9 @@ func (c *BucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1311,6 +1395,7 @@ type BucketsGetCall struct {
 	s      *Service
 	bucket string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Returns metadata for the specified bucket.
@@ -1357,6 +1442,14 @@ func (c *BucketsGetCall) Fields(s ...googleapi.Field) *BucketsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketsGetCall) Context(ctx context.Context) *BucketsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1380,6 +1473,9 @@ func (c *BucketsGetCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1457,6 +1553,7 @@ type BucketsInsertCall struct {
 	projectid string
 	bucket    *Bucket
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Insert: Creates a new bucket.
@@ -1488,6 +1585,14 @@ func (c *BucketsInsertCall) Fields(s ...googleapi.Field) *BucketsInsertCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketsInsertCall) Context(ctx context.Context) *BucketsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucket)
@@ -1510,6 +1615,9 @@ func (c *BucketsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1576,6 +1684,7 @@ type BucketsListCall struct {
 	s         *Service
 	projectid string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Retrieves a list of buckets for a given project.
@@ -1619,6 +1728,14 @@ func (c *BucketsListCall) Fields(s ...googleapi.Field) *BucketsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketsListCall) Context(ctx context.Context) *BucketsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1641,6 +1758,9 @@ func (c *BucketsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1718,6 +1838,7 @@ type BucketsPatchCall struct {
 	bucket  string
 	bucket2 *Bucket
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Patch: Updates a bucket. This method supports patch semantics.
@@ -1765,6 +1886,14 @@ func (c *BucketsPatchCall) Fields(s ...googleapi.Field) *BucketsPatchCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketsPatchCall) Context(ctx context.Context) *BucketsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucket2)
@@ -1794,6 +1923,9 @@ func (c *BucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1873,6 +2005,7 @@ type BucketsUpdateCall struct {
 	bucket  string
 	bucket2 *Bucket
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Update: Updates a bucket.
@@ -1920,6 +2053,14 @@ func (c *BucketsUpdateCall) Fields(s ...googleapi.Field) *BucketsUpdateCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *BucketsUpdateCall) Context(ctx context.Context) *BucketsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BucketsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bucket2)
@@ -1949,6 +2090,9 @@ func (c *BucketsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2027,6 +2171,7 @@ type ChannelsStopCall struct {
 	s       *Service
 	channel *Channel
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Stop: Stop watching resources through this channel
@@ -2041,6 +2186,14 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 // for more information.
 func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ChannelsStopCall) Context(ctx context.Context) *ChannelsStopCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2062,6 +2215,9 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2100,6 +2256,7 @@ type DefaultObjectAccessControlsDeleteCall struct {
 	bucket string
 	entity string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Permanently deletes the default object ACL entry for the
@@ -2119,6 +2276,14 @@ func (c *DefaultObjectAccessControlsDeleteCall) Fields(s ...googleapi.Field) *De
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DefaultObjectAccessControlsDeleteCall) Context(ctx context.Context) *DefaultObjectAccessControlsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DefaultObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2134,6 +2299,9 @@ func (c *DefaultObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Res
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2184,6 +2352,7 @@ type DefaultObjectAccessControlsGetCall struct {
 	bucket string
 	entity string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Returns the default object ACL entry for the specified entity on
@@ -2203,6 +2372,14 @@ func (c *DefaultObjectAccessControlsGetCall) Fields(s ...googleapi.Field) *Defau
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DefaultObjectAccessControlsGetCall) Context(ctx context.Context) *DefaultObjectAccessControlsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DefaultObjectAccessControlsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2218,6 +2395,9 @@ func (c *DefaultObjectAccessControlsGetCall) doRequest(alt string) (*http.Respon
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2275,6 +2455,7 @@ type DefaultObjectAccessControlsInsertCall struct {
 	bucket              string
 	objectaccesscontrol *ObjectAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Insert: Creates a new default object ACL entry on the specified
@@ -2291,6 +2472,14 @@ func (r *DefaultObjectAccessControlsService) Insert(bucket string, objectaccessc
 // for more information.
 func (c *DefaultObjectAccessControlsInsertCall) Fields(s ...googleapi.Field) *DefaultObjectAccessControlsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DefaultObjectAccessControlsInsertCall) Context(ctx context.Context) *DefaultObjectAccessControlsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2314,6 +2503,9 @@ func (c *DefaultObjectAccessControlsInsertCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2366,6 +2558,7 @@ type DefaultObjectAccessControlsListCall struct {
 	s      *Service
 	bucket string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves default object ACL entries on the specified bucket.
@@ -2400,6 +2593,14 @@ func (c *DefaultObjectAccessControlsListCall) Fields(s ...googleapi.Field) *Defa
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DefaultObjectAccessControlsListCall) Context(ctx context.Context) *DefaultObjectAccessControlsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DefaultObjectAccessControlsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2420,6 +2621,9 @@ func (c *DefaultObjectAccessControlsListCall) doRequest(alt string) (*http.Respo
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2483,6 +2687,7 @@ type DefaultObjectAccessControlsPatchCall struct {
 	entity              string
 	objectaccesscontrol *ObjectAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Patch: Updates a default object ACL entry on the specified bucket.
@@ -2500,6 +2705,14 @@ func (r *DefaultObjectAccessControlsService) Patch(bucket string, entity string,
 // for more information.
 func (c *DefaultObjectAccessControlsPatchCall) Fields(s ...googleapi.Field) *DefaultObjectAccessControlsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DefaultObjectAccessControlsPatchCall) Context(ctx context.Context) *DefaultObjectAccessControlsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2524,6 +2737,9 @@ func (c *DefaultObjectAccessControlsPatchCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2585,6 +2801,7 @@ type DefaultObjectAccessControlsUpdateCall struct {
 	entity              string
 	objectaccesscontrol *ObjectAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Update: Updates a default object ACL entry on the specified bucket.
@@ -2601,6 +2818,14 @@ func (r *DefaultObjectAccessControlsService) Update(bucket string, entity string
 // for more information.
 func (c *DefaultObjectAccessControlsUpdateCall) Fields(s ...googleapi.Field) *DefaultObjectAccessControlsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DefaultObjectAccessControlsUpdateCall) Context(ctx context.Context) *DefaultObjectAccessControlsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2625,6 +2850,9 @@ func (c *DefaultObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2686,6 +2914,7 @@ type ObjectAccessControlsDeleteCall struct {
 	object string
 	entity string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Permanently deletes the ACL entry for the specified entity on
@@ -2714,6 +2943,14 @@ func (c *ObjectAccessControlsDeleteCall) Fields(s ...googleapi.Field) *ObjectAcc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectAccessControlsDeleteCall) Context(ctx context.Context) *ObjectAccessControlsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2733,6 +2970,9 @@ func (c *ObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Response, 
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2797,6 +3037,7 @@ type ObjectAccessControlsGetCall struct {
 	object string
 	entity string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Returns the ACL entry for the specified entity on the specified
@@ -2825,6 +3066,14 @@ func (c *ObjectAccessControlsGetCall) Fields(s ...googleapi.Field) *ObjectAccess
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectAccessControlsGetCall) Context(ctx context.Context) *ObjectAccessControlsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectAccessControlsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2844,6 +3093,9 @@ func (c *ObjectAccessControlsGetCall) doRequest(alt string) (*http.Response, err
 		"entity": c.entity,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2915,6 +3167,7 @@ type ObjectAccessControlsInsertCall struct {
 	object              string
 	objectaccesscontrol *ObjectAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Insert: Creates a new ACL entry on the specified object.
@@ -2942,6 +3195,14 @@ func (c *ObjectAccessControlsInsertCall) Fields(s ...googleapi.Field) *ObjectAcc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectAccessControlsInsertCall) Context(ctx context.Context) *ObjectAccessControlsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectAccessControlsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -2966,6 +3227,9 @@ func (c *ObjectAccessControlsInsertCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3032,6 +3296,7 @@ type ObjectAccessControlsListCall struct {
 	bucket string
 	object string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves ACL entries on the specified object.
@@ -3058,6 +3323,14 @@ func (c *ObjectAccessControlsListCall) Fields(s ...googleapi.Field) *ObjectAcces
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectAccessControlsListCall) Context(ctx context.Context) *ObjectAccessControlsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectAccessControlsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3076,6 +3349,9 @@ func (c *ObjectAccessControlsListCall) doRequest(alt string) (*http.Response, er
 		"object": c.object,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3141,6 +3417,7 @@ type ObjectAccessControlsPatchCall struct {
 	entity              string
 	objectaccesscontrol *ObjectAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Patch: Updates an ACL entry on the specified object. This method
@@ -3170,6 +3447,14 @@ func (c *ObjectAccessControlsPatchCall) Fields(s ...googleapi.Field) *ObjectAcce
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectAccessControlsPatchCall) Context(ctx context.Context) *ObjectAccessControlsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectAccessControlsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -3195,6 +3480,9 @@ func (c *ObjectAccessControlsPatchCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3270,6 +3558,7 @@ type ObjectAccessControlsUpdateCall struct {
 	entity              string
 	objectaccesscontrol *ObjectAccessControl
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Update: Updates an ACL entry on the specified object.
@@ -3298,6 +3587,14 @@ func (c *ObjectAccessControlsUpdateCall) Fields(s ...googleapi.Field) *ObjectAcc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectAccessControlsUpdateCall) Context(ctx context.Context) *ObjectAccessControlsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.objectaccesscontrol)
@@ -3323,6 +3620,9 @@ func (c *ObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3397,6 +3697,7 @@ type ObjectsComposeCall struct {
 	destinationObject string
 	composerequest    *ComposeRequest
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Compose: Concatenates a list of existing objects into a new object in
@@ -3433,6 +3734,14 @@ func (c *ObjectsComposeCall) Fields(s ...googleapi.Field) *ObjectsComposeCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectsComposeCall) Context(ctx context.Context) *ObjectsComposeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectsComposeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.composerequest)
@@ -3460,6 +3769,9 @@ func (c *ObjectsComposeCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3552,6 +3864,7 @@ type ObjectsCopyCall struct {
 	destinationObject string
 	object            *Object
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Copy: Copies an object to a destination in the same location.
@@ -3664,6 +3977,14 @@ func (c *ObjectsCopyCall) Fields(s ...googleapi.Field) *ObjectsCopyCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectsCopyCall) Context(ctx context.Context) *ObjectsCopyCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectsCopyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object)
@@ -3717,6 +4038,9 @@ func (c *ObjectsCopyCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3875,6 +4199,7 @@ type ObjectsDeleteCall struct {
 	bucket string
 	object string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Deletes data blobs and associated metadata. Deletions are
@@ -3936,6 +4261,14 @@ func (c *ObjectsDeleteCall) Fields(s ...googleapi.Field) *ObjectsDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectsDeleteCall) Context(ctx context.Context) *ObjectsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3966,6 +4299,9 @@ func (c *ObjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"object": c.object,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4047,6 +4383,7 @@ type ObjectsGetCall struct {
 	bucket string
 	object string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves objects or their associated metadata.
@@ -4117,6 +4454,14 @@ func (c *ObjectsGetCall) Fields(s ...googleapi.Field) *ObjectsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectsGetCall) Context(ctx context.Context) *ObjectsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4150,6 +4495,9 @@ func (c *ObjectsGetCall) doRequest(alt string) (*http.Response, error) {
 		"object": c.object,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4271,8 +4619,8 @@ type ObjectsInsertCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Stores new data blobs and associated metadata.
@@ -4344,7 +4692,7 @@ func (c *ObjectsInsertCall) Media(r io.Reader) *ObjectsInsertCall {
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
@@ -4369,6 +4717,16 @@ func (c *ObjectsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *Objec
 // for more information.
 func (c *ObjectsInsertCall) Fields(s ...googleapi.Field) *ObjectsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *ObjectsInsertCall) Context(ctx context.Context) *ObjectsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4429,6 +4787,9 @@ func (c *ObjectsInsertCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4564,6 +4925,7 @@ type ObjectsListCall struct {
 	s      *Service
 	bucket string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of objects matching the criteria.
@@ -4633,6 +4995,14 @@ func (c *ObjectsListCall) Fields(s ...googleapi.Field) *ObjectsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectsListCall) Context(ctx context.Context) *ObjectsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4665,6 +5035,9 @@ func (c *ObjectsListCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4759,6 +5132,7 @@ type ObjectsPatchCall struct {
 	object  string
 	object2 *Object
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Patch: Updates a data blob's associated metadata. This method
@@ -4831,6 +5205,14 @@ func (c *ObjectsPatchCall) Fields(s ...googleapi.Field) *ObjectsPatchCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectsPatchCall) Context(ctx context.Context) *ObjectsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object2)
@@ -4870,6 +5252,9 @@ func (c *ObjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4975,6 +5360,7 @@ type ObjectsUpdateCall struct {
 	object  string
 	object2 *Object
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Update: Updates a data blob's associated metadata.
@@ -5046,6 +5432,14 @@ func (c *ObjectsUpdateCall) Fields(s ...googleapi.Field) *ObjectsUpdateCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectsUpdateCall) Context(ctx context.Context) *ObjectsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.object2)
@@ -5085,6 +5479,9 @@ func (c *ObjectsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5205,6 +5602,7 @@ type ObjectsWatchAllCall struct {
 	bucket  string
 	channel *Channel
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // WatchAll: Watch for changes on all objects in a bucket.
@@ -5275,6 +5673,14 @@ func (c *ObjectsWatchAllCall) Fields(s ...googleapi.Field) *ObjectsWatchAllCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ObjectsWatchAllCall) Context(ctx context.Context) *ObjectsWatchAllCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ObjectsWatchAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -5313,6 +5719,9 @@ func (c *ObjectsWatchAllCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

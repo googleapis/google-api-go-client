@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "oauth2:v1"
 const apiName = "oauth2"
@@ -235,6 +235,7 @@ type Userinfoplus struct {
 type GetCertForOpenIdConnectCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetCertForOpenIdConnect:
@@ -251,6 +252,14 @@ func (c *GetCertForOpenIdConnectCall) Fields(s ...googleapi.Field) *GetCertForOp
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *GetCertForOpenIdConnectCall) Context(ctx context.Context) *GetCertForOpenIdConnectCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GetCertForOpenIdConnectCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -263,6 +272,9 @@ func (c *GetCertForOpenIdConnectCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -296,6 +308,7 @@ func (c *GetCertForOpenIdConnectCall) Do() (map[string]string, error) {
 type GetCertForOpenIdConnectRawCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetCertForOpenIdConnectRaw:
@@ -312,6 +325,14 @@ func (c *GetCertForOpenIdConnectRawCall) Fields(s ...googleapi.Field) *GetCertFo
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *GetCertForOpenIdConnectRawCall) Context(ctx context.Context) *GetCertForOpenIdConnectRawCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GetCertForOpenIdConnectRawCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -324,6 +345,9 @@ func (c *GetCertForOpenIdConnectRawCall) doRequest(alt string) (*http.Response, 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -358,6 +382,7 @@ type GetRobotJwkCall struct {
 	s          *Service
 	robotEmail string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // GetRobotJwk:
@@ -375,6 +400,14 @@ func (c *GetRobotJwkCall) Fields(s ...googleapi.Field) *GetRobotJwkCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *GetRobotJwkCall) Context(ctx context.Context) *GetRobotJwkCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GetRobotJwkCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -389,6 +422,9 @@ func (c *GetRobotJwkCall) doRequest(alt string) (*http.Response, error) {
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -434,6 +470,7 @@ type GetRobotMetadataRawCall struct {
 	s          *Service
 	robotEmail string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // GetRobotMetadataRaw:
@@ -451,6 +488,14 @@ func (c *GetRobotMetadataRawCall) Fields(s ...googleapi.Field) *GetRobotMetadata
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *GetRobotMetadataRawCall) Context(ctx context.Context) *GetRobotMetadataRawCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GetRobotMetadataRawCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -465,6 +510,9 @@ func (c *GetRobotMetadataRawCall) doRequest(alt string) (*http.Response, error) 
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -510,6 +558,7 @@ type GetRobotMetadataX509Call struct {
 	s          *Service
 	robotEmail string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // GetRobotMetadataX509:
@@ -527,6 +576,14 @@ func (c *GetRobotMetadataX509Call) Fields(s ...googleapi.Field) *GetRobotMetadat
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *GetRobotMetadataX509Call) Context(ctx context.Context) *GetRobotMetadataX509Call {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GetRobotMetadataX509Call) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -541,6 +598,9 @@ func (c *GetRobotMetadataX509Call) doRequest(alt string) (*http.Response, error)
 		"robotEmail": c.robotEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -585,6 +645,7 @@ func (c *GetRobotMetadataX509Call) Do() (map[string]string, error) {
 type TokeninfoCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Tokeninfo: Get token info
@@ -614,6 +675,14 @@ func (c *TokeninfoCall) Fields(s ...googleapi.Field) *TokeninfoCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TokeninfoCall) Context(ctx context.Context) *TokeninfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TokeninfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -632,6 +701,9 @@ func (c *TokeninfoCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -678,6 +750,7 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 type UserinfoGetCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Get user info
@@ -694,6 +767,14 @@ func (c *UserinfoGetCall) Fields(s ...googleapi.Field) *UserinfoGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UserinfoGetCall) Context(ctx context.Context) *UserinfoGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UserinfoGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -706,6 +787,9 @@ func (c *UserinfoGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -746,6 +830,7 @@ func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 type UserinfoV2MeGetCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Get user info
@@ -762,6 +847,14 @@ func (c *UserinfoV2MeGetCall) Fields(s ...googleapi.Field) *UserinfoV2MeGetCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UserinfoV2MeGetCall) Context(ctx context.Context) *UserinfoV2MeGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UserinfoV2MeGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -774,6 +867,9 @@ func (c *UserinfoV2MeGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

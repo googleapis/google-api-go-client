@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "appstate:v1"
 const apiName = "appstate"
@@ -142,6 +142,7 @@ type StatesClearCall struct {
 	s        *Service
 	stateKey int64
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Clear: Clears (sets to empty) the data for the passed key if and only
@@ -169,6 +170,14 @@ func (c *StatesClearCall) Fields(s ...googleapi.Field) *StatesClearCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *StatesClearCall) Context(ctx context.Context) *StatesClearCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *StatesClearCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -186,6 +195,9 @@ func (c *StatesClearCall) doRequest(alt string) (*http.Response, error) {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -243,6 +255,7 @@ type StatesDeleteCall struct {
 	s        *Service
 	stateKey int64
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes a key and the data associated with it. The key is
@@ -265,6 +278,14 @@ func (c *StatesDeleteCall) Fields(s ...googleapi.Field) *StatesDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *StatesDeleteCall) Context(ctx context.Context) *StatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *StatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -279,6 +300,9 @@ func (c *StatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -324,6 +348,7 @@ type StatesGetCall struct {
 	s        *Service
 	stateKey int64
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves the data corresponding to the passed key. If the key
@@ -342,6 +367,14 @@ func (c *StatesGetCall) Fields(s ...googleapi.Field) *StatesGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *StatesGetCall) Context(ctx context.Context) *StatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *StatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -356,6 +389,9 @@ func (c *StatesGetCall) doRequest(alt string) (*http.Response, error) {
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -407,6 +443,7 @@ func (c *StatesGetCall) Do() (*GetResponse, error) {
 type StatesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all the states keys, and optionally the state data.
@@ -430,6 +467,14 @@ func (c *StatesListCall) Fields(s ...googleapi.Field) *StatesListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *StatesListCall) Context(ctx context.Context) *StatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *StatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -445,6 +490,9 @@ func (c *StatesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -492,6 +540,7 @@ type StatesUpdateCall struct {
 	stateKey      int64
 	updaterequest *UpdateRequest
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Update the data associated with the input key if and only if
@@ -524,6 +573,14 @@ func (c *StatesUpdateCall) Fields(s ...googleapi.Field) *StatesUpdateCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *StatesUpdateCall) Context(ctx context.Context) *StatesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *StatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updaterequest)
@@ -547,6 +604,9 @@ func (c *StatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

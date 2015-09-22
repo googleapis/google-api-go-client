@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "replicapool:v1beta2"
 const apiName = "replicapool"
@@ -426,6 +426,7 @@ type InstanceGroupManagersAbandonInstancesCall struct {
 	instanceGroupManager                         string
 	instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest
 	opt_                                         map[string]interface{}
+	ctx_                                         context.Context
 }
 
 // AbandonInstances: Removes the specified instances from the managed
@@ -445,6 +446,14 @@ func (r *InstanceGroupManagersService) AbandonInstances(project string, zone str
 // for more information.
 func (c *InstanceGroupManagersAbandonInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersAbandonInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersAbandonInstancesCall) Context(ctx context.Context) *InstanceGroupManagersAbandonInstancesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -470,6 +479,9 @@ func (c *InstanceGroupManagersAbandonInstancesCall) doRequest(alt string) (*http
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -542,6 +554,7 @@ type InstanceGroupManagersDeleteCall struct {
 	zone                 string
 	instanceGroupManager string
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Delete: Deletes the instance group manager and all instances
@@ -564,6 +577,14 @@ func (c *InstanceGroupManagersDeleteCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersDeleteCall) Context(ctx context.Context) *InstanceGroupManagersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -580,6 +601,9 @@ func (c *InstanceGroupManagersDeleteCall) doRequest(alt string) (*http.Response,
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -650,6 +674,7 @@ type InstanceGroupManagersDeleteInstancesCall struct {
 	instanceGroupManager                        string
 	instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest
 	opt_                                        map[string]interface{}
+	ctx_                                        context.Context
 }
 
 // DeleteInstances: Deletes the specified instances. The instances are
@@ -670,6 +695,14 @@ func (r *InstanceGroupManagersService) DeleteInstances(project string, zone stri
 // for more information.
 func (c *InstanceGroupManagersDeleteInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersDeleteInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersDeleteInstancesCall) Context(ctx context.Context) *InstanceGroupManagersDeleteInstancesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -695,6 +728,9 @@ func (c *InstanceGroupManagersDeleteInstancesCall) doRequest(alt string) (*http.
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -767,6 +803,7 @@ type InstanceGroupManagersGetCall struct {
 	zone                 string
 	instanceGroupManager string
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Get: Returns the specified Instance Group Manager resource.
@@ -786,6 +823,14 @@ func (c *InstanceGroupManagersGetCall) Fields(s ...googleapi.Field) *InstanceGro
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersGetCall) Context(ctx context.Context) *InstanceGroupManagersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -802,6 +847,9 @@ func (c *InstanceGroupManagersGetCall) doRequest(alt string) (*http.Response, er
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -874,6 +922,7 @@ type InstanceGroupManagersInsertCall struct {
 	size                 int64
 	instancegroupmanager *InstanceGroupManager
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Insert: Creates an instance group manager, as well as the instance
@@ -892,6 +941,14 @@ func (r *InstanceGroupManagersService) Insert(project string, zone string, size 
 // for more information.
 func (c *InstanceGroupManagersInsertCall) Fields(s ...googleapi.Field) *InstanceGroupManagersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersInsertCall) Context(ctx context.Context) *InstanceGroupManagersInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -917,6 +974,9 @@ func (c *InstanceGroupManagersInsertCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -989,6 +1049,7 @@ type InstanceGroupManagersListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of Instance Group Manager resources
@@ -1031,6 +1092,14 @@ func (c *InstanceGroupManagersListCall) Fields(s ...googleapi.Field) *InstanceGr
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersListCall) Context(ctx context.Context) *InstanceGroupManagersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1055,6 +1124,9 @@ func (c *InstanceGroupManagersListCall) doRequest(alt string) (*http.Response, e
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1138,6 +1210,7 @@ type InstanceGroupManagersRecreateInstancesCall struct {
 	instanceGroupManager                          string
 	instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest
 	opt_                                          map[string]interface{}
+	ctx_                                          context.Context
 }
 
 // RecreateInstances: Recreates the specified instances. The instances
@@ -1157,6 +1230,14 @@ func (r *InstanceGroupManagersService) RecreateInstances(project string, zone st
 // for more information.
 func (c *InstanceGroupManagersRecreateInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersRecreateInstancesCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersRecreateInstancesCall) Context(ctx context.Context) *InstanceGroupManagersRecreateInstancesCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1182,6 +1263,9 @@ func (c *InstanceGroupManagersRecreateInstancesCall) doRequest(alt string) (*htt
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1255,6 +1339,7 @@ type InstanceGroupManagersResizeCall struct {
 	instanceGroupManager string
 	size                 int64
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Resize: Resizes the managed instance group up or down. If resized up,
@@ -1278,6 +1363,14 @@ func (c *InstanceGroupManagersResizeCall) Fields(s ...googleapi.Field) *Instance
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersResizeCall) Context(ctx context.Context) *InstanceGroupManagersResizeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InstanceGroupManagersResizeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1295,6 +1388,9 @@ func (c *InstanceGroupManagersResizeCall) doRequest(alt string) (*http.Response,
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1374,6 +1470,7 @@ type InstanceGroupManagersSetInstanceTemplateCall struct {
 	instanceGroupManager                            string
 	instancegroupmanagerssetinstancetemplaterequest *InstanceGroupManagersSetInstanceTemplateRequest
 	opt_                                            map[string]interface{}
+	ctx_                                            context.Context
 }
 
 // SetInstanceTemplate: Sets the instance template to use when creating
@@ -1392,6 +1489,14 @@ func (r *InstanceGroupManagersService) SetInstanceTemplate(project string, zone 
 // for more information.
 func (c *InstanceGroupManagersSetInstanceTemplateCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetInstanceTemplateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersSetInstanceTemplateCall) Context(ctx context.Context) *InstanceGroupManagersSetInstanceTemplateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1417,6 +1522,9 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) doRequest(alt string) (*h
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1490,6 +1598,7 @@ type InstanceGroupManagersSetTargetPoolsCall struct {
 	instanceGroupManager                       string
 	instancegroupmanagerssettargetpoolsrequest *InstanceGroupManagersSetTargetPoolsRequest
 	opt_                                       map[string]interface{}
+	ctx_                                       context.Context
 }
 
 // SetTargetPools: Modifies the target pools to which all new instances
@@ -1509,6 +1618,14 @@ func (r *InstanceGroupManagersService) SetTargetPools(project string, zone strin
 // for more information.
 func (c *InstanceGroupManagersSetTargetPoolsCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetTargetPoolsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstanceGroupManagersSetTargetPoolsCall) Context(ctx context.Context) *InstanceGroupManagersSetTargetPoolsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1534,6 +1651,9 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) doRequest(alt string) (*http.R
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1606,6 +1726,7 @@ type ZoneOperationsGetCall struct {
 	zone      string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves the specified zone-specific operation resource.
@@ -1625,6 +1746,14 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ZoneOperationsGetCall) Context(ctx context.Context) *ZoneOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1641,6 +1770,9 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1709,6 +1841,7 @@ type ZoneOperationsListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of operation resources contained within the
@@ -1751,6 +1884,14 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ZoneOperationsListCall) Context(ctx context.Context) *ZoneOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1775,6 +1916,9 @@ func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

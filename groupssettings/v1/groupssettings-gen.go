@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "groupssettings:v1"
 const apiName = "groupssettings"
@@ -195,6 +195,7 @@ type GroupsGetCall struct {
 	s             *Service
 	groupUniqueId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Gets one resource by id.
@@ -212,6 +213,14 @@ func (c *GroupsGetCall) Fields(s ...googleapi.Field) *GroupsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *GroupsGetCall) Context(ctx context.Context) *GroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -226,6 +235,9 @@ func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 		"groupUniqueId": c.groupUniqueId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -276,6 +288,7 @@ type GroupsPatchCall struct {
 	groupUniqueId string
 	groups        *Groups
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Patch: Updates an existing resource. This method supports patch
@@ -292,6 +305,14 @@ func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatch
 // for more information.
 func (c *GroupsPatchCall) Fields(s ...googleapi.Field) *GroupsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *GroupsPatchCall) Context(ctx context.Context) *GroupsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -315,6 +336,9 @@ func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -368,6 +392,7 @@ type GroupsUpdateCall struct {
 	groupUniqueId string
 	groups        *Groups
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Updates an existing resource.
@@ -383,6 +408,14 @@ func (r *GroupsService) Update(groupUniqueId string, groups *Groups) *GroupsUpda
 // for more information.
 func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *GroupsUpdateCall) Context(ctx context.Context) *GroupsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -406,6 +439,9 @@ func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

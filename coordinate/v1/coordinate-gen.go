@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "coordinate:v1"
 const apiName = "coordinate"
@@ -416,6 +416,7 @@ type CustomFieldDefListCall struct {
 	s      *Service
 	teamId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of custom field definitions for a team.
@@ -433,6 +434,13 @@ func (c *CustomFieldDefListCall) Fields(s ...googleapi.Field) *CustomFieldDefLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CustomFieldDefListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CustomFieldDefListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -447,6 +455,9 @@ func (c *CustomFieldDefListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -498,6 +509,7 @@ type JobsGetCall struct {
 	teamId string
 	jobId  uint64
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves a job, including all the changes made to the job.
@@ -516,6 +528,13 @@ func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *JobsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -531,6 +550,9 @@ func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -594,6 +616,7 @@ type JobsInsertCall struct {
 	title   string
 	job     *Job
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Inserts a new job. Only the state field of the job should be
@@ -657,6 +680,13 @@ func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *JobsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -696,6 +726,9 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -804,6 +837,7 @@ type JobsListCall struct {
 	s      *Service
 	teamId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves jobs created or modified since the given timestamp.
@@ -849,6 +883,13 @@ func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *JobsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -875,6 +916,9 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -949,6 +993,7 @@ type JobsPatchCall struct {
 	jobId  uint64
 	job    *Job
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Updates a job. Fields that are set in the job state will be
@@ -1049,6 +1094,13 @@ func (c *JobsPatchCall) Fields(s ...googleapi.Field) *JobsPatchCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *JobsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1100,6 +1152,9 @@ func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1229,6 +1284,7 @@ type JobsUpdateCall struct {
 	jobId  uint64
 	job    *Job
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Updates a job. Fields that are set in the job state will be
@@ -1329,6 +1385,13 @@ func (c *JobsUpdateCall) Fields(s ...googleapi.Field) *JobsUpdateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *JobsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *JobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1380,6 +1443,9 @@ func (c *JobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1509,6 +1575,7 @@ type LocationListCall struct {
 	workerEmail      string
 	startTimestampMs uint64
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // List: Retrieves a list of locations for a worker.
@@ -1541,6 +1608,13 @@ func (c *LocationListCall) Fields(s ...googleapi.Field) *LocationListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LocationListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LocationListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1563,6 +1637,9 @@ func (c *LocationListCall) doRequest(alt string) (*http.Response, error) {
 		"workerEmail": c.workerEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1640,6 +1717,7 @@ type ScheduleGetCall struct {
 	teamId string
 	jobId  uint64
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves the schedule for a job.
@@ -1658,6 +1736,13 @@ func (c *ScheduleGetCall) Fields(s ...googleapi.Field) *ScheduleGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ScheduleGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ScheduleGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1673,6 +1758,9 @@ func (c *ScheduleGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1733,6 +1821,7 @@ type SchedulePatchCall struct {
 	jobId    uint64
 	schedule *Schedule
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Patch: Replaces the schedule of a job with the provided schedule.
@@ -1782,6 +1871,13 @@ func (c *SchedulePatchCall) Fields(s ...googleapi.Field) *SchedulePatchCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SchedulePatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *SchedulePatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
@@ -1815,6 +1911,9 @@ func (c *SchedulePatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1900,6 +1999,7 @@ type ScheduleUpdateCall struct {
 	jobId    uint64
 	schedule *Schedule
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Update: Replaces the schedule of a job with the provided schedule.
@@ -1948,6 +2048,13 @@ func (c *ScheduleUpdateCall) Fields(s ...googleapi.Field) *ScheduleUpdateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ScheduleUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ScheduleUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.schedule)
@@ -1981,6 +2088,9 @@ func (c *ScheduleUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2063,6 +2173,7 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 type TeamListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieves a list of teams for a user.
@@ -2100,6 +2211,13 @@ func (c *TeamListCall) Fields(s ...googleapi.Field) *TeamListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TeamListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TeamListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2121,6 +2239,9 @@ func (c *TeamListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2177,6 +2298,7 @@ type WorkerListCall struct {
 	s      *Service
 	teamId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of workers in a team.
@@ -2194,6 +2316,13 @@ func (c *WorkerListCall) Fields(s ...googleapi.Field) *WorkerListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WorkerListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *WorkerListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2208,6 +2337,9 @@ func (c *WorkerListCall) doRequest(alt string) (*http.Response, error) {
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

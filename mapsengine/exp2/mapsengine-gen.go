@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "mapsengine:exp2"
 const apiName = "mapsengine"
@@ -1937,6 +1937,7 @@ type AssetsGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Return metadata for a particular asset.
@@ -1954,6 +1955,13 @@ func (c *AssetsGetCall) Fields(s ...googleapi.Field) *AssetsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AssetsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AssetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1968,6 +1976,9 @@ func (c *AssetsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2017,6 +2028,7 @@ func (c *AssetsGetCall) Do() (*Asset, error) {
 type AssetsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all assets readable by the current user.
@@ -2144,6 +2156,13 @@ func (c *AssetsListCall) Fields(s ...googleapi.Field) *AssetsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AssetsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2195,6 +2214,9 @@ func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2316,6 +2338,7 @@ type AssetsParentsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all parent ids of the specified asset.
@@ -2350,6 +2373,13 @@ func (c *AssetsParentsListCall) Fields(s ...googleapi.Field) *AssetsParentsListC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AssetsParentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AssetsParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2370,6 +2400,9 @@ func (c *AssetsParentsListCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2431,6 +2464,7 @@ type AssetsPermissionsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
@@ -2448,6 +2482,13 @@ func (c *AssetsPermissionsListCall) Fields(s ...googleapi.Field) *AssetsPermissi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AssetsPermissionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AssetsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2462,6 +2503,9 @@ func (c *AssetsPermissionsListCall) doRequest(alt string) (*http.Response, error
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2512,6 +2556,7 @@ type LayersCancelProcessingCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // CancelProcessing: Cancel processing on a layer asset.
@@ -2529,6 +2574,13 @@ func (c *LayersCancelProcessingCall) Fields(s ...googleapi.Field) *LayersCancelP
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersCancelProcessingCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersCancelProcessingCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2543,6 +2595,9 @@ func (c *LayersCancelProcessingCall) doRequest(alt string) (*http.Response, erro
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2592,6 +2647,7 @@ type LayersCreateCall struct {
 	s     *Service
 	layer *Layer
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Create: Create a layer asset.
@@ -2616,6 +2672,13 @@ func (c *LayersCreateCall) Fields(s ...googleapi.Field) *LayersCreateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersCreateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.layer)
@@ -2637,6 +2700,9 @@ func (c *LayersCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2685,6 +2751,7 @@ type LayersDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Delete a layer.
@@ -2702,6 +2769,13 @@ func (c *LayersDeleteCall) Fields(s ...googleapi.Field) *LayersDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2716,6 +2790,9 @@ func (c *LayersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2758,6 +2835,7 @@ type LayersGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Return metadata for a particular layer.
@@ -2789,6 +2867,13 @@ func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2806,6 +2891,9 @@ func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2869,6 +2957,7 @@ type LayersGetPublishedCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetPublished: Return the published metadata for a particular layer.
@@ -2886,6 +2975,13 @@ func (c *LayersGetPublishedCall) Fields(s ...googleapi.Field) *LayersGetPublishe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersGetPublishedCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersGetPublishedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2900,6 +2996,9 @@ func (c *LayersGetPublishedCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2949,6 +3048,7 @@ func (c *LayersGetPublishedCall) Do() (*PublishedLayer, error) {
 type LayersListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all layers readable by the current user.
@@ -3080,6 +3180,13 @@ func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3131,6 +3238,9 @@ func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3264,6 +3374,7 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 type LayersListPublishedCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ListPublished: Return all published layers readable by the current
@@ -3315,6 +3426,13 @@ func (c *LayersListPublishedCall) Fields(s ...googleapi.Field) *LayersListPublis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersListPublishedCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersListPublishedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3339,6 +3457,9 @@ func (c *LayersListPublishedCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3402,6 +3523,7 @@ type LayersPatchCall struct {
 	id    string
 	layer *Layer
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Patch: Mutate a layer asset.
@@ -3418,6 +3540,13 @@ func (r *LayersService) Patch(id string, layer *Layer) *LayersPatchCall {
 func (c *LayersPatchCall) Fields(s ...googleapi.Field) *LayersPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *LayersPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -3440,6 +3569,9 @@ func (c *LayersPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3485,6 +3617,7 @@ type LayersProcessCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Process: Process a layer asset.
@@ -3502,6 +3635,13 @@ func (c *LayersProcessCall) Fields(s ...googleapi.Field) *LayersProcessCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersProcessCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersProcessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3516,6 +3656,9 @@ func (c *LayersProcessCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3565,6 +3708,7 @@ type LayersPublishCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Publish: Publish a layer asset.
@@ -3591,6 +3735,13 @@ func (c *LayersPublishCall) Fields(s ...googleapi.Field) *LayersPublishCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersPublishCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3608,6 +3759,9 @@ func (c *LayersPublishCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3662,6 +3816,7 @@ type LayersUnpublishCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Unpublish: Unpublish a layer asset.
@@ -3679,6 +3834,13 @@ func (c *LayersUnpublishCall) Fields(s ...googleapi.Field) *LayersUnpublishCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersUnpublishCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersUnpublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3693,6 +3855,9 @@ func (c *LayersUnpublishCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3742,6 +3907,7 @@ type LayersParentsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all parent ids of the specified layer.
@@ -3776,6 +3942,13 @@ func (c *LayersParentsListCall) Fields(s ...googleapi.Field) *LayersParentsListC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersParentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3796,6 +3969,9 @@ func (c *LayersParentsListCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3858,6 +4034,7 @@ type LayersPermissionsBatchDeleteCall struct {
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
@@ -3875,6 +4052,13 @@ func (r *LayersPermissionsService) BatchDelete(id string, permissionsbatchdelete
 func (c *LayersPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *LayersPermissionsBatchDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersPermissionsBatchDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *LayersPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
@@ -3897,6 +4081,9 @@ func (c *LayersPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3950,6 +4137,7 @@ type LayersPermissionsBatchUpdateCall struct {
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchUpdate: Add or update permission entries to an already existing
@@ -3972,6 +4160,13 @@ func (c *LayersPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *LayersP
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersPermissionsBatchUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
@@ -3992,6 +4187,9 @@ func (c *LayersPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4044,6 +4242,7 @@ type LayersPermissionsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
@@ -4061,6 +4260,13 @@ func (c *LayersPermissionsListCall) Fields(s ...googleapi.Field) *LayersPermissi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersPermissionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LayersPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4075,6 +4281,9 @@ func (c *LayersPermissionsListCall) doRequest(alt string) (*http.Response, error
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4125,6 +4334,7 @@ type MapsCreateCall struct {
 	s    *Service
 	map_ *Map
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Create: Create a map asset.
@@ -4140,6 +4350,13 @@ func (r *MapsService) Create(map_ *Map) *MapsCreateCall {
 func (c *MapsCreateCall) Fields(s ...googleapi.Field) *MapsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsCreateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *MapsCreateCall) doRequest(alt string) (*http.Response, error) {
@@ -4160,6 +4377,9 @@ func (c *MapsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4201,6 +4421,7 @@ type MapsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Delete a map.
@@ -4218,6 +4439,13 @@ func (c *MapsDeleteCall) Fields(s ...googleapi.Field) *MapsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4232,6 +4460,9 @@ func (c *MapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4274,6 +4505,7 @@ type MapsGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Return metadata for a particular map.
@@ -4305,6 +4537,13 @@ func (c *MapsGetCall) Fields(s ...googleapi.Field) *MapsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4322,6 +4561,9 @@ func (c *MapsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4385,6 +4627,7 @@ type MapsGetPublishedCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetPublished: Return the published metadata for a particular map.
@@ -4402,6 +4645,13 @@ func (c *MapsGetPublishedCall) Fields(s ...googleapi.Field) *MapsGetPublishedCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsGetPublishedCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsGetPublishedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4416,6 +4666,9 @@ func (c *MapsGetPublishedCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4465,6 +4718,7 @@ func (c *MapsGetPublishedCall) Do() (*PublishedMap, error) {
 type MapsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all maps readable by the current user.
@@ -4609,6 +4863,13 @@ func (c *MapsListCall) Fields(s ...googleapi.Field) *MapsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4663,6 +4924,9 @@ func (c *MapsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4807,6 +5071,7 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 type MapsListPublishedCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ListPublished: Return all published maps readable by the current
@@ -4858,6 +5123,13 @@ func (c *MapsListPublishedCall) Fields(s ...googleapi.Field) *MapsListPublishedC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsListPublishedCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsListPublishedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4882,6 +5154,9 @@ func (c *MapsListPublishedCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4945,6 +5220,7 @@ type MapsPatchCall struct {
 	id   string
 	map_ *Map
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Patch: Mutate a map asset.
@@ -4961,6 +5237,13 @@ func (r *MapsService) Patch(id string, map_ *Map) *MapsPatchCall {
 func (c *MapsPatchCall) Fields(s ...googleapi.Field) *MapsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *MapsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -4983,6 +5266,9 @@ func (c *MapsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5028,6 +5314,7 @@ type MapsPublishCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Publish: Publish a map asset.
@@ -5053,6 +5340,13 @@ func (c *MapsPublishCall) Fields(s ...googleapi.Field) *MapsPublishCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsPublishCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5070,6 +5364,9 @@ func (c *MapsPublishCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5124,6 +5421,7 @@ type MapsUnpublishCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Unpublish: Unpublish a map asset.
@@ -5141,6 +5439,13 @@ func (c *MapsUnpublishCall) Fields(s ...googleapi.Field) *MapsUnpublishCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsUnpublishCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsUnpublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5155,6 +5460,9 @@ func (c *MapsUnpublishCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5205,6 +5513,7 @@ type MapsPermissionsBatchDeleteCall struct {
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
@@ -5222,6 +5531,13 @@ func (r *MapsPermissionsService) BatchDelete(id string, permissionsbatchdeletere
 func (c *MapsPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *MapsPermissionsBatchDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsPermissionsBatchDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *MapsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
@@ -5244,6 +5560,9 @@ func (c *MapsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5297,6 +5616,7 @@ type MapsPermissionsBatchUpdateCall struct {
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchUpdate: Add or update permission entries to an already existing
@@ -5319,6 +5639,13 @@ func (c *MapsPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *MapsPermi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsPermissionsBatchUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
@@ -5339,6 +5666,9 @@ func (c *MapsPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5391,6 +5721,7 @@ type MapsPermissionsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
@@ -5408,6 +5739,13 @@ func (c *MapsPermissionsListCall) Fields(s ...googleapi.Field) *MapsPermissionsL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MapsPermissionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MapsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5422,6 +5760,9 @@ func (c *MapsPermissionsListCall) doRequest(alt string) (*http.Response, error) 
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5471,6 +5812,7 @@ func (c *MapsPermissionsListCall) Do() (*PermissionsListResponse, error) {
 type ProjectsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all projects readable by the current user.
@@ -5487,6 +5829,13 @@ func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5499,6 +5848,9 @@ func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5542,8 +5894,8 @@ type ProjectsIconsCreateCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Create: Create an icon.
@@ -5590,6 +5942,15 @@ func (c *ProjectsIconsCreateCall) Fields(s ...googleapi.Field) *ProjectsIconsCre
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *ProjectsIconsCreateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.icon)
@@ -5629,6 +5990,9 @@ func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) 
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5722,6 +6086,7 @@ type ProjectsIconsGetCall struct {
 	projectId string
 	id        string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Return an icon or its associated metadata
@@ -5740,6 +6105,13 @@ func (c *ProjectsIconsGetCall) Fields(s ...googleapi.Field) *ProjectsIconsGetCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsIconsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsIconsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5755,6 +6127,9 @@ func (c *ProjectsIconsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id":        c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5828,6 +6203,7 @@ type ProjectsIconsListCall struct {
 	s         *Service
 	projectId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Return all icons in the current project
@@ -5862,6 +6238,13 @@ func (c *ProjectsIconsListCall) Fields(s ...googleapi.Field) *ProjectsIconsListC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsIconsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsIconsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5882,6 +6265,9 @@ func (c *ProjectsIconsListCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5943,6 +6329,7 @@ type RasterCollectionsCancelProcessingCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // CancelProcessing: Cancel processing on a raster collection asset.
@@ -5960,6 +6347,13 @@ func (c *RasterCollectionsCancelProcessingCall) Fields(s ...googleapi.Field) *Ra
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsCancelProcessingCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsCancelProcessingCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5974,6 +6368,9 @@ func (c *RasterCollectionsCancelProcessingCall) doRequest(alt string) (*http.Res
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6023,6 +6420,7 @@ type RasterCollectionsCreateCall struct {
 	s                *Service
 	rastercollection *RasterCollection
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Create: Create a raster collection asset.
@@ -6038,6 +6436,13 @@ func (r *RasterCollectionsService) Create(rastercollection *RasterCollection) *R
 func (c *RasterCollectionsCreateCall) Fields(s ...googleapi.Field) *RasterCollectionsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsCreateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RasterCollectionsCreateCall) doRequest(alt string) (*http.Response, error) {
@@ -6058,6 +6463,9 @@ func (c *RasterCollectionsCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6099,6 +6507,7 @@ type RasterCollectionsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Delete a raster collection.
@@ -6116,6 +6525,13 @@ func (c *RasterCollectionsDeleteCall) Fields(s ...googleapi.Field) *RasterCollec
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6130,6 +6546,9 @@ func (c *RasterCollectionsDeleteCall) doRequest(alt string) (*http.Response, err
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6172,6 +6591,7 @@ type RasterCollectionsGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Return metadata for a particular raster collection.
@@ -6189,6 +6609,13 @@ func (c *RasterCollectionsGetCall) Fields(s ...googleapi.Field) *RasterCollectio
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6203,6 +6630,9 @@ func (c *RasterCollectionsGetCall) doRequest(alt string) (*http.Response, error)
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6252,6 +6682,7 @@ func (c *RasterCollectionsGetCall) Do() (*RasterCollection, error) {
 type RasterCollectionsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all raster collections readable by the current user.
@@ -6383,6 +6814,13 @@ func (c *RasterCollectionsListCall) Fields(s ...googleapi.Field) *RasterCollecti
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6434,6 +6872,9 @@ func (c *RasterCollectionsListCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6569,6 +7010,7 @@ type RasterCollectionsPatchCall struct {
 	id               string
 	rastercollection *RasterCollection
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Patch: Mutate a raster collection asset.
@@ -6585,6 +7027,13 @@ func (r *RasterCollectionsService) Patch(id string, rastercollection *RasterColl
 func (c *RasterCollectionsPatchCall) Fields(s ...googleapi.Field) *RasterCollectionsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RasterCollectionsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -6607,6 +7056,9 @@ func (c *RasterCollectionsPatchCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6652,6 +7104,7 @@ type RasterCollectionsProcessCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Process: Process a raster collection asset.
@@ -6669,6 +7122,13 @@ func (c *RasterCollectionsProcessCall) Fields(s ...googleapi.Field) *RasterColle
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsProcessCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6683,6 +7143,9 @@ func (c *RasterCollectionsProcessCall) doRequest(alt string) (*http.Response, er
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6732,6 +7195,7 @@ type RasterCollectionsParentsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all parent ids of the specified raster collection.
@@ -6766,6 +7230,13 @@ func (c *RasterCollectionsParentsListCall) Fields(s ...googleapi.Field) *RasterC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsParentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6786,6 +7257,9 @@ func (c *RasterCollectionsParentsListCall) doRequest(alt string) (*http.Response
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6848,6 +7322,7 @@ type RasterCollectionsPermissionsBatchDeleteCall struct {
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
@@ -6865,6 +7340,13 @@ func (r *RasterCollectionsPermissionsService) BatchDelete(id string, permissions
 func (c *RasterCollectionsPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *RasterCollectionsPermissionsBatchDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsPermissionsBatchDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RasterCollectionsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
@@ -6887,6 +7369,9 @@ func (c *RasterCollectionsPermissionsBatchDeleteCall) doRequest(alt string) (*ht
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6940,6 +7425,7 @@ type RasterCollectionsPermissionsBatchUpdateCall struct {
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchUpdate: Add or update permission entries to an already existing
@@ -6962,6 +7448,13 @@ func (c *RasterCollectionsPermissionsBatchUpdateCall) Fields(s ...googleapi.Fiel
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsPermissionsBatchUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
@@ -6982,6 +7475,9 @@ func (c *RasterCollectionsPermissionsBatchUpdateCall) doRequest(alt string) (*ht
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7034,6 +7530,7 @@ type RasterCollectionsPermissionsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
@@ -7051,6 +7548,13 @@ func (c *RasterCollectionsPermissionsListCall) Fields(s ...googleapi.Field) *Ras
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsPermissionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7065,6 +7569,9 @@ func (c *RasterCollectionsPermissionsListCall) doRequest(alt string) (*http.Resp
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7116,6 +7623,7 @@ type RasterCollectionsRastersBatchDeleteCall struct {
 	id                                        string
 	rastercollectionsrasterbatchdeleterequest *RasterCollectionsRasterBatchDeleteRequest
 	opt_                                      map[string]interface{}
+	ctx_                                      context.Context
 }
 
 // BatchDelete: Remove rasters from an existing raster collection.
@@ -7135,6 +7643,13 @@ func (r *RasterCollectionsRastersService) BatchDelete(id string, rastercollectio
 func (c *RasterCollectionsRastersBatchDeleteCall) Fields(s ...googleapi.Field) *RasterCollectionsRastersBatchDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsRastersBatchDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RasterCollectionsRastersBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
@@ -7157,6 +7672,9 @@ func (c *RasterCollectionsRastersBatchDeleteCall) doRequest(alt string) (*http.R
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7210,6 +7728,7 @@ type RasterCollectionsRastersBatchInsertCall struct {
 	id                                         string
 	rastercollectionsrastersbatchinsertrequest *RasterCollectionsRastersBatchInsertRequest
 	opt_                                       map[string]interface{}
+	ctx_                                       context.Context
 }
 
 // BatchInsert: Add rasters to an existing raster collection. Rasters
@@ -7233,6 +7752,13 @@ func (c *RasterCollectionsRastersBatchInsertCall) Fields(s ...googleapi.Field) *
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsRastersBatchInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsRastersBatchInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rastercollectionsrastersbatchinsertrequest)
@@ -7253,6 +7779,9 @@ func (c *RasterCollectionsRastersBatchInsertCall) doRequest(alt string) (*http.R
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7305,6 +7834,7 @@ type RasterCollectionsRastersListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all rasters within a raster collection.
@@ -7414,6 +7944,13 @@ func (c *RasterCollectionsRastersListCall) Fields(s ...googleapi.Field) *RasterC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RasterCollectionsRastersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RasterCollectionsRastersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7461,6 +7998,9 @@ func (c *RasterCollectionsRastersListCall) doRequest(alt string) (*http.Response
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7581,6 +8121,7 @@ type RastersDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Delete a raster.
@@ -7598,6 +8139,13 @@ func (c *RastersDeleteCall) Fields(s ...googleapi.Field) *RastersDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RastersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7612,6 +8160,9 @@ func (c *RastersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7654,6 +8205,7 @@ type RastersGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Return metadata for a single raster.
@@ -7671,6 +8223,13 @@ func (c *RastersGetCall) Fields(s ...googleapi.Field) *RastersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RastersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7685,6 +8244,9 @@ func (c *RastersGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7735,6 +8297,7 @@ type RastersListCall struct {
 	s         *Service
 	projectId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Return all rasters readable by the current user.
@@ -7857,6 +8420,13 @@ func (c *RastersListCall) Fields(s ...googleapi.Field) *RastersListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RastersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7906,6 +8476,9 @@ func (c *RastersListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8045,6 +8618,7 @@ type RastersPatchCall struct {
 	id     string
 	raster *Raster
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Mutate a raster asset.
@@ -8061,6 +8635,13 @@ func (r *RastersService) Patch(id string, raster *Raster) *RastersPatchCall {
 func (c *RastersPatchCall) Fields(s ...googleapi.Field) *RastersPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RastersPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -8083,6 +8664,9 @@ func (c *RastersPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8128,6 +8712,7 @@ type RastersProcessCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Process: Process a raster asset.
@@ -8145,6 +8730,13 @@ func (c *RastersProcessCall) Fields(s ...googleapi.Field) *RastersProcessCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersProcessCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RastersProcessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8159,6 +8751,9 @@ func (c *RastersProcessCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8208,6 +8803,7 @@ type RastersUploadCall struct {
 	s      *Service
 	raster *Raster
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Upload: Create a skeleton raster asset for upload.
@@ -8223,6 +8819,13 @@ func (r *RastersService) Upload(raster *Raster) *RastersUploadCall {
 func (c *RastersUploadCall) Fields(s ...googleapi.Field) *RastersUploadCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersUploadCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RastersUploadCall) doRequest(alt string) (*http.Response, error) {
@@ -8243,6 +8846,9 @@ func (c *RastersUploadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8288,8 +8894,8 @@ type RastersFilesInsertCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Upload a file to a raster asset.
@@ -8336,6 +8942,15 @@ func (c *RastersFilesInsertCall) Fields(s ...googleapi.Field) *RastersFilesInser
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *RastersFilesInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8373,6 +8988,9 @@ func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8462,6 +9080,7 @@ type RastersParentsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all parent ids of the specified rasters.
@@ -8496,6 +9115,13 @@ func (c *RastersParentsListCall) Fields(s ...googleapi.Field) *RastersParentsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersParentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RastersParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8516,6 +9142,9 @@ func (c *RastersParentsListCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8578,6 +9207,7 @@ type RastersPermissionsBatchDeleteCall struct {
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
@@ -8595,6 +9225,13 @@ func (r *RastersPermissionsService) BatchDelete(id string, permissionsbatchdelet
 func (c *RastersPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *RastersPermissionsBatchDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersPermissionsBatchDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RastersPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
@@ -8617,6 +9254,9 @@ func (c *RastersPermissionsBatchDeleteCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8670,6 +9310,7 @@ type RastersPermissionsBatchUpdateCall struct {
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchUpdate: Add or update permission entries to an already existing
@@ -8692,6 +9333,13 @@ func (c *RastersPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *Raster
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersPermissionsBatchUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RastersPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
@@ -8712,6 +9360,9 @@ func (c *RastersPermissionsBatchUpdateCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8764,6 +9415,7 @@ type RastersPermissionsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
@@ -8781,6 +9433,13 @@ func (c *RastersPermissionsListCall) Fields(s ...googleapi.Field) *RastersPermis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RastersPermissionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RastersPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8795,6 +9454,9 @@ func (c *RastersPermissionsListCall) doRequest(alt string) (*http.Response, erro
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8845,6 +9507,7 @@ type TablesCreateCall struct {
 	s     *Service
 	table *Table
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Create: Create a table asset.
@@ -8860,6 +9523,13 @@ func (r *TablesService) Create(table *Table) *TablesCreateCall {
 func (c *TablesCreateCall) Fields(s ...googleapi.Field) *TablesCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesCreateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TablesCreateCall) doRequest(alt string) (*http.Response, error) {
@@ -8880,6 +9550,9 @@ func (c *TablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8921,6 +9594,7 @@ type TablesDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Delete a table.
@@ -8938,6 +9612,13 @@ func (c *TablesDeleteCall) Fields(s ...googleapi.Field) *TablesDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8952,6 +9633,9 @@ func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8994,6 +9678,7 @@ type TablesGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Return metadata for a particular table, including the schema.
@@ -9021,6 +9706,13 @@ func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9038,6 +9730,9 @@ func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9099,6 +9794,7 @@ func (c *TablesGetCall) Do() (*Table, error) {
 type TablesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all tables readable by the current user.
@@ -9230,6 +9926,13 @@ func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9281,6 +9984,9 @@ func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9416,6 +10122,7 @@ type TablesPatchCall struct {
 	id    string
 	table *Table
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Patch: Mutate a table asset.
@@ -9432,6 +10139,13 @@ func (r *TablesService) Patch(id string, table *Table) *TablesPatchCall {
 func (c *TablesPatchCall) Fields(s ...googleapi.Field) *TablesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -9454,6 +10168,9 @@ func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9499,6 +10216,7 @@ type TablesProcessCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Process: Process a table asset.
@@ -9516,6 +10234,13 @@ func (c *TablesProcessCall) Fields(s ...googleapi.Field) *TablesProcessCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesProcessCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesProcessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9530,6 +10255,9 @@ func (c *TablesProcessCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9579,6 +10307,7 @@ type TablesUploadCall struct {
 	s     *Service
 	table *Table
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Upload: Create a placeholder table asset to which table files can be
@@ -9602,6 +10331,13 @@ func (c *TablesUploadCall) Fields(s ...googleapi.Field) *TablesUploadCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesUploadCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesUploadCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
@@ -9620,6 +10356,9 @@ func (c *TablesUploadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9662,6 +10401,7 @@ type TablesFeaturesBatchDeleteCall struct {
 	id                         string
 	featuresbatchdeleterequest *FeaturesBatchDeleteRequest
 	opt_                       map[string]interface{}
+	ctx_                       context.Context
 }
 
 // BatchDelete: Delete all features matching the given IDs.
@@ -9678,6 +10418,13 @@ func (r *TablesFeaturesService) BatchDelete(id string, featuresbatchdeletereques
 func (c *TablesFeaturesBatchDeleteCall) Fields(s ...googleapi.Field) *TablesFeaturesBatchDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesFeaturesBatchDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TablesFeaturesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
@@ -9700,6 +10447,9 @@ func (c *TablesFeaturesBatchDeleteCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9746,6 +10496,7 @@ type TablesFeaturesBatchInsertCall struct {
 	id                         string
 	featuresbatchinsertrequest *FeaturesBatchInsertRequest
 	opt_                       map[string]interface{}
+	ctx_                       context.Context
 }
 
 // BatchInsert: Append features to an existing table.
@@ -9775,6 +10526,13 @@ func (c *TablesFeaturesBatchInsertCall) Fields(s ...googleapi.Field) *TablesFeat
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesFeaturesBatchInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesFeaturesBatchInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.featuresbatchinsertrequest)
@@ -9795,6 +10553,9 @@ func (c *TablesFeaturesBatchInsertCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9841,6 +10602,7 @@ type TablesFeaturesBatchPatchCall struct {
 	id                        string
 	featuresbatchpatchrequest *FeaturesBatchPatchRequest
 	opt_                      map[string]interface{}
+	ctx_                      context.Context
 }
 
 // BatchPatch: Update the supplied features.
@@ -9880,6 +10642,13 @@ func (c *TablesFeaturesBatchPatchCall) Fields(s ...googleapi.Field) *TablesFeatu
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesFeaturesBatchPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesFeaturesBatchPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.featuresbatchpatchrequest)
@@ -9900,6 +10669,9 @@ func (c *TablesFeaturesBatchPatchCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9946,6 +10718,7 @@ type TablesFeaturesGetCall struct {
 	tableId string
 	id      string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Return a single feature, given its ID.
@@ -9983,6 +10756,13 @@ func (c *TablesFeaturesGetCall) Fields(s ...googleapi.Field) *TablesFeaturesGetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesFeaturesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10004,6 +10784,9 @@ func (c *TablesFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 		"id":      c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10079,6 +10862,7 @@ type TablesFeaturesListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all features readable by the current user.
@@ -10169,6 +10953,13 @@ func (c *TablesFeaturesListCall) Fields(s ...googleapi.Field) *TablesFeaturesLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesFeaturesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10210,6 +11001,9 @@ func (c *TablesFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10319,8 +11113,8 @@ type TablesFilesInsertCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Upload a file to a placeholder table asset. See Table Upload
@@ -10370,6 +11164,15 @@ func (c *TablesFilesInsertCall) Fields(s ...googleapi.Field) *TablesFilesInsertC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *TablesFilesInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10407,6 +11210,9 @@ func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10496,6 +11302,7 @@ type TablesParentsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all parent ids of the specified table.
@@ -10530,6 +11337,13 @@ func (c *TablesParentsListCall) Fields(s ...googleapi.Field) *TablesParentsListC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesParentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10550,6 +11364,9 @@ func (c *TablesParentsListCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10612,6 +11429,7 @@ type TablesPermissionsBatchDeleteCall struct {
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
@@ -10629,6 +11447,13 @@ func (r *TablesPermissionsService) BatchDelete(id string, permissionsbatchdelete
 func (c *TablesPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *TablesPermissionsBatchDeleteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesPermissionsBatchDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TablesPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
@@ -10651,6 +11476,9 @@ func (c *TablesPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10704,6 +11532,7 @@ type TablesPermissionsBatchUpdateCall struct {
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // BatchUpdate: Add or update permission entries to an already existing
@@ -10726,6 +11555,13 @@ func (c *TablesPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *TablesP
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesPermissionsBatchUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.permissionsbatchupdaterequest)
@@ -10746,6 +11582,9 @@ func (c *TablesPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10798,6 +11637,7 @@ type TablesPermissionsListCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
@@ -10815,6 +11655,13 @@ func (c *TablesPermissionsListCall) Fields(s ...googleapi.Field) *TablesPermissi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TablesPermissionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TablesPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10829,6 +11676,9 @@ func (c *TablesPermissionsListCall) doRequest(alt string) (*http.Response, error
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

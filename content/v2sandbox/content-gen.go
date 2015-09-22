@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "content:v2sandbox"
 const apiName = "content"
@@ -1004,6 +1004,7 @@ type OrdersAcknowledgeCall struct {
 	orderId                  string
 	ordersacknowledgerequest *OrdersAcknowledgeRequest
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Acknowledge: Marks an order as acknowledged.
@@ -1021,6 +1022,13 @@ func (r *OrdersService) Acknowledge(merchantId uint64, orderId string, ordersack
 func (c *OrdersAcknowledgeCall) Fields(s ...googleapi.Field) *OrdersAcknowledgeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersAcknowledgeCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
@@ -1044,6 +1052,9 @@ func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1105,6 +1116,7 @@ type OrdersAdvancetestorderCall struct {
 	merchantId uint64
 	orderId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Advancetestorder: Sandbox only. Moves a test order from state
@@ -1124,6 +1136,13 @@ func (c *OrdersAdvancetestorderCall) Fields(s ...googleapi.Field) *OrdersAdvance
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersAdvancetestorderCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1139,6 +1158,9 @@ func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, erro
 		"orderId":    c.orderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1198,6 +1220,7 @@ type OrdersCancelCall struct {
 	orderId             string
 	orderscancelrequest *OrdersCancelRequest
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Cancel: Cancels all line items in an order.
@@ -1215,6 +1238,13 @@ func (r *OrdersService) Cancel(merchantId uint64, orderId string, orderscancelre
 func (c *OrdersCancelCall) Fields(s ...googleapi.Field) *OrdersCancelCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersCancelCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
@@ -1238,6 +1268,9 @@ func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1300,6 +1333,7 @@ type OrdersCancellineitemCall struct {
 	orderId                     string
 	orderscancellineitemrequest *OrdersCancelLineItemRequest
 	opt_                        map[string]interface{}
+	ctx_                        context.Context
 }
 
 // Cancellineitem: Cancels a line item.
@@ -1317,6 +1351,13 @@ func (r *OrdersService) Cancellineitem(merchantId uint64, orderId string, orders
 func (c *OrdersCancellineitemCall) Fields(s ...googleapi.Field) *OrdersCancellineitemCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersCancellineitemCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error) {
@@ -1340,6 +1381,9 @@ func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1401,6 +1445,7 @@ type OrdersCreatetestorderCall struct {
 	merchantId                   uint64
 	orderscreatetestorderrequest *OrdersCreateTestOrderRequest
 	opt_                         map[string]interface{}
+	ctx_                         context.Context
 }
 
 // Createtestorder: Sandbox only. Creates a test order.
@@ -1417,6 +1462,13 @@ func (r *OrdersService) Createtestorder(merchantId uint64, orderscreatetestorder
 func (c *OrdersCreatetestorderCall) Fields(s ...googleapi.Field) *OrdersCreatetestorderCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersCreatetestorderCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error) {
@@ -1439,6 +1491,9 @@ func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1492,6 +1547,7 @@ type OrdersCustombatchCall struct {
 	s                        *Service
 	orderscustombatchrequest *OrdersCustomBatchRequest
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Custombatch: Retrieves or modifies multiple orders in a single
@@ -1508,6 +1564,13 @@ func (r *OrdersService) Custombatch(orderscustombatchrequest *OrdersCustomBatchR
 func (c *OrdersCustombatchCall) Fields(s ...googleapi.Field) *OrdersCustombatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersCustombatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersCustombatchCall) doRequest(alt string) (*http.Response, error) {
@@ -1528,6 +1591,9 @@ func (c *OrdersCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1570,6 +1636,7 @@ type OrdersGetCall struct {
 	merchantId uint64
 	orderId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Retrieves an order from your Merchant Center account.
@@ -1588,6 +1655,13 @@ func (c *OrdersGetCall) Fields(s ...googleapi.Field) *OrdersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1603,6 +1677,9 @@ func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 		"orderId":    c.orderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1661,6 +1738,7 @@ type OrdersGetbymerchantorderidCall struct {
 	merchantId      uint64
 	merchantOrderId string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Getbymerchantorderid: Retrieves an order using merchant order id.
@@ -1679,6 +1757,13 @@ func (c *OrdersGetbymerchantorderidCall) Fields(s ...googleapi.Field) *OrdersGet
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersGetbymerchantorderidCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1694,6 +1779,9 @@ func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, 
 		"merchantOrderId": c.merchantOrderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1752,6 +1840,7 @@ type OrdersGettestordertemplateCall struct {
 	merchantId   uint64
 	templateName string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Gettestordertemplate: Sandbox only. Retrieves an order template that
@@ -1771,6 +1860,13 @@ func (c *OrdersGettestordertemplateCall) Fields(s ...googleapi.Field) *OrdersGet
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersGettestordertemplateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1786,6 +1882,9 @@ func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, 
 		"templateName": c.templateName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1851,6 +1950,7 @@ type OrdersListCall struct {
 	s          *Service
 	merchantId uint64
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Lists the orders in your Merchant Center account.
@@ -1952,6 +2052,13 @@ func (c *OrdersListCall) Fields(s ...googleapi.Field) *OrdersListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1987,6 +2094,9 @@ func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2110,6 +2220,7 @@ type OrdersRefundCall struct {
 	orderId             string
 	ordersrefundrequest *OrdersRefundRequest
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Refund: Refund a portion of the order, up to the full amount paid.
@@ -2127,6 +2238,13 @@ func (r *OrdersService) Refund(merchantId uint64, orderId string, ordersrefundre
 func (c *OrdersRefundCall) Fields(s ...googleapi.Field) *OrdersRefundCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersRefundCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
@@ -2150,6 +2268,9 @@ func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2212,6 +2333,7 @@ type OrdersReturnlineitemCall struct {
 	orderId                     string
 	ordersreturnlineitemrequest *OrdersReturnLineItemRequest
 	opt_                        map[string]interface{}
+	ctx_                        context.Context
 }
 
 // Returnlineitem: Returns a line item.
@@ -2229,6 +2351,13 @@ func (r *OrdersService) Returnlineitem(merchantId uint64, orderId string, orders
 func (c *OrdersReturnlineitemCall) Fields(s ...googleapi.Field) *OrdersReturnlineitemCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersReturnlineitemCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersReturnlineitemCall) doRequest(alt string) (*http.Response, error) {
@@ -2252,6 +2381,9 @@ func (c *OrdersReturnlineitemCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2314,6 +2446,7 @@ type OrdersShiplineitemsCall struct {
 	orderId                    string
 	ordersshiplineitemsrequest *OrdersShipLineItemsRequest
 	opt_                       map[string]interface{}
+	ctx_                       context.Context
 }
 
 // Shiplineitems: Marks line item(s) as shipped.
@@ -2331,6 +2464,13 @@ func (r *OrdersService) Shiplineitems(merchantId uint64, orderId string, orderss
 func (c *OrdersShiplineitemsCall) Fields(s ...googleapi.Field) *OrdersShiplineitemsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersShiplineitemsCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) {
@@ -2354,6 +2494,9 @@ func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2416,6 +2559,7 @@ type OrdersUpdatemerchantorderidCall struct {
 	orderId                            string
 	ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest
 	opt_                               map[string]interface{}
+	ctx_                               context.Context
 }
 
 // Updatemerchantorderid: Updates the merchant order ID for a given
@@ -2434,6 +2578,13 @@ func (r *OrdersService) Updatemerchantorderid(merchantId uint64, orderId string,
 func (c *OrdersUpdatemerchantorderidCall) Fields(s ...googleapi.Field) *OrdersUpdatemerchantorderidCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersUpdatemerchantorderidCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response, error) {
@@ -2457,6 +2608,9 @@ func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2519,6 +2673,7 @@ type OrdersUpdateshipmentCall struct {
 	orderId                     string
 	ordersupdateshipmentrequest *OrdersUpdateShipmentRequest
 	opt_                        map[string]interface{}
+	ctx_                        context.Context
 }
 
 // Updateshipment: Updates a shipment's status, carrier, and/or tracking
@@ -2537,6 +2692,13 @@ func (r *OrdersService) Updateshipment(merchantId uint64, orderId string, orders
 func (c *OrdersUpdateshipmentCall) Fields(s ...googleapi.Field) *OrdersUpdateshipmentCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OrdersUpdateshipmentCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error) {
@@ -2560,6 +2722,9 @@ func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

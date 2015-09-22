@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "tasks:v1"
 const apiName = "tasks"
@@ -226,6 +226,7 @@ type TasklistsDeleteCall struct {
 	s          *Service
 	tasklistid string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes the authenticated user's specified task list.
@@ -243,6 +244,13 @@ func (c *TasklistsDeleteCall) Fields(s ...googleapi.Field) *TasklistsDeleteCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasklistsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -257,6 +265,9 @@ func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -299,6 +310,7 @@ type TasklistsGetCall struct {
 	s          *Service
 	tasklistid string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns the authenticated user's specified task list.
@@ -316,6 +328,13 @@ func (c *TasklistsGetCall) Fields(s ...googleapi.Field) *TasklistsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasklistsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -330,6 +349,9 @@ func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -380,6 +402,7 @@ type TasklistsInsertCall struct {
 	s        *Service
 	tasklist *TaskList
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Creates a new task list and adds it to the authenticated
@@ -396,6 +419,13 @@ func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 func (c *TasklistsInsertCall) Fields(s ...googleapi.Field) *TasklistsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasklistsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -416,6 +446,9 @@ func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -456,6 +489,7 @@ func (c *TasklistsInsertCall) Do() (*TaskList, error) {
 type TasklistsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns all the authenticated user's task lists.
@@ -486,6 +520,13 @@ func (c *TasklistsListCall) Fields(s ...googleapi.Field) *TasklistsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasklistsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -504,6 +545,9 @@ func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -557,6 +601,7 @@ type TasklistsPatchCall struct {
 	tasklistid string
 	tasklist   *TaskList
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Patch: Updates the authenticated user's specified task list. This
@@ -574,6 +619,13 @@ func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *Tasklis
 func (c *TasklistsPatchCall) Fields(s ...googleapi.Field) *TasklistsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasklistsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -596,6 +648,9 @@ func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -649,6 +704,7 @@ type TasklistsUpdateCall struct {
 	tasklistid string
 	tasklist   *TaskList
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates the authenticated user's specified task list.
@@ -665,6 +721,13 @@ func (r *TasklistsService) Update(tasklistid string, tasklist *TaskList) *Taskli
 func (c *TasklistsUpdateCall) Fields(s ...googleapi.Field) *TasklistsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasklistsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -687,6 +750,9 @@ func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -739,6 +805,7 @@ type TasksClearCall struct {
 	s          *Service
 	tasklistid string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Clear: Clears all completed tasks from the specified task list. The
@@ -758,6 +825,13 @@ func (c *TasksClearCall) Fields(s ...googleapi.Field) *TasksClearCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksClearCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -772,6 +846,9 @@ func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -815,6 +892,7 @@ type TasksDeleteCall struct {
 	tasklistid string
 	taskid     string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes the specified task from the task list.
@@ -833,6 +911,13 @@ func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -848,6 +933,9 @@ func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"task":     c.taskid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -898,6 +986,7 @@ type TasksGetCall struct {
 	tasklistid string
 	taskid     string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns the specified task.
@@ -916,6 +1005,13 @@ func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -931,6 +1027,9 @@ func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 		"task":     c.taskid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -989,6 +1088,7 @@ type TasksInsertCall struct {
 	tasklistid string
 	task       *Task
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Creates a new task on the specified task list.
@@ -1022,6 +1122,13 @@ func (c *TasksInsertCall) Fields(s ...googleapi.Field) *TasksInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
@@ -1048,6 +1155,9 @@ func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1110,6 +1220,7 @@ type TasksListCall struct {
 	s          *Service
 	tasklistid string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Returns all tasks in the specified task list.
@@ -1205,6 +1316,13 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1249,6 +1367,9 @@ func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1351,6 +1472,7 @@ type TasksMoveCall struct {
 	tasklistid string
 	taskid     string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Move: Moves the specified task to another position in the task list.
@@ -1387,6 +1509,13 @@ func (c *TasksMoveCall) Fields(s ...googleapi.Field) *TasksMoveCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksMoveCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1408,6 +1537,9 @@ func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 		"task":     c.taskid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1476,6 +1608,7 @@ type TasksPatchCall struct {
 	taskid     string
 	task       *Task
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Patch: Updates the specified task. This method supports patch
@@ -1494,6 +1627,13 @@ func (r *TasksService) Patch(tasklistid string, taskid string, task *Task) *Task
 func (c *TasksPatchCall) Fields(s ...googleapi.Field) *TasksPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -1517,6 +1657,9 @@ func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1578,6 +1721,7 @@ type TasksUpdateCall struct {
 	taskid     string
 	task       *Task
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates the specified task.
@@ -1595,6 +1739,13 @@ func (r *TasksService) Update(tasklistid string, taskid string, task *Task) *Tas
 func (c *TasksUpdateCall) Fields(s ...googleapi.Field) *TasksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TasksUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -1618,6 +1769,9 @@ func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

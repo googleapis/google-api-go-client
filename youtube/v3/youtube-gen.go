@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "youtube:v3"
 const apiName = "youtube"
@@ -4895,6 +4895,7 @@ type ActivitiesInsertCall struct {
 	part     string
 	activity *Activity
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Posts a bulletin for a specific channel. (The user submitting
@@ -4922,6 +4923,13 @@ func (c *ActivitiesInsertCall) Fields(s ...googleapi.Field) *ActivitiesInsertCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ActivitiesInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ActivitiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activity)
@@ -4941,6 +4949,9 @@ func (c *ActivitiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4994,6 +5005,7 @@ type ActivitiesListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of channel activity events that match the
@@ -5090,6 +5102,13 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ActivitiesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5127,6 +5146,9 @@ func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5224,6 +5246,7 @@ type CaptionsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a specified caption track.
@@ -5267,6 +5290,13 @@ func (c *CaptionsDeleteCall) Fields(s ...googleapi.Field) *CaptionsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CaptionsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CaptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5286,6 +5316,9 @@ func (c *CaptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5339,6 +5372,7 @@ type CaptionsDownloadCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Download: Downloads a caption track. The caption track is returned in
@@ -5412,6 +5446,13 @@ func (c *CaptionsDownloadCall) Fields(s ...googleapi.Field) *CaptionsDownloadCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CaptionsDownloadCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CaptionsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5438,6 +5479,9 @@ func (c *CaptionsDownloadCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5535,8 +5579,8 @@ type CaptionsInsertCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Uploads a caption track.
@@ -5623,6 +5667,15 @@ func (c *CaptionsInsertCall) Fields(s ...googleapi.Field) *CaptionsInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *CaptionsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.caption)
@@ -5670,6 +5723,9 @@ func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5781,6 +5837,7 @@ type CaptionsListCall struct {
 	part    string
 	videoId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Returns a list of caption tracks that are associated with a
@@ -5837,6 +5894,13 @@ func (c *CaptionsListCall) Fields(s ...googleapi.Field) *CaptionsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CaptionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CaptionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5860,6 +5924,9 @@ func (c *CaptionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5936,8 +6003,8 @@ type CaptionsUpdateCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Update: Updates a caption track. When updating a caption track, you
@@ -6025,6 +6092,15 @@ func (c *CaptionsUpdateCall) Fields(s ...googleapi.Field) *CaptionsUpdateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *CaptionsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.caption)
@@ -6072,6 +6148,9 @@ func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6185,8 +6264,8 @@ type ChannelBannersInsertCall struct {
 	media_                io.Reader
 	resumable_            googleapi.SizeReaderAt
 	mediaType_            string
-	ctx_                  context.Context
 	protocol_             string
+	ctx_                  context.Context
 }
 
 // Insert: Uploads a channel banner image to YouTube. This method
@@ -6261,6 +6340,15 @@ func (c *ChannelBannersInsertCall) Fields(s ...googleapi.Field) *ChannelBannersI
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *ChannelBannersInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelbannerresource)
@@ -6301,6 +6389,9 @@ func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error)
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6393,6 +6484,7 @@ type ChannelSectionsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a channelSection.
@@ -6428,6 +6520,13 @@ func (c *ChannelSectionsDeleteCall) Fields(s ...googleapi.Field) *ChannelSection
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChannelSectionsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChannelSectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6444,6 +6543,9 @@ func (c *ChannelSectionsDeleteCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6494,6 +6596,7 @@ type ChannelSectionsInsertCall struct {
 	part           string
 	channelsection *ChannelSection
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Adds a channelSection for the authenticated user's channel.
@@ -6556,6 +6659,13 @@ func (c *ChannelSectionsInsertCall) Fields(s ...googleapi.Field) *ChannelSection
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChannelSectionsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChannelSectionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelsection)
@@ -6581,6 +6691,9 @@ func (c *ChannelSectionsInsertCall) doRequest(alt string) (*http.Response, error
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6645,6 +6758,7 @@ type ChannelSectionsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns channelSection resources that match the API request
@@ -6719,6 +6833,13 @@ func (c *ChannelSectionsListCall) Fields(s ...googleapi.Field) *ChannelSectionsL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChannelSectionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChannelSectionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6747,6 +6868,9 @@ func (c *ChannelSectionsListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6825,6 +6949,7 @@ type ChannelSectionsUpdateCall struct {
 	part           string
 	channelsection *ChannelSection
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Update: Update a channelSection.
@@ -6861,6 +6986,13 @@ func (c *ChannelSectionsUpdateCall) Fields(s ...googleapi.Field) *ChannelSection
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChannelSectionsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChannelSectionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channelsection)
@@ -6883,6 +7015,9 @@ func (c *ChannelSectionsUpdateCall) doRequest(alt string) (*http.Response, error
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6942,6 +7077,7 @@ type ChannelsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a collection of zero or more channel resources that
@@ -7057,6 +7193,13 @@ func (c *ChannelsListCall) Fields(s ...googleapi.Field) *ChannelsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChannelsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7100,6 +7243,9 @@ func (c *ChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7208,6 +7354,7 @@ type ChannelsUpdateCall struct {
 	part    string
 	channel *Channel
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Update: Updates a channel's metadata. Note that this method currently
@@ -7243,6 +7390,13 @@ func (c *ChannelsUpdateCall) Fields(s ...googleapi.Field) *ChannelsUpdateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChannelsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChannelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -7265,6 +7419,9 @@ func (c *ChannelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7325,6 +7482,7 @@ type CommentThreadsInsertCall struct {
 	part          string
 	commentthread *CommentThread
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Creates a new top-level comment. To add a reply to an
@@ -7342,6 +7500,13 @@ func (r *CommentThreadsService) Insert(part string, commentthread *CommentThread
 func (c *CommentThreadsInsertCall) Fields(s ...googleapi.Field) *CommentThreadsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentThreadsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CommentThreadsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -7363,6 +7528,9 @@ func (c *CommentThreadsInsertCall) doRequest(alt string) (*http.Response, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7415,6 +7583,7 @@ type CommentThreadsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of comment threads that match the API request
@@ -7556,6 +7725,13 @@ func (c *CommentThreadsListCall) Fields(s ...googleapi.Field) *CommentThreadsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentThreadsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7599,6 +7775,9 @@ func (c *CommentThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7732,6 +7911,7 @@ type CommentThreadsUpdateCall struct {
 	part          string
 	commentthread *CommentThread
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Modifies the top-level comment in a comment thread.
@@ -7748,6 +7928,13 @@ func (r *CommentThreadsService) Update(part string, commentthread *CommentThread
 func (c *CommentThreadsUpdateCall) Fields(s ...googleapi.Field) *CommentThreadsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentThreadsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CommentThreadsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -7769,6 +7956,9 @@ func (c *CommentThreadsUpdateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7821,6 +8011,7 @@ type CommentsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a comment.
@@ -7838,6 +8029,13 @@ func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7851,6 +8049,9 @@ func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7894,6 +8095,7 @@ type CommentsInsertCall struct {
 	part    string
 	comment *Comment
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates a reply to an existing comment. Note: To create a
@@ -7911,6 +8113,13 @@ func (r *CommentsService) Insert(part string, comment *Comment) *CommentsInsertC
 func (c *CommentsInsertCall) Fields(s ...googleapi.Field) *CommentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -7932,6 +8141,9 @@ func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7984,6 +8196,7 @@ type CommentsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of comments that match the API request
@@ -8058,6 +8271,13 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8086,6 +8306,9 @@ func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8173,6 +8396,7 @@ type CommentsMarkAsSpamCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // MarkAsSpam: Expresses the caller's opinion that one or more comments
@@ -8191,6 +8415,13 @@ func (c *CommentsMarkAsSpamCall) Fields(s ...googleapi.Field) *CommentsMarkAsSpa
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsMarkAsSpamCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8204,6 +8435,9 @@ func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8247,6 +8481,7 @@ type CommentsSetModerationStatusCall struct {
 	id               string
 	moderationStatus string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // SetModerationStatus: Sets the moderation status of one or more
@@ -8279,6 +8514,13 @@ func (c *CommentsSetModerationStatusCall) Fields(s ...googleapi.Field) *Comments
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsSetModerationStatusCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsSetModerationStatusCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8296,6 +8538,9 @@ func (c *CommentsSetModerationStatusCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8362,6 +8607,7 @@ type CommentsUpdateCall struct {
 	part    string
 	comment *Comment
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Update: Modifies a comment.
@@ -8378,6 +8624,13 @@ func (r *CommentsService) Update(part string, comment *Comment) *CommentsUpdateC
 func (c *CommentsUpdateCall) Fields(s ...googleapi.Field) *CommentsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -8399,6 +8652,9 @@ func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8451,6 +8707,7 @@ type GuideCategoriesListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of categories that can be associated with
@@ -8494,6 +8751,13 @@ func (c *GuideCategoriesListCall) Fields(s ...googleapi.Field) *GuideCategoriesL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GuideCategoriesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GuideCategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8516,6 +8780,9 @@ func (c *GuideCategoriesListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8584,6 +8851,7 @@ type I18nLanguagesListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of application languages that the YouTube
@@ -8609,6 +8877,13 @@ func (c *I18nLanguagesListCall) Fields(s ...googleapi.Field) *I18nLanguagesListC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *I18nLanguagesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *I18nLanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8625,6 +8900,9 @@ func (c *I18nLanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8683,6 +8961,7 @@ type I18nRegionsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of content regions that the YouTube website
@@ -8708,6 +8987,13 @@ func (c *I18nRegionsListCall) Fields(s ...googleapi.Field) *I18nRegionsListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *I18nRegionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *I18nRegionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8724,6 +9010,9 @@ func (c *I18nRegionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8783,6 +9072,7 @@ type LiveBroadcastsBindCall struct {
 	id   string
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Bind: Binds a YouTube broadcast to a stream or removes an existing
@@ -8857,6 +9147,13 @@ func (c *LiveBroadcastsBindCall) Fields(s ...googleapi.Field) *LiveBroadcastsBin
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveBroadcastsBindCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveBroadcastsBindCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8880,6 +9177,9 @@ func (c *LiveBroadcastsBindCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8953,6 +9253,7 @@ type LiveBroadcastsBindDirectCall struct {
 	id   string
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // BindDirect: Binds a YouTube broadcast to a stream or removes an
@@ -9027,6 +9328,13 @@ func (c *LiveBroadcastsBindDirectCall) Fields(s ...googleapi.Field) *LiveBroadca
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveBroadcastsBindDirectCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveBroadcastsBindDirectCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9050,6 +9358,9 @@ func (c *LiveBroadcastsBindDirectCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9123,6 +9434,7 @@ type LiveBroadcastsControlCall struct {
 	id   string
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Control: Controls the settings for a slate that can be displayed in
@@ -9223,6 +9535,13 @@ func (c *LiveBroadcastsControlCall) Fields(s ...googleapi.Field) *LiveBroadcasts
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveBroadcastsControlCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveBroadcastsControlCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9252,6 +9571,9 @@ func (c *LiveBroadcastsControlCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9336,6 +9658,7 @@ type LiveBroadcastsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a broadcast.
@@ -9397,6 +9720,13 @@ func (c *LiveBroadcastsDeleteCall) Fields(s ...googleapi.Field) *LiveBroadcastsD
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveBroadcastsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveBroadcastsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9416,6 +9746,9 @@ func (c *LiveBroadcastsDeleteCall) doRequest(alt string) (*http.Response, error)
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9470,6 +9803,7 @@ type LiveBroadcastsInsertCall struct {
 	part          string
 	livebroadcast *LiveBroadcast
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Creates a broadcast.
@@ -9532,6 +9866,13 @@ func (c *LiveBroadcastsInsertCall) Fields(s ...googleapi.Field) *LiveBroadcastsI
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveBroadcastsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveBroadcastsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livebroadcast)
@@ -9557,6 +9898,9 @@ func (c *LiveBroadcastsInsertCall) doRequest(alt string) (*http.Response, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9620,6 +9964,7 @@ type LiveBroadcastsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of YouTube broadcasts that match the API request
@@ -9731,6 +10076,13 @@ func (c *LiveBroadcastsListCall) Fields(s ...googleapi.Field) *LiveBroadcastsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveBroadcastsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveBroadcastsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9765,6 +10117,9 @@ func (c *LiveBroadcastsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9869,6 +10224,7 @@ type LiveBroadcastsTransitionCall struct {
 	id              string
 	part            string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Transition: Changes the status of a YouTube live broadcast and
@@ -9938,6 +10294,13 @@ func (c *LiveBroadcastsTransitionCall) Fields(s ...googleapi.Field) *LiveBroadca
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveBroadcastsTransitionCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveBroadcastsTransitionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9959,6 +10322,9 @@ func (c *LiveBroadcastsTransitionCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10044,6 +10410,7 @@ type LiveBroadcastsUpdateCall struct {
 	part          string
 	livebroadcast *LiveBroadcast
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Updates a broadcast. For example, you could modify the
@@ -10108,6 +10475,13 @@ func (c *LiveBroadcastsUpdateCall) Fields(s ...googleapi.Field) *LiveBroadcastsU
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveBroadcastsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveBroadcastsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livebroadcast)
@@ -10133,6 +10507,9 @@ func (c *LiveBroadcastsUpdateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10196,6 +10573,7 @@ type LiveStreamsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a video stream.
@@ -10257,6 +10635,13 @@ func (c *LiveStreamsDeleteCall) Fields(s ...googleapi.Field) *LiveStreamsDeleteC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveStreamsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10276,6 +10661,9 @@ func (c *LiveStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10330,6 +10718,7 @@ type LiveStreamsInsertCall struct {
 	part       string
 	livestream *LiveStream
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Creates a video stream. The stream enables you to send your
@@ -10394,6 +10783,13 @@ func (c *LiveStreamsInsertCall) Fields(s ...googleapi.Field) *LiveStreamsInsertC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveStreamsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveStreamsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livestream)
@@ -10419,6 +10815,9 @@ func (c *LiveStreamsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10482,6 +10881,7 @@ type LiveStreamsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of video streams that match the API request
@@ -10579,6 +10979,13 @@ func (c *LiveStreamsListCall) Fields(s ...googleapi.Field) *LiveStreamsListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveStreamsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10610,6 +11017,9 @@ func (c *LiveStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10696,6 +11106,7 @@ type LiveStreamsUpdateCall struct {
 	part       string
 	livestream *LiveStream
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates a video stream. If the properties that you want to
@@ -10760,6 +11171,13 @@ func (c *LiveStreamsUpdateCall) Fields(s ...googleapi.Field) *LiveStreamsUpdateC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LiveStreamsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LiveStreamsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livestream)
@@ -10785,6 +11203,9 @@ func (c *LiveStreamsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10848,6 +11269,7 @@ type PlaylistItemsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a playlist item.
@@ -10865,6 +11287,13 @@ func (c *PlaylistItemsDeleteCall) Fields(s ...googleapi.Field) *PlaylistItemsDel
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlaylistItemsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlaylistItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10878,6 +11307,9 @@ func (c *PlaylistItemsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10923,6 +11355,7 @@ type PlaylistItemsInsertCall struct {
 	part         string
 	playlistitem *PlaylistItem
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Insert: Adds a resource to a playlist.
@@ -10959,6 +11392,13 @@ func (c *PlaylistItemsInsertCall) Fields(s ...googleapi.Field) *PlaylistItemsIns
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlaylistItemsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlaylistItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlistitem)
@@ -10981,6 +11421,9 @@ func (c *PlaylistItemsInsertCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11040,6 +11483,7 @@ type PlaylistItemsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a collection of playlist items that match the API
@@ -11120,6 +11564,13 @@ func (c *PlaylistItemsListCall) Fields(s ...googleapi.Field) *PlaylistItemsListC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlaylistItemsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlaylistItemsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11151,6 +11602,9 @@ func (c *PlaylistItemsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11239,6 +11693,7 @@ type PlaylistItemsUpdateCall struct {
 	part         string
 	playlistitem *PlaylistItem
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Update: Modifies a playlist item. For example, you could update the
@@ -11256,6 +11711,13 @@ func (r *PlaylistItemsService) Update(part string, playlistitem *PlaylistItem) *
 func (c *PlaylistItemsUpdateCall) Fields(s ...googleapi.Field) *PlaylistItemsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlaylistItemsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *PlaylistItemsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -11277,6 +11739,9 @@ func (c *PlaylistItemsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11331,6 +11796,7 @@ type PlaylistsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a playlist.
@@ -11366,6 +11832,13 @@ func (c *PlaylistsDeleteCall) Fields(s ...googleapi.Field) *PlaylistsDeleteCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlaylistsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlaylistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11382,6 +11855,9 @@ func (c *PlaylistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11432,6 +11908,7 @@ type PlaylistsInsertCall struct {
 	part     string
 	playlist *Playlist
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Creates a playlist.
@@ -11494,6 +11971,13 @@ func (c *PlaylistsInsertCall) Fields(s ...googleapi.Field) *PlaylistsInsertCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlaylistsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlaylistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlist)
@@ -11519,6 +12003,9 @@ func (c *PlaylistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11583,6 +12070,7 @@ type PlaylistsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a collection of playlists that match the API request
@@ -11697,6 +12185,13 @@ func (c *PlaylistsListCall) Fields(s ...googleapi.Field) *PlaylistsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlaylistsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlaylistsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11734,6 +12229,9 @@ func (c *PlaylistsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11831,6 +12329,7 @@ type PlaylistsUpdateCall struct {
 	part     string
 	playlist *Playlist
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Update: Modifies a playlist. For example, you could change a
@@ -11868,6 +12367,13 @@ func (c *PlaylistsUpdateCall) Fields(s ...googleapi.Field) *PlaylistsUpdateCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlaylistsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlaylistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playlist)
@@ -11890,6 +12396,9 @@ func (c *PlaylistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11949,6 +12458,7 @@ type SearchListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a collection of search results that match the query
@@ -12369,6 +12879,13 @@ func (c *SearchListCall) Fields(s ...googleapi.Field) *SearchListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SearchListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *SearchListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -12472,6 +12989,9 @@ func (c *SearchListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12804,6 +13324,7 @@ type SubscriptionsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a subscription.
@@ -12821,6 +13342,13 @@ func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDel
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -12834,6 +13362,9 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12879,6 +13410,7 @@ type SubscriptionsInsertCall struct {
 	part         string
 	subscription *Subscription
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Insert: Adds a subscription for the authenticated user's channel.
@@ -12895,6 +13427,13 @@ func (r *SubscriptionsService) Insert(part string, subscription *Subscription) *
 func (c *SubscriptionsInsertCall) Fields(s ...googleapi.Field) *SubscriptionsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -12916,6 +13455,9 @@ func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -12970,6 +13512,7 @@ type SubscriptionsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns subscription resources that match the API request
@@ -13103,6 +13646,13 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SubscriptionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13146,6 +13696,9 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13266,8 +13819,8 @@ type ThumbnailsSetCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Set: Uploads a custom video thumbnail to YouTube and sets it for a
@@ -13333,6 +13886,15 @@ func (c *ThumbnailsSetCall) Fields(s ...googleapi.Field) *ThumbnailsSetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *ThumbnailsSetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13371,6 +13933,9 @@ func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13470,6 +14035,7 @@ type VideoAbuseReportReasonsListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of abuse reasons that can be used for reporting
@@ -13495,6 +14061,13 @@ func (c *VideoAbuseReportReasonsListCall) Fields(s ...googleapi.Field) *VideoAbu
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VideoAbuseReportReasonsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideoAbuseReportReasonsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13511,6 +14084,9 @@ func (c *VideoAbuseReportReasonsListCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13568,6 +14144,7 @@ type VideoCategoriesListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of categories that can be associated with
@@ -13610,6 +14187,13 @@ func (c *VideoCategoriesListCall) Fields(s ...googleapi.Field) *VideoCategoriesL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VideoCategoriesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideoCategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13632,6 +14216,9 @@ func (c *VideoCategoriesListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13700,6 +14287,7 @@ type VideosDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a YouTube video.
@@ -13736,6 +14324,13 @@ func (c *VideosDeleteCall) Fields(s ...googleapi.Field) *VideosDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VideosDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13752,6 +14347,9 @@ func (c *VideosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13801,6 +14399,7 @@ type VideosGetRatingCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetRating: Retrieves the ratings that the authorized user gave to a
@@ -13837,6 +14436,13 @@ func (c *VideosGetRatingCall) Fields(s ...googleapi.Field) *VideosGetRatingCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VideosGetRatingCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideosGetRatingCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -13853,6 +14459,9 @@ func (c *VideosGetRatingCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -13913,8 +14522,8 @@ type VideosInsertCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Uploads a video to YouTube and optionally sets the video's
@@ -14035,6 +14644,15 @@ func (c *VideosInsertCall) Fields(s ...googleapi.Field) *VideosInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *VideosInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.video)
@@ -14088,6 +14706,9 @@ func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14210,6 +14831,7 @@ type VideosListCall struct {
 	s    *Service
 	part string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of videos that match the API request parameters.
@@ -14344,6 +14966,13 @@ func (c *VideosListCall) Fields(s ...googleapi.Field) *VideosListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VideosListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -14387,6 +15016,9 @@ func (c *VideosListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14509,6 +15141,7 @@ type VideosRateCall struct {
 	id     string
 	rating string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Rate: Add a like or dislike rating to a video or remove a rating from
@@ -14528,6 +15161,13 @@ func (c *VideosRateCall) Fields(s ...googleapi.Field) *VideosRateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VideosRateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideosRateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -14542,6 +15182,9 @@ func (c *VideosRateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14603,6 +15246,7 @@ type VideosReportAbuseCall struct {
 	s                *Service
 	videoabusereport *VideoAbuseReport
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // ReportAbuse: Report abuse for a video.
@@ -14638,6 +15282,13 @@ func (c *VideosReportAbuseCall) Fields(s ...googleapi.Field) *VideosReportAbuseC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VideosReportAbuseCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideosReportAbuseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.videoabusereport)
@@ -14659,6 +15310,9 @@ func (c *VideosReportAbuseCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14703,6 +15357,7 @@ type VideosUpdateCall struct {
 	part  string
 	video *Video
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Update: Updates a video's metadata.
@@ -14740,6 +15395,13 @@ func (c *VideosUpdateCall) Fields(s ...googleapi.Field) *VideosUpdateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VideosUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *VideosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.video)
@@ -14762,6 +15424,9 @@ func (c *VideosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -14825,8 +15490,8 @@ type WatermarksSetCall struct {
 	media_          io.Reader
 	resumable_      googleapi.SizeReaderAt
 	mediaType_      string
-	ctx_            context.Context
 	protocol_       string
+	ctx_            context.Context
 }
 
 // Set: Uploads a watermark image to YouTube and sets it for a channel.
@@ -14891,6 +15556,15 @@ func (c *WatermarksSetCall) Fields(s ...googleapi.Field) *WatermarksSetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *WatermarksSetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invideobranding)
@@ -14932,6 +15606,9 @@ func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -15027,6 +15704,7 @@ type WatermarksUnsetCall struct {
 	s         *Service
 	channelId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Unset: Deletes a channel's watermark image.
@@ -15062,6 +15740,13 @@ func (c *WatermarksUnsetCall) Fields(s ...googleapi.Field) *WatermarksUnsetCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WatermarksUnsetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *WatermarksUnsetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -15078,6 +15763,9 @@ func (c *WatermarksUnsetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

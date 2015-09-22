@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "calendar:v3"
 const apiName = "calendar"
@@ -1068,6 +1068,7 @@ type AclDeleteCall struct {
 	calendarId string
 	ruleId     string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes an access control rule.
@@ -1086,6 +1087,13 @@ func (c *AclDeleteCall) Fields(s ...googleapi.Field) *AclDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AclDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AclDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1101,6 +1109,9 @@ func (c *AclDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"ruleId":     c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1151,6 +1162,7 @@ type AclGetCall struct {
 	calendarId string
 	ruleId     string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns an access control rule.
@@ -1169,6 +1181,13 @@ func (c *AclGetCall) Fields(s ...googleapi.Field) *AclGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AclGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AclGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1184,6 +1203,9 @@ func (c *AclGetCall) doRequest(alt string) (*http.Response, error) {
 		"ruleId":     c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1242,6 +1264,7 @@ type AclInsertCall struct {
 	calendarId string
 	aclrule    *AclRule
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Creates an access control rule.
@@ -1258,6 +1281,13 @@ func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall 
 func (c *AclInsertCall) Fields(s ...googleapi.Field) *AclInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AclInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AclInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -1280,6 +1310,9 @@ func (c *AclInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1332,6 +1365,7 @@ type AclListCall struct {
 	s          *Service
 	calendarId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Returns the rules in the access control list for the calendar.
@@ -1389,6 +1423,13 @@ func (c *AclListCall) Fields(s ...googleapi.Field) *AclListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AclListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AclListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1415,6 +1456,9 @@ func (c *AclListCall) doRequest(alt string) (*http.Response, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1489,6 +1533,7 @@ type AclPatchCall struct {
 	ruleId     string
 	aclrule    *AclRule
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Patch: Updates an access control rule. This method supports patch
@@ -1507,6 +1552,13 @@ func (r *AclService) Patch(calendarId string, ruleId string, aclrule *AclRule) *
 func (c *AclPatchCall) Fields(s ...googleapi.Field) *AclPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AclPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AclPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -1530,6 +1582,9 @@ func (c *AclPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1591,6 +1646,7 @@ type AclUpdateCall struct {
 	ruleId     string
 	aclrule    *AclRule
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates an access control rule.
@@ -1608,6 +1664,13 @@ func (r *AclService) Update(calendarId string, ruleId string, aclrule *AclRule) 
 func (c *AclUpdateCall) Fields(s ...googleapi.Field) *AclUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AclUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AclUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -1631,6 +1694,9 @@ func (c *AclUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1691,6 +1757,7 @@ type AclWatchCall struct {
 	calendarId string
 	channel    *Channel
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Watch: Watch for changes to ACL resources.
@@ -1749,6 +1816,13 @@ func (c *AclWatchCall) Fields(s ...googleapi.Field) *AclWatchCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AclWatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AclWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -1781,6 +1855,9 @@ func (c *AclWatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1857,6 +1934,7 @@ type CalendarListDeleteCall struct {
 	s          *Service
 	calendarId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes an entry on the user's calendar list.
@@ -1874,6 +1952,13 @@ func (c *CalendarListDeleteCall) Fields(s ...googleapi.Field) *CalendarListDelet
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarListDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarListDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1888,6 +1973,9 @@ func (c *CalendarListDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1930,6 +2018,7 @@ type CalendarListGetCall struct {
 	s          *Service
 	calendarId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns an entry on the user's calendar list.
@@ -1947,6 +2036,13 @@ func (c *CalendarListGetCall) Fields(s ...googleapi.Field) *CalendarListGetCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarListGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarListGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1961,6 +2057,9 @@ func (c *CalendarListGetCall) doRequest(alt string) (*http.Response, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2011,6 +2110,7 @@ type CalendarListInsertCall struct {
 	s                 *Service
 	calendarlistentry *CalendarListEntry
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Insert: Adds an entry to the user's calendar list.
@@ -2038,6 +2138,13 @@ func (c *CalendarListInsertCall) Fields(s ...googleapi.Field) *CalendarListInser
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarListInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarListInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -2059,6 +2166,9 @@ func (c *CalendarListInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2106,6 +2216,7 @@ func (c *CalendarListInsertCall) Do() (*CalendarListEntry, error) {
 type CalendarListListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns entries on the user's calendar list.
@@ -2187,6 +2298,13 @@ func (c *CalendarListListCall) Fields(s ...googleapi.Field) *CalendarListListCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarListListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarListListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2217,6 +2335,9 @@ func (c *CalendarListListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2304,6 +2425,7 @@ type CalendarListPatchCall struct {
 	calendarId        string
 	calendarlistentry *CalendarListEntry
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Patch: Updates an entry on the user's calendar list. This method
@@ -2333,6 +2455,13 @@ func (c *CalendarListPatchCall) Fields(s ...googleapi.Field) *CalendarListPatchC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarListPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarListPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -2356,6 +2485,9 @@ func (c *CalendarListPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2414,6 +2546,7 @@ type CalendarListUpdateCall struct {
 	calendarId        string
 	calendarlistentry *CalendarListEntry
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Update: Updates an entry on the user's calendar list.
@@ -2442,6 +2575,13 @@ func (c *CalendarListUpdateCall) Fields(s ...googleapi.Field) *CalendarListUpdat
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarListUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarListUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.calendarlistentry)
@@ -2465,6 +2605,9 @@ func (c *CalendarListUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2522,6 +2665,7 @@ type CalendarListWatchCall struct {
 	s       *Service
 	channel *Channel
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Watch: Watch for changes to CalendarList resources.
@@ -2604,6 +2748,13 @@ func (c *CalendarListWatchCall) Fields(s ...googleapi.Field) *CalendarListWatchC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarListWatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarListWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -2640,6 +2791,9 @@ func (c *CalendarListWatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2730,6 +2884,7 @@ type CalendarsClearCall struct {
 	s          *Service
 	calendarId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Clear: Clears a primary calendar. This operation deletes all events
@@ -2748,6 +2903,13 @@ func (c *CalendarsClearCall) Fields(s ...googleapi.Field) *CalendarsClearCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarsClearCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarsClearCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2762,6 +2924,9 @@ func (c *CalendarsClearCall) doRequest(alt string) (*http.Response, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2804,6 +2969,7 @@ type CalendarsDeleteCall struct {
 	s          *Service
 	calendarId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes a secondary calendar. Use calendars.clear for
@@ -2822,6 +2988,13 @@ func (c *CalendarsDeleteCall) Fields(s ...googleapi.Field) *CalendarsDeleteCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2836,6 +3009,9 @@ func (c *CalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2878,6 +3054,7 @@ type CalendarsGetCall struct {
 	s          *Service
 	calendarId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns metadata for a calendar.
@@ -2895,6 +3072,13 @@ func (c *CalendarsGetCall) Fields(s ...googleapi.Field) *CalendarsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2909,6 +3093,9 @@ func (c *CalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2959,6 +3146,7 @@ type CalendarsInsertCall struct {
 	s        *Service
 	calendar *Calendar
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Creates a secondary calendar.
@@ -2974,6 +3162,13 @@ func (r *CalendarsService) Insert(calendar *Calendar) *CalendarsInsertCall {
 func (c *CalendarsInsertCall) Fields(s ...googleapi.Field) *CalendarsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -2994,6 +3189,9 @@ func (c *CalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3036,6 +3234,7 @@ type CalendarsPatchCall struct {
 	calendarId string
 	calendar   *Calendar
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Patch: Updates metadata for a calendar. This method supports patch
@@ -3053,6 +3252,13 @@ func (r *CalendarsService) Patch(calendarId string, calendar *Calendar) *Calenda
 func (c *CalendarsPatchCall) Fields(s ...googleapi.Field) *CalendarsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -3075,6 +3281,9 @@ func (c *CalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3128,6 +3337,7 @@ type CalendarsUpdateCall struct {
 	calendarId string
 	calendar   *Calendar
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates metadata for a calendar.
@@ -3144,6 +3354,13 @@ func (r *CalendarsService) Update(calendarId string, calendar *Calendar) *Calend
 func (c *CalendarsUpdateCall) Fields(s ...googleapi.Field) *CalendarsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CalendarsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -3166,6 +3383,9 @@ func (c *CalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3218,6 +3438,7 @@ type ChannelsStopCall struct {
 	s       *Service
 	channel *Channel
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Stop: Stop watching resources through this channel
@@ -3233,6 +3454,13 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChannelsStopCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
@@ -3253,6 +3481,9 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3288,6 +3519,7 @@ func (c *ChannelsStopCall) Do() error {
 type ColorsGetCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Returns the color definitions for calendars and events.
@@ -3304,6 +3536,13 @@ func (c *ColorsGetCall) Fields(s ...googleapi.Field) *ColorsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ColorsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ColorsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3316,6 +3555,9 @@ func (c *ColorsGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3356,6 +3598,7 @@ type EventsDeleteCall struct {
 	calendarId string
 	eventId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes an event.
@@ -3382,6 +3625,13 @@ func (c *EventsDeleteCall) Fields(s ...googleapi.Field) *EventsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3400,6 +3650,9 @@ func (c *EventsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"eventId":    c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3455,6 +3708,7 @@ type EventsGetCall struct {
 	calendarId string
 	eventId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns an event.
@@ -3501,6 +3755,13 @@ func (c *EventsGetCall) Fields(s ...googleapi.Field) *EventsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3525,6 +3786,9 @@ func (c *EventsGetCall) doRequest(alt string) (*http.Response, error) {
 		"eventId":    c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3600,6 +3864,7 @@ type EventsImportCall struct {
 	calendarId string
 	event      *Event
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Import: Imports an event. This operation is used to add a private
@@ -3627,6 +3892,13 @@ func (c *EventsImportCall) Fields(s ...googleapi.Field) *EventsImportCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsImportCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsImportCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -3650,6 +3922,9 @@ func (c *EventsImportCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3708,6 +3983,7 @@ type EventsInsertCall struct {
 	calendarId string
 	event      *Event
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Creates an event.
@@ -3751,6 +4027,13 @@ func (c *EventsInsertCall) Fields(s ...googleapi.Field) *EventsInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -3780,6 +4063,9 @@ func (c *EventsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3850,6 +4136,7 @@ type EventsInstancesCall struct {
 	calendarId string
 	eventId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Instances: Returns instances of the specified recurring event.
@@ -3945,6 +4232,13 @@ func (c *EventsInstancesCall) Fields(s ...googleapi.Field) *EventsInstancesCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsInstancesCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsInstancesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3987,6 +4281,9 @@ func (c *EventsInstancesCall) doRequest(alt string) (*http.Response, error) {
 		"eventId":    c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4096,6 +4393,7 @@ type EventsListCall struct {
 	s          *Service
 	calendarId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Returns events on the specified calendar.
@@ -4293,6 +4591,13 @@ func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4358,6 +4663,9 @@ func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4513,6 +4821,7 @@ type EventsMoveCall struct {
 	eventId       string
 	destinationid string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Move: Moves an event to another calendar, i.e. changes an event's
@@ -4541,6 +4850,13 @@ func (c *EventsMoveCall) Fields(s ...googleapi.Field) *EventsMoveCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsMoveCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsMoveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4560,6 +4876,9 @@ func (c *EventsMoveCall) doRequest(alt string) (*http.Response, error) {
 		"eventId":    c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4630,6 +4949,7 @@ type EventsPatchCall struct {
 	eventId    string
 	event      *Event
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Patch: Updates an event. This method supports patch semantics.
@@ -4686,6 +5006,13 @@ func (c *EventsPatchCall) Fields(s ...googleapi.Field) *EventsPatchCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -4719,6 +5046,9 @@ func (c *EventsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4801,6 +5131,7 @@ type EventsQuickAddCall struct {
 	calendarId string
 	text       string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // QuickAdd: Creates an event based on a simple text string.
@@ -4827,6 +5158,13 @@ func (c *EventsQuickAddCall) Fields(s ...googleapi.Field) *EventsQuickAddCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsQuickAddCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsQuickAddCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4845,6 +5183,9 @@ func (c *EventsQuickAddCall) doRequest(alt string) (*http.Response, error) {
 		"calendarId": c.calendarId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4908,6 +5249,7 @@ type EventsUpdateCall struct {
 	eventId    string
 	event      *Event
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates an event.
@@ -4964,6 +5306,13 @@ func (c *EventsUpdateCall) Fields(s ...googleapi.Field) *EventsUpdateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.event)
@@ -4997,6 +5346,9 @@ func (c *EventsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5079,6 +5431,7 @@ type EventsWatchCall struct {
 	calendarId string
 	channel    *Channel
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Watch: Watch for changes to Events resources.
@@ -5277,6 +5630,13 @@ func (c *EventsWatchCall) Fields(s ...googleapi.Field) *EventsWatchCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsWatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -5348,6 +5708,9 @@ func (c *EventsWatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5505,6 +5868,7 @@ type FreebusyQueryCall struct {
 	s               *Service
 	freebusyrequest *FreeBusyRequest
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Query: Returns free/busy information for a set of calendars.
@@ -5520,6 +5884,13 @@ func (r *FreebusyService) Query(freebusyrequest *FreeBusyRequest) *FreebusyQuery
 func (c *FreebusyQueryCall) Fields(s ...googleapi.Field) *FreebusyQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FreebusyQueryCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *FreebusyQueryCall) doRequest(alt string) (*http.Response, error) {
@@ -5540,6 +5911,9 @@ func (c *FreebusyQueryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5582,6 +5956,7 @@ type SettingsGetCall struct {
 	s       *Service
 	setting string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns a single user setting.
@@ -5599,6 +5974,13 @@ func (c *SettingsGetCall) Fields(s ...googleapi.Field) *SettingsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SettingsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5613,6 +5995,9 @@ func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
 		"setting": c.setting,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5662,6 +6047,7 @@ func (c *SettingsGetCall) Do() (*Setting, error) {
 type SettingsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns all user settings for the authenticated user.
@@ -5707,6 +6093,13 @@ func (c *SettingsListCall) Fields(s ...googleapi.Field) *SettingsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SettingsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *SettingsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5728,6 +6121,9 @@ func (c *SettingsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5787,6 +6183,7 @@ type SettingsWatchCall struct {
 	s       *Service
 	channel *Channel
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Watch: Watch for changes to Settings resources.
@@ -5833,6 +6230,13 @@ func (c *SettingsWatchCall) Fields(s ...googleapi.Field) *SettingsWatchCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *SettingsWatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *SettingsWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -5860,6 +6264,9 @@ func (c *SettingsWatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

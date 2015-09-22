@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "dfareporting:v1"
 const apiName = "dfareporting"
@@ -533,6 +533,7 @@ type DimensionValuesQueryCall struct {
 	profileId             int64
 	dimensionvaluerequest *DimensionValueRequest
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // Query: Retrieves list of report dimension values for a list of
@@ -566,6 +567,13 @@ func (c *DimensionValuesQueryCall) Fields(s ...googleapi.Field) *DimensionValues
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DimensionValuesQueryCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DimensionValuesQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dimensionvaluerequest)
@@ -592,6 +600,9 @@ func (c *DimensionValuesQueryCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -658,6 +669,7 @@ type FilesListCall struct {
 	s         *Service
 	profileId int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists files for a user profile.
@@ -711,6 +723,13 @@ func (c *FilesListCall) Fields(s ...googleapi.Field) *FilesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *FilesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -737,6 +756,9 @@ func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -829,6 +851,7 @@ type ReportsDeleteCall struct {
 	profileId int64
 	reportId  int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes a report by its id.
@@ -847,6 +870,13 @@ func (c *ReportsDeleteCall) Fields(s ...googleapi.Field) *ReportsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -862,6 +892,9 @@ func (c *ReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -914,6 +947,7 @@ type ReportsGetCall struct {
 	profileId int64
 	reportId  int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves a report by its id.
@@ -932,6 +966,13 @@ func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -947,6 +988,9 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1006,6 +1050,7 @@ type ReportsInsertCall struct {
 	profileId int64
 	report    *Report
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Insert: Creates a report.
@@ -1022,6 +1067,13 @@ func (r *ReportsService) Insert(profileId int64, report *Report) *ReportsInsertC
 func (c *ReportsInsertCall) Fields(s ...googleapi.Field) *ReportsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ReportsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -1044,6 +1096,9 @@ func (c *ReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1097,6 +1152,7 @@ type ReportsListCall struct {
 	s         *Service
 	profileId int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Retrieves list of reports.
@@ -1151,6 +1207,13 @@ func (c *ReportsListCall) Fields(s ...googleapi.Field) *ReportsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1177,6 +1240,9 @@ func (c *ReportsListCall) doRequest(alt string) (*http.Response, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1272,6 +1338,7 @@ type ReportsPatchCall struct {
 	reportId  int64
 	report    *Report
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates a report. This method supports patch semantics.
@@ -1289,6 +1356,13 @@ func (r *ReportsService) Patch(profileId int64, reportId int64, report *Report) 
 func (c *ReportsPatchCall) Fields(s ...googleapi.Field) *ReportsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ReportsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -1312,6 +1386,9 @@ func (c *ReportsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1374,6 +1451,7 @@ type ReportsRunCall struct {
 	profileId int64
 	reportId  int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Run: Runs a report.
@@ -1399,6 +1477,13 @@ func (c *ReportsRunCall) Fields(s ...googleapi.Field) *ReportsRunCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsRunCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsRunCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1417,6 +1502,9 @@ func (c *ReportsRunCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1482,6 +1570,7 @@ type ReportsUpdateCall struct {
 	reportId  int64
 	report    *Report
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates a report.
@@ -1499,6 +1588,13 @@ func (r *ReportsService) Update(profileId int64, reportId int64, report *Report)
 func (c *ReportsUpdateCall) Fields(s ...googleapi.Field) *ReportsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -1522,6 +1618,9 @@ func (c *ReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1585,6 +1684,7 @@ type ReportsFilesGetCall struct {
 	reportId  int64
 	fileId    int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves a report file.
@@ -1604,6 +1704,13 @@ func (c *ReportsFilesGetCall) Fields(s ...googleapi.Field) *ReportsFilesGetCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsFilesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1620,6 +1727,9 @@ func (c *ReportsFilesGetCall) doRequest(alt string) (*http.Response, error) {
 		"fileId":    strconv.FormatInt(c.fileId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1687,6 +1797,7 @@ type ReportsFilesListCall struct {
 	profileId int64
 	reportId  int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists files for a report.
@@ -1741,6 +1852,13 @@ func (c *ReportsFilesListCall) Fields(s ...googleapi.Field) *ReportsFilesListCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsFilesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1768,6 +1886,9 @@ func (c *ReportsFilesListCall) doRequest(alt string) (*http.Response, error) {
 		"reportId":  strconv.FormatInt(c.reportId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1867,6 +1988,7 @@ type UserProfilesGetCall struct {
 	s         *Service
 	profileId int64
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets one user profile by id.
@@ -1884,6 +2006,13 @@ func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UserProfilesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1898,6 +2027,9 @@ func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 		"profileId": strconv.FormatInt(c.profileId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1947,6 +2079,7 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 type UserProfilesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieves list of user profiles for a user.
@@ -1963,6 +2096,13 @@ func (c *UserProfilesListCall) Fields(s ...googleapi.Field) *UserProfilesListCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UserProfilesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UserProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1975,6 +2115,9 @@ func (c *UserProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

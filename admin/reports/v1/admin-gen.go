@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "admin:reports_v1"
 const apiName = "admin"
@@ -361,6 +361,7 @@ type ActivitiesListCall struct {
 	userKey         string
 	applicationName string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // List: Retrieves a list of activities for a specific customer and
@@ -438,6 +439,13 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ActivitiesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -477,6 +485,9 @@ func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 		"applicationName": c.applicationName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -584,6 +595,7 @@ type ActivitiesWatchCall struct {
 	applicationName string
 	channel         *Channel
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Watch: Push changes to activities
@@ -661,6 +673,13 @@ func (c *ActivitiesWatchCall) Fields(s ...googleapi.Field) *ActivitiesWatchCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ActivitiesWatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
@@ -706,6 +725,9 @@ func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -815,6 +837,7 @@ type ChannelsStopCall struct {
 	s       *Service
 	channel *Channel
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Stop: Stop watching resources through this channel
@@ -830,6 +853,13 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChannelsStopCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
@@ -850,6 +880,9 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -885,6 +918,7 @@ type CustomerUsageReportsGetCall struct {
 	s    *Service
 	date string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Retrieves a report which is a collection of properties /
@@ -925,6 +959,13 @@ func (c *CustomerUsageReportsGetCall) Fields(s ...googleapi.Field) *CustomerUsag
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CustomerUsageReportsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -948,6 +989,9 @@ func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, err
 		"date": c.date,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1016,6 +1060,7 @@ type UserUsageReportGetCall struct {
 	userKey string
 	date    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Retrieves a report which is a collection of properties /
@@ -1071,6 +1116,13 @@ func (c *UserUsageReportGetCall) Fields(s ...googleapi.Field) *UserUsageReportGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UserUsageReportGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1101,6 +1153,9 @@ func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 		"date":    c.date,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

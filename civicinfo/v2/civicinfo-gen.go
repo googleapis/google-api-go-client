@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "civicinfo:v2"
 const apiName = "civicinfo"
@@ -670,6 +670,7 @@ type VoterInfoResponse struct {
 type DivisionsSearchCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Search: Searches for political divisions by their natural name or OCD
@@ -698,6 +699,13 @@ func (c *DivisionsSearchCall) Fields(s ...googleapi.Field) *DivisionsSearchCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DivisionsSearchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -713,6 +721,9 @@ func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -754,6 +765,7 @@ func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 type ElectionsElectionQueryCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ElectionQuery: List of available elections to query.
@@ -770,6 +782,13 @@ func (c *ElectionsElectionQueryCall) Fields(s ...googleapi.Field) *ElectionsElec
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ElectionsElectionQueryCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -782,6 +801,9 @@ func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -817,6 +839,7 @@ type ElectionsVoterInfoQueryCall struct {
 	s       *Service
 	address string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // VoterInfoQuery: Looks up information relevant to a voter based on the
@@ -850,6 +873,13 @@ func (c *ElectionsVoterInfoQueryCall) Fields(s ...googleapi.Field) *ElectionsVot
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ElectionsVoterInfoQueryCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -869,6 +899,9 @@ func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -927,6 +960,7 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 type RepresentativesRepresentativeInfoByAddressCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // RepresentativeInfoByAddress: Looks up political geography and
@@ -1001,6 +1035,13 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Fields(s ...googleapi.F
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RepresentativesRepresentativeInfoByAddressCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1025,6 +1066,9 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1133,6 +1177,7 @@ type RepresentativesRepresentativeInfoByDivisionCall struct {
 	s     *Service
 	ocdId string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // RepresentativeInfoByDivision: Looks up representative information for
@@ -1203,6 +1248,13 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Fields(s ...googleapi.
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1226,6 +1278,9 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) 
 		"ocdId": c.ocdId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

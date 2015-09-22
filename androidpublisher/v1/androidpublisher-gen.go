@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "androidpublisher:v1"
 const apiName = "androidpublisher"
@@ -108,6 +108,7 @@ type PurchasesCancelCall struct {
 	subscriptionId string
 	token          string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Cancel: Cancels a user's subscription purchase. The subscription
@@ -128,6 +129,13 @@ func (c *PurchasesCancelCall) Fields(s ...googleapi.Field) *PurchasesCancelCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PurchasesCancelCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PurchasesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -144,6 +152,9 @@ func (c *PurchasesCancelCall) doRequest(alt string) (*http.Response, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -202,6 +213,7 @@ type PurchasesGetCall struct {
 	subscriptionId string
 	token          string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Checks whether a user's subscription purchase is valid and
@@ -222,6 +234,13 @@ func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PurchasesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -238,6 +257,9 @@ func (c *PurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

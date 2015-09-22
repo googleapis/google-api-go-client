@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "prediction:v1.3"
 const apiName = "prediction"
@@ -241,6 +241,7 @@ type HostedmodelsPredictCall struct {
 	hostedModelName string
 	input           *Input
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Predict: Submit input and request an output against a hosted model
@@ -257,6 +258,13 @@ func (r *HostedmodelsService) Predict(hostedModelName string, input *Input) *Hos
 func (c *HostedmodelsPredictCall) Fields(s ...googleapi.Field) *HostedmodelsPredictCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *HostedmodelsPredictCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *HostedmodelsPredictCall) doRequest(alt string) (*http.Response, error) {
@@ -279,6 +287,9 @@ func (c *HostedmodelsPredictCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -331,6 +342,7 @@ type TrainingDeleteCall struct {
 	s    *Service
 	data string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Delete a trained model
@@ -348,6 +360,13 @@ func (c *TrainingDeleteCall) Fields(s ...googleapi.Field) *TrainingDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TrainingDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TrainingDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -362,6 +381,9 @@ func (c *TrainingDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"data": c.data,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -404,6 +426,7 @@ type TrainingGetCall struct {
 	s    *Service
 	data string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Check training status of your model
@@ -421,6 +444,13 @@ func (c *TrainingGetCall) Fields(s ...googleapi.Field) *TrainingGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TrainingGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TrainingGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -435,6 +465,9 @@ func (c *TrainingGetCall) doRequest(alt string) (*http.Response, error) {
 		"data": c.data,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -484,6 +517,7 @@ type TrainingInsertCall struct {
 	s        *Service
 	training *Training
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Begin training your model
@@ -499,6 +533,13 @@ func (r *TrainingService) Insert(training *Training) *TrainingInsertCall {
 func (c *TrainingInsertCall) Fields(s ...googleapi.Field) *TrainingInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TrainingInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TrainingInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -519,6 +560,9 @@ func (c *TrainingInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -564,6 +608,7 @@ type TrainingPredictCall struct {
 	data  string
 	input *Input
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Predict: Submit data and request a prediction
@@ -580,6 +625,13 @@ func (r *TrainingService) Predict(data string, input *Input) *TrainingPredictCal
 func (c *TrainingPredictCall) Fields(s ...googleapi.Field) *TrainingPredictCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TrainingPredictCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TrainingPredictCall) doRequest(alt string) (*http.Response, error) {
@@ -602,6 +654,9 @@ func (c *TrainingPredictCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -655,6 +710,7 @@ type TrainingUpdateCall struct {
 	data   string
 	update *Update
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Add new data to a trained model
@@ -671,6 +727,13 @@ func (r *TrainingService) Update(data string, update *Update) *TrainingUpdateCal
 func (c *TrainingUpdateCall) Fields(s ...googleapi.Field) *TrainingUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TrainingUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *TrainingUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -693,6 +756,9 @@ func (c *TrainingUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

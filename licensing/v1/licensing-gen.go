@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "licensing:v1"
 const apiName = "licensing"
@@ -134,6 +134,7 @@ type LicenseAssignmentsDeleteCall struct {
 	skuId     string
 	userId    string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Revoke License.
@@ -153,6 +154,13 @@ func (c *LicenseAssignmentsDeleteCall) Fields(s ...googleapi.Field) *LicenseAssi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LicenseAssignmentsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -169,6 +177,9 @@ func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, er
 		"userId":    c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -227,6 +238,7 @@ type LicenseAssignmentsGetCall struct {
 	skuId     string
 	userId    string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get license assignment of a particular product and sku for a
@@ -247,6 +259,13 @@ func (c *LicenseAssignmentsGetCall) Fields(s ...googleapi.Field) *LicenseAssignm
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LicenseAssignmentsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -263,6 +282,9 @@ func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error
 		"userId":    c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -328,6 +350,7 @@ type LicenseAssignmentsInsertCall struct {
 	skuId                   string
 	licenseassignmentinsert *LicenseAssignmentInsert
 	opt_                    map[string]interface{}
+	ctx_                    context.Context
 }
 
 // Insert: Assign License.
@@ -345,6 +368,13 @@ func (r *LicenseAssignmentsService) Insert(productId string, skuId string, licen
 func (c *LicenseAssignmentsInsertCall) Fields(s ...googleapi.Field) *LicenseAssignmentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LicenseAssignmentsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -368,6 +398,9 @@ func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -428,6 +461,7 @@ type LicenseAssignmentsListForProductCall struct {
 	productId  string
 	customerId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // ListForProduct: List license assignments for given product of the
@@ -462,6 +496,13 @@ func (c *LicenseAssignmentsListForProductCall) Fields(s ...googleapi.Field) *Lic
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LicenseAssignmentsListForProductCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -483,6 +524,9 @@ func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Resp
 		"productId": c.productId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -556,6 +600,7 @@ type LicenseAssignmentsListForProductAndSkuCall struct {
 	skuId      string
 	customerId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // ListForProductAndSku: List license assignments for given product and
@@ -591,6 +636,13 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Fields(s ...googleapi.Field
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LicenseAssignmentsListForProductAndSkuCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -613,6 +665,9 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*htt
 		"skuId":     c.skuId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -694,6 +749,7 @@ type LicenseAssignmentsPatchCall struct {
 	userId            string
 	licenseassignment *LicenseAssignment
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Patch: Assign License. This method supports patch semantics.
@@ -712,6 +768,13 @@ func (r *LicenseAssignmentsService) Patch(productId string, skuId string, userId
 func (c *LicenseAssignmentsPatchCall) Fields(s ...googleapi.Field) *LicenseAssignmentsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LicenseAssignmentsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -736,6 +799,9 @@ func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -805,6 +871,7 @@ type LicenseAssignmentsUpdateCall struct {
 	userId            string
 	licenseassignment *LicenseAssignment
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Update: Assign License.
@@ -823,6 +890,13 @@ func (r *LicenseAssignmentsService) Update(productId string, skuId string, userI
 func (c *LicenseAssignmentsUpdateCall) Fields(s ...googleapi.Field) *LicenseAssignmentsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LicenseAssignmentsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -847,6 +921,9 @@ func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

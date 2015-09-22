@@ -13,6 +13,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -32,7 +33,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "cloudlatencytest:v2"
 const apiName = "cloudlatencytest"
@@ -124,6 +124,7 @@ type StatscollectionUpdateaggregatedstatsCall struct {
 	s               *Service
 	aggregatedstats *AggregatedStats
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Updateaggregatedstats: RPC to update the new TCP stats.
@@ -139,6 +140,13 @@ func (r *StatscollectionService) Updateaggregatedstats(aggregatedstats *Aggregat
 func (c *StatscollectionUpdateaggregatedstatsCall) Fields(s ...googleapi.Field) *StatscollectionUpdateaggregatedstatsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *StatscollectionUpdateaggregatedstatsCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *StatscollectionUpdateaggregatedstatsCall) doRequest(alt string) (*http.Response, error) {
@@ -159,6 +167,9 @@ func (c *StatscollectionUpdateaggregatedstatsCall) doRequest(alt string) (*http.
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -200,6 +211,7 @@ type StatscollectionUpdatestatsCall struct {
 	s     *Service
 	stats *Stats
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Updatestats: RPC to update the new TCP stats.
@@ -215,6 +227,13 @@ func (r *StatscollectionService) Updatestats(stats *Stats) *StatscollectionUpdat
 func (c *StatscollectionUpdatestatsCall) Fields(s ...googleapi.Field) *StatscollectionUpdatestatsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *StatscollectionUpdatestatsCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *StatscollectionUpdatestatsCall) doRequest(alt string) (*http.Response, error) {
@@ -235,6 +254,9 @@ func (c *StatscollectionUpdatestatsCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

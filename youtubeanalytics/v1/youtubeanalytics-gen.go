@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "youtubeAnalytics:v1"
 const apiName = "youtubeAnalytics"
@@ -352,6 +352,7 @@ type BatchReportDefinitionsListCall struct {
 	s                      *Service
 	onBehalfOfContentOwner string
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // List: Retrieves a list of available batch report definitions.
@@ -369,6 +370,13 @@ func (c *BatchReportDefinitionsListCall) Fields(s ...googleapi.Field) *BatchRepo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BatchReportDefinitionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BatchReportDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -382,6 +390,9 @@ func (c *BatchReportDefinitionsListCall) doRequest(alt string) (*http.Response, 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -433,6 +444,7 @@ type BatchReportsListCall struct {
 	batchReportDefinitionId string
 	onBehalfOfContentOwner  string
 	opt_                    map[string]interface{}
+	ctx_                    context.Context
 }
 
 // List: Retrieves a list of processed batch reports.
@@ -451,6 +463,13 @@ func (c *BatchReportsListCall) Fields(s ...googleapi.Field) *BatchReportsListCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BatchReportsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BatchReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -465,6 +484,9 @@ func (c *BatchReportsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -522,6 +544,7 @@ type GroupItemsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Removes an item from a group.
@@ -557,6 +580,13 @@ func (c *GroupItemsDeleteCall) Fields(s ...googleapi.Field) *GroupItemsDeleteCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupItemsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -573,6 +603,9 @@ func (c *GroupItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -621,6 +654,7 @@ type GroupItemsInsertCall struct {
 	s         *Service
 	groupitem *GroupItem
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Insert: Creates a group item.
@@ -656,6 +690,13 @@ func (c *GroupItemsInsertCall) Fields(s ...googleapi.Field) *GroupItemsInsertCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupItemsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupitem)
@@ -677,6 +718,9 @@ func (c *GroupItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -726,6 +770,7 @@ type GroupItemsListCall struct {
 	s       *Service
 	groupId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Returns a collection of group items that match the API request
@@ -762,6 +807,13 @@ func (c *GroupItemsListCall) Fields(s ...googleapi.Field) *GroupItemsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupItemsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupItemsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -778,6 +830,9 @@ func (c *GroupItemsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -835,6 +890,7 @@ type GroupsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a group.
@@ -870,6 +926,13 @@ func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -886,6 +949,9 @@ func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -934,6 +1000,7 @@ type GroupsInsertCall struct {
 	s     *Service
 	group *Group
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Insert: Creates a group.
@@ -969,6 +1036,13 @@ func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -990,6 +1064,9 @@ func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1038,6 +1115,7 @@ func (c *GroupsInsertCall) Do() (*Group, error) {
 type GroupsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a collection of groups that match the API request
@@ -1092,6 +1170,13 @@ func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1113,6 +1198,9 @@ func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1171,6 +1259,7 @@ type GroupsUpdateCall struct {
 	s     *Service
 	group *Group
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Update: Modifies a group. For example, you could change a group's
@@ -1207,6 +1296,13 @@ func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
@@ -1228,6 +1324,9 @@ func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1280,6 +1379,7 @@ type ReportsQueryCall struct {
 	endDate   string
 	metrics   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Query: Retrieve your YouTube Analytics reports.
@@ -1360,6 +1460,13 @@ func (c *ReportsQueryCall) Fields(s ...googleapi.Field) *ReportsQueryCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsQueryCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1394,6 +1501,9 @@ func (c *ReportsQueryCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

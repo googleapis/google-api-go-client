@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "blogger:v3"
 const apiName = "blogger"
@@ -681,6 +681,7 @@ type BlogUserInfosGetCall struct {
 	userId string
 	blogId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one blog and user info pair by blogId and userId.
@@ -706,6 +707,13 @@ func (c *BlogUserInfosGetCall) Fields(s ...googleapi.Field) *BlogUserInfosGetCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BlogUserInfosGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BlogUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -724,6 +732,9 @@ func (c *BlogUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -787,6 +798,7 @@ type BlogsGetCall struct {
 	s      *Service
 	blogId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one blog by id.
@@ -811,6 +823,13 @@ func (c *BlogsGetCall) Fields(s ...googleapi.Field) *BlogsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BlogsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -828,6 +847,9 @@ func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -884,6 +906,7 @@ type BlogsGetByUrlCall struct {
 	s    *Service
 	url  string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetByUrl: Retrieve a Blog by URL.
@@ -901,6 +924,13 @@ func (c *BlogsGetByUrlCall) Fields(s ...googleapi.Field) *BlogsGetByUrlCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BlogsGetByUrlCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BlogsGetByUrlCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -914,6 +944,9 @@ func (c *BlogsGetByUrlCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -964,6 +997,7 @@ type BlogsListByUserCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // ListByUser: Retrieves a list of blogs, possibly filtered.
@@ -1000,6 +1034,13 @@ func (c *BlogsListByUserCall) Fields(s ...googleapi.Field) *BlogsListByUserCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BlogsListByUserCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1020,6 +1061,9 @@ func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1091,6 +1135,7 @@ type CommentsApproveCall struct {
 	postId    string
 	commentId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Approve: Marks a comment as not spam.
@@ -1110,6 +1155,13 @@ func (c *CommentsApproveCall) Fields(s ...googleapi.Field) *CommentsApproveCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsApproveCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsApproveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1126,6 +1178,9 @@ func (c *CommentsApproveCall) doRequest(alt string) (*http.Response, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1191,6 +1246,7 @@ type CommentsDeleteCall struct {
 	postId    string
 	commentId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Delete a comment by id.
@@ -1210,6 +1266,13 @@ func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1226,6 +1289,9 @@ func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1284,6 +1350,7 @@ type CommentsGetCall struct {
 	postId    string
 	commentId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets one comment by id.
@@ -1303,6 +1370,13 @@ func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1319,6 +1393,9 @@ func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1384,6 +1461,7 @@ type CommentsListCall struct {
 	blogId string
 	postId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves the comments for a post, possibly filtered.
@@ -1460,6 +1538,13 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1496,6 +1581,9 @@ func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1612,6 +1700,7 @@ type CommentsListByBlogCall struct {
 	s      *Service
 	blogId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // ListByBlog: Retrieves the comments for a blog, across all posts,
@@ -1665,6 +1754,13 @@ func (c *CommentsListByBlogCall) Fields(s ...googleapi.Field) *CommentsListByBlo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsListByBlogCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1694,6 +1790,9 @@ func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1774,6 +1873,7 @@ type CommentsMarkAsSpamCall struct {
 	postId    string
 	commentId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // MarkAsSpam: Marks a comment as spam.
@@ -1793,6 +1893,13 @@ func (c *CommentsMarkAsSpamCall) Fields(s ...googleapi.Field) *CommentsMarkAsSpa
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsMarkAsSpamCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1809,6 +1916,9 @@ func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1874,6 +1984,7 @@ type CommentsRemoveContentCall struct {
 	postId    string
 	commentId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // RemoveContent: Removes the content of a comment.
@@ -1893,6 +2004,13 @@ func (c *CommentsRemoveContentCall) Fields(s ...googleapi.Field) *CommentsRemove
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsRemoveContentCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsRemoveContentCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1909,6 +2027,9 @@ func (c *CommentsRemoveContentCall) doRequest(alt string) (*http.Response, error
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1972,6 +2093,7 @@ type PageViewsGetCall struct {
 	s      *Service
 	blogId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieve pageview stats for a Blog.
@@ -2000,6 +2122,13 @@ func (c *PageViewsGetCall) Fields(s ...googleapi.Field) *PageViewsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PageViewsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2017,6 +2146,9 @@ func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2082,6 +2214,7 @@ type PagesDeleteCall struct {
 	blogId string
 	pageId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Delete a page by id.
@@ -2100,6 +2233,13 @@ func (c *PagesDeleteCall) Fields(s ...googleapi.Field) *PagesDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PagesDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2115,6 +2255,9 @@ func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"pageId": c.pageId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2165,6 +2308,7 @@ type PagesGetCall struct {
 	blogId string
 	pageId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one blog page by id.
@@ -2194,6 +2338,13 @@ func (c *PagesGetCall) Fields(s ...googleapi.Field) *PagesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PagesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2212,6 +2363,9 @@ func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 		"pageId": c.pageId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2284,6 +2438,7 @@ type PagesInsertCall struct {
 	blogId string
 	page   *Page
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Insert: Add a page.
@@ -2300,6 +2455,13 @@ func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
 func (c *PagesInsertCall) Fields(s ...googleapi.Field) *PagesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PagesInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *PagesInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -2322,6 +2484,9 @@ func (c *PagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2374,6 +2539,7 @@ type PagesListCall struct {
 	s      *Service
 	blogId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves the pages for a blog, optionally including non-LIVE
@@ -2421,6 +2587,13 @@ func (c *PagesListCall) Fields(s ...googleapi.Field) *PagesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PagesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2444,6 +2617,9 @@ func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2530,6 +2706,7 @@ type PagesPatchCall struct {
 	pageId string
 	page   *Page
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Update a page. This method supports patch semantics.
@@ -2547,6 +2724,13 @@ func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPat
 func (c *PagesPatchCall) Fields(s ...googleapi.Field) *PagesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PagesPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *PagesPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -2570,6 +2754,9 @@ func (c *PagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2631,6 +2818,7 @@ type PagesUpdateCall struct {
 	pageId string
 	page   *Page
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Update a page.
@@ -2648,6 +2836,13 @@ func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUp
 func (c *PagesUpdateCall) Fields(s ...googleapi.Field) *PagesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PagesUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -2671,6 +2866,9 @@ func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2732,6 +2930,7 @@ type PostUserInfosGetCall struct {
 	blogId string
 	postId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one post and user info pair by postId and userId.
@@ -2758,6 +2957,13 @@ func (c *PostUserInfosGetCall) Fields(s ...googleapi.Field) *PostUserInfosGetCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostUserInfosGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2777,6 +2983,9 @@ func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2848,6 +3057,7 @@ type PostUserInfosListCall struct {
 	userId string
 	blogId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of post and user info pairs, possibly
@@ -2941,6 +3151,13 @@ func (c *PostUserInfosListCall) Fields(s ...googleapi.Field) *PostUserInfosListC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostUserInfosListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2983,6 +3200,9 @@ func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3117,6 +3337,7 @@ type PostsDeleteCall struct {
 	blogId string
 	postId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Delete a post by id.
@@ -3135,6 +3356,13 @@ func (c *PostsDeleteCall) Fields(s ...googleapi.Field) *PostsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3150,6 +3378,9 @@ func (c *PostsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3200,6 +3431,7 @@ type PostsGetCall struct {
 	blogId string
 	postId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Get a post by id.
@@ -3236,6 +3468,13 @@ func (c *PostsGetCall) Fields(s ...googleapi.Field) *PostsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3257,6 +3496,9 @@ func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3335,6 +3577,7 @@ type PostsGetByPathCall struct {
 	blogId string
 	path   string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // GetByPath: Retrieve a Post by Path.
@@ -3371,6 +3614,13 @@ func (c *PostsGetByPathCall) Fields(s ...googleapi.Field) *PostsGetByPathCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsGetByPathCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostsGetByPathCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3392,6 +3642,9 @@ func (c *PostsGetByPathCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3470,6 +3723,7 @@ type PostsInsertCall struct {
 	blogId string
 	post   *Post
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Insert: Add a post.
@@ -3495,6 +3749,13 @@ func (c *PostsInsertCall) Fields(s ...googleapi.Field) *PostsInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
@@ -3518,6 +3779,9 @@ func (c *PostsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3575,6 +3839,7 @@ type PostsListCall struct {
 	s      *Service
 	blogId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of posts, possibly filtered.
@@ -3675,6 +3940,13 @@ func (c *PostsListCall) Fields(s ...googleapi.Field) *PostsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3719,6 +3991,9 @@ func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3853,6 +4128,7 @@ type PostsPatchCall struct {
 	postId string
 	post   *Post
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Update a post. This method supports patch semantics.
@@ -3870,6 +4146,13 @@ func (r *PostsService) Patch(blogId string, postId string, post *Post) *PostsPat
 func (c *PostsPatchCall) Fields(s ...googleapi.Field) *PostsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *PostsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -3893,6 +4176,9 @@ func (c *PostsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3953,6 +4239,7 @@ type PostsPublishCall struct {
 	blogId string
 	postId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Publish: Publish a draft post.
@@ -3978,6 +4265,13 @@ func (c *PostsPublishCall) Fields(s ...googleapi.Field) *PostsPublishCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsPublishCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostsPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3996,6 +4290,9 @@ func (c *PostsPublishCall) doRequest(alt string) (*http.Response, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4059,6 +4356,7 @@ type PostsRevertCall struct {
 	blogId string
 	postId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Revert: Revert a published or scheduled post to draft state.
@@ -4077,6 +4375,13 @@ func (c *PostsRevertCall) Fields(s ...googleapi.Field) *PostsRevertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsRevertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostsRevertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4092,6 +4397,9 @@ func (c *PostsRevertCall) doRequest(alt string) (*http.Response, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4149,6 +4457,7 @@ type PostsSearchCall struct {
 	blogId string
 	q      string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Search: Search for a post.
@@ -4186,6 +4495,13 @@ func (c *PostsSearchCall) Fields(s ...googleapi.Field) *PostsSearchCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsSearchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PostsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4207,6 +4523,9 @@ func (c *PostsSearchCall) doRequest(alt string) (*http.Response, error) {
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4286,6 +4605,7 @@ type PostsUpdateCall struct {
 	postId string
 	post   *Post
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Update a post.
@@ -4303,6 +4623,13 @@ func (r *PostsService) Update(blogId string, postId string, post *Post) *PostsUp
 func (c *PostsUpdateCall) Fields(s ...googleapi.Field) *PostsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PostsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *PostsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -4326,6 +4653,9 @@ func (c *PostsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4385,6 +4715,7 @@ type UsersGetCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one user by id.
@@ -4402,6 +4733,13 @@ func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4416,6 +4754,9 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "plus:v1"
 const apiName = "plus"
@@ -1283,6 +1283,7 @@ type ActivitiesGetCall struct {
 	s          *Service
 	activityId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Get an activity.
@@ -1300,6 +1301,13 @@ func (c *ActivitiesGetCall) Fields(s ...googleapi.Field) *ActivitiesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ActivitiesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ActivitiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1314,6 +1322,9 @@ func (c *ActivitiesGetCall) doRequest(alt string) (*http.Response, error) {
 		"activityId": c.activityId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1365,6 +1376,7 @@ type ActivitiesListCall struct {
 	userId     string
 	collection string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all of the activities in the specified collection for a
@@ -1402,6 +1414,13 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ActivitiesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1423,6 +1442,9 @@ func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1500,6 +1522,7 @@ type ActivitiesSearchCall struct {
 	s     *Service
 	query string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Search: Search public activities.
@@ -1557,6 +1580,13 @@ func (c *ActivitiesSearchCall) Fields(s ...googleapi.Field) *ActivitiesSearchCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ActivitiesSearchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ActivitiesSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1582,6 +1612,9 @@ func (c *ActivitiesSearchCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1666,6 +1699,7 @@ type CommentsGetCall struct {
 	s         *Service
 	commentId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get a comment.
@@ -1683,6 +1717,13 @@ func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1697,6 +1738,9 @@ func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1747,6 +1791,7 @@ type CommentsListCall struct {
 	s          *Service
 	activityId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all of the comments for an activity.
@@ -1793,6 +1838,13 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CommentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1816,6 +1868,9 @@ func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 		"activityId": c.activityId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1896,6 +1951,7 @@ type MomentsInsertCall struct {
 	collection string
 	moment     *Moment
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Record a moment representing a user's action such as making a
@@ -1923,6 +1979,13 @@ func (c *MomentsInsertCall) Fields(s ...googleapi.Field) *MomentsInsertCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MomentsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MomentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.moment)
@@ -1947,6 +2010,9 @@ func (c *MomentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2019,6 +2085,7 @@ type MomentsListCall struct {
 	userId     string
 	collection string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all of the moments for a particular user.
@@ -2069,6 +2136,13 @@ func (c *MomentsListCall) Fields(s ...googleapi.Field) *MomentsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MomentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MomentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2096,6 +2170,9 @@ func (c *MomentsListCall) doRequest(alt string) (*http.Response, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2183,6 +2260,7 @@ type PeopleGetCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Get a person's profile. If your app uses scope
@@ -2202,6 +2280,13 @@ func (c *PeopleGetCall) Fields(s ...googleapi.Field) *PeopleGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PeopleGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2216,6 +2301,9 @@ func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2269,6 +2357,7 @@ type PeopleListCall struct {
 	userId     string
 	collection string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all of the people in the specified collection.
@@ -2316,6 +2405,13 @@ func (c *PeopleListCall) Fields(s ...googleapi.Field) *PeopleListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PeopleListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PeopleListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2340,6 +2436,9 @@ func (c *PeopleListCall) doRequest(alt string) (*http.Response, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2433,6 +2532,7 @@ type PeopleListByActivityCall struct {
 	activityId string
 	collection string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // ListByActivity: List all of the people in the specified collection
@@ -2470,6 +2570,13 @@ func (c *PeopleListByActivityCall) Fields(s ...googleapi.Field) *PeopleListByAct
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PeopleListByActivityCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PeopleListByActivityCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2491,6 +2598,9 @@ func (c *PeopleListByActivityCall) doRequest(alt string) (*http.Response, error)
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2570,6 +2680,7 @@ type PeopleSearchCall struct {
 	s     *Service
 	query string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Search: Search all public profiles.
@@ -2614,6 +2725,13 @@ func (c *PeopleSearchCall) Fields(s ...googleapi.Field) *PeopleSearchCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PeopleSearchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PeopleSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2636,6 +2754,9 @@ func (c *PeopleSearchCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

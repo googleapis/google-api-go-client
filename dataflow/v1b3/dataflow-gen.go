@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "dataflow:v1b3"
 const apiName = "dataflow"
@@ -1724,6 +1724,7 @@ type ProjectsJobsCreateCall struct {
 	projectId string
 	job       *Job
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Create: Creates a dataflow job.
@@ -1761,6 +1762,13 @@ func (c *ProjectsJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsJobsCreat
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsJobsCreateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
@@ -1787,6 +1795,9 @@ func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1856,6 +1867,7 @@ type ProjectsJobsGetCall struct {
 	projectId string
 	jobId     string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets the state of the specified dataflow job.
@@ -1886,6 +1898,13 @@ func (c *ProjectsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsJobsGetCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsJobsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1904,6 +1923,9 @@ func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1972,6 +1994,7 @@ type ProjectsJobsGetMetricsCall struct {
 	projectId string
 	jobId     string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // GetMetrics: Request the job status.
@@ -1998,6 +2021,13 @@ func (c *ProjectsJobsGetMetricsCall) Fields(s ...googleapi.Field) *ProjectsJobsG
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsJobsGetMetricsCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsJobsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2016,6 +2046,9 @@ func (c *ProjectsJobsGetMetricsCall) doRequest(alt string) (*http.Response, erro
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2078,6 +2111,7 @@ type ProjectsJobsListCall struct {
 	s         *Service
 	projectId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: List the jobs of a project
@@ -2124,6 +2158,13 @@ func (c *ProjectsJobsListCall) Fields(s ...googleapi.Field) *ProjectsJobsListCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsJobsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2147,6 +2188,9 @@ func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2220,6 +2264,7 @@ type ProjectsJobsUpdateCall struct {
 	jobId     string
 	job       *Job
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates the state of an existing dataflow job.
@@ -2237,6 +2282,13 @@ func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *
 func (c *ProjectsJobsUpdateCall) Fields(s ...googleapi.Field) *ProjectsJobsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsJobsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ProjectsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -2260,6 +2312,9 @@ func (c *ProjectsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2321,6 +2376,7 @@ type ProjectsJobsMessagesListCall struct {
 	projectId string
 	jobId     string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Request the job status.
@@ -2387,6 +2443,13 @@ func (c *ProjectsJobsMessagesListCall) Fields(s ...googleapi.Field) *ProjectsJob
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsJobsMessagesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsJobsMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2417,6 +2480,9 @@ func (c *ProjectsJobsMessagesListCall) doRequest(alt string) (*http.Response, er
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2510,6 +2576,7 @@ type ProjectsJobsWorkItemsLeaseCall struct {
 	jobId                string
 	leaseworkitemrequest *LeaseWorkItemRequest
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Lease: Leases a dataflow WorkItem to run.
@@ -2527,6 +2594,13 @@ func (r *ProjectsJobsWorkItemsService) Lease(projectId string, jobId string, lea
 func (c *ProjectsJobsWorkItemsLeaseCall) Fields(s ...googleapi.Field) *ProjectsJobsWorkItemsLeaseCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsJobsWorkItemsLeaseCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ProjectsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, error) {
@@ -2550,6 +2624,9 @@ func (c *ProjectsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2612,6 +2689,7 @@ type ProjectsJobsWorkItemsReportStatusCall struct {
 	jobId                       string
 	reportworkitemstatusrequest *ReportWorkItemStatusRequest
 	opt_                        map[string]interface{}
+	ctx_                        context.Context
 }
 
 // ReportStatus: Reports the status of dataflow WorkItems leased by a
@@ -2630,6 +2708,13 @@ func (r *ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId stri
 func (c *ProjectsJobsWorkItemsReportStatusCall) Fields(s ...googleapi.Field) *ProjectsJobsWorkItemsReportStatusCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsJobsWorkItemsReportStatusCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ProjectsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Response, error) {
@@ -2653,6 +2738,9 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "analytics:v3"
 const apiName = "analytics"
@@ -2881,6 +2881,7 @@ type DataGaGetCall struct {
 	endDate   string
 	metrics   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns Analytics data for a view (profile).
@@ -2972,6 +2973,13 @@ func (c *DataGaGetCall) Fields(s ...googleapi.Field) *DataGaGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DataGaGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DataGaGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3012,6 +3020,9 @@ func (c *DataGaGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3154,6 +3165,7 @@ type DataMcfGetCall struct {
 	endDate   string
 	metrics   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns Analytics Multi-Channel Funnels data for a view
@@ -3227,6 +3239,13 @@ func (c *DataMcfGetCall) Fields(s ...googleapi.Field) *DataMcfGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DataMcfGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DataMcfGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3261,6 +3280,9 @@ func (c *DataMcfGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3383,6 +3405,7 @@ type DataRealtimeGetCall struct {
 	ids     string
 	metrics string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns real time data for a view (profile).
@@ -3431,6 +3454,13 @@ func (c *DataRealtimeGetCall) Fields(s ...googleapi.Field) *DataRealtimeGetCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DataRealtimeGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DataRealtimeGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3457,6 +3487,9 @@ func (c *DataRealtimeGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3539,6 +3572,7 @@ func (c *DataRealtimeGetCall) Do() (*RealtimeData, error) {
 type ManagementAccountSummariesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists account summaries (lightweight tree comprised of
@@ -3572,6 +3606,13 @@ func (c *ManagementAccountSummariesListCall) Fields(s ...googleapi.Field) *Manag
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementAccountSummariesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementAccountSummariesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3590,6 +3631,9 @@ func (c *ManagementAccountSummariesListCall) doRequest(alt string) (*http.Respon
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3645,6 +3689,7 @@ type ManagementAccountUserLinksDeleteCall struct {
 	accountId string
 	linkId    string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Removes a user from the given account.
@@ -3663,6 +3708,13 @@ func (c *ManagementAccountUserLinksDeleteCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementAccountUserLinksDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementAccountUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3678,6 +3730,9 @@ func (c *ManagementAccountUserLinksDeleteCall) doRequest(alt string) (*http.Resp
 		"linkId":    c.linkId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3728,6 +3783,7 @@ type ManagementAccountUserLinksInsertCall struct {
 	accountId      string
 	entityuserlink *EntityUserLink
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Adds a new user to the given account.
@@ -3744,6 +3800,13 @@ func (r *ManagementAccountUserLinksService) Insert(accountId string, entityuserl
 func (c *ManagementAccountUserLinksInsertCall) Fields(s ...googleapi.Field) *ManagementAccountUserLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementAccountUserLinksInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementAccountUserLinksInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -3766,6 +3829,9 @@ func (c *ManagementAccountUserLinksInsertCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3818,6 +3884,7 @@ type ManagementAccountUserLinksListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists account-user links for a given account.
@@ -3850,6 +3917,13 @@ func (c *ManagementAccountUserLinksListCall) Fields(s ...googleapi.Field) *Manag
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementAccountUserLinksListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementAccountUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3870,6 +3944,9 @@ func (c *ManagementAccountUserLinksListCall) doRequest(alt string) (*http.Respon
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3935,6 +4012,7 @@ type ManagementAccountUserLinksUpdateCall struct {
 	linkId         string
 	entityuserlink *EntityUserLink
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Update: Updates permissions for an existing user on the given
@@ -3953,6 +4031,13 @@ func (r *ManagementAccountUserLinksService) Update(accountId string, linkId stri
 func (c *ManagementAccountUserLinksUpdateCall) Fields(s ...googleapi.Field) *ManagementAccountUserLinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementAccountUserLinksUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementAccountUserLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -3976,6 +4061,9 @@ func (c *ManagementAccountUserLinksUpdateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4034,6 +4122,7 @@ func (c *ManagementAccountUserLinksUpdateCall) Do() (*EntityUserLink, error) {
 type ManagementAccountsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all accounts to which the user has access.
@@ -4065,6 +4154,13 @@ func (c *ManagementAccountsListCall) Fields(s ...googleapi.Field) *ManagementAcc
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementAccountsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4083,6 +4179,9 @@ func (c *ManagementAccountsListCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4139,6 +4238,7 @@ type ManagementCustomDataSourcesListCall struct {
 	accountId     string
 	webPropertyId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: List custom data sources to which the user has access.
@@ -4172,6 +4272,13 @@ func (c *ManagementCustomDataSourcesListCall) Fields(s ...googleapi.Field) *Mana
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomDataSourcesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4193,6 +4300,9 @@ func (c *ManagementCustomDataSourcesListCall) doRequest(alt string) (*http.Respo
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4269,6 +4379,7 @@ type ManagementCustomDimensionsGetCall struct {
 	webPropertyId     string
 	customDimensionId string
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Get: Get a custom dimension to which the user has access.
@@ -4288,6 +4399,13 @@ func (c *ManagementCustomDimensionsGetCall) Fields(s ...googleapi.Field) *Manage
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomDimensionsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomDimensionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4304,6 +4422,9 @@ func (c *ManagementCustomDimensionsGetCall) doRequest(alt string) (*http.Respons
 		"customDimensionId": c.customDimensionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4370,6 +4491,7 @@ type ManagementCustomDimensionsInsertCall struct {
 	webPropertyId   string
 	customdimension *CustomDimension
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Insert: Create a new custom dimension.
@@ -4387,6 +4509,13 @@ func (r *ManagementCustomDimensionsService) Insert(accountId string, webProperty
 func (c *ManagementCustomDimensionsInsertCall) Fields(s ...googleapi.Field) *ManagementCustomDimensionsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomDimensionsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementCustomDimensionsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -4410,6 +4539,9 @@ func (c *ManagementCustomDimensionsInsertCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4470,6 +4602,7 @@ type ManagementCustomDimensionsListCall struct {
 	accountId     string
 	webPropertyId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists custom dimensions to which the user has access.
@@ -4503,6 +4636,13 @@ func (c *ManagementCustomDimensionsListCall) Fields(s ...googleapi.Field) *Manag
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomDimensionsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomDimensionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4524,6 +4664,9 @@ func (c *ManagementCustomDimensionsListCall) doRequest(alt string) (*http.Respon
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4597,6 +4740,7 @@ type ManagementCustomDimensionsPatchCall struct {
 	customDimensionId string
 	customdimension   *CustomDimension
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Patch: Updates an existing custom dimension. This method supports
@@ -4627,6 +4771,13 @@ func (c *ManagementCustomDimensionsPatchCall) Fields(s ...googleapi.Field) *Mana
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomDimensionsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomDimensionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customdimension)
@@ -4652,6 +4803,9 @@ func (c *ManagementCustomDimensionsPatchCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4727,6 +4881,7 @@ type ManagementCustomDimensionsUpdateCall struct {
 	customDimensionId string
 	customdimension   *CustomDimension
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Update: Updates an existing custom dimension.
@@ -4756,6 +4911,13 @@ func (c *ManagementCustomDimensionsUpdateCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomDimensionsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomDimensionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customdimension)
@@ -4781,6 +4943,9 @@ func (c *ManagementCustomDimensionsUpdateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4855,6 +5020,7 @@ type ManagementCustomMetricsGetCall struct {
 	webPropertyId  string
 	customMetricId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Get a custom metric to which the user has access.
@@ -4874,6 +5040,13 @@ func (c *ManagementCustomMetricsGetCall) Fields(s ...googleapi.Field) *Managemen
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomMetricsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4890,6 +5063,9 @@ func (c *ManagementCustomMetricsGetCall) doRequest(alt string) (*http.Response, 
 		"customMetricId": c.customMetricId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4956,6 +5132,7 @@ type ManagementCustomMetricsInsertCall struct {
 	webPropertyId string
 	custommetric  *CustomMetric
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Create a new custom metric.
@@ -4973,6 +5150,13 @@ func (r *ManagementCustomMetricsService) Insert(accountId string, webPropertyId 
 func (c *ManagementCustomMetricsInsertCall) Fields(s ...googleapi.Field) *ManagementCustomMetricsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomMetricsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementCustomMetricsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -4996,6 +5180,9 @@ func (c *ManagementCustomMetricsInsertCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5056,6 +5243,7 @@ type ManagementCustomMetricsListCall struct {
 	accountId     string
 	webPropertyId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists custom metrics to which the user has access.
@@ -5089,6 +5277,13 @@ func (c *ManagementCustomMetricsListCall) Fields(s ...googleapi.Field) *Manageme
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomMetricsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5110,6 +5305,9 @@ func (c *ManagementCustomMetricsListCall) doRequest(alt string) (*http.Response,
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5183,6 +5381,7 @@ type ManagementCustomMetricsPatchCall struct {
 	customMetricId string
 	custommetric   *CustomMetric
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Patch: Updates an existing custom metric. This method supports patch
@@ -5213,6 +5412,13 @@ func (c *ManagementCustomMetricsPatchCall) Fields(s ...googleapi.Field) *Managem
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomMetricsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomMetricsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.custommetric)
@@ -5238,6 +5444,9 @@ func (c *ManagementCustomMetricsPatchCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5313,6 +5522,7 @@ type ManagementCustomMetricsUpdateCall struct {
 	customMetricId string
 	custommetric   *CustomMetric
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Update: Updates an existing custom metric.
@@ -5342,6 +5552,13 @@ func (c *ManagementCustomMetricsUpdateCall) Fields(s ...googleapi.Field) *Manage
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementCustomMetricsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementCustomMetricsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.custommetric)
@@ -5367,6 +5584,9 @@ func (c *ManagementCustomMetricsUpdateCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5442,6 +5662,7 @@ type ManagementExperimentsDeleteCall struct {
 	profileId     string
 	experimentId  string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Delete an experiment.
@@ -5462,6 +5683,13 @@ func (c *ManagementExperimentsDeleteCall) Fields(s ...googleapi.Field) *Manageme
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementExperimentsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementExperimentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5479,6 +5707,9 @@ func (c *ManagementExperimentsDeleteCall) doRequest(alt string) (*http.Response,
 		"experimentId":  c.experimentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5546,6 +5777,7 @@ type ManagementExperimentsGetCall struct {
 	profileId     string
 	experimentId  string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Returns an experiment to which the user has access.
@@ -5566,6 +5798,13 @@ func (c *ManagementExperimentsGetCall) Fields(s ...googleapi.Field) *ManagementE
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementExperimentsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementExperimentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5583,6 +5822,9 @@ func (c *ManagementExperimentsGetCall) doRequest(alt string) (*http.Response, er
 		"experimentId":  c.experimentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5658,6 +5900,7 @@ type ManagementExperimentsInsertCall struct {
 	profileId     string
 	experiment    *Experiment
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Create a new experiment.
@@ -5676,6 +5919,13 @@ func (r *ManagementExperimentsService) Insert(accountId string, webPropertyId st
 func (c *ManagementExperimentsInsertCall) Fields(s ...googleapi.Field) *ManagementExperimentsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementExperimentsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementExperimentsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -5700,6 +5950,9 @@ func (c *ManagementExperimentsInsertCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5769,6 +6022,7 @@ type ManagementExperimentsListCall struct {
 	webPropertyId string
 	profileId     string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists experiments to which the user has access.
@@ -5803,6 +6057,13 @@ func (c *ManagementExperimentsListCall) Fields(s ...googleapi.Field) *Management
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementExperimentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementExperimentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5825,6 +6086,9 @@ func (c *ManagementExperimentsListCall) doRequest(alt string) (*http.Response, e
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5910,6 +6174,7 @@ type ManagementExperimentsPatchCall struct {
 	experimentId  string
 	experiment    *Experiment
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Patch: Update an existing experiment. This method supports patch
@@ -5930,6 +6195,13 @@ func (r *ManagementExperimentsService) Patch(accountId string, webPropertyId str
 func (c *ManagementExperimentsPatchCall) Fields(s ...googleapi.Field) *ManagementExperimentsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementExperimentsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementExperimentsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -5955,6 +6227,9 @@ func (c *ManagementExperimentsPatchCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6033,6 +6308,7 @@ type ManagementExperimentsUpdateCall struct {
 	experimentId  string
 	experiment    *Experiment
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Update an existing experiment.
@@ -6052,6 +6328,13 @@ func (r *ManagementExperimentsService) Update(accountId string, webPropertyId st
 func (c *ManagementExperimentsUpdateCall) Fields(s ...googleapi.Field) *ManagementExperimentsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementExperimentsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementExperimentsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -6077,6 +6360,9 @@ func (c *ManagementExperimentsUpdateCall) doRequest(alt string) (*http.Response,
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6152,6 +6438,7 @@ type ManagementFiltersDeleteCall struct {
 	accountId string
 	filterId  string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Delete a filter.
@@ -6170,6 +6457,13 @@ func (c *ManagementFiltersDeleteCall) Fields(s ...googleapi.Field) *ManagementFi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementFiltersDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementFiltersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6185,6 +6479,9 @@ func (c *ManagementFiltersDeleteCall) doRequest(alt string) (*http.Response, err
 		"filterId":  c.filterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6242,6 +6539,7 @@ type ManagementFiltersGetCall struct {
 	accountId string
 	filterId  string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns a filters to which the user has access.
@@ -6260,6 +6558,13 @@ func (c *ManagementFiltersGetCall) Fields(s ...googleapi.Field) *ManagementFilte
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementFiltersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementFiltersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6275,6 +6580,9 @@ func (c *ManagementFiltersGetCall) doRequest(alt string) (*http.Response, error)
 		"filterId":  c.filterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6333,6 +6641,7 @@ type ManagementFiltersInsertCall struct {
 	accountId string
 	filter    *Filter
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Insert: Create a new filter.
@@ -6349,6 +6658,13 @@ func (r *ManagementFiltersService) Insert(accountId string, filter *Filter) *Man
 func (c *ManagementFiltersInsertCall) Fields(s ...googleapi.Field) *ManagementFiltersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementFiltersInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementFiltersInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -6371,6 +6687,9 @@ func (c *ManagementFiltersInsertCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6423,6 +6742,7 @@ type ManagementFiltersListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all filters for an account
@@ -6455,6 +6775,13 @@ func (c *ManagementFiltersListCall) Fields(s ...googleapi.Field) *ManagementFilt
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementFiltersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementFiltersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6475,6 +6802,9 @@ func (c *ManagementFiltersListCall) doRequest(alt string) (*http.Response, error
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6541,6 +6871,7 @@ type ManagementFiltersPatchCall struct {
 	filterId  string
 	filter    *Filter
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates an existing filter. This method supports patch
@@ -6559,6 +6890,13 @@ func (r *ManagementFiltersService) Patch(accountId string, filterId string, filt
 func (c *ManagementFiltersPatchCall) Fields(s ...googleapi.Field) *ManagementFiltersPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementFiltersPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementFiltersPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -6582,6 +6920,9 @@ func (c *ManagementFiltersPatchCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6643,6 +6984,7 @@ type ManagementFiltersUpdateCall struct {
 	filterId  string
 	filter    *Filter
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates an existing filter.
@@ -6660,6 +7002,13 @@ func (r *ManagementFiltersService) Update(accountId string, filterId string, fil
 func (c *ManagementFiltersUpdateCall) Fields(s ...googleapi.Field) *ManagementFiltersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementFiltersUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementFiltersUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -6683,6 +7032,9 @@ func (c *ManagementFiltersUpdateCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6745,6 +7097,7 @@ type ManagementGoalsGetCall struct {
 	profileId     string
 	goalId        string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Gets a goal to which the user has access.
@@ -6765,6 +7118,13 @@ func (c *ManagementGoalsGetCall) Fields(s ...googleapi.Field) *ManagementGoalsGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementGoalsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementGoalsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6782,6 +7142,9 @@ func (c *ManagementGoalsGetCall) doRequest(alt string) (*http.Response, error) {
 		"goalId":        c.goalId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6856,6 +7219,7 @@ type ManagementGoalsInsertCall struct {
 	profileId     string
 	goal          *Goal
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Create a new goal.
@@ -6874,6 +7238,13 @@ func (r *ManagementGoalsService) Insert(accountId string, webPropertyId string, 
 func (c *ManagementGoalsInsertCall) Fields(s ...googleapi.Field) *ManagementGoalsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementGoalsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementGoalsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -6898,6 +7269,9 @@ func (c *ManagementGoalsInsertCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6966,6 +7340,7 @@ type ManagementGoalsListCall struct {
 	webPropertyId string
 	profileId     string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists goals to which the user has access.
@@ -7000,6 +7375,13 @@ func (c *ManagementGoalsListCall) Fields(s ...googleapi.Field) *ManagementGoalsL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementGoalsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementGoalsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7022,6 +7404,9 @@ func (c *ManagementGoalsListCall) doRequest(alt string) (*http.Response, error) 
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7104,6 +7489,7 @@ type ManagementGoalsPatchCall struct {
 	goalId        string
 	goal          *Goal
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Patch: Updates an existing view (profile). This method supports patch
@@ -7124,6 +7510,13 @@ func (r *ManagementGoalsService) Patch(accountId string, webPropertyId string, p
 func (c *ManagementGoalsPatchCall) Fields(s ...googleapi.Field) *ManagementGoalsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementGoalsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementGoalsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -7149,6 +7542,9 @@ func (c *ManagementGoalsPatchCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7226,6 +7622,7 @@ type ManagementGoalsUpdateCall struct {
 	goalId        string
 	goal          *Goal
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Updates an existing view (profile).
@@ -7245,6 +7642,13 @@ func (r *ManagementGoalsService) Update(accountId string, webPropertyId string, 
 func (c *ManagementGoalsUpdateCall) Fields(s ...googleapi.Field) *ManagementGoalsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementGoalsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementGoalsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -7270,6 +7674,9 @@ func (c *ManagementGoalsUpdateCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7346,6 +7753,7 @@ type ManagementProfileFilterLinksDeleteCall struct {
 	profileId     string
 	linkId        string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Delete a profile filter link.
@@ -7366,6 +7774,13 @@ func (c *ManagementProfileFilterLinksDeleteCall) Fields(s ...googleapi.Field) *M
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileFilterLinksDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementProfileFilterLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7383,6 +7798,9 @@ func (c *ManagementProfileFilterLinksDeleteCall) doRequest(alt string) (*http.Re
 		"linkId":        c.linkId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7453,6 +7871,7 @@ type ManagementProfileFilterLinksGetCall struct {
 	profileId     string
 	linkId        string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Returns a single profile filter link.
@@ -7473,6 +7892,13 @@ func (c *ManagementProfileFilterLinksGetCall) Fields(s ...googleapi.Field) *Mana
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileFilterLinksGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementProfileFilterLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7490,6 +7916,9 @@ func (c *ManagementProfileFilterLinksGetCall) doRequest(alt string) (*http.Respo
 		"linkId":        c.linkId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7568,6 +7997,7 @@ type ManagementProfileFilterLinksInsertCall struct {
 	profileId         string
 	profilefilterlink *ProfileFilterLink
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Insert: Create a new profile filter link.
@@ -7586,6 +8016,13 @@ func (r *ManagementProfileFilterLinksService) Insert(accountId string, webProper
 func (c *ManagementProfileFilterLinksInsertCall) Fields(s ...googleapi.Field) *ManagementProfileFilterLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileFilterLinksInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementProfileFilterLinksInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -7610,6 +8047,9 @@ func (c *ManagementProfileFilterLinksInsertCall) doRequest(alt string) (*http.Re
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7681,6 +8121,7 @@ type ManagementProfileFilterLinksListCall struct {
 	webPropertyId string
 	profileId     string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists all profile filter links for a profile.
@@ -7715,6 +8156,13 @@ func (c *ManagementProfileFilterLinksListCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileFilterLinksListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementProfileFilterLinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7737,6 +8185,9 @@ func (c *ManagementProfileFilterLinksListCall) doRequest(alt string) (*http.Resp
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7819,6 +8270,7 @@ type ManagementProfileFilterLinksPatchCall struct {
 	linkId            string
 	profilefilterlink *ProfileFilterLink
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Patch: Update an existing profile filter link. This method supports
@@ -7839,6 +8291,13 @@ func (r *ManagementProfileFilterLinksService) Patch(accountId string, webPropert
 func (c *ManagementProfileFilterLinksPatchCall) Fields(s ...googleapi.Field) *ManagementProfileFilterLinksPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileFilterLinksPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementProfileFilterLinksPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -7864,6 +8323,9 @@ func (c *ManagementProfileFilterLinksPatchCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7945,6 +8407,7 @@ type ManagementProfileFilterLinksUpdateCall struct {
 	linkId            string
 	profilefilterlink *ProfileFilterLink
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Update: Update an existing profile filter link.
@@ -7964,6 +8427,13 @@ func (r *ManagementProfileFilterLinksService) Update(accountId string, webProper
 func (c *ManagementProfileFilterLinksUpdateCall) Fields(s ...googleapi.Field) *ManagementProfileFilterLinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileFilterLinksUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementProfileFilterLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -7989,6 +8459,9 @@ func (c *ManagementProfileFilterLinksUpdateCall) doRequest(alt string) (*http.Re
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8069,6 +8542,7 @@ type ManagementProfileUserLinksDeleteCall struct {
 	profileId     string
 	linkId        string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Removes a user from the given view (profile).
@@ -8089,6 +8563,13 @@ func (c *ManagementProfileUserLinksDeleteCall) Fields(s ...googleapi.Field) *Man
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileUserLinksDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementProfileUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8106,6 +8587,9 @@ func (c *ManagementProfileUserLinksDeleteCall) doRequest(alt string) (*http.Resp
 		"linkId":        c.linkId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8172,6 +8656,7 @@ type ManagementProfileUserLinksInsertCall struct {
 	profileId      string
 	entityuserlink *EntityUserLink
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Adds a new user to the given view (profile).
@@ -8190,6 +8675,13 @@ func (r *ManagementProfileUserLinksService) Insert(accountId string, webProperty
 func (c *ManagementProfileUserLinksInsertCall) Fields(s ...googleapi.Field) *ManagementProfileUserLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileUserLinksInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementProfileUserLinksInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -8214,6 +8706,9 @@ func (c *ManagementProfileUserLinksInsertCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8282,6 +8777,7 @@ type ManagementProfileUserLinksListCall struct {
 	webPropertyId string
 	profileId     string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists profile-user links for a given view (profile).
@@ -8316,6 +8812,13 @@ func (c *ManagementProfileUserLinksListCall) Fields(s ...googleapi.Field) *Manag
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileUserLinksListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementProfileUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8338,6 +8841,9 @@ func (c *ManagementProfileUserLinksListCall) doRequest(alt string) (*http.Respon
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8419,6 +8925,7 @@ type ManagementProfileUserLinksUpdateCall struct {
 	linkId         string
 	entityuserlink *EntityUserLink
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Update: Updates permissions for an existing user on the given view
@@ -8439,6 +8946,13 @@ func (r *ManagementProfileUserLinksService) Update(accountId string, webProperty
 func (c *ManagementProfileUserLinksUpdateCall) Fields(s ...googleapi.Field) *ManagementProfileUserLinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfileUserLinksUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementProfileUserLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -8464,6 +8978,9 @@ func (c *ManagementProfileUserLinksUpdateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8539,6 +9056,7 @@ type ManagementProfilesDeleteCall struct {
 	webPropertyId string
 	profileId     string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Deletes a view (profile).
@@ -8558,6 +9076,13 @@ func (c *ManagementProfilesDeleteCall) Fields(s ...googleapi.Field) *ManagementP
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfilesDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8574,6 +9099,9 @@ func (c *ManagementProfilesDeleteCall) doRequest(alt string) (*http.Response, er
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8632,6 +9160,7 @@ type ManagementProfilesGetCall struct {
 	webPropertyId string
 	profileId     string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Gets a view (profile) to which the user has access.
@@ -8651,6 +9180,13 @@ func (c *ManagementProfilesGetCall) Fields(s ...googleapi.Field) *ManagementProf
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfilesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8667,6 +9203,9 @@ func (c *ManagementProfilesGetCall) doRequest(alt string) (*http.Response, error
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8736,6 +9275,7 @@ type ManagementProfilesInsertCall struct {
 	webPropertyId string
 	profile       *Profile
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Create a new view (profile).
@@ -8753,6 +9293,13 @@ func (r *ManagementProfilesService) Insert(accountId string, webPropertyId strin
 func (c *ManagementProfilesInsertCall) Fields(s ...googleapi.Field) *ManagementProfilesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfilesInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementProfilesInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -8776,6 +9323,9 @@ func (c *ManagementProfilesInsertCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8836,6 +9386,7 @@ type ManagementProfilesListCall struct {
 	accountId     string
 	webPropertyId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists views (profiles) to which the user has access.
@@ -8869,6 +9420,13 @@ func (c *ManagementProfilesListCall) Fields(s ...googleapi.Field) *ManagementPro
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfilesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8890,6 +9448,9 @@ func (c *ManagementProfilesListCall) doRequest(alt string) (*http.Response, erro
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8964,6 +9525,7 @@ type ManagementProfilesPatchCall struct {
 	profileId     string
 	profile       *Profile
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Patch: Updates an existing view (profile). This method supports patch
@@ -8983,6 +9545,13 @@ func (r *ManagementProfilesService) Patch(accountId string, webPropertyId string
 func (c *ManagementProfilesPatchCall) Fields(s ...googleapi.Field) *ManagementProfilesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfilesPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -9007,6 +9576,9 @@ func (c *ManagementProfilesPatchCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9076,6 +9648,7 @@ type ManagementProfilesUpdateCall struct {
 	profileId     string
 	profile       *Profile
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Updates an existing view (profile).
@@ -9094,6 +9667,13 @@ func (r *ManagementProfilesService) Update(accountId string, webPropertyId strin
 func (c *ManagementProfilesUpdateCall) Fields(s ...googleapi.Field) *ManagementProfilesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementProfilesUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementProfilesUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -9118,6 +9698,9 @@ func (c *ManagementProfilesUpdateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9183,6 +9766,7 @@ func (c *ManagementProfilesUpdateCall) Do() (*Profile, error) {
 type ManagementSegmentsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists segments to which the user has access.
@@ -9214,6 +9798,13 @@ func (c *ManagementSegmentsListCall) Fields(s ...googleapi.Field) *ManagementSeg
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementSegmentsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementSegmentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9232,6 +9823,9 @@ func (c *ManagementSegmentsListCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9290,6 +9884,7 @@ type ManagementUnsampledReportsGetCall struct {
 	profileId         string
 	unsampledReportId string
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Get: Returns a single unsampled report.
@@ -9310,6 +9905,13 @@ func (c *ManagementUnsampledReportsGetCall) Fields(s ...googleapi.Field) *Manage
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementUnsampledReportsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementUnsampledReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9327,6 +9929,9 @@ func (c *ManagementUnsampledReportsGetCall) doRequest(alt string) (*http.Respons
 		"unsampledReportId": c.unsampledReportId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9402,6 +10007,7 @@ type ManagementUnsampledReportsInsertCall struct {
 	profileId       string
 	unsampledreport *UnsampledReport
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Insert: Create a new unsampled report.
@@ -9420,6 +10026,13 @@ func (r *ManagementUnsampledReportsService) Insert(accountId string, webProperty
 func (c *ManagementUnsampledReportsInsertCall) Fields(s ...googleapi.Field) *ManagementUnsampledReportsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementUnsampledReportsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementUnsampledReportsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -9444,6 +10057,9 @@ func (c *ManagementUnsampledReportsInsertCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9513,6 +10129,7 @@ type ManagementUnsampledReportsListCall struct {
 	webPropertyId string
 	profileId     string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists unsampled reports to which the user has access.
@@ -9547,6 +10164,13 @@ func (c *ManagementUnsampledReportsListCall) Fields(s ...googleapi.Field) *Manag
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementUnsampledReportsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementUnsampledReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9569,6 +10193,9 @@ func (c *ManagementUnsampledReportsListCall) doRequest(alt string) (*http.Respon
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9650,6 +10277,7 @@ type ManagementUploadsDeleteUploadDataCall struct {
 	customDataSourceId                         string
 	analyticsdataimportdeleteuploaddatarequest *AnalyticsDataimportDeleteUploadDataRequest
 	opt_                                       map[string]interface{}
+	ctx_                                       context.Context
 }
 
 // DeleteUploadData: Delete data associated with a previous upload.
@@ -9668,6 +10296,13 @@ func (r *ManagementUploadsService) DeleteUploadData(accountId string, webPropert
 func (c *ManagementUploadsDeleteUploadDataCall) Fields(s ...googleapi.Field) *ManagementUploadsDeleteUploadDataCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementUploadsDeleteUploadDataCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementUploadsDeleteUploadDataCall) doRequest(alt string) (*http.Response, error) {
@@ -9692,6 +10327,9 @@ func (c *ManagementUploadsDeleteUploadDataCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9758,6 +10396,7 @@ type ManagementUploadsGetCall struct {
 	customDataSourceId string
 	uploadId           string
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Get: List uploads to which the user has access.
@@ -9778,6 +10417,13 @@ func (c *ManagementUploadsGetCall) Fields(s ...googleapi.Field) *ManagementUploa
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementUploadsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementUploadsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9795,6 +10441,9 @@ func (c *ManagementUploadsGetCall) doRequest(alt string) (*http.Response, error)
 		"uploadId":           c.uploadId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -9873,6 +10522,7 @@ type ManagementUploadsListCall struct {
 	webPropertyId      string
 	customDataSourceId string
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // List: List uploads to which the user has access.
@@ -9907,6 +10557,13 @@ func (c *ManagementUploadsListCall) Fields(s ...googleapi.Field) *ManagementUplo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementUploadsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementUploadsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -9929,6 +10586,9 @@ func (c *ManagementUploadsListCall) doRequest(alt string) (*http.Response, error
 		"customDataSourceId": c.customDataSourceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10016,8 +10676,8 @@ type ManagementUploadsUploadDataCall struct {
 	media_             io.Reader
 	resumable_         googleapi.SizeReaderAt
 	mediaType_         string
-	ctx_               context.Context
 	protocol_          string
+	ctx_               context.Context
 }
 
 // UploadData: Upload data for a custom data source.
@@ -10065,6 +10725,15 @@ func (c *ManagementUploadsUploadDataCall) Fields(s ...googleapi.Field) *Manageme
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+// You do not need to provide a context with this method if one was
+// specified using the ResumableMedia method.
+func (c *ManagementUploadsUploadDataCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementUploadsUploadDataCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10103,6 +10772,9 @@ func (c *ManagementUploadsUploadDataCall) doRequest(alt string) (*http.Response,
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10211,6 +10883,7 @@ type ManagementWebPropertyAdWordsLinksDeleteCall struct {
 	webPropertyId            string
 	webPropertyAdWordsLinkId string
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Delete: Deletes a web property-AdWords link.
@@ -10230,6 +10903,13 @@ func (c *ManagementWebPropertyAdWordsLinksDeleteCall) Fields(s ...googleapi.Fiel
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebPropertyAdWordsLinksDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementWebPropertyAdWordsLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10246,6 +10926,9 @@ func (c *ManagementWebPropertyAdWordsLinksDeleteCall) doRequest(alt string) (*ht
 		"webPropertyAdWordsLinkId": c.webPropertyAdWordsLinkId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10304,6 +10987,7 @@ type ManagementWebPropertyAdWordsLinksGetCall struct {
 	webPropertyId            string
 	webPropertyAdWordsLinkId string
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Get: Returns a web property-AdWords link to which the user has
@@ -10324,6 +11008,13 @@ func (c *ManagementWebPropertyAdWordsLinksGetCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebPropertyAdWordsLinksGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementWebPropertyAdWordsLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10340,6 +11031,9 @@ func (c *ManagementWebPropertyAdWordsLinksGetCall) doRequest(alt string) (*http.
 		"webPropertyAdWordsLinkId": c.webPropertyAdWordsLinkId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10406,6 +11100,7 @@ type ManagementWebPropertyAdWordsLinksInsertCall struct {
 	webPropertyId     string
 	entityadwordslink *EntityAdWordsLink
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Insert: Creates a webProperty-AdWords link.
@@ -10423,6 +11118,13 @@ func (r *ManagementWebPropertyAdWordsLinksService) Insert(accountId string, webP
 func (c *ManagementWebPropertyAdWordsLinksInsertCall) Fields(s ...googleapi.Field) *ManagementWebPropertyAdWordsLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebPropertyAdWordsLinksInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementWebPropertyAdWordsLinksInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -10446,6 +11148,9 @@ func (c *ManagementWebPropertyAdWordsLinksInsertCall) doRequest(alt string) (*ht
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10506,6 +11211,7 @@ type ManagementWebPropertyAdWordsLinksListCall struct {
 	accountId     string
 	webPropertyId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists webProperty-AdWords links for a given web property.
@@ -10539,6 +11245,13 @@ func (c *ManagementWebPropertyAdWordsLinksListCall) Fields(s ...googleapi.Field)
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebPropertyAdWordsLinksListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementWebPropertyAdWordsLinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10560,6 +11273,9 @@ func (c *ManagementWebPropertyAdWordsLinksListCall) doRequest(alt string) (*http
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10634,6 +11350,7 @@ type ManagementWebPropertyAdWordsLinksPatchCall struct {
 	webPropertyAdWordsLinkId string
 	entityadwordslink        *EntityAdWordsLink
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Patch: Updates an existing webProperty-AdWords link. This method
@@ -10653,6 +11370,13 @@ func (r *ManagementWebPropertyAdWordsLinksService) Patch(accountId string, webPr
 func (c *ManagementWebPropertyAdWordsLinksPatchCall) Fields(s ...googleapi.Field) *ManagementWebPropertyAdWordsLinksPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebPropertyAdWordsLinksPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementWebPropertyAdWordsLinksPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -10677,6 +11401,9 @@ func (c *ManagementWebPropertyAdWordsLinksPatchCall) doRequest(alt string) (*htt
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10746,6 +11473,7 @@ type ManagementWebPropertyAdWordsLinksUpdateCall struct {
 	webPropertyAdWordsLinkId string
 	entityadwordslink        *EntityAdWordsLink
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Update: Updates an existing webProperty-AdWords link.
@@ -10764,6 +11492,13 @@ func (r *ManagementWebPropertyAdWordsLinksService) Update(accountId string, webP
 func (c *ManagementWebPropertyAdWordsLinksUpdateCall) Fields(s ...googleapi.Field) *ManagementWebPropertyAdWordsLinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebPropertyAdWordsLinksUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementWebPropertyAdWordsLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -10788,6 +11523,9 @@ func (c *ManagementWebPropertyAdWordsLinksUpdateCall) doRequest(alt string) (*ht
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10855,6 +11593,7 @@ type ManagementWebpropertiesGetCall struct {
 	accountId     string
 	webPropertyId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Gets a web property to which the user has access.
@@ -10873,6 +11612,13 @@ func (c *ManagementWebpropertiesGetCall) Fields(s ...googleapi.Field) *Managemen
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertiesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementWebpropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -10888,6 +11634,9 @@ func (c *ManagementWebpropertiesGetCall) doRequest(alt string) (*http.Response, 
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -10948,6 +11697,7 @@ type ManagementWebpropertiesInsertCall struct {
 	accountId   string
 	webproperty *Webproperty
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Insert: Create a new property if the account has fewer than 20
@@ -10966,6 +11716,13 @@ func (r *ManagementWebpropertiesService) Insert(accountId string, webproperty *W
 func (c *ManagementWebpropertiesInsertCall) Fields(s ...googleapi.Field) *ManagementWebpropertiesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertiesInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementWebpropertiesInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -10988,6 +11745,9 @@ func (c *ManagementWebpropertiesInsertCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11040,6 +11800,7 @@ type ManagementWebpropertiesListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists web properties to which the user has access.
@@ -11072,6 +11833,13 @@ func (c *ManagementWebpropertiesListCall) Fields(s ...googleapi.Field) *Manageme
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertiesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementWebpropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11092,6 +11860,9 @@ func (c *ManagementWebpropertiesListCall) doRequest(alt string) (*http.Response,
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11158,6 +11929,7 @@ type ManagementWebpropertiesPatchCall struct {
 	webPropertyId string
 	webproperty   *Webproperty
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Patch: Updates an existing web property. This method supports patch
@@ -11176,6 +11948,13 @@ func (r *ManagementWebpropertiesService) Patch(accountId string, webPropertyId s
 func (c *ManagementWebpropertiesPatchCall) Fields(s ...googleapi.Field) *ManagementWebpropertiesPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertiesPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementWebpropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -11199,6 +11978,9 @@ func (c *ManagementWebpropertiesPatchCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11260,6 +12042,7 @@ type ManagementWebpropertiesUpdateCall struct {
 	webPropertyId string
 	webproperty   *Webproperty
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Updates an existing web property.
@@ -11277,6 +12060,13 @@ func (r *ManagementWebpropertiesService) Update(accountId string, webPropertyId 
 func (c *ManagementWebpropertiesUpdateCall) Fields(s ...googleapi.Field) *ManagementWebpropertiesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertiesUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementWebpropertiesUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -11300,6 +12090,9 @@ func (c *ManagementWebpropertiesUpdateCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11361,6 +12154,7 @@ type ManagementWebpropertyUserLinksDeleteCall struct {
 	webPropertyId string
 	linkId        string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Removes a user from the given web property.
@@ -11380,6 +12174,13 @@ func (c *ManagementWebpropertyUserLinksDeleteCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertyUserLinksDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementWebpropertyUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11396,6 +12197,9 @@ func (c *ManagementWebpropertyUserLinksDeleteCall) doRequest(alt string) (*http.
 		"linkId":        c.linkId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11454,6 +12258,7 @@ type ManagementWebpropertyUserLinksInsertCall struct {
 	webPropertyId  string
 	entityuserlink *EntityUserLink
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Insert: Adds a new user to the given web property.
@@ -11471,6 +12276,13 @@ func (r *ManagementWebpropertyUserLinksService) Insert(accountId string, webProp
 func (c *ManagementWebpropertyUserLinksInsertCall) Fields(s ...googleapi.Field) *ManagementWebpropertyUserLinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertyUserLinksInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementWebpropertyUserLinksInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -11494,6 +12306,9 @@ func (c *ManagementWebpropertyUserLinksInsertCall) doRequest(alt string) (*http.
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11554,6 +12369,7 @@ type ManagementWebpropertyUserLinksListCall struct {
 	accountId     string
 	webPropertyId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists webProperty-user links for a given web property.
@@ -11587,6 +12403,13 @@ func (c *ManagementWebpropertyUserLinksListCall) Fields(s ...googleapi.Field) *M
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertyUserLinksListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagementWebpropertyUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11608,6 +12431,9 @@ func (c *ManagementWebpropertyUserLinksListCall) doRequest(alt string) (*http.Re
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11681,6 +12507,7 @@ type ManagementWebpropertyUserLinksUpdateCall struct {
 	linkId         string
 	entityuserlink *EntityUserLink
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Update: Updates permissions for an existing user on the given web
@@ -11700,6 +12527,13 @@ func (r *ManagementWebpropertyUserLinksService) Update(accountId string, webProp
 func (c *ManagementWebpropertyUserLinksUpdateCall) Fields(s ...googleapi.Field) *ManagementWebpropertyUserLinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagementWebpropertyUserLinksUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagementWebpropertyUserLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -11724,6 +12558,9 @@ func (c *ManagementWebpropertyUserLinksUpdateCall) doRequest(alt string) (*http.
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11790,6 +12627,7 @@ type MetadataColumnsListCall struct {
 	s          *Service
 	reportType string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Lists all columns for a report type
@@ -11807,6 +12645,13 @@ func (c *MetadataColumnsListCall) Fields(s ...googleapi.Field) *MetadataColumnsL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MetadataColumnsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *MetadataColumnsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -11821,6 +12666,9 @@ func (c *MetadataColumnsListCall) doRequest(alt string) (*http.Response, error) 
 		"reportType": c.reportType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -11873,6 +12721,7 @@ type ProvisioningCreateAccountTicketCall struct {
 	s             *Service
 	accountticket *AccountTicket
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // CreateAccountTicket: Creates an account ticket.
@@ -11888,6 +12737,13 @@ func (r *ProvisioningService) CreateAccountTicket(accountticket *AccountTicket) 
 func (c *ProvisioningCreateAccountTicketCall) Fields(s ...googleapi.Field) *ProvisioningCreateAccountTicketCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProvisioningCreateAccountTicketCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ProvisioningCreateAccountTicketCall) doRequest(alt string) (*http.Response, error) {
@@ -11908,6 +12764,9 @@ func (c *ProvisioningCreateAccountTicketCall) doRequest(alt string) (*http.Respo
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

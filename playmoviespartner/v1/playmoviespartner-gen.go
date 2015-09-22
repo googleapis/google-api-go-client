@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "playmoviespartner:v1"
 const apiName = "playmoviespartner"
@@ -689,6 +689,7 @@ type AccountsAvailsListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: List Avails owned or managed by the partner. See
@@ -765,6 +766,13 @@ func (c *AccountsAvailsListCall) Fields(s ...googleapi.Field) *AccountsAvailsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAvailsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsAvailsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -803,6 +811,9 @@ func (c *AccountsAvailsListCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -898,6 +909,7 @@ type AccountsExperienceLocalesGetCall struct {
 	accountId string
 	elId      string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get an ExperienceLocale given its id. See _Authentication and
@@ -918,6 +930,13 @@ func (c *AccountsExperienceLocalesGetCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsExperienceLocalesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsExperienceLocalesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -933,6 +952,9 @@ func (c *AccountsExperienceLocalesGetCall) doRequest(alt string) (*http.Response
 		"elId":      c.elId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -989,6 +1011,7 @@ type AccountsExperienceLocalesListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: List ExperienceLocales owned or managed by the partner. See
@@ -1081,6 +1104,13 @@ func (c *AccountsExperienceLocalesListCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsExperienceLocalesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsExperienceLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1122,6 +1152,9 @@ func (c *AccountsExperienceLocalesListCall) doRequest(alt string) (*http.Respons
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1229,6 +1262,7 @@ type AccountsOrdersGetCall struct {
 	accountId string
 	orderId   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get an Order given its id. See _Authentication and Authorization
@@ -1249,6 +1283,13 @@ func (c *AccountsOrdersGetCall) Fields(s ...googleapi.Field) *AccountsOrdersGetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsOrdersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1264,6 +1305,9 @@ func (c *AccountsOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 		"orderId":   c.orderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1320,6 +1364,7 @@ type AccountsOrdersListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: List Orders owned or managed by the partner. See
@@ -1396,6 +1441,13 @@ func (c *AccountsOrdersListCall) Fields(s ...googleapi.Field) *AccountsOrdersLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsOrdersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsOrdersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1431,6 +1483,9 @@ func (c *AccountsOrdersListCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1527,6 +1582,7 @@ type AccountsStoreInfosListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: List StoreInfos owned or managed by the partner. See
@@ -1604,6 +1660,13 @@ func (c *AccountsStoreInfosListCall) Fields(s ...googleapi.Field) *AccountsStore
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsStoreInfosListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1642,6 +1705,9 @@ func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, erro
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1738,6 +1804,7 @@ type AccountsStoreInfosCountryGetCall struct {
 	videoId   string
 	country   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get a StoreInfo given its video id and country. See
@@ -1759,6 +1826,13 @@ func (c *AccountsStoreInfosCountryGetCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsStoreInfosCountryGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsStoreInfosCountryGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1775,6 +1849,9 @@ func (c *AccountsStoreInfosCountryGetCall) doRequest(alt string) (*http.Response
 		"country":   c.country,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

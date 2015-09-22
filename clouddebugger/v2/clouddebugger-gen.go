@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "clouddebugger:v2"
 const apiName = "clouddebugger"
@@ -613,6 +613,7 @@ type ControllerDebuggeesRegisterCall struct {
 	s                       *Service
 	registerdebuggeerequest *RegisterDebuggeeRequest
 	opt_                    map[string]interface{}
+	ctx_                    context.Context
 }
 
 // Register: Registers the debuggee with the controller. All agents
@@ -636,6 +637,13 @@ func (c *ControllerDebuggeesRegisterCall) Fields(s ...googleapi.Field) *Controll
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ControllerDebuggeesRegisterCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.registerdebuggeerequest)
@@ -654,6 +662,9 @@ func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response,
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -696,6 +707,7 @@ type ControllerDebuggeesBreakpointsListCall struct {
 	s          *Service
 	debuggeeId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Returns the list of all active breakpoints for the specified
@@ -733,6 +745,13 @@ func (c *ControllerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *C
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ControllerDebuggeesBreakpointsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -750,6 +769,9 @@ func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Re
 		"debuggeeId": c.debuggeeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -807,6 +829,7 @@ type ControllerDebuggeesBreakpointsUpdateCall struct {
 	id                            string
 	updateactivebreakpointrequest *UpdateActiveBreakpointRequest
 	opt_                          map[string]interface{}
+	ctx_                          context.Context
 }
 
 // Update: Updates the breakpoint state or mutable fields. The entire
@@ -832,6 +855,13 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ControllerDebuggeesBreakpointsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateactivebreakpointrequest)
@@ -853,6 +883,9 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -912,6 +945,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpoint
 type DebuggerDebuggeesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all the debuggees that the user can set breakpoints to.
@@ -944,6 +978,13 @@ func (c *DebuggerDebuggeesListCall) Fields(s ...googleapi.Field) *DebuggerDebugg
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DebuggerDebuggeesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -962,6 +1003,9 @@ func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1014,6 +1058,7 @@ type DebuggerDebuggeesBreakpointsDeleteCall struct {
 	debuggeeId   string
 	breakpointId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Delete: Deletes the breakpoint from the debuggee.
@@ -1032,6 +1077,13 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Fields(s ...googleapi.Field) *D
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DebuggerDebuggeesBreakpointsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1047,6 +1099,9 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Re
 		"breakpointId": c.breakpointId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1105,6 +1160,7 @@ type DebuggerDebuggeesBreakpointsGetCall struct {
 	debuggeeId   string
 	breakpointId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Get: Gets breakpoint information.
@@ -1123,6 +1179,13 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Fields(s ...googleapi.Field) *Debu
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DebuggerDebuggeesBreakpointsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1138,6 +1201,9 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Respo
 		"breakpointId": c.breakpointId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1195,6 +1261,7 @@ type DebuggerDebuggeesBreakpointsListCall struct {
 	s          *Service
 	debuggeeId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Lists all breakpoints of the debuggee that the user has access
@@ -1259,6 +1326,13 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *Deb
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DebuggerDebuggeesBreakpointsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1288,6 +1362,9 @@ func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Resp
 		"debuggeeId": c.debuggeeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1368,6 +1445,7 @@ type DebuggerDebuggeesBreakpointsSetCall struct {
 	debuggeeId string
 	breakpoint *Breakpoint
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Set: Sets the breakpoint to the debuggee.
@@ -1384,6 +1462,13 @@ func (r *DebuggerDebuggeesBreakpointsService) Set(debuggeeId string, breakpoint 
 func (c *DebuggerDebuggeesBreakpointsSetCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsSetCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DebuggerDebuggeesBreakpointsSetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Response, error) {
@@ -1406,6 +1491,9 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

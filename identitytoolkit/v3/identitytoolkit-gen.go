@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "identitytoolkit:v3"
 const apiName = "identitytoolkit"
@@ -637,6 +637,7 @@ type RelyingpartyCreateAuthUriCall struct {
 	s                                               *Service
 	identitytoolkitrelyingpartycreateauthurirequest *IdentitytoolkitRelyingpartyCreateAuthUriRequest
 	opt_                                            map[string]interface{}
+	ctx_                                            context.Context
 }
 
 // CreateAuthUri: Creates the URI used by the IdP to authenticate the
@@ -653,6 +654,13 @@ func (r *RelyingpartyService) CreateAuthUri(identitytoolkitrelyingpartycreateaut
 func (c *RelyingpartyCreateAuthUriCall) Fields(s ...googleapi.Field) *RelyingpartyCreateAuthUriCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyCreateAuthUriCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyCreateAuthUriCall) doRequest(alt string) (*http.Response, error) {
@@ -673,6 +681,9 @@ func (c *RelyingpartyCreateAuthUriCall) doRequest(alt string) (*http.Response, e
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -711,6 +722,7 @@ type RelyingpartyDeleteAccountCall struct {
 	s                                               *Service
 	identitytoolkitrelyingpartydeleteaccountrequest *IdentitytoolkitRelyingpartyDeleteAccountRequest
 	opt_                                            map[string]interface{}
+	ctx_                                            context.Context
 }
 
 // DeleteAccount: Delete user account.
@@ -726,6 +738,13 @@ func (r *RelyingpartyService) DeleteAccount(identitytoolkitrelyingpartydeleteacc
 func (c *RelyingpartyDeleteAccountCall) Fields(s ...googleapi.Field) *RelyingpartyDeleteAccountCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyDeleteAccountCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyDeleteAccountCall) doRequest(alt string) (*http.Response, error) {
@@ -746,6 +765,9 @@ func (c *RelyingpartyDeleteAccountCall) doRequest(alt string) (*http.Response, e
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -784,6 +806,7 @@ type RelyingpartyDownloadAccountCall struct {
 	s                                                 *Service
 	identitytoolkitrelyingpartydownloadaccountrequest *IdentitytoolkitRelyingpartyDownloadAccountRequest
 	opt_                                              map[string]interface{}
+	ctx_                                              context.Context
 }
 
 // DownloadAccount: Batch download user accounts.
@@ -799,6 +822,13 @@ func (r *RelyingpartyService) DownloadAccount(identitytoolkitrelyingpartydownloa
 func (c *RelyingpartyDownloadAccountCall) Fields(s ...googleapi.Field) *RelyingpartyDownloadAccountCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyDownloadAccountCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyDownloadAccountCall) doRequest(alt string) (*http.Response, error) {
@@ -819,6 +849,9 @@ func (c *RelyingpartyDownloadAccountCall) doRequest(alt string) (*http.Response,
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -857,6 +890,7 @@ type RelyingpartyGetAccountInfoCall struct {
 	s                                                *Service
 	identitytoolkitrelyingpartygetaccountinforequest *IdentitytoolkitRelyingpartyGetAccountInfoRequest
 	opt_                                             map[string]interface{}
+	ctx_                                             context.Context
 }
 
 // GetAccountInfo: Returns the account info.
@@ -872,6 +906,13 @@ func (r *RelyingpartyService) GetAccountInfo(identitytoolkitrelyingpartygetaccou
 func (c *RelyingpartyGetAccountInfoCall) Fields(s ...googleapi.Field) *RelyingpartyGetAccountInfoCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyGetAccountInfoCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyGetAccountInfoCall) doRequest(alt string) (*http.Response, error) {
@@ -892,6 +933,9 @@ func (c *RelyingpartyGetAccountInfoCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -930,6 +974,7 @@ type RelyingpartyGetOobConfirmationCodeCall struct {
 	s            *Service
 	relyingparty *Relyingparty
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // GetOobConfirmationCode: Get a code for user action confirmation.
@@ -945,6 +990,13 @@ func (r *RelyingpartyService) GetOobConfirmationCode(relyingparty *Relyingparty)
 func (c *RelyingpartyGetOobConfirmationCodeCall) Fields(s ...googleapi.Field) *RelyingpartyGetOobConfirmationCodeCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyGetOobConfirmationCodeCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyGetOobConfirmationCodeCall) doRequest(alt string) (*http.Response, error) {
@@ -965,6 +1017,9 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) doRequest(alt string) (*http.Re
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1002,6 +1057,7 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeRe
 type RelyingpartyGetPublicKeysCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetPublicKeys: Get token signing public key.
@@ -1018,6 +1074,13 @@ func (c *RelyingpartyGetPublicKeysCall) Fields(s ...googleapi.Field) *Relyingpar
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyGetPublicKeysCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RelyingpartyGetPublicKeysCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1030,6 +1093,9 @@ func (c *RelyingpartyGetPublicKeysCall) doRequest(alt string) (*http.Response, e
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1064,6 +1130,7 @@ func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
 type RelyingpartyGetRecaptchaParamCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetRecaptchaParam: Get recaptcha secure param.
@@ -1080,6 +1147,13 @@ func (c *RelyingpartyGetRecaptchaParamCall) Fields(s ...googleapi.Field) *Relyin
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyGetRecaptchaParamCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RelyingpartyGetRecaptchaParamCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1092,6 +1166,9 @@ func (c *RelyingpartyGetRecaptchaParamCall) doRequest(alt string) (*http.Respons
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1127,6 +1204,7 @@ type RelyingpartyResetPasswordCall struct {
 	s                                               *Service
 	identitytoolkitrelyingpartyresetpasswordrequest *IdentitytoolkitRelyingpartyResetPasswordRequest
 	opt_                                            map[string]interface{}
+	ctx_                                            context.Context
 }
 
 // ResetPassword: Reset password for a user.
@@ -1142,6 +1220,13 @@ func (r *RelyingpartyService) ResetPassword(identitytoolkitrelyingpartyresetpass
 func (c *RelyingpartyResetPasswordCall) Fields(s ...googleapi.Field) *RelyingpartyResetPasswordCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyResetPasswordCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyResetPasswordCall) doRequest(alt string) (*http.Response, error) {
@@ -1162,6 +1247,9 @@ func (c *RelyingpartyResetPasswordCall) doRequest(alt string) (*http.Response, e
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1200,6 +1288,7 @@ type RelyingpartySetAccountInfoCall struct {
 	s                                                *Service
 	identitytoolkitrelyingpartysetaccountinforequest *IdentitytoolkitRelyingpartySetAccountInfoRequest
 	opt_                                             map[string]interface{}
+	ctx_                                             context.Context
 }
 
 // SetAccountInfo: Set account info for a user.
@@ -1215,6 +1304,13 @@ func (r *RelyingpartyService) SetAccountInfo(identitytoolkitrelyingpartysetaccou
 func (c *RelyingpartySetAccountInfoCall) Fields(s ...googleapi.Field) *RelyingpartySetAccountInfoCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartySetAccountInfoCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartySetAccountInfoCall) doRequest(alt string) (*http.Response, error) {
@@ -1235,6 +1331,9 @@ func (c *RelyingpartySetAccountInfoCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1273,6 +1372,7 @@ type RelyingpartyUploadAccountCall struct {
 	s                                               *Service
 	identitytoolkitrelyingpartyuploadaccountrequest *IdentitytoolkitRelyingpartyUploadAccountRequest
 	opt_                                            map[string]interface{}
+	ctx_                                            context.Context
 }
 
 // UploadAccount: Batch upload existing user accounts.
@@ -1288,6 +1388,13 @@ func (r *RelyingpartyService) UploadAccount(identitytoolkitrelyingpartyuploadacc
 func (c *RelyingpartyUploadAccountCall) Fields(s ...googleapi.Field) *RelyingpartyUploadAccountCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyUploadAccountCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyUploadAccountCall) doRequest(alt string) (*http.Response, error) {
@@ -1308,6 +1415,9 @@ func (c *RelyingpartyUploadAccountCall) doRequest(alt string) (*http.Response, e
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1346,6 +1456,7 @@ type RelyingpartyVerifyAssertionCall struct {
 	s                                                 *Service
 	identitytoolkitrelyingpartyverifyassertionrequest *IdentitytoolkitRelyingpartyVerifyAssertionRequest
 	opt_                                              map[string]interface{}
+	ctx_                                              context.Context
 }
 
 // VerifyAssertion: Verifies the assertion returned by the IdP.
@@ -1361,6 +1472,13 @@ func (r *RelyingpartyService) VerifyAssertion(identitytoolkitrelyingpartyverifya
 func (c *RelyingpartyVerifyAssertionCall) Fields(s ...googleapi.Field) *RelyingpartyVerifyAssertionCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyVerifyAssertionCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyVerifyAssertionCall) doRequest(alt string) (*http.Response, error) {
@@ -1381,6 +1499,9 @@ func (c *RelyingpartyVerifyAssertionCall) doRequest(alt string) (*http.Response,
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1419,6 +1540,7 @@ type RelyingpartyVerifyPasswordCall struct {
 	s                                                *Service
 	identitytoolkitrelyingpartyverifypasswordrequest *IdentitytoolkitRelyingpartyVerifyPasswordRequest
 	opt_                                             map[string]interface{}
+	ctx_                                             context.Context
 }
 
 // VerifyPassword: Verifies the user entered password.
@@ -1434,6 +1556,13 @@ func (r *RelyingpartyService) VerifyPassword(identitytoolkitrelyingpartyverifypa
 func (c *RelyingpartyVerifyPasswordCall) Fields(s ...googleapi.Field) *RelyingpartyVerifyPasswordCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RelyingpartyVerifyPasswordCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *RelyingpartyVerifyPasswordCall) doRequest(alt string) (*http.Response, error) {
@@ -1454,6 +1583,9 @@ func (c *RelyingpartyVerifyPasswordCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

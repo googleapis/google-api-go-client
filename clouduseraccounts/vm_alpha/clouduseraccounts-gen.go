@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "clouduseraccounts:vm_alpha"
 const apiName = "clouduseraccounts"
@@ -700,6 +700,7 @@ type GlobalAccountsOperationsDeleteCall struct {
 	project   string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the specified operation resource.
@@ -718,6 +719,13 @@ func (c *GlobalAccountsOperationsDeleteCall) Fields(s ...googleapi.Field) *Globa
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalAccountsOperationsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GlobalAccountsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -733,6 +741,9 @@ func (c *GlobalAccountsOperationsDeleteCall) doRequest(alt string) (*http.Respon
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -786,6 +797,7 @@ type GlobalAccountsOperationsGetCall struct {
 	project   string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves the specified operation resource.
@@ -804,6 +816,13 @@ func (c *GlobalAccountsOperationsGetCall) Fields(s ...googleapi.Field) *GlobalAc
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalAccountsOperationsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GlobalAccountsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -819,6 +838,9 @@ func (c *GlobalAccountsOperationsGetCall) doRequest(alt string) (*http.Response,
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -880,6 +902,7 @@ type GlobalAccountsOperationsListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of operation resources contained within the
@@ -951,6 +974,13 @@ func (c *GlobalAccountsOperationsListCall) Fields(s ...googleapi.Field) *GlobalA
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GlobalAccountsOperationsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GlobalAccountsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -977,6 +1007,9 @@ func (c *GlobalAccountsOperationsListCall) doRequest(alt string) (*http.Response
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1056,6 +1089,7 @@ type GroupsAddMemberCall struct {
 	groupName              string
 	groupsaddmemberrequest *GroupsAddMemberRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // AddMember: Adds users to the specified group.
@@ -1073,6 +1107,13 @@ func (r *GroupsService) AddMember(project string, groupName string, groupsaddmem
 func (c *GroupsAddMemberCall) Fields(s ...googleapi.Field) *GroupsAddMemberCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsAddMemberCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *GroupsAddMemberCall) doRequest(alt string) (*http.Response, error) {
@@ -1096,6 +1137,9 @@ func (c *GroupsAddMemberCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1159,6 +1203,7 @@ type GroupsDeleteCall struct {
 	project   string
 	groupName string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the specified Group resource.
@@ -1177,6 +1222,13 @@ func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1192,6 +1244,9 @@ func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"groupName": c.groupName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1252,6 +1307,7 @@ type GroupsGetCall struct {
 	project   string
 	groupName string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns the specified Group resource.
@@ -1270,6 +1326,13 @@ func (c *GroupsGetCall) Fields(s ...googleapi.Field) *GroupsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1285,6 +1348,9 @@ func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 		"groupName": c.groupName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1347,6 +1413,7 @@ type GroupsGetIamPolicyCall struct {
 	project  string
 	resource string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // GetIamPolicy: Gets the access control policy for a resource. May be
@@ -1366,6 +1433,13 @@ func (c *GroupsGetIamPolicyCall) Fields(s ...googleapi.Field) *GroupsGetIamPolic
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsGetIamPolicyCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1381,6 +1455,9 @@ func (c *GroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 		"resource": c.resource,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1443,6 +1520,7 @@ type GroupsInsertCall struct {
 	project string
 	group   *Group
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates a Group resource in the specified project using the
@@ -1460,6 +1538,13 @@ func (r *GroupsService) Insert(project string, group *Group) *GroupsInsertCall {
 func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -1482,6 +1567,9 @@ func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1536,6 +1624,7 @@ type GroupsListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of groups contained within the specified
@@ -1607,6 +1696,13 @@ func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1633,6 +1729,9 @@ func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1712,6 +1811,7 @@ type GroupsRemoveMemberCall struct {
 	groupName                 string
 	groupsremovememberrequest *GroupsRemoveMemberRequest
 	opt_                      map[string]interface{}
+	ctx_                      context.Context
 }
 
 // RemoveMember: Removes users from the specified group.
@@ -1729,6 +1829,13 @@ func (r *GroupsService) RemoveMember(project string, groupName string, groupsrem
 func (c *GroupsRemoveMemberCall) Fields(s ...googleapi.Field) *GroupsRemoveMemberCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsRemoveMemberCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *GroupsRemoveMemberCall) doRequest(alt string) (*http.Response, error) {
@@ -1752,6 +1859,9 @@ func (c *GroupsRemoveMemberCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1816,6 +1926,7 @@ type GroupsSetIamPolicyCall struct {
 	resource string
 	policy   *Policy
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
@@ -1834,6 +1945,13 @@ func (r *GroupsService) SetIamPolicy(project string, resource string, policy *Po
 func (c *GroupsSetIamPolicyCall) Fields(s ...googleapi.Field) *GroupsSetIamPolicyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsSetIamPolicyCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *GroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
@@ -1857,6 +1975,9 @@ func (c *GroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1923,6 +2044,7 @@ type GroupsTestIamPermissionsCall struct {
 	resource               string
 	testpermissionsrequest *TestPermissionsRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
@@ -1941,6 +2063,13 @@ func (r *GroupsService) TestIamPermissions(project string, resource string, test
 func (c *GroupsTestIamPermissionsCall) Fields(s ...googleapi.Field) *GroupsTestIamPermissionsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *GroupsTestIamPermissionsCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *GroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
@@ -1964,6 +2093,9 @@ func (c *GroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2031,6 +2163,7 @@ type LinuxGetAuthorizedKeysViewCall struct {
 	user     string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // GetAuthorizedKeysView: Returns a list of authorized public keys for a
@@ -2059,6 +2192,13 @@ func (c *LinuxGetAuthorizedKeysViewCall) Fields(s ...googleapi.Field) *LinuxGetA
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LinuxGetAuthorizedKeysViewCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LinuxGetAuthorizedKeysViewCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2079,6 +2219,9 @@ func (c *LinuxGetAuthorizedKeysViewCall) doRequest(alt string) (*http.Response, 
 		"user":    c.user,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2162,6 +2305,7 @@ type LinuxGetLinuxAccountViewsCall struct {
 	zone     string
 	instance string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // GetLinuxAccountViews: Retrieves a list of user accounts for an
@@ -2235,6 +2379,13 @@ func (c *LinuxGetLinuxAccountViewsCall) Fields(s ...googleapi.Field) *LinuxGetLi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LinuxGetLinuxAccountViewsCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LinuxGetLinuxAccountViewsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2263,6 +2414,9 @@ func (c *LinuxGetLinuxAccountViewsCall) doRequest(alt string) (*http.Response, e
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2357,6 +2511,7 @@ type UsersAddPublicKeyCall struct {
 	user      string
 	publickey *PublicKey
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // AddPublicKey: Adds a public key to the specified User resource with
@@ -2375,6 +2530,13 @@ func (r *UsersService) AddPublicKey(project string, user string, publickey *Publ
 func (c *UsersAddPublicKeyCall) Fields(s ...googleapi.Field) *UsersAddPublicKeyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersAddPublicKeyCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *UsersAddPublicKeyCall) doRequest(alt string) (*http.Response, error) {
@@ -2398,6 +2560,9 @@ func (c *UsersAddPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2461,6 +2626,7 @@ type UsersDeleteCall struct {
 	project string
 	user    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Deletes the specified User resource.
@@ -2479,6 +2645,13 @@ func (c *UsersDeleteCall) Fields(s ...googleapi.Field) *UsersDeleteCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2494,6 +2667,9 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"user":    c.user,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2554,6 +2730,7 @@ type UsersGetCall struct {
 	project string
 	user    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Returns the specified User resource.
@@ -2572,6 +2749,13 @@ func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2587,6 +2771,9 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 		"user":    c.user,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2649,6 +2836,7 @@ type UsersGetIamPolicyCall struct {
 	project  string
 	resource string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // GetIamPolicy: Gets the access control policy for a resource. May be
@@ -2668,6 +2856,13 @@ func (c *UsersGetIamPolicyCall) Fields(s ...googleapi.Field) *UsersGetIamPolicyC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersGetIamPolicyCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UsersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2683,6 +2878,9 @@ func (c *UsersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 		"resource": c.resource,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2745,6 +2943,7 @@ type UsersInsertCall struct {
 	project string
 	user    *User
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates a User resource in the specified project using the
@@ -2762,6 +2961,13 @@ func (r *UsersService) Insert(project string, user *User) *UsersInsertCall {
 func (c *UsersInsertCall) Fields(s ...googleapi.Field) *UsersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -2784,6 +2990,9 @@ func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2838,6 +3047,7 @@ type UsersListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves a list of users contained within the specified
@@ -2909,6 +3119,13 @@ func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2935,6 +3152,9 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3014,6 +3234,7 @@ type UsersRemovePublicKeyCall struct {
 	user        string
 	fingerprint string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // RemovePublicKey: Removes the specified public key from the user.
@@ -3033,6 +3254,13 @@ func (c *UsersRemovePublicKeyCall) Fields(s ...googleapi.Field) *UsersRemovePubl
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersRemovePublicKeyCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UsersRemovePublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3049,6 +3277,9 @@ func (c *UsersRemovePublicKeyCall) doRequest(alt string) (*http.Response, error)
 		"user":    c.user,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3118,6 +3349,7 @@ type UsersSetIamPolicyCall struct {
 	resource string
 	policy   *Policy
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
@@ -3136,6 +3368,13 @@ func (r *UsersService) SetIamPolicy(project string, resource string, policy *Pol
 func (c *UsersSetIamPolicyCall) Fields(s ...googleapi.Field) *UsersSetIamPolicyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersSetIamPolicyCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *UsersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
@@ -3159,6 +3398,9 @@ func (c *UsersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3225,6 +3467,7 @@ type UsersTestIamPermissionsCall struct {
 	resource               string
 	testpermissionsrequest *TestPermissionsRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
@@ -3243,6 +3486,13 @@ func (r *UsersService) TestIamPermissions(project string, resource string, testp
 func (c *UsersTestIamPermissionsCall) Fields(s ...googleapi.Field) *UsersTestIamPermissionsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UsersTestIamPermissionsCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *UsersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
@@ -3266,6 +3516,9 @@ func (c *UsersTestIamPermissionsCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

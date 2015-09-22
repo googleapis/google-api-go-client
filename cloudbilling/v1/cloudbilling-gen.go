@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "cloudbilling:v1"
 const apiName = "cloudbilling"
@@ -189,6 +189,7 @@ type BillingAccountsGetCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Gets information about a billing account. The current
@@ -208,6 +209,13 @@ func (c *BillingAccountsGetCall) Fields(s ...googleapi.Field) *BillingAccountsGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BillingAccountsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -222,6 +230,9 @@ func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -271,6 +282,7 @@ func (c *BillingAccountsGetCall) Do() (*BillingAccount, error) {
 type BillingAccountsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the billing accounts that the current authenticated user
@@ -305,6 +317,13 @@ func (c *BillingAccountsListCall) Fields(s ...googleapi.Field) *BillingAccountsL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BillingAccountsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -323,6 +342,9 @@ func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -374,6 +396,7 @@ type BillingAccountsProjectsListCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the projects associated with a billing account. The
@@ -410,6 +433,13 @@ func (c *BillingAccountsProjectsListCall) Fields(s ...googleapi.Field) *BillingA
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BillingAccountsProjectsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -430,6 +460,9 @@ func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response,
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -491,6 +524,7 @@ type ProjectsGetBillingInfoCall struct {
 	s    *Service
 	name string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetBillingInfo: Gets the billing information for a project. The
@@ -511,6 +545,13 @@ func (c *ProjectsGetBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsGetBi
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsGetBillingInfoCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -525,6 +566,9 @@ func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, erro
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -576,6 +620,7 @@ type ProjectsUpdateBillingInfoCall struct {
 	name               string
 	projectbillinginfo *ProjectBillingInfo
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // UpdateBillingInfo: Sets or updates the billing account associated
@@ -621,6 +666,13 @@ func (c *ProjectsUpdateBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsUp
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsUpdateBillingInfoCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectbillinginfo)
@@ -641,6 +693,9 @@ func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "gan:v1beta1"
 const apiName = "gan"
@@ -858,6 +858,7 @@ type AdvertisersGetCall struct {
 	role   string
 	roleId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves data about a single advertiser if that the requesting
@@ -886,6 +887,13 @@ func (c *AdvertisersGetCall) Fields(s ...googleapi.Field) *AdvertisersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AdvertisersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -904,6 +912,9 @@ func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -971,6 +982,7 @@ type AdvertisersListCall struct {
 	role   string
 	roleId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves data about all advertisers that the requesting
@@ -1060,6 +1072,13 @@ func (c *AdvertisersListCall) Fields(s ...googleapi.Field) *AdvertisersListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AdvertisersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1096,6 +1115,9 @@ func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1214,6 +1236,7 @@ type CcOffersListCall struct {
 	s         *Service
 	publisher string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Retrieves credit card offers for the given publisher.
@@ -1251,6 +1274,13 @@ func (c *CcOffersListCall) Fields(s ...googleapi.Field) *CcOffersListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CcOffersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CcOffersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1271,6 +1301,9 @@ func (c *CcOffersListCall) doRequest(alt string) (*http.Response, error) {
 		"publisher": c.publisher,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1337,6 +1370,7 @@ type EventsListCall struct {
 	role   string
 	roleId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves event data for a given advertiser/publisher.
@@ -1513,6 +1547,13 @@ func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1576,6 +1617,9 @@ func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1756,6 +1800,7 @@ type LinksGetCall struct {
 	roleId string
 	linkId int64
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves data about a single link if the requesting
@@ -1778,6 +1823,13 @@ func (c *LinksGetCall) Fields(s ...googleapi.Field) *LinksGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LinksGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1794,6 +1846,9 @@ func (c *LinksGetCall) doRequest(alt string) (*http.Response, error) {
 		"linkId": strconv.FormatInt(c.linkId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1865,6 +1920,7 @@ type LinksInsertCall struct {
 	roleId string
 	link   *Link
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Insert: Inserts a new link.
@@ -1882,6 +1938,13 @@ func (r *LinksService) Insert(role string, roleId string, link *Link) *LinksInse
 func (c *LinksInsertCall) Fields(s ...googleapi.Field) *LinksInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LinksInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *LinksInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -1905,6 +1968,9 @@ func (c *LinksInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1970,6 +2036,7 @@ type LinksListCall struct {
 	role   string
 	roleId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves all links that match the query parameters.
@@ -2099,6 +2166,13 @@ func (c *LinksListCall) Fields(s ...googleapi.Field) *LinksListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LinksListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *LinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2153,6 +2227,9 @@ func (c *LinksListCall) doRequest(alt string) (*http.Response, error) {
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2325,6 +2402,7 @@ type PublishersGetCall struct {
 	role   string
 	roleId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves data about a single advertiser if that the requesting
@@ -2353,6 +2431,13 @@ func (c *PublishersGetCall) Fields(s ...googleapi.Field) *PublishersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PublishersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PublishersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2371,6 +2456,9 @@ func (c *PublishersGetCall) doRequest(alt string) (*http.Response, error) {
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2438,6 +2526,7 @@ type PublishersListCall struct {
 	role   string
 	roleId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves data about all publishers that the requesting
@@ -2528,6 +2617,13 @@ func (c *PublishersListCall) Fields(s ...googleapi.Field) *PublishersListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PublishersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PublishersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2564,6 +2660,9 @@ func (c *PublishersListCall) doRequest(alt string) (*http.Response, error) {
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2684,6 +2783,7 @@ type ReportsGetCall struct {
 	roleId     string
 	reportType string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Retrieves a report of the specified type.
@@ -2794,6 +2894,13 @@ func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2843,6 +2950,9 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 		"reportType": c.reportType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

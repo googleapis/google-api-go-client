@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "adsensehost:v4.1"
 const apiName = "adsensehost"
@@ -549,6 +549,7 @@ type AccountsGetCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get information about the selected associated AdSense account.
@@ -566,6 +567,13 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -580,6 +588,9 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -629,6 +640,7 @@ type AccountsListCall struct {
 	s                *Service
 	filterAdClientId []string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // List: List hosted accounts associated with this AdSense account by ad
@@ -647,6 +659,13 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -662,6 +681,9 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -713,6 +735,7 @@ type AccountsAdclientsGetCall struct {
 	accountId  string
 	adClientId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Get information about one of the ad clients in the specified
@@ -732,6 +755,13 @@ func (c *AccountsAdclientsGetCall) Fields(s ...googleapi.Field) *AccountsAdclien
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdclientsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsAdclientsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -747,6 +777,9 @@ func (c *AccountsAdclientsGetCall) doRequest(alt string) (*http.Response, error)
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -803,6 +836,7 @@ type AccountsAdclientsListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: List all hosted ad clients in the specified hosted account.
@@ -836,6 +870,13 @@ func (c *AccountsAdclientsListCall) Fields(s ...googleapi.Field) *AccountsAdclie
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdclientsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -856,6 +897,9 @@ func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -920,6 +964,7 @@ type AccountsAdunitsDeleteCall struct {
 	adClientId string
 	adUnitId   string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Delete the specified ad unit from the specified publisher
@@ -940,6 +985,13 @@ func (c *AccountsAdunitsDeleteCall) Fields(s ...googleapi.Field) *AccountsAdunit
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdunitsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsAdunitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -956,6 +1008,9 @@ func (c *AccountsAdunitsDeleteCall) doRequest(alt string) (*http.Response, error
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1021,6 +1076,7 @@ type AccountsAdunitsGetCall struct {
 	adClientId string
 	adUnitId   string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Get the specified host ad unit in this AdSense account.
@@ -1040,6 +1096,13 @@ func (c *AccountsAdunitsGetCall) Fields(s ...googleapi.Field) *AccountsAdunitsGe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdunitsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsAdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1056,6 +1119,9 @@ func (c *AccountsAdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1121,6 +1187,7 @@ type AccountsAdunitsGetAdCodeCall struct {
 	adClientId string
 	adUnitId   string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // GetAdCode: Get ad code for the specified ad unit, attaching the
@@ -1148,6 +1215,13 @@ func (c *AccountsAdunitsGetAdCodeCall) Fields(s ...googleapi.Field) *AccountsAdu
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdunitsGetAdCodeCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsAdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1167,6 +1241,9 @@ func (c *AccountsAdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, er
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1238,6 +1315,7 @@ type AccountsAdunitsInsertCall struct {
 	adClientId string
 	adunit     *AdUnit
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Insert the supplied ad unit into the specified publisher
@@ -1256,6 +1334,13 @@ func (r *AccountsAdunitsService) Insert(accountId string, adClientId string, adu
 func (c *AccountsAdunitsInsertCall) Fields(s ...googleapi.Field) *AccountsAdunitsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdunitsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AccountsAdunitsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -1279,6 +1364,9 @@ func (c *AccountsAdunitsInsertCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1339,6 +1427,7 @@ type AccountsAdunitsListCall struct {
 	accountId  string
 	adClientId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all ad units in the specified publisher's AdSense account.
@@ -1380,6 +1469,13 @@ func (c *AccountsAdunitsListCall) Fields(s ...googleapi.Field) *AccountsAdunitsL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdunitsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1404,6 +1500,9 @@ func (c *AccountsAdunitsListCall) doRequest(alt string) (*http.Response, error) 
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1481,6 +1580,7 @@ type AccountsAdunitsPatchCall struct {
 	adUnitId   string
 	adunit     *AdUnit
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Patch: Update the supplied ad unit in the specified publisher AdSense
@@ -1500,6 +1600,13 @@ func (r *AccountsAdunitsService) Patch(accountId string, adClientId string, adUn
 func (c *AccountsAdunitsPatchCall) Fields(s ...googleapi.Field) *AccountsAdunitsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdunitsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AccountsAdunitsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -1524,6 +1631,9 @@ func (c *AccountsAdunitsPatchCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1592,6 +1702,7 @@ type AccountsAdunitsUpdateCall struct {
 	adClientId string
 	adunit     *AdUnit
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Update the supplied ad unit in the specified publisher
@@ -1610,6 +1721,13 @@ func (r *AccountsAdunitsService) Update(accountId string, adClientId string, adu
 func (c *AccountsAdunitsUpdateCall) Fields(s ...googleapi.Field) *AccountsAdunitsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsAdunitsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AccountsAdunitsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -1633,6 +1751,9 @@ func (c *AccountsAdunitsUpdateCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1694,6 +1815,7 @@ type AccountsReportsGenerateCall struct {
 	startDate string
 	endDate   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Generate: Generate an AdSense report based on the report request sent
@@ -1767,6 +1889,13 @@ func (c *AccountsReportsGenerateCall) Fields(s ...googleapi.Field) *AccountsRepo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AccountsReportsGenerateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1804,6 +1933,9 @@ func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, err
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1919,6 +2051,7 @@ type AdclientsGetCall struct {
 	s          *Service
 	adClientId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Get information about one of the ad clients in the Host AdSense
@@ -1937,6 +2070,13 @@ func (c *AdclientsGetCall) Fields(s ...googleapi.Field) *AdclientsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AdclientsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AdclientsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1951,6 +2091,9 @@ func (c *AdclientsGetCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1999,6 +2142,7 @@ func (c *AdclientsGetCall) Do() (*AdClient, error) {
 type AdclientsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: List all host ad clients in this AdSense account.
@@ -2031,6 +2175,13 @@ func (c *AdclientsListCall) Fields(s ...googleapi.Field) *AdclientsListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AdclientsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2049,6 +2200,9 @@ func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2103,6 +2257,7 @@ type AssociationsessionsStartCall struct {
 	productCode []string
 	websiteUrl  string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Start: Create an association session for initiating an association
@@ -2136,6 +2291,13 @@ func (c *AssociationsessionsStartCall) Fields(s ...googleapi.Field) *Association
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AssociationsessionsStartCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AssociationsessionsStartCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2158,6 +2320,9 @@ func (c *AssociationsessionsStartCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2239,6 +2404,7 @@ type AssociationsessionsVerifyCall struct {
 	s     *Service
 	token string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Verify: Verify an association session after the association callback
@@ -2257,6 +2423,13 @@ func (c *AssociationsessionsVerifyCall) Fields(s ...googleapi.Field) *Associatio
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AssociationsessionsVerifyCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AssociationsessionsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2270,6 +2443,9 @@ func (c *AssociationsessionsVerifyCall) doRequest(alt string) (*http.Response, e
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2320,6 +2496,7 @@ type CustomchannelsDeleteCall struct {
 	adClientId      string
 	customChannelId string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Delete: Delete a specific custom channel from the host AdSense
@@ -2339,6 +2516,13 @@ func (c *CustomchannelsDeleteCall) Fields(s ...googleapi.Field) *CustomchannelsD
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CustomchannelsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CustomchannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2354,6 +2538,9 @@ func (c *CustomchannelsDeleteCall) doRequest(alt string) (*http.Response, error)
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2411,6 +2598,7 @@ type CustomchannelsGetCall struct {
 	adClientId      string
 	customChannelId string
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Get: Get a specific custom channel from the host AdSense account.
@@ -2429,6 +2617,13 @@ func (c *CustomchannelsGetCall) Fields(s ...googleapi.Field) *CustomchannelsGetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CustomchannelsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2444,6 +2639,9 @@ func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2501,6 +2699,7 @@ type CustomchannelsInsertCall struct {
 	adClientId    string
 	customchannel *CustomChannel
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Add a new custom channel to the host AdSense account.
@@ -2517,6 +2716,13 @@ func (r *CustomchannelsService) Insert(adClientId string, customchannel *CustomC
 func (c *CustomchannelsInsertCall) Fields(s ...googleapi.Field) *CustomchannelsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CustomchannelsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CustomchannelsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -2539,6 +2745,9 @@ func (c *CustomchannelsInsertCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2591,6 +2800,7 @@ type CustomchannelsListCall struct {
 	s          *Service
 	adClientId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all host custom channels in this AdSense account.
@@ -2625,6 +2835,13 @@ func (c *CustomchannelsListCall) Fields(s ...googleapi.Field) *CustomchannelsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CustomchannelsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2645,6 +2862,9 @@ func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2709,6 +2929,7 @@ type CustomchannelsPatchCall struct {
 	customChannelId string
 	customchannel   *CustomChannel
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Patch: Update a custom channel in the host AdSense account. This
@@ -2727,6 +2948,13 @@ func (r *CustomchannelsService) Patch(adClientId string, customChannelId string,
 func (c *CustomchannelsPatchCall) Fields(s ...googleapi.Field) *CustomchannelsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CustomchannelsPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CustomchannelsPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -2750,6 +2978,9 @@ func (c *CustomchannelsPatchCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2810,6 +3041,7 @@ type CustomchannelsUpdateCall struct {
 	adClientId    string
 	customchannel *CustomChannel
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Update a custom channel in the host AdSense account.
@@ -2826,6 +3058,13 @@ func (r *CustomchannelsService) Update(adClientId string, customchannel *CustomC
 func (c *CustomchannelsUpdateCall) Fields(s ...googleapi.Field) *CustomchannelsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CustomchannelsUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *CustomchannelsUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -2848,6 +3087,9 @@ func (c *CustomchannelsUpdateCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2901,6 +3143,7 @@ type ReportsGenerateCall struct {
 	startDate string
 	endDate   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Generate: Generate an AdSense report based on the report request sent
@@ -2973,6 +3216,13 @@ func (c *ReportsGenerateCall) Fields(s ...googleapi.Field) *ReportsGenerateCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ReportsGenerateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3008,6 +3258,9 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3117,6 +3370,7 @@ type UrlchannelsDeleteCall struct {
 	adClientId   string
 	urlChannelId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Delete: Delete a URL channel from the host AdSense account.
@@ -3135,6 +3389,13 @@ func (c *UrlchannelsDeleteCall) Fields(s ...googleapi.Field) *UrlchannelsDeleteC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlchannelsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UrlchannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3150,6 +3411,9 @@ func (c *UrlchannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"urlChannelId": c.urlChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3207,6 +3471,7 @@ type UrlchannelsInsertCall struct {
 	adClientId string
 	urlchannel *UrlChannel
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Add a new URL channel to the host AdSense account.
@@ -3223,6 +3488,13 @@ func (r *UrlchannelsService) Insert(adClientId string, urlchannel *UrlChannel) *
 func (c *UrlchannelsInsertCall) Fields(s ...googleapi.Field) *UrlchannelsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlchannelsInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *UrlchannelsInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -3245,6 +3517,9 @@ func (c *UrlchannelsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3297,6 +3572,7 @@ type UrlchannelsListCall struct {
 	s          *Service
 	adClientId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all host URL channels in the host AdSense account.
@@ -3330,6 +3606,13 @@ func (c *UrlchannelsListCall) Fields(s ...googleapi.Field) *UrlchannelsListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UrlchannelsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3350,6 +3633,9 @@ func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

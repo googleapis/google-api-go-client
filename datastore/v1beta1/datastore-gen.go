@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "datastore:v1beta1"
 const apiName = "datastore"
@@ -575,6 +575,7 @@ type DatasetsAllocateIdsCall struct {
 	datasetId          string
 	allocateidsrequest *AllocateIdsRequest
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // AllocateIds: Allocate IDs for incomplete keys (useful for referencing
@@ -592,6 +593,13 @@ func (r *DatasetsService) AllocateIds(datasetId string, allocateidsrequest *Allo
 func (c *DatasetsAllocateIdsCall) Fields(s ...googleapi.Field) *DatasetsAllocateIdsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsAllocateIdsCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *DatasetsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
@@ -614,6 +622,9 @@ func (c *DatasetsAllocateIdsCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -669,6 +680,7 @@ type DatasetsBeginTransactionCall struct {
 	datasetId               string
 	begintransactionrequest *BeginTransactionRequest
 	opt_                    map[string]interface{}
+	ctx_                    context.Context
 }
 
 // BeginTransaction: Begin a new transaction.
@@ -685,6 +697,13 @@ func (r *DatasetsService) BeginTransaction(datasetId string, begintransactionreq
 func (c *DatasetsBeginTransactionCall) Fields(s ...googleapi.Field) *DatasetsBeginTransactionCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsBeginTransactionCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *DatasetsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
@@ -707,6 +726,9 @@ func (c *DatasetsBeginTransactionCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -762,6 +784,7 @@ type DatasetsBlindWriteCall struct {
 	datasetId         string
 	blindwriterequest *BlindWriteRequest
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // BlindWrite: Create, delete or modify some entities outside a
@@ -779,6 +802,13 @@ func (r *DatasetsService) BlindWrite(datasetId string, blindwriterequest *BlindW
 func (c *DatasetsBlindWriteCall) Fields(s ...googleapi.Field) *DatasetsBlindWriteCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsBlindWriteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *DatasetsBlindWriteCall) doRequest(alt string) (*http.Response, error) {
@@ -801,6 +831,9 @@ func (c *DatasetsBlindWriteCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -856,6 +889,7 @@ type DatasetsCommitCall struct {
 	datasetId     string
 	commitrequest *CommitRequest
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Commit: Commit a transaction, optionally creating, deleting or
@@ -873,6 +907,13 @@ func (r *DatasetsService) Commit(datasetId string, commitrequest *CommitRequest)
 func (c *DatasetsCommitCall) Fields(s ...googleapi.Field) *DatasetsCommitCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsCommitCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *DatasetsCommitCall) doRequest(alt string) (*http.Response, error) {
@@ -895,6 +936,9 @@ func (c *DatasetsCommitCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -950,6 +994,7 @@ type DatasetsLookupCall struct {
 	datasetId     string
 	lookuprequest *LookupRequest
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Lookup: Look up some entities by key.
@@ -966,6 +1011,13 @@ func (r *DatasetsService) Lookup(datasetId string, lookuprequest *LookupRequest)
 func (c *DatasetsLookupCall) Fields(s ...googleapi.Field) *DatasetsLookupCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsLookupCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *DatasetsLookupCall) doRequest(alt string) (*http.Response, error) {
@@ -988,6 +1040,9 @@ func (c *DatasetsLookupCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1043,6 +1098,7 @@ type DatasetsRollbackCall struct {
 	datasetId       string
 	rollbackrequest *RollbackRequest
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Rollback: Roll back a transaction.
@@ -1059,6 +1115,13 @@ func (r *DatasetsService) Rollback(datasetId string, rollbackrequest *RollbackRe
 func (c *DatasetsRollbackCall) Fields(s ...googleapi.Field) *DatasetsRollbackCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsRollbackCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *DatasetsRollbackCall) doRequest(alt string) (*http.Response, error) {
@@ -1081,6 +1144,9 @@ func (c *DatasetsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1136,6 +1202,7 @@ type DatasetsRunQueryCall struct {
 	datasetId       string
 	runqueryrequest *RunQueryRequest
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // RunQuery: Query for entities.
@@ -1152,6 +1219,13 @@ func (r *DatasetsService) RunQuery(datasetId string, runqueryrequest *RunQueryRe
 func (c *DatasetsRunQueryCall) Fields(s ...googleapi.Field) *DatasetsRunQueryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DatasetsRunQueryCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *DatasetsRunQueryCall) doRequest(alt string) (*http.Response, error) {
@@ -1174,6 +1248,9 @@ func (c *DatasetsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

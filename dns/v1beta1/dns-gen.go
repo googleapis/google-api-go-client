@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "dns:v1beta1"
 const apiName = "dns"
@@ -336,6 +336,7 @@ type ChangesCreateCall struct {
 	managedZone string
 	change      *Change
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Atomically update the ResourceRecordSet collection.
@@ -353,6 +354,13 @@ func (r *ChangesService) Create(project string, managedZone string, change *Chan
 func (c *ChangesCreateCall) Fields(s ...googleapi.Field) *ChangesCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChangesCreateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ChangesCreateCall) doRequest(alt string) (*http.Response, error) {
@@ -376,6 +384,9 @@ func (c *ChangesCreateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -438,6 +449,7 @@ type ChangesGetCall struct {
 	managedZone string
 	changeId    string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Fetch the representation of an existing Change.
@@ -457,6 +469,13 @@ func (c *ChangesGetCall) Fields(s ...googleapi.Field) *ChangesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChangesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -473,6 +492,9 @@ func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 		"changeId":    c.changeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -540,6 +562,7 @@ type ChangesListCall struct {
 	project     string
 	managedZone string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Enumerate Changes to a ResourceRecordSet collection.
@@ -591,6 +614,13 @@ func (c *ChangesListCall) Fields(s ...googleapi.Field) *ChangesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ChangesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -618,6 +648,9 @@ func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 		"managedZone": c.managedZone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -706,6 +739,7 @@ type ManagedZonesCreateCall struct {
 	project     string
 	managedzone *ManagedZone
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Create a new ManagedZone.
@@ -722,6 +756,13 @@ func (r *ManagedZonesService) Create(project string, managedzone *ManagedZone) *
 func (c *ManagedZonesCreateCall) Fields(s ...googleapi.Field) *ManagedZonesCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagedZonesCreateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *ManagedZonesCreateCall) doRequest(alt string) (*http.Response, error) {
@@ -744,6 +785,9 @@ func (c *ManagedZonesCreateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -798,6 +842,7 @@ type ManagedZonesDeleteCall struct {
 	project     string
 	managedZone string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Delete: Delete a previously created ManagedZone.
@@ -816,6 +861,13 @@ func (c *ManagedZonesDeleteCall) Fields(s ...googleapi.Field) *ManagedZonesDelet
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagedZonesDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagedZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -831,6 +883,9 @@ func (c *ManagedZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"managedZone": c.managedZone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -882,6 +937,7 @@ type ManagedZonesGetCall struct {
 	project     string
 	managedZone string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Fetch the representation of an existing ManagedZone.
@@ -900,6 +956,13 @@ func (c *ManagedZonesGetCall) Fields(s ...googleapi.Field) *ManagedZonesGetCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagedZonesGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagedZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -915,6 +978,9 @@ func (c *ManagedZonesGetCall) doRequest(alt string) (*http.Response, error) {
 		"managedZone": c.managedZone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -974,6 +1040,7 @@ type ManagedZonesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Enumerate ManagedZones that have been created but not yet
@@ -1015,6 +1082,13 @@ func (c *ManagedZonesListCall) Fields(s ...googleapi.Field) *ManagedZonesListCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ManagedZonesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ManagedZonesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1038,6 +1112,9 @@ func (c *ManagedZonesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1106,6 +1183,7 @@ type ProjectsGetCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Fetch the representation of an existing Project.
@@ -1123,6 +1201,13 @@ func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ProjectsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1137,6 +1222,9 @@ func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1190,6 +1278,7 @@ type ResourceRecordSetsListCall struct {
 	project     string
 	managedZone string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Enumerate ResourceRecordSets that have been created but not yet
@@ -1240,6 +1329,13 @@ func (c *ResourceRecordSetsListCall) Fields(s ...googleapi.Field) *ResourceRecor
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ResourceRecordSetsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ResourceRecordSetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1267,6 +1363,9 @@ func (c *ResourceRecordSetsListCall) doRequest(alt string) (*http.Response, erro
 		"managedZone": c.managedZone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

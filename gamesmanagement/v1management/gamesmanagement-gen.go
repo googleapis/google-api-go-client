@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "gamesManagement:v1management"
 const apiName = "gamesManagement"
@@ -400,6 +400,7 @@ type AchievementsResetCall struct {
 	s             *Service
 	achievementId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Reset: Resets the achievement with the given ID for the currently
@@ -419,6 +420,13 @@ func (c *AchievementsResetCall) Fields(s ...googleapi.Field) *AchievementsResetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AchievementsResetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -433,6 +441,9 @@ func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -482,6 +493,7 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 type AchievementsResetAllCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAll: Resets all achievements for the currently authenticated
@@ -500,6 +512,13 @@ func (c *AchievementsResetAllCall) Fields(s ...googleapi.Field) *AchievementsRes
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AchievementsResetAllCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -512,6 +531,9 @@ func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error)
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -550,6 +572,7 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 type AchievementsResetAllForAllPlayersCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAllForAllPlayers: Resets all draft achievements for all players.
@@ -568,6 +591,13 @@ func (c *AchievementsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AchievementsResetAllForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -580,6 +610,9 @@ func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Res
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -612,6 +645,7 @@ type AchievementsResetForAllPlayersCall struct {
 	s             *Service
 	achievementId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // ResetForAllPlayers: Resets the achievement with the given ID for all
@@ -631,6 +665,13 @@ func (c *AchievementsResetForAllPlayersCall) Fields(s ...googleapi.Field) *Achie
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AchievementsResetForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -645,6 +686,9 @@ func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Respon
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -688,6 +732,7 @@ type AchievementsResetMultipleForAllPlayersCall struct {
 	s                                     *Service
 	achievementresetmultipleforallrequest *AchievementResetMultipleForAllRequest
 	opt_                                  map[string]interface{}
+	ctx_                                  context.Context
 }
 
 // ResetMultipleForAllPlayers: Resets achievements with the given IDs
@@ -705,6 +750,13 @@ func (r *AchievementsService) ResetMultipleForAllPlayers(achievementresetmultipl
 func (c *AchievementsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *AchievementsResetMultipleForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AchievementsResetMultipleForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
@@ -725,6 +777,9 @@ func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*htt
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -760,6 +815,7 @@ type ApplicationsListHiddenCall struct {
 	s             *Service
 	applicationId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // ListHidden: Get the list of players hidden from the given
@@ -795,6 +851,13 @@ func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ApplicationsListHiddenCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -815,6 +878,9 @@ func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, erro
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -878,6 +944,7 @@ type EventsResetCall struct {
 	s       *Service
 	eventId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Reset: Resets all player progress on the event with the given ID for
@@ -898,6 +965,13 @@ func (c *EventsResetCall) Fields(s ...googleapi.Field) *EventsResetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsResetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -912,6 +986,9 @@ func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -954,6 +1031,7 @@ func (c *EventsResetCall) Do() error {
 type EventsResetAllCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAll: Resets all player progress on all events for the currently
@@ -973,6 +1051,13 @@ func (c *EventsResetAllCall) Fields(s ...googleapi.Field) *EventsResetAllCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsResetAllCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -985,6 +1070,9 @@ func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1016,6 +1104,7 @@ func (c *EventsResetAllCall) Do() error {
 type EventsResetAllForAllPlayersCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAllForAllPlayers: Resets all draft events for all players. This
@@ -1034,6 +1123,13 @@ func (c *EventsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *EventsRe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsResetAllForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1046,6 +1142,9 @@ func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1078,6 +1177,7 @@ type EventsResetForAllPlayersCall struct {
 	s       *Service
 	eventId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // ResetForAllPlayers: Resets the event with the given ID for all
@@ -1098,6 +1198,13 @@ func (c *EventsResetForAllPlayersCall) Fields(s ...googleapi.Field) *EventsReset
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsResetForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1112,6 +1219,9 @@ func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 		"eventId": c.eventId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1155,6 +1265,7 @@ type EventsResetMultipleForAllPlayersCall struct {
 	s                                *Service
 	eventsresetmultipleforallrequest *EventsResetMultipleForAllRequest
 	opt_                             map[string]interface{}
+	ctx_                             context.Context
 }
 
 // ResetMultipleForAllPlayers: Resets events with the given IDs for all
@@ -1175,6 +1286,13 @@ func (c *EventsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Eve
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *EventsResetMultipleForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventsresetmultipleforallrequest)
@@ -1193,6 +1311,9 @@ func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1229,6 +1350,7 @@ type PlayersHideCall struct {
 	applicationId string
 	playerId      string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Hide: Hide the given player's leaderboard scores from the given
@@ -1249,6 +1371,13 @@ func (c *PlayersHideCall) Fields(s ...googleapi.Field) *PlayersHideCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlayersHideCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1264,6 +1393,9 @@ func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1315,6 +1447,7 @@ type PlayersUnhideCall struct {
 	applicationId string
 	playerId      string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Unhide: Unhide the given player's leaderboard scores from the given
@@ -1335,6 +1468,13 @@ func (c *PlayersUnhideCall) Fields(s ...googleapi.Field) *PlayersUnhideCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PlayersUnhideCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1350,6 +1490,9 @@ func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 		"playerId":      c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1400,6 +1543,7 @@ type QuestsResetCall struct {
 	s       *Service
 	questId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Reset: Resets all player progress on the quest with the given ID for
@@ -1419,6 +1563,13 @@ func (c *QuestsResetCall) Fields(s ...googleapi.Field) *QuestsResetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QuestsResetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *QuestsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1433,6 +1584,9 @@ func (c *QuestsResetCall) doRequest(alt string) (*http.Response, error) {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1475,6 +1629,7 @@ func (c *QuestsResetCall) Do() error {
 type QuestsResetAllCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAll: Resets all player progress on all quests for the currently
@@ -1493,6 +1648,13 @@ func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QuestsResetAllCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *QuestsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1505,6 +1667,9 @@ func (c *QuestsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1536,6 +1701,7 @@ func (c *QuestsResetAllCall) Do() error {
 type QuestsResetAllForAllPlayersCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAllForAllPlayers: Resets all draft quests for all players. This
@@ -1553,6 +1719,13 @@ func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsRe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QuestsResetAllForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *QuestsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1565,6 +1738,9 @@ func (c *QuestsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1597,6 +1773,7 @@ type QuestsResetForAllPlayersCall struct {
 	s       *Service
 	questId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // ResetForAllPlayers: Resets all player progress on the quest with the
@@ -1616,6 +1793,13 @@ func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsReset
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QuestsResetForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *QuestsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1630,6 +1814,9 @@ func (c *QuestsResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1673,6 +1860,7 @@ type QuestsResetMultipleForAllPlayersCall struct {
 	s                                *Service
 	questsresetmultipleforallrequest *QuestsResetMultipleForAllRequest
 	opt_                             map[string]interface{}
+	ctx_                             context.Context
 }
 
 // ResetMultipleForAllPlayers: Resets quests with the given IDs for all
@@ -1690,6 +1878,13 @@ func (r *QuestsService) ResetMultipleForAllPlayers(questsresetmultipleforallrequ
 func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetMultipleForAllPlayersCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *QuestsResetMultipleForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *QuestsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
@@ -1710,6 +1905,9 @@ func (c *QuestsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1744,6 +1942,7 @@ func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 type RoomsResetCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Reset: Reset all rooms for the currently authenticated player for
@@ -1762,6 +1961,13 @@ func (c *RoomsResetCall) Fields(s ...googleapi.Field) *RoomsResetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RoomsResetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RoomsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1774,6 +1980,9 @@ func (c *RoomsResetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1805,6 +2014,7 @@ func (c *RoomsResetCall) Do() error {
 type RoomsResetForAllPlayersCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetForAllPlayers: Deletes rooms where the only room participants
@@ -1823,6 +2033,13 @@ func (c *RoomsResetForAllPlayersCall) Fields(s ...googleapi.Field) *RoomsResetFo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RoomsResetForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *RoomsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1835,6 +2052,9 @@ func (c *RoomsResetForAllPlayersCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1867,6 +2087,7 @@ type ScoresResetCall struct {
 	s             *Service
 	leaderboardId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Reset: Resets scores for the leaderboard with the given ID for the
@@ -1886,6 +2107,13 @@ func (c *ScoresResetCall) Fields(s ...googleapi.Field) *ScoresResetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ScoresResetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1900,6 +2128,9 @@ func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1949,6 +2180,7 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 type ScoresResetAllCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAll: Resets all scores for all leaderboards for the currently
@@ -1967,6 +2199,13 @@ func (c *ScoresResetAllCall) Fields(s ...googleapi.Field) *ScoresResetAllCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ScoresResetAllCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1979,6 +2218,9 @@ func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2017,6 +2259,7 @@ func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 type ScoresResetAllForAllPlayersCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAllForAllPlayers: Resets scores for all draft leaderboards for
@@ -2035,6 +2278,13 @@ func (c *ScoresResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresRe
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ScoresResetAllForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2047,6 +2297,9 @@ func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2079,6 +2332,7 @@ type ScoresResetForAllPlayersCall struct {
 	s             *Service
 	leaderboardId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // ResetForAllPlayers: Resets scores for the leaderboard with the given
@@ -2098,6 +2352,13 @@ func (c *ScoresResetForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresReset
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ScoresResetForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2112,6 +2373,9 @@ func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2155,6 +2419,7 @@ type ScoresResetMultipleForAllPlayersCall struct {
 	s                                *Service
 	scoresresetmultipleforallrequest *ScoresResetMultipleForAllRequest
 	opt_                             map[string]interface{}
+	ctx_                             context.Context
 }
 
 // ResetMultipleForAllPlayers: Resets scores for the leaderboards with
@@ -2175,6 +2440,13 @@ func (c *ScoresResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *Sco
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ScoresResetMultipleForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.scoresresetmultipleforallrequest)
@@ -2193,6 +2465,9 @@ func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2227,6 +2502,7 @@ func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 type TurnBasedMatchesResetCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Reset: Reset all turn-based match data for a user. This method is
@@ -2244,6 +2520,13 @@ func (c *TurnBasedMatchesResetCall) Fields(s ...googleapi.Field) *TurnBasedMatch
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TurnBasedMatchesResetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TurnBasedMatchesResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2256,6 +2539,9 @@ func (c *TurnBasedMatchesResetCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2287,6 +2573,7 @@ func (c *TurnBasedMatchesResetCall) Do() error {
 type TurnBasedMatchesResetForAllPlayersCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetForAllPlayers: Deletes turn-based matches where the only match
@@ -2306,6 +2593,13 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Fields(s ...googleapi.Field) *T
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *TurnBasedMatchesResetForAllPlayersCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *TurnBasedMatchesResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2318,6 +2612,9 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) doRequest(alt string) (*http.Re
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

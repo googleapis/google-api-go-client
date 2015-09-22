@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "siteVerification:v1"
 const apiName = "siteVerification"
@@ -157,6 +157,7 @@ type WebResourceDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Relinquish ownership of a website or domain.
@@ -174,6 +175,13 @@ func (c *WebResourceDeleteCall) Fields(s ...googleapi.Field) *WebResourceDeleteC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WebResourceDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -188,6 +196,9 @@ func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -230,6 +241,7 @@ type WebResourceGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Get the most current data for a website or domain.
@@ -247,6 +259,13 @@ func (c *WebResourceGetCall) Fields(s ...googleapi.Field) *WebResourceGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WebResourceGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -261,6 +280,9 @@ func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -310,6 +332,7 @@ type WebResourceGetTokenCall struct {
 	s                                          *Service
 	siteverificationwebresourcegettokenrequest *SiteVerificationWebResourceGettokenRequest
 	opt_                                       map[string]interface{}
+	ctx_                                       context.Context
 }
 
 // GetToken: Get a verification token for placing on a website or
@@ -326,6 +349,13 @@ func (r *WebResourceService) GetToken(siteverificationwebresourcegettokenrequest
 func (c *WebResourceGetTokenCall) Fields(s ...googleapi.Field) *WebResourceGetTokenCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WebResourceGetTokenCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) {
@@ -346,6 +376,9 @@ func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -389,6 +422,7 @@ type WebResourceInsertCall struct {
 	verificationMethod                  string
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	opt_                                map[string]interface{}
+	ctx_                                context.Context
 }
 
 // Insert: Attempt verification of a website or domain.
@@ -405,6 +439,13 @@ func (r *WebResourceService) Insert(verificationMethod string, siteverificationw
 func (c *WebResourceInsertCall) Fields(s ...googleapi.Field) *WebResourceInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WebResourceInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -426,6 +467,9 @@ func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -478,6 +522,7 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 type WebResourceListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Get the list of your verified websites and domains.
@@ -494,6 +539,13 @@ func (c *WebResourceListCall) Fields(s ...googleapi.Field) *WebResourceListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WebResourceListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -506,6 +558,9 @@ func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -545,6 +600,7 @@ type WebResourcePatchCall struct {
 	id                                  string
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	opt_                                map[string]interface{}
+	ctx_                                context.Context
 }
 
 // Patch: Modify the list of owners for your website or domain. This
@@ -562,6 +618,13 @@ func (r *WebResourceService) Patch(id string, siteverificationwebresourceresourc
 func (c *WebResourcePatchCall) Fields(s ...googleapi.Field) *WebResourcePatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WebResourcePatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
@@ -584,6 +647,9 @@ func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -637,6 +703,7 @@ type WebResourceUpdateCall struct {
 	id                                  string
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
 	opt_                                map[string]interface{}
+	ctx_                                context.Context
 }
 
 // Update: Modify the list of owners for your website or domain.
@@ -653,6 +720,13 @@ func (r *WebResourceService) Update(id string, siteverificationwebresourceresour
 func (c *WebResourceUpdateCall) Fields(s ...googleapi.Field) *WebResourceUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *WebResourceUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -675,6 +749,9 @@ func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

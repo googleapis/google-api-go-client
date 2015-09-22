@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "autoscaler:v1beta2"
 const apiName = "autoscaler"
@@ -383,6 +383,7 @@ type AutoscalersDeleteCall struct {
 	zone       string
 	autoscaler string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes the specified Autoscaler resource.
@@ -402,6 +403,13 @@ func (c *AutoscalersDeleteCall) Fields(s ...googleapi.Field) *AutoscalersDeleteC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AutoscalersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -418,6 +426,9 @@ func (c *AutoscalersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"autoscaler": c.autoscaler,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -483,6 +494,7 @@ type AutoscalersGetCall struct {
 	zone       string
 	autoscaler string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Gets the specified Autoscaler resource.
@@ -502,6 +514,13 @@ func (c *AutoscalersGetCall) Fields(s ...googleapi.Field) *AutoscalersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AutoscalersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -518,6 +537,9 @@ func (c *AutoscalersGetCall) doRequest(alt string) (*http.Response, error) {
 		"autoscaler": c.autoscaler,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -584,6 +606,7 @@ type AutoscalersInsertCall struct {
 	zone       string
 	autoscaler *Autoscaler
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Adds new Autoscaler resource.
@@ -601,6 +624,13 @@ func (r *AutoscalersService) Insert(project string, zone string, autoscaler *Aut
 func (c *AutoscalersInsertCall) Fields(s ...googleapi.Field) *AutoscalersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersInsertCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AutoscalersInsertCall) doRequest(alt string) (*http.Response, error) {
@@ -624,6 +654,9 @@ func (c *AutoscalersInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -684,6 +717,7 @@ type AutoscalersListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Lists all Autoscaler resources in this zone.
@@ -720,6 +754,13 @@ func (c *AutoscalersListCall) Fields(s ...googleapi.Field) *AutoscalersListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *AutoscalersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -744,6 +785,9 @@ func (c *AutoscalersListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -820,6 +864,7 @@ type AutoscalersPatchCall struct {
 	autoscaler  string
 	autoscaler2 *Autoscaler
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Patch: Update the entire content of the Autoscaler resource. This
@@ -839,6 +884,13 @@ func (r *AutoscalersService) Patch(project string, zone string, autoscaler strin
 func (c *AutoscalersPatchCall) Fields(s ...googleapi.Field) *AutoscalersPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersPatchCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AutoscalersPatchCall) doRequest(alt string) (*http.Response, error) {
@@ -863,6 +915,9 @@ func (c *AutoscalersPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -932,6 +987,7 @@ type AutoscalersUpdateCall struct {
 	autoscaler  string
 	autoscaler2 *Autoscaler
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Update the entire content of the Autoscaler resource.
@@ -950,6 +1006,13 @@ func (r *AutoscalersService) Update(project string, zone string, autoscaler stri
 func (c *AutoscalersUpdateCall) Fields(s ...googleapi.Field) *AutoscalersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *AutoscalersUpdateCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
 }
 
 func (c *AutoscalersUpdateCall) doRequest(alt string) (*http.Response, error) {
@@ -974,6 +1037,9 @@ func (c *AutoscalersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1042,6 +1108,7 @@ type ZoneOperationsDeleteCall struct {
 	zone      string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the specified zone-specific operation resource.
@@ -1061,6 +1128,13 @@ func (c *ZoneOperationsDeleteCall) Fields(s ...googleapi.Field) *ZoneOperationsD
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZoneOperationsDeleteCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ZoneOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1077,6 +1151,9 @@ func (c *ZoneOperationsDeleteCall) doRequest(alt string) (*http.Response, error)
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1135,6 +1212,7 @@ type ZoneOperationsGetCall struct {
 	zone      string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves the specified zone-specific operation resource.
@@ -1154,6 +1232,13 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZoneOperationsGetCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1170,6 +1255,9 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1235,6 +1323,7 @@ type ZoneOperationsListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of operation resources contained within the
@@ -1272,6 +1361,13 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZoneOperationsListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1296,6 +1392,9 @@ func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1369,6 +1468,7 @@ type ZonesListCall struct {
 	s       *Service
 	project string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List:
@@ -1404,6 +1504,13 @@ func (c *ZonesListCall) Fields(s ...googleapi.Field) *ZonesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZonesListCall) Ctx(ctx context.Context) {
+	c.ctx_ = ctx
+}
+
 func (c *ZonesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1427,6 +1534,9 @@ func (c *ZonesListCall) doRequest(alt string) (*http.Response, error) {
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

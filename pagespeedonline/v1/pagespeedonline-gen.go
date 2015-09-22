@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "pagespeedonline:v1"
 const apiName = "pagespeedonline"
@@ -218,6 +218,7 @@ type PagespeedapiRunpagespeedCall struct {
 	s    *Service
 	url  string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Runpagespeed: Runs PageSpeed analysis on the page at the specified
@@ -277,6 +278,14 @@ func (c *PagespeedapiRunpagespeedCall) Fields(s ...googleapi.Field) *Pagespeedap
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *PagespeedapiRunpagespeedCall) Context(ctx context.Context) *PagespeedapiRunpagespeedCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -305,6 +314,9 @@ func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

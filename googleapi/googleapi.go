@@ -24,6 +24,7 @@ import (
 	"time"
 
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi/internal/uritemplates"
 )
 
@@ -343,12 +344,12 @@ func (rx *ResumableUpload) Progress() int64 {
 	return rx.progress
 }
 
-func (rx *ResumableUpload) transferStatus() (int64, *http.Response, error) {
+func (rx *ResumableUpload) transferStatus(ctx context.Context) (int64, *http.Response, error) {
 	req, _ := http.NewRequest("POST", rx.URI, nil)
 	req.ContentLength = 0
 	req.Header.Set("User-Agent", rx.UserAgent)
 	req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.ContentLength))
-	res, err := rx.Client.Do(req)
+	res, err := ctxhttp.Do(ctx, rx.Client, req)
 	if err != nil || res.StatusCode != statusResumeIncomplete {
 		return 0, res, err
 	}
@@ -374,7 +375,7 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 	var err error
 	res := &http.Response{}
 	if rx.started {
-		start, res, err = rx.transferStatus()
+		start, res, err = rx.transferStatus(ctx)
 		if err != nil || res.StatusCode != statusResumeIncomplete {
 			return res, err
 		}
@@ -398,7 +399,7 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 		req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
 		req.Header.Set("Content-Type", rx.MediaType)
 		req.Header.Set("User-Agent", rx.UserAgent)
-		res, err = rx.Client.Do(req)
+		res, err = ctxhttp.Do(ctx, rx.Client, req)
 		start += reqSize
 		if err == nil && (res.StatusCode == statusResumeIncomplete || res.StatusCode == http.StatusOK) {
 			rx.mu.Lock()

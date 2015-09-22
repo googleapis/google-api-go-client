@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "classroom:v1"
 const apiName = "classroom"
@@ -413,6 +413,7 @@ type CoursesCreateCall struct {
 	s      *Service
 	course *Course
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Create: Creates a course. The user specified in `ownerId` is the
@@ -437,6 +438,14 @@ func (c *CoursesCreateCall) Fields(s ...googleapi.Field) *CoursesCreateCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesCreateCall) Context(ctx context.Context) *CoursesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
@@ -455,6 +464,9 @@ func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -496,6 +508,7 @@ type CoursesDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes a course. This method returns the following error
@@ -517,6 +530,14 @@ func (c *CoursesDeleteCall) Fields(s ...googleapi.Field) *CoursesDeleteCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesDeleteCall) Context(ctx context.Context) *CoursesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -531,6 +552,9 @@ func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -580,6 +604,7 @@ type CoursesGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Returns a course. This method returns the following error codes:
@@ -601,6 +626,14 @@ func (c *CoursesGetCall) Fields(s ...googleapi.Field) *CoursesGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesGetCall) Context(ctx context.Context) *CoursesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -615,6 +648,9 @@ func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -664,6 +700,7 @@ func (c *CoursesGetCall) Do() (*Course, error) {
 type CoursesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of courses that the requesting user is permitted
@@ -726,6 +763,14 @@ func (c *CoursesListCall) Fields(s ...googleapi.Field) *CoursesListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesListCall) Context(ctx context.Context) *CoursesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -750,6 +795,9 @@ func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -813,6 +861,7 @@ type CoursesPatchCall struct {
 	id     string
 	course *Course
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Updates one or more fields in a course. This method returns
@@ -849,6 +898,14 @@ func (c *CoursesPatchCall) Fields(s ...googleapi.Field) *CoursesPatchCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesPatchCall) Context(ctx context.Context) *CoursesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.course)
@@ -872,6 +929,9 @@ func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -930,6 +990,7 @@ type CoursesUpdateCall struct {
 	id     string
 	course *Course
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Updates a course. This method returns the following error
@@ -949,6 +1010,14 @@ func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
 // for more information.
 func (c *CoursesUpdateCall) Fields(s ...googleapi.Field) *CoursesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesUpdateCall) Context(ctx context.Context) *CoursesUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -972,6 +1041,9 @@ func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1025,6 +1097,7 @@ type CoursesAliasesCreateCall struct {
 	courseId    string
 	coursealias *CourseAlias
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Creates an alias for a course. This method returns the
@@ -1044,6 +1117,14 @@ func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias
 // for more information.
 func (c *CoursesAliasesCreateCall) Fields(s ...googleapi.Field) *CoursesAliasesCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesAliasesCreateCall) Context(ctx context.Context) *CoursesAliasesCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1067,6 +1148,9 @@ func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1120,6 +1204,7 @@ type CoursesAliasesDeleteCall struct {
 	courseId string
 	aliasid  string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes an alias of a course. This method returns the
@@ -1142,6 +1227,14 @@ func (c *CoursesAliasesDeleteCall) Fields(s ...googleapi.Field) *CoursesAliasesD
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesAliasesDeleteCall) Context(ctx context.Context) *CoursesAliasesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1157,6 +1250,9 @@ func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error)
 		"alias":    c.aliasid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1213,6 +1309,7 @@ type CoursesAliasesListCall struct {
 	s        *Service
 	courseId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Returns a list of aliases for a course. This method returns the
@@ -1255,6 +1352,14 @@ func (c *CoursesAliasesListCall) Fields(s ...googleapi.Field) *CoursesAliasesLis
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesAliasesListCall) Context(ctx context.Context) *CoursesAliasesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1275,6 +1380,9 @@ func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1337,6 +1445,7 @@ type CoursesStudentsCreateCall struct {
 	courseId string
 	student  *Student
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Create: Adds a user as a student of a course. This method returns the
@@ -1371,6 +1480,14 @@ func (c *CoursesStudentsCreateCall) Fields(s ...googleapi.Field) *CoursesStudent
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesStudentsCreateCall) Context(ctx context.Context) *CoursesStudentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.student)
@@ -1394,6 +1511,9 @@ func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1454,6 +1574,7 @@ type CoursesStudentsDeleteCall struct {
 	courseId string
 	userId   string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes a student of a course. This method returns the
@@ -1477,6 +1598,14 @@ func (c *CoursesStudentsDeleteCall) Fields(s ...googleapi.Field) *CoursesStudent
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesStudentsDeleteCall) Context(ctx context.Context) *CoursesStudentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1492,6 +1621,9 @@ func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1549,6 +1681,7 @@ type CoursesStudentsGetCall struct {
 	courseId string
 	userId   string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Returns a student of a course. This method returns the following
@@ -1572,6 +1705,14 @@ func (c *CoursesStudentsGetCall) Fields(s ...googleapi.Field) *CoursesStudentsGe
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesStudentsGetCall) Context(ctx context.Context) *CoursesStudentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1587,6 +1728,9 @@ func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1646,6 +1790,7 @@ type CoursesStudentsListCall struct {
 	s        *Service
 	courseId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Returns a list of students of this course that the requester is
@@ -1686,6 +1831,14 @@ func (c *CoursesStudentsListCall) Fields(s ...googleapi.Field) *CoursesStudentsL
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesStudentsListCall) Context(ctx context.Context) *CoursesStudentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1706,6 +1859,9 @@ func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) 
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1770,6 +1926,7 @@ type CoursesTeachersCreateCall struct {
 	courseId string
 	teacher  *Teacher
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Create: Creates a teacher of a course. This method returns the
@@ -1794,6 +1951,14 @@ func (c *CoursesTeachersCreateCall) Fields(s ...googleapi.Field) *CoursesTeacher
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesTeachersCreateCall) Context(ctx context.Context) *CoursesTeachersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.teacher)
@@ -1814,6 +1979,9 @@ func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1869,6 +2037,7 @@ type CoursesTeachersDeleteCall struct {
 	courseId string
 	userId   string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes a teacher of a course. This method returns the
@@ -1893,6 +2062,14 @@ func (c *CoursesTeachersDeleteCall) Fields(s ...googleapi.Field) *CoursesTeacher
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesTeachersDeleteCall) Context(ctx context.Context) *CoursesTeachersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1908,6 +2085,9 @@ func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1965,6 +2145,7 @@ type CoursesTeachersGetCall struct {
 	courseId string
 	userId   string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Returns a teacher of a course. This method returns the following
@@ -1988,6 +2169,14 @@ func (c *CoursesTeachersGetCall) Fields(s ...googleapi.Field) *CoursesTeachersGe
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesTeachersGetCall) Context(ctx context.Context) *CoursesTeachersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2003,6 +2192,9 @@ func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2062,6 +2254,7 @@ type CoursesTeachersListCall struct {
 	s        *Service
 	courseId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Returns a list of teachers of this course that the requester is
@@ -2102,6 +2295,14 @@ func (c *CoursesTeachersListCall) Fields(s ...googleapi.Field) *CoursesTeachersL
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CoursesTeachersListCall) Context(ctx context.Context) *CoursesTeachersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2122,6 +2323,9 @@ func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) 
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2185,6 +2389,7 @@ type InvitationsAcceptCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Accept: Accepts an invitation, removing it and adding the invited
@@ -2208,6 +2413,14 @@ func (c *InvitationsAcceptCall) Fields(s ...googleapi.Field) *InvitationsAcceptC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InvitationsAcceptCall) Context(ctx context.Context) *InvitationsAcceptCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2222,6 +2435,9 @@ func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2271,6 +2487,7 @@ type InvitationsCreateCall struct {
 	s          *Service
 	invitation *Invitation
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Create: Creates an invitation. Only one invitation for a user and
@@ -2297,6 +2514,14 @@ func (c *InvitationsCreateCall) Fields(s ...googleapi.Field) *InvitationsCreateC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InvitationsCreateCall) Context(ctx context.Context) *InvitationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.invitation)
@@ -2315,6 +2540,9 @@ func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2356,6 +2584,7 @@ type InvitationsDeleteCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Delete: Deletes an invitation. This method returns the following
@@ -2377,6 +2606,14 @@ func (c *InvitationsDeleteCall) Fields(s ...googleapi.Field) *InvitationsDeleteC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InvitationsDeleteCall) Context(ctx context.Context) *InvitationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2391,6 +2628,9 @@ func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2440,6 +2680,7 @@ type InvitationsGetCall struct {
 	s    *Service
 	id   string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Returns an invitation. This method returns the following error
@@ -2461,6 +2702,14 @@ func (c *InvitationsGetCall) Fields(s ...googleapi.Field) *InvitationsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InvitationsGetCall) Context(ctx context.Context) *InvitationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2475,6 +2724,9 @@ func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2524,6 +2776,7 @@ func (c *InvitationsGetCall) Do() (*Invitation, error) {
 type InvitationsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of invitations that the requesting user is
@@ -2582,6 +2835,14 @@ func (c *InvitationsListCall) Fields(s ...googleapi.Field) *InvitationsListCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InvitationsListCall) Context(ctx context.Context) *InvitationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2606,6 +2867,9 @@ func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2668,6 +2932,7 @@ type UserProfilesGetCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Returns a user profile. This method returns the following error
@@ -2689,6 +2954,14 @@ func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UserProfilesGetCall) Context(ctx context.Context) *UserProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2703,6 +2976,9 @@ func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

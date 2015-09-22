@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "analytics:v2.4"
 const apiName = "analytics"
@@ -164,6 +164,7 @@ type DataGetCall struct {
 	endDate   string
 	metrics   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns Analytics report data for a view (profile).
@@ -229,6 +230,14 @@ func (c *DataGetCall) Fields(s ...googleapi.Field) *DataGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DataGetCall) Context(ctx context.Context) *DataGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DataGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -263,6 +272,9 @@ func (c *DataGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -366,6 +378,7 @@ func (c *DataGetCall) Do() error {
 type ManagementAccountsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all accounts to which the user has access.
@@ -397,6 +410,14 @@ func (c *ManagementAccountsListCall) Fields(s ...googleapi.Field) *ManagementAcc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ManagementAccountsListCall) Context(ctx context.Context) *ManagementAccountsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ManagementAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -415,6 +436,9 @@ func (c *ManagementAccountsListCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -464,6 +488,7 @@ type ManagementGoalsListCall struct {
 	webPropertyId string
 	profileId     string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists goals to which the user has access.
@@ -498,6 +523,14 @@ func (c *ManagementGoalsListCall) Fields(s ...googleapi.Field) *ManagementGoalsL
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ManagementGoalsListCall) Context(ctx context.Context) *ManagementGoalsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ManagementGoalsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -520,6 +553,9 @@ func (c *ManagementGoalsListCall) doRequest(alt string) (*http.Response, error) 
 		"profileId":     c.profileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -591,6 +627,7 @@ type ManagementProfilesListCall struct {
 	accountId     string
 	webPropertyId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists views (profiles) to which the user has access.
@@ -624,6 +661,14 @@ func (c *ManagementProfilesListCall) Fields(s ...googleapi.Field) *ManagementPro
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ManagementProfilesListCall) Context(ctx context.Context) *ManagementProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ManagementProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -645,6 +690,9 @@ func (c *ManagementProfilesListCall) doRequest(alt string) (*http.Response, erro
 		"webPropertyId": c.webPropertyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -707,6 +755,7 @@ func (c *ManagementProfilesListCall) Do() error {
 type ManagementSegmentsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists advanced segments to which the user has access.
@@ -738,6 +787,14 @@ func (c *ManagementSegmentsListCall) Fields(s ...googleapi.Field) *ManagementSeg
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ManagementSegmentsListCall) Context(ctx context.Context) *ManagementSegmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ManagementSegmentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -756,6 +813,9 @@ func (c *ManagementSegmentsListCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -803,6 +863,7 @@ type ManagementWebpropertiesListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists web properties to which the user has access.
@@ -835,6 +896,14 @@ func (c *ManagementWebpropertiesListCall) Fields(s ...googleapi.Field) *Manageme
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ManagementWebpropertiesListCall) Context(ctx context.Context) *ManagementWebpropertiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ManagementWebpropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -855,6 +924,9 @@ func (c *ManagementWebpropertiesListCall) doRequest(alt string) (*http.Response,
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

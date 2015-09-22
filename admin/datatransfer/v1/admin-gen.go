@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "admin:datatransfer_v1"
 const apiName = "admin"
@@ -215,6 +215,7 @@ type ApplicationsGetCall struct {
 	s             *Service
 	applicationId int64
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Retrieves information about an application for the given
@@ -233,6 +234,14 @@ func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ApplicationsGetCall) Context(ctx context.Context) *ApplicationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -247,6 +256,9 @@ func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"applicationId": strconv.FormatInt(c.applicationId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -297,6 +309,7 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 type ApplicationsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the applications available for data transfer for a
@@ -335,6 +348,14 @@ func (c *ApplicationsListCall) Fields(s ...googleapi.Field) *ApplicationsListCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ApplicationsListCall) Context(ctx context.Context) *ApplicationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -356,6 +377,9 @@ func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -415,6 +439,7 @@ type TransfersGetCall struct {
 	s              *Service
 	dataTransferId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Retrieves a data transfer request by its resource ID.
@@ -432,6 +457,14 @@ func (c *TransfersGetCall) Fields(s ...googleapi.Field) *TransfersGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TransfersGetCall) Context(ctx context.Context) *TransfersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -446,6 +479,9 @@ func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 		"dataTransferId": c.dataTransferId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -496,6 +532,7 @@ type TransfersInsertCall struct {
 	s            *Service
 	datatransfer *DataTransfer
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Insert: Inserts a data transfer request.
@@ -510,6 +547,14 @@ func (r *TransfersService) Insert(datatransfer *DataTransfer) *TransfersInsertCa
 // for more information.
 func (c *TransfersInsertCall) Fields(s ...googleapi.Field) *TransfersInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TransfersInsertCall) Context(ctx context.Context) *TransfersInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -531,6 +576,9 @@ func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -571,6 +619,7 @@ func (c *TransfersInsertCall) Do() (*DataTransfer, error) {
 type TransfersListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the transfers for a customer by source user, destination
@@ -629,6 +678,14 @@ func (c *TransfersListCall) Fields(s ...googleapi.Field) *TransfersListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TransfersListCall) Context(ctx context.Context) *TransfersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -659,6 +716,9 @@ func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

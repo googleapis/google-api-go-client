@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "gamesConfiguration:v1configuration"
 const apiName = "gamesConfiguration"
@@ -353,6 +353,7 @@ type AchievementConfigurationsDeleteCall struct {
 	s             *Service
 	achievementId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Delete the achievement configuration with the given ID.
@@ -370,6 +371,14 @@ func (c *AchievementConfigurationsDeleteCall) Fields(s ...googleapi.Field) *Achi
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementConfigurationsDeleteCall) Context(ctx context.Context) *AchievementConfigurationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -384,6 +393,9 @@ func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -426,6 +438,7 @@ type AchievementConfigurationsGetCall struct {
 	s             *Service
 	achievementId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Retrieves the metadata of the achievement configuration with the
@@ -444,6 +457,14 @@ func (c *AchievementConfigurationsGetCall) Fields(s ...googleapi.Field) *Achieve
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementConfigurationsGetCall) Context(ctx context.Context) *AchievementConfigurationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -458,6 +479,9 @@ func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -508,6 +532,7 @@ type AchievementConfigurationsInsertCall struct {
 	applicationId            string
 	achievementconfiguration *AchievementConfiguration
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Insert: Insert a new achievement configuration in this application.
@@ -523,6 +548,14 @@ func (r *AchievementConfigurationsService) Insert(applicationId string, achievem
 // for more information.
 func (c *AchievementConfigurationsInsertCall) Fields(s ...googleapi.Field) *AchievementConfigurationsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementConfigurationsInsertCall) Context(ctx context.Context) *AchievementConfigurationsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -546,6 +579,9 @@ func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -598,6 +634,7 @@ type AchievementConfigurationsListCall struct {
 	s             *Service
 	applicationId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Returns a list of the achievement configurations in this
@@ -632,6 +669,14 @@ func (c *AchievementConfigurationsListCall) Fields(s ...googleapi.Field) *Achiev
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementConfigurationsListCall) Context(ctx context.Context) *AchievementConfigurationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -652,6 +697,9 @@ func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Respons
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -715,6 +763,7 @@ type AchievementConfigurationsPatchCall struct {
 	achievementId            string
 	achievementconfiguration *AchievementConfiguration
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Patch: Update the metadata of the achievement configuration with the
@@ -731,6 +780,14 @@ func (r *AchievementConfigurationsService) Patch(achievementId string, achieveme
 // for more information.
 func (c *AchievementConfigurationsPatchCall) Fields(s ...googleapi.Field) *AchievementConfigurationsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementConfigurationsPatchCall) Context(ctx context.Context) *AchievementConfigurationsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -754,6 +811,9 @@ func (c *AchievementConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -807,6 +867,7 @@ type AchievementConfigurationsUpdateCall struct {
 	achievementId            string
 	achievementconfiguration *AchievementConfiguration
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Update: Update the metadata of the achievement configuration with the
@@ -823,6 +884,14 @@ func (r *AchievementConfigurationsService) Update(achievementId string, achievem
 // for more information.
 func (c *AchievementConfigurationsUpdateCall) Fields(s ...googleapi.Field) *AchievementConfigurationsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementConfigurationsUpdateCall) Context(ctx context.Context) *AchievementConfigurationsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -846,6 +915,9 @@ func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -902,8 +974,8 @@ type ImageConfigurationsUploadCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Upload: Uploads an image for a resource with the given ID and image
@@ -923,10 +995,12 @@ func (c *ImageConfigurationsUploadCall) Media(r io.Reader) *ImageConfigurationsU
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *ImageConfigurationsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ImageConfigurationsUploadCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -948,6 +1022,16 @@ func (c *ImageConfigurationsUploadCall) ProgressUpdater(pu googleapi.ProgressUpd
 // for more information.
 func (c *ImageConfigurationsUploadCall) Fields(s ...googleapi.Field) *ImageConfigurationsUploadCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
+func (c *ImageConfigurationsUploadCall) Context(ctx context.Context) *ImageConfigurationsUploadCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -988,6 +1072,9 @@ func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, e
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1092,6 +1179,7 @@ type LeaderboardConfigurationsDeleteCall struct {
 	s             *Service
 	leaderboardId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Delete the leaderboard configuration with the given ID.
@@ -1109,6 +1197,14 @@ func (c *LeaderboardConfigurationsDeleteCall) Fields(s ...googleapi.Field) *Lead
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *LeaderboardConfigurationsDeleteCall) Context(ctx context.Context) *LeaderboardConfigurationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1123,6 +1219,9 @@ func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1165,6 +1264,7 @@ type LeaderboardConfigurationsGetCall struct {
 	s             *Service
 	leaderboardId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Retrieves the metadata of the leaderboard configuration with the
@@ -1183,6 +1283,14 @@ func (c *LeaderboardConfigurationsGetCall) Fields(s ...googleapi.Field) *Leaderb
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *LeaderboardConfigurationsGetCall) Context(ctx context.Context) *LeaderboardConfigurationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1197,6 +1305,9 @@ func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1247,6 +1358,7 @@ type LeaderboardConfigurationsInsertCall struct {
 	applicationId            string
 	leaderboardconfiguration *LeaderboardConfiguration
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Insert: Insert a new leaderboard configuration in this application.
@@ -1262,6 +1374,14 @@ func (r *LeaderboardConfigurationsService) Insert(applicationId string, leaderbo
 // for more information.
 func (c *LeaderboardConfigurationsInsertCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *LeaderboardConfigurationsInsertCall) Context(ctx context.Context) *LeaderboardConfigurationsInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1285,6 +1405,9 @@ func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1337,6 +1460,7 @@ type LeaderboardConfigurationsListCall struct {
 	s             *Service
 	applicationId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Returns a list of the leaderboard configurations in this
@@ -1371,6 +1495,14 @@ func (c *LeaderboardConfigurationsListCall) Fields(s ...googleapi.Field) *Leader
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *LeaderboardConfigurationsListCall) Context(ctx context.Context) *LeaderboardConfigurationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1391,6 +1523,9 @@ func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Respons
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1454,6 +1589,7 @@ type LeaderboardConfigurationsPatchCall struct {
 	leaderboardId            string
 	leaderboardconfiguration *LeaderboardConfiguration
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Patch: Update the metadata of the leaderboard configuration with the
@@ -1470,6 +1606,14 @@ func (r *LeaderboardConfigurationsService) Patch(leaderboardId string, leaderboa
 // for more information.
 func (c *LeaderboardConfigurationsPatchCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *LeaderboardConfigurationsPatchCall) Context(ctx context.Context) *LeaderboardConfigurationsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1493,6 +1637,9 @@ func (c *LeaderboardConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1546,6 +1693,7 @@ type LeaderboardConfigurationsUpdateCall struct {
 	leaderboardId            string
 	leaderboardconfiguration *LeaderboardConfiguration
 	opt_                     map[string]interface{}
+	ctx_                     context.Context
 }
 
 // Update: Update the metadata of the leaderboard configuration with the
@@ -1562,6 +1710,14 @@ func (r *LeaderboardConfigurationsService) Update(leaderboardId string, leaderbo
 // for more information.
 func (c *LeaderboardConfigurationsUpdateCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *LeaderboardConfigurationsUpdateCall) Context(ctx context.Context) *LeaderboardConfigurationsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1585,6 +1741,9 @@ func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

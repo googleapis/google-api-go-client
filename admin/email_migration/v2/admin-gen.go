@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "admin:email_migration_v2"
 const apiName = "admin"
@@ -120,8 +120,8 @@ type MailInsertCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Insert Mail into Google's Gmail backends
@@ -140,10 +140,12 @@ func (c *MailInsertCall) Media(r io.Reader) *MailInsertCall {
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *MailInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *MailInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -165,6 +167,16 @@ func (c *MailInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *MailInse
 // for more information.
 func (c *MailInsertCall) Fields(s ...googleapi.Field) *MailInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
+func (c *MailInsertCall) Context(ctx context.Context) *MailInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -207,6 +219,9 @@ func (c *MailInsertCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

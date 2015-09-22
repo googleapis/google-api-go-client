@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69fd77bf_5471ba1e",
+        "filename": "admin/datatransfer/v1/admin-gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 5850
+      },
+      "writtenOn": "2015-09-22T06:23:01Z",
+      "side": 1,
+      "message": "Is it worth saying anything about err being equal to ctx.Err()?",
+      "revId": "74f83f1e078584b786d802a5ca931405f7094c20",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

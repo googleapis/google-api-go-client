@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "gmail:v1"
 const apiName = "gmail"
@@ -527,6 +527,7 @@ type UsersGetProfileCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // GetProfile: Gets the current user's Gmail profile.
@@ -544,6 +545,14 @@ func (c *UsersGetProfileCall) Fields(s ...googleapi.Field) *UsersGetProfileCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersGetProfileCall) Context(ctx context.Context) *UsersGetProfileCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersGetProfileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -558,6 +567,9 @@ func (c *UsersGetProfileCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -611,6 +623,7 @@ type UsersStopCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Stop: Stop receiving push notifications for the given user mailbox.
@@ -628,6 +641,14 @@ func (c *UsersStopCall) Fields(s ...googleapi.Field) *UsersStopCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersStopCall) Context(ctx context.Context) *UsersStopCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersStopCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -642,6 +663,9 @@ func (c *UsersStopCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -688,6 +712,7 @@ type UsersWatchCall struct {
 	userId       string
 	watchrequest *WatchRequest
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Watch: Set up or update a push notification watch on the given user
@@ -704,6 +729,14 @@ func (r *UsersService) Watch(userId string, watchrequest *WatchRequest) *UsersWa
 // for more information.
 func (c *UsersWatchCall) Fields(s ...googleapi.Field) *UsersWatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersWatchCall) Context(ctx context.Context) *UsersWatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -727,6 +760,9 @@ func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -786,8 +822,8 @@ type UsersDraftsCreateCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Create: Creates a new draft with the DRAFT label.
@@ -806,10 +842,12 @@ func (c *UsersDraftsCreateCall) Media(r io.Reader) *UsersDraftsCreateCall {
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersDraftsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsCreateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -831,6 +869,16 @@ func (c *UsersDraftsCreateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *U
 // for more information.
 func (c *UsersDraftsCreateCall) Fields(s ...googleapi.Field) *UsersDraftsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
+func (c *UsersDraftsCreateCall) Context(ctx context.Context) *UsersDraftsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -873,6 +921,9 @@ func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -969,6 +1020,7 @@ type UsersDraftsDeleteCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Immediately and permanently deletes the specified draft. Does
@@ -988,6 +1040,14 @@ func (c *UsersDraftsDeleteCall) Fields(s ...googleapi.Field) *UsersDraftsDeleteC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDraftsDeleteCall) Context(ctx context.Context) *UsersDraftsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDraftsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1003,6 +1063,9 @@ func (c *UsersDraftsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1056,6 +1119,7 @@ type UsersDraftsGetCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets the specified draft.
@@ -1087,6 +1151,14 @@ func (c *UsersDraftsGetCall) Fields(s ...googleapi.Field) *UsersDraftsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDraftsGetCall) Context(ctx context.Context) *UsersDraftsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDraftsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1105,6 +1177,9 @@ func (c *UsersDraftsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1183,6 +1258,7 @@ type UsersDraftsListCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists the drafts in the user's mailbox.
@@ -1214,6 +1290,14 @@ func (c *UsersDraftsListCall) Fields(s ...googleapi.Field) *UsersDraftsListCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDraftsListCall) Context(ctx context.Context) *UsersDraftsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDraftsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1234,6 +1318,9 @@ func (c *UsersDraftsListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1303,8 +1390,8 @@ type UsersDraftsSendCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Send: Sends the specified, existing draft to the recipients in the
@@ -1324,10 +1411,12 @@ func (c *UsersDraftsSendCall) Media(r io.Reader) *UsersDraftsSendCall {
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersDraftsSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsSendCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -1349,6 +1438,16 @@ func (c *UsersDraftsSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *Use
 // for more information.
 func (c *UsersDraftsSendCall) Fields(s ...googleapi.Field) *UsersDraftsSendCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
+func (c *UsersDraftsSendCall) Context(ctx context.Context) *UsersDraftsSendCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1391,6 +1490,9 @@ func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1491,8 +1593,8 @@ type UsersDraftsUpdateCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Update: Replaces a draft's content.
@@ -1512,10 +1614,12 @@ func (c *UsersDraftsUpdateCall) Media(r io.Reader) *UsersDraftsUpdateCall {
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersDraftsUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsUpdateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -1537,6 +1641,16 @@ func (c *UsersDraftsUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *U
 // for more information.
 func (c *UsersDraftsUpdateCall) Fields(s ...googleapi.Field) *UsersDraftsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
+func (c *UsersDraftsUpdateCall) Context(ctx context.Context) *UsersDraftsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1580,6 +1694,9 @@ func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1682,6 +1799,7 @@ type UsersHistoryListCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists the history of all changes to the given mailbox. History
@@ -1738,6 +1856,14 @@ func (c *UsersHistoryListCall) Fields(s ...googleapi.Field) *UsersHistoryListCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersHistoryListCall) Context(ctx context.Context) *UsersHistoryListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersHistoryListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1764,6 +1890,9 @@ func (c *UsersHistoryListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1840,6 +1969,7 @@ type UsersLabelsCreateCall struct {
 	userId string
 	label  *Label
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Create: Creates a new label.
@@ -1855,6 +1985,14 @@ func (r *UsersLabelsService) Create(userId string, label *Label) *UsersLabelsCre
 // for more information.
 func (c *UsersLabelsCreateCall) Fields(s ...googleapi.Field) *UsersLabelsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersLabelsCreateCall) Context(ctx context.Context) *UsersLabelsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1878,6 +2016,9 @@ func (c *UsersLabelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1934,6 +2075,7 @@ type UsersLabelsDeleteCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Immediately and permanently deletes the specified label and
@@ -1953,6 +2095,14 @@ func (c *UsersLabelsDeleteCall) Fields(s ...googleapi.Field) *UsersLabelsDeleteC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersLabelsDeleteCall) Context(ctx context.Context) *UsersLabelsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1968,6 +2118,9 @@ func (c *UsersLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2021,6 +2174,7 @@ type UsersLabelsGetCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets the specified label.
@@ -2039,6 +2193,14 @@ func (c *UsersLabelsGetCall) Fields(s ...googleapi.Field) *UsersLabelsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersLabelsGetCall) Context(ctx context.Context) *UsersLabelsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersLabelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2054,6 +2216,9 @@ func (c *UsersLabelsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2114,6 +2279,7 @@ type UsersLabelsListCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists all labels in the user's mailbox.
@@ -2131,6 +2297,14 @@ func (c *UsersLabelsListCall) Fields(s ...googleapi.Field) *UsersLabelsListCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersLabelsListCall) Context(ctx context.Context) *UsersLabelsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersLabelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2145,6 +2319,9 @@ func (c *UsersLabelsListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2200,6 +2377,7 @@ type UsersLabelsPatchCall struct {
 	id     string
 	label  *Label
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Updates the specified label. This method supports patch
@@ -2217,6 +2395,14 @@ func (r *UsersLabelsService) Patch(userId string, id string, label *Label) *User
 // for more information.
 func (c *UsersLabelsPatchCall) Fields(s ...googleapi.Field) *UsersLabelsPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersLabelsPatchCall) Context(ctx context.Context) *UsersLabelsPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2241,6 +2427,9 @@ func (c *UsersLabelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2305,6 +2494,7 @@ type UsersLabelsUpdateCall struct {
 	id     string
 	label  *Label
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Updates the specified label.
@@ -2321,6 +2511,14 @@ func (r *UsersLabelsService) Update(userId string, id string, label *Label) *Use
 // for more information.
 func (c *UsersLabelsUpdateCall) Fields(s ...googleapi.Field) *UsersLabelsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersLabelsUpdateCall) Context(ctx context.Context) *UsersLabelsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2345,6 +2543,9 @@ func (c *UsersLabelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2408,6 +2609,7 @@ type UsersMessagesDeleteCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Immediately and permanently deletes the specified message.
@@ -2427,6 +2629,14 @@ func (c *UsersMessagesDeleteCall) Fields(s ...googleapi.Field) *UsersMessagesDel
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersMessagesDeleteCall) Context(ctx context.Context) *UsersMessagesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2442,6 +2652,9 @@ func (c *UsersMessagesDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2493,6 +2706,7 @@ type UsersMessagesGetCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets the specified message.
@@ -2531,6 +2745,14 @@ func (c *UsersMessagesGetCall) Fields(s ...googleapi.Field) *UsersMessagesGetCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersMessagesGetCall) Context(ctx context.Context) *UsersMessagesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2552,6 +2774,9 @@ func (c *UsersMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2639,8 +2864,8 @@ type UsersMessagesImportCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Import: Imports a message into only this user's mailbox, with
@@ -2697,10 +2922,12 @@ func (c *UsersMessagesImportCall) Media(r io.Reader) *UsersMessagesImportCall {
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersMessagesImportCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesImportCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -2722,6 +2949,16 @@ func (c *UsersMessagesImportCall) ProgressUpdater(pu googleapi.ProgressUpdater) 
 // for more information.
 func (c *UsersMessagesImportCall) Fields(s ...googleapi.Field) *UsersMessagesImportCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
+func (c *UsersMessagesImportCall) Context(ctx context.Context) *UsersMessagesImportCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2776,6 +3013,9 @@ func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) 
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2907,8 +3147,8 @@ type UsersMessagesInsertCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Directly inserts a message into only this user's mailbox
@@ -2949,10 +3189,12 @@ func (c *UsersMessagesInsertCall) Media(r io.Reader) *UsersMessagesInsertCall {
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersMessagesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -2974,6 +3216,16 @@ func (c *UsersMessagesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) 
 // for more information.
 func (c *UsersMessagesInsertCall) Fields(s ...googleapi.Field) *UsersMessagesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
+func (c *UsersMessagesInsertCall) Context(ctx context.Context) *UsersMessagesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3022,6 +3274,9 @@ func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) 
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3137,6 +3392,7 @@ type UsersMessagesListCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists the messages in the user's mailbox.
@@ -3190,6 +3446,14 @@ func (c *UsersMessagesListCall) Fields(s ...googleapi.Field) *UsersMessagesListC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersMessagesListCall) Context(ctx context.Context) *UsersMessagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3219,6 +3483,9 @@ func (c *UsersMessagesListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3302,6 +3569,7 @@ type UsersMessagesModifyCall struct {
 	id                   string
 	modifymessagerequest *ModifyMessageRequest
 	opt_                 map[string]interface{}
+	ctx_                 context.Context
 }
 
 // Modify: Modifies the labels on the specified message.
@@ -3318,6 +3586,14 @@ func (r *UsersMessagesService) Modify(userId string, id string, modifymessagereq
 // for more information.
 func (c *UsersMessagesModifyCall) Fields(s ...googleapi.Field) *UsersMessagesModifyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersMessagesModifyCall) Context(ctx context.Context) *UsersMessagesModifyCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3342,6 +3618,9 @@ func (c *UsersMessagesModifyCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3407,8 +3686,8 @@ type UsersMessagesSendCall struct {
 	media_     io.Reader
 	resumable_ googleapi.SizeReaderAt
 	mediaType_ string
-	ctx_       context.Context
 	protocol_  string
+	ctx_       context.Context
 }
 
 // Send: Sends the specified message to the recipients in the To, Cc,
@@ -3428,10 +3707,12 @@ func (c *UsersMessagesSendCall) Media(r io.Reader) *UsersMessagesSendCall {
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be cancelled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
 // At most one of Media and ResumableMedia may be set.
 // mediaType identifies the MIME media type of the upload, such as "image/png".
 // If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersMessagesSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesSendCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -3453,6 +3734,16 @@ func (c *UsersMessagesSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *U
 // for more information.
 func (c *UsersMessagesSendCall) Fields(s ...googleapi.Field) *UsersMessagesSendCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
+func (c *UsersMessagesSendCall) Context(ctx context.Context) *UsersMessagesSendCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3495,6 +3786,9 @@ func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 		req.Header.Set("Content-Type", ctype)
 	}
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3592,6 +3886,7 @@ type UsersMessagesTrashCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Trash: Moves the specified message to the trash.
@@ -3610,6 +3905,14 @@ func (c *UsersMessagesTrashCall) Fields(s ...googleapi.Field) *UsersMessagesTras
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersMessagesTrashCall) Context(ctx context.Context) *UsersMessagesTrashCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersMessagesTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3625,6 +3928,9 @@ func (c *UsersMessagesTrashCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3684,6 +3990,7 @@ type UsersMessagesUntrashCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Untrash: Removes the specified message from the trash.
@@ -3702,6 +4009,14 @@ func (c *UsersMessagesUntrashCall) Fields(s ...googleapi.Field) *UsersMessagesUn
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersMessagesUntrashCall) Context(ctx context.Context) *UsersMessagesUntrashCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersMessagesUntrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3717,6 +4032,9 @@ func (c *UsersMessagesUntrashCall) doRequest(alt string) (*http.Response, error)
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3777,6 +4095,7 @@ type UsersMessagesAttachmentsGetCall struct {
 	messageId string
 	id        string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets the specified message attachment.
@@ -3796,6 +4115,14 @@ func (c *UsersMessagesAttachmentsGetCall) Fields(s ...googleapi.Field) *UsersMes
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersMessagesAttachmentsGetCall) Context(ctx context.Context) *UsersMessagesAttachmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3812,6 +4139,9 @@ func (c *UsersMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response,
 		"id":        c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3879,6 +4209,7 @@ type UsersThreadsDeleteCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Immediately and permanently deletes the specified thread.
@@ -3898,6 +4229,14 @@ func (c *UsersThreadsDeleteCall) Fields(s ...googleapi.Field) *UsersThreadsDelet
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersThreadsDeleteCall) Context(ctx context.Context) *UsersThreadsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3913,6 +4252,9 @@ func (c *UsersThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3964,6 +4306,7 @@ type UsersThreadsGetCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets the specified thread.
@@ -4001,6 +4344,14 @@ func (c *UsersThreadsGetCall) Fields(s ...googleapi.Field) *UsersThreadsGetCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersThreadsGetCall) Context(ctx context.Context) *UsersThreadsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4022,6 +4373,9 @@ func (c *UsersThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4103,6 +4457,7 @@ type UsersThreadsListCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists the threads in the user's mailbox.
@@ -4156,6 +4511,14 @@ func (c *UsersThreadsListCall) Fields(s ...googleapi.Field) *UsersThreadsListCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersThreadsListCall) Context(ctx context.Context) *UsersThreadsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4185,6 +4548,9 @@ func (c *UsersThreadsListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4268,6 +4634,7 @@ type UsersThreadsModifyCall struct {
 	id                  string
 	modifythreadrequest *ModifyThreadRequest
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Modify: Modifies the labels applied to the thread. This applies to
@@ -4285,6 +4652,14 @@ func (r *UsersThreadsService) Modify(userId string, id string, modifythreadreque
 // for more information.
 func (c *UsersThreadsModifyCall) Fields(s ...googleapi.Field) *UsersThreadsModifyCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersThreadsModifyCall) Context(ctx context.Context) *UsersThreadsModifyCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4309,6 +4684,9 @@ func (c *UsersThreadsModifyCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4371,6 +4749,7 @@ type UsersThreadsTrashCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Trash: Moves the specified thread to the trash.
@@ -4389,6 +4768,14 @@ func (c *UsersThreadsTrashCall) Fields(s ...googleapi.Field) *UsersThreadsTrashC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersThreadsTrashCall) Context(ctx context.Context) *UsersThreadsTrashCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersThreadsTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4404,6 +4791,9 @@ func (c *UsersThreadsTrashCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4463,6 +4853,7 @@ type UsersThreadsUntrashCall struct {
 	userId string
 	id     string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Untrash: Removes the specified thread from the trash.
@@ -4481,6 +4872,14 @@ func (c *UsersThreadsUntrashCall) Fields(s ...googleapi.Field) *UsersThreadsUntr
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersThreadsUntrashCall) Context(ctx context.Context) *UsersThreadsUntrashCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersThreadsUntrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4496,6 +4895,9 @@ func (c *UsersThreadsUntrashCall) doRequest(alt string) (*http.Response, error) 
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

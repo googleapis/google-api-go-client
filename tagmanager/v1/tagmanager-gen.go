@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "tagmanager:v1"
 const apiName = "tagmanager"
@@ -1012,6 +1012,7 @@ type AccountsGetCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a GTM Account.
@@ -1029,6 +1030,14 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1043,6 +1052,9 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1093,6 +1105,7 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 type AccountsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all GTM Accounts that a user has access to.
@@ -1109,6 +1122,14 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1121,6 +1142,9 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1162,6 +1186,7 @@ type AccountsUpdateCall struct {
 	accountId string
 	account   *Account
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates a GTM Account.
@@ -1188,6 +1213,14 @@ func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsUpdateCall) Context(ctx context.Context) *AccountsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
@@ -1211,6 +1244,9 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1269,6 +1305,7 @@ type AccountsContainersCreateCall struct {
 	accountId string
 	container *Container
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Create: Creates a Container.
@@ -1284,6 +1321,14 @@ func (r *AccountsContainersService) Create(accountId string, container *Containe
 // for more information.
 func (c *AccountsContainersCreateCall) Fields(s ...googleapi.Field) *AccountsContainersCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersCreateCall) Context(ctx context.Context) *AccountsContainersCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1307,6 +1352,9 @@ func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1360,6 +1408,7 @@ type AccountsContainersDeleteCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Delete: Deletes a Container.
@@ -1378,6 +1427,14 @@ func (c *AccountsContainersDeleteCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersDeleteCall) Context(ctx context.Context) *AccountsContainersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1393,6 +1450,9 @@ func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, er
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1443,6 +1503,7 @@ type AccountsContainersGetCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a Container.
@@ -1461,6 +1522,14 @@ func (c *AccountsContainersGetCall) Fields(s ...googleapi.Field) *AccountsContai
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersGetCall) Context(ctx context.Context) *AccountsContainersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1476,6 +1545,9 @@ func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1533,6 +1605,7 @@ type AccountsContainersListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all Containers that belongs to a GTM Account.
@@ -1550,6 +1623,14 @@ func (c *AccountsContainersListCall) Fields(s ...googleapi.Field) *AccountsConta
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersListCall) Context(ctx context.Context) *AccountsContainersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1564,6 +1645,9 @@ func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, erro
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1616,6 +1700,7 @@ type AccountsContainersUpdateCall struct {
 	containerId string
 	container   *Container
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Updates a Container.
@@ -1643,6 +1728,14 @@ func (c *AccountsContainersUpdateCall) Fields(s ...googleapi.Field) *AccountsCon
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersUpdateCall) Context(ctx context.Context) *AccountsContainersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.container)
@@ -1667,6 +1760,9 @@ func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1733,6 +1829,7 @@ type AccountsContainersFoldersCreateCall struct {
 	containerId string
 	folder      *Folder
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Creates a GTM Folder.
@@ -1749,6 +1846,14 @@ func (r *AccountsContainersFoldersService) Create(accountId string, containerId 
 // for more information.
 func (c *AccountsContainersFoldersCreateCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersFoldersCreateCall) Context(ctx context.Context) *AccountsContainersFoldersCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1773,6 +1878,9 @@ func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1834,6 +1942,7 @@ type AccountsContainersFoldersDeleteCall struct {
 	containerId string
 	folderId    string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Delete: Deletes a GTM Folder.
@@ -1853,6 +1962,14 @@ func (c *AccountsContainersFoldersDeleteCall) Fields(s ...googleapi.Field) *Acco
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersFoldersDeleteCall) Context(ctx context.Context) *AccountsContainersFoldersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1869,6 +1986,9 @@ func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Respo
 		"folderId":    c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1927,6 +2047,7 @@ type AccountsContainersFoldersGetCall struct {
 	containerId string
 	folderId    string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a GTM Folder.
@@ -1946,6 +2067,14 @@ func (c *AccountsContainersFoldersGetCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersFoldersGetCall) Context(ctx context.Context) *AccountsContainersFoldersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1962,6 +2091,9 @@ func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response
 		"folderId":    c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2027,6 +2159,7 @@ type AccountsContainersFoldersListCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists all GTM Folders of a Container.
@@ -2045,6 +2178,14 @@ func (c *AccountsContainersFoldersListCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersFoldersListCall) Context(ctx context.Context) *AccountsContainersFoldersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2060,6 +2201,9 @@ func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Respons
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2120,6 +2264,7 @@ type AccountsContainersFoldersUpdateCall struct {
 	folderId    string
 	folder      *Folder
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Updates a GTM Folder.
@@ -2144,6 +2289,14 @@ func (c *AccountsContainersFoldersUpdateCall) Fingerprint(fingerprint string) *A
 // for more information.
 func (c *AccountsContainersFoldersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersFoldersUpdateCall) Context(ctx context.Context) *AccountsContainersFoldersUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2172,6 +2325,9 @@ func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Respo
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2245,6 +2401,7 @@ type AccountsContainersFoldersEntitiesListCall struct {
 	containerId string
 	folderId    string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: List all entities in a GTM Folder.
@@ -2264,6 +2421,14 @@ func (c *AccountsContainersFoldersEntitiesListCall) Fields(s ...googleapi.Field)
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersFoldersEntitiesListCall) Context(ctx context.Context) *AccountsContainersFoldersEntitiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2280,6 +2445,9 @@ func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http
 		"folderId":    c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2346,6 +2514,7 @@ type AccountsContainersMacrosCreateCall struct {
 	containerId string
 	macro       *Macro
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Creates a GTM Macro.
@@ -2362,6 +2531,14 @@ func (r *AccountsContainersMacrosService) Create(accountId string, containerId s
 // for more information.
 func (c *AccountsContainersMacrosCreateCall) Fields(s ...googleapi.Field) *AccountsContainersMacrosCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersMacrosCreateCall) Context(ctx context.Context) *AccountsContainersMacrosCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2386,6 +2563,9 @@ func (c *AccountsContainersMacrosCreateCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2447,6 +2627,7 @@ type AccountsContainersMacrosDeleteCall struct {
 	containerId string
 	macroId     string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Delete: Deletes a GTM Macro.
@@ -2466,6 +2647,14 @@ func (c *AccountsContainersMacrosDeleteCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersMacrosDeleteCall) Context(ctx context.Context) *AccountsContainersMacrosDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersMacrosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2482,6 +2671,9 @@ func (c *AccountsContainersMacrosDeleteCall) doRequest(alt string) (*http.Respon
 		"macroId":     c.macroId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2540,6 +2732,7 @@ type AccountsContainersMacrosGetCall struct {
 	containerId string
 	macroId     string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a GTM Macro.
@@ -2559,6 +2752,14 @@ func (c *AccountsContainersMacrosGetCall) Fields(s ...googleapi.Field) *Accounts
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersMacrosGetCall) Context(ctx context.Context) *AccountsContainersMacrosGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersMacrosGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2575,6 +2776,9 @@ func (c *AccountsContainersMacrosGetCall) doRequest(alt string) (*http.Response,
 		"macroId":     c.macroId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2640,6 +2844,7 @@ type AccountsContainersMacrosListCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists all GTM Macros of a Container.
@@ -2658,6 +2863,14 @@ func (c *AccountsContainersMacrosListCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersMacrosListCall) Context(ctx context.Context) *AccountsContainersMacrosListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersMacrosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2673,6 +2886,9 @@ func (c *AccountsContainersMacrosListCall) doRequest(alt string) (*http.Response
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2733,6 +2949,7 @@ type AccountsContainersMacrosUpdateCall struct {
 	macroId     string
 	macro       *Macro
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Updates a GTM Macro.
@@ -2757,6 +2974,14 @@ func (c *AccountsContainersMacrosUpdateCall) Fingerprint(fingerprint string) *Ac
 // for more information.
 func (c *AccountsContainersMacrosUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersMacrosUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersMacrosUpdateCall) Context(ctx context.Context) *AccountsContainersMacrosUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2785,6 +3010,9 @@ func (c *AccountsContainersMacrosUpdateCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2858,6 +3086,7 @@ type AccountsContainersMoveFoldersUpdateCall struct {
 	containerId string
 	folderId    string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Moves entities to a GTM Folder.
@@ -2898,6 +3127,14 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Fields(s ...googleapi.Field) *
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersMoveFoldersUpdateCall) Context(ctx context.Context) *AccountsContainersMoveFoldersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2923,6 +3160,9 @@ func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.R
 		"folderId":    c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2996,6 +3236,7 @@ type AccountsContainersRulesCreateCall struct {
 	containerId string
 	rule        *Rule
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Creates a GTM Rule.
@@ -3012,6 +3253,14 @@ func (r *AccountsContainersRulesService) Create(accountId string, containerId st
 // for more information.
 func (c *AccountsContainersRulesCreateCall) Fields(s ...googleapi.Field) *AccountsContainersRulesCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersRulesCreateCall) Context(ctx context.Context) *AccountsContainersRulesCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3036,6 +3285,9 @@ func (c *AccountsContainersRulesCreateCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3097,6 +3349,7 @@ type AccountsContainersRulesDeleteCall struct {
 	containerId string
 	ruleId      string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Delete: Deletes a GTM Rule.
@@ -3116,6 +3369,14 @@ func (c *AccountsContainersRulesDeleteCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersRulesDeleteCall) Context(ctx context.Context) *AccountsContainersRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3132,6 +3393,9 @@ func (c *AccountsContainersRulesDeleteCall) doRequest(alt string) (*http.Respons
 		"ruleId":      c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3190,6 +3454,7 @@ type AccountsContainersRulesGetCall struct {
 	containerId string
 	ruleId      string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a GTM Rule.
@@ -3209,6 +3474,14 @@ func (c *AccountsContainersRulesGetCall) Fields(s ...googleapi.Field) *AccountsC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersRulesGetCall) Context(ctx context.Context) *AccountsContainersRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3225,6 +3498,9 @@ func (c *AccountsContainersRulesGetCall) doRequest(alt string) (*http.Response, 
 		"ruleId":      c.ruleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3290,6 +3566,7 @@ type AccountsContainersRulesListCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists all GTM Rules of a Container.
@@ -3308,6 +3585,14 @@ func (c *AccountsContainersRulesListCall) Fields(s ...googleapi.Field) *Accounts
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersRulesListCall) Context(ctx context.Context) *AccountsContainersRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersRulesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3323,6 +3608,9 @@ func (c *AccountsContainersRulesListCall) doRequest(alt string) (*http.Response,
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3383,6 +3671,7 @@ type AccountsContainersRulesUpdateCall struct {
 	ruleId      string
 	rule        *Rule
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Updates a GTM Rule.
@@ -3407,6 +3696,14 @@ func (c *AccountsContainersRulesUpdateCall) Fingerprint(fingerprint string) *Acc
 // for more information.
 func (c *AccountsContainersRulesUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersRulesUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersRulesUpdateCall) Context(ctx context.Context) *AccountsContainersRulesUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3435,6 +3732,9 @@ func (c *AccountsContainersRulesUpdateCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3508,6 +3808,7 @@ type AccountsContainersTagsCreateCall struct {
 	containerId string
 	tag         *Tag
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Creates a GTM Tag.
@@ -3524,6 +3825,14 @@ func (r *AccountsContainersTagsService) Create(accountId string, containerId str
 // for more information.
 func (c *AccountsContainersTagsCreateCall) Fields(s ...googleapi.Field) *AccountsContainersTagsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTagsCreateCall) Context(ctx context.Context) *AccountsContainersTagsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3548,6 +3857,9 @@ func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3609,6 +3921,7 @@ type AccountsContainersTagsDeleteCall struct {
 	containerId string
 	tagId       string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Delete: Deletes a GTM Tag.
@@ -3628,6 +3941,14 @@ func (c *AccountsContainersTagsDeleteCall) Fields(s ...googleapi.Field) *Account
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTagsDeleteCall) Context(ctx context.Context) *AccountsContainersTagsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3644,6 +3965,9 @@ func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response
 		"tagId":       c.tagId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3702,6 +4026,7 @@ type AccountsContainersTagsGetCall struct {
 	containerId string
 	tagId       string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a GTM Tag.
@@ -3721,6 +4046,14 @@ func (c *AccountsContainersTagsGetCall) Fields(s ...googleapi.Field) *AccountsCo
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTagsGetCall) Context(ctx context.Context) *AccountsContainersTagsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3737,6 +4070,9 @@ func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, e
 		"tagId":       c.tagId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3802,6 +4138,7 @@ type AccountsContainersTagsListCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists all GTM Tags of a Container.
@@ -3820,6 +4157,14 @@ func (c *AccountsContainersTagsListCall) Fields(s ...googleapi.Field) *AccountsC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTagsListCall) Context(ctx context.Context) *AccountsContainersTagsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3835,6 +4180,9 @@ func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, 
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3895,6 +4243,7 @@ type AccountsContainersTagsUpdateCall struct {
 	tagId       string
 	tag         *Tag
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Updates a GTM Tag.
@@ -3919,6 +4268,14 @@ func (c *AccountsContainersTagsUpdateCall) Fingerprint(fingerprint string) *Acco
 // for more information.
 func (c *AccountsContainersTagsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersTagsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTagsUpdateCall) Context(ctx context.Context) *AccountsContainersTagsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3947,6 +4304,9 @@ func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4020,6 +4380,7 @@ type AccountsContainersTriggersCreateCall struct {
 	containerId string
 	trigger     *Trigger
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Creates a GTM Trigger.
@@ -4036,6 +4397,14 @@ func (r *AccountsContainersTriggersService) Create(accountId string, containerId
 // for more information.
 func (c *AccountsContainersTriggersCreateCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTriggersCreateCall) Context(ctx context.Context) *AccountsContainersTriggersCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4060,6 +4429,9 @@ func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4121,6 +4493,7 @@ type AccountsContainersTriggersDeleteCall struct {
 	containerId string
 	triggerId   string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Delete: Deletes a GTM Trigger.
@@ -4140,6 +4513,14 @@ func (c *AccountsContainersTriggersDeleteCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTriggersDeleteCall) Context(ctx context.Context) *AccountsContainersTriggersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4156,6 +4537,9 @@ func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Resp
 		"triggerId":   c.triggerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4214,6 +4598,7 @@ type AccountsContainersTriggersGetCall struct {
 	containerId string
 	triggerId   string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a GTM Trigger.
@@ -4233,6 +4618,14 @@ func (c *AccountsContainersTriggersGetCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTriggersGetCall) Context(ctx context.Context) *AccountsContainersTriggersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4249,6 +4642,9 @@ func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Respons
 		"triggerId":   c.triggerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4314,6 +4710,7 @@ type AccountsContainersTriggersListCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists all GTM Triggers of a Container.
@@ -4332,6 +4729,14 @@ func (c *AccountsContainersTriggersListCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTriggersListCall) Context(ctx context.Context) *AccountsContainersTriggersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4347,6 +4752,9 @@ func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Respon
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4407,6 +4815,7 @@ type AccountsContainersTriggersUpdateCall struct {
 	triggerId   string
 	trigger     *Trigger
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Updates a GTM Trigger.
@@ -4435,6 +4844,14 @@ func (c *AccountsContainersTriggersUpdateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersTriggersUpdateCall) Context(ctx context.Context) *AccountsContainersTriggersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trigger)
@@ -4460,6 +4877,9 @@ func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4533,6 +4953,7 @@ type AccountsContainersVariablesCreateCall struct {
 	containerId string
 	variable    *Variable
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Create: Creates a GTM Variable.
@@ -4549,6 +4970,14 @@ func (r *AccountsContainersVariablesService) Create(accountId string, containerI
 // for more information.
 func (c *AccountsContainersVariablesCreateCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVariablesCreateCall) Context(ctx context.Context) *AccountsContainersVariablesCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4573,6 +5002,9 @@ func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4634,6 +5066,7 @@ type AccountsContainersVariablesDeleteCall struct {
 	containerId string
 	variableId  string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Delete: Deletes a GTM Variable.
@@ -4653,6 +5086,14 @@ func (c *AccountsContainersVariablesDeleteCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVariablesDeleteCall) Context(ctx context.Context) *AccountsContainersVariablesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4669,6 +5110,9 @@ func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Res
 		"variableId":  c.variableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4727,6 +5171,7 @@ type AccountsContainersVariablesGetCall struct {
 	containerId string
 	variableId  string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a GTM Variable.
@@ -4746,6 +5191,14 @@ func (c *AccountsContainersVariablesGetCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVariablesGetCall) Context(ctx context.Context) *AccountsContainersVariablesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4762,6 +5215,9 @@ func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Respon
 		"variableId":  c.variableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4827,6 +5283,7 @@ type AccountsContainersVariablesListCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists all GTM Variables of a Container.
@@ -4845,6 +5302,14 @@ func (c *AccountsContainersVariablesListCall) Fields(s ...googleapi.Field) *Acco
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVariablesListCall) Context(ctx context.Context) *AccountsContainersVariablesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4860,6 +5325,9 @@ func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Respo
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4920,6 +5388,7 @@ type AccountsContainersVariablesUpdateCall struct {
 	variableId  string
 	variable    *Variable
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Update: Updates a GTM Variable.
@@ -4948,6 +5417,14 @@ func (c *AccountsContainersVariablesUpdateCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVariablesUpdateCall) Context(ctx context.Context) *AccountsContainersVariablesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
@@ -4973,6 +5450,9 @@ func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Res
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5046,6 +5526,7 @@ type AccountsContainersVersionsCreateCall struct {
 	containerId                                 string
 	createcontainerversionrequestversionoptions *CreateContainerVersionRequestVersionOptions
 	opt_                                        map[string]interface{}
+	ctx_                                        context.Context
 }
 
 // Create: Creates a Container Version.
@@ -5062,6 +5543,14 @@ func (r *AccountsContainersVersionsService) Create(accountId string, containerId
 // for more information.
 func (c *AccountsContainersVersionsCreateCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVersionsCreateCall) Context(ctx context.Context) *AccountsContainersVersionsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -5086,6 +5575,9 @@ func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5147,6 +5639,7 @@ type AccountsContainersVersionsDeleteCall struct {
 	containerId        string
 	containerVersionId string
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Delete: Deletes a Container Version.
@@ -5166,6 +5659,14 @@ func (c *AccountsContainersVersionsDeleteCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVersionsDeleteCall) Context(ctx context.Context) *AccountsContainersVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5182,6 +5683,9 @@ func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Resp
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5240,6 +5744,7 @@ type AccountsContainersVersionsGetCall struct {
 	containerId        string
 	containerVersionId string
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Get: Gets a Container Version.
@@ -5259,6 +5764,14 @@ func (c *AccountsContainersVersionsGetCall) Fields(s ...googleapi.Field) *Accoun
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVersionsGetCall) Context(ctx context.Context) *AccountsContainersVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5275,6 +5788,9 @@ func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Respons
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5341,6 +5857,7 @@ type AccountsContainersVersionsListCall struct {
 	accountId   string
 	containerId string
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: Lists all Container Versions of a GTM Container.
@@ -5366,6 +5883,14 @@ func (c *AccountsContainersVersionsListCall) Fields(s ...googleapi.Field) *Accou
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVersionsListCall) Context(ctx context.Context) *AccountsContainersVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5384,6 +5909,9 @@ func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Respon
 		"containerId": c.containerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5450,6 +5978,7 @@ type AccountsContainersVersionsPublishCall struct {
 	containerId        string
 	containerVersionId string
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Publish: Publishes a Container Version.
@@ -5477,6 +6006,14 @@ func (c *AccountsContainersVersionsPublishCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVersionsPublishCall) Context(ctx context.Context) *AccountsContainersVersionsPublishCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5496,6 +6033,9 @@ func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Res
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5566,6 +6106,7 @@ type AccountsContainersVersionsRestoreCall struct {
 	containerId        string
 	containerVersionId string
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Restore: Restores a Container Version. This will overwrite the
@@ -5588,6 +6129,14 @@ func (c *AccountsContainersVersionsRestoreCall) Fields(s ...googleapi.Field) *Ac
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVersionsRestoreCall) Context(ctx context.Context) *AccountsContainersVersionsRestoreCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5604,6 +6153,9 @@ func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Res
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5669,6 +6221,7 @@ type AccountsContainersVersionsUndeleteCall struct {
 	containerId        string
 	containerVersionId string
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Undelete: Undeletes a Container Version.
@@ -5688,6 +6241,14 @@ func (c *AccountsContainersVersionsUndeleteCall) Fields(s ...googleapi.Field) *A
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVersionsUndeleteCall) Context(ctx context.Context) *AccountsContainersVersionsUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5704,6 +6265,9 @@ func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Re
 		"containerVersionId": c.containerVersionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5770,6 +6334,7 @@ type AccountsContainersVersionsUpdateCall struct {
 	containerVersionId string
 	containerversion   *ContainerVersion
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Update: Updates a Container Version.
@@ -5798,6 +6363,14 @@ func (c *AccountsContainersVersionsUpdateCall) Fields(s ...googleapi.Field) *Acc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsContainersVersionsUpdateCall) Context(ctx context.Context) *AccountsContainersVersionsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.containerversion)
@@ -5823,6 +6396,9 @@ func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Resp
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5895,6 +6471,7 @@ type AccountsPermissionsCreateCall struct {
 	accountId  string
 	useraccess *UserAccess
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Create: Creates a user's Account & Container Permissions.
@@ -5910,6 +6487,14 @@ func (r *AccountsPermissionsService) Create(accountId string, useraccess *UserAc
 // for more information.
 func (c *AccountsPermissionsCreateCall) Fields(s ...googleapi.Field) *AccountsPermissionsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsPermissionsCreateCall) Context(ctx context.Context) *AccountsPermissionsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -5933,6 +6518,9 @@ func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5986,6 +6574,7 @@ type AccountsPermissionsDeleteCall struct {
 	accountId    string
 	permissionId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Delete: Removes a user from the account, revoking access to it and
@@ -6005,6 +6594,14 @@ func (c *AccountsPermissionsDeleteCall) Fields(s ...googleapi.Field) *AccountsPe
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsPermissionsDeleteCall) Context(ctx context.Context) *AccountsPermissionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6020,6 +6617,9 @@ func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, e
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6070,6 +6670,7 @@ type AccountsPermissionsGetCall struct {
 	accountId    string
 	permissionId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Get: Gets a user's Account & Container Permissions.
@@ -6088,6 +6689,14 @@ func (c *AccountsPermissionsGetCall) Fields(s ...googleapi.Field) *AccountsPermi
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsPermissionsGetCall) Context(ctx context.Context) *AccountsPermissionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6103,6 +6712,9 @@ func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, erro
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6159,6 +6771,7 @@ type AccountsPermissionsListCall struct {
 	s         *Service
 	accountId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: List all users that have access to the account along with
@@ -6177,6 +6790,14 @@ func (c *AccountsPermissionsListCall) Fields(s ...googleapi.Field) *AccountsPerm
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsPermissionsListCall) Context(ctx context.Context) *AccountsPermissionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6191,6 +6812,9 @@ func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, err
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6242,6 +6866,7 @@ type AccountsPermissionsUpdateCall struct {
 	permissionId string
 	useraccess   *UserAccess
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Update: Updates a user's Account & Container Permissions.
@@ -6258,6 +6883,14 @@ func (r *AccountsPermissionsService) Update(accountId string, permissionId strin
 // for more information.
 func (c *AccountsPermissionsUpdateCall) Fields(s ...googleapi.Field) *AccountsPermissionsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AccountsPermissionsUpdateCall) Context(ctx context.Context) *AccountsPermissionsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -6282,6 +6915,9 @@ func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, e
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "games:v1"
 const apiName = "games"
@@ -2607,6 +2607,7 @@ type TurnBasedMatchTurn struct {
 type AchievementDefinitionsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all the achievement definitions for your application.
@@ -2646,6 +2647,14 @@ func (c *AchievementDefinitionsListCall) Fields(s ...googleapi.Field) *Achieveme
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementDefinitionsListCall) Context(ctx context.Context) *AchievementDefinitionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2667,6 +2676,9 @@ func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, 
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2727,6 +2739,7 @@ type AchievementsIncrementCall struct {
 	achievementId    string
 	stepsToIncrement int64
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Increment: Increments the steps of the achievement with the given ID
@@ -2755,6 +2768,14 @@ func (c *AchievementsIncrementCall) Fields(s ...googleapi.Field) *AchievementsIn
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementsIncrementCall) Context(ctx context.Context) *AchievementsIncrementCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementsIncrementCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2773,6 +2794,9 @@ func (c *AchievementsIncrementCall) doRequest(alt string) (*http.Response, error
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2838,6 +2862,7 @@ type AchievementsListCall struct {
 	s        *Service
 	playerId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists the progress for all your application's achievements for
@@ -2893,6 +2918,14 @@ func (c *AchievementsListCall) Fields(s ...googleapi.Field) *AchievementsListCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementsListCall) Context(ctx context.Context) *AchievementsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2919,6 +2952,9 @@ func (c *AchievementsListCall) doRequest(alt string) (*http.Response, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3004,6 +3040,7 @@ type AchievementsRevealCall struct {
 	s             *Service
 	achievementId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Reveal: Sets the state of the achievement with the given ID to
@@ -3022,6 +3059,14 @@ func (c *AchievementsRevealCall) Fields(s ...googleapi.Field) *AchievementsRevea
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementsRevealCall) Context(ctx context.Context) *AchievementsRevealCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementsRevealCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3036,6 +3081,9 @@ func (c *AchievementsRevealCall) doRequest(alt string) (*http.Response, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3087,6 +3135,7 @@ type AchievementsSetStepsAtLeastCall struct {
 	achievementId string
 	steps         int64
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // SetStepsAtLeast: Sets the steps for the currently authenticated
@@ -3108,6 +3157,14 @@ func (c *AchievementsSetStepsAtLeastCall) Fields(s ...googleapi.Field) *Achievem
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementsSetStepsAtLeastCall) Context(ctx context.Context) *AchievementsSetStepsAtLeastCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementsSetStepsAtLeastCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3123,6 +3180,9 @@ func (c *AchievementsSetStepsAtLeastCall) doRequest(alt string) (*http.Response,
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3182,6 +3242,7 @@ type AchievementsUnlockCall struct {
 	s             *Service
 	achievementId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Unlock: Unlocks this achievement for the currently authenticated
@@ -3200,6 +3261,14 @@ func (c *AchievementsUnlockCall) Fields(s ...googleapi.Field) *AchievementsUnloc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementsUnlockCall) Context(ctx context.Context) *AchievementsUnlockCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *AchievementsUnlockCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3214,6 +3283,9 @@ func (c *AchievementsUnlockCall) doRequest(alt string) (*http.Response, error) {
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3264,6 +3336,7 @@ type AchievementsUpdateMultipleCall struct {
 	s                                *Service
 	achievementupdatemultiplerequest *AchievementUpdateMultipleRequest
 	opt_                             map[string]interface{}
+	ctx_                             context.Context
 }
 
 // UpdateMultiple: Updates multiple achievements for the currently
@@ -3279,6 +3352,14 @@ func (r *AchievementsService) UpdateMultiple(achievementupdatemultiplerequest *A
 // for more information.
 func (c *AchievementsUpdateMultipleCall) Fields(s ...googleapi.Field) *AchievementsUpdateMultipleCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *AchievementsUpdateMultipleCall) Context(ctx context.Context) *AchievementsUpdateMultipleCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -3300,6 +3381,9 @@ func (c *AchievementsUpdateMultipleCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3342,6 +3426,7 @@ type ApplicationsGetCall struct {
 	s             *Service
 	applicationId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Retrieves the metadata of the application with the given ID. If
@@ -3382,6 +3467,14 @@ func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ApplicationsGetCall) Context(ctx context.Context) *ApplicationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3402,6 +3495,9 @@ func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3471,6 +3567,7 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 type ApplicationsPlayedCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Played: Indicate that the the currently authenticated user is playing
@@ -3488,6 +3585,14 @@ func (c *ApplicationsPlayedCall) Fields(s ...googleapi.Field) *ApplicationsPlaye
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ApplicationsPlayedCall) Context(ctx context.Context) *ApplicationsPlayedCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3500,6 +3605,9 @@ func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3531,6 +3639,7 @@ func (c *ApplicationsPlayedCall) Do() error {
 type EventsListByPlayerCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ListByPlayer: Returns a list showing the current progress on events
@@ -3571,6 +3680,14 @@ func (c *EventsListByPlayerCall) Fields(s ...googleapi.Field) *EventsListByPlaye
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *EventsListByPlayerCall) Context(ctx context.Context) *EventsListByPlayerCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3592,6 +3709,9 @@ func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3650,6 +3770,7 @@ func (c *EventsListByPlayerCall) Do() (*PlayerEventListResponse, error) {
 type EventsListDefinitionsCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ListDefinitions: Returns a list of the event definitions in this
@@ -3690,6 +3811,14 @@ func (c *EventsListDefinitionsCall) Fields(s ...googleapi.Field) *EventsListDefi
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *EventsListDefinitionsCall) Context(ctx context.Context) *EventsListDefinitionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3711,6 +3840,9 @@ func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3770,6 +3902,7 @@ type EventsRecordCall struct {
 	s                  *Service
 	eventrecordrequest *EventRecordRequest
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // Record: Records a batch of changes to the number of times events have
@@ -3795,6 +3928,14 @@ func (c *EventsRecordCall) Fields(s ...googleapi.Field) *EventsRecordCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *EventsRecordCall) Context(ctx context.Context) *EventsRecordCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.eventrecordrequest)
@@ -3816,6 +3957,9 @@ func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3865,6 +4009,7 @@ type LeaderboardsGetCall struct {
 	s             *Service
 	leaderboardId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Retrieves the metadata of the leaderboard with the given ID.
@@ -3889,6 +4034,14 @@ func (c *LeaderboardsGetCall) Fields(s ...googleapi.Field) *LeaderboardsGetCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *LeaderboardsGetCall) Context(ctx context.Context) *LeaderboardsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LeaderboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3906,6 +4059,9 @@ func (c *LeaderboardsGetCall) doRequest(alt string) (*http.Response, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3960,6 +4116,7 @@ func (c *LeaderboardsGetCall) Do() (*Leaderboard, error) {
 type LeaderboardsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all the leaderboard metadata for your application.
@@ -3999,6 +4156,14 @@ func (c *LeaderboardsListCall) Fields(s ...googleapi.Field) *LeaderboardsListCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *LeaderboardsListCall) Context(ctx context.Context) *LeaderboardsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4020,6 +4185,9 @@ func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4078,6 +4246,7 @@ func (c *LeaderboardsListCall) Do() (*LeaderboardListResponse, error) {
 type MetagameGetMetagameConfigCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetMetagameConfig: Return the metagame configuration data for the
@@ -4095,6 +4264,14 @@ func (c *MetagameGetMetagameConfigCall) Fields(s ...googleapi.Field) *MetagameGe
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *MetagameGetMetagameConfigCall) Context(ctx context.Context) *MetagameGetMetagameConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4107,6 +4284,9 @@ func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, e
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4147,6 +4327,7 @@ type MetagameListCategoriesByPlayerCall struct {
 	playerId   string
 	collection string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // ListCategoriesByPlayer: List play data aggregated per category for
@@ -4189,6 +4370,14 @@ func (c *MetagameListCategoriesByPlayerCall) Fields(s ...googleapi.Field) *Metag
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *MetagameListCategoriesByPlayerCall) Context(ctx context.Context) *MetagameListCategoriesByPlayerCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MetagameListCategoriesByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4213,6 +4402,9 @@ func (c *MetagameListCategoriesByPlayerCall) doRequest(alt string) (*http.Respon
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4294,6 +4486,7 @@ type PlayersGetCall struct {
 	s        *Service
 	playerId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves the Player resource with the given ID. To retrieve the
@@ -4319,6 +4512,14 @@ func (c *PlayersGetCall) Fields(s ...googleapi.Field) *PlayersGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *PlayersGetCall) Context(ctx context.Context) *PlayersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PlayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4336,6 +4537,9 @@ func (c *PlayersGetCall) doRequest(alt string) (*http.Response, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4391,6 +4595,7 @@ type PlayersListCall struct {
 	s          *Service
 	collection string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Get the collection of players for the currently authenticated
@@ -4432,6 +4637,14 @@ func (c *PlayersListCall) Fields(s ...googleapi.Field) *PlayersListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *PlayersListCall) Context(ctx context.Context) *PlayersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PlayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4455,6 +4668,9 @@ func (c *PlayersListCall) doRequest(alt string) (*http.Response, error) {
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4531,6 +4747,7 @@ type PushtokensRemoveCall struct {
 	s           *Service
 	pushtokenid *PushTokenId
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Remove: Removes a push token for the current user and application.
@@ -4546,6 +4763,14 @@ func (r *PushtokensService) Remove(pushtokenid *PushTokenId) *PushtokensRemoveCa
 // for more information.
 func (c *PushtokensRemoveCall) Fields(s ...googleapi.Field) *PushtokensRemoveCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *PushtokensRemoveCall) Context(ctx context.Context) *PushtokensRemoveCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4567,6 +4792,9 @@ func (c *PushtokensRemoveCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4602,6 +4830,7 @@ type PushtokensUpdateCall struct {
 	s         *Service
 	pushtoken *PushToken
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Registers a push token for the current user and application.
@@ -4616,6 +4845,14 @@ func (r *PushtokensService) Update(pushtoken *PushToken) *PushtokensUpdateCall {
 // for more information.
 func (c *PushtokensUpdateCall) Fields(s ...googleapi.Field) *PushtokensUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *PushtokensUpdateCall) Context(ctx context.Context) *PushtokensUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4637,6 +4874,9 @@ func (c *PushtokensUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4674,6 +4914,7 @@ type QuestMilestonesClaimCall struct {
 	milestoneId string
 	requestId   int64
 	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Claim: Report that a reward for the milestone corresponding to
@@ -4695,6 +4936,14 @@ func (c *QuestMilestonesClaimCall) Fields(s ...googleapi.Field) *QuestMilestones
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *QuestMilestonesClaimCall) Context(ctx context.Context) *QuestMilestonesClaimCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *QuestMilestonesClaimCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4711,6 +4960,9 @@ func (c *QuestMilestonesClaimCall) doRequest(alt string) (*http.Response, error)
 		"milestoneId": c.milestoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4769,6 +5021,7 @@ type QuestsAcceptCall struct {
 	s       *Service
 	questId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Accept: Indicates that the currently authorized user will participate
@@ -4794,6 +5047,14 @@ func (c *QuestsAcceptCall) Fields(s ...googleapi.Field) *QuestsAcceptCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *QuestsAcceptCall) Context(ctx context.Context) *QuestsAcceptCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *QuestsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4811,6 +5072,9 @@ func (c *QuestsAcceptCall) doRequest(alt string) (*http.Response, error) {
 		"questId": c.questId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4866,6 +5130,7 @@ type QuestsListCall struct {
 	s        *Service
 	playerId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Get a list of quests for your application and the currently
@@ -4908,6 +5173,14 @@ func (c *QuestsListCall) Fields(s ...googleapi.Field) *QuestsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *QuestsListCall) Context(ctx context.Context) *QuestsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *QuestsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4931,6 +5204,9 @@ func (c *QuestsListCall) doRequest(alt string) (*http.Response, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4999,6 +5275,7 @@ type RevisionsCheckCall struct {
 	s              *Service
 	clientRevision string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Check: Checks whether the games client is out of date.
@@ -5016,6 +5293,14 @@ func (c *RevisionsCheckCall) Fields(s ...googleapi.Field) *RevisionsCheckCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RevisionsCheckCall) Context(ctx context.Context) *RevisionsCheckCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5029,6 +5314,9 @@ func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5079,6 +5367,7 @@ type RoomsCreateCall struct {
 	s                 *Service
 	roomcreaterequest *RoomCreateRequest
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Create: Create a room. For internal use by the Games SDK only.
@@ -5104,6 +5393,14 @@ func (c *RoomsCreateCall) Fields(s ...googleapi.Field) *RoomsCreateCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoomsCreateCall) Context(ctx context.Context) *RoomsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoomsCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomcreaterequest)
@@ -5125,6 +5422,9 @@ func (c *RoomsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5174,6 +5474,7 @@ type RoomsDeclineCall struct {
 	s      *Service
 	roomId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Decline: Decline an invitation to join a room. For internal use by
@@ -5199,6 +5500,14 @@ func (c *RoomsDeclineCall) Fields(s ...googleapi.Field) *RoomsDeclineCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoomsDeclineCall) Context(ctx context.Context) *RoomsDeclineCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoomsDeclineCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5216,6 +5525,9 @@ func (c *RoomsDeclineCall) doRequest(alt string) (*http.Response, error) {
 		"roomId": c.roomId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5271,6 +5583,7 @@ type RoomsDismissCall struct {
 	s      *Service
 	roomId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Dismiss: Dismiss an invitation to join a room. For internal use by
@@ -5289,6 +5602,14 @@ func (c *RoomsDismissCall) Fields(s ...googleapi.Field) *RoomsDismissCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoomsDismissCall) Context(ctx context.Context) *RoomsDismissCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoomsDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5303,6 +5624,9 @@ func (c *RoomsDismissCall) doRequest(alt string) (*http.Response, error) {
 		"roomId": c.roomId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5346,6 +5670,7 @@ type RoomsGetCall struct {
 	s      *Service
 	roomId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Get the data for a room.
@@ -5370,6 +5695,14 @@ func (c *RoomsGetCall) Fields(s ...googleapi.Field) *RoomsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoomsGetCall) Context(ctx context.Context) *RoomsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoomsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5387,6 +5720,9 @@ func (c *RoomsGetCall) doRequest(alt string) (*http.Response, error) {
 		"roomId": c.roomId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5443,6 +5779,7 @@ type RoomsJoinCall struct {
 	roomId          string
 	roomjoinrequest *RoomJoinRequest
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // Join: Join a room. For internal use by the Games SDK only. Calling
@@ -5469,6 +5806,14 @@ func (c *RoomsJoinCall) Fields(s ...googleapi.Field) *RoomsJoinCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoomsJoinCall) Context(ctx context.Context) *RoomsJoinCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoomsJoinCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomjoinrequest)
@@ -5492,6 +5837,9 @@ func (c *RoomsJoinCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5551,6 +5899,7 @@ type RoomsLeaveCall struct {
 	roomId           string
 	roomleaverequest *RoomLeaveRequest
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Leave: Leave a room. For internal use by the Games SDK only. Calling
@@ -5577,6 +5926,14 @@ func (c *RoomsLeaveCall) Fields(s ...googleapi.Field) *RoomsLeaveCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoomsLeaveCall) Context(ctx context.Context) *RoomsLeaveCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoomsLeaveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomleaverequest)
@@ -5600,6 +5957,9 @@ func (c *RoomsLeaveCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5657,6 +6017,7 @@ func (c *RoomsLeaveCall) Do() (*Room, error) {
 type RoomsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns invitations to join rooms.
@@ -5696,6 +6057,14 @@ func (c *RoomsListCall) Fields(s ...googleapi.Field) *RoomsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoomsListCall) Context(ctx context.Context) *RoomsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoomsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5717,6 +6086,9 @@ func (c *RoomsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5777,6 +6149,7 @@ type RoomsReportStatusCall struct {
 	roomId          string
 	roomp2pstatuses *RoomP2PStatuses
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // ReportStatus: Updates sent by a client reporting the status of peers
@@ -5804,6 +6177,14 @@ func (c *RoomsReportStatusCall) Fields(s ...googleapi.Field) *RoomsReportStatusC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoomsReportStatusCall) Context(ctx context.Context) *RoomsReportStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RoomsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roomp2pstatuses)
@@ -5827,6 +6208,9 @@ func (c *RoomsReportStatusCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5887,6 +6271,7 @@ type ScoresGetCall struct {
 	leaderboardId string
 	timeSpan      string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Get high scores, and optionally ranks, in leaderboards for the
@@ -5948,6 +6333,14 @@ func (c *ScoresGetCall) Fields(s ...googleapi.Field) *ScoresGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ScoresGetCall) Context(ctx context.Context) *ScoresGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ScoresGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5976,6 +6369,9 @@ func (c *ScoresGetCall) doRequest(alt string) (*http.Response, error) {
 		"timeSpan":      c.timeSpan,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6087,6 +6483,7 @@ type ScoresListCall struct {
 	collection    string
 	timeSpan      string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists the scores in a leaderboard, starting from the top.
@@ -6129,6 +6526,14 @@ func (c *ScoresListCall) Fields(s ...googleapi.Field) *ScoresListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ScoresListCall) Context(ctx context.Context) *ScoresListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ScoresListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6154,6 +6559,9 @@ func (c *ScoresListCall) doRequest(alt string) (*http.Response, error) {
 		"collection":    c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6256,6 +6664,7 @@ type ScoresListWindowCall struct {
 	collection    string
 	timeSpan      string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // ListWindow: Lists the scores in a leaderboard around (and including)
@@ -6317,6 +6726,14 @@ func (c *ScoresListWindowCall) Fields(s ...googleapi.Field) *ScoresListWindowCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ScoresListWindowCall) Context(ctx context.Context) *ScoresListWindowCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ScoresListWindowCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6348,6 +6765,9 @@ func (c *ScoresListWindowCall) doRequest(alt string) (*http.Response, error) {
 		"collection":    c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6460,6 +6880,7 @@ type ScoresSubmitCall struct {
 	leaderboardId string
 	score         int64
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Submit: Submits a score to the specified leaderboard.
@@ -6494,6 +6915,14 @@ func (c *ScoresSubmitCall) Fields(s ...googleapi.Field) *ScoresSubmitCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ScoresSubmitCall) Context(ctx context.Context) *ScoresSubmitCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ScoresSubmitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6515,6 +6944,9 @@ func (c *ScoresSubmitCall) doRequest(alt string) (*http.Response, error) {
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6584,6 +7016,7 @@ type ScoresSubmitMultipleCall struct {
 	s                         *Service
 	playerscoresubmissionlist *PlayerScoreSubmissionList
 	opt_                      map[string]interface{}
+	ctx_                      context.Context
 }
 
 // SubmitMultiple: Submits multiple scores to leaderboards.
@@ -6608,6 +7041,14 @@ func (c *ScoresSubmitMultipleCall) Fields(s ...googleapi.Field) *ScoresSubmitMul
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ScoresSubmitMultipleCall) Context(ctx context.Context) *ScoresSubmitMultipleCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.playerscoresubmissionlist)
@@ -6629,6 +7070,9 @@ func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6678,6 +7122,7 @@ type SnapshotsGetCall struct {
 	s          *Service
 	snapshotId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Retrieves the metadata for a given snapshot ID.
@@ -6702,6 +7147,14 @@ func (c *SnapshotsGetCall) Fields(s ...googleapi.Field) *SnapshotsGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SnapshotsGetCall) Context(ctx context.Context) *SnapshotsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6719,6 +7172,9 @@ func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 		"snapshotId": c.snapshotId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6775,6 +7231,7 @@ type SnapshotsListCall struct {
 	s        *Service
 	playerId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Retrieves a list of snapshots created by your application for
@@ -6816,6 +7273,14 @@ func (c *SnapshotsListCall) Fields(s ...googleapi.Field) *SnapshotsListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SnapshotsListCall) Context(ctx context.Context) *SnapshotsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6839,6 +7304,9 @@ func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 		"playerId": c.playerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6908,6 +7376,7 @@ type TurnBasedMatchesCancelCall struct {
 	s       *Service
 	matchId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Cancel: Cancel a turn-based match.
@@ -6925,6 +7394,14 @@ func (c *TurnBasedMatchesCancelCall) Fields(s ...googleapi.Field) *TurnBasedMatc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesCancelCall) Context(ctx context.Context) *TurnBasedMatchesCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6939,6 +7416,9 @@ func (c *TurnBasedMatchesCancelCall) doRequest(alt string) (*http.Response, erro
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6982,6 +7462,7 @@ type TurnBasedMatchesCreateCall struct {
 	s                           *Service
 	turnbasedmatchcreaterequest *TurnBasedMatchCreateRequest
 	opt_                        map[string]interface{}
+	ctx_                        context.Context
 }
 
 // Create: Create a turn-based match.
@@ -7006,6 +7487,14 @@ func (c *TurnBasedMatchesCreateCall) Fields(s ...googleapi.Field) *TurnBasedMatc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesCreateCall) Context(ctx context.Context) *TurnBasedMatchesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchcreaterequest)
@@ -7027,6 +7516,9 @@ func (c *TurnBasedMatchesCreateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7076,6 +7568,7 @@ type TurnBasedMatchesDeclineCall struct {
 	s       *Service
 	matchId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Decline: Decline an invitation to play a turn-based match.
@@ -7100,6 +7593,14 @@ func (c *TurnBasedMatchesDeclineCall) Fields(s ...googleapi.Field) *TurnBasedMat
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesDeclineCall) Context(ctx context.Context) *TurnBasedMatchesDeclineCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesDeclineCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7117,6 +7618,9 @@ func (c *TurnBasedMatchesDeclineCall) doRequest(alt string) (*http.Response, err
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7172,6 +7676,7 @@ type TurnBasedMatchesDismissCall struct {
 	s       *Service
 	matchId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Dismiss: Dismiss a turn-based match from the match list. The match
@@ -7191,6 +7696,14 @@ func (c *TurnBasedMatchesDismissCall) Fields(s ...googleapi.Field) *TurnBasedMat
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesDismissCall) Context(ctx context.Context) *TurnBasedMatchesDismissCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7205,6 +7718,9 @@ func (c *TurnBasedMatchesDismissCall) doRequest(alt string) (*http.Response, err
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7249,6 +7765,7 @@ type TurnBasedMatchesFinishCall struct {
 	matchId               string
 	turnbasedmatchresults *TurnBasedMatchResults
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // Finish: Finish a turn-based match. Each player should make this call
@@ -7276,6 +7793,14 @@ func (c *TurnBasedMatchesFinishCall) Fields(s ...googleapi.Field) *TurnBasedMatc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesFinishCall) Context(ctx context.Context) *TurnBasedMatchesFinishCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesFinishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.turnbasedmatchresults)
@@ -7299,6 +7824,9 @@ func (c *TurnBasedMatchesFinishCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7357,6 +7885,7 @@ type TurnBasedMatchesGetCall struct {
 	s       *Service
 	matchId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Get: Get the data for a turn-based match.
@@ -7388,6 +7917,14 @@ func (c *TurnBasedMatchesGetCall) Fields(s ...googleapi.Field) *TurnBasedMatches
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesGetCall) Context(ctx context.Context) *TurnBasedMatchesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7408,6 +7945,9 @@ func (c *TurnBasedMatchesGetCall) doRequest(alt string) (*http.Response, error) 
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7468,6 +8008,7 @@ type TurnBasedMatchesJoinCall struct {
 	s       *Service
 	matchId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Join: Join a turn-based match.
@@ -7492,6 +8033,14 @@ func (c *TurnBasedMatchesJoinCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesJoinCall) Context(ctx context.Context) *TurnBasedMatchesJoinCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesJoinCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7509,6 +8058,9 @@ func (c *TurnBasedMatchesJoinCall) doRequest(alt string) (*http.Response, error)
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7564,6 +8116,7 @@ type TurnBasedMatchesLeaveCall struct {
 	s       *Service
 	matchId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Leave: Leave a turn-based match when it is not the current player's
@@ -7589,6 +8142,14 @@ func (c *TurnBasedMatchesLeaveCall) Fields(s ...googleapi.Field) *TurnBasedMatch
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesLeaveCall) Context(ctx context.Context) *TurnBasedMatchesLeaveCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesLeaveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7606,6 +8167,9 @@ func (c *TurnBasedMatchesLeaveCall) doRequest(alt string) (*http.Response, error
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7662,6 +8226,7 @@ type TurnBasedMatchesLeaveTurnCall struct {
 	matchId      string
 	matchVersion int64
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // LeaveTurn: Leave a turn-based match during the current player's turn,
@@ -7698,6 +8263,14 @@ func (c *TurnBasedMatchesLeaveTurnCall) Fields(s ...googleapi.Field) *TurnBasedM
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesLeaveTurnCall) Context(ctx context.Context) *TurnBasedMatchesLeaveTurnCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesLeaveTurnCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7719,6 +8292,9 @@ func (c *TurnBasedMatchesLeaveTurnCall) doRequest(alt string) (*http.Response, e
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7786,6 +8362,7 @@ func (c *TurnBasedMatchesLeaveTurnCall) Do() (*TurnBasedMatch, error) {
 type TurnBasedMatchesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns turn-based matches the player is or was involved in.
@@ -7845,6 +8422,14 @@ func (c *TurnBasedMatchesListCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesListCall) Context(ctx context.Context) *TurnBasedMatchesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7872,6 +8457,9 @@ func (c *TurnBasedMatchesListCall) doRequest(alt string) (*http.Response, error)
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7944,6 +8532,7 @@ type TurnBasedMatchesRematchCall struct {
 	s       *Service
 	matchId string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Rematch: Create a rematch of a match that was previously completed,
@@ -7980,6 +8569,14 @@ func (c *TurnBasedMatchesRematchCall) Fields(s ...googleapi.Field) *TurnBasedMat
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesRematchCall) Context(ctx context.Context) *TurnBasedMatchesRematchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesRematchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8000,6 +8597,9 @@ func (c *TurnBasedMatchesRematchCall) doRequest(alt string) (*http.Response, err
 		"matchId": c.matchId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8060,6 +8660,7 @@ func (c *TurnBasedMatchesRematchCall) Do() (*TurnBasedMatchRematch, error) {
 type TurnBasedMatchesSyncCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Sync: Returns turn-based matches the player is or was involved in
@@ -8122,6 +8723,14 @@ func (c *TurnBasedMatchesSyncCall) Fields(s ...googleapi.Field) *TurnBasedMatche
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesSyncCall) Context(ctx context.Context) *TurnBasedMatchesSyncCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TurnBasedMatchesSyncCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -8149,6 +8758,9 @@ func (c *TurnBasedMatchesSyncCall) doRequest(alt string) (*http.Response, error)
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -8222,6 +8834,7 @@ type TurnBasedMatchesTakeTurnCall struct {
 	matchId            string
 	turnbasedmatchturn *TurnBasedMatchTurn
 	opt_               map[string]interface{}
+	ctx_               context.Context
 }
 
 // TakeTurn: Commit the results of a player turn.
@@ -8244,6 +8857,14 @@ func (c *TurnBasedMatchesTakeTurnCall) Language(language string) *TurnBasedMatch
 // for more information.
 func (c *TurnBasedMatchesTakeTurnCall) Fields(s ...googleapi.Field) *TurnBasedMatchesTakeTurnCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TurnBasedMatchesTakeTurnCall) Context(ctx context.Context) *TurnBasedMatchesTakeTurnCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -8270,6 +8891,9 @@ func (c *TurnBasedMatchesTakeTurnCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

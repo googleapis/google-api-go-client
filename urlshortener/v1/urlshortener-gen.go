@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "urlshortener:v1"
 const apiName = "urlshortener"
@@ -184,6 +184,7 @@ type UrlGetCall struct {
 	s        *Service
 	shortUrl string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Expands a short URL or gets creation time and analytics.
@@ -214,6 +215,14 @@ func (c *UrlGetCall) Fields(s ...googleapi.Field) *UrlGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UrlGetCall) Context(ctx context.Context) *UrlGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -230,6 +239,9 @@ func (c *UrlGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -294,6 +306,7 @@ type UrlInsertCall struct {
 	s    *Service
 	url  *Url
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Insert: Creates a new short URL.
@@ -308,6 +321,14 @@ func (r *UrlService) Insert(url *Url) *UrlInsertCall {
 // for more information.
 func (c *UrlInsertCall) Fields(s ...googleapi.Field) *UrlInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UrlInsertCall) Context(ctx context.Context) *UrlInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -329,6 +350,9 @@ func (c *UrlInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -369,6 +393,7 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 type UrlListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieves a list of URLs shortened by a user.
@@ -403,6 +428,14 @@ func (c *UrlListCall) Fields(s ...googleapi.Field) *UrlListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UrlListCall) Context(ctx context.Context) *UrlListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UrlListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -421,6 +454,9 @@ func (c *UrlListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

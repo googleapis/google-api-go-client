@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "reseller:v1sandbox"
 const apiName = "reseller"
@@ -312,6 +312,7 @@ type CustomersGetCall struct {
 	s          *Service
 	customerId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Gets a customer resource if one exists and is owned by the
@@ -330,6 +331,14 @@ func (c *CustomersGetCall) Fields(s ...googleapi.Field) *CustomersGetCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CustomersGetCall) Context(ctx context.Context) *CustomersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -344,6 +353,9 @@ func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 		"customerId": c.customerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -394,6 +406,7 @@ type CustomersInsertCall struct {
 	s        *Service
 	customer *Customer
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Creates a customer resource if one does not already exist.
@@ -420,6 +433,14 @@ func (c *CustomersInsertCall) Fields(s ...googleapi.Field) *CustomersInsertCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CustomersInsertCall) Context(ctx context.Context) *CustomersInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
@@ -441,6 +462,9 @@ func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -490,6 +514,7 @@ type CustomersPatchCall struct {
 	customerId string
 	customer   *Customer
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Patch: Update a customer resource if one it exists and is owned by
@@ -506,6 +531,14 @@ func (r *CustomersService) Patch(customerId string, customer *Customer) *Custome
 // for more information.
 func (c *CustomersPatchCall) Fields(s ...googleapi.Field) *CustomersPatchCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CustomersPatchCall) Context(ctx context.Context) *CustomersPatchCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -529,6 +562,9 @@ func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -582,6 +618,7 @@ type CustomersUpdateCall struct {
 	customerId string
 	customer   *Customer
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Update a customer resource if one it exists and is owned by
@@ -598,6 +635,14 @@ func (r *CustomersService) Update(customerId string, customer *Customer) *Custom
 // for more information.
 func (c *CustomersUpdateCall) Fields(s ...googleapi.Field) *CustomersUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CustomersUpdateCall) Context(ctx context.Context) *CustomersUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -621,6 +666,9 @@ func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -674,6 +722,7 @@ type SubscriptionsActivateCall struct {
 	customerId     string
 	subscriptionId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Activate: Activates a subscription previously suspended by the
@@ -693,6 +742,14 @@ func (c *SubscriptionsActivateCall) Fields(s ...googleapi.Field) *SubscriptionsA
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsActivateCall) Context(ctx context.Context) *SubscriptionsActivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -708,6 +765,9 @@ func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error
 		"subscriptionId": c.subscriptionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -766,6 +826,7 @@ type SubscriptionsChangePlanCall struct {
 	subscriptionId    string
 	changeplanrequest *ChangePlanRequest
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // ChangePlan: Changes the plan of a subscription
@@ -782,6 +843,14 @@ func (r *SubscriptionsService) ChangePlan(customerId string, subscriptionId stri
 // for more information.
 func (c *SubscriptionsChangePlanCall) Fields(s ...googleapi.Field) *SubscriptionsChangePlanCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsChangePlanCall) Context(ctx context.Context) *SubscriptionsChangePlanCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -806,6 +875,9 @@ func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -867,6 +939,7 @@ type SubscriptionsChangeRenewalSettingsCall struct {
 	subscriptionId  string
 	renewalsettings *RenewalSettings
 	opt_            map[string]interface{}
+	ctx_            context.Context
 }
 
 // ChangeRenewalSettings: Changes the renewal settings of a subscription
@@ -883,6 +956,14 @@ func (r *SubscriptionsService) ChangeRenewalSettings(customerId string, subscrip
 // for more information.
 func (c *SubscriptionsChangeRenewalSettingsCall) Fields(s ...googleapi.Field) *SubscriptionsChangeRenewalSettingsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsChangeRenewalSettingsCall) Context(ctx context.Context) *SubscriptionsChangeRenewalSettingsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -907,6 +988,9 @@ func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Re
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -968,6 +1052,7 @@ type SubscriptionsChangeSeatsCall struct {
 	subscriptionId string
 	seats          *Seats
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // ChangeSeats: Changes the seats configuration of a subscription
@@ -984,6 +1069,14 @@ func (r *SubscriptionsService) ChangeSeats(customerId string, subscriptionId str
 // for more information.
 func (c *SubscriptionsChangeSeatsCall) Fields(s ...googleapi.Field) *SubscriptionsChangeSeatsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsChangeSeatsCall) Context(ctx context.Context) *SubscriptionsChangeSeatsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1008,6 +1101,9 @@ func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1069,6 +1165,7 @@ type SubscriptionsDeleteCall struct {
 	subscriptionId string
 	deletionType   string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Delete: Cancels/Downgrades a subscription.
@@ -1088,6 +1185,14 @@ func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDel
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1104,6 +1209,9 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"subscriptionId": c.subscriptionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1173,6 +1281,7 @@ type SubscriptionsGetCall struct {
 	customerId     string
 	subscriptionId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Get: Gets a subscription of the customer.
@@ -1191,6 +1300,14 @@ func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1206,6 +1323,9 @@ func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 		"subscriptionId": c.subscriptionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1264,6 +1384,7 @@ type SubscriptionsInsertCall struct {
 	customerId   string
 	subscription *Subscription
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Insert: Creates/Transfers a subscription for the customer.
@@ -1290,6 +1411,14 @@ func (c *SubscriptionsInsertCall) Fields(s ...googleapi.Field) *SubscriptionsIns
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsInsertCall) Context(ctx context.Context) *SubscriptionsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
@@ -1313,6 +1442,9 @@ func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1369,6 +1501,7 @@ func (c *SubscriptionsInsertCall) Do() (*Subscription, error) {
 type SubscriptionsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists subscriptions of a reseller, optionally filtered by a
@@ -1424,6 +1557,14 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1451,6 +1592,9 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1521,6 +1665,7 @@ type SubscriptionsStartPaidServiceCall struct {
 	customerId     string
 	subscriptionId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // StartPaidService: Starts paid service of a trial subscription
@@ -1539,6 +1684,14 @@ func (c *SubscriptionsStartPaidServiceCall) Fields(s ...googleapi.Field) *Subscr
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsStartPaidServiceCall) Context(ctx context.Context) *SubscriptionsStartPaidServiceCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1554,6 +1707,9 @@ func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Respons
 		"subscriptionId": c.subscriptionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1611,6 +1767,7 @@ type SubscriptionsSuspendCall struct {
 	customerId     string
 	subscriptionId string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // Suspend: Suspends an active subscription
@@ -1629,6 +1786,14 @@ func (c *SubscriptionsSuspendCall) Fields(s ...googleapi.Field) *SubscriptionsSu
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SubscriptionsSuspendCall) Context(ctx context.Context) *SubscriptionsSuspendCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1644,6 +1809,9 @@ func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error)
 		"subscriptionId": c.subscriptionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

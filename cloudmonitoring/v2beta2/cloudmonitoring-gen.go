@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "cloudmonitoring:v2beta2"
 const apiName = "cloudmonitoring"
@@ -421,6 +421,7 @@ type MetricDescriptorsCreateCall struct {
 	project          string
 	metricdescriptor *MetricDescriptor
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Create: Create a new metric.
@@ -436,6 +437,14 @@ func (r *MetricDescriptorsService) Create(project string, metricdescriptor *Metr
 // for more information.
 func (c *MetricDescriptorsCreateCall) Fields(s ...googleapi.Field) *MetricDescriptorsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *MetricDescriptorsCreateCall) Context(ctx context.Context) *MetricDescriptorsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -459,6 +468,9 @@ func (c *MetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -513,6 +525,7 @@ type MetricDescriptorsDeleteCall struct {
 	project string
 	metric  string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Delete: Delete an existing metric.
@@ -531,6 +544,14 @@ func (c *MetricDescriptorsDeleteCall) Fields(s ...googleapi.Field) *MetricDescri
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *MetricDescriptorsDeleteCall) Context(ctx context.Context) *MetricDescriptorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -546,6 +567,9 @@ func (c *MetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, err
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -604,6 +628,7 @@ type MetricDescriptorsListCall struct {
 	project                      string
 	listmetricdescriptorsrequest *ListMetricDescriptorsRequest
 	opt_                         map[string]interface{}
+	ctx_                         context.Context
 }
 
 // List: List metric descriptors that match the query. If the query is
@@ -654,6 +679,14 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *MetricDescriptorsListCall) Context(ctx context.Context) *MetricDescriptorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -677,6 +710,9 @@ func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -752,6 +788,7 @@ type TimeseriesListCall struct {
 	youngest              string
 	listtimeseriesrequest *ListTimeseriesRequest
 	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // List: List the data points of the time series that match the metric
@@ -863,6 +900,14 @@ func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TimeseriesListCall) Context(ctx context.Context) *TimeseriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TimeseriesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -900,6 +945,9 @@ func (c *TimeseriesListCall) doRequest(alt string) (*http.Response, error) {
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1023,6 +1071,7 @@ type TimeseriesWriteCall struct {
 	project                string
 	writetimeseriesrequest *WriteTimeseriesRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // Write: Put data points to one or more time series for one or more
@@ -1048,6 +1097,14 @@ func (c *TimeseriesWriteCall) Fields(s ...googleapi.Field) *TimeseriesWriteCall 
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TimeseriesWriteCall) Context(ctx context.Context) *TimeseriesWriteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TimeseriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writetimeseriesrequest)
@@ -1068,6 +1125,9 @@ func (c *TimeseriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1124,6 +1184,7 @@ type TimeseriesDescriptorsListCall struct {
 	youngest                         string
 	listtimeseriesdescriptorsrequest *ListTimeseriesDescriptorsRequest
 	opt_                             map[string]interface{}
+	ctx_                             context.Context
 }
 
 // List: List the descriptors of the time series that match the metric
@@ -1236,6 +1297,14 @@ func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *Timeseries
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TimeseriesDescriptorsListCall) Context(ctx context.Context) *TimeseriesDescriptorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *TimeseriesDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1273,6 +1342,9 @@ func (c *TimeseriesDescriptorsListCall) doRequest(alt string) (*http.Response, e
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

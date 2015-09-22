@@ -429,11 +429,12 @@ var statusTests = []*testTransport{
 }
 
 func TestTransferStatus(t *testing.T) {
+	ctx := context.Background()
 	for _, tr := range statusTests {
 		rx := &ResumableUpload{
 			Client: &http.Client{Transport: tr},
 		}
-		g, _, err := rx.transferStatus()
+		g, _, err := rx.transferStatus(ctx)
 		if err != nil {
 			t.Error(err)
 		}

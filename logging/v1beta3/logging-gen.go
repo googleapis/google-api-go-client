@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "logging:v1beta3"
 const apiName = "logging"
@@ -719,6 +719,7 @@ type ProjectsLogServicesListCall struct {
 	s          *Service
 	projectsId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Lists the log services that have log entries in this project.
@@ -765,6 +766,14 @@ func (c *ProjectsLogServicesListCall) Fields(s ...googleapi.Field) *ProjectsLogS
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogServicesListCall) Context(ctx context.Context) *ProjectsLogServicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -788,6 +797,9 @@ func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, err
 		"projectsId": c.projectsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -857,6 +869,7 @@ type ProjectsLogServicesIndexesListCall struct {
 	projectsId    string
 	logServicesId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists the current index values for a log service.
@@ -933,6 +946,14 @@ func (c *ProjectsLogServicesIndexesListCall) Fields(s ...googleapi.Field) *Proje
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogServicesIndexesListCall) Context(ctx context.Context) *ProjectsLogServicesIndexesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -963,6 +984,9 @@ func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Respon
 		"logServicesId": c.logServicesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1051,6 +1075,7 @@ type ProjectsLogServicesSinksCreateCall struct {
 	logServicesId string
 	logsink       *LogSink
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Create: Creates a log service sink. All log entries from a specified
@@ -1068,6 +1093,14 @@ func (r *ProjectsLogServicesSinksService) Create(projectsId string, logServicesI
 // for more information.
 func (c *ProjectsLogServicesSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogServicesSinksCreateCall) Context(ctx context.Context) *ProjectsLogServicesSinksCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1092,6 +1125,9 @@ func (c *ProjectsLogServicesSinksCreateCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1154,6 +1190,7 @@ type ProjectsLogServicesSinksDeleteCall struct {
 	logServicesId string
 	sinksId       string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Delete: Deletes a log service sink. After deletion, no new log
@@ -1174,6 +1211,14 @@ func (c *ProjectsLogServicesSinksDeleteCall) Fields(s ...googleapi.Field) *Proje
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogServicesSinksDeleteCall) Context(ctx context.Context) *ProjectsLogServicesSinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogServicesSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1190,6 +1235,9 @@ func (c *ProjectsLogServicesSinksDeleteCall) doRequest(alt string) (*http.Respon
 		"sinksId":       c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1256,6 +1304,7 @@ type ProjectsLogServicesSinksGetCall struct {
 	logServicesId string
 	sinksId       string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Gets a log service sink.
@@ -1275,6 +1324,14 @@ func (c *ProjectsLogServicesSinksGetCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogServicesSinksGetCall) Context(ctx context.Context) *ProjectsLogServicesSinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogServicesSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1291,6 +1348,9 @@ func (c *ProjectsLogServicesSinksGetCall) doRequest(alt string) (*http.Response,
 		"sinksId":       c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1358,6 +1418,7 @@ type ProjectsLogServicesSinksListCall struct {
 	projectsId    string
 	logServicesId string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // List: Lists log service sinks associated with a log service.
@@ -1376,6 +1437,14 @@ func (c *ProjectsLogServicesSinksListCall) Fields(s ...googleapi.Field) *Project
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogServicesSinksListCall) Context(ctx context.Context) *ProjectsLogServicesSinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogServicesSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1391,6 +1460,9 @@ func (c *ProjectsLogServicesSinksListCall) doRequest(alt string) (*http.Response
 		"logServicesId": c.logServicesId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1453,6 +1525,7 @@ type ProjectsLogServicesSinksUpdateCall struct {
 	sinksId       string
 	logsink       *LogSink
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Update: Updates a log service sink. If the sink does not exist, it is
@@ -1471,6 +1544,14 @@ func (r *ProjectsLogServicesSinksService) Update(projectsId string, logServicesI
 // for more information.
 func (c *ProjectsLogServicesSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogServicesSinksUpdateCall) Context(ctx context.Context) *ProjectsLogServicesSinksUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1496,6 +1577,9 @@ func (c *ProjectsLogServicesSinksUpdateCall) doRequest(alt string) (*http.Respon
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1564,6 +1648,7 @@ type ProjectsLogsDeleteCall struct {
 	projectsId string
 	logsId     string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes a log and all its log entries. The log will reappear
@@ -1583,6 +1668,14 @@ func (c *ProjectsLogsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogsDelet
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogsDeleteCall) Context(ctx context.Context) *ProjectsLogsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1598,6 +1691,9 @@ func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"logsId":     c.logsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1655,6 +1751,7 @@ type ProjectsLogsListCall struct {
 	s          *Service
 	projectsId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Lists the logs in the project. Only logs that have entries are
@@ -1712,6 +1809,14 @@ func (c *ProjectsLogsListCall) Fields(s ...googleapi.Field) *ProjectsLogsListCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogsListCall) Context(ctx context.Context) *ProjectsLogsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1738,6 +1843,9 @@ func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 		"projectsId": c.projectsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1813,6 +1921,7 @@ type ProjectsLogsEntriesWriteCall struct {
 	logsId                 string
 	writelogentriesrequest *WriteLogEntriesRequest
 	opt_                   map[string]interface{}
+	ctx_                   context.Context
 }
 
 // Write: Writes log entries to Cloud Logging. Each entry consists of a
@@ -1837,6 +1946,14 @@ func (c *ProjectsLogsEntriesWriteCall) Fields(s ...googleapi.Field) *ProjectsLog
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogsEntriesWriteCall) Context(ctx context.Context) *ProjectsLogsEntriesWriteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogsEntriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writelogentriesrequest)
@@ -1858,6 +1975,9 @@ func (c *ProjectsLogsEntriesWriteCall) doRequest(alt string) (*http.Response, er
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1921,6 +2041,7 @@ type ProjectsLogsSinksCreateCall struct {
 	logsId     string
 	logsink    *LogSink
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Create: Creates a log sink. All log entries for a specified log are
@@ -1938,6 +2059,14 @@ func (r *ProjectsLogsSinksService) Create(projectsId string, logsId string, logs
 // for more information.
 func (c *ProjectsLogsSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogsSinksCreateCall) Context(ctx context.Context) *ProjectsLogsSinksCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1962,6 +2091,9 @@ func (c *ProjectsLogsSinksCreateCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2024,6 +2156,7 @@ type ProjectsLogsSinksDeleteCall struct {
 	logsId     string
 	sinksId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes a log sink. After deletion, no new log entries are
@@ -2044,6 +2177,14 @@ func (c *ProjectsLogsSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogs
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogsSinksDeleteCall) Context(ctx context.Context) *ProjectsLogsSinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2060,6 +2201,9 @@ func (c *ProjectsLogsSinksDeleteCall) doRequest(alt string) (*http.Response, err
 		"sinksId":    c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2126,6 +2270,7 @@ type ProjectsLogsSinksGetCall struct {
 	logsId     string
 	sinksId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Gets a log sink.
@@ -2145,6 +2290,14 @@ func (c *ProjectsLogsSinksGetCall) Fields(s ...googleapi.Field) *ProjectsLogsSin
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogsSinksGetCall) Context(ctx context.Context) *ProjectsLogsSinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2161,6 +2314,9 @@ func (c *ProjectsLogsSinksGetCall) doRequest(alt string) (*http.Response, error)
 		"sinksId":    c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2228,6 +2384,7 @@ type ProjectsLogsSinksListCall struct {
 	projectsId string
 	logsId     string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Lists log sinks associated with a log.
@@ -2246,6 +2403,14 @@ func (c *ProjectsLogsSinksListCall) Fields(s ...googleapi.Field) *ProjectsLogsSi
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogsSinksListCall) Context(ctx context.Context) *ProjectsLogsSinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsLogsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2261,6 +2426,9 @@ func (c *ProjectsLogsSinksListCall) doRequest(alt string) (*http.Response, error
 		"logsId":     c.logsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2323,6 +2491,7 @@ type ProjectsLogsSinksUpdateCall struct {
 	sinksId    string
 	logsink    *LogSink
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates a log sink. If the sink does not exist, it is
@@ -2341,6 +2510,14 @@ func (r *ProjectsLogsSinksService) Update(projectsId string, logsId string, sink
 // for more information.
 func (c *ProjectsLogsSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsLogsSinksUpdateCall) Context(ctx context.Context) *ProjectsLogsSinksUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2366,6 +2543,9 @@ func (c *ProjectsLogsSinksUpdateCall) doRequest(alt string) (*http.Response, err
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2434,6 +2614,7 @@ type ProjectsSinksCreateCall struct {
 	projectsId string
 	logsink    *LogSink
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Create: Creates a project sink. A logs filter determines which log
@@ -2450,6 +2631,14 @@ func (r *ProjectsSinksService) Create(projectsId string, logsink *LogSink) *Proj
 // for more information.
 func (c *ProjectsSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsSinksCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsSinksCreateCall) Context(ctx context.Context) *ProjectsSinksCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2473,6 +2662,9 @@ func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2527,6 +2719,7 @@ type ProjectsSinksDeleteCall struct {
 	projectsId string
 	sinksId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Delete: Deletes a project sink. After deletion, no new log entries
@@ -2546,6 +2739,14 @@ func (c *ProjectsSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsSinksDel
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsSinksDeleteCall) Context(ctx context.Context) *ProjectsSinksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2561,6 +2762,9 @@ func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"sinksId":    c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2619,6 +2823,7 @@ type ProjectsSinksGetCall struct {
 	projectsId string
 	sinksId    string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Gets a project sink.
@@ -2637,6 +2842,14 @@ func (c *ProjectsSinksGetCall) Fields(s ...googleapi.Field) *ProjectsSinksGetCal
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsSinksGetCall) Context(ctx context.Context) *ProjectsSinksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2652,6 +2865,9 @@ func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 		"sinksId":    c.sinksId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2711,6 +2927,7 @@ type ProjectsSinksListCall struct {
 	s          *Service
 	projectsId string
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Lists project sinks associated with a project.
@@ -2728,6 +2945,14 @@ func (c *ProjectsSinksListCall) Fields(s ...googleapi.Field) *ProjectsSinksListC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsSinksListCall) Context(ctx context.Context) *ProjectsSinksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2742,6 +2967,9 @@ func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 		"projectsId": c.projectsId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2796,6 +3024,7 @@ type ProjectsSinksUpdateCall struct {
 	sinksId    string
 	logsink    *LogSink
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Update: Updates a project sink. If the sink does not exist, it is
@@ -2813,6 +3042,14 @@ func (r *ProjectsSinksService) Update(projectsId string, sinksId string, logsink
 // for more information.
 func (c *ProjectsSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsSinksUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsSinksUpdateCall) Context(ctx context.Context) *ProjectsSinksUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2837,6 +3074,9 @@ func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

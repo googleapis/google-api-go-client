@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "fitness:v1"
 const apiName = "fitness"
@@ -658,6 +658,7 @@ type UsersDataSourcesCreateCall struct {
 	userId     string
 	datasource *DataSource
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Create: Creates a new data source that is unique across all data
@@ -684,6 +685,14 @@ func (c *UsersDataSourcesCreateCall) Fields(s ...googleapi.Field) *UsersDataSour
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesCreateCall) Context(ctx context.Context) *UsersDataSourcesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datasource)
@@ -704,6 +713,9 @@ func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -759,6 +771,7 @@ type UsersDataSourcesDeleteCall struct {
 	userId       string
 	dataSourceId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Delete: Delete the data source if there are no datapoints associated
@@ -778,6 +791,14 @@ func (c *UsersDataSourcesDeleteCall) Fields(s ...googleapi.Field) *UsersDataSour
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesDeleteCall) Context(ctx context.Context) *UsersDataSourcesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -793,6 +814,9 @@ func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, erro
 		"dataSourceId": c.dataSourceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -852,6 +876,7 @@ type UsersDataSourcesGetCall struct {
 	userId       string
 	dataSourceId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Get: Returns a data source identified by a data stream ID.
@@ -870,6 +895,14 @@ func (c *UsersDataSourcesGetCall) Fields(s ...googleapi.Field) *UsersDataSources
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesGetCall) Context(ctx context.Context) *UsersDataSourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -885,6 +918,9 @@ func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) 
 		"dataSourceId": c.dataSourceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -946,6 +982,7 @@ type UsersDataSourcesListCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists all data sources that are visible to the developer, using
@@ -974,6 +1011,14 @@ func (c *UsersDataSourcesListCall) Fields(s ...googleapi.Field) *UsersDataSource
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesListCall) Context(ctx context.Context) *UsersDataSourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -991,6 +1036,9 @@ func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error)
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1053,6 +1101,7 @@ type UsersDataSourcesPatchCall struct {
 	dataSourceId string
 	datasource   *DataSource
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Patch: Updates a given data source. It is an error to modify the data
@@ -1079,6 +1128,14 @@ func (c *UsersDataSourcesPatchCall) Fields(s ...googleapi.Field) *UsersDataSourc
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesPatchCall) Context(ctx context.Context) *UsersDataSourcesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datasource)
@@ -1100,6 +1157,9 @@ func (c *UsersDataSourcesPatchCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1163,6 +1223,7 @@ type UsersDataSourcesUpdateCall struct {
 	dataSourceId string
 	datasource   *DataSource
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Update: Updates a given data source. It is an error to modify the
@@ -1188,6 +1249,14 @@ func (c *UsersDataSourcesUpdateCall) Fields(s ...googleapi.Field) *UsersDataSour
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesUpdateCall) Context(ctx context.Context) *UsersDataSourcesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.datasource)
@@ -1209,6 +1278,9 @@ func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, erro
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1272,6 +1344,7 @@ type UsersDataSourcesDatasetsDeleteCall struct {
 	dataSourceId string
 	datasetId    string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Delete: Performs an inclusive delete of all data points whose start
@@ -1311,6 +1384,14 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Fields(s ...googleapi.Field) *Users
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesDatasetsDeleteCall) Context(ctx context.Context) *UsersDataSourcesDatasetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1333,6 +1414,9 @@ func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Respon
 		"datasetId":    c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1405,6 +1489,7 @@ type UsersDataSourcesDatasetsGetCall struct {
 	dataSourceId string
 	datasetId    string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Get: Returns a dataset containing all data points whose start and end
@@ -1448,6 +1533,14 @@ func (c *UsersDataSourcesDatasetsGetCall) Fields(s ...googleapi.Field) *UsersDat
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesDatasetsGetCall) Context(ctx context.Context) *UsersDataSourcesDatasetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1470,6 +1563,9 @@ func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response,
 		"datasetId":    c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1552,6 +1648,7 @@ type UsersDataSourcesDatasetsPatchCall struct {
 	datasetId    string
 	dataset      *Dataset
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Patch: Adds data points to a dataset. The dataset need not be
@@ -1585,6 +1682,14 @@ func (c *UsersDataSourcesDatasetsPatchCall) Fields(s ...googleapi.Field) *UsersD
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDataSourcesDatasetsPatchCall) Context(ctx context.Context) *UsersDataSourcesDatasetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
@@ -1610,6 +1715,9 @@ func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Respons
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1685,6 +1793,7 @@ type UsersDatasetAggregateCall struct {
 	userId           string
 	aggregaterequest *AggregateRequest
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Aggregate: Aggregates data of a certain type or stream into buckets
@@ -1703,6 +1812,14 @@ func (r *UsersDatasetService) Aggregate(userId string, aggregaterequest *Aggrega
 // for more information.
 func (c *UsersDatasetAggregateCall) Fields(s ...googleapi.Field) *UsersDatasetAggregateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersDatasetAggregateCall) Context(ctx context.Context) *UsersDatasetAggregateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1726,6 +1843,9 @@ func (c *UsersDatasetAggregateCall) doRequest(alt string) (*http.Response, error
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1781,6 +1901,7 @@ type UsersSessionsDeleteCall struct {
 	userId    string
 	sessionId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes a session specified by the given session ID.
@@ -1806,6 +1927,14 @@ func (c *UsersSessionsDeleteCall) Fields(s ...googleapi.Field) *UsersSessionsDel
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersSessionsDeleteCall) Context(ctx context.Context) *UsersSessionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1824,6 +1953,9 @@ func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"sessionId": c.sessionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1879,6 +2011,7 @@ type UsersSessionsListCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists sessions previously created.
@@ -1930,6 +2063,14 @@ func (c *UsersSessionsListCall) Fields(s ...googleapi.Field) *UsersSessionsListC
 	return c
 }
 
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersSessionsListCall) Context(ctx context.Context) *UsersSessionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1956,6 +2097,9 @@ func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2032,6 +2176,7 @@ type UsersSessionsUpdateCall struct {
 	sessionId string
 	session   *Session
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates or insert a given session.
@@ -2055,6 +2200,14 @@ func (c *UsersSessionsUpdateCall) CurrentTimeMillis(currentTimeMillis int64) *Us
 // for more information.
 func (c *UsersSessionsUpdateCall) Fields(s ...googleapi.Field) *UsersSessionsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *UsersSessionsUpdateCall) Context(ctx context.Context) *UsersSessionsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2082,6 +2235,9 @@ func (c *UsersSessionsUpdateCall) doRequest(alt string) (*http.Response, error) 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "partners:v2"
 const apiName = "partners"
@@ -825,6 +825,7 @@ type ClientMessagesLogCall struct {
 	s                 *Service
 	logmessagerequest *LogMessageRequest
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Log: Logs a generic message from the client, such as `Failed to
@@ -841,6 +842,14 @@ func (r *ClientMessagesService) Log(logmessagerequest *LogMessageRequest) *Clien
 // for more information.
 func (c *ClientMessagesLogCall) Fields(s ...googleapi.Field) *ClientMessagesLogCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ClientMessagesLogCall) Ctx(ctx context.Context) *ClientMessagesLogCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -862,6 +871,9 @@ func (c *ClientMessagesLogCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -900,6 +912,7 @@ type CompaniesGetCall struct {
 	s         *Service
 	companyId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a company.
@@ -1011,6 +1024,14 @@ func (c *CompaniesGetCall) Fields(s ...googleapi.Field) *CompaniesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CompaniesGetCall) Ctx(ctx context.Context) *CompaniesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1058,6 +1079,9 @@ func (c *CompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 		"companyId": c.companyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1163,6 +1187,7 @@ func (c *CompaniesGetCall) Do() (*GetCompanyResponse, error) {
 type CompaniesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists companies.
@@ -1408,6 +1433,14 @@ func (c *CompaniesListCall) Fields(s ...googleapi.Field) *CompaniesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CompaniesListCall) Ctx(ctx context.Context) *CompaniesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1492,6 +1525,9 @@ func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1691,6 +1727,7 @@ type CompaniesLeadsCreateCall struct {
 	companyId         string
 	createleadrequest *CreateLeadRequest
 	opt_              map[string]interface{}
+	ctx_              context.Context
 }
 
 // Create: Creates an advertiser lead for the given company ID.
@@ -1706,6 +1743,14 @@ func (r *CompaniesLeadsService) Create(companyId string, createleadrequest *Crea
 // for more information.
 func (c *CompaniesLeadsCreateCall) Fields(s ...googleapi.Field) *CompaniesLeadsCreateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CompaniesLeadsCreateCall) Ctx(ctx context.Context) *CompaniesLeadsCreateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1729,6 +1774,9 @@ func (c *CompaniesLeadsCreateCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1778,6 +1826,7 @@ type UserEventsLogCall struct {
 	s                   *Service
 	logusereventrequest *LogUserEventRequest
 	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // Log: Logs a user event.
@@ -1792,6 +1841,14 @@ func (r *UserEventsService) Log(logusereventrequest *LogUserEventRequest) *UserE
 // for more information.
 func (c *UserEventsLogCall) Fields(s ...googleapi.Field) *UserEventsLogCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UserEventsLogCall) Ctx(ctx context.Context) *UserEventsLogCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -1813,6 +1870,9 @@ func (c *UserEventsLogCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1850,6 +1910,7 @@ func (c *UserEventsLogCall) Do() (*LogUserEventResponse, error) {
 type UserStatesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists states for current user.
@@ -1922,6 +1983,14 @@ func (c *UserStatesListCall) Fields(s ...googleapi.Field) *UserStatesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *UserStatesListCall) Ctx(ctx context.Context) *UserStatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *UserStatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1955,6 +2024,9 @@ func (c *UserStatesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

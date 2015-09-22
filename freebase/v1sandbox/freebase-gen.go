@@ -4,7 +4,7 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/freebase/v1"
+//   import "google.golang.org/api/freebase/v1sandbox"
 //   ...
 //   freebaseService, err := freebase.New(oauthHttpClient)
 package freebase
@@ -36,10 +36,10 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 
-const apiId = "freebase:v1"
+const apiId = "freebase:v1sandbox"
 const apiName = "freebase"
-const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/freebase/v1/"
+const apiVersion = "v1sandbox"
+const basePath = "https://www.googleapis.com/freebase/v1sandbox/"
 
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
@@ -81,8 +81,6 @@ type ReconcileCandidate struct {
 	Notable *ReconcileCandidateNotable `json:"notable,omitempty"`
 }
 
-// ReconcileCandidateNotable: Type or profession the candidate is
-// notable for.
 type ReconcileCandidateNotable struct {
 	// Id: MID of notable category.
 	Id string `json:"id,omitempty"`
@@ -113,7 +111,6 @@ type ReconcileGet struct {
 	Warning []*ReconcileGetWarning `json:"warning,omitempty"`
 }
 
-// ReconcileGetCosts: Server costs for reconciling.
 type ReconcileGetCosts struct {
 	// Hits: Total number of hits found.
 	Hits int64 `json:"hits,omitempty"`
@@ -200,15 +197,15 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 // Ctx sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is cancelled.
-func (c *ReconcileCall) Ctx(ctx context.Context) *ReconcileCall {
+func (c *ReconcileCall) Ctx(ctx context.Context) {
 	c.ctx_ = ctx
-	return c
 }
 
-func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
+func (c *ReconcileCall) Do() (*ReconcileGet, error) {
+	var body io.Reader
+	var err error
 	params := make(url.Values)
-	params.Set("alt", alt)
+	params.Set("alt", "json")
 	if v, ok := c.opt_["confidence"]; ok {
 		params.Set("confidence", fmt.Sprintf("%v", v))
 	}
@@ -235,14 +232,12 @@ func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	var res *http.Response
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		res, err = ctxhttp.Do(c.ctx_, c.s.client, req)
+	} else {
+		res, err = c.s.client.Do(req)
 	}
-	return c.s.client.Do(req)
-}
-
-func (c *ReconcileCall) Do() (*ReconcileGet, error) {
-	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
 	}
@@ -526,18 +521,18 @@ func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 	return c
 }
 
-// Ctx sets the context to be used in this call's Do and Download methods.
+// Ctx sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is cancelled.
-func (c *SearchCall) Ctx(ctx context.Context) *SearchCall {
+func (c *SearchCall) Ctx(ctx context.Context) {
 	c.ctx_ = ctx
-	return c
 }
 
-func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
+func (c *SearchCall) Do() error {
+	var body io.Reader
+	var err error
 	params := make(url.Values)
-	params.Set("alt", alt)
+	params.Set("alt", "json")
 	if v, ok := c.opt_["as_of_time"]; ok {
 		params.Set("as_of_time", fmt.Sprintf("%v", v))
 	}
@@ -615,29 +610,12 @@ func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	var res *http.Response
 	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
+		res, err = ctxhttp.Do(c.ctx_, c.s.client, req)
+	} else {
+		res, err = c.s.client.Do(req)
 	}
-	return c.s.client.Do(req)
-}
-
-// Download fetches the API endpoint's "media" value, instead of the normal
-// API response value. If the returned error is nil, the Response is guaranteed to
-// have a 2xx status code. Callers must close the Response.Body as usual.
-func (c *SearchCall) Download() (*http.Response, error) {
-	res, err := c.doRequest("media")
-	if err != nil {
-		return nil, err
-	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
-		res.Body.Close()
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *SearchCall) Do() error {
-	res, err := c.doRequest("json")
 	if err != nil {
 		return err
 	}

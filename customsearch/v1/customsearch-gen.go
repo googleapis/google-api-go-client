@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "customsearch:v1"
 const apiName = "customsearch"
@@ -301,6 +301,7 @@ type CseListCall struct {
 	s    *Service
 	q    string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns metadata about the search performed, metadata about the
@@ -629,6 +630,14 @@ func (c *CseListCall) Fields(s ...googleapi.Field) *CseListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CseListCall) Ctx(ctx context.Context) *CseListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -735,6 +744,9 @@ func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

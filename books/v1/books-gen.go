@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "books:v1"
 const apiName = "books"
@@ -1710,6 +1710,7 @@ type BookshelvesGetCall struct {
 	userId string
 	shelf  string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves metadata for a specific bookshelf for the specified
@@ -1736,6 +1737,14 @@ func (c *BookshelvesGetCall) Fields(s ...googleapi.Field) *BookshelvesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BookshelvesGetCall) Ctx(ctx context.Context) *BookshelvesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1754,6 +1763,9 @@ func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 		"shelf":  c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1815,6 +1827,7 @@ type BookshelvesListCall struct {
 	s      *Service
 	userId string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of public bookshelves for the specified user.
@@ -1839,6 +1852,14 @@ func (c *BookshelvesListCall) Fields(s ...googleapi.Field) *BookshelvesListCall 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BookshelvesListCall) Ctx(ctx context.Context) *BookshelvesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1856,6 +1877,9 @@ func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1911,6 +1935,7 @@ type BookshelvesVolumesListCall struct {
 	userId string
 	shelf  string
 	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves volumes in a specific bookshelf for the specified
@@ -1958,6 +1983,14 @@ func (c *BookshelvesVolumesListCall) Fields(s ...googleapi.Field) *BookshelvesVo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *BookshelvesVolumesListCall) Ctx(ctx context.Context) *BookshelvesVolumesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1985,6 +2018,9 @@ func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, erro
 		"shelf":  c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2064,6 +2100,7 @@ func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 type CloudloadingAddBookCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // AddBook:
@@ -2107,6 +2144,14 @@ func (c *CloudloadingAddBookCall) Fields(s ...googleapi.Field) *CloudloadingAddB
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CloudloadingAddBookCall) Ctx(ctx context.Context) *CloudloadingAddBookCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2131,6 +2176,9 @@ func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) 
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2190,6 +2238,7 @@ type CloudloadingDeleteBookCall struct {
 	s        *Service
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // DeleteBook: Remove the book and its contents
@@ -2207,6 +2256,14 @@ func (c *CloudloadingDeleteBookCall) Fields(s ...googleapi.Field) *CloudloadingD
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CloudloadingDeleteBookCall) Ctx(ctx context.Context) *CloudloadingDeleteBookCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2220,6 +2277,9 @@ func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2262,6 +2322,7 @@ type CloudloadingUpdateBookCall struct {
 	s                         *Service
 	bookscloudloadingresource *BooksCloudloadingResource
 	opt_                      map[string]interface{}
+	ctx_                      context.Context
 }
 
 // UpdateBook:
@@ -2276,6 +2337,14 @@ func (r *CloudloadingService) UpdateBook(bookscloudloadingresource *BooksCloudlo
 // for more information.
 func (c *CloudloadingUpdateBookCall) Fields(s ...googleapi.Field) *CloudloadingUpdateBookCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *CloudloadingUpdateBookCall) Ctx(ctx context.Context) *CloudloadingUpdateBookCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -2297,6 +2366,9 @@ func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, erro
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2338,6 +2410,7 @@ type DictionaryListOfflineMetadataCall struct {
 	s       *Service
 	cpksver string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // ListOfflineMetadata: Returns a list of offline dictionary meatadata
@@ -2356,6 +2429,14 @@ func (c *DictionaryListOfflineMetadataCall) Fields(s ...googleapi.Field) *Dictio
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *DictionaryListOfflineMetadataCall) Ctx(ctx context.Context) *DictionaryListOfflineMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2369,6 +2450,9 @@ func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Respons
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2419,6 +2503,7 @@ type LayersGetCall struct {
 	volumeId  string
 	summaryId string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets the layer summary for a volume.
@@ -2451,6 +2536,14 @@ func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersGetCall) Ctx(ctx context.Context) *LayersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2472,6 +2565,9 @@ func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 		"summaryId": c.summaryId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2538,6 +2634,7 @@ type LayersListCall struct {
 	s        *Service
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: List the layer summaries for a volume.
@@ -2583,6 +2680,14 @@ func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersListCall) Ctx(ctx context.Context) *LayersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2609,6 +2714,9 @@ func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2684,6 +2792,7 @@ type LayersAnnotationDataGetCall struct {
 	annotationDataId string
 	contentVersion   string
 	opt_             map[string]interface{}
+	ctx_             context.Context
 }
 
 // Get: Gets the annotation data.
@@ -2748,6 +2857,14 @@ func (c *LayersAnnotationDataGetCall) Fields(s ...googleapi.Field) *LayersAnnota
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersAnnotationDataGetCall) Ctx(ctx context.Context) *LayersAnnotationDataGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -2783,6 +2900,9 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 		"annotationDataId": c.annotationDataId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -2889,6 +3009,7 @@ type LayersAnnotationDataListCall struct {
 	layerId        string
 	contentVersion string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // List: Gets the annotation data for a volume and layer.
@@ -2982,6 +3103,14 @@ func (c *LayersAnnotationDataListCall) Fields(s ...googleapi.Field) *LayersAnnot
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersAnnotationDataListCall) Ctx(ctx context.Context) *LayersAnnotationDataListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3028,6 +3157,9 @@ func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, er
 		"layerId":  c.layerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3151,6 +3283,7 @@ type LayersVolumeAnnotationsGetCall struct {
 	layerId      string
 	annotationId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Get: Gets the volume annotation.
@@ -3185,6 +3318,14 @@ func (c *LayersVolumeAnnotationsGetCall) Fields(s ...googleapi.Field) *LayersVol
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersVolumeAnnotationsGetCall) Ctx(ctx context.Context) *LayersVolumeAnnotationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3207,6 +3348,9 @@ func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, 
 		"annotationId": c.annotationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3282,6 +3426,7 @@ type LayersVolumeAnnotationsListCall struct {
 	layerId        string
 	contentVersion string
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // List: Gets the volume annotations for a volume and layer.
@@ -3390,6 +3535,14 @@ func (c *LayersVolumeAnnotationsListCall) Fields(s ...googleapi.Field) *LayersVo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *LayersVolumeAnnotationsListCall) Ctx(ctx context.Context) *LayersVolumeAnnotationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3442,6 +3595,9 @@ func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response,
 		"layerId":  c.layerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3567,6 +3723,7 @@ func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 type MyconfigGetUserSettingsCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetUserSettings: Gets the current settings for the user.
@@ -3583,6 +3740,14 @@ func (c *MyconfigGetUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigGetU
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MyconfigGetUserSettingsCall) Ctx(ctx context.Context) *MyconfigGetUserSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3595,6 +3760,9 @@ func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3634,6 +3802,7 @@ type MyconfigReleaseDownloadAccessCall struct {
 	volumeIds []string
 	cpksver   string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // ReleaseDownloadAccess: Release downloaded content access restriction.
@@ -3666,6 +3835,14 @@ func (c *MyconfigReleaseDownloadAccessCall) Fields(s ...googleapi.Field) *Myconf
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MyconfigReleaseDownloadAccessCall) Ctx(ctx context.Context) *MyconfigReleaseDownloadAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3688,6 +3865,9 @@ func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Respons
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3758,6 +3938,7 @@ type MyconfigRequestAccessCall struct {
 	nonce    string
 	cpksver  string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // RequestAccess: Request concurrent and download access restrictions.
@@ -3797,6 +3978,14 @@ func (c *MyconfigRequestAccessCall) Fields(s ...googleapi.Field) *MyconfigReques
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MyconfigRequestAccessCall) Ctx(ctx context.Context) *MyconfigRequestAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3819,6 +4008,9 @@ func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -3911,6 +4103,7 @@ type MyconfigSyncVolumeLicensesCall struct {
 	nonce   string
 	cpksver string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // SyncVolumeLicenses: Request downloaded content access for specified
@@ -3962,6 +4155,14 @@ func (c *MyconfigSyncVolumeLicensesCall) Fields(s ...googleapi.Field) *MyconfigS
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MyconfigSyncVolumeLicensesCall) Ctx(ctx context.Context) *MyconfigSyncVolumeLicensesCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -3989,6 +4190,9 @@ func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, 
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4080,6 +4284,7 @@ type MyconfigUpdateUserSettingsCall struct {
 	s            *Service
 	usersettings *Usersettings
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // UpdateUserSettings: Sets the settings for the user. If a sub-object
@@ -4096,6 +4301,14 @@ func (r *MyconfigService) UpdateUserSettings(usersettings *Usersettings) *Myconf
 // for more information.
 func (c *MyconfigUpdateUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigUpdateUserSettingsCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MyconfigUpdateUserSettingsCall) Ctx(ctx context.Context) *MyconfigUpdateUserSettingsCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4117,6 +4330,9 @@ func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4158,6 +4374,7 @@ type MylibraryAnnotationsDeleteCall struct {
 	s            *Service
 	annotationId string
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Delete: Deletes an annotation.
@@ -4182,6 +4399,14 @@ func (c *MylibraryAnnotationsDeleteCall) Fields(s ...googleapi.Field) *Mylibrary
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryAnnotationsDeleteCall) Ctx(ctx context.Context) *MylibraryAnnotationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4199,6 +4424,9 @@ func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, 
 		"annotationId": c.annotationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4246,6 +4474,7 @@ type MylibraryAnnotationsInsertCall struct {
 	s          *Service
 	annotation *Annotation
 	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Insert: Inserts a new annotation.
@@ -4285,6 +4514,14 @@ func (c *MylibraryAnnotationsInsertCall) Fields(s ...googleapi.Field) *Mylibrary
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryAnnotationsInsertCall) Ctx(ctx context.Context) *MylibraryAnnotationsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.annotation)
@@ -4312,6 +4549,9 @@ func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, 
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4369,6 +4609,7 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 type MylibraryAnnotationsListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieves a list of annotations, possibly filtered.
@@ -4458,6 +4699,14 @@ func (c *MylibraryAnnotationsListCall) Fields(s ...googleapi.Field) *MylibraryAn
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryAnnotationsListCall) Ctx(ctx context.Context) *MylibraryAnnotationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4500,6 +4749,9 @@ func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4595,6 +4847,7 @@ type MylibraryAnnotationsSummaryCall struct {
 	layerIds []string
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Summary: Gets the summary of specified layers.
@@ -4610,6 +4863,14 @@ func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string
 // for more information.
 func (c *MylibraryAnnotationsSummaryCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsSummaryCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryAnnotationsSummaryCall) Ctx(ctx context.Context) *MylibraryAnnotationsSummaryCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4629,6 +4890,9 @@ func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response,
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4687,6 +4951,7 @@ type MylibraryAnnotationsUpdateCall struct {
 	annotationId string
 	annotation   *Annotation
 	opt_         map[string]interface{}
+	ctx_         context.Context
 }
 
 // Update: Updates an existing annotation.
@@ -4709,6 +4974,14 @@ func (c *MylibraryAnnotationsUpdateCall) Source(source string) *MylibraryAnnotat
 // for more information.
 func (c *MylibraryAnnotationsUpdateCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsUpdateCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryAnnotationsUpdateCall) Ctx(ctx context.Context) *MylibraryAnnotationsUpdateCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -4735,6 +5008,9 @@ func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, 
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4793,6 +5069,7 @@ type MylibraryBookshelvesAddVolumeCall struct {
 	shelf    string
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // AddVolume: Adds a volume to a bookshelf.
@@ -4830,6 +5107,14 @@ func (c *MylibraryBookshelvesAddVolumeCall) Fields(s ...googleapi.Field) *Mylibr
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryBookshelvesAddVolumeCall) Ctx(ctx context.Context) *MylibraryBookshelvesAddVolumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4851,6 +5136,9 @@ func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Respons
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -4920,6 +5208,7 @@ type MylibraryBookshelvesClearVolumesCall struct {
 	s     *Service
 	shelf string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // ClearVolumes: Clears all volumes from a bookshelf.
@@ -4944,6 +5233,14 @@ func (c *MylibraryBookshelvesClearVolumesCall) Fields(s ...googleapi.Field) *Myl
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryBookshelvesClearVolumesCall) Ctx(ctx context.Context) *MylibraryBookshelvesClearVolumesCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -4961,6 +5258,9 @@ func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Resp
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5008,6 +5308,7 @@ type MylibraryBookshelvesGetCall struct {
 	s     *Service
 	shelf string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Get: Retrieves metadata for a specific bookshelf belonging to the
@@ -5033,6 +5334,14 @@ func (c *MylibraryBookshelvesGetCall) Fields(s ...googleapi.Field) *MylibraryBoo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryBookshelvesGetCall) Ctx(ctx context.Context) *MylibraryBookshelvesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5050,6 +5359,9 @@ func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, err
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5103,6 +5415,7 @@ func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
 type MylibraryBookshelvesListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieves a list of bookshelves belonging to the authenticated
@@ -5127,6 +5440,14 @@ func (c *MylibraryBookshelvesListCall) Fields(s ...googleapi.Field) *MylibraryBo
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryBookshelvesListCall) Ctx(ctx context.Context) *MylibraryBookshelvesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5142,6 +5463,9 @@ func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5189,6 +5513,7 @@ type MylibraryBookshelvesMoveVolumeCall struct {
 	volumeId       string
 	volumePosition int64
 	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // MoveVolume: Moves a volume within a bookshelf.
@@ -5215,6 +5540,14 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Fields(s ...googleapi.Field) *Mylib
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryBookshelvesMoveVolumeCall) Ctx(ctx context.Context) *MylibraryBookshelvesMoveVolumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5234,6 +5567,9 @@ func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Respon
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5297,6 +5633,7 @@ type MylibraryBookshelvesRemoveVolumeCall struct {
 	shelf    string
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // RemoveVolume: Removes a volume from a bookshelf.
@@ -5332,6 +5669,14 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Fields(s ...googleapi.Field) *Myl
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryBookshelvesRemoveVolumeCall) Ctx(ctx context.Context) *MylibraryBookshelvesRemoveVolumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5353,6 +5698,9 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Resp
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5418,6 +5766,7 @@ type MylibraryBookshelvesVolumesListCall struct {
 	s     *Service
 	shelf string
 	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // List: Gets volume information for volumes on a bookshelf.
@@ -5488,6 +5837,14 @@ func (c *MylibraryBookshelvesVolumesListCall) Fields(s ...googleapi.Field) *Myli
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryBookshelvesVolumesListCall) Ctx(ctx context.Context) *MylibraryBookshelvesVolumesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5523,6 +5880,9 @@ func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Respo
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5619,6 +5979,7 @@ type MylibraryReadingpositionsGetCall struct {
 	s        *Service
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves my reading position information for a volume.
@@ -5650,6 +6011,14 @@ func (c *MylibraryReadingpositionsGetCall) Fields(s ...googleapi.Field) *Mylibra
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryReadingpositionsGetCall) Ctx(ctx context.Context) *MylibraryReadingpositionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5670,6 +6039,9 @@ func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5731,6 +6103,7 @@ type MylibraryReadingpositionsSetPositionCall struct {
 	timestamp string
 	position  string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // SetPosition: Sets my reading position information for a volume.
@@ -5786,6 +6159,14 @@ func (c *MylibraryReadingpositionsSetPositionCall) Fields(s ...googleapi.Field) 
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *MylibraryReadingpositionsSetPositionCall) Ctx(ctx context.Context) *MylibraryReadingpositionsSetPositionCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5814,6 +6195,9 @@ func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5905,6 +6289,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 type OnboardingListCategoriesCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ListCategories: List categories for onboarding experience.
@@ -5928,6 +6313,14 @@ func (c *OnboardingListCategoriesCall) Fields(s ...googleapi.Field) *OnboardingL
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OnboardingListCategoriesCall) Ctx(ctx context.Context) *OnboardingListCategoriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -5943,6 +6336,9 @@ func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, er
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -5987,6 +6383,7 @@ func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
 type OnboardingListCategoryVolumesCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ListCategoryVolumes: List available volumes under categories for
@@ -6045,6 +6442,14 @@ func (c *OnboardingListCategoryVolumesCall) Fields(s ...googleapi.Field) *Onboar
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *OnboardingListCategoryVolumesCall) Ctx(ctx context.Context) *OnboardingListCategoryVolumesCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6072,6 +6477,9 @@ func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Respons
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6146,6 +6554,7 @@ func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
 type PromoofferAcceptCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Accept:
@@ -6212,6 +6621,14 @@ func (c *PromoofferAcceptCall) Fields(s ...googleapi.Field) *PromoofferAcceptCal
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PromoofferAcceptCall) Ctx(ctx context.Context) *PromoofferAcceptCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6248,6 +6665,9 @@ func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6319,6 +6739,7 @@ func (c *PromoofferAcceptCall) Do() error {
 type PromoofferDismissCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Dismiss:
@@ -6378,6 +6799,14 @@ func (c *PromoofferDismissCall) Fields(s ...googleapi.Field) *PromoofferDismissC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PromoofferDismissCall) Ctx(ctx context.Context) *PromoofferDismissCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6411,6 +6840,9 @@ func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6478,6 +6910,7 @@ func (c *PromoofferDismissCall) Do() error {
 type PromoofferGetCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Returns a list of promo offers available to the user
@@ -6531,6 +6964,14 @@ func (c *PromoofferGetCall) Fields(s ...googleapi.Field) *PromoofferGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *PromoofferGetCall) Ctx(ctx context.Context) *PromoofferGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6561,6 +7002,9 @@ func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6631,6 +7075,7 @@ type VolumesGetCall struct {
 	s        *Service
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Gets volume information for a single volume.
@@ -6687,6 +7132,14 @@ func (c *VolumesGetCall) Fields(s ...googleapi.Field) *VolumesGetCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VolumesGetCall) Ctx(ctx context.Context) *VolumesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6716,6 +7169,9 @@ func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -6797,6 +7253,7 @@ type VolumesListCall struct {
 	s    *Service
 	q    string
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Performs a book search.
@@ -6923,6 +7380,14 @@ func (c *VolumesListCall) Fields(s ...googleapi.Field) *VolumesListCall {
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VolumesListCall) Ctx(ctx context.Context) *VolumesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -6972,6 +7437,9 @@ func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7140,6 +7608,7 @@ type VolumesAssociatedListCall struct {
 	s        *Service
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Return a list of associated books.
@@ -7197,6 +7666,14 @@ func (c *VolumesAssociatedListCall) Fields(s ...googleapi.Field) *VolumesAssocia
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VolumesAssociatedListCall) Ctx(ctx context.Context) *VolumesAssociatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7223,6 +7700,9 @@ func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7309,6 +7789,7 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 type VolumesMybooksListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return a list of books in My Library.
@@ -7383,6 +7864,14 @@ func (c *VolumesMybooksListCall) Fields(s ...googleapi.Field) *VolumesMybooksLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VolumesMybooksListCall) Ctx(ctx context.Context) *VolumesMybooksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7413,6 +7902,9 @@ func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7517,6 +8009,7 @@ func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 type VolumesRecommendedListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return a list of recommended books for the current user.
@@ -7561,6 +8054,14 @@ func (c *VolumesRecommendedListCall) Fields(s ...googleapi.Field) *VolumesRecomm
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VolumesRecommendedListCall) Ctx(ctx context.Context) *VolumesRecommendedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7582,6 +8083,9 @@ func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7646,6 +8150,7 @@ type VolumesRecommendedRateCall struct {
 	rating   string
 	volumeId string
 	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Rate: Rate a recommended book for the current user.
@@ -7679,6 +8184,14 @@ func (c *VolumesRecommendedRateCall) Fields(s ...googleapi.Field) *VolumesRecomm
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VolumesRecommendedRateCall) Ctx(ctx context.Context) *VolumesRecommendedRateCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7699,6 +8212,9 @@ func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, erro
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -7772,6 +8288,7 @@ func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse,
 type VolumesUseruploadedListCall struct {
 	s    *Service
 	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return a list of books uploaded by the current user.
@@ -7837,6 +8354,14 @@ func (c *VolumesUseruploadedListCall) Fields(s ...googleapi.Field) *VolumesUseru
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *VolumesUseruploadedListCall) Ctx(ctx context.Context) *VolumesUseruploadedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -7867,6 +8392,9 @@ func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, err
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

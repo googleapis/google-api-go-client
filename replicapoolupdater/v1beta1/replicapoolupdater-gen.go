@@ -15,6 +15,7 @@ import (
 	"errors"
 	"fmt"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -34,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = context.Background
 
 const apiId = "replicapoolupdater:v1beta1"
 const apiName = "replicapoolupdater"
@@ -447,6 +447,7 @@ type RollingUpdatesCancelCall struct {
 	zone          string
 	rollingUpdate string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Cancel: Cancels an update. The update must be PAUSED before it can be
@@ -468,6 +469,14 @@ func (c *RollingUpdatesCancelCall) Fields(s ...googleapi.Field) *RollingUpdatesC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RollingUpdatesCancelCall) Ctx(ctx context.Context) *RollingUpdatesCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RollingUpdatesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -484,6 +493,9 @@ func (c *RollingUpdatesCancelCall) doRequest(alt string) (*http.Response, error)
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -551,6 +563,7 @@ type RollingUpdatesGetCall struct {
 	zone          string
 	rollingUpdate string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Get: Returns information about an update.
@@ -571,6 +584,14 @@ func (c *RollingUpdatesGetCall) Fields(s ...googleapi.Field) *RollingUpdatesGetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RollingUpdatesGetCall) Ctx(ctx context.Context) *RollingUpdatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RollingUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -587,6 +608,9 @@ func (c *RollingUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -656,6 +680,7 @@ type RollingUpdatesInsertCall struct {
 	zone          string
 	rollingupdate *RollingUpdate
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Insert: Inserts and starts a new update.
@@ -673,6 +698,14 @@ func (r *RollingUpdatesService) Insert(project string, zone string, rollingupdat
 // for more information.
 func (c *RollingUpdatesInsertCall) Fields(s ...googleapi.Field) *RollingUpdatesInsertCall {
 	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RollingUpdatesInsertCall) Ctx(ctx context.Context) *RollingUpdatesInsertCall {
+	c.ctx_ = ctx
 	return c
 }
 
@@ -697,6 +730,9 @@ func (c *RollingUpdatesInsertCall) doRequest(alt string) (*http.Response, error)
 	})
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -759,6 +795,7 @@ type RollingUpdatesListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Lists recent updates for a given managed instance group, in
@@ -802,6 +839,14 @@ func (c *RollingUpdatesListCall) Fields(s ...googleapi.Field) *RollingUpdatesLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RollingUpdatesListCall) Ctx(ctx context.Context) *RollingUpdatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RollingUpdatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -826,6 +871,9 @@ func (c *RollingUpdatesListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -907,6 +955,7 @@ type RollingUpdatesListInstanceUpdatesCall struct {
 	zone          string
 	rollingUpdate string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // ListInstanceUpdates: Lists the current status for each instance
@@ -951,6 +1000,14 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Fields(s ...googleapi.Field) *Ro
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RollingUpdatesListInstanceUpdatesCall) Ctx(ctx context.Context) *RollingUpdatesListInstanceUpdatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RollingUpdatesListInstanceUpdatesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -976,6 +1033,9 @@ func (c *RollingUpdatesListInstanceUpdatesCall) doRequest(alt string) (*http.Res
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1064,6 +1124,7 @@ type RollingUpdatesPauseCall struct {
 	zone          string
 	rollingUpdate string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Pause: Pauses the update in state from ROLLING_FORWARD or
@@ -1086,6 +1147,14 @@ func (c *RollingUpdatesPauseCall) Fields(s ...googleapi.Field) *RollingUpdatesPa
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RollingUpdatesPauseCall) Ctx(ctx context.Context) *RollingUpdatesPauseCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RollingUpdatesPauseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1102,6 +1171,9 @@ func (c *RollingUpdatesPauseCall) doRequest(alt string) (*http.Response, error) 
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1169,6 +1241,7 @@ type RollingUpdatesResumeCall struct {
 	zone          string
 	rollingUpdate string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Resume: Continues an update in PAUSED state. Has no effect if invoked
@@ -1190,6 +1263,14 @@ func (c *RollingUpdatesResumeCall) Fields(s ...googleapi.Field) *RollingUpdatesR
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RollingUpdatesResumeCall) Ctx(ctx context.Context) *RollingUpdatesResumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RollingUpdatesResumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1206,6 +1287,9 @@ func (c *RollingUpdatesResumeCall) doRequest(alt string) (*http.Response, error)
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1273,6 +1357,7 @@ type RollingUpdatesRollbackCall struct {
 	zone          string
 	rollingUpdate string
 	opt_          map[string]interface{}
+	ctx_          context.Context
 }
 
 // Rollback: Rolls back the update in state from ROLLING_FORWARD or
@@ -1295,6 +1380,14 @@ func (c *RollingUpdatesRollbackCall) Fields(s ...googleapi.Field) *RollingUpdate
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *RollingUpdatesRollbackCall) Ctx(ctx context.Context) *RollingUpdatesRollbackCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *RollingUpdatesRollbackCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1311,6 +1404,9 @@ func (c *RollingUpdatesRollbackCall) doRequest(alt string) (*http.Response, erro
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1378,6 +1474,7 @@ type ZoneOperationsGetCall struct {
 	zone      string
 	operation string
 	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves the specified zone-specific operation resource.
@@ -1397,6 +1494,14 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZoneOperationsGetCall) Ctx(ctx context.Context) *ZoneOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1413,6 +1518,9 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 
@@ -1479,6 +1587,7 @@ type ZoneOperationsListCall struct {
 	project string
 	zone    string
 	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of Operation resources contained within the
@@ -1521,6 +1630,14 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 	return c
 }
 
+// Ctx sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is cancelled.
+func (c *ZoneOperationsListCall) Ctx(ctx context.Context) *ZoneOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
@@ -1545,6 +1662,9 @@ func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
 	return c.s.client.Do(req)
 }
 

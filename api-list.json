@@ -1398,6 +1398,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "script:v1",
+   "name": "script",
+   "version": "v1",
+   "title": "Google Apps Script Execution API",
+   "description": "An API for executing Google Apps Script projects.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/script/v1/rest",
+   "discoveryLink": "./apis/script/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/apps-script/execution/rest/v1/run",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "storagetransfer:v1",
    "name": "storagetransfer",
    "version": "v1",

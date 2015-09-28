@@ -22,6 +22,30 @@
       "revId": "63751bac2831360a9215ac6cd9d4e33e36e2ec59",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e6de1ec_bdc72b7d",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2015-09-28T00:10:28Z",
+      "side": 1,
+      "message": "Done. PTAL (added equiv. to the ResumableMedia one too).",
+      "parentUuid": "0e6de1ec_ddc0df69",
+      "range": {
+        "startLine": 1547,
+        "startChar": 9,
+        "endLine": 1548,
+        "endChar": 50
+      },
+      "revId": "63751bac2831360a9215ac6cd9d4e33e36e2ec59",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

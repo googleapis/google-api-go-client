@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/gamesconfiguration/v1configuration"
 //   ...
 //   gamesconfigurationService, err := gamesconfiguration.New(oauthHttpClient)
-package gamesconfiguration
+package gamesconfiguration // import "google.golang.org/api/gamesconfiguration/v1configuration"
 
 import (
 	"bytes"

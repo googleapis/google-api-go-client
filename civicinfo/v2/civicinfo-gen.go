@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/civicinfo/v2"
 //   ...
 //   civicinfoService, err := civicinfo.New(oauthHttpClient)
-package civicinfo
+package civicinfo // import "google.golang.org/api/civicinfo/v2"
 
 import (
 	"bytes"

@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/gamesmanagement/v1management"
 //   ...
 //   gamesmanagementService, err := gamesmanagement.New(oauthHttpClient)
-package gamesmanagement
+package gamesmanagement // import "google.golang.org/api/gamesmanagement/v1management"
 
 import (
 	"bytes"

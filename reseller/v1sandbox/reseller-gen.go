@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/reseller/v1sandbox"
 //   ...
 //   resellerService, err := reseller.New(oauthHttpClient)
-package reseller
+package reseller // import "google.golang.org/api/reseller/v1sandbox"
 
 import (
 	"bytes"

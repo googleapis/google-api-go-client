@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/cloudbilling/v1"
 //   ...
 //   cloudbillingService, err := cloudbilling.New(oauthHttpClient)
-package cloudbilling
+package cloudbilling // import "google.golang.org/api/cloudbilling/v1"
 
 import (
 	"bytes"

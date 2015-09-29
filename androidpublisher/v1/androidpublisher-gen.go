@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/androidpublisher/v1"
 //   ...
 //   androidpublisherService, err := androidpublisher.New(oauthHttpClient)
-package androidpublisher
+package androidpublisher // import "google.golang.org/api/androidpublisher/v1"
 
 import (
 	"bytes"

@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/appsactivity/v1"
 //   ...
 //   appsactivityService, err := appsactivity.New(oauthHttpClient)
-package appsactivity
+package appsactivity // import "google.golang.org/api/appsactivity/v1"
 
 import (
 	"bytes"

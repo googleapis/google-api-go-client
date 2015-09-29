@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/discovery/v1"
 //   ...
 //   discoveryService, err := discovery.New(oauthHttpClient)
-package discovery
+package discovery // import "google.golang.org/api/discovery/v1"
 
 import (
 	"bytes"

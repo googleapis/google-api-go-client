@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/admin/directory/v1"
 //   ...
 //   adminService, err := admin.New(oauthHttpClient)
-package admin
+package admin // import "google.golang.org/api/admin/directory/v1"
 
 import (
 	"bytes"

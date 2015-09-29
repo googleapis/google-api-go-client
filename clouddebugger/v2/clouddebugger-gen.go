@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/clouddebugger/v2"
 //   ...
 //   clouddebuggerService, err := clouddebugger.New(oauthHttpClient)
-package clouddebugger
+package clouddebugger // import "google.golang.org/api/clouddebugger/v2"
 
 import (
 	"bytes"

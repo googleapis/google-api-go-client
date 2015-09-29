@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/prediction/v1.5"
 //   ...
 //   predictionService, err := prediction.New(oauthHttpClient)
-package prediction
+package prediction // import "google.golang.org/api/prediction/v1.5"
 
 import (
 	"bytes"

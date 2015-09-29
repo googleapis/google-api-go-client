@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/proximitybeacon/v1beta1"
 //   ...
 //   proximitybeaconService, err := proximitybeacon.New(oauthHttpClient)
-package proximitybeacon
+package proximitybeacon // import "google.golang.org/api/proximitybeacon/v1beta1"
 
 import (
 	"bytes"

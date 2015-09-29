@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/partners/v2"
 //   ...
 //   partnersService, err := partners.New(oauthHttpClient)
-package partners
+package partners // import "google.golang.org/api/partners/v2"
 
 import (
 	"bytes"

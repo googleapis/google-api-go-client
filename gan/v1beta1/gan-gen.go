@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/gan/v1beta1"
 //   ...
 //   ganService, err := gan.New(oauthHttpClient)
-package gan
+package gan // import "google.golang.org/api/gan/v1beta1"
 
 import (
 	"bytes"

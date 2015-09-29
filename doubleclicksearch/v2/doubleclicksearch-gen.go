@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/doubleclicksearch/v2"
 //   ...
 //   doubleclicksearchService, err := doubleclicksearch.New(oauthHttpClient)
-package doubleclicksearch
+package doubleclicksearch // import "google.golang.org/api/doubleclicksearch/v2"
 
 import (
 	"bytes"

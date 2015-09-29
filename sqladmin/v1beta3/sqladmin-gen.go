@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/sqladmin/v1beta3"
 //   ...
 //   sqladminService, err := sqladmin.New(oauthHttpClient)
-package sqladmin
+package sqladmin // import "google.golang.org/api/sqladmin/v1beta3"
 
 import (
 	"bytes"

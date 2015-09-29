@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/admin/email_migration/v2"
 //   ...
 //   adminService, err := admin.New(oauthHttpClient)
-package admin
+package admin // import "google.golang.org/api/admin/email_migration/v2"
 
 import (
 	"bytes"

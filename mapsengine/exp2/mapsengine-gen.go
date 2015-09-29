@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/mapsengine/exp2"
 //   ...
 //   mapsengineService, err := mapsengine.New(oauthHttpClient)
-package mapsengine
+package mapsengine // import "google.golang.org/api/mapsengine/exp2"
 
 import (
 	"bytes"

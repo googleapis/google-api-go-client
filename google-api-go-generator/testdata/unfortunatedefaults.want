@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/wrapnewlines/v1"
 //   ...
 //   wrapnewlinesService, err := wrapnewlines.New(oauthHttpClient)
-package wrapnewlines
+package wrapnewlines // import "google.golang.org/api/wrapnewlines/v1"
 
 import (
 	"bytes"

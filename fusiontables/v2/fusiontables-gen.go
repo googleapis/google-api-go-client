@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/fusiontables/v2"
 //   ...
 //   fusiontablesService, err := fusiontables.New(oauthHttpClient)
-package fusiontables
+package fusiontables // import "google.golang.org/api/fusiontables/v2"
 
 import (
 	"bytes"

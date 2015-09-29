@@ -480,7 +480,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	p("//   ...\n")
 	p("//   %sService, err := %s.New(oauthHttpClient)\n", pkg, pkg)
 
-	p("package %s\n", pkg)
+	p("package %s // import %q\n", pkg, a.Target())
 	p("\n")
 	p("import (\n")
 	for _, pkg := range []string{

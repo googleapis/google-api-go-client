@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/taskqueue/v1beta1"
 //   ...
 //   taskqueueService, err := taskqueue.New(oauthHttpClient)
-package taskqueue
+package taskqueue // import "google.golang.org/api/taskqueue/v1beta1"
 
 import (
 	"bytes"

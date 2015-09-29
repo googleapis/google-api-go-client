@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/spectrum/v1explorer"
 //   ...
 //   spectrumService, err := spectrum.New(oauthHttpClient)
-package spectrum
+package spectrum // import "google.golang.org/api/spectrum/v1explorer"
 
 import (
 	"bytes"

@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/deploymentmanager/v2"
 //   ...
 //   deploymentmanagerService, err := deploymentmanager.New(oauthHttpClient)
-package deploymentmanager
+package deploymentmanager // import "google.golang.org/api/deploymentmanager/v2"
 
 import (
 	"bytes"

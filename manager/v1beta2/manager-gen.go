@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/manager/v1beta2"
 //   ...
 //   managerService, err := manager.New(oauthHttpClient)
-package manager
+package manager // import "google.golang.org/api/manager/v1beta2"
 
 import (
 	"bytes"

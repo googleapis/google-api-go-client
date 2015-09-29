@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/dfareporting/v2.0"
 //   ...
 //   dfareportingService, err := dfareporting.New(oauthHttpClient)
-package dfareporting
+package dfareporting // import "google.golang.org/api/dfareporting/v2.0"
 
 import (
 	"bytes"

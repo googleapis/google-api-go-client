@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/getwithoutbody/v1"
 //   ...
 //   getwithoutbodyService, err := getwithoutbody.New(oauthHttpClient)
-package getwithoutbody
+package getwithoutbody // import "google.golang.org/api/getwithoutbody/v1"
 
 import (
 	"bytes"

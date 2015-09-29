@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/arrayofenum/v1"
 //   ...
 //   arrayofenumService, err := arrayofenum.New(oauthHttpClient)
-package arrayofenum
+package arrayofenum // import "google.golang.org/api/arrayofenum/v1"
 
 import (
 	"bytes"

@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/datastore/v1beta1"
 //   ...
 //   datastoreService, err := datastore.New(oauthHttpClient)
-package datastore
+package datastore // import "google.golang.org/api/datastore/v1beta1"
 
 import (
 	"bytes"

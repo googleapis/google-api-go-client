@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/adsensehost/v4.1"
 //   ...
 //   adsensehostService, err := adsensehost.New(oauthHttpClient)
-package adsensehost
+package adsensehost // import "google.golang.org/api/adsensehost/v4.1"
 
 import (
 	"bytes"

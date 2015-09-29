@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/calendar/v3"
 //   ...
 //   calendarService, err := calendar.New(oauthHttpClient)
-package calendar
+package calendar // import "google.golang.org/api/calendar/v3"
 
 import (
 	"bytes"

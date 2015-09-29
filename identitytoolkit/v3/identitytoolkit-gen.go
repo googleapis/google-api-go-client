@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/identitytoolkit/v3"
 //   ...
 //   identitytoolkitService, err := identitytoolkit.New(oauthHttpClient)
-package identitytoolkit
+package identitytoolkit // import "google.golang.org/api/identitytoolkit/v3"
 
 import (
 	"bytes"

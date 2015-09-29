@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/dataflow/v1b3"
 //   ...
 //   dataflowService, err := dataflow.New(oauthHttpClient)
-package dataflow
+package dataflow // import "google.golang.org/api/dataflow/v1b3"
 
 import (
 	"bytes"

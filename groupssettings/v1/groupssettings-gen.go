@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/groupssettings/v1"
 //   ...
 //   groupssettingsService, err := groupssettings.New(oauthHttpClient)
-package groupssettings
+package groupssettings // import "google.golang.org/api/groupssettings/v1"
 
 import (
 	"bytes"

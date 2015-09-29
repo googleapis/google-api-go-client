@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/translate/v2"
 //   ...
 //   translateService, err := translate.New(oauthHttpClient)
-package translate
+package translate // import "google.golang.org/api/translate/v2"
 
 import (
 	"bytes"

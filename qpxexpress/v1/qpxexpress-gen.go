@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/qpxexpress/v1"
 //   ...
 //   qpxexpressService, err := qpxexpress.New(oauthHttpClient)
-package qpxexpress
+package qpxexpress // import "google.golang.org/api/qpxexpress/v1"
 
 import (
 	"bytes"

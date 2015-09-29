@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/genomics/v1"
 //   ...
 //   genomicsService, err := genomics.New(oauthHttpClient)
-package genomics
+package genomics // import "google.golang.org/api/genomics/v1"
 
 import (
 	"bytes"

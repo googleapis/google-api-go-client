@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/plus/v1"
 //   ...
 //   plusService, err := plus.New(oauthHttpClient)
-package plus
+package plus // import "google.golang.org/api/plus/v1"
 
 import (
 	"bytes"

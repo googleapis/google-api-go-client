@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/adexchangebuyer/v1.2"
 //   ...
 //   adexchangebuyerService, err := adexchangebuyer.New(oauthHttpClient)
-package adexchangebuyer
+package adexchangebuyer // import "google.golang.org/api/adexchangebuyer/v1.2"
 
 import (
 	"bytes"

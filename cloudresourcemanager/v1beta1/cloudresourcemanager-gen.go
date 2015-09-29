@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/cloudresourcemanager/v1beta1"
 //   ...
 //   cloudresourcemanagerService, err := cloudresourcemanager.New(oauthHttpClient)
-package cloudresourcemanager
+package cloudresourcemanager // import "google.golang.org/api/cloudresourcemanager/v1beta1"
 
 import (
 	"bytes"

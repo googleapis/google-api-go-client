@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/additionalprops/v1"
 //   ...
 //   additionalpropsService, err := additionalprops.New(oauthHttpClient)
-package additionalprops
+package additionalprops // import "google.golang.org/api/additionalprops/v1"
 
 import (
 	"bytes"

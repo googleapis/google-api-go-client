@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/coordinate/v1"
 //   ...
 //   coordinateService, err := coordinate.New(oauthHttpClient)
-package coordinate
+package coordinate // import "google.golang.org/api/coordinate/v1"
 
 import (
 	"bytes"

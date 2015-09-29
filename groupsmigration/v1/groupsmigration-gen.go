@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/groupsmigration/v1"
 //   ...
 //   groupsmigrationService, err := groupsmigration.New(oauthHttpClient)
-package groupsmigration
+package groupsmigration // import "google.golang.org/api/groupsmigration/v1"
 
 import (
 	"bytes"

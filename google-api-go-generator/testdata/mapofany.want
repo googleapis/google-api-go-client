@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/mapofany/v1"
 //   ...
 //   mapofanyService, err := mapofany.New(oauthHttpClient)
-package mapofany
+package mapofany // import "google.golang.org/api/mapofany/v1"
 
 import (
 	"bytes"

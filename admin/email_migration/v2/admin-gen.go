@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -35,6 +36,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = internal.MarshalJSON
 
 const apiId = "admin:email_migration_v2"
 const apiName = "admin"
@@ -108,6 +110,20 @@ type MailItem struct {
 
 	// Labels: List of labels (strings)
 	Labels []string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsDeleted") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *MailItem) MarshalJSON() ([]byte, error) {
+	type noMethod MailItem
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "emailMigration.mail.insert":

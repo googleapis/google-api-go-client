@@ -17,6 +17,7 @@ import (
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/api/googleapi"
+	"google.golang.org/api/internal"
 	"io"
 	"net/http"
 	"net/url"
@@ -35,6 +36,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = internal.MarshalJSON
 
 const apiId = "admin:datatransfer_v1"
 const apiName = "admin"
@@ -113,6 +115,20 @@ type Application struct {
 	// application. These parameters can be used to select the data of the
 	// user in this application to be transfered.
 	TransferParams []*ApplicationTransferParam `json:"transferParams,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Application) MarshalJSON() ([]byte, error) {
+	type noMethod Application
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApplicationDataTransfer: Template to map fields of
@@ -129,6 +145,20 @@ type ApplicationDataTransfer struct {
 	// ApplicationTransferStatus: Current status of transfer for this
 	// application. (Read-only)
 	ApplicationTransferStatus string `json:"applicationTransferStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ApplicationDataTransfer) MarshalJSON() ([]byte, error) {
+	type noMethod ApplicationDataTransfer
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApplicationTransferParam: Template for application transfer
@@ -140,6 +170,20 @@ type ApplicationTransferParam struct {
 	// Value: The value of the coressponding transfer parameter. eg:
 	// 'PRIVATE' or 'SHARED'
 	Value []string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ApplicationTransferParam) MarshalJSON() ([]byte, error) {
+	type noMethod ApplicationTransferParam
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApplicationsListResponse: Template for a collection of Applications.
@@ -157,6 +201,20 @@ type ApplicationsListResponse struct {
 	// NextPageToken: Continuation token which will be used to specify next
 	// page in list API.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Applications") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ApplicationsListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ApplicationsListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DataTransfer: The JSON template for a DataTransfer resource.
@@ -189,6 +247,21 @@ type DataTransfer struct {
 	// RequestTime: The time at which the data transfer was requested
 	// (Read-only).
 	RequestTime string `json:"requestTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplicationDataTransfers") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DataTransfer) MarshalJSON() ([]byte, error) {
+	type noMethod DataTransfer
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DataTransfersListResponse: Template for a collection of DataTransfer
@@ -207,6 +280,20 @@ type DataTransfersListResponse struct {
 	// NextPageToken: Continuation token which will be used to specify next
 	// page in list API.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataTransfers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DataTransfersListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod DataTransfersListResponse
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "datatransfer.applications.get":

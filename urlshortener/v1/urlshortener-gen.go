@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/urlshortener/v1"
 //   ...
 //   urlshortenerService, err := urlshortener.New(oauthHttpClient)
-package urlshortener
+package urlshortener // import "google.golang.org/api/urlshortener/v1"
 
 import (
 	"bytes"

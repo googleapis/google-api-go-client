@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/webmasters/v3"
 //   ...
 //   webmastersService, err := webmasters.New(oauthHttpClient)
-package webmasters
+package webmasters // import "google.golang.org/api/webmasters/v3"
 
 import (
 	"bytes"

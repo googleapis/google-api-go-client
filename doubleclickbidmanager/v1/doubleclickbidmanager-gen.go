@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/doubleclickbidmanager/v1"
 //   ...
 //   doubleclickbidmanagerService, err := doubleclickbidmanager.New(oauthHttpClient)
-package doubleclickbidmanager
+package doubleclickbidmanager // import "google.golang.org/api/doubleclickbidmanager/v1"
 
 import (
 	"bytes"

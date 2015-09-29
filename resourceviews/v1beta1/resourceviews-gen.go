@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/resourceviews/v1beta1"
 //   ...
 //   resourceviewsService, err := resourceviews.New(oauthHttpClient)
-package resourceviews
+package resourceviews // import "google.golang.org/api/resourceviews/v1beta1"
 
 import (
 	"bytes"

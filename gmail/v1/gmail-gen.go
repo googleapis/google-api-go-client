@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/gmail/v1"
 //   ...
 //   gmailService, err := gmail.New(oauthHttpClient)
-package gmail
+package gmail // import "google.golang.org/api/gmail/v1"
 
 import (
 	"bytes"

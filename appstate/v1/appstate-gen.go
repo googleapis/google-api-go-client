@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/appstate/v1"
 //   ...
 //   appstateService, err := appstate.New(oauthHttpClient)
-package appstate
+package appstate // import "google.golang.org/api/appstate/v1"
 
 import (
 	"bytes"

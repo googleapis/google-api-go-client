@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/books/v1"
 //   ...
 //   booksService, err := books.New(oauthHttpClient)
-package books
+package books // import "google.golang.org/api/books/v1"
 
 import (
 	"bytes"

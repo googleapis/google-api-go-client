@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/webfonts/v1"
 //   ...
 //   webfontsService, err := webfonts.New(oauthHttpClient)
-package webfonts
+package webfonts // import "google.golang.org/api/webfonts/v1"
 
 import (
 	"bytes"

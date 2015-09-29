@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/analytics/v3"
 //   ...
 //   analyticsService, err := analytics.New(oauthHttpClient)
-package analytics
+package analytics // import "google.golang.org/api/analytics/v3"
 
 import (
 	"bytes"

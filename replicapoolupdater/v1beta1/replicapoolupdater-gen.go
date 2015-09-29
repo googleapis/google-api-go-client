@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/replicapoolupdater/v1beta1"
 //   ...
 //   replicapoolupdaterService, err := replicapoolupdater.New(oauthHttpClient)
-package replicapoolupdater
+package replicapoolupdater // import "google.golang.org/api/replicapoolupdater/v1beta1"
 
 import (
 	"bytes"

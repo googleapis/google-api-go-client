@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/script/v1"
 //   ...
 //   scriptService, err := script.New(oauthHttpClient)
-package script
+package script // import "google.golang.org/api/script/v1"
 
 import (
 	"bytes"

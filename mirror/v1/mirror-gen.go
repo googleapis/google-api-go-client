@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/mirror/v1"
 //   ...
 //   mirrorService, err := mirror.New(oauthHttpClient)
-package mirror
+package mirror // import "google.golang.org/api/mirror/v1"
 
 import (
 	"bytes"

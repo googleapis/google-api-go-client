@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/tasks/v1"
 //   ...
 //   tasksService, err := tasks.New(oauthHttpClient)
-package tasks
+package tasks // import "google.golang.org/api/tasks/v1"
 
 import (
 	"bytes"

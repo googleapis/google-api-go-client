@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/arrayofarray/v1"
 //   ...
 //   arrayofarrayService, err := arrayofarray.New(oauthHttpClient)
-package arrayofarray
+package arrayofarray // import "google.golang.org/api/arrayofarray/v1"
 
 import (
 	"bytes"

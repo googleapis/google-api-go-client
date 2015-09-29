@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/customsearch/v1"
 //   ...
 //   customsearchService, err := customsearch.New(oauthHttpClient)
-package customsearch
+package customsearch // import "google.golang.org/api/customsearch/v1"
 
 import (
 	"bytes"

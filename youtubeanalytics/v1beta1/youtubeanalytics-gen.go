@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/youtubeanalytics/v1beta1"
 //   ...
 //   youtubeanalyticsService, err := youtubeanalytics.New(oauthHttpClient)
-package youtubeanalytics
+package youtubeanalytics // import "google.golang.org/api/youtubeanalytics/v1beta1"
 
 import (
 	"bytes"

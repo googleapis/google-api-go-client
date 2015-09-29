@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/content/v2sandbox"
 //   ...
 //   contentService, err := content.New(oauthHttpClient)
-package content
+package content // import "google.golang.org/api/content/v2sandbox"
 
 import (
 	"bytes"

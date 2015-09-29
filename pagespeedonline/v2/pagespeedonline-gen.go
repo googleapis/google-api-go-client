@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/pagespeedonline/v2"
 //   ...
 //   pagespeedonlineService, err := pagespeedonline.New(oauthHttpClient)
-package pagespeedonline
+package pagespeedonline // import "google.golang.org/api/pagespeedonline/v2"
 
 import (
 	"bytes"

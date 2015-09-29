@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/licensing/v1"
 //   ...
 //   licensingService, err := licensing.New(oauthHttpClient)
-package licensing
+package licensing // import "google.golang.org/api/licensing/v1"
 
 import (
 	"bytes"

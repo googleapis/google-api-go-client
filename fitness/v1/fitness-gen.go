@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/fitness/v1"
 //   ...
 //   fitnessService, err := fitness.New(oauthHttpClient)
-package fitness
+package fitness // import "google.golang.org/api/fitness/v1"
 
 import (
 	"bytes"

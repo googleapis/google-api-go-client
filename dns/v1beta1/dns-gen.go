@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/dns/v1beta1"
 //   ...
 //   dnsService, err := dns.New(oauthHttpClient)
-package dns
+package dns // import "google.golang.org/api/dns/v1beta1"
 
 import (
 	"bytes"

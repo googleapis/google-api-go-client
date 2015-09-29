@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/freebase/v1"
 //   ...
 //   freebaseService, err := freebase.New(oauthHttpClient)
-package freebase
+package freebase // import "google.golang.org/api/freebase/v1"
 
 import (
 	"bytes"

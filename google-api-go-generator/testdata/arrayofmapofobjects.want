@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/arrayofmapofstrings/v1"
 //   ...
 //   arrayofmapofstringsService, err := arrayofmapofstrings.New(oauthHttpClient)
-package arrayofmapofstrings
+package arrayofmapofstrings // import "google.golang.org/api/arrayofmapofstrings/v1"
 
 import (
 	"bytes"

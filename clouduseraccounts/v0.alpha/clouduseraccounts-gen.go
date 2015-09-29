@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/clouduseraccounts/v0.alpha"
 //   ...
 //   clouduseraccountsService, err := clouduseraccounts.New(oauthHttpClient)
-package clouduseraccounts
+package clouduseraccounts // import "google.golang.org/api/clouduseraccounts/v0.alpha"
 
 import (
 	"bytes"

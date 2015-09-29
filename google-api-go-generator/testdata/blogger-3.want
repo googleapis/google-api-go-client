@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/blogger/v3"
 //   ...
 //   bloggerService, err := blogger.New(oauthHttpClient)
-package blogger
+package blogger // import "google.golang.org/api/blogger/v3"
 
 import (
 	"bytes"

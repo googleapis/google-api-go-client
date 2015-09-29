@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/androidenterprise/v1"
 //   ...
 //   androidenterpriseService, err := androidenterprise.New(oauthHttpClient)
-package androidenterprise
+package androidenterprise // import "google.golang.org/api/androidenterprise/v1"
 
 import (
 	"bytes"

@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/cloudlatencytest/v2"
 //   ...
 //   cloudlatencytestService, err := cloudlatencytest.New(oauthHttpClient)
-package cloudlatencytest
+package cloudlatencytest // import "google.golang.org/api/cloudlatencytest/v2"
 
 import (
 	"bytes"

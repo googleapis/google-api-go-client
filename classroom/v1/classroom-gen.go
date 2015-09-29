@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/classroom/v1"
 //   ...
 //   classroomService, err := classroom.New(oauthHttpClient)
-package classroom
+package classroom // import "google.golang.org/api/classroom/v1"
 
 import (
 	"bytes"

@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/oauth2/v2"
 //   ...
 //   oauth2Service, err := oauth2.New(oauthHttpClient)
-package oauth2
+package oauth2 // import "google.golang.org/api/oauth2/v2"
 
 import (
 	"bytes"

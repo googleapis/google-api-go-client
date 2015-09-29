@@ -5,7 +5,7 @@
 //   import "google.golang.org/api/additionalpropsobjs/v1"
 //   ...
 //   additionalpropsobjsService, err := additionalpropsobjs.New(oauthHttpClient)
-package additionalpropsobjs
+package additionalpropsobjs // import "google.golang.org/api/additionalpropsobjs/v1"
 
 import (
 	"bytes"

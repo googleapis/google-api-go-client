@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/playmoviespartner/v1"
 //   ...
 //   playmoviespartnerService, err := playmoviespartner.New(oauthHttpClient)
-package playmoviespartner
+package playmoviespartner // import "google.golang.org/api/playmoviespartner/v1"
 
 import (
 	"bytes"

@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/tagmanager/v1"
 //   ...
 //   tagmanagerService, err := tagmanager.New(oauthHttpClient)
-package tagmanager
+package tagmanager // import "google.golang.org/api/tagmanager/v1"
 
 import (
 	"bytes"

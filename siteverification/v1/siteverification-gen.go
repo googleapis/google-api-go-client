@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/siteverification/v1"
 //   ...
 //   siteverificationService, err := siteverification.New(oauthHttpClient)
-package siteverification
+package siteverification // import "google.golang.org/api/siteverification/v1"
 
 import (
 	"bytes"

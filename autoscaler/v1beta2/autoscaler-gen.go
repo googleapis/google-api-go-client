@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/autoscaler/v1beta2"
 //   ...
 //   autoscalerService, err := autoscaler.New(oauthHttpClient)
-package autoscaler
+package autoscaler // import "google.golang.org/api/autoscaler/v1beta2"
 
 import (
 	"bytes"

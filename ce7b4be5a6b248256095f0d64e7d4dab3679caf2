@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_e243b608",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_627c66b1",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_22766ecf",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2015-09-29T20:25:39Z",
       "side": 1,
       "message": "can drop this paragraph",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_c240bafe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_22766ecf",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -105,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_82d08289",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_e2fcd6a6",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_c2f9dab4",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 6
@@ -122,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_62d58677",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_c2f9dab4",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_8713f4d4",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 6
@@ -133,6 +205,24 @@
       "writtenOn": "2015-09-29T20:25:39Z",
       "side": 1,
       "message": "the rest of the world spells this ETag with a capital T, so we probably should too, even if the Go canonicalization makes it Etag in the map.\n\nBut does this method matter? The caller can write it anyway, right?\n\nI\u0027d just remove it.",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_e29616c8",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_8713f4d4",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -162,6 +252,30 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_a2cb7ee0",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_6209066e",
+      "range": {
+        "startLine": 121,
+        "startChar": 25,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_07ff04d4",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 6
@@ -173,6 +287,24 @@
       "writtenOn": "2015-09-29T20:25:39Z",
       "side": 1,
       "message": "Maybe:\n\n  func IsNotModified(err error) bool {\n        e, ok :\u003d err.(*Error)\n        return ok \u0026\u0026 e.Code \u003d\u003d http.StatusNotModified \n  }\n\nSo caller\u0027s like:\n\n     dep, err :\u003d client.Blah().IfNotModified(\"sdlfjdsf\").Do()\n     if googleapi.IsNotModified(err) {\n          ...\n     }",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_c26afa71",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_07ff04d4",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -196,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_e2c856e0",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_a226defa",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_42aa8a77",
         "filename": "groupsmigration/v1/groupsmigration-gen.go",
         "patchSetId": 6
@@ -207,6 +357,24 @@
       "writtenOn": "2015-09-29T20:25:39Z",
       "side": 1,
       "message": "After this,\n\n// Use googleapi.IsNotModified to check whether the response error from Do is the result of If-None-Match.\n\n?",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_a2b25e64",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_42aa8a77",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -230,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_a215bed3",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_62534655",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_02413272",
         "filename": "groupsmigration/v1/groupsmigration-gen.go",
         "patchSetId": 6
@@ -241,6 +427,24 @@
       "writtenOn": "2015-09-29T20:25:39Z",
       "side": 1,
       "message": "// Exactly one of *Groups or error will be non-nil.\n// Any non-2xx status code is an error.\n// Response headers are in either *Groups.ServerResponse.Header\n// or (if a response was returned at all) in error.(*googleapi.Error).Header.",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_0226d24f",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_02413272",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -264,6 +468,24 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_8d4e73af",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "The only change I made here is that we are not expecting a body when res.StatusCode \u003d\u003d http.StatusNotModified... so I close res.Body out of paranoia.",
+      "parentUuid": "6e4d7d85_622a26b1",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_225d4e5f",
         "filename": "groupsmigration/v1/groupsmigration-gen.go",
         "patchSetId": 6
@@ -275,6 +497,24 @@
       "writtenOn": "2015-09-29T20:25:39Z",
       "side": 1,
       "message": "return nil, err",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_6d533755",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_225d4e5f",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -298,6 +538,24 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_4d587b6f",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_025a5266",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_c2955a2c",
         "filename": "groupsmigration/v1/groupsmigration-gen.go",
         "patchSetId": 6
@@ -309,6 +567,24 @@
       "writtenOn": "2015-09-29T20:25:39Z",
       "side": 1,
       "message": "return nil, err",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_2d5d3f5f",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_c2955a2c",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
@@ -332,6 +608,24 @@
     },
     {
       "key": {
+        "uuid": "6e4d7d85_0d5a8366",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_228f8e23",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_a2adbec2",
         "filename": "storage/v1/storage-gen.go",
         "patchSetId": 6
@@ -343,6 +637,24 @@
       "writtenOn": "2015-09-29T20:25:39Z",
       "side": 1,
       "message": "ETag",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_228d4eb9",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T22:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7d85_a2adbec2",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

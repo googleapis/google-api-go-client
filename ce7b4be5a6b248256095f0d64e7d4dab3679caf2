@@ -33,6 +33,24 @@
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_47aa9c77",
+        "filename": "deploymentmanager/v2/deploymentmanager-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T18:23:36Z",
+      "side": 1,
+      "message": "Right. I agree that it is a bit crazy.\nAnd we also have \"option 1\" in the other CL where the header is returned in a separate (additional) API call for times when it is wanted, with the down-side that the API is bigger.",
+      "parentUuid": "6e4d7d85_7cbbef19",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

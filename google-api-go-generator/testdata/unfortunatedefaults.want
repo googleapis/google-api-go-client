@@ -34,6 +34,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = internal.MarshalJSON
 
 const apiId = "wrapnewlines:v1"
 const apiName = "wrapnewlines"
@@ -111,7 +112,7 @@ type Thing struct {
 	// string encoded, so will not be represented as pointer.
 	//
 	// Default: 1
-	NumericNonemptyDefaultA int64 `json:"numeric_nonempty_default_a,omitempty,string"`
+	NumericNonemptyDefaultA *int64 `json:"numeric_nonempty_default_a,omitempty,string"`
 
 	// NumericNonemptyDefaultB:
 	// Nonempty default: yes

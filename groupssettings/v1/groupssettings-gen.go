@@ -36,6 +36,7 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = internal.MarshalJSON
 
 const apiId = "groupssettings:v1"
 const apiName = "groupssettings"

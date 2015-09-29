@@ -512,6 +512,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = googleapi.Version")
 	pn("var _ = errors.New")
 	pn("var _ = strings.Replace")
+	pn("var _ = internal.MarshalJSON")
 	pn("")
 	pn("const apiId = %q", jstr(m, "id"))
 	pn("const apiName = %q", jstr(m, "name"))

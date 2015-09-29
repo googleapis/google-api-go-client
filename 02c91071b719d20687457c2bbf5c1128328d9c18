@@ -16,6 +16,24 @@
       "revId": "02c91071b719d20687457c2bbf5c1128328d9c18",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_7c2acfb0",
+        "filename": "admin/directory/v1/admin-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-29T16:15:09Z",
+      "side": 1,
+      "message": "Yes, I saw that too... I\u0027m thinking that \"make cached\" was also not run in an earlier CL.",
+      "parentUuid": "6e4d7d85_1c175b7f",
+      "revId": "02c91071b719d20687457c2bbf5c1128328d9c18",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

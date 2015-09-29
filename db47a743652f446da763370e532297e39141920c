@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e4d7d85_1ca87b5a",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T16:48:12Z",
+      "side": 1,
+      "message": "blank line after this, and let\u0027s add some documentation before it.\n\n// ServerResponse contains the HTTP response code \u0026 headers\n// from the server.",
+      "revId": "db47a743652f446da763370e532297e39141920c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_dcb1c3c3",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T16:48:12Z",
+      "side": 1,
+      "message": "There is no \"ret\". Actually this documentation is old now.",
+      "revId": "db47a743652f446da763370e532297e39141920c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e4d7d85_9cb6ab30",
+        "filename": "deploymentmanager/v2/deploymentmanager-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T18:06:54Z",
+      "side": 1,
+      "message": "// The Deployment.ServerResponse field is ...",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_7cbbef19",
+        "filename": "deploymentmanager/v2/deploymentmanager-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T18:06:54Z",
+      "side": 1,
+      "message": "is that true? Is that a change in behavior?  Oh! Reading the code I now understand.\n \nMaybe:\n\n// Do executes the \"deploymentmanager.deployments.get\" call.\n// The returned with *Deployment is always non-nil.\n\nOh, now I realize that\u0027s not true. How about we always return a non-nil resource type, so users don\u0027t need to check it?  Explaining the difference between a DNS error (error to contact server at all) vs a 500 error would be annoying in the comment.  Then we could just mirror any network error into the ServerResponse type too and be sure we return the right sort of value if somebody calls the accessor (IsNotModified, etc) on a response that never got a response?\n\nIf not, we should at least document here what types of errors result in each scenario:\n\n    a) (*T, nil)       (normal success)\n    b) (*T, error)   (server replied, but with a 500 or Not Modified or 403?)\n    c) (nil, error)   (DNS error or truncated TLS/HTTP connection)\n\nIt\u0027s a little crazy that there are three scenarios.\n\nThoughts?",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

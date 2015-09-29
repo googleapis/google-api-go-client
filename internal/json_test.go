@@ -24,7 +24,7 @@ type schema struct {
 	PB    *bool    `json:"pb,omitempty"`
 	PF    *float64 `json:"pf,omitempty"`
 	PI    *int64   `json:"pi,omitempty"`
-	PIstr *int64   `json:"pistr,omitempty,string"`
+	PIStr *int64   `json:"pistr,omitempty,string"`
 	PStr  *string  `json:"pstr,omitempty"`
 
 	// Other types
@@ -68,7 +68,7 @@ func TestBasics(t *testing.T) {
 				PB:    googleapi.Bool(true),
 				PF:    googleapi.Float64(1.2),
 				PI:    googleapi.Int64(int64(1)),
-				PIstr: googleapi.Int64(int64(2)),
+				PIStr: googleapi.Int64(int64(2)),
 				PStr:  googleapi.String("a"),
 			},
 			want: `{"b":true,"f":1.2,"i":1,"istr":"2","str":"a","pb":true,"pf":1.2,"pi":1,"pistr":"2","pstr":"a"}`,
@@ -83,7 +83,7 @@ func TestBasics(t *testing.T) {
 				PB:    googleapi.Bool(false),
 				PF:    googleapi.Float64(0.0),
 				PI:    googleapi.Int64(int64(0)),
-				PIstr: googleapi.Int64(int64(0)),
+				PIStr: googleapi.Int64(int64(0)),
 				PStr:  googleapi.String(""),
 			},
 			want: `{"pb":false,"pf":0.0,"pi":0,"pistr":"0","pstr":""}`,
@@ -98,7 +98,7 @@ func TestBasics(t *testing.T) {
 				PB:              googleapi.Bool(false),
 				PF:              googleapi.Float64(0.0),
 				PI:              googleapi.Int64(int64(0)),
-				PIstr:           googleapi.Int64(int64(0)),
+				PIStr:           googleapi.Int64(int64(0)),
 				PStr:            googleapi.String(""),
 				ForceSendFields: []string{"B", "F", "I", "Istr", "Str", "PB", "PF", "PI", "PIStr", "PStr"},
 			},

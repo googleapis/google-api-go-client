@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e4d7d85_627c66b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "drop \"- option 2\" part\ncould drop \"implement \" too.  or just \"add If-None-Match\" support.",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_22766ecf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "can drop this paragraph",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_9cb6ab30",
         "filename": "deploymentmanager/v2/deploymentmanager-gen.go",
         "patchSetId": 6
@@ -48,6 +82,267 @@
       "side": 1,
       "message": "Right. I agree that it is a bit crazy.\nAnd we also have \"option 1\" in the other CL where the header is returned in a separate (additional) API call for times when it is wanted, with the down-side that the API is bigger.",
       "parentUuid": "6e4d7d85_7cbbef19",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_e2fcd6a6",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "// HTTPStatusCode is the server\u0027s response status code.\n// When using a resource method\u0027s Do call, this will always be in the 2xx range.",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_c2f9dab4",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "// Header contains the response header fields from the server.",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_8713f4d4",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "the rest of the world spells this ETag with a capital T, so we probably should too, even if the Go canonicalization makes it Etag in the map.\n\nBut does this method matter? The caller can write it anyway, right?\n\nI\u0027d just remove it.",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_6209066e",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 121,
+        "startChar": 25,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_07ff04d4",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "Maybe:\n\n  func IsNotModified(err error) bool {\n        e, ok :\u003d err.(*Error)\n        return ok \u0026\u0026 e.Code \u003d\u003d http.StatusNotModified \n  }\n\nSo caller\u0027s like:\n\n     dep, err :\u003d client.Blah().IfNotModified(\"sdlfjdsf\").Do()\n     if googleapi.IsNotModified(err) {\n          ...\n     }",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_a226defa",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "be sure to reserve \"ServerResponse\" from the namePool in the generator?",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_42aa8a77",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "After this,\n\n// Use googleapi.IsNotModified to check whether the response error from Do is the result of If-None-Match.\n\n?",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_62534655",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "let\u0027s drop non-GET ones for now in the generator.  the generator can reference https://github.com/google/google-api-go-client/issues/107 in that conditional code",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_02413272",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "// Exactly one of *Groups or error will be non-nil.\n// Any non-2xx status code is an error.\n// Response headers are in either *Groups.ServerResponse.Header\n// or (if a response was returned at all) in error.(*googleapi.Error).Header.",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_622a26b1",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "if res !\u003d nil \u0026\u0026 res.StatusCode \u003d\u003d http.StatusNotModified {\n      slurp, err :\u003d ioutil.ReadAll(res.Body)\n      res.Body.Close()\n      if err !\u003d nil { return nil, err }\n      return nil, \u0026googleapi.Error{\n           Code: res.StatusCode,\n           Header: res.Header,\n       }\n}",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_225d4e5f",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "return nil, err",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_025a5266",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "return nil, err",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_c2955a2c",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "return nil, err",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_228f8e23",
+        "filename": "groupsmigration/v1/groupsmigration-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "make sure all returns in this function always have an explicit \"nil\" visible. don\u0027t rely on a variable that \"should\" be nil. easier to read.  (I\u0027d revert back to the if statement)",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e4d7d85_a2adbec2",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-09-29T20:25:39Z",
+      "side": 1,
+      "message": "ETag",
       "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

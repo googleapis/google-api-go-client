@@ -43,6 +43,8 @@ const apiName = "dfareporting"
 const apiVersion = "v1.1"
 const basePath = "https://www.googleapis.com/dfareporting/v1.1/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage DoubleClick for Advertisers reports
@@ -1191,14 +1193,14 @@ type DimensionValuesQueryCall struct {
 	s                     *Service
 	profileId             int64
 	dimensionvaluerequest *DimensionValueRequest
-	opt_                  map[string]interface{}
+	opt_                  url.Values
 	ctx_                  context.Context
 }
 
 // Query: Retrieves list of report dimension values for a list of
 // filters.
 func (r *DimensionValuesService) Query(profileId int64, dimensionvaluerequest *DimensionValueRequest) *DimensionValuesQueryCall {
-	c := &DimensionValuesQueryCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DimensionValuesQueryCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.dimensionvaluerequest = dimensionvaluerequest
 	return c
@@ -1207,28 +1209,28 @@ func (r *DimensionValuesService) Query(profileId int64, dimensionvaluerequest *D
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *DimensionValuesQueryCall) MaxResults(maxResults int64) *DimensionValuesQueryCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous result page.
 func (c *DimensionValuesQueryCall) PageToken(pageToken string) *DimensionValuesQueryCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DimensionValuesQueryCall) Fields(s ...googleapi.Field) *DimensionValuesQueryCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DimensionValuesQueryCall) Context(ctx context.Context) *DimensionValuesQueryCall {
 	c.ctx_ = ctx
 	return c
@@ -1241,19 +1243,9 @@ func (c *DimensionValuesQueryCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/dimensionvalues/query")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -1328,13 +1320,13 @@ func (c *DimensionValuesQueryCall) Do() (*DimensionValueList, error) {
 type FilesListCall struct {
 	s         *Service
 	profileId int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List: Lists files for a user profile.
 func (r *FilesService) List(profileId int64) *FilesListCall {
-	c := &FilesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &FilesListCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	return c
 }
@@ -1342,14 +1334,14 @@ func (r *FilesService) List(profileId int64) *FilesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *FilesListCall) MaxResults(maxResults int64) *FilesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous result page.
 func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
@@ -1360,7 +1352,7 @@ func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
 //   "ID" - Sort by file ID.
 //   "LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
 func (c *FilesListCall) SortField(sortField string) *FilesListCall {
-	c.opt_["sortField"] = sortField
+	c.opt_.Set("sortField", fmt.Sprintf("%v", sortField))
 	return c
 }
 
@@ -1371,21 +1363,21 @@ func (c *FilesListCall) SortField(sortField string) *FilesListCall {
 //   "ASCENDING" - Ascending order.
 //   "DESCENDING" (default) - Descending order.
 func (c *FilesListCall) SortOrder(sortOrder string) *FilesListCall {
-	c.opt_["sortOrder"] = sortOrder
+	c.opt_.Set("sortOrder", fmt.Sprintf("%v", sortOrder))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesListCall) Fields(s ...googleapi.Field) *FilesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *FilesListCall) Context(ctx context.Context) *FilesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1393,25 +1385,9 @@ func (c *FilesListCall) Context(ctx context.Context) *FilesListCall {
 
 func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sortField"]; ok {
-		params.Set("sortField", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sortOrder"]; ok {
-		params.Set("sortOrder", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/files")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -1511,29 +1487,29 @@ type ReportsDeleteCall struct {
 	s         *Service
 	profileId int64
 	reportId  int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Delete: Deletes a report by its ID.
 func (r *ReportsService) Delete(profileId int64, reportId int64) *ReportsDeleteCall {
-	c := &ReportsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsDeleteCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.reportId = reportId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsDeleteCall) Fields(s ...googleapi.Field) *ReportsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsDeleteCall) Context(ctx context.Context) *ReportsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1541,13 +1517,9 @@ func (c *ReportsDeleteCall) Context(ctx context.Context) *ReportsDeleteCall {
 
 func (c *ReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -1608,29 +1580,29 @@ type ReportsGetCall struct {
 	s         *Service
 	profileId int64
 	reportId  int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Get: Retrieves a report by its ID.
 func (r *ReportsService) Get(profileId int64, reportId int64) *ReportsGetCall {
-	c := &ReportsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsGetCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.reportId = reportId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsGetCall) Context(ctx context.Context) *ReportsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1638,13 +1610,9 @@ func (c *ReportsGetCall) Context(ctx context.Context) *ReportsGetCall {
 
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -1712,29 +1680,29 @@ type ReportsInsertCall struct {
 	s         *Service
 	profileId int64
 	report    *Report
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Insert: Creates a report.
 func (r *ReportsService) Insert(profileId int64, report *Report) *ReportsInsertCall {
-	c := &ReportsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsInsertCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.report = report
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsInsertCall) Fields(s ...googleapi.Field) *ReportsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsInsertCall) Context(ctx context.Context) *ReportsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1747,13 +1715,9 @@ func (c *ReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -1815,13 +1779,13 @@ func (c *ReportsInsertCall) Do() (*Report, error) {
 type ReportsListCall struct {
 	s         *Service
 	profileId int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List: Retrieves list of reports.
 func (r *ReportsService) List(profileId int64) *ReportsListCall {
-	c := &ReportsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsListCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	return c
 }
@@ -1829,14 +1793,14 @@ func (r *ReportsService) List(profileId int64) *ReportsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *ReportsListCall) MaxResults(maxResults int64) *ReportsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous result page.
 func (c *ReportsListCall) PageToken(pageToken string) *ReportsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
@@ -1848,7 +1812,7 @@ func (c *ReportsListCall) PageToken(pageToken string) *ReportsListCall {
 //   "LAST_MODIFIED_TIME" (default) - Sort by 'lastModifiedTime' field.
 //   "NAME" - Sort by name of reports.
 func (c *ReportsListCall) SortField(sortField string) *ReportsListCall {
-	c.opt_["sortField"] = sortField
+	c.opt_.Set("sortField", fmt.Sprintf("%v", sortField))
 	return c
 }
 
@@ -1859,21 +1823,21 @@ func (c *ReportsListCall) SortField(sortField string) *ReportsListCall {
 //   "ASCENDING" - Ascending order.
 //   "DESCENDING" (default) - Descending order.
 func (c *ReportsListCall) SortOrder(sortOrder string) *ReportsListCall {
-	c.opt_["sortOrder"] = sortOrder
+	c.opt_.Set("sortOrder", fmt.Sprintf("%v", sortOrder))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsListCall) Fields(s ...googleapi.Field) *ReportsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsListCall) Context(ctx context.Context) *ReportsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1881,25 +1845,9 @@ func (c *ReportsListCall) Context(ctx context.Context) *ReportsListCall {
 
 func (c *ReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sortField"]; ok {
-		params.Set("sortField", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sortOrder"]; ok {
-		params.Set("sortOrder", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -2002,30 +1950,30 @@ type ReportsPatchCall struct {
 	profileId int64
 	reportId  int64
 	report    *Report
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Patch: Updates a report. This method supports patch semantics.
 func (r *ReportsService) Patch(profileId int64, reportId int64, report *Report) *ReportsPatchCall {
-	c := &ReportsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsPatchCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.reportId = reportId
 	c.report = report
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsPatchCall) Fields(s ...googleapi.Field) *ReportsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsPatchCall) Context(ctx context.Context) *ReportsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2038,13 +1986,9 @@ func (c *ReportsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -2116,13 +2060,13 @@ type ReportsRunCall struct {
 	s         *Service
 	profileId int64
 	reportId  int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Run: Runs a report.
 func (r *ReportsService) Run(profileId int64, reportId int64) *ReportsRunCall {
-	c := &ReportsRunCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsRunCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.reportId = reportId
 	return c
@@ -2131,21 +2075,21 @@ func (r *ReportsService) Run(profileId int64, reportId int64) *ReportsRunCall {
 // Synchronous sets the optional parameter "synchronous": If set and
 // true, tries to run the report synchronously.
 func (c *ReportsRunCall) Synchronous(synchronous bool) *ReportsRunCall {
-	c.opt_["synchronous"] = synchronous
+	c.opt_.Set("synchronous", fmt.Sprintf("%v", synchronous))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsRunCall) Fields(s ...googleapi.Field) *ReportsRunCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsRunCall) Context(ctx context.Context) *ReportsRunCall {
 	c.ctx_ = ctx
 	return c
@@ -2153,16 +2097,9 @@ func (c *ReportsRunCall) Context(ctx context.Context) *ReportsRunCall {
 
 func (c *ReportsRunCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["synchronous"]; ok {
-		params.Set("synchronous", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/run")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -2236,30 +2173,30 @@ type ReportsUpdateCall struct {
 	profileId int64
 	reportId  int64
 	report    *Report
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Update: Updates a report.
 func (r *ReportsService) Update(profileId int64, reportId int64, report *Report) *ReportsUpdateCall {
-	c := &ReportsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsUpdateCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.reportId = reportId
 	c.report = report
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsUpdateCall) Fields(s ...googleapi.Field) *ReportsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsUpdateCall) Context(ctx context.Context) *ReportsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2272,13 +2209,9 @@ func (c *ReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -2351,30 +2284,30 @@ type ReportsFilesGetCall struct {
 	profileId int64
 	reportId  int64
 	fileId    int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Get: Retrieves a report file.
 func (r *ReportsFilesService) Get(profileId int64, reportId int64, fileId int64) *ReportsFilesGetCall {
-	c := &ReportsFilesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsFilesGetCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.reportId = reportId
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsFilesGetCall) Fields(s ...googleapi.Field) *ReportsFilesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsFilesGetCall) Context(ctx context.Context) *ReportsFilesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2382,13 +2315,9 @@ func (c *ReportsFilesGetCall) Context(ctx context.Context) *ReportsFilesGetCall 
 
 func (c *ReportsFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/files/{fileId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -2465,13 +2394,13 @@ type ReportsFilesListCall struct {
 	s         *Service
 	profileId int64
 	reportId  int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List: Lists files for a report.
 func (r *ReportsFilesService) List(profileId int64, reportId int64) *ReportsFilesListCall {
-	c := &ReportsFilesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsFilesListCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	c.reportId = reportId
 	return c
@@ -2480,14 +2409,14 @@ func (r *ReportsFilesService) List(profileId int64, reportId int64) *ReportsFile
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *ReportsFilesListCall) MaxResults(maxResults int64) *ReportsFilesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous result page.
 func (c *ReportsFilesListCall) PageToken(pageToken string) *ReportsFilesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
@@ -2498,7 +2427,7 @@ func (c *ReportsFilesListCall) PageToken(pageToken string) *ReportsFilesListCall
 //   "ID" - Sort by file ID.
 //   "LAST_MODIFIED_TIME" (default) - Sort by 'lastmodifiedAt' field.
 func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall {
-	c.opt_["sortField"] = sortField
+	c.opt_.Set("sortField", fmt.Sprintf("%v", sortField))
 	return c
 }
 
@@ -2509,21 +2438,21 @@ func (c *ReportsFilesListCall) SortField(sortField string) *ReportsFilesListCall
 //   "ASCENDING" - Ascending order.
 //   "DESCENDING" (default) - Descending order.
 func (c *ReportsFilesListCall) SortOrder(sortOrder string) *ReportsFilesListCall {
-	c.opt_["sortOrder"] = sortOrder
+	c.opt_.Set("sortOrder", fmt.Sprintf("%v", sortOrder))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsFilesListCall) Fields(s ...googleapi.Field) *ReportsFilesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsFilesListCall) Context(ctx context.Context) *ReportsFilesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2531,25 +2460,9 @@ func (c *ReportsFilesListCall) Context(ctx context.Context) *ReportsFilesListCal
 
 func (c *ReportsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sortField"]; ok {
-		params.Set("sortField", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sortOrder"]; ok {
-		params.Set("sortOrder", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}/files")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -2657,28 +2570,28 @@ func (c *ReportsFilesListCall) Do() (*FileList, error) {
 type UserProfilesGetCall struct {
 	s         *Service
 	profileId int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Get: Gets one user profile by ID.
 func (r *UserProfilesService) Get(profileId int64) *UserProfilesGetCall {
-	c := &UserProfilesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UserProfilesGetCall{s: r.s, opt_: urlValues()}
 	c.profileId = profileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UserProfilesGetCall) Context(ctx context.Context) *UserProfilesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2686,13 +2599,9 @@ func (c *UserProfilesGetCall) Context(ctx context.Context) *UserProfilesGetCall 
 
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"profileId": strconv.FormatInt(c.profileId, 10),
@@ -2749,27 +2658,27 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 
 type UserProfilesListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Retrieves list of user profiles for a user.
 func (r *UserProfilesService) List() *UserProfilesListCall {
-	c := &UserProfilesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UserProfilesListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UserProfilesListCall) Fields(s ...googleapi.Field) *UserProfilesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UserProfilesListCall) Context(ctx context.Context) *UserProfilesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2777,13 +2686,9 @@ func (c *UserProfilesListCall) Context(ctx context.Context) *UserProfilesListCal
 
 func (c *UserProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())

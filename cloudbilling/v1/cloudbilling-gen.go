@@ -43,6 +43,8 @@ const apiName = "cloudbilling"
 const apiVersion = "v1"
 const basePath = "https://cloudbilling.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -246,7 +248,7 @@ func (s *ProjectBillingInfo) MarshalJSON() ([]byte, error) {
 type BillingAccountsGetCall struct {
 	s    *Service
 	name string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -254,22 +256,22 @@ type BillingAccountsGetCall struct {
 // authenticated user must be an [owner of the billing
 // account](https://support.google.com/cloud/answer/4430947).
 func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
-	c := &BillingAccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BillingAccountsGetCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BillingAccountsGetCall) Fields(s ...googleapi.Field) *BillingAccountsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BillingAccountsGetCall) Context(ctx context.Context) *BillingAccountsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -277,13 +279,9 @@ func (c *BillingAccountsGetCall) Context(ctx context.Context) *BillingAccountsGe
 
 func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -340,21 +338,21 @@ func (c *BillingAccountsGetCall) Do() (*BillingAccount, error) {
 
 type BillingAccountsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Lists the billing accounts that the current authenticated user
 // [owns](https://support.google.com/cloud/answer/4430947).
 func (r *BillingAccountsService) List() *BillingAccountsListCall {
-	c := &BillingAccountsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BillingAccountsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The maximum page size is 100; this is also the default.
 func (c *BillingAccountsListCall) PageSize(pageSize int64) *BillingAccountsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -364,21 +362,21 @@ func (c *BillingAccountsListCall) PageSize(pageSize int64) *BillingAccountsListC
 // `ListBillingAccounts` call. If unspecified, the first page of results
 // is returned.
 func (c *BillingAccountsListCall) PageToken(pageToken string) *BillingAccountsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BillingAccountsListCall) Fields(s ...googleapi.Field) *BillingAccountsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BillingAccountsListCall) Context(ctx context.Context) *BillingAccountsListCall {
 	c.ctx_ = ctx
 	return c
@@ -386,19 +384,9 @@ func (c *BillingAccountsListCall) Context(ctx context.Context) *BillingAccountsL
 
 func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/billingAccounts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -455,7 +443,7 @@ func (c *BillingAccountsListCall) Do() (*ListBillingAccountsResponse, error) {
 type BillingAccountsProjectsListCall struct {
 	s    *Service
 	name string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -463,7 +451,7 @@ type BillingAccountsProjectsListCall struct {
 // current authenticated user must be an [owner of the billing
 // account](https://support.google.com/cloud/answer/4430947).
 func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProjectsListCall {
-	c := &BillingAccountsProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BillingAccountsProjectsListCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	return c
 }
@@ -471,7 +459,7 @@ func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProje
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The maximum page size is 100; this is also the default.
 func (c *BillingAccountsProjectsListCall) PageSize(pageSize int64) *BillingAccountsProjectsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -481,21 +469,21 @@ func (c *BillingAccountsProjectsListCall) PageSize(pageSize int64) *BillingAccou
 // `ListProjectBillingInfo` call. If unspecified, the first page of
 // results is returned.
 func (c *BillingAccountsProjectsListCall) PageToken(pageToken string) *BillingAccountsProjectsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BillingAccountsProjectsListCall) Fields(s ...googleapi.Field) *BillingAccountsProjectsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BillingAccountsProjectsListCall) Context(ctx context.Context) *BillingAccountsProjectsListCall {
 	c.ctx_ = ctx
 	return c
@@ -503,19 +491,9 @@ func (c *BillingAccountsProjectsListCall) Context(ctx context.Context) *BillingA
 
 func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/projects")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -584,7 +562,7 @@ func (c *BillingAccountsProjectsListCall) Do() (*ListProjectBillingInfoResponse,
 type ProjectsGetBillingInfoCall struct {
 	s    *Service
 	name string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -593,22 +571,22 @@ type ProjectsGetBillingInfoCall struct {
 // project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxof
 // vnoo ).
 func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCall {
-	c := &ProjectsGetBillingInfoCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsGetBillingInfoCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsGetBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsGetBillingInfoCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsGetBillingInfoCall) Context(ctx context.Context) *ProjectsGetBillingInfoCall {
 	c.ctx_ = ctx
 	return c
@@ -616,13 +594,9 @@ func (c *ProjectsGetBillingInfoCall) Context(ctx context.Context) *ProjectsGetBi
 
 func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/billingInfo")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -681,7 +655,7 @@ type ProjectsUpdateBillingInfoCall struct {
 	s                  *Service
 	name               string
 	projectbillinginfo *ProjectBillingInfo
-	opt_               map[string]interface{}
+	opt_               url.Values
 	ctx_               context.Context
 }
 
@@ -714,23 +688,23 @@ type ProjectsUpdateBillingInfoCall struct {
 // wish to disable billing, you should always call this method with the
 // name of an *open* billing account.
 func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *ProjectBillingInfo) *ProjectsUpdateBillingInfoCall {
-	c := &ProjectsUpdateBillingInfoCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsUpdateBillingInfoCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	c.projectbillinginfo = projectbillinginfo
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsUpdateBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsUpdateBillingInfoCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsUpdateBillingInfoCall) Context(ctx context.Context) *ProjectsUpdateBillingInfoCall {
 	c.ctx_ = ctx
 	return c
@@ -743,13 +717,9 @@ func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/billingInfo")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,

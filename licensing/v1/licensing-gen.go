@@ -43,6 +43,8 @@ const apiName = "licensing"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/apps/licensing/v1/product/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage Google Apps licenses for your domain
@@ -177,30 +179,30 @@ type LicenseAssignmentsDeleteCall struct {
 	productId string
 	skuId     string
 	userId    string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Delete: Revoke License.
 func (r *LicenseAssignmentsService) Delete(productId string, skuId string, userId string) *LicenseAssignmentsDeleteCall {
-	c := &LicenseAssignmentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LicenseAssignmentsDeleteCall{s: r.s, opt_: urlValues()}
 	c.productId = productId
 	c.skuId = skuId
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LicenseAssignmentsDeleteCall) Fields(s ...googleapi.Field) *LicenseAssignmentsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LicenseAssignmentsDeleteCall) Context(ctx context.Context) *LicenseAssignmentsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -208,13 +210,9 @@ func (c *LicenseAssignmentsDeleteCall) Context(ctx context.Context) *LicenseAssi
 
 func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{productId}/sku/{skuId}/user/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,
@@ -282,31 +280,31 @@ type LicenseAssignmentsGetCall struct {
 	productId string
 	skuId     string
 	userId    string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Get: Get license assignment of a particular product and sku for a
 // user
 func (r *LicenseAssignmentsService) Get(productId string, skuId string, userId string) *LicenseAssignmentsGetCall {
-	c := &LicenseAssignmentsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LicenseAssignmentsGetCall{s: r.s, opt_: urlValues()}
 	c.productId = productId
 	c.skuId = skuId
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LicenseAssignmentsGetCall) Fields(s ...googleapi.Field) *LicenseAssignmentsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LicenseAssignmentsGetCall) Context(ctx context.Context) *LicenseAssignmentsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -314,13 +312,9 @@ func (c *LicenseAssignmentsGetCall) Context(ctx context.Context) *LicenseAssignm
 
 func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{productId}/sku/{skuId}/user/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,
@@ -395,30 +389,30 @@ type LicenseAssignmentsInsertCall struct {
 	productId               string
 	skuId                   string
 	licenseassignmentinsert *LicenseAssignmentInsert
-	opt_                    map[string]interface{}
+	opt_                    url.Values
 	ctx_                    context.Context
 }
 
 // Insert: Assign License.
 func (r *LicenseAssignmentsService) Insert(productId string, skuId string, licenseassignmentinsert *LicenseAssignmentInsert) *LicenseAssignmentsInsertCall {
-	c := &LicenseAssignmentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LicenseAssignmentsInsertCall{s: r.s, opt_: urlValues()}
 	c.productId = productId
 	c.skuId = skuId
 	c.licenseassignmentinsert = licenseassignmentinsert
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LicenseAssignmentsInsertCall) Fields(s ...googleapi.Field) *LicenseAssignmentsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LicenseAssignmentsInsertCall) Context(ctx context.Context) *LicenseAssignmentsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -431,13 +425,9 @@ func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{productId}/sku/{skuId}/user")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,
@@ -507,14 +497,14 @@ type LicenseAssignmentsListForProductCall struct {
 	s          *Service
 	productId  string
 	customerId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // ListForProduct: List license assignments for given product of the
 // customer.
 func (r *LicenseAssignmentsService) ListForProduct(productId string, customerId string) *LicenseAssignmentsListForProductCall {
-	c := &LicenseAssignmentsListForProductCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LicenseAssignmentsListForProductCall{s: r.s, opt_: urlValues()}
 	c.productId = productId
 	c.customerId = customerId
 	return c
@@ -524,28 +514,28 @@ func (r *LicenseAssignmentsService) ListForProduct(productId string, customerId 
 // of campaigns to return at one time. Must be positive.  Default value
 // is 100.
 func (c *LicenseAssignmentsListForProductCall) MaxResults(maxResults int64) *LicenseAssignmentsListForProductCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Token to fetch the
 // next page. By default server will return first page
 func (c *LicenseAssignmentsListForProductCall) PageToken(pageToken string) *LicenseAssignmentsListForProductCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LicenseAssignmentsListForProductCall) Fields(s ...googleapi.Field) *LicenseAssignmentsListForProductCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LicenseAssignmentsListForProductCall) Context(ctx context.Context) *LicenseAssignmentsListForProductCall {
 	c.ctx_ = ctx
 	return c
@@ -553,20 +543,10 @@ func (c *LicenseAssignmentsListForProductCall) Context(ctx context.Context) *Lic
 
 func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("customerId", fmt.Sprintf("%v", c.customerId))
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("customerId", fmt.Sprintf("%v", c.customerId))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{productId}/users")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,
@@ -647,14 +627,14 @@ type LicenseAssignmentsListForProductAndSkuCall struct {
 	productId  string
 	skuId      string
 	customerId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // ListForProductAndSku: List license assignments for given product and
 // sku of the customer.
 func (r *LicenseAssignmentsService) ListForProductAndSku(productId string, skuId string, customerId string) *LicenseAssignmentsListForProductAndSkuCall {
-	c := &LicenseAssignmentsListForProductAndSkuCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LicenseAssignmentsListForProductAndSkuCall{s: r.s, opt_: urlValues()}
 	c.productId = productId
 	c.skuId = skuId
 	c.customerId = customerId
@@ -665,28 +645,28 @@ func (r *LicenseAssignmentsService) ListForProductAndSku(productId string, skuId
 // of campaigns to return at one time. Must be positive.  Default value
 // is 100.
 func (c *LicenseAssignmentsListForProductAndSkuCall) MaxResults(maxResults int64) *LicenseAssignmentsListForProductAndSkuCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Token to fetch the
 // next page. By default server will return first page
 func (c *LicenseAssignmentsListForProductAndSkuCall) PageToken(pageToken string) *LicenseAssignmentsListForProductAndSkuCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LicenseAssignmentsListForProductAndSkuCall) Fields(s ...googleapi.Field) *LicenseAssignmentsListForProductAndSkuCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LicenseAssignmentsListForProductAndSkuCall) Context(ctx context.Context) *LicenseAssignmentsListForProductAndSkuCall {
 	c.ctx_ = ctx
 	return c
@@ -694,20 +674,10 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Context(ctx context.Context
 
 func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("customerId", fmt.Sprintf("%v", c.customerId))
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("customerId", fmt.Sprintf("%v", c.customerId))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{productId}/sku/{skuId}/users")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,
@@ -797,13 +767,13 @@ type LicenseAssignmentsPatchCall struct {
 	skuId             string
 	userId            string
 	licenseassignment *LicenseAssignment
-	opt_              map[string]interface{}
+	opt_              url.Values
 	ctx_              context.Context
 }
 
 // Patch: Assign License. This method supports patch semantics.
 func (r *LicenseAssignmentsService) Patch(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) *LicenseAssignmentsPatchCall {
-	c := &LicenseAssignmentsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LicenseAssignmentsPatchCall{s: r.s, opt_: urlValues()}
 	c.productId = productId
 	c.skuId = skuId
 	c.userId = userId
@@ -811,17 +781,17 @@ func (r *LicenseAssignmentsService) Patch(productId string, skuId string, userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LicenseAssignmentsPatchCall) Fields(s ...googleapi.Field) *LicenseAssignmentsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LicenseAssignmentsPatchCall) Context(ctx context.Context) *LicenseAssignmentsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -834,13 +804,9 @@ func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{productId}/sku/{skuId}/user/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,
@@ -920,13 +886,13 @@ type LicenseAssignmentsUpdateCall struct {
 	skuId             string
 	userId            string
 	licenseassignment *LicenseAssignment
-	opt_              map[string]interface{}
+	opt_              url.Values
 	ctx_              context.Context
 }
 
 // Update: Assign License.
 func (r *LicenseAssignmentsService) Update(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) *LicenseAssignmentsUpdateCall {
-	c := &LicenseAssignmentsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LicenseAssignmentsUpdateCall{s: r.s, opt_: urlValues()}
 	c.productId = productId
 	c.skuId = skuId
 	c.userId = userId
@@ -934,17 +900,17 @@ func (r *LicenseAssignmentsService) Update(productId string, skuId string, userI
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LicenseAssignmentsUpdateCall) Fields(s ...googleapi.Field) *LicenseAssignmentsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LicenseAssignmentsUpdateCall) Context(ctx context.Context) *LicenseAssignmentsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -957,13 +923,9 @@ func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{productId}/sku/{skuId}/user/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"productId": c.productId,

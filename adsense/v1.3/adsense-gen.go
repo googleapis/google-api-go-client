@@ -43,6 +43,8 @@ const apiName = "adsense"
 const apiVersion = "v1.3"
 const basePath = "https://www.googleapis.com/adsense/v1.3/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your AdSense data
@@ -1285,13 +1287,13 @@ func (s *UrlChannels) MarshalJSON() ([]byte, error) {
 type AccountsGetCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Get: Get information about the selected AdSense account.
 func (r *AccountsService) Get(accountId string) *AccountsGetCall {
-	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsGetCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -1299,21 +1301,21 @@ func (r *AccountsService) Get(accountId string) *AccountsGetCall {
 // Tree sets the optional parameter "tree": Whether the tree of sub
 // accounts should be returned.
 func (c *AccountsGetCall) Tree(tree bool) *AccountsGetCall {
-	c.opt_["tree"] = tree
+	c.opt_.Set("tree", fmt.Sprintf("%v", tree))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1321,16 +1323,9 @@ func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["tree"]; ok {
-		params.Set("tree", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -1392,20 +1387,20 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 
 type AccountsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: List all accounts available to this AdSense account.
 func (r *AccountsService) List() *AccountsListCall {
-	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of accounts to include in the response, used for paging.
 func (c *AccountsListCall) MaxResults(maxResults int64) *AccountsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1414,21 +1409,21 @@ func (c *AccountsListCall) MaxResults(maxResults int64) *AccountsListCall {
 // this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1436,19 +1431,9 @@ func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1508,13 +1493,13 @@ func (c *AccountsListCall) Do() (*Accounts, error) {
 type AccountsAdclientsListCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List: List all ad clients in the specified account.
 func (r *AccountsAdclientsService) List(accountId string) *AccountsAdclientsListCall {
-	c := &AccountsAdclientsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsAdclientsListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -1522,7 +1507,7 @@ func (r *AccountsAdclientsService) List(accountId string) *AccountsAdclientsList
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad clients to include in the response, used for paging.
 func (c *AccountsAdclientsListCall) MaxResults(maxResults int64) *AccountsAdclientsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1531,21 +1516,21 @@ func (c *AccountsAdclientsListCall) MaxResults(maxResults int64) *AccountsAdclie
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AccountsAdclientsListCall) PageToken(pageToken string) *AccountsAdclientsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsAdclientsListCall) Fields(s ...googleapi.Field) *AccountsAdclientsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsAdclientsListCall) Context(ctx context.Context) *AccountsAdclientsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1553,19 +1538,9 @@ func (c *AccountsAdclientsListCall) Context(ctx context.Context) *AccountsAdclie
 
 func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -1638,31 +1613,31 @@ type AccountsAdunitsGetCall struct {
 	accountId  string
 	adClientId string
 	adUnitId   string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Gets the specified ad unit in the specified ad client for the
 // specified account.
 func (r *AccountsAdunitsService) Get(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetCall {
-	c := &AccountsAdunitsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsAdunitsGetCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.adClientId = adClientId
 	c.adUnitId = adUnitId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsAdunitsGetCall) Fields(s ...googleapi.Field) *AccountsAdunitsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsAdunitsGetCall) Context(ctx context.Context) *AccountsAdunitsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1670,13 +1645,9 @@ func (c *AccountsAdunitsGetCall) Context(ctx context.Context) *AccountsAdunitsGe
 
 func (c *AccountsAdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":  c.accountId,
@@ -1752,30 +1723,30 @@ type AccountsAdunitsGetAdCodeCall struct {
 	accountId  string
 	adClientId string
 	adUnitId   string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // GetAdCode: Get ad code for the specified ad unit.
 func (r *AccountsAdunitsService) GetAdCode(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetAdCodeCall {
-	c := &AccountsAdunitsGetAdCodeCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsAdunitsGetAdCodeCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.adClientId = adClientId
 	c.adUnitId = adUnitId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsAdunitsGetAdCodeCall) Fields(s ...googleapi.Field) *AccountsAdunitsGetAdCodeCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsAdunitsGetAdCodeCall) Context(ctx context.Context) *AccountsAdunitsGetAdCodeCall {
 	c.ctx_ = ctx
 	return c
@@ -1783,13 +1754,9 @@ func (c *AccountsAdunitsGetAdCodeCall) Context(ctx context.Context) *AccountsAdu
 
 func (c *AccountsAdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/adcode")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":  c.accountId,
@@ -1864,14 +1831,14 @@ type AccountsAdunitsListCall struct {
 	s          *Service
 	accountId  string
 	adClientId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: List all ad units in the specified ad client for the specified
 // account.
 func (r *AccountsAdunitsService) List(accountId string, adClientId string) *AccountsAdunitsListCall {
-	c := &AccountsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsAdunitsListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.adClientId = adClientId
 	return c
@@ -1880,14 +1847,14 @@ func (r *AccountsAdunitsService) List(accountId string, adClientId string) *Acco
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *AccountsAdunitsListCall) IncludeInactive(includeInactive bool) *AccountsAdunitsListCall {
-	c.opt_["includeInactive"] = includeInactive
+	c.opt_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *AccountsAdunitsListCall) MaxResults(maxResults int64) *AccountsAdunitsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1896,21 +1863,21 @@ func (c *AccountsAdunitsListCall) MaxResults(maxResults int64) *AccountsAdunitsL
 // this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AccountsAdunitsListCall) PageToken(pageToken string) *AccountsAdunitsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsAdunitsListCall) Fields(s ...googleapi.Field) *AccountsAdunitsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsAdunitsListCall) Context(ctx context.Context) *AccountsAdunitsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1918,22 +1885,9 @@ func (c *AccountsAdunitsListCall) Context(ctx context.Context) *AccountsAdunitsL
 
 func (c *AccountsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["includeInactive"]; ok {
-		params.Set("includeInactive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":  c.accountId,
@@ -2019,14 +1973,14 @@ type AccountsAdunitsCustomchannelsListCall struct {
 	accountId  string
 	adClientId string
 	adUnitId   string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: List all custom channels which the specified ad unit belongs
 // to.
 func (r *AccountsAdunitsCustomchannelsService) List(accountId string, adClientId string, adUnitId string) *AccountsAdunitsCustomchannelsListCall {
-	c := &AccountsAdunitsCustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsAdunitsCustomchannelsListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.adClientId = adClientId
 	c.adUnitId = adUnitId
@@ -2037,7 +1991,7 @@ func (r *AccountsAdunitsCustomchannelsService) List(accountId string, adClientId
 // number of custom channels to include in the response, used for
 // paging.
 func (c *AccountsAdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AccountsAdunitsCustomchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -2046,21 +2000,21 @@ func (c *AccountsAdunitsCustomchannelsListCall) MaxResults(maxResults int64) *Ac
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *AccountsAdunitsCustomchannelsListCall) PageToken(pageToken string) *AccountsAdunitsCustomchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsAdunitsCustomchannelsListCall) Fields(s ...googleapi.Field) *AccountsAdunitsCustomchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsAdunitsCustomchannelsListCall) Context(ctx context.Context) *AccountsAdunitsCustomchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2068,19 +2022,9 @@ func (c *AccountsAdunitsCustomchannelsListCall) Context(ctx context.Context) *Ac
 
 func (c *AccountsAdunitsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/adunits/{adUnitId}/customchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":  c.accountId,
@@ -2167,13 +2111,13 @@ func (c *AccountsAdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
 type AccountsAlertsListCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List: List the alerts for the specified AdSense account.
 func (r *AccountsAlertsService) List(accountId string) *AccountsAlertsListCall {
-	c := &AccountsAlertsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsAlertsListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -2183,21 +2127,21 @@ func (r *AccountsAlertsService) List(accountId string) *AccountsAlertsListCall {
 // is not supplied. The AdSense default (English) will be used if the
 // supplied locale is invalid or unsupported.
 func (c *AccountsAlertsListCall) Locale(locale string) *AccountsAlertsListCall {
-	c.opt_["locale"] = locale
+	c.opt_.Set("locale", fmt.Sprintf("%v", locale))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsAlertsListCall) Fields(s ...googleapi.Field) *AccountsAlertsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsAlertsListCall) Context(ctx context.Context) *AccountsAlertsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2205,16 +2149,9 @@ func (c *AccountsAlertsListCall) Context(ctx context.Context) *AccountsAlertsLis
 
 func (c *AccountsAlertsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/alerts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -2279,31 +2216,31 @@ type AccountsCustomchannelsGetCall struct {
 	accountId       string
 	adClientId      string
 	customChannelId string
-	opt_            map[string]interface{}
+	opt_            url.Values
 	ctx_            context.Context
 }
 
 // Get: Get the specified custom channel from the specified ad client
 // for the specified account.
 func (r *AccountsCustomchannelsService) Get(accountId string, adClientId string, customChannelId string) *AccountsCustomchannelsGetCall {
-	c := &AccountsCustomchannelsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsCustomchannelsGetCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.adClientId = adClientId
 	c.customChannelId = customChannelId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsCustomchannelsGetCall) Fields(s ...googleapi.Field) *AccountsCustomchannelsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsCustomchannelsGetCall) Context(ctx context.Context) *AccountsCustomchannelsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2311,13 +2248,9 @@ func (c *AccountsCustomchannelsGetCall) Context(ctx context.Context) *AccountsCu
 
 func (c *AccountsCustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/customchannels/{customChannelId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":       c.accountId,
@@ -2392,14 +2325,14 @@ type AccountsCustomchannelsListCall struct {
 	s          *Service
 	accountId  string
 	adClientId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: List all custom channels in the specified ad client for the
 // specified account.
 func (r *AccountsCustomchannelsService) List(accountId string, adClientId string) *AccountsCustomchannelsListCall {
-	c := &AccountsCustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsCustomchannelsListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.adClientId = adClientId
 	return c
@@ -2409,7 +2342,7 @@ func (r *AccountsCustomchannelsService) List(accountId string, adClientId string
 // number of custom channels to include in the response, used for
 // paging.
 func (c *AccountsCustomchannelsListCall) MaxResults(maxResults int64) *AccountsCustomchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -2418,21 +2351,21 @@ func (c *AccountsCustomchannelsListCall) MaxResults(maxResults int64) *AccountsC
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *AccountsCustomchannelsListCall) PageToken(pageToken string) *AccountsCustomchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsCustomchannelsListCall) Fields(s ...googleapi.Field) *AccountsCustomchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsCustomchannelsListCall) Context(ctx context.Context) *AccountsCustomchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2440,19 +2373,9 @@ func (c *AccountsCustomchannelsListCall) Context(ctx context.Context) *AccountsC
 
 func (c *AccountsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/customchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":  c.accountId,
@@ -2533,13 +2456,13 @@ type AccountsCustomchannelsAdunitsListCall struct {
 	accountId       string
 	adClientId      string
 	customChannelId string
-	opt_            map[string]interface{}
+	opt_            url.Values
 	ctx_            context.Context
 }
 
 // List: List all ad units in the specified custom channel.
 func (r *AccountsCustomchannelsAdunitsService) List(accountId string, adClientId string, customChannelId string) *AccountsCustomchannelsAdunitsListCall {
-	c := &AccountsCustomchannelsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsCustomchannelsAdunitsListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.adClientId = adClientId
 	c.customChannelId = customChannelId
@@ -2549,14 +2472,14 @@ func (r *AccountsCustomchannelsAdunitsService) List(accountId string, adClientId
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *AccountsCustomchannelsAdunitsListCall) IncludeInactive(includeInactive bool) *AccountsCustomchannelsAdunitsListCall {
-	c.opt_["includeInactive"] = includeInactive
+	c.opt_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *AccountsCustomchannelsAdunitsListCall) MaxResults(maxResults int64) *AccountsCustomchannelsAdunitsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -2565,21 +2488,21 @@ func (c *AccountsCustomchannelsAdunitsListCall) MaxResults(maxResults int64) *Ac
 // this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AccountsCustomchannelsAdunitsListCall) PageToken(pageToken string) *AccountsCustomchannelsAdunitsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsCustomchannelsAdunitsListCall) Fields(s ...googleapi.Field) *AccountsCustomchannelsAdunitsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsCustomchannelsAdunitsListCall) Context(ctx context.Context) *AccountsCustomchannelsAdunitsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2587,22 +2510,9 @@ func (c *AccountsCustomchannelsAdunitsListCall) Context(ctx context.Context) *Ac
 
 func (c *AccountsCustomchannelsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["includeInactive"]; ok {
-		params.Set("includeInactive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/customchannels/{customChannelId}/adunits")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":       c.accountId,
@@ -2696,7 +2606,7 @@ type AccountsReportsGenerateCall struct {
 	accountId string
 	startDate string
 	endDate   string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -2704,7 +2614,7 @@ type AccountsReportsGenerateCall struct {
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
 func (r *AccountsReportsService) Generate(accountId string, startDate string, endDate string) *AccountsReportsGenerateCall {
-	c := &AccountsReportsGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsReportsGenerateCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.startDate = startDate
 	c.endDate = endDate
@@ -2715,21 +2625,27 @@ func (r *AccountsReportsService) Generate(accountId string, startDate string, en
 // use when reporting on monetary metrics. Defaults to the account's
 // currency if not set.
 func (c *AccountsReportsGenerateCall) Currency(currency string) *AccountsReportsGenerateCall {
-	c.opt_["currency"] = currency
+	c.opt_.Set("currency", fmt.Sprintf("%v", currency))
 	return c
 }
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *AccountsReportsGenerateCall) Dimension(dimension string) *AccountsReportsGenerateCall {
-	c.opt_["dimension"] = dimension
+func (c *AccountsReportsGenerateCall) Dimension(dimension []string) *AccountsReportsGenerateCall {
+	c.opt_.Del("dimension")
+	for _, v := range dimension {
+		c.opt_.Add("dimension", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *AccountsReportsGenerateCall) Filter(filter string) *AccountsReportsGenerateCall {
-	c.opt_["filter"] = filter
+func (c *AccountsReportsGenerateCall) Filter(filter []string) *AccountsReportsGenerateCall {
+	c.opt_.Del("filter")
+	for _, v := range filter {
+		c.opt_.Add("filter", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -2737,21 +2653,24 @@ func (c *AccountsReportsGenerateCall) Filter(filter string) *AccountsReportsGene
 // for translating report output to a local language. Defaults to
 // "en_US" if not specified.
 func (c *AccountsReportsGenerateCall) Locale(locale string) *AccountsReportsGenerateCall {
-	c.opt_["locale"] = locale
+	c.opt_.Set("locale", fmt.Sprintf("%v", locale))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *AccountsReportsGenerateCall) MaxResults(maxResults int64) *AccountsReportsGenerateCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *AccountsReportsGenerateCall) Metric(metric string) *AccountsReportsGenerateCall {
-	c.opt_["metric"] = metric
+func (c *AccountsReportsGenerateCall) Metric(metric []string) *AccountsReportsGenerateCall {
+	c.opt_.Del("metric")
+	for _, v := range metric {
+		c.opt_.Add("metric", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -2759,15 +2678,18 @@ func (c *AccountsReportsGenerateCall) Metric(metric string) *AccountsReportsGene
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *AccountsReportsGenerateCall) Sort(sort string) *AccountsReportsGenerateCall {
-	c.opt_["sort"] = sort
+func (c *AccountsReportsGenerateCall) Sort(sort []string) *AccountsReportsGenerateCall {
+	c.opt_.Del("sort")
+	for _, v := range sort {
+		c.opt_.Add("sort", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *AccountsReportsGenerateCall) StartIndex(startIndex int64) *AccountsReportsGenerateCall {
-	c.opt_["startIndex"] = startIndex
+	c.opt_.Set("startIndex", fmt.Sprintf("%v", startIndex))
 	return c
 }
 
@@ -2776,21 +2698,21 @@ func (c *AccountsReportsGenerateCall) StartIndex(startIndex int64) *AccountsRepo
 // AdSense account's local timezone. If false default PST/PDT timezone
 // will be used.
 func (c *AccountsReportsGenerateCall) UseTimezoneReporting(useTimezoneReporting bool) *AccountsReportsGenerateCall {
-	c.opt_["useTimezoneReporting"] = useTimezoneReporting
+	c.opt_.Set("useTimezoneReporting", fmt.Sprintf("%v", useTimezoneReporting))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsReportsGenerateCall) Fields(s ...googleapi.Field) *AccountsReportsGenerateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download methods.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
 func (c *AccountsReportsGenerateCall) Context(ctx context.Context) *AccountsReportsGenerateCall {
 	c.ctx_ = ctx
 	return c
@@ -2798,42 +2720,11 @@ func (c *AccountsReportsGenerateCall) Context(ctx context.Context) *AccountsRepo
 
 func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
-	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
-	if v, ok := c.opt_["currency"]; ok {
-		params.Set("currency", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["dimension"]; ok {
-		params.Set("dimension", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["metric"]; ok {
-		params.Set("metric", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["useTimezoneReporting"]; ok {
-		params.Set("useTimezoneReporting", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("endDate", fmt.Sprintf("%v", c.endDate))
+	c.opt_.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/reports")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -2985,14 +2876,14 @@ type AccountsReportsSavedGenerateCall struct {
 	s             *Service
 	accountId     string
 	savedReportId string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // Generate: Generate an AdSense report based on the saved report ID
 // sent in the query parameters.
 func (r *AccountsReportsSavedService) Generate(accountId string, savedReportId string) *AccountsReportsSavedGenerateCall {
-	c := &AccountsReportsSavedGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsReportsSavedGenerateCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.savedReportId = savedReportId
 	return c
@@ -3002,35 +2893,35 @@ func (r *AccountsReportsSavedService) Generate(accountId string, savedReportId s
 // for translating report output to a local language. Defaults to
 // "en_US" if not specified.
 func (c *AccountsReportsSavedGenerateCall) Locale(locale string) *AccountsReportsSavedGenerateCall {
-	c.opt_["locale"] = locale
+	c.opt_.Set("locale", fmt.Sprintf("%v", locale))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *AccountsReportsSavedGenerateCall) MaxResults(maxResults int64) *AccountsReportsSavedGenerateCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *AccountsReportsSavedGenerateCall) StartIndex(startIndex int64) *AccountsReportsSavedGenerateCall {
-	c.opt_["startIndex"] = startIndex
+	c.opt_.Set("startIndex", fmt.Sprintf("%v", startIndex))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsReportsSavedGenerateCall) Fields(s ...googleapi.Field) *AccountsReportsSavedGenerateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsReportsSavedGenerateCall) Context(ctx context.Context) *AccountsReportsSavedGenerateCall {
 	c.ctx_ = ctx
 	return c
@@ -3038,22 +2929,9 @@ func (c *AccountsReportsSavedGenerateCall) Context(ctx context.Context) *Account
 
 func (c *AccountsReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/reports/{savedReportId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":     c.accountId,
@@ -3141,13 +3019,13 @@ func (c *AccountsReportsSavedGenerateCall) Do() (*AdsenseReportsGenerateResponse
 type AccountsReportsSavedListCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List: List all saved reports in the specified AdSense account.
 func (r *AccountsReportsSavedService) List(accountId string) *AccountsReportsSavedListCall {
-	c := &AccountsReportsSavedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsReportsSavedListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -3155,7 +3033,7 @@ func (r *AccountsReportsSavedService) List(accountId string) *AccountsReportsSav
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of saved reports to include in the response, used for paging.
 func (c *AccountsReportsSavedListCall) MaxResults(maxResults int64) *AccountsReportsSavedListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3164,21 +3042,21 @@ func (c *AccountsReportsSavedListCall) MaxResults(maxResults int64) *AccountsRep
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AccountsReportsSavedListCall) PageToken(pageToken string) *AccountsReportsSavedListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsReportsSavedListCall) Fields(s ...googleapi.Field) *AccountsReportsSavedListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsReportsSavedListCall) Context(ctx context.Context) *AccountsReportsSavedListCall {
 	c.ctx_ = ctx
 	return c
@@ -3186,19 +3064,9 @@ func (c *AccountsReportsSavedListCall) Context(ctx context.Context) *AccountsRep
 
 func (c *AccountsReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/reports/saved")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -3270,29 +3138,29 @@ type AccountsSavedadstylesGetCall struct {
 	s              *Service
 	accountId      string
 	savedAdStyleId string
-	opt_           map[string]interface{}
+	opt_           url.Values
 	ctx_           context.Context
 }
 
 // Get: List a specific saved ad style for the specified account.
 func (r *AccountsSavedadstylesService) Get(accountId string, savedAdStyleId string) *AccountsSavedadstylesGetCall {
-	c := &AccountsSavedadstylesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsSavedadstylesGetCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.savedAdStyleId = savedAdStyleId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsSavedadstylesGetCall) Fields(s ...googleapi.Field) *AccountsSavedadstylesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsSavedadstylesGetCall) Context(ctx context.Context) *AccountsSavedadstylesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3300,13 +3168,9 @@ func (c *AccountsSavedadstylesGetCall) Context(ctx context.Context) *AccountsSav
 
 func (c *AccountsSavedadstylesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/savedadstyles/{savedAdStyleId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":      c.accountId,
@@ -3372,13 +3236,13 @@ func (c *AccountsSavedadstylesGetCall) Do() (*SavedAdStyle, error) {
 type AccountsSavedadstylesListCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List: List all saved ad styles in the specified account.
 func (r *AccountsSavedadstylesService) List(accountId string) *AccountsSavedadstylesListCall {
-	c := &AccountsSavedadstylesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsSavedadstylesListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -3387,7 +3251,7 @@ func (r *AccountsSavedadstylesService) List(accountId string) *AccountsSavedadst
 // number of saved ad styles to include in the response, used for
 // paging.
 func (c *AccountsSavedadstylesListCall) MaxResults(maxResults int64) *AccountsSavedadstylesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3396,21 +3260,21 @@ func (c *AccountsSavedadstylesListCall) MaxResults(maxResults int64) *AccountsSa
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *AccountsSavedadstylesListCall) PageToken(pageToken string) *AccountsSavedadstylesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsSavedadstylesListCall) Fields(s ...googleapi.Field) *AccountsSavedadstylesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsSavedadstylesListCall) Context(ctx context.Context) *AccountsSavedadstylesListCall {
 	c.ctx_ = ctx
 	return c
@@ -3418,19 +3282,9 @@ func (c *AccountsSavedadstylesListCall) Context(ctx context.Context) *AccountsSa
 
 func (c *AccountsSavedadstylesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/savedadstyles")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -3502,14 +3356,14 @@ type AccountsUrlchannelsListCall struct {
 	s          *Service
 	accountId  string
 	adClientId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: List all URL channels in the specified ad client for the
 // specified account.
 func (r *AccountsUrlchannelsService) List(accountId string, adClientId string) *AccountsUrlchannelsListCall {
-	c := &AccountsUrlchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsUrlchannelsListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.adClientId = adClientId
 	return c
@@ -3518,7 +3372,7 @@ func (r *AccountsUrlchannelsService) List(accountId string, adClientId string) *
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of URL channels to include in the response, used for paging.
 func (c *AccountsUrlchannelsListCall) MaxResults(maxResults int64) *AccountsUrlchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3527,21 +3381,21 @@ func (c *AccountsUrlchannelsListCall) MaxResults(maxResults int64) *AccountsUrlc
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AccountsUrlchannelsListCall) PageToken(pageToken string) *AccountsUrlchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsUrlchannelsListCall) Fields(s ...googleapi.Field) *AccountsUrlchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsUrlchannelsListCall) Context(ctx context.Context) *AccountsUrlchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3549,19 +3403,9 @@ func (c *AccountsUrlchannelsListCall) Context(ctx context.Context) *AccountsUrlc
 
 func (c *AccountsUrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}/adclients/{adClientId}/urlchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":  c.accountId,
@@ -3639,20 +3483,20 @@ func (c *AccountsUrlchannelsListCall) Do() (*UrlChannels, error) {
 
 type AdclientsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: List all ad clients in this AdSense account.
 func (r *AdclientsService) List() *AdclientsListCall {
-	c := &AdclientsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdclientsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad clients to include in the response, used for paging.
 func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3661,21 +3505,21 @@ func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AdclientsListCall) PageToken(pageToken string) *AdclientsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdclientsListCall) Fields(s ...googleapi.Field) *AdclientsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdclientsListCall) Context(ctx context.Context) *AdclientsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3683,19 +3527,9 @@ func (c *AdclientsListCall) Context(ctx context.Context) *AdclientsListCall {
 
 func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3756,29 +3590,29 @@ type AdunitsGetCall struct {
 	s          *Service
 	adClientId string
 	adUnitId   string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Gets the specified ad unit in the specified ad client.
 func (r *AdunitsService) Get(adClientId string, adUnitId string) *AdunitsGetCall {
-	c := &AdunitsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdunitsGetCall{s: r.s, opt_: urlValues()}
 	c.adClientId = adClientId
 	c.adUnitId = adUnitId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdunitsGetCall) Fields(s ...googleapi.Field) *AdunitsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdunitsGetCall) Context(ctx context.Context) *AdunitsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3786,13 +3620,9 @@ func (c *AdunitsGetCall) Context(ctx context.Context) *AdunitsGetCall {
 
 func (c *AdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/adunits/{adUnitId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
@@ -3859,29 +3689,29 @@ type AdunitsGetAdCodeCall struct {
 	s          *Service
 	adClientId string
 	adUnitId   string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // GetAdCode: Get ad code for the specified ad unit.
 func (r *AdunitsService) GetAdCode(adClientId string, adUnitId string) *AdunitsGetAdCodeCall {
-	c := &AdunitsGetAdCodeCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdunitsGetAdCodeCall{s: r.s, opt_: urlValues()}
 	c.adClientId = adClientId
 	c.adUnitId = adUnitId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdunitsGetAdCodeCall) Fields(s ...googleapi.Field) *AdunitsGetAdCodeCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdunitsGetAdCodeCall) Context(ctx context.Context) *AdunitsGetAdCodeCall {
 	c.ctx_ = ctx
 	return c
@@ -3889,13 +3719,9 @@ func (c *AdunitsGetAdCodeCall) Context(ctx context.Context) *AdunitsGetAdCodeCal
 
 func (c *AdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/adunits/{adUnitId}/adcode")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
@@ -3961,14 +3787,14 @@ func (c *AdunitsGetAdCodeCall) Do() (*AdCode, error) {
 type AdunitsListCall struct {
 	s          *Service
 	adClientId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: List all ad units in the specified ad client for this AdSense
 // account.
 func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
-	c := &AdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdunitsListCall{s: r.s, opt_: urlValues()}
 	c.adClientId = adClientId
 	return c
 }
@@ -3976,14 +3802,14 @@ func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *AdunitsListCall) IncludeInactive(includeInactive bool) *AdunitsListCall {
-	c.opt_["includeInactive"] = includeInactive
+	c.opt_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3992,21 +3818,21 @@ func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
 // this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AdunitsListCall) PageToken(pageToken string) *AdunitsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdunitsListCall) Fields(s ...googleapi.Field) *AdunitsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdunitsListCall) Context(ctx context.Context) *AdunitsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4014,22 +3840,9 @@ func (c *AdunitsListCall) Context(ctx context.Context) *AdunitsListCall {
 
 func (c *AdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["includeInactive"]; ok {
-		params.Set("includeInactive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/adunits")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
@@ -4106,14 +3919,14 @@ type AdunitsCustomchannelsListCall struct {
 	s          *Service
 	adClientId string
 	adUnitId   string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: List all custom channels which the specified ad unit belongs
 // to.
 func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) *AdunitsCustomchannelsListCall {
-	c := &AdunitsCustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdunitsCustomchannelsListCall{s: r.s, opt_: urlValues()}
 	c.adClientId = adClientId
 	c.adUnitId = adUnitId
 	return c
@@ -4123,7 +3936,7 @@ func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) 
 // number of custom channels to include in the response, used for
 // paging.
 func (c *AdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AdunitsCustomchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -4132,21 +3945,21 @@ func (c *AdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AdunitsCus
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *AdunitsCustomchannelsListCall) PageToken(pageToken string) *AdunitsCustomchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdunitsCustomchannelsListCall) Fields(s ...googleapi.Field) *AdunitsCustomchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdunitsCustomchannelsListCall) Context(ctx context.Context) *AdunitsCustomchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4154,19 +3967,9 @@ func (c *AdunitsCustomchannelsListCall) Context(ctx context.Context) *AdunitsCus
 
 func (c *AdunitsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/adunits/{adUnitId}/customchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
@@ -4244,13 +4047,13 @@ func (c *AdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
 
 type AlertsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: List the alerts for this AdSense account.
 func (r *AlertsService) List() *AlertsListCall {
-	c := &AlertsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AlertsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
@@ -4259,21 +4062,21 @@ func (r *AlertsService) List() *AlertsListCall {
 // is not supplied. The AdSense default (English) will be used if the
 // supplied locale is invalid or unsupported.
 func (c *AlertsListCall) Locale(locale string) *AlertsListCall {
-	c.opt_["locale"] = locale
+	c.opt_.Set("locale", fmt.Sprintf("%v", locale))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AlertsListCall) Fields(s ...googleapi.Field) *AlertsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AlertsListCall) Context(ctx context.Context) *AlertsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4281,16 +4084,9 @@ func (c *AlertsListCall) Context(ctx context.Context) *AlertsListCall {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "alerts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4343,29 +4139,29 @@ type CustomchannelsGetCall struct {
 	s               *Service
 	adClientId      string
 	customChannelId string
-	opt_            map[string]interface{}
+	opt_            url.Values
 	ctx_            context.Context
 }
 
 // Get: Get the specified custom channel from the specified ad client.
 func (r *CustomchannelsService) Get(adClientId string, customChannelId string) *CustomchannelsGetCall {
-	c := &CustomchannelsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CustomchannelsGetCall{s: r.s, opt_: urlValues()}
 	c.adClientId = adClientId
 	c.customChannelId = customChannelId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CustomchannelsGetCall) Fields(s ...googleapi.Field) *CustomchannelsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CustomchannelsGetCall) Context(ctx context.Context) *CustomchannelsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4373,13 +4169,9 @@ func (c *CustomchannelsGetCall) Context(ctx context.Context) *CustomchannelsGetC
 
 func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels/{customChannelId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId":      c.adClientId,
@@ -4445,14 +4237,14 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 type CustomchannelsListCall struct {
 	s          *Service
 	adClientId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: List all custom channels in the specified ad client for this
 // AdSense account.
 func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall {
-	c := &CustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CustomchannelsListCall{s: r.s, opt_: urlValues()}
 	c.adClientId = adClientId
 	return c
 }
@@ -4461,7 +4253,7 @@ func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall 
 // number of custom channels to include in the response, used for
 // paging.
 func (c *CustomchannelsListCall) MaxResults(maxResults int64) *CustomchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -4470,21 +4262,21 @@ func (c *CustomchannelsListCall) MaxResults(maxResults int64) *CustomchannelsLis
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *CustomchannelsListCall) PageToken(pageToken string) *CustomchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CustomchannelsListCall) Fields(s ...googleapi.Field) *CustomchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CustomchannelsListCall) Context(ctx context.Context) *CustomchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4492,19 +4284,9 @@ func (c *CustomchannelsListCall) Context(ctx context.Context) *CustomchannelsLis
 
 func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
@@ -4576,13 +4358,13 @@ type CustomchannelsAdunitsListCall struct {
 	s               *Service
 	adClientId      string
 	customChannelId string
-	opt_            map[string]interface{}
+	opt_            url.Values
 	ctx_            context.Context
 }
 
 // List: List all ad units in the specified custom channel.
 func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId string) *CustomchannelsAdunitsListCall {
-	c := &CustomchannelsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CustomchannelsAdunitsListCall{s: r.s, opt_: urlValues()}
 	c.adClientId = adClientId
 	c.customChannelId = customChannelId
 	return c
@@ -4591,14 +4373,14 @@ func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId s
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *CustomchannelsAdunitsListCall) IncludeInactive(includeInactive bool) *CustomchannelsAdunitsListCall {
-	c.opt_["includeInactive"] = includeInactive
+	c.opt_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *CustomchannelsAdunitsListCall) MaxResults(maxResults int64) *CustomchannelsAdunitsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -4607,21 +4389,21 @@ func (c *CustomchannelsAdunitsListCall) MaxResults(maxResults int64) *Customchan
 // this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *CustomchannelsAdunitsListCall) PageToken(pageToken string) *CustomchannelsAdunitsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CustomchannelsAdunitsListCall) Fields(s ...googleapi.Field) *CustomchannelsAdunitsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CustomchannelsAdunitsListCall) Context(ctx context.Context) *CustomchannelsAdunitsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4629,22 +4411,9 @@ func (c *CustomchannelsAdunitsListCall) Context(ctx context.Context) *Customchan
 
 func (c *CustomchannelsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["includeInactive"]; ok {
-		params.Set("includeInactive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels/{customChannelId}/adunits")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId":      c.adClientId,
@@ -4727,28 +4496,28 @@ func (c *CustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
 
 type MetadataDimensionsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: List the metadata for the dimensions available to this AdSense
 // account.
 func (r *MetadataDimensionsService) List() *MetadataDimensionsListCall {
-	c := &MetadataDimensionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MetadataDimensionsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MetadataDimensionsListCall) Fields(s ...googleapi.Field) *MetadataDimensionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MetadataDimensionsListCall) Context(ctx context.Context) *MetadataDimensionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4756,13 +4525,9 @@ func (c *MetadataDimensionsListCall) Context(ctx context.Context) *MetadataDimen
 
 func (c *MetadataDimensionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "metadata/dimensions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4806,28 +4571,28 @@ func (c *MetadataDimensionsListCall) Do() (*Metadata, error) {
 
 type MetadataMetricsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: List the metadata for the metrics available to this AdSense
 // account.
 func (r *MetadataMetricsService) List() *MetadataMetricsListCall {
-	c := &MetadataMetricsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MetadataMetricsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MetadataMetricsListCall) Fields(s ...googleapi.Field) *MetadataMetricsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MetadataMetricsListCall) Context(ctx context.Context) *MetadataMetricsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4835,13 +4600,9 @@ func (c *MetadataMetricsListCall) Context(ctx context.Context) *MetadataMetricsL
 
 func (c *MetadataMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "metadata/metrics")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4887,7 +4648,7 @@ type ReportsGenerateCall struct {
 	s         *Service
 	startDate string
 	endDate   string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -4895,7 +4656,7 @@ type ReportsGenerateCall struct {
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
 func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGenerateCall {
-	c := &ReportsGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsGenerateCall{s: r.s, opt_: urlValues()}
 	c.startDate = startDate
 	c.endDate = endDate
 	return c
@@ -4903,8 +4664,11 @@ func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGene
 
 // AccountId sets the optional parameter "accountId": Accounts upon
 // which to report.
-func (c *ReportsGenerateCall) AccountId(accountId string) *ReportsGenerateCall {
-	c.opt_["accountId"] = accountId
+func (c *ReportsGenerateCall) AccountId(accountId []string) *ReportsGenerateCall {
+	c.opt_.Del("accountId")
+	for _, v := range accountId {
+		c.opt_.Add("accountId", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -4912,21 +4676,27 @@ func (c *ReportsGenerateCall) AccountId(accountId string) *ReportsGenerateCall {
 // use when reporting on monetary metrics. Defaults to the account's
 // currency if not set.
 func (c *ReportsGenerateCall) Currency(currency string) *ReportsGenerateCall {
-	c.opt_["currency"] = currency
+	c.opt_.Set("currency", fmt.Sprintf("%v", currency))
 	return c
 }
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *ReportsGenerateCall) Dimension(dimension string) *ReportsGenerateCall {
-	c.opt_["dimension"] = dimension
+func (c *ReportsGenerateCall) Dimension(dimension []string) *ReportsGenerateCall {
+	c.opt_.Del("dimension")
+	for _, v := range dimension {
+		c.opt_.Add("dimension", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *ReportsGenerateCall) Filter(filter string) *ReportsGenerateCall {
-	c.opt_["filter"] = filter
+func (c *ReportsGenerateCall) Filter(filter []string) *ReportsGenerateCall {
+	c.opt_.Del("filter")
+	for _, v := range filter {
+		c.opt_.Add("filter", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -4934,21 +4704,24 @@ func (c *ReportsGenerateCall) Filter(filter string) *ReportsGenerateCall {
 // for translating report output to a local language. Defaults to
 // "en_US" if not specified.
 func (c *ReportsGenerateCall) Locale(locale string) *ReportsGenerateCall {
-	c.opt_["locale"] = locale
+	c.opt_.Set("locale", fmt.Sprintf("%v", locale))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *ReportsGenerateCall) MaxResults(maxResults int64) *ReportsGenerateCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *ReportsGenerateCall) Metric(metric string) *ReportsGenerateCall {
-	c.opt_["metric"] = metric
+func (c *ReportsGenerateCall) Metric(metric []string) *ReportsGenerateCall {
+	c.opt_.Del("metric")
+	for _, v := range metric {
+		c.opt_.Add("metric", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -4956,15 +4729,18 @@ func (c *ReportsGenerateCall) Metric(metric string) *ReportsGenerateCall {
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *ReportsGenerateCall) Sort(sort string) *ReportsGenerateCall {
-	c.opt_["sort"] = sort
+func (c *ReportsGenerateCall) Sort(sort []string) *ReportsGenerateCall {
+	c.opt_.Del("sort")
+	for _, v := range sort {
+		c.opt_.Add("sort", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall {
-	c.opt_["startIndex"] = startIndex
+	c.opt_.Set("startIndex", fmt.Sprintf("%v", startIndex))
 	return c
 }
 
@@ -4973,21 +4749,21 @@ func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall 
 // AdSense account's local timezone. If false default PST/PDT timezone
 // will be used.
 func (c *ReportsGenerateCall) UseTimezoneReporting(useTimezoneReporting bool) *ReportsGenerateCall {
-	c.opt_["useTimezoneReporting"] = useTimezoneReporting
+	c.opt_.Set("useTimezoneReporting", fmt.Sprintf("%v", useTimezoneReporting))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsGenerateCall) Fields(s ...googleapi.Field) *ReportsGenerateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download methods.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
 func (c *ReportsGenerateCall) Context(ctx context.Context) *ReportsGenerateCall {
 	c.ctx_ = ctx
 	return c
@@ -4995,45 +4771,11 @@ func (c *ReportsGenerateCall) Context(ctx context.Context) *ReportsGenerateCall 
 
 func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
-	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
-	if v, ok := c.opt_["accountId"]; ok {
-		params.Set("accountId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["currency"]; ok {
-		params.Set("currency", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["dimension"]; ok {
-		params.Set("dimension", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["metric"]; ok {
-		params.Set("metric", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["useTimezoneReporting"]; ok {
-		params.Set("useTimezoneReporting", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("endDate", fmt.Sprintf("%v", c.endDate))
+	c.opt_.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -5181,14 +4923,14 @@ func (c *ReportsGenerateCall) Do() (*AdsenseReportsGenerateResponse, error) {
 type ReportsSavedGenerateCall struct {
 	s             *Service
 	savedReportId string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // Generate: Generate an AdSense report based on the saved report ID
 // sent in the query parameters.
 func (r *ReportsSavedService) Generate(savedReportId string) *ReportsSavedGenerateCall {
-	c := &ReportsSavedGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsSavedGenerateCall{s: r.s, opt_: urlValues()}
 	c.savedReportId = savedReportId
 	return c
 }
@@ -5197,35 +4939,35 @@ func (r *ReportsSavedService) Generate(savedReportId string) *ReportsSavedGenera
 // for translating report output to a local language. Defaults to
 // "en_US" if not specified.
 func (c *ReportsSavedGenerateCall) Locale(locale string) *ReportsSavedGenerateCall {
-	c.opt_["locale"] = locale
+	c.opt_.Set("locale", fmt.Sprintf("%v", locale))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *ReportsSavedGenerateCall) MaxResults(maxResults int64) *ReportsSavedGenerateCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *ReportsSavedGenerateCall) StartIndex(startIndex int64) *ReportsSavedGenerateCall {
-	c.opt_["startIndex"] = startIndex
+	c.opt_.Set("startIndex", fmt.Sprintf("%v", startIndex))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsSavedGenerateCall) Fields(s ...googleapi.Field) *ReportsSavedGenerateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsSavedGenerateCall) Context(ctx context.Context) *ReportsSavedGenerateCall {
 	c.ctx_ = ctx
 	return c
@@ -5233,22 +4975,9 @@ func (c *ReportsSavedGenerateCall) Context(ctx context.Context) *ReportsSavedGen
 
 func (c *ReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{savedReportId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"savedReportId": c.savedReportId,
@@ -5327,20 +5056,20 @@ func (c *ReportsSavedGenerateCall) Do() (*AdsenseReportsGenerateResponse, error)
 
 type ReportsSavedListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: List all saved reports in this AdSense account.
 func (r *ReportsSavedService) List() *ReportsSavedListCall {
-	c := &ReportsSavedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsSavedListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of saved reports to include in the response, used for paging.
 func (c *ReportsSavedListCall) MaxResults(maxResults int64) *ReportsSavedListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -5349,21 +5078,21 @@ func (c *ReportsSavedListCall) MaxResults(maxResults int64) *ReportsSavedListCal
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *ReportsSavedListCall) PageToken(pageToken string) *ReportsSavedListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsSavedListCall) Fields(s ...googleapi.Field) *ReportsSavedListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsSavedListCall) Context(ctx context.Context) *ReportsSavedListCall {
 	c.ctx_ = ctx
 	return c
@@ -5371,19 +5100,9 @@ func (c *ReportsSavedListCall) Context(ctx context.Context) *ReportsSavedListCal
 
 func (c *ReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/saved")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -5443,28 +5162,28 @@ func (c *ReportsSavedListCall) Do() (*SavedReports, error) {
 type SavedadstylesGetCall struct {
 	s              *Service
 	savedAdStyleId string
-	opt_           map[string]interface{}
+	opt_           url.Values
 	ctx_           context.Context
 }
 
 // Get: Get a specific saved ad style from the user's account.
 func (r *SavedadstylesService) Get(savedAdStyleId string) *SavedadstylesGetCall {
-	c := &SavedadstylesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SavedadstylesGetCall{s: r.s, opt_: urlValues()}
 	c.savedAdStyleId = savedAdStyleId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SavedadstylesGetCall) Fields(s ...googleapi.Field) *SavedadstylesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SavedadstylesGetCall) Context(ctx context.Context) *SavedadstylesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -5472,13 +5191,9 @@ func (c *SavedadstylesGetCall) Context(ctx context.Context) *SavedadstylesGetCal
 
 func (c *SavedadstylesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "savedadstyles/{savedAdStyleId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"savedAdStyleId": c.savedAdStyleId,
@@ -5535,13 +5250,13 @@ func (c *SavedadstylesGetCall) Do() (*SavedAdStyle, error) {
 
 type SavedadstylesListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: List all saved ad styles in the user's account.
 func (r *SavedadstylesService) List() *SavedadstylesListCall {
-	c := &SavedadstylesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SavedadstylesListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
@@ -5549,7 +5264,7 @@ func (r *SavedadstylesService) List() *SavedadstylesListCall {
 // number of saved ad styles to include in the response, used for
 // paging.
 func (c *SavedadstylesListCall) MaxResults(maxResults int64) *SavedadstylesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -5558,21 +5273,21 @@ func (c *SavedadstylesListCall) MaxResults(maxResults int64) *SavedadstylesListC
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *SavedadstylesListCall) PageToken(pageToken string) *SavedadstylesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SavedadstylesListCall) Fields(s ...googleapi.Field) *SavedadstylesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SavedadstylesListCall) Context(ctx context.Context) *SavedadstylesListCall {
 	c.ctx_ = ctx
 	return c
@@ -5580,19 +5295,9 @@ func (c *SavedadstylesListCall) Context(ctx context.Context) *SavedadstylesListC
 
 func (c *SavedadstylesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "savedadstyles")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -5652,14 +5357,14 @@ func (c *SavedadstylesListCall) Do() (*SavedAdStyles, error) {
 type UrlchannelsListCall struct {
 	s          *Service
 	adClientId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: List all URL channels in the specified ad client for this
 // AdSense account.
 func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
-	c := &UrlchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlchannelsListCall{s: r.s, opt_: urlValues()}
 	c.adClientId = adClientId
 	return c
 }
@@ -5667,7 +5372,7 @@ func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of URL channels to include in the response, used for paging.
 func (c *UrlchannelsListCall) MaxResults(maxResults int64) *UrlchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -5676,21 +5381,21 @@ func (c *UrlchannelsListCall) MaxResults(maxResults int64) *UrlchannelsListCall 
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *UrlchannelsListCall) PageToken(pageToken string) *UrlchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlchannelsListCall) Fields(s ...googleapi.Field) *UrlchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlchannelsListCall) Context(ctx context.Context) *UrlchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -5698,19 +5403,9 @@ func (c *UrlchannelsListCall) Context(ctx context.Context) *UrlchannelsListCall 
 
 func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/urlchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,

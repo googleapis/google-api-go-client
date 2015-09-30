@@ -43,6 +43,8 @@ const apiName = "urlshortener"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/urlshortener/v1/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage your goo.gl short URLs
@@ -255,13 +257,13 @@ func (s *UrlHistory) MarshalJSON() ([]byte, error) {
 type UrlGetCall struct {
 	s        *Service
 	shortUrl string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // Get: Expands a short URL or gets creation time and analytics.
 func (r *UrlService) Get(shortUrl string) *UrlGetCall {
-	c := &UrlGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlGetCall{s: r.s, opt_: urlValues()}
 	c.shortUrl = shortUrl
 	return c
 }
@@ -275,21 +277,21 @@ func (r *UrlService) Get(shortUrl string) *UrlGetCall {
 //   "FULL" - Returns the creation timestamp and all available
 // analytics.
 func (c *UrlGetCall) Projection(projection string) *UrlGetCall {
-	c.opt_["projection"] = projection
+	c.opt_.Set("projection", fmt.Sprintf("%v", projection))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlGetCall) Fields(s ...googleapi.Field) *UrlGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlGetCall) Context(ctx context.Context) *UrlGetCall {
 	c.ctx_ = ctx
 	return c
@@ -297,17 +299,10 @@ func (c *UrlGetCall) Context(ctx context.Context) *UrlGetCall {
 
 func (c *UrlGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("shortUrl", fmt.Sprintf("%v", c.shortUrl))
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("shortUrl", fmt.Sprintf("%v", c.shortUrl))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -377,28 +372,28 @@ func (c *UrlGetCall) Do() (*Url, error) {
 type UrlInsertCall struct {
 	s    *Service
 	url  *Url
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // Insert: Creates a new short URL.
 func (r *UrlService) Insert(url *Url) *UrlInsertCall {
-	c := &UrlInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlInsertCall{s: r.s, opt_: urlValues()}
 	c.url = url
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlInsertCall) Fields(s ...googleapi.Field) *UrlInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlInsertCall) Context(ctx context.Context) *UrlInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -411,13 +406,9 @@ func (c *UrlInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -464,13 +455,13 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 
 type UrlListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Retrieves a list of URLs shortened by a user.
 func (r *UrlService) List() *UrlListCall {
-	c := &UrlListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
@@ -481,28 +472,28 @@ func (r *UrlService) List() *UrlListCall {
 //   "ANALYTICS_CLICKS" - Returns short URL click counts.
 //   "FULL" - Returns short URL click counts.
 func (c *UrlListCall) Projection(projection string) *UrlListCall {
-	c.opt_["projection"] = projection
+	c.opt_.Set("projection", fmt.Sprintf("%v", projection))
 	return c
 }
 
 // StartToken sets the optional parameter "start-token": Token for
 // requesting successive pages of results.
 func (c *UrlListCall) StartToken(startToken string) *UrlListCall {
-	c.opt_["start-token"] = startToken
+	c.opt_.Set("startToken", fmt.Sprintf("%v", startToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlListCall) Fields(s ...googleapi.Field) *UrlListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlListCall) Context(ctx context.Context) *UrlListCall {
 	c.ctx_ = ctx
 	return c
@@ -510,19 +501,9 @@ func (c *UrlListCall) Context(ctx context.Context) *UrlListCall {
 
 func (c *UrlListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["start-token"]; ok {
-		params.Set("start-token", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url/history")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())

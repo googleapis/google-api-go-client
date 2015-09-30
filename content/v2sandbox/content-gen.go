@@ -2834,7 +2834,7 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 //   "pendingShipment"
 //   "returned"
 //   "shipped"
-func (c *OrdersListCall) Statuses(statuses string) *OrdersListCall {
+func (c *OrdersListCall) Statuses(statuses []string) *OrdersListCall {
 	c.opt_["statuses"] = statuses
 	return c
 }
@@ -2878,7 +2878,11 @@ func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("placedDateStart", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["statuses"]; ok {
-		params.Set("statuses", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("statuses", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

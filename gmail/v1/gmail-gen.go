@@ -3042,7 +3042,7 @@ func (c *UsersMessagesGetCall) Format(format string) *UsersMessagesGetCall {
 
 // MetadataHeaders sets the optional parameter "metadataHeaders": When
 // given and format is METADATA, only include headers specified.
-func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders string) *UsersMessagesGetCall {
+func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders []string) *UsersMessagesGetCall {
 	c.opt_["metadataHeaders"] = metadataHeaders
 	return c
 }
@@ -3071,7 +3071,11 @@ func (c *UsersMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("format", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["metadataHeaders"]; ok {
-		params.Set("metadataHeaders", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("metadataHeaders", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -3721,7 +3725,7 @@ func (c *UsersMessagesListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersMe
 
 // LabelIds sets the optional parameter "labelIds": Only return messages
 // with labels that match all of the specified label IDs.
-func (c *UsersMessagesListCall) LabelIds(labelIds string) *UsersMessagesListCall {
+func (c *UsersMessagesListCall) LabelIds(labelIds []string) *UsersMessagesListCall {
 	c.opt_["labelIds"] = labelIds
 	return c
 }
@@ -3772,7 +3776,11 @@ func (c *UsersMessagesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("includeSpamTrash", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["labelIds"]; ok {
-		params.Set("labelIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("labelIds", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -4641,7 +4649,7 @@ func (c *UsersThreadsGetCall) Format(format string) *UsersThreadsGetCall {
 
 // MetadataHeaders sets the optional parameter "metadataHeaders": When
 // given and format is METADATA, only include headers specified.
-func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders string) *UsersThreadsGetCall {
+func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders []string) *UsersThreadsGetCall {
 	c.opt_["metadataHeaders"] = metadataHeaders
 	return c
 }
@@ -4670,7 +4678,11 @@ func (c *UsersThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("format", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["metadataHeaders"]; ok {
-		params.Set("metadataHeaders", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("metadataHeaders", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -4786,7 +4798,7 @@ func (c *UsersThreadsListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersThr
 
 // LabelIds sets the optional parameter "labelIds": Only return threads
 // with labels that match all of the specified label IDs.
-func (c *UsersThreadsListCall) LabelIds(labelIds string) *UsersThreadsListCall {
+func (c *UsersThreadsListCall) LabelIds(labelIds []string) *UsersThreadsListCall {
 	c.opt_["labelIds"] = labelIds
 	return c
 }
@@ -4837,7 +4849,11 @@ func (c *UsersThreadsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("includeSpamTrash", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["labelIds"]; ok {
-		params.Set("labelIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("labelIds", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))

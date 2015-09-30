@@ -1490,7 +1490,7 @@ func (r *AccountsAdunitsService) GetAdCode(accountId string, adClientId string, 
 
 // HostCustomChannelId sets the optional parameter
 // "hostCustomChannelId": Host custom channel to attach to the ad code.
-func (c *AccountsAdunitsGetAdCodeCall) HostCustomChannelId(hostCustomChannelId string) *AccountsAdunitsGetAdCodeCall {
+func (c *AccountsAdunitsGetAdCodeCall) HostCustomChannelId(hostCustomChannelId []string) *AccountsAdunitsGetAdCodeCall {
 	c.opt_["hostCustomChannelId"] = hostCustomChannelId
 	return c
 }
@@ -1516,7 +1516,11 @@ func (c *AccountsAdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, er
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["hostCustomChannelId"]; ok {
-		params.Set("hostCustomChannelId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("hostCustomChannelId", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -2124,14 +2128,14 @@ func (r *AccountsReportsService) Generate(accountId string, startDate string, en
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *AccountsReportsGenerateCall) Dimension(dimension string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Dimension(dimension []string) *AccountsReportsGenerateCall {
 	c.opt_["dimension"] = dimension
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *AccountsReportsGenerateCall) Filter(filter string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Filter(filter []string) *AccountsReportsGenerateCall {
 	c.opt_["filter"] = filter
 	return c
 }
@@ -2153,7 +2157,7 @@ func (c *AccountsReportsGenerateCall) MaxResults(maxResults int64) *AccountsRepo
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *AccountsReportsGenerateCall) Metric(metric string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Metric(metric []string) *AccountsReportsGenerateCall {
 	c.opt_["metric"] = metric
 	return c
 }
@@ -2162,7 +2166,7 @@ func (c *AccountsReportsGenerateCall) Metric(metric string) *AccountsReportsGene
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *AccountsReportsGenerateCall) Sort(sort string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Sort(sort []string) *AccountsReportsGenerateCall {
 	c.opt_["sort"] = sort
 	return c
 }
@@ -2197,10 +2201,18 @@ func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, err
 	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
 	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	if v, ok := c.opt_["dimension"]; ok {
-		params.Set("dimension", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("dimension", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("filter", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
@@ -2209,10 +2221,18 @@ func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, err
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["metric"]; ok {
-		params.Set("metric", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("metric", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("sort", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))
@@ -3462,14 +3482,14 @@ func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGene
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *ReportsGenerateCall) Dimension(dimension string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Dimension(dimension []string) *ReportsGenerateCall {
 	c.opt_["dimension"] = dimension
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *ReportsGenerateCall) Filter(filter string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Filter(filter []string) *ReportsGenerateCall {
 	c.opt_["filter"] = filter
 	return c
 }
@@ -3491,7 +3511,7 @@ func (c *ReportsGenerateCall) MaxResults(maxResults int64) *ReportsGenerateCall 
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *ReportsGenerateCall) Metric(metric string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Metric(metric []string) *ReportsGenerateCall {
 	c.opt_["metric"] = metric
 	return c
 }
@@ -3500,7 +3520,7 @@ func (c *ReportsGenerateCall) Metric(metric string) *ReportsGenerateCall {
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *ReportsGenerateCall) Sort(sort string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Sort(sort []string) *ReportsGenerateCall {
 	c.opt_["sort"] = sort
 	return c
 }
@@ -3535,10 +3555,18 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
 	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	if v, ok := c.opt_["dimension"]; ok {
-		params.Set("dimension", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("dimension", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("filter", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
@@ -3547,10 +3575,18 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["metric"]; ok {
-		params.Set("metric", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("metric", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("sort", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["startIndex"]; ok {
 		params.Set("startIndex", fmt.Sprintf("%v", v))

@@ -1133,7 +1133,7 @@ func (c *TimeseriesListCall) Count(count int64) *TimeseriesListCall {
 // you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
-func (c *TimeseriesListCall) Labels(labels string) *TimeseriesListCall {
+func (c *TimeseriesListCall) Labels(labels []string) *TimeseriesListCall {
 	c.opt_["labels"] = labels
 	return c
 }
@@ -1216,7 +1216,11 @@ func (c *TimeseriesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("count", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["labels"]; ok {
-		params.Set("labels", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("labels", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["oldest"]; ok {
 		params.Set("oldest", fmt.Sprintf("%v", v))
@@ -1530,7 +1534,7 @@ func (c *TimeseriesDescriptorsListCall) Count(count int64) *TimeseriesDescriptor
 // you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
-func (c *TimeseriesDescriptorsListCall) Labels(labels string) *TimeseriesDescriptorsListCall {
+func (c *TimeseriesDescriptorsListCall) Labels(labels []string) *TimeseriesDescriptorsListCall {
 	c.opt_["labels"] = labels
 	return c
 }
@@ -1613,7 +1617,11 @@ func (c *TimeseriesDescriptorsListCall) doRequest(alt string) (*http.Response, e
 		params.Set("count", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["labels"]; ok {
-		params.Set("labels", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("labels", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["oldest"]; ok {
 		params.Set("oldest", fmt.Sprintf("%v", v))

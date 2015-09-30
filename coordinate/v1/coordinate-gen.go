@@ -902,7 +902,7 @@ func (c *JobsInsertCall) Assignee(assignee string) *JobsInsertCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsInsertCall) CustomField(customField string) *JobsInsertCall {
+func (c *JobsInsertCall) CustomField(customField []string) *JobsInsertCall {
 	c.opt_["customField"] = customField
 	return c
 }
@@ -961,7 +961,11 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("assignee", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["customField"]; ok {
-		params.Set("customField", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("customField", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["customerName"]; ok {
 		params.Set("customerName", fmt.Sprintf("%v", v))
@@ -1285,7 +1289,7 @@ func (c *JobsPatchCall) Assignee(assignee string) *JobsPatchCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsPatchCall) CustomField(customField string) *JobsPatchCall {
+func (c *JobsPatchCall) CustomField(customField []string) *JobsPatchCall {
 	c.opt_["customField"] = customField
 	return c
 }
@@ -1376,7 +1380,11 @@ func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("assignee", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["customField"]; ok {
-		params.Set("customField", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("customField", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["customerName"]; ok {
 		params.Set("customerName", fmt.Sprintf("%v", v))
@@ -1577,7 +1585,7 @@ func (c *JobsUpdateCall) Assignee(assignee string) *JobsUpdateCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsUpdateCall) CustomField(customField string) *JobsUpdateCall {
+func (c *JobsUpdateCall) CustomField(customField []string) *JobsUpdateCall {
 	c.opt_["customField"] = customField
 	return c
 }
@@ -1668,7 +1676,11 @@ func (c *JobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("assignee", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["customField"]; ok {
-		params.Set("customField", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("customField", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["customerName"]; ok {
 		params.Set("customerName", fmt.Sprintf("%v", v))

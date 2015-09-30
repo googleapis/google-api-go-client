@@ -1493,7 +1493,7 @@ func (r *CcOffersService) List(publisher string) *CcOffersListCall {
 // Advertiser sets the optional parameter "advertiser": The advertiser
 // ID of a card issuer whose offers to include. Optional, may be
 // repeated.
-func (c *CcOffersListCall) Advertiser(advertiser string) *CcOffersListCall {
+func (c *CcOffersListCall) Advertiser(advertiser []string) *CcOffersListCall {
 	c.opt_["advertiser"] = advertiser
 	return c
 }
@@ -1531,7 +1531,11 @@ func (c *CcOffersListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiser"]; ok {
-		params.Set("advertiser", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("advertiser", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["projection"]; ok {
 		params.Set("projection", fmt.Sprintf("%v", v))
@@ -2297,14 +2301,14 @@ func (r *LinksService) List(role string, roleId string) *LinksListCall {
 
 // AdvertiserId sets the optional parameter "advertiserId": Limits the
 // resulting links to the ones belonging to the listed advertisers.
-func (c *LinksListCall) AdvertiserId(advertiserId int64) *LinksListCall {
+func (c *LinksListCall) AdvertiserId(advertiserId []int64) *LinksListCall {
 	c.opt_["advertiserId"] = advertiserId
 	return c
 }
 
 // AssetSize sets the optional parameter "assetSize": The size of the
 // given asset.
-func (c *LinksListCall) AssetSize(assetSize string) *LinksListCall {
+func (c *LinksListCall) AssetSize(assetSize []string) *LinksListCall {
 	c.opt_["assetSize"] = assetSize
 	return c
 }
@@ -2368,7 +2372,7 @@ func (c *LinksListCall) PageToken(pageToken string) *LinksListCall {
 //   "free_shipping"
 //   "percent_off"
 //   "price_cut"
-func (c *LinksListCall) PromotionType(promotionType string) *LinksListCall {
+func (c *LinksListCall) PromotionType(promotionType []string) *LinksListCall {
 	c.opt_["promotionType"] = promotionType
 	return c
 }
@@ -2427,10 +2431,18 @@ func (c *LinksListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserId"]; ok {
-		params.Set("advertiserId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("advertiserId", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["assetSize"]; ok {
-		params.Set("assetSize", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("assetSize", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["authorship"]; ok {
 		params.Set("authorship", fmt.Sprintf("%v", v))
@@ -2451,7 +2463,11 @@ func (c *LinksListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["promotionType"]; ok {
-		params.Set("promotionType", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("promotionType", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["relationshipStatus"]; ok {
 		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
@@ -3048,7 +3064,7 @@ func (r *ReportsService) Get(role string, roleId string, reportType string) *Rep
 
 // AdvertiserId sets the optional parameter "advertiserId": The IDs of
 // the advertisers to look up, if applicable.
-func (c *ReportsGetCall) AdvertiserId(advertiserId string) *ReportsGetCall {
+func (c *ReportsGetCall) AdvertiserId(advertiserId []string) *ReportsGetCall {
 	c.opt_["advertiserId"] = advertiserId
 	return c
 }
@@ -3083,7 +3099,7 @@ func (c *ReportsGetCall) EventType(eventType string) *ReportsGetCall {
 
 // LinkId sets the optional parameter "linkId": Filters to capture one
 // of given link IDs.
-func (c *ReportsGetCall) LinkId(linkId string) *ReportsGetCall {
+func (c *ReportsGetCall) LinkId(linkId []string) *ReportsGetCall {
 	c.opt_["linkId"] = linkId
 	return c
 }
@@ -3097,14 +3113,14 @@ func (c *ReportsGetCall) MaxResults(maxResults int64) *ReportsGetCall {
 
 // OrderId sets the optional parameter "orderId": Filters to capture one
 // of the given order IDs.
-func (c *ReportsGetCall) OrderId(orderId string) *ReportsGetCall {
+func (c *ReportsGetCall) OrderId(orderId []string) *ReportsGetCall {
 	c.opt_["orderId"] = orderId
 	return c
 }
 
 // PublisherId sets the optional parameter "publisherId": The IDs of the
 // publishers to look up, if applicable.
-func (c *ReportsGetCall) PublisherId(publisherId string) *ReportsGetCall {
+func (c *ReportsGetCall) PublisherId(publisherId []string) *ReportsGetCall {
 	c.opt_["publisherId"] = publisherId
 	return c
 }
@@ -3158,7 +3174,11 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserId"]; ok {
-		params.Set("advertiserId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("advertiserId", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["calculateTotals"]; ok {
 		params.Set("calculateTotals", fmt.Sprintf("%v", v))
@@ -3170,16 +3190,28 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("eventType", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["linkId"]; ok {
-		params.Set("linkId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("linkId", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["orderId"]; ok {
-		params.Set("orderId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("orderId", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["publisherId"]; ok {
-		params.Set("publisherId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("publisherId", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["startDate"]; ok {
 		params.Set("startDate", fmt.Sprintf("%v", v))

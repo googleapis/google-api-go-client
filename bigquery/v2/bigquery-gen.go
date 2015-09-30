@@ -3321,7 +3321,7 @@ func (c *JobsListCall) Projection(projection string) *JobsListCall {
 //   "done" - Finished jobs
 //   "pending" - Pending jobs
 //   "running" - Running jobs
-func (c *JobsListCall) StateFilter(stateFilter string) *JobsListCall {
+func (c *JobsListCall) StateFilter(stateFilter []string) *JobsListCall {
 	c.opt_["stateFilter"] = stateFilter
 	return c
 }
@@ -3359,7 +3359,11 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("projection", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["stateFilter"]; ok {
-		params.Set("stateFilter", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("stateFilter", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

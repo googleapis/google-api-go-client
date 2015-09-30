@@ -1611,7 +1611,7 @@ func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUser
 // access.
 //   "READER" - Reader role - Blogs where the user has Reader level
 // access (to a private blog).
-func (c *BlogsListByUserCall) Role(role string) *BlogsListByUserCall {
+func (c *BlogsListByUserCall) Role(role []string) *BlogsListByUserCall {
 	c.opt_["role"] = role
 	return c
 }
@@ -1623,7 +1623,7 @@ func (c *BlogsListByUserCall) Role(role string) *BlogsListByUserCall {
 // Possible values:
 //   "DELETED" - Blog has been deleted by an administrator.
 //   "LIVE" (default) - Blog is currently live.
-func (c *BlogsListByUserCall) Status(status string) *BlogsListByUserCall {
+func (c *BlogsListByUserCall) Status(status []string) *BlogsListByUserCall {
 	c.opt_["status"] = status
 	return c
 }
@@ -1664,10 +1664,18 @@ func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("fetchUserInfo", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["role"]; ok {
-		params.Set("role", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("role", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("status", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -2203,7 +2211,7 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListCall) Status(status string) *CommentsListCall {
+func (c *CommentsListCall) Status(status []string) *CommentsListCall {
 	c.opt_["status"] = status
 	return c
 }
@@ -2257,7 +2265,11 @@ func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("startDate", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("status", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -2446,7 +2458,7 @@ func (c *CommentsListByBlogCall) StartDate(startDate string) *CommentsListByBlog
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListByBlogCall) Status(status string) *CommentsListByBlogCall {
+func (c *CommentsListByBlogCall) Status(status []string) *CommentsListByBlogCall {
 	c.opt_["status"] = status
 	return c
 }
@@ -2487,7 +2499,11 @@ func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("startDate", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("status", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -2837,7 +2853,7 @@ func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 //   "30DAYS" - Page view counts from the last thirty days.
 //   "7DAYS" - Page view counts from the last seven days.
 //   "all" - Total page view counts from all time.
-func (c *PageViewsGetCall) Range(range_ string) *PageViewsGetCall {
+func (c *PageViewsGetCall) Range(range_ []string) *PageViewsGetCall {
 	c.opt_["range"] = range_
 	return c
 }
@@ -2863,7 +2879,11 @@ func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["range"]; ok {
-		params.Set("range", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("range", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -3323,7 +3343,7 @@ func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
 // Possible values:
 //   "draft" - Draft (unpublished) Pages
 //   "live" - Pages that are publicly visible
-func (c *PagesListCall) Status(status string) *PagesListCall {
+func (c *PagesListCall) Status(status []string) *PagesListCall {
 	c.opt_["status"] = status
 	return c
 }
@@ -3371,7 +3391,11 @@ func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("status", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -4177,7 +4201,7 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 //   "draft" - Draft posts
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in future.
-func (c *PostUserInfosListCall) Status(status string) *PostUserInfosListCall {
+func (c *PostUserInfosListCall) Status(status []string) *PostUserInfosListCall {
 	c.opt_["status"] = status
 	return c
 }
@@ -4237,7 +4261,11 @@ func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("startDate", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("status", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -5047,7 +5075,7 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 //   "draft" - Draft (non-published) posts.
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in the future.
-func (c *PostsListCall) Status(status string) *PostsListCall {
+func (c *PostsListCall) Status(status []string) *PostsListCall {
 	c.opt_["status"] = status
 	return c
 }
@@ -5110,7 +5138,11 @@ func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("startDate", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("status", p)
+			}
+		}
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))

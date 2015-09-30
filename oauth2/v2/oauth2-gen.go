@@ -43,6 +43,8 @@ const apiName = "oauth2"
 const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// Know your basic profile info and list of people in your circles.
@@ -268,27 +270,27 @@ func (s *Userinfoplus) MarshalJSON() ([]byte, error) {
 
 type GetCertForOpenIdConnectCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // GetCertForOpenIdConnect:
 func (s *Service) GetCertForOpenIdConnect() *GetCertForOpenIdConnectCall {
-	c := &GetCertForOpenIdConnectCall{s: s, opt_: make(map[string]interface{})}
+	c := &GetCertForOpenIdConnectCall{s: s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *GetCertForOpenIdConnectCall) Fields(s ...googleapi.Field) *GetCertForOpenIdConnectCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *GetCertForOpenIdConnectCall) Context(ctx context.Context) *GetCertForOpenIdConnectCall {
 	c.ctx_ = ctx
 	return c
@@ -296,13 +298,9 @@ func (c *GetCertForOpenIdConnectCall) Context(ctx context.Context) *GetCertForOp
 
 func (c *GetCertForOpenIdConnectCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v2/certs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -341,45 +339,45 @@ func (c *GetCertForOpenIdConnectCall) Do() (*Jwk, error) {
 
 type TokeninfoCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // Tokeninfo:
 func (s *Service) Tokeninfo() *TokeninfoCall {
-	c := &TokeninfoCall{s: s, opt_: make(map[string]interface{})}
+	c := &TokeninfoCall{s: s, opt_: urlValues()}
 	return c
 }
 
 // AccessToken sets the optional parameter "access_token":
 func (c *TokeninfoCall) AccessToken(accessToken string) *TokeninfoCall {
-	c.opt_["access_token"] = accessToken
+	c.opt_.Set("accessToken", fmt.Sprintf("%v", accessToken))
 	return c
 }
 
 // IdToken sets the optional parameter "id_token":
 func (c *TokeninfoCall) IdToken(idToken string) *TokeninfoCall {
-	c.opt_["id_token"] = idToken
+	c.opt_.Set("idToken", fmt.Sprintf("%v", idToken))
 	return c
 }
 
 // TokenHandle sets the optional parameter "token_handle":
 func (c *TokeninfoCall) TokenHandle(tokenHandle string) *TokeninfoCall {
-	c.opt_["token_handle"] = tokenHandle
+	c.opt_.Set("tokenHandle", fmt.Sprintf("%v", tokenHandle))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TokeninfoCall) Fields(s ...googleapi.Field) *TokeninfoCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TokeninfoCall) Context(ctx context.Context) *TokeninfoCall {
 	c.ctx_ = ctx
 	return c
@@ -387,22 +385,9 @@ func (c *TokeninfoCall) Context(ctx context.Context) *TokeninfoCall {
 
 func (c *TokeninfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["access_token"]; ok {
-		params.Set("access_token", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["id_token"]; ok {
-		params.Set("id_token", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["token_handle"]; ok {
-		params.Set("token_handle", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v2/tokeninfo")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -455,27 +440,27 @@ func (c *TokeninfoCall) Do() (*Tokeninfo, error) {
 
 type UserinfoGetCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // Get:
 func (r *UserinfoService) Get() *UserinfoGetCall {
-	c := &UserinfoGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UserinfoGetCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UserinfoGetCall) Fields(s ...googleapi.Field) *UserinfoGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UserinfoGetCall) Context(ctx context.Context) *UserinfoGetCall {
 	c.ctx_ = ctx
 	return c
@@ -483,13 +468,9 @@ func (c *UserinfoGetCall) Context(ctx context.Context) *UserinfoGetCall {
 
 func (c *UserinfoGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "oauth2/v2/userinfo")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -534,27 +515,27 @@ func (c *UserinfoGetCall) Do() (*Userinfoplus, error) {
 
 type UserinfoV2MeGetCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // Get:
 func (r *UserinfoV2MeService) Get() *UserinfoV2MeGetCall {
-	c := &UserinfoV2MeGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UserinfoV2MeGetCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UserinfoV2MeGetCall) Fields(s ...googleapi.Field) *UserinfoV2MeGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UserinfoV2MeGetCall) Context(ctx context.Context) *UserinfoV2MeGetCall {
 	c.ctx_ = ctx
 	return c
@@ -562,13 +543,9 @@ func (c *UserinfoV2MeGetCall) Context(ctx context.Context) *UserinfoV2MeGetCall 
 
 func (c *UserinfoV2MeGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userinfo/v2/me")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())

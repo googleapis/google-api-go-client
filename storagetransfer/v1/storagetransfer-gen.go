@@ -43,6 +43,8 @@ const apiName = "storagetransfer"
 const apiVersion = "v1"
 const basePath = "https://storagetransfer.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -983,7 +985,7 @@ func (s *UpdateTransferJobRequest) MarshalJSON() ([]byte, error) {
 type GoogleServiceAccountsGetCall struct {
 	s         *Service
 	projectId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -996,22 +998,22 @@ type GoogleServiceAccountsGetCall struct {
 // by Storage Transfer Service and can only be used by Storage Transfer
 // Service.
 func (r *GoogleServiceAccountsService) Get(projectId string) *GoogleServiceAccountsGetCall {
-	c := &GoogleServiceAccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &GoogleServiceAccountsGetCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *GoogleServiceAccountsGetCall) Fields(s ...googleapi.Field) *GoogleServiceAccountsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *GoogleServiceAccountsGetCall) Context(ctx context.Context) *GoogleServiceAccountsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1019,13 +1021,9 @@ func (c *GoogleServiceAccountsGetCall) Context(ctx context.Context) *GoogleServi
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/googleServiceAccounts/{projectId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -1082,28 +1080,28 @@ func (c *GoogleServiceAccountsGetCall) Do() (*GoogleServiceAccount, error) {
 type TransferJobsCreateCall struct {
 	s           *Service
 	transferjob *TransferJob
-	opt_        map[string]interface{}
+	opt_        url.Values
 	ctx_        context.Context
 }
 
 // Create: Creates a transfer job that runs periodically.
 func (r *TransferJobsService) Create(transferjob *TransferJob) *TransferJobsCreateCall {
-	c := &TransferJobsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferJobsCreateCall{s: r.s, opt_: urlValues()}
 	c.transferjob = transferjob
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferJobsCreateCall) Fields(s ...googleapi.Field) *TransferJobsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferJobsCreateCall) Context(ctx context.Context) *TransferJobsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1116,13 +1114,9 @@ func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/transferJobs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1170,13 +1164,13 @@ func (c *TransferJobsCreateCall) Do() (*TransferJob, error) {
 type TransferJobsGetCall struct {
 	s       *Service
 	jobName string
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
 // Get: Gets a transfer job.
 func (r *TransferJobsService) Get(jobName string) *TransferJobsGetCall {
-	c := &TransferJobsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferJobsGetCall{s: r.s, opt_: urlValues()}
 	c.jobName = jobName
 	return c
 }
@@ -1184,21 +1178,21 @@ func (r *TransferJobsService) Get(jobName string) *TransferJobsGetCall {
 // ProjectId sets the optional parameter "projectId": The ID of the
 // Google Developers Console project that owns the job. Required.
 func (c *TransferJobsGetCall) ProjectId(projectId string) *TransferJobsGetCall {
-	c.opt_["projectId"] = projectId
+	c.opt_.Set("projectId", fmt.Sprintf("%v", projectId))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferJobsGetCall) Fields(s ...googleapi.Field) *TransferJobsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferJobsGetCall) Context(ctx context.Context) *TransferJobsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1206,16 +1200,9 @@ func (c *TransferJobsGetCall) Context(ctx context.Context) *TransferJobsGetCall 
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+jobName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"jobName": c.jobName,
@@ -1277,13 +1264,13 @@ func (c *TransferJobsGetCall) Do() (*TransferJob, error) {
 
 type TransferJobsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Lists transfer jobs.
 func (r *TransferJobsService) List() *TransferJobsListCall {
-	c := &TransferJobsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferJobsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
@@ -1297,35 +1284,35 @@ func (r *TransferJobsService) List() *TransferJobsListCall {
 // and `job_statuses` are optional. The valid values for `job_statuses`
 // are case-insensitive: `ENABLED`, `DISABLED`, and `DELETED`.
 func (c *TransferJobsListCall) Filter(filter string) *TransferJobsListCall {
-	c.opt_["filter"] = filter
+	c.opt_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The list page size.
 // The max allowed value is 256.
 func (c *TransferJobsListCall) PageSize(pageSize int64) *TransferJobsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The list page
 // token.
 func (c *TransferJobsListCall) PageToken(pageToken string) *TransferJobsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferJobsListCall) Fields(s ...googleapi.Field) *TransferJobsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferJobsListCall) Context(ctx context.Context) *TransferJobsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1333,22 +1320,9 @@ func (c *TransferJobsListCall) Context(ctx context.Context) *TransferJobsListCal
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/transferJobs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1411,7 +1385,7 @@ type TransferJobsPatchCall struct {
 	s                        *Service
 	jobName                  string
 	updatetransferjobrequest *UpdateTransferJobRequest
-	opt_                     map[string]interface{}
+	opt_                     url.Values
 	ctx_                     context.Context
 }
 
@@ -1419,23 +1393,23 @@ type TransferJobsPatchCall struct {
 // not affect transfer operations that are running already. Updating the
 // scheduling of a job is not allowed.
 func (r *TransferJobsService) Patch(jobName string, updatetransferjobrequest *UpdateTransferJobRequest) *TransferJobsPatchCall {
-	c := &TransferJobsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferJobsPatchCall{s: r.s, opt_: urlValues()}
 	c.jobName = jobName
 	c.updatetransferjobrequest = updatetransferjobrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferJobsPatchCall) Fields(s ...googleapi.Field) *TransferJobsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferJobsPatchCall) Context(ctx context.Context) *TransferJobsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1448,13 +1422,9 @@ func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+jobName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"jobName": c.jobName,
@@ -1516,7 +1486,7 @@ func (c *TransferJobsPatchCall) Do() (*TransferJob, error) {
 type TransferOperationsCancelCall struct {
 	s    *Service
 	name string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -1524,22 +1494,22 @@ type TransferOperationsCancelCall struct {
 // cancellation succeeded or whether the operation completed despite
 // cancellation.
 func (r *TransferOperationsService) Cancel(name string) *TransferOperationsCancelCall {
-	c := &TransferOperationsCancelCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferOperationsCancelCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferOperationsCancelCall) Fields(s ...googleapi.Field) *TransferOperationsCancelCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferOperationsCancelCall) Context(ctx context.Context) *TransferOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
@@ -1547,13 +1517,9 @@ func (c *TransferOperationsCancelCall) Context(ctx context.Context) *TransferOpe
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -1611,29 +1577,29 @@ func (c *TransferOperationsCancelCall) Do() (*Empty, error) {
 type TransferOperationsDeleteCall struct {
 	s    *Service
 	name string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // Delete: This method is not supported and the server returns
 // `UNIMPLEMENTED`.
 func (r *TransferOperationsService) Delete(name string) *TransferOperationsDeleteCall {
-	c := &TransferOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferOperationsDeleteCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferOperationsDeleteCall) Fields(s ...googleapi.Field) *TransferOperationsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferOperationsDeleteCall) Context(ctx context.Context) *TransferOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1641,13 +1607,9 @@ func (c *TransferOperationsDeleteCall) Context(ctx context.Context) *TransferOpe
 
 func (c *TransferOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -1705,7 +1667,7 @@ func (c *TransferOperationsDeleteCall) Do() (*Empty, error) {
 type TransferOperationsGetCall struct {
 	s    *Service
 	name string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -1713,22 +1675,22 @@ type TransferOperationsGetCall struct {
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
 func (r *TransferOperationsService) Get(name string) *TransferOperationsGetCall {
-	c := &TransferOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferOperationsGetCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferOperationsGetCall) Fields(s ...googleapi.Field) *TransferOperationsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferOperationsGetCall) Context(ctx context.Context) *TransferOperationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1736,13 +1698,9 @@ func (c *TransferOperationsGetCall) Context(ctx context.Context) *TransferOperat
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -1800,7 +1758,7 @@ func (c *TransferOperationsGetCall) Do() (*Operation, error) {
 type TransferOperationsListCall struct {
 	s    *Service
 	name string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -1810,7 +1768,7 @@ type TransferOperationsListCall struct {
 // to override the binding to use different resource name schemes, such
 // as `users/*/operations`.
 func (r *TransferOperationsService) List(name string) *TransferOperationsListCall {
-	c := &TransferOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferOperationsListCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	return c
 }
@@ -1818,35 +1776,35 @@ func (r *TransferOperationsService) List(name string) *TransferOperationsListCal
 // Filter sets the optional parameter "filter": The standard list
 // filter.
 func (c *TransferOperationsListCall) Filter(filter string) *TransferOperationsListCall {
-	c.opt_["filter"] = filter
+	c.opt_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The standard list
 // page size.
 func (c *TransferOperationsListCall) PageSize(pageSize int64) *TransferOperationsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The standard list
 // page token.
 func (c *TransferOperationsListCall) PageToken(pageToken string) *TransferOperationsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferOperationsListCall) Fields(s ...googleapi.Field) *TransferOperationsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferOperationsListCall) Context(ctx context.Context) *TransferOperationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1854,22 +1812,9 @@ func (c *TransferOperationsListCall) Context(ctx context.Context) *TransferOpera
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -1944,29 +1889,29 @@ type TransferOperationsPauseCall struct {
 	s                             *Service
 	name                          string
 	pausetransferoperationrequest *PauseTransferOperationRequest
-	opt_                          map[string]interface{}
+	opt_                          url.Values
 	ctx_                          context.Context
 }
 
 // Pause: Pauses a transfer operation.
 func (r *TransferOperationsService) Pause(name string, pausetransferoperationrequest *PauseTransferOperationRequest) *TransferOperationsPauseCall {
-	c := &TransferOperationsPauseCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferOperationsPauseCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	c.pausetransferoperationrequest = pausetransferoperationrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferOperationsPauseCall) Fields(s ...googleapi.Field) *TransferOperationsPauseCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferOperationsPauseCall) Context(ctx context.Context) *TransferOperationsPauseCall {
 	c.ctx_ = ctx
 	return c
@@ -1979,13 +1924,9 @@ func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:pause")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -2048,29 +1989,29 @@ type TransferOperationsResumeCall struct {
 	s                              *Service
 	name                           string
 	resumetransferoperationrequest *ResumeTransferOperationRequest
-	opt_                           map[string]interface{}
+	opt_                           url.Values
 	ctx_                           context.Context
 }
 
 // Resume: Resumes a transfer operation that is paused.
 func (r *TransferOperationsService) Resume(name string, resumetransferoperationrequest *ResumeTransferOperationRequest) *TransferOperationsResumeCall {
-	c := &TransferOperationsResumeCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TransferOperationsResumeCall{s: r.s, opt_: urlValues()}
 	c.name = name
 	c.resumetransferoperationrequest = resumetransferoperationrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransferOperationsResumeCall) Fields(s ...googleapi.Field) *TransferOperationsResumeCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TransferOperationsResumeCall) Context(ctx context.Context) *TransferOperationsResumeCall {
 	c.ctx_ = ctx
 	return c
@@ -2083,13 +2024,9 @@ func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:resume")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -2150,7 +2087,7 @@ func (c *TransferOperationsResumeCall) Do() (*Empty, error) {
 
 type V1GetGoogleServiceAccountCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -2163,7 +2100,7 @@ type V1GetGoogleServiceAccountCall struct {
 // account is created and owned by Storage Transfer Service and can only
 // be used by Storage Transfer Service.
 func (r *V1Service) GetGoogleServiceAccount() *V1GetGoogleServiceAccountCall {
-	c := &V1GetGoogleServiceAccountCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &V1GetGoogleServiceAccountCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
@@ -2171,21 +2108,21 @@ func (r *V1Service) GetGoogleServiceAccount() *V1GetGoogleServiceAccountCall {
 // Google Developers Console project that the Google service account is
 // associated with. Required.
 func (c *V1GetGoogleServiceAccountCall) ProjectId(projectId string) *V1GetGoogleServiceAccountCall {
-	c.opt_["projectId"] = projectId
+	c.opt_.Set("projectId", fmt.Sprintf("%v", projectId))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *V1GetGoogleServiceAccountCall) Fields(s ...googleapi.Field) *V1GetGoogleServiceAccountCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *V1GetGoogleServiceAccountCall) Context(ctx context.Context) *V1GetGoogleServiceAccountCall {
 	c.ctx_ = ctx
 	return c
@@ -2193,16 +2130,9 @@ func (c *V1GetGoogleServiceAccountCall) Context(ctx context.Context) *V1GetGoogl
 
 func (c *V1GetGoogleServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1:getGoogleServiceAccount")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())

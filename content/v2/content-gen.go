@@ -43,6 +43,8 @@ const apiName = "content"
 const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/content/v2/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage your product listings and accounts for Google Shopping
@@ -4799,27 +4801,27 @@ func (s *Weight) MarshalJSON() ([]byte, error) {
 
 type AccountsAuthinfoCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // Authinfo: Returns information about the authenticated user.
 func (r *AccountsService) Authinfo() *AccountsAuthinfoCall {
-	c := &AccountsAuthinfoCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsAuthinfoCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsAuthinfoCall) Fields(s ...googleapi.Field) *AccountsAuthinfoCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsAuthinfoCall) Context(ctx context.Context) *AccountsAuthinfoCall {
 	c.ctx_ = ctx
 	return c
@@ -4827,13 +4829,9 @@ func (c *AccountsAuthinfoCall) Context(ctx context.Context) *AccountsAuthinfoCal
 
 func (c *AccountsAuthinfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/authinfo")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4877,14 +4875,14 @@ func (c *AccountsAuthinfoCall) Do() (*AccountsAuthInfoResponse, error) {
 type AccountsCustombatchCall struct {
 	s                          *Service
 	accountscustombatchrequest *AccountsCustomBatchRequest
-	opt_                       map[string]interface{}
+	opt_                       url.Values
 	ctx_                       context.Context
 }
 
 // Custombatch: Retrieves, inserts, updates, and deletes multiple
 // Merchant Center (sub-)accounts in a single request.
 func (r *AccountsService) Custombatch(accountscustombatchrequest *AccountsCustomBatchRequest) *AccountsCustombatchCall {
-	c := &AccountsCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsCustombatchCall{s: r.s, opt_: urlValues()}
 	c.accountscustombatchrequest = accountscustombatchrequest
 	return c
 }
@@ -4892,21 +4890,21 @@ func (r *AccountsService) Custombatch(accountscustombatchrequest *AccountsCustom
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsCustombatchCall) DryRun(dryRun bool) *AccountsCustombatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsCustombatchCall) Fields(s ...googleapi.Field) *AccountsCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsCustombatchCall) Context(ctx context.Context) *AccountsCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -4919,16 +4917,9 @@ func (c *AccountsCustombatchCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -4984,13 +4975,13 @@ type AccountsDeleteCall struct {
 	s          *Service
 	merchantId uint64
 	accountId  uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Delete: Deletes a Merchant Center sub-account.
 func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsDeleteCall {
-	c := &AccountsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsDeleteCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	return c
@@ -4999,21 +4990,21 @@ func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsD
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsDeleteCall) DryRun(dryRun bool) *AccountsDeleteCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsDeleteCall) Fields(s ...googleapi.Field) *AccountsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsDeleteCall) Context(ctx context.Context) *AccountsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -5021,16 +5012,9 @@ func (c *AccountsDeleteCall) Context(ctx context.Context) *AccountsDeleteCall {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounts/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -5096,29 +5080,29 @@ type AccountsGetCall struct {
 	s          *Service
 	merchantId uint64
 	accountId  uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Retrieves a Merchant Center account.
 func (r *AccountsService) Get(merchantId uint64, accountId uint64) *AccountsGetCall {
-	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -5126,13 +5110,9 @@ func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounts/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -5200,13 +5180,13 @@ type AccountsInsertCall struct {
 	s          *Service
 	merchantId uint64
 	account    *Account
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Insert: Creates a Merchant Center sub-account.
 func (r *AccountsService) Insert(merchantId uint64, account *Account) *AccountsInsertCall {
-	c := &AccountsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsInsertCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.account = account
 	return c
@@ -5215,21 +5195,21 @@ func (r *AccountsService) Insert(merchantId uint64, account *Account) *AccountsI
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsInsertCall) DryRun(dryRun bool) *AccountsInsertCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsInsertCall) Fields(s ...googleapi.Field) *AccountsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsInsertCall) Context(ctx context.Context) *AccountsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -5242,16 +5222,9 @@ func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -5318,13 +5291,13 @@ func (c *AccountsInsertCall) Do() (*Account, error) {
 type AccountsListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the sub-accounts in your Merchant Center account.
 func (r *AccountsService) List(merchantId uint64) *AccountsListCall {
-	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -5332,28 +5305,28 @@ func (r *AccountsService) List(merchantId uint64) *AccountsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of accounts to return in the response, used for paging.
 func (c *AccountsListCall) MaxResults(maxResults int64) *AccountsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 	c.ctx_ = ctx
 	return c
@@ -5361,19 +5334,9 @@ func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -5444,14 +5407,14 @@ type AccountsPatchCall struct {
 	merchantId uint64
 	accountId  uint64
 	account    *Account
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Patch: Updates a Merchant Center account. This method supports patch
 // semantics.
 func (r *AccountsService) Patch(merchantId uint64, accountId uint64, account *Account) *AccountsPatchCall {
-	c := &AccountsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsPatchCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	c.account = account
@@ -5461,21 +5424,21 @@ func (r *AccountsService) Patch(merchantId uint64, accountId uint64, account *Ac
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsPatchCall) DryRun(dryRun bool) *AccountsPatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsPatchCall) Context(ctx context.Context) *AccountsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -5488,16 +5451,9 @@ func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounts/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -5575,13 +5531,13 @@ type AccountsUpdateCall struct {
 	merchantId uint64
 	accountId  uint64
 	account    *Account
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Update: Updates a Merchant Center account.
 func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *Account) *AccountsUpdateCall {
-	c := &AccountsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsUpdateCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	c.account = account
@@ -5591,21 +5547,21 @@ func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *A
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsUpdateCall) DryRun(dryRun bool) *AccountsUpdateCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsUpdateCall) Context(ctx context.Context) *AccountsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -5618,16 +5574,9 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounts/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -5703,14 +5652,14 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 type AccountshippingCustombatchCall struct {
 	s                                 *Service
 	accountshippingcustombatchrequest *AccountshippingCustomBatchRequest
-	opt_                              map[string]interface{}
+	opt_                              url.Values
 	ctx_                              context.Context
 }
 
 // Custombatch: Retrieves and updates the shipping settings of multiple
 // accounts in a single request.
 func (r *AccountshippingService) Custombatch(accountshippingcustombatchrequest *AccountshippingCustomBatchRequest) *AccountshippingCustombatchCall {
-	c := &AccountshippingCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountshippingCustombatchCall{s: r.s, opt_: urlValues()}
 	c.accountshippingcustombatchrequest = accountshippingcustombatchrequest
 	return c
 }
@@ -5718,21 +5667,21 @@ func (r *AccountshippingService) Custombatch(accountshippingcustombatchrequest *
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountshippingCustombatchCall) DryRun(dryRun bool) *AccountshippingCustombatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountshippingCustombatchCall) Fields(s ...googleapi.Field) *AccountshippingCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountshippingCustombatchCall) Context(ctx context.Context) *AccountshippingCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -5745,16 +5694,9 @@ func (c *AccountshippingCustombatchCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accountshipping/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -5810,29 +5752,29 @@ type AccountshippingGetCall struct {
 	s          *Service
 	merchantId uint64
 	accountId  uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Retrieves the shipping settings of the account.
 func (r *AccountshippingService) Get(merchantId uint64, accountId uint64) *AccountshippingGetCall {
-	c := &AccountshippingGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountshippingGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountshippingGetCall) Fields(s ...googleapi.Field) *AccountshippingGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountshippingGetCall) Context(ctx context.Context) *AccountshippingGetCall {
 	c.ctx_ = ctx
 	return c
@@ -5840,13 +5782,9 @@ func (c *AccountshippingGetCall) Context(ctx context.Context) *AccountshippingGe
 
 func (c *AccountshippingGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -5913,14 +5851,14 @@ func (c *AccountshippingGetCall) Do() (*AccountShipping, error) {
 type AccountshippingListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the shipping settings of the sub-accounts in your
 // Merchant Center account.
 func (r *AccountshippingService) List(merchantId uint64) *AccountshippingListCall {
-	c := &AccountshippingListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountshippingListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -5929,28 +5867,28 @@ func (r *AccountshippingService) List(merchantId uint64) *AccountshippingListCal
 // number of shipping settings to return in the response, used for
 // paging.
 func (c *AccountshippingListCall) MaxResults(maxResults int64) *AccountshippingListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *AccountshippingListCall) PageToken(pageToken string) *AccountshippingListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountshippingListCall) Fields(s ...googleapi.Field) *AccountshippingListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountshippingListCall) Context(ctx context.Context) *AccountshippingListCall {
 	c.ctx_ = ctx
 	return c
@@ -5958,19 +5896,9 @@ func (c *AccountshippingListCall) Context(ctx context.Context) *AccountshippingL
 
 func (c *AccountshippingListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -6041,14 +5969,14 @@ type AccountshippingPatchCall struct {
 	merchantId      uint64
 	accountId       uint64
 	accountshipping *AccountShipping
-	opt_            map[string]interface{}
+	opt_            url.Values
 	ctx_            context.Context
 }
 
 // Patch: Updates the shipping settings of the account. This method
 // supports patch semantics.
 func (r *AccountshippingService) Patch(merchantId uint64, accountId uint64, accountshipping *AccountShipping) *AccountshippingPatchCall {
-	c := &AccountshippingPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountshippingPatchCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	c.accountshipping = accountshipping
@@ -6058,21 +5986,21 @@ func (r *AccountshippingService) Patch(merchantId uint64, accountId uint64, acco
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountshippingPatchCall) DryRun(dryRun bool) *AccountshippingPatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountshippingPatchCall) Fields(s ...googleapi.Field) *AccountshippingPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountshippingPatchCall) Context(ctx context.Context) *AccountshippingPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -6085,16 +6013,9 @@ func (c *AccountshippingPatchCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -6172,13 +6093,13 @@ type AccountshippingUpdateCall struct {
 	merchantId      uint64
 	accountId       uint64
 	accountshipping *AccountShipping
-	opt_            map[string]interface{}
+	opt_            url.Values
 	ctx_            context.Context
 }
 
 // Update: Updates the shipping settings of the account.
 func (r *AccountshippingService) Update(merchantId uint64, accountId uint64, accountshipping *AccountShipping) *AccountshippingUpdateCall {
-	c := &AccountshippingUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountshippingUpdateCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	c.accountshipping = accountshipping
@@ -6188,21 +6109,21 @@ func (r *AccountshippingService) Update(merchantId uint64, accountId uint64, acc
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountshippingUpdateCall) DryRun(dryRun bool) *AccountshippingUpdateCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountshippingUpdateCall) Fields(s ...googleapi.Field) *AccountshippingUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountshippingUpdateCall) Context(ctx context.Context) *AccountshippingUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -6215,16 +6136,9 @@ func (c *AccountshippingUpdateCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountshipping/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -6300,28 +6214,28 @@ func (c *AccountshippingUpdateCall) Do() (*AccountShipping, error) {
 type AccountstatusesCustombatchCall struct {
 	s                                 *Service
 	accountstatusescustombatchrequest *AccountstatusesCustomBatchRequest
-	opt_                              map[string]interface{}
+	opt_                              url.Values
 	ctx_                              context.Context
 }
 
 // Custombatch:
 func (r *AccountstatusesService) Custombatch(accountstatusescustombatchrequest *AccountstatusesCustomBatchRequest) *AccountstatusesCustombatchCall {
-	c := &AccountstatusesCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountstatusesCustombatchCall{s: r.s, opt_: urlValues()}
 	c.accountstatusescustombatchrequest = accountstatusescustombatchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountstatusesCustombatchCall) Fields(s ...googleapi.Field) *AccountstatusesCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountstatusesCustombatchCall) Context(ctx context.Context) *AccountstatusesCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -6334,13 +6248,9 @@ func (c *AccountstatusesCustombatchCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accountstatuses/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -6388,29 +6298,29 @@ type AccountstatusesGetCall struct {
 	s          *Service
 	merchantId uint64
 	accountId  uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Retrieves the status of a Merchant Center account.
 func (r *AccountstatusesService) Get(merchantId uint64, accountId uint64) *AccountstatusesGetCall {
-	c := &AccountstatusesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountstatusesGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountstatusesGetCall) Fields(s ...googleapi.Field) *AccountstatusesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountstatusesGetCall) Context(ctx context.Context) *AccountstatusesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -6418,13 +6328,9 @@ func (c *AccountstatusesGetCall) Context(ctx context.Context) *AccountstatusesGe
 
 func (c *AccountstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountstatuses/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -6491,14 +6397,14 @@ func (c *AccountstatusesGetCall) Do() (*AccountStatus, error) {
 type AccountstatusesListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the statuses of the sub-accounts in your Merchant Center
 // account.
 func (r *AccountstatusesService) List(merchantId uint64) *AccountstatusesListCall {
-	c := &AccountstatusesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountstatusesListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -6507,28 +6413,28 @@ func (r *AccountstatusesService) List(merchantId uint64) *AccountstatusesListCal
 // number of account statuses to return in the response, used for
 // paging.
 func (c *AccountstatusesListCall) MaxResults(maxResults int64) *AccountstatusesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *AccountstatusesListCall) PageToken(pageToken string) *AccountstatusesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountstatusesListCall) Fields(s ...googleapi.Field) *AccountstatusesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountstatusesListCall) Context(ctx context.Context) *AccountstatusesListCall {
 	c.ctx_ = ctx
 	return c
@@ -6536,19 +6442,9 @@ func (c *AccountstatusesListCall) Context(ctx context.Context) *AccountstatusesL
 
 func (c *AccountstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accountstatuses")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -6617,14 +6513,14 @@ func (c *AccountstatusesListCall) Do() (*AccountstatusesListResponse, error) {
 type AccounttaxCustombatchCall struct {
 	s                            *Service
 	accounttaxcustombatchrequest *AccounttaxCustomBatchRequest
-	opt_                         map[string]interface{}
+	opt_                         url.Values
 	ctx_                         context.Context
 }
 
 // Custombatch: Retrieves and updates tax settings of multiple accounts
 // in a single request.
 func (r *AccounttaxService) Custombatch(accounttaxcustombatchrequest *AccounttaxCustomBatchRequest) *AccounttaxCustombatchCall {
-	c := &AccounttaxCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccounttaxCustombatchCall{s: r.s, opt_: urlValues()}
 	c.accounttaxcustombatchrequest = accounttaxcustombatchrequest
 	return c
 }
@@ -6632,21 +6528,21 @@ func (r *AccounttaxService) Custombatch(accounttaxcustombatchrequest *Accounttax
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccounttaxCustombatchCall) DryRun(dryRun bool) *AccounttaxCustombatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccounttaxCustombatchCall) Fields(s ...googleapi.Field) *AccounttaxCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccounttaxCustombatchCall) Context(ctx context.Context) *AccounttaxCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -6659,16 +6555,9 @@ func (c *AccounttaxCustombatchCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounttax/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -6724,29 +6613,29 @@ type AccounttaxGetCall struct {
 	s          *Service
 	merchantId uint64
 	accountId  uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Retrieves the tax settings of the account.
 func (r *AccounttaxService) Get(merchantId uint64, accountId uint64) *AccounttaxGetCall {
-	c := &AccounttaxGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccounttaxGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccounttaxGetCall) Fields(s ...googleapi.Field) *AccounttaxGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccounttaxGetCall) Context(ctx context.Context) *AccounttaxGetCall {
 	c.ctx_ = ctx
 	return c
@@ -6754,13 +6643,9 @@ func (c *AccounttaxGetCall) Context(ctx context.Context) *AccounttaxGetCall {
 
 func (c *AccounttaxGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -6827,14 +6712,14 @@ func (c *AccounttaxGetCall) Do() (*AccountTax, error) {
 type AccounttaxListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the tax settings of the sub-accounts in your Merchant
 // Center account.
 func (r *AccounttaxService) List(merchantId uint64) *AccounttaxListCall {
-	c := &AccounttaxListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccounttaxListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -6842,28 +6727,28 @@ func (r *AccounttaxService) List(merchantId uint64) *AccounttaxListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of tax settings to return in the response, used for paging.
 func (c *AccounttaxListCall) MaxResults(maxResults int64) *AccounttaxListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *AccounttaxListCall) PageToken(pageToken string) *AccounttaxListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccounttaxListCall) Fields(s ...googleapi.Field) *AccounttaxListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccounttaxListCall) Context(ctx context.Context) *AccounttaxListCall {
 	c.ctx_ = ctx
 	return c
@@ -6871,19 +6756,9 @@ func (c *AccounttaxListCall) Context(ctx context.Context) *AccounttaxListCall {
 
 func (c *AccounttaxListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -6954,14 +6829,14 @@ type AccounttaxPatchCall struct {
 	merchantId uint64
 	accountId  uint64
 	accounttax *AccountTax
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Patch: Updates the tax settings of the account. This method supports
 // patch semantics.
 func (r *AccounttaxService) Patch(merchantId uint64, accountId uint64, accounttax *AccountTax) *AccounttaxPatchCall {
-	c := &AccounttaxPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccounttaxPatchCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	c.accounttax = accounttax
@@ -6971,21 +6846,21 @@ func (r *AccounttaxService) Patch(merchantId uint64, accountId uint64, accountta
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccounttaxPatchCall) DryRun(dryRun bool) *AccounttaxPatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccounttaxPatchCall) Fields(s ...googleapi.Field) *AccounttaxPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccounttaxPatchCall) Context(ctx context.Context) *AccounttaxPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -6998,16 +6873,9 @@ func (c *AccounttaxPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -7085,13 +6953,13 @@ type AccounttaxUpdateCall struct {
 	merchantId uint64
 	accountId  uint64
 	accounttax *AccountTax
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Update: Updates the tax settings of the account.
 func (r *AccounttaxService) Update(merchantId uint64, accountId uint64, accounttax *AccountTax) *AccounttaxUpdateCall {
-	c := &AccounttaxUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccounttaxUpdateCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.accountId = accountId
 	c.accounttax = accounttax
@@ -7101,21 +6969,21 @@ func (r *AccounttaxService) Update(merchantId uint64, accountId uint64, accountt
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccounttaxUpdateCall) DryRun(dryRun bool) *AccounttaxUpdateCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccounttaxUpdateCall) Fields(s ...googleapi.Field) *AccounttaxUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccounttaxUpdateCall) Context(ctx context.Context) *AccounttaxUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -7128,16 +6996,9 @@ func (c *AccounttaxUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/accounttax/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -7213,13 +7074,13 @@ func (c *AccounttaxUpdateCall) Do() (*AccountTax, error) {
 type DatafeedsCustombatchCall struct {
 	s                           *Service
 	datafeedscustombatchrequest *DatafeedsCustomBatchRequest
-	opt_                        map[string]interface{}
+	opt_                        url.Values
 	ctx_                        context.Context
 }
 
 // Custombatch:
 func (r *DatafeedsService) Custombatch(datafeedscustombatchrequest *DatafeedsCustomBatchRequest) *DatafeedsCustombatchCall {
-	c := &DatafeedsCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedsCustombatchCall{s: r.s, opt_: urlValues()}
 	c.datafeedscustombatchrequest = datafeedscustombatchrequest
 	return c
 }
@@ -7227,21 +7088,21 @@ func (r *DatafeedsService) Custombatch(datafeedscustombatchrequest *DatafeedsCus
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsCustombatchCall) DryRun(dryRun bool) *DatafeedsCustombatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedsCustombatchCall) Fields(s ...googleapi.Field) *DatafeedsCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedsCustombatchCall) Context(ctx context.Context) *DatafeedsCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -7254,16 +7115,9 @@ func (c *DatafeedsCustombatchCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datafeeds/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -7318,13 +7172,13 @@ type DatafeedsDeleteCall struct {
 	s          *Service
 	merchantId uint64
 	datafeedId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Delete: Deletes a datafeed from your Merchant Center account.
 func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *DatafeedsDeleteCall {
-	c := &DatafeedsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedsDeleteCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.datafeedId = datafeedId
 	return c
@@ -7333,21 +7187,21 @@ func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *Datafee
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsDeleteCall) DryRun(dryRun bool) *DatafeedsDeleteCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedsDeleteCall) Fields(s ...googleapi.Field) *DatafeedsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedsDeleteCall) Context(ctx context.Context) *DatafeedsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -7355,16 +7209,9 @@ func (c *DatafeedsDeleteCall) Context(ctx context.Context) *DatafeedsDeleteCall 
 
 func (c *DatafeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeeds/{datafeedId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -7428,29 +7275,29 @@ type DatafeedsGetCall struct {
 	s          *Service
 	merchantId uint64
 	datafeedId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Retrieves a datafeed from your Merchant Center account.
 func (r *DatafeedsService) Get(merchantId uint64, datafeedId uint64) *DatafeedsGetCall {
-	c := &DatafeedsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedsGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.datafeedId = datafeedId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedsGetCall) Fields(s ...googleapi.Field) *DatafeedsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedsGetCall) Context(ctx context.Context) *DatafeedsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -7458,13 +7305,9 @@ func (c *DatafeedsGetCall) Context(ctx context.Context) *DatafeedsGetCall {
 
 func (c *DatafeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeeds/{datafeedId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -7530,13 +7373,13 @@ type DatafeedsInsertCall struct {
 	s          *Service
 	merchantId uint64
 	datafeed   *Datafeed
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Insert: Registers a datafeed with your Merchant Center account.
 func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *DatafeedsInsertCall {
-	c := &DatafeedsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedsInsertCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.datafeed = datafeed
 	return c
@@ -7545,21 +7388,21 @@ func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *Datafe
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsInsertCall) DryRun(dryRun bool) *DatafeedsInsertCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedsInsertCall) Fields(s ...googleapi.Field) *DatafeedsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedsInsertCall) Context(ctx context.Context) *DatafeedsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -7572,16 +7415,9 @@ func (c *DatafeedsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeeds")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -7647,13 +7483,13 @@ func (c *DatafeedsInsertCall) Do() (*Datafeed, error) {
 type DatafeedsListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the datafeeds in your Merchant Center account.
 func (r *DatafeedsService) List(merchantId uint64) *DatafeedsListCall {
-	c := &DatafeedsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedsListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -7661,28 +7497,28 @@ func (r *DatafeedsService) List(merchantId uint64) *DatafeedsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of products to return in the response, used for paging.
 func (c *DatafeedsListCall) MaxResults(maxResults int64) *DatafeedsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *DatafeedsListCall) PageToken(pageToken string) *DatafeedsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedsListCall) Fields(s ...googleapi.Field) *DatafeedsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedsListCall) Context(ctx context.Context) *DatafeedsListCall {
 	c.ctx_ = ctx
 	return c
@@ -7690,19 +7526,9 @@ func (c *DatafeedsListCall) Context(ctx context.Context) *DatafeedsListCall {
 
 func (c *DatafeedsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeeds")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -7773,14 +7599,14 @@ type DatafeedsPatchCall struct {
 	merchantId uint64
 	datafeedId uint64
 	datafeed   *Datafeed
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Patch: Updates a datafeed of your Merchant Center account. This
 // method supports patch semantics.
 func (r *DatafeedsService) Patch(merchantId uint64, datafeedId uint64, datafeed *Datafeed) *DatafeedsPatchCall {
-	c := &DatafeedsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedsPatchCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.datafeedId = datafeedId
 	c.datafeed = datafeed
@@ -7790,21 +7616,21 @@ func (r *DatafeedsService) Patch(merchantId uint64, datafeedId uint64, datafeed 
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsPatchCall) DryRun(dryRun bool) *DatafeedsPatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedsPatchCall) Fields(s ...googleapi.Field) *DatafeedsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedsPatchCall) Context(ctx context.Context) *DatafeedsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -7817,16 +7643,9 @@ func (c *DatafeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeeds/{datafeedId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -7902,13 +7721,13 @@ type DatafeedsUpdateCall struct {
 	merchantId uint64
 	datafeedId uint64
 	datafeed   *Datafeed
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Update: Updates a datafeed of your Merchant Center account.
 func (r *DatafeedsService) Update(merchantId uint64, datafeedId uint64, datafeed *Datafeed) *DatafeedsUpdateCall {
-	c := &DatafeedsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedsUpdateCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.datafeedId = datafeedId
 	c.datafeed = datafeed
@@ -7918,21 +7737,21 @@ func (r *DatafeedsService) Update(merchantId uint64, datafeedId uint64, datafeed
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsUpdateCall) DryRun(dryRun bool) *DatafeedsUpdateCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedsUpdateCall) Fields(s ...googleapi.Field) *DatafeedsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedsUpdateCall) Context(ctx context.Context) *DatafeedsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -7945,16 +7764,9 @@ func (c *DatafeedsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeeds/{datafeedId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -8028,28 +7840,28 @@ func (c *DatafeedsUpdateCall) Do() (*Datafeed, error) {
 type DatafeedstatusesCustombatchCall struct {
 	s                                  *Service
 	datafeedstatusescustombatchrequest *DatafeedstatusesCustomBatchRequest
-	opt_                               map[string]interface{}
+	opt_                               url.Values
 	ctx_                               context.Context
 }
 
 // Custombatch:
 func (r *DatafeedstatusesService) Custombatch(datafeedstatusescustombatchrequest *DatafeedstatusesCustomBatchRequest) *DatafeedstatusesCustombatchCall {
-	c := &DatafeedstatusesCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedstatusesCustombatchCall{s: r.s, opt_: urlValues()}
 	c.datafeedstatusescustombatchrequest = datafeedstatusescustombatchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedstatusesCustombatchCall) Fields(s ...googleapi.Field) *DatafeedstatusesCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedstatusesCustombatchCall) Context(ctx context.Context) *DatafeedstatusesCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -8062,13 +7874,9 @@ func (c *DatafeedstatusesCustombatchCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "datafeedstatuses/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -8116,30 +7924,30 @@ type DatafeedstatusesGetCall struct {
 	s          *Service
 	merchantId uint64
 	datafeedId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Retrieves the status of a datafeed from your Merchant Center
 // account.
 func (r *DatafeedstatusesService) Get(merchantId uint64, datafeedId uint64) *DatafeedstatusesGetCall {
-	c := &DatafeedstatusesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedstatusesGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.datafeedId = datafeedId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedstatusesGetCall) Fields(s ...googleapi.Field) *DatafeedstatusesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedstatusesGetCall) Context(ctx context.Context) *DatafeedstatusesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -8147,13 +7955,9 @@ func (c *DatafeedstatusesGetCall) Context(ctx context.Context) *Datafeedstatuses
 
 func (c *DatafeedstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeedstatuses/{datafeedId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -8218,14 +8022,14 @@ func (c *DatafeedstatusesGetCall) Do() (*DatafeedStatus, error) {
 type DatafeedstatusesListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the statuses of the datafeeds in your Merchant Center
 // account.
 func (r *DatafeedstatusesService) List(merchantId uint64) *DatafeedstatusesListCall {
-	c := &DatafeedstatusesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DatafeedstatusesListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -8233,28 +8037,28 @@ func (r *DatafeedstatusesService) List(merchantId uint64) *DatafeedstatusesListC
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of products to return in the response, used for paging.
 func (c *DatafeedstatusesListCall) MaxResults(maxResults int64) *DatafeedstatusesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *DatafeedstatusesListCall) PageToken(pageToken string) *DatafeedstatusesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatafeedstatusesListCall) Fields(s ...googleapi.Field) *DatafeedstatusesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DatafeedstatusesListCall) Context(ctx context.Context) *DatafeedstatusesListCall {
 	c.ctx_ = ctx
 	return c
@@ -8262,19 +8066,9 @@ func (c *DatafeedstatusesListCall) Context(ctx context.Context) *Datafeedstatuse
 
 func (c *DatafeedstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeedstatuses")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -8343,7 +8137,7 @@ func (c *DatafeedstatusesListCall) Do() (*DatafeedstatusesListResponse, error) {
 type InventoryCustombatchCall struct {
 	s                           *Service
 	inventorycustombatchrequest *InventoryCustomBatchRequest
-	opt_                        map[string]interface{}
+	opt_                        url.Values
 	ctx_                        context.Context
 }
 
@@ -8351,7 +8145,7 @@ type InventoryCustombatchCall struct {
 // stores in a single request. This operation does not update the
 // expiration date of the products.
 func (r *InventoryService) Custombatch(inventorycustombatchrequest *InventoryCustomBatchRequest) *InventoryCustombatchCall {
-	c := &InventoryCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InventoryCustombatchCall{s: r.s, opt_: urlValues()}
 	c.inventorycustombatchrequest = inventorycustombatchrequest
 	return c
 }
@@ -8359,21 +8153,21 @@ func (r *InventoryService) Custombatch(inventorycustombatchrequest *InventoryCus
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *InventoryCustombatchCall) DryRun(dryRun bool) *InventoryCustombatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InventoryCustombatchCall) Fields(s ...googleapi.Field) *InventoryCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InventoryCustombatchCall) Context(ctx context.Context) *InventoryCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -8386,16 +8180,9 @@ func (c *InventoryCustombatchCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "inventory/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -8453,7 +8240,7 @@ type InventorySetCall struct {
 	storeCode           string
 	productId           string
 	inventorysetrequest *InventorySetRequest
-	opt_                map[string]interface{}
+	opt_                url.Values
 	ctx_                context.Context
 }
 
@@ -8461,7 +8248,7 @@ type InventorySetCall struct {
 // Center account. This operation does not update the expiration date of
 // the product.
 func (r *InventoryService) Set(merchantId uint64, storeCode string, productId string, inventorysetrequest *InventorySetRequest) *InventorySetCall {
-	c := &InventorySetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InventorySetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.storeCode = storeCode
 	c.productId = productId
@@ -8472,21 +8259,21 @@ func (r *InventoryService) Set(merchantId uint64, storeCode string, productId st
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *InventorySetCall) DryRun(dryRun bool) *InventorySetCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InventorySetCall) Fields(s ...googleapi.Field) *InventorySetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InventorySetCall) Context(ctx context.Context) *InventorySetCall {
 	c.ctx_ = ctx
 	return c
@@ -8499,16 +8286,9 @@ func (c *InventorySetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/inventory/{storeCode}/products/{productId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -8593,30 +8373,30 @@ type OrdersAcknowledgeCall struct {
 	merchantId               uint64
 	orderId                  string
 	ordersacknowledgerequest *OrdersAcknowledgeRequest
-	opt_                     map[string]interface{}
+	opt_                     url.Values
 	ctx_                     context.Context
 }
 
 // Acknowledge: Marks an order as acknowledged.
 func (r *OrdersService) Acknowledge(merchantId uint64, orderId string, ordersacknowledgerequest *OrdersAcknowledgeRequest) *OrdersAcknowledgeCall {
-	c := &OrdersAcknowledgeCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersAcknowledgeCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	c.ordersacknowledgerequest = ordersacknowledgerequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersAcknowledgeCall) Fields(s ...googleapi.Field) *OrdersAcknowledgeCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersAcknowledgeCall) Context(ctx context.Context) *OrdersAcknowledgeCall {
 	c.ctx_ = ctx
 	return c
@@ -8629,13 +8409,9 @@ func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/acknowledge")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -8706,30 +8482,30 @@ type OrdersAdvancetestorderCall struct {
 	s          *Service
 	merchantId uint64
 	orderId    string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Advancetestorder: Sandbox only. Moves a test order from state
 // "inProgress" to state "pendingShipment".
 func (r *OrdersService) Advancetestorder(merchantId uint64, orderId string) *OrdersAdvancetestorderCall {
-	c := &OrdersAdvancetestorderCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersAdvancetestorderCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersAdvancetestorderCall) Fields(s ...googleapi.Field) *OrdersAdvancetestorderCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersAdvancetestorderCall) Context(ctx context.Context) *OrdersAdvancetestorderCall {
 	c.ctx_ = ctx
 	return c
@@ -8737,13 +8513,9 @@ func (c *OrdersAdvancetestorderCall) Context(ctx context.Context) *OrdersAdvance
 
 func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/testorders/{orderId}/advance")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -8811,30 +8583,30 @@ type OrdersCancelCall struct {
 	merchantId          uint64
 	orderId             string
 	orderscancelrequest *OrdersCancelRequest
-	opt_                map[string]interface{}
+	opt_                url.Values
 	ctx_                context.Context
 }
 
 // Cancel: Cancels all line items in an order.
 func (r *OrdersService) Cancel(merchantId uint64, orderId string, orderscancelrequest *OrdersCancelRequest) *OrdersCancelCall {
-	c := &OrdersCancelCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersCancelCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	c.orderscancelrequest = orderscancelrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersCancelCall) Fields(s ...googleapi.Field) *OrdersCancelCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersCancelCall) Context(ctx context.Context) *OrdersCancelCall {
 	c.ctx_ = ctx
 	return c
@@ -8847,13 +8619,9 @@ func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/cancel")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -8925,30 +8693,30 @@ type OrdersCancellineitemCall struct {
 	merchantId                  uint64
 	orderId                     string
 	orderscancellineitemrequest *OrdersCancelLineItemRequest
-	opt_                        map[string]interface{}
+	opt_                        url.Values
 	ctx_                        context.Context
 }
 
 // Cancellineitem: Cancels a line item.
 func (r *OrdersService) Cancellineitem(merchantId uint64, orderId string, orderscancellineitemrequest *OrdersCancelLineItemRequest) *OrdersCancellineitemCall {
-	c := &OrdersCancellineitemCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersCancellineitemCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	c.orderscancellineitemrequest = orderscancellineitemrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersCancellineitemCall) Fields(s ...googleapi.Field) *OrdersCancellineitemCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersCancellineitemCall) Context(ctx context.Context) *OrdersCancellineitemCall {
 	c.ctx_ = ctx
 	return c
@@ -8961,13 +8729,9 @@ func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/cancelLineItem")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -9038,29 +8802,29 @@ type OrdersCreatetestorderCall struct {
 	s                            *Service
 	merchantId                   uint64
 	orderscreatetestorderrequest *OrdersCreateTestOrderRequest
-	opt_                         map[string]interface{}
+	opt_                         url.Values
 	ctx_                         context.Context
 }
 
 // Createtestorder: Sandbox only. Creates a test order.
 func (r *OrdersService) Createtestorder(merchantId uint64, orderscreatetestorderrequest *OrdersCreateTestOrderRequest) *OrdersCreatetestorderCall {
-	c := &OrdersCreatetestorderCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersCreatetestorderCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderscreatetestorderrequest = orderscreatetestorderrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersCreatetestorderCall) Fields(s ...googleapi.Field) *OrdersCreatetestorderCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersCreatetestorderCall) Context(ctx context.Context) *OrdersCreatetestorderCall {
 	c.ctx_ = ctx
 	return c
@@ -9073,13 +8837,9 @@ func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/testorders")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -9141,29 +8901,29 @@ func (c *OrdersCreatetestorderCall) Do() (*OrdersCreateTestOrderResponse, error)
 type OrdersCustombatchCall struct {
 	s                        *Service
 	orderscustombatchrequest *OrdersCustomBatchRequest
-	opt_                     map[string]interface{}
+	opt_                     url.Values
 	ctx_                     context.Context
 }
 
 // Custombatch: Retrieves or modifies multiple orders in a single
 // request.
 func (r *OrdersService) Custombatch(orderscustombatchrequest *OrdersCustomBatchRequest) *OrdersCustombatchCall {
-	c := &OrdersCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersCustombatchCall{s: r.s, opt_: urlValues()}
 	c.orderscustombatchrequest = orderscustombatchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersCustombatchCall) Fields(s ...googleapi.Field) *OrdersCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersCustombatchCall) Context(ctx context.Context) *OrdersCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -9176,13 +8936,9 @@ func (c *OrdersCustombatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "orders/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -9231,29 +8987,29 @@ type OrdersGetCall struct {
 	s          *Service
 	merchantId uint64
 	orderId    string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Retrieves an order from your Merchant Center account.
 func (r *OrdersService) Get(merchantId uint64, orderId string) *OrdersGetCall {
-	c := &OrdersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersGetCall) Fields(s ...googleapi.Field) *OrdersGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersGetCall) Context(ctx context.Context) *OrdersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -9261,13 +9017,9 @@ func (c *OrdersGetCall) Context(ctx context.Context) *OrdersGetCall {
 
 func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -9334,29 +9086,29 @@ type OrdersGetbymerchantorderidCall struct {
 	s               *Service
 	merchantId      uint64
 	merchantOrderId string
-	opt_            map[string]interface{}
+	opt_            url.Values
 	ctx_            context.Context
 }
 
 // Getbymerchantorderid: Retrieves an order using merchant order id.
 func (r *OrdersService) Getbymerchantorderid(merchantId uint64, merchantOrderId string) *OrdersGetbymerchantorderidCall {
-	c := &OrdersGetbymerchantorderidCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersGetbymerchantorderidCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.merchantOrderId = merchantOrderId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersGetbymerchantorderidCall) Fields(s ...googleapi.Field) *OrdersGetbymerchantorderidCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersGetbymerchantorderidCall) Context(ctx context.Context) *OrdersGetbymerchantorderidCall {
 	c.ctx_ = ctx
 	return c
@@ -9364,13 +9116,9 @@ func (c *OrdersGetbymerchantorderidCall) Context(ctx context.Context) *OrdersGet
 
 func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/ordersbymerchantid/{merchantOrderId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId":      strconv.FormatUint(c.merchantId, 10),
@@ -9437,30 +9185,30 @@ type OrdersGettestordertemplateCall struct {
 	s            *Service
 	merchantId   uint64
 	templateName string
-	opt_         map[string]interface{}
+	opt_         url.Values
 	ctx_         context.Context
 }
 
 // Gettestordertemplate: Sandbox only. Retrieves an order template that
 // can be used to quickly create a new order in sandbox.
 func (r *OrdersService) Gettestordertemplate(merchantId uint64, templateName string) *OrdersGettestordertemplateCall {
-	c := &OrdersGettestordertemplateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersGettestordertemplateCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.templateName = templateName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersGettestordertemplateCall) Fields(s ...googleapi.Field) *OrdersGettestordertemplateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersGettestordertemplateCall) Context(ctx context.Context) *OrdersGettestordertemplateCall {
 	c.ctx_ = ctx
 	return c
@@ -9468,13 +9216,9 @@ func (c *OrdersGettestordertemplateCall) Context(ctx context.Context) *OrdersGet
 
 func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/testordertemplates/{templateName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId":   strconv.FormatUint(c.merchantId, 10),
@@ -9548,13 +9292,13 @@ func (c *OrdersGettestordertemplateCall) Do() (*OrdersGetTestOrderTemplateRespon
 type OrdersListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the orders in your Merchant Center account.
 func (r *OrdersService) List(merchantId uint64) *OrdersListCall {
-	c := &OrdersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -9566,7 +9310,7 @@ func (r *OrdersService) List(merchantId uint64) *OrdersListCall {
 // We recommend using this filter set to false, in conjunction with the
 // acknowledge call, such that only un-acknowledged orders are returned.
 func (c *OrdersListCall) Acknowledged(acknowledged bool) *OrdersListCall {
-	c.opt_["acknowledged"] = acknowledged
+	c.opt_.Set("acknowledged", fmt.Sprintf("%v", acknowledged))
 	return c
 }
 
@@ -9577,7 +9321,7 @@ func (c *OrdersListCall) Acknowledged(acknowledged bool) *OrdersListCall {
 // Known issue: All List calls will return all Orders without limit
 // regardless of the value of this field.
 func (c *OrdersListCall) MaxResults(maxResults int64) *OrdersListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -9593,21 +9337,21 @@ func (c *OrdersListCall) MaxResults(maxResults int64) *OrdersListCall {
 //   "placedDate asc"
 //   "placedDate desc"
 func (c *OrdersListCall) OrderBy(orderBy string) *OrdersListCall {
-	c.opt_["orderBy"] = orderBy
+	c.opt_.Set("orderBy", fmt.Sprintf("%v", orderBy))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *OrdersListCall) PageToken(pageToken string) *OrdersListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
 // PlacedDateEnd sets the optional parameter "placedDateEnd": Obtains
 // orders placed before this date (exclusively), in ISO 8601 format.
 func (c *OrdersListCall) PlacedDateEnd(placedDateEnd string) *OrdersListCall {
-	c.opt_["placedDateEnd"] = placedDateEnd
+	c.opt_.Set("placedDateEnd", fmt.Sprintf("%v", placedDateEnd))
 	return c
 }
 
@@ -9615,7 +9359,7 @@ func (c *OrdersListCall) PlacedDateEnd(placedDateEnd string) *OrdersListCall {
 // Obtains orders placed after this date (inclusively), in ISO 8601
 // format.
 func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall {
-	c.opt_["placedDateStart"] = placedDateStart
+	c.opt_.Set("placedDateStart", fmt.Sprintf("%v", placedDateStart))
 	return c
 }
 
@@ -9638,22 +9382,25 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 //   "pendingShipment"
 //   "returned"
 //   "shipped"
-func (c *OrdersListCall) Statuses(statuses string) *OrdersListCall {
-	c.opt_["statuses"] = statuses
+func (c *OrdersListCall) Statuses(statuses []string) *OrdersListCall {
+	c.opt_.Del("statuses")
+	for _, v := range statuses {
+		c.opt_.Add("statuses", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersListCall) Fields(s ...googleapi.Field) *OrdersListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersListCall) Context(ctx context.Context) *OrdersListCall {
 	c.ctx_ = ctx
 	return c
@@ -9661,34 +9408,9 @@ func (c *OrdersListCall) Context(ctx context.Context) *OrdersListCall {
 
 func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["acknowledged"]; ok {
-		params.Set("acknowledged", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["placedDateEnd"]; ok {
-		params.Set("placedDateEnd", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["placedDateStart"]; ok {
-		params.Set("placedDateStart", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["statuses"]; ok {
-		params.Set("statuses", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -9819,30 +9541,30 @@ type OrdersRefundCall struct {
 	merchantId          uint64
 	orderId             string
 	ordersrefundrequest *OrdersRefundRequest
-	opt_                map[string]interface{}
+	opt_                url.Values
 	ctx_                context.Context
 }
 
 // Refund: Refund a portion of the order, up to the full amount paid.
 func (r *OrdersService) Refund(merchantId uint64, orderId string, ordersrefundrequest *OrdersRefundRequest) *OrdersRefundCall {
-	c := &OrdersRefundCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersRefundCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	c.ordersrefundrequest = ordersrefundrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersRefundCall) Fields(s ...googleapi.Field) *OrdersRefundCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersRefundCall) Context(ctx context.Context) *OrdersRefundCall {
 	c.ctx_ = ctx
 	return c
@@ -9855,13 +9577,9 @@ func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/refund")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -9933,30 +9651,30 @@ type OrdersReturnlineitemCall struct {
 	merchantId                  uint64
 	orderId                     string
 	ordersreturnlineitemrequest *OrdersReturnLineItemRequest
-	opt_                        map[string]interface{}
+	opt_                        url.Values
 	ctx_                        context.Context
 }
 
 // Returnlineitem: Returns a line item.
 func (r *OrdersService) Returnlineitem(merchantId uint64, orderId string, ordersreturnlineitemrequest *OrdersReturnLineItemRequest) *OrdersReturnlineitemCall {
-	c := &OrdersReturnlineitemCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersReturnlineitemCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	c.ordersreturnlineitemrequest = ordersreturnlineitemrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersReturnlineitemCall) Fields(s ...googleapi.Field) *OrdersReturnlineitemCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersReturnlineitemCall) Context(ctx context.Context) *OrdersReturnlineitemCall {
 	c.ctx_ = ctx
 	return c
@@ -9969,13 +9687,9 @@ func (c *OrdersReturnlineitemCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/returnLineItem")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -10047,30 +9761,30 @@ type OrdersShiplineitemsCall struct {
 	merchantId                 uint64
 	orderId                    string
 	ordersshiplineitemsrequest *OrdersShipLineItemsRequest
-	opt_                       map[string]interface{}
+	opt_                       url.Values
 	ctx_                       context.Context
 }
 
 // Shiplineitems: Marks line item(s) as shipped.
 func (r *OrdersService) Shiplineitems(merchantId uint64, orderId string, ordersshiplineitemsrequest *OrdersShipLineItemsRequest) *OrdersShiplineitemsCall {
-	c := &OrdersShiplineitemsCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersShiplineitemsCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	c.ordersshiplineitemsrequest = ordersshiplineitemsrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersShiplineitemsCall) Fields(s ...googleapi.Field) *OrdersShiplineitemsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersShiplineitemsCall) Context(ctx context.Context) *OrdersShiplineitemsCall {
 	c.ctx_ = ctx
 	return c
@@ -10083,13 +9797,9 @@ func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/shipLineItems")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -10161,31 +9871,31 @@ type OrdersUpdatemerchantorderidCall struct {
 	merchantId                         uint64
 	orderId                            string
 	ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest
-	opt_                               map[string]interface{}
+	opt_                               url.Values
 	ctx_                               context.Context
 }
 
 // Updatemerchantorderid: Updates the merchant order ID for a given
 // order.
 func (r *OrdersService) Updatemerchantorderid(merchantId uint64, orderId string, ordersupdatemerchantorderidrequest *OrdersUpdateMerchantOrderIdRequest) *OrdersUpdatemerchantorderidCall {
-	c := &OrdersUpdatemerchantorderidCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersUpdatemerchantorderidCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	c.ordersupdatemerchantorderidrequest = ordersupdatemerchantorderidrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersUpdatemerchantorderidCall) Fields(s ...googleapi.Field) *OrdersUpdatemerchantorderidCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersUpdatemerchantorderidCall) Context(ctx context.Context) *OrdersUpdatemerchantorderidCall {
 	c.ctx_ = ctx
 	return c
@@ -10198,13 +9908,9 @@ func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/updateMerchantOrderId")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -10276,31 +9982,31 @@ type OrdersUpdateshipmentCall struct {
 	merchantId                  uint64
 	orderId                     string
 	ordersupdateshipmentrequest *OrdersUpdateShipmentRequest
-	opt_                        map[string]interface{}
+	opt_                        url.Values
 	ctx_                        context.Context
 }
 
 // Updateshipment: Updates a shipment's status, carrier, and/or tracking
 // ID.
 func (r *OrdersService) Updateshipment(merchantId uint64, orderId string, ordersupdateshipmentrequest *OrdersUpdateShipmentRequest) *OrdersUpdateshipmentCall {
-	c := &OrdersUpdateshipmentCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrdersUpdateshipmentCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.orderId = orderId
 	c.ordersupdateshipmentrequest = ordersupdateshipmentrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrdersUpdateshipmentCall) Fields(s ...googleapi.Field) *OrdersUpdateshipmentCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrdersUpdateshipmentCall) Context(ctx context.Context) *OrdersUpdateshipmentCall {
 	c.ctx_ = ctx
 	return c
@@ -10313,13 +10019,9 @@ func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/updateShipment")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -10389,14 +10091,14 @@ func (c *OrdersUpdateshipmentCall) Do() (*OrdersUpdateShipmentResponse, error) {
 type ProductsCustombatchCall struct {
 	s                          *Service
 	productscustombatchrequest *ProductsCustomBatchRequest
-	opt_                       map[string]interface{}
+	opt_                       url.Values
 	ctx_                       context.Context
 }
 
 // Custombatch: Retrieves, inserts, and deletes multiple products in a
 // single request.
 func (r *ProductsService) Custombatch(productscustombatchrequest *ProductsCustomBatchRequest) *ProductsCustombatchCall {
-	c := &ProductsCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProductsCustombatchCall{s: r.s, opt_: urlValues()}
 	c.productscustombatchrequest = productscustombatchrequest
 	return c
 }
@@ -10404,21 +10106,21 @@ func (r *ProductsService) Custombatch(productscustombatchrequest *ProductsCustom
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *ProductsCustombatchCall) DryRun(dryRun bool) *ProductsCustombatchCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProductsCustombatchCall) Fields(s ...googleapi.Field) *ProductsCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProductsCustombatchCall) Context(ctx context.Context) *ProductsCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -10431,16 +10133,9 @@ func (c *ProductsCustombatchCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "products/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -10496,13 +10191,13 @@ type ProductsDeleteCall struct {
 	s          *Service
 	merchantId uint64
 	productId  string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Delete: Deletes a product from your Merchant Center account.
 func (r *ProductsService) Delete(merchantId uint64, productId string) *ProductsDeleteCall {
-	c := &ProductsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProductsDeleteCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.productId = productId
 	return c
@@ -10511,21 +10206,21 @@ func (r *ProductsService) Delete(merchantId uint64, productId string) *ProductsD
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *ProductsDeleteCall) DryRun(dryRun bool) *ProductsDeleteCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProductsDeleteCall) Fields(s ...googleapi.Field) *ProductsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProductsDeleteCall) Context(ctx context.Context) *ProductsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -10533,16 +10228,9 @@ func (c *ProductsDeleteCall) Context(ctx context.Context) *ProductsDeleteCall {
 
 func (c *ProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/products/{productId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -10607,29 +10295,29 @@ type ProductsGetCall struct {
 	s          *Service
 	merchantId uint64
 	productId  string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Retrieves a product from your Merchant Center account.
 func (r *ProductsService) Get(merchantId uint64, productId string) *ProductsGetCall {
-	c := &ProductsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProductsGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.productId = productId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProductsGetCall) Fields(s ...googleapi.Field) *ProductsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProductsGetCall) Context(ctx context.Context) *ProductsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -10637,13 +10325,9 @@ func (c *ProductsGetCall) Context(ctx context.Context) *ProductsGetCall {
 
 func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/products/{productId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -10710,13 +10394,13 @@ type ProductsInsertCall struct {
 	s          *Service
 	merchantId uint64
 	product    *Product
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Insert: Uploads a product to your Merchant Center account.
 func (r *ProductsService) Insert(merchantId uint64, product *Product) *ProductsInsertCall {
-	c := &ProductsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProductsInsertCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.product = product
 	return c
@@ -10725,21 +10409,21 @@ func (r *ProductsService) Insert(merchantId uint64, product *Product) *ProductsI
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *ProductsInsertCall) DryRun(dryRun bool) *ProductsInsertCall {
-	c.opt_["dryRun"] = dryRun
+	c.opt_.Set("dryRun", fmt.Sprintf("%v", dryRun))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProductsInsertCall) Fields(s ...googleapi.Field) *ProductsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProductsInsertCall) Context(ctx context.Context) *ProductsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -10752,16 +10436,9 @@ func (c *ProductsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dryRun"]; ok {
-		params.Set("dryRun", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/products")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -10828,13 +10505,13 @@ func (c *ProductsInsertCall) Do() (*Product, error) {
 type ProductsListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the products in your Merchant Center account.
 func (r *ProductsService) List(merchantId uint64) *ProductsListCall {
-	c := &ProductsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProductsListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -10842,28 +10519,28 @@ func (r *ProductsService) List(merchantId uint64) *ProductsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of products to return in the response, used for paging.
 func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *ProductsListCall) PageToken(pageToken string) *ProductsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProductsListCall) Fields(s ...googleapi.Field) *ProductsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProductsListCall) Context(ctx context.Context) *ProductsListCall {
 	c.ctx_ = ctx
 	return c
@@ -10871,19 +10548,9 @@ func (c *ProductsListCall) Context(ctx context.Context) *ProductsListCall {
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/products")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -10952,29 +10619,29 @@ func (c *ProductsListCall) Do() (*ProductsListResponse, error) {
 type ProductstatusesCustombatchCall struct {
 	s                                 *Service
 	productstatusescustombatchrequest *ProductstatusesCustomBatchRequest
-	opt_                              map[string]interface{}
+	opt_                              url.Values
 	ctx_                              context.Context
 }
 
 // Custombatch: Gets the statuses of multiple products in a single
 // request.
 func (r *ProductstatusesService) Custombatch(productstatusescustombatchrequest *ProductstatusesCustomBatchRequest) *ProductstatusesCustombatchCall {
-	c := &ProductstatusesCustombatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProductstatusesCustombatchCall{s: r.s, opt_: urlValues()}
 	c.productstatusescustombatchrequest = productstatusescustombatchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProductstatusesCustombatchCall) Fields(s ...googleapi.Field) *ProductstatusesCustombatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProductstatusesCustombatchCall) Context(ctx context.Context) *ProductstatusesCustombatchCall {
 	c.ctx_ = ctx
 	return c
@@ -10987,13 +10654,9 @@ func (c *ProductstatusesCustombatchCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "productstatuses/batch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -11042,29 +10705,29 @@ type ProductstatusesGetCall struct {
 	s          *Service
 	merchantId uint64
 	productId  string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Gets the status of a product from your Merchant Center account.
 func (r *ProductstatusesService) Get(merchantId uint64, productId string) *ProductstatusesGetCall {
-	c := &ProductstatusesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProductstatusesGetCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	c.productId = productId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProductstatusesGetCall) Fields(s ...googleapi.Field) *ProductstatusesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProductstatusesGetCall) Context(ctx context.Context) *ProductstatusesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -11072,13 +10735,9 @@ func (c *ProductstatusesGetCall) Context(ctx context.Context) *ProductstatusesGe
 
 func (c *ProductstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/productstatuses/{productId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),
@@ -11144,14 +10803,14 @@ func (c *ProductstatusesGetCall) Do() (*ProductStatus, error) {
 type ProductstatusesListCall struct {
 	s          *Service
 	merchantId uint64
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the statuses of the products in your Merchant Center
 // account.
 func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCall {
-	c := &ProductstatusesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProductstatusesListCall{s: r.s, opt_: urlValues()}
 	c.merchantId = merchantId
 	return c
 }
@@ -11160,28 +10819,28 @@ func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCal
 // number of product statuses to return in the response, used for
 // paging.
 func (c *ProductstatusesListCall) MaxResults(maxResults int64) *ProductstatusesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *ProductstatusesListCall) PageToken(pageToken string) *ProductstatusesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProductstatusesListCall) Fields(s ...googleapi.Field) *ProductstatusesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProductstatusesListCall) Context(ctx context.Context) *ProductstatusesListCall {
 	c.ctx_ = ctx
 	return c
@@ -11189,19 +10848,9 @@ func (c *ProductstatusesListCall) Context(ctx context.Context) *ProductstatusesL
 
 func (c *ProductstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/productstatuses")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"merchantId": strconv.FormatUint(c.merchantId, 10),

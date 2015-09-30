@@ -519,6 +519,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("const apiVersion = %q", jstr(m, "version"))
 	p("const basePath = %q\n", a.apiBaseURL())
 	p("\n")
+	pn("func urlValues() url.Values {return url.Values{}}\n")
 
 	a.generateScopeConstants()
 
@@ -1499,12 +1500,13 @@ func (meth *Method) generateCode() {
 	for _, arg := range args.l {
 		p("\t%s %s\n", arg.goname, arg.gotype)
 	}
-	p("\topt_ map[string]interface{}\n")
+	p("\topt_ url.Values\n")
 	if meth.supportsMediaUpload() {
 		p("\tmedia_     io.Reader\n")
 		p("\tresumable_ googleapi.SizeReaderAt\n")
 		p("\tmediaType_ string\n")
 		p("\tprotocol_  string\n")
+		p("\tprogressUpdater_  googleapi.ProgressUpdater\n")
 	}
 	p("\tctx_ context.Context\n")
 	p("}\n")
@@ -1525,7 +1527,7 @@ func (meth *Method) generateCode() {
 		servicePtr = "r.s"
 	}
 
-	p("\tc := &%s{s: %s, opt_: make(map[string]interface{})}\n", callName, servicePtr)
+	p("\tc := &%s{s: %s, opt_: urlValues()}\n", callName, servicePtr)
 	for _, arg := range args.l {
 		p("\tc.%s = %s\n", arg.goname, arg.goname)
 	}
@@ -1542,26 +1544,39 @@ func (meth *Method) generateCode() {
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
 		paramName := np.Get(validGoIdentifer(opt.name))
-		p("func (c *%s) %s(%s %s) *%s {\n", callName, setter, paramName, opt.GoType(), callName)
-		p("c.opt_[%q] = %s\n", opt.name, paramName)
+		goType := opt.GoType()
+		if opt.IsRepeated() {
+			goType = "[]" + goType
+		}
+		p("func (c *%s) %s(%s %s) *%s {\n", callName, setter, paramName, goType, callName)
+		if opt.IsRepeated() {
+			pn("c.opt_.Del(%q)", paramName)
+			pn("for _, v := range %v {", paramName)
+			pn(" c.opt_.Add(%q, fmt.Sprintf(\"%%v\", v))", paramName)
+			pn("}")
+		} else {
+			pn("c.opt_.Set(%q, fmt.Sprintf(\"%%v\", %v))", paramName, paramName)
+		}
 		p("return c\n")
 		p("}\n")
 	}
 
 	if meth.supportsMediaUpload() {
-		pn("\n// Media specifies the media to upload in a single chunk.")
-		pn("// At most one of Media and ResumableMedia may be set.")
+		comment := "Media specifies the media to upload in a single chunk. " +
+			"At most one of Media and ResumableMedia may be set."
+		p("\n%s", asComment("", comment))
 		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
 		pn("c.media_ = r")
 		pn(`c.protocol_ = "multipart"`)
 		pn("return c")
 		pn("}")
-		pn("\n// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.")
-		pn("// At most one of Media and ResumableMedia may be set.")
-		pn(`// mediaType identifies the MIME media type of the upload, such as "image/png".`)
-		pn(`// If mediaType is "", it will be auto-detected.`)
-		pn(`// The provided ctx will supersede any context previously provided to `)
-		pn(`// the Context method.`)
+		comment = "ResumableMedia specifies the media to upload in chunks and can be canceled with ctx. " +
+			"At most one of Media and ResumableMedia may be set. " +
+			`mediaType identifies the MIME media type of the upload, such as "image/png". ` +
+			`If mediaType is "", it will be auto-detected. ` +
+			`The provided ctx will supersede any context previously provided to ` +
+			`the Context method.`
+		p("\n%s", asComment("", comment))
 		pn("func (c *%s) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *%s {", callName, callName)
 		pn("c.ctx_ = ctx")
 		pn("c.resumable_ = io.NewSectionReader(r, 0, size)")
@@ -1569,20 +1584,22 @@ func (meth *Method) generateCode() {
 		pn(`c.protocol_ = "resumable"`)
 		pn("return c")
 		pn("}")
-		pn("\n// ProgressUpdater provides a callback function that will be called after every chunk.")
-		pn("// It should be a low-latency function in order to not slow down the upload operation.")
-		pn("// This should only be called when using ResumableMedia (as opposed to Media).")
+		comment = "ProgressUpdater provides a callback function that will be called after every chunk. " +
+			"It should be a low-latency function in order to not slow down the upload operation. " +
+			"This should only be called when using ResumableMedia (as opposed to Media)."
+		p("\n%s", asComment("", comment))
 		pn("func (c *%s) ProgressUpdater(pu googleapi.ProgressUpdater) *%s {", callName, callName)
-		pn(`c.opt_["progressUpdater"] = pu`)
+		pn(`c.progressUpdater_ = pu`)
 		pn("return c")
 		pn("}")
 	}
 
-	pn("\n// Fields allows partial responses to be retrieved.")
-	pn("// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse")
-	pn("// for more information.")
+	comment := "Fields allows partial responses to be retrieved. " +
+		"See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse " +
+		"for more information."
+	p("\n%s", asComment("", comment))
 	pn("func (c *%s) Fields(s ...googleapi.Field) *%s {", callName, callName)
-	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
+	pn(`c.opt_.Set("fields", googleapi.CombineFields(s))`)
 	pn("return c")
 	pn("}")
 
@@ -1590,12 +1607,14 @@ func (meth *Method) generateCode() {
 	if meth.supportsMediaDownload() {
 		doMethod = "Do and Download methods"
 	}
-	pn("\n// Context sets the context to be used in this call's %s.", doMethod)
-	pn("// Any pending HTTP request will be aborted if the provided context")
-	pn("// is canceled.")
+	commentFmtStr := "Context sets the context to be used in this call's %s. " +
+		"Any pending HTTP request will be aborted if the provided context is canceled."
+	comment = fmt.Sprintf(commentFmtStr, doMethod)
+	p("\n%s", asComment("", comment))
 	if meth.supportsMediaUpload() {
-		pn("// This context will supersede any context previously provided to ")
-		pn("// the ResumableMedia method.")
+		comment = "This context will supersede any context previously provided to " +
+			"the ResumableMedia method."
+		p("%s", asComment("", comment))
 	}
 	pn("func (c *%s) Context(ctx context.Context) *%s {", callName, callName)
 	pn(`c.ctx_ = ctx`)
@@ -1616,19 +1635,13 @@ func (meth *Method) generateCode() {
 		pn(`ctype := "application/json"`)
 		hasContentType = true
 	}
-	pn("params := make(url.Values)")
-	pn(`params.Set("alt", alt)`)
+	pn(`c.opt_.Set("alt", alt)`)
 	for _, p := range meth.RequiredQueryParams() {
-		pn("params.Set(%q, fmt.Sprintf(\"%%v\", c.%s))", p.name, p.goCallFieldName())
+		pn("c.opt_.Set(%q, fmt.Sprintf(\"%%v\", c.%s))", p.name, p.goCallFieldName())
 	}
 	for _, p := range meth.RequiredRepeatedQueryParams() {
-		pn("for _, v := range c.%s { params.Add(%q, fmt.Sprintf(\"%%v\", v)) }",
-			p.name, p.name)
-	}
-	opts := meth.OptParams()
-	opts = append(opts, &Param{name: "fields"})
-	for _, p := range opts {
-		pn("if v, ok := c.opt_[%q]; ok { params.Set(%q, fmt.Sprintf(\"%%v\", v)) }",
+		pn("c.opt_.Del(%q)", p.name)
+		pn("for _, v := range c.%s { c.opt_.Add(%q, fmt.Sprintf(\"%%v\", v)) }",
 			p.name, p.name)
 	}
 
@@ -1639,10 +1652,10 @@ func (meth *Method) generateCode() {
 		//pn("urls = googleapi.ResolveRelative(%q, %q)", a.apiBaseURL(), meth.mediaUploadPath())
 		// Further hack.  Discovery doc is wrong?
 		pn("urls = strings.Replace(urls, %q, %q, 1)", "https://www.googleapis.com/", "https://www.googleapis.com/upload/")
-		pn(`params.Set("uploadType", c.protocol_)`)
+		pn(`c.opt_.Set("uploadType", c.protocol_)`)
 		pn("}")
 	}
-	pn("urls += \"?\" + params.Encode()")
+	pn("urls += \"?\" + c.opt_.Encode()")
 	if meth.supportsMediaUpload() && httpMethod != "GET" {
 		if !hasContentType { // Support mediaUpload but no ctype set.
 			pn("body = new(bytes.Buffer)")
@@ -1715,12 +1728,6 @@ func (meth *Method) generateCode() {
 	pn("defer googleapi.CloseBody(res)")
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
 	if meth.supportsMediaUpload() {
-		pn("var progressUpdater_ googleapi.ProgressUpdater")
-		pn("if v, ok := c.opt_[\"progressUpdater\"]; ok {")
-		pn(" if pu, ok := v.(googleapi.ProgressUpdater); ok {")
-		pn("  progressUpdater_ = pu")
-		pn(" }")
-		pn("}")
 		pn(`if c.protocol_ == "resumable" {`)
 		pn(` loc := res.Header.Get("Location")`)
 		pn(" rx := &googleapi.ResumableUpload{")
@@ -1730,7 +1737,7 @@ func (meth *Method) generateCode() {
 		pn("  Media:         c.resumable_,")
 		pn("  MediaType:     c.mediaType_,")
 		pn("  ContentLength: c.resumable_.Size(),")
-		pn("  Callback:      progressUpdater_,")
+		pn("  Callback:      c.progressUpdater_,")
 		pn(" }")
 		pn(" res, err = rx.Upload(c.ctx_)")
 		pn(" if err != nil { return %serr }", nilRet)

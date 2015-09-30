@@ -43,6 +43,8 @@ const apiName = "siteVerification"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/siteVerification/v1/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage the list of sites and domains you control
@@ -242,28 +244,28 @@ func (s *SiteVerificationWebResourceResourceSite) MarshalJSON() ([]byte, error) 
 type WebResourceDeleteCall struct {
 	s    *Service
 	id   string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // Delete: Relinquish ownership of a website or domain.
 func (r *WebResourceService) Delete(id string) *WebResourceDeleteCall {
-	c := &WebResourceDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WebResourceDeleteCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WebResourceDeleteCall) Fields(s ...googleapi.Field) *WebResourceDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WebResourceDeleteCall) Context(ctx context.Context) *WebResourceDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -271,13 +273,9 @@ func (c *WebResourceDeleteCall) Context(ctx context.Context) *WebResourceDeleteC
 
 func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -327,28 +325,28 @@ func (c *WebResourceDeleteCall) Do() error {
 type WebResourceGetCall struct {
 	s    *Service
 	id   string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // Get: Get the most current data for a website or domain.
 func (r *WebResourceService) Get(id string) *WebResourceGetCall {
-	c := &WebResourceGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WebResourceGetCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WebResourceGetCall) Fields(s ...googleapi.Field) *WebResourceGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WebResourceGetCall) Context(ctx context.Context) *WebResourceGetCall {
 	c.ctx_ = ctx
 	return c
@@ -356,13 +354,9 @@ func (c *WebResourceGetCall) Context(ctx context.Context) *WebResourceGetCall {
 
 func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -419,29 +413,29 @@ func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) 
 type WebResourceGetTokenCall struct {
 	s                                          *Service
 	siteverificationwebresourcegettokenrequest *SiteVerificationWebResourceGettokenRequest
-	opt_                                       map[string]interface{}
+	opt_                                       url.Values
 	ctx_                                       context.Context
 }
 
 // GetToken: Get a verification token for placing on a website or
 // domain.
 func (r *WebResourceService) GetToken(siteverificationwebresourcegettokenrequest *SiteVerificationWebResourceGettokenRequest) *WebResourceGetTokenCall {
-	c := &WebResourceGetTokenCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WebResourceGetTokenCall{s: r.s, opt_: urlValues()}
 	c.siteverificationwebresourcegettokenrequest = siteverificationwebresourcegettokenrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WebResourceGetTokenCall) Fields(s ...googleapi.Field) *WebResourceGetTokenCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WebResourceGetTokenCall) Context(ctx context.Context) *WebResourceGetTokenCall {
 	c.ctx_ = ctx
 	return c
@@ -454,13 +448,9 @@ func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "token")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -510,29 +500,29 @@ type WebResourceInsertCall struct {
 	s                                   *Service
 	verificationMethod                  string
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
-	opt_                                map[string]interface{}
+	opt_                                url.Values
 	ctx_                                context.Context
 }
 
 // Insert: Attempt verification of a website or domain.
 func (r *WebResourceService) Insert(verificationMethod string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourceInsertCall {
-	c := &WebResourceInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WebResourceInsertCall{s: r.s, opt_: urlValues()}
 	c.verificationMethod = verificationMethod
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WebResourceInsertCall) Fields(s ...googleapi.Field) *WebResourceInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WebResourceInsertCall) Context(ctx context.Context) *WebResourceInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -545,14 +535,10 @@ func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("verificationMethod", fmt.Sprintf("%v", c.verificationMethod))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("verificationMethod", fmt.Sprintf("%v", c.verificationMethod))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -611,27 +597,27 @@ func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, erro
 
 type WebResourceListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Get the list of your verified websites and domains.
 func (r *WebResourceService) List() *WebResourceListCall {
-	c := &WebResourceListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WebResourceListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WebResourceListCall) Fields(s ...googleapi.Field) *WebResourceListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WebResourceListCall) Context(ctx context.Context) *WebResourceListCall {
 	c.ctx_ = ctx
 	return c
@@ -639,13 +625,9 @@ func (c *WebResourceListCall) Context(ctx context.Context) *WebResourceListCall 
 
 func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -690,30 +672,30 @@ type WebResourcePatchCall struct {
 	s                                   *Service
 	id                                  string
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
-	opt_                                map[string]interface{}
+	opt_                                url.Values
 	ctx_                                context.Context
 }
 
 // Patch: Modify the list of owners for your website or domain. This
 // method supports patch semantics.
 func (r *WebResourceService) Patch(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourcePatchCall {
-	c := &WebResourcePatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WebResourcePatchCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WebResourcePatchCall) Fields(s ...googleapi.Field) *WebResourcePatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WebResourcePatchCall) Context(ctx context.Context) *WebResourcePatchCall {
 	c.ctx_ = ctx
 	return c
@@ -726,13 +708,9 @@ func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -794,29 +772,29 @@ type WebResourceUpdateCall struct {
 	s                                   *Service
 	id                                  string
 	siteverificationwebresourceresource *SiteVerificationWebResourceResource
-	opt_                                map[string]interface{}
+	opt_                                url.Values
 	ctx_                                context.Context
 }
 
 // Update: Modify the list of owners for your website or domain.
 func (r *WebResourceService) Update(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourceUpdateCall {
-	c := &WebResourceUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WebResourceUpdateCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WebResourceUpdateCall) Fields(s ...googleapi.Field) *WebResourceUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WebResourceUpdateCall) Context(ctx context.Context) *WebResourceUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -829,13 +807,9 @@ func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,

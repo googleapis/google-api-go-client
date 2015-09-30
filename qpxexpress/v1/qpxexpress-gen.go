@@ -43,6 +43,8 @@ const apiName = "qpxExpress"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/qpxExpress/v1/trips/"
 
+func urlValues() url.Values { return url.Values{} }
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -1047,28 +1049,28 @@ func (s *TripsSearchResponse) MarshalJSON() ([]byte, error) {
 type TripsSearchCall struct {
 	s                  *Service
 	tripssearchrequest *TripsSearchRequest
-	opt_               map[string]interface{}
+	opt_               url.Values
 	ctx_               context.Context
 }
 
 // Search: Returns a list of flights.
 func (r *TripsService) Search(tripssearchrequest *TripsSearchRequest) *TripsSearchCall {
-	c := &TripsSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TripsSearchCall{s: r.s, opt_: urlValues()}
 	c.tripssearchrequest = tripssearchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TripsSearchCall) Fields(s ...googleapi.Field) *TripsSearchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TripsSearchCall) Context(ctx context.Context) *TripsSearchCall {
 	c.ctx_ = ctx
 	return c
@@ -1081,13 +1083,9 @@ func (c *TripsSearchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "search")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)

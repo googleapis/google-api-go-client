@@ -43,6 +43,8 @@ const apiName = "logging"
 const apiVersion = "v1beta3"
 const basePath = "https://logging.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -986,13 +988,13 @@ type WriteLogEntriesResponse struct {
 type ProjectsLogServicesListCall struct {
 	s          *Service
 	projectsId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the log services that have log entries in this project.
 func (r *ProjectsLogServicesService) List(projectsId string) *ProjectsLogServicesListCall {
-	c := &ProjectsLogServicesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogServicesListCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	return c
 }
@@ -1005,14 +1007,14 @@ func (r *ProjectsLogServicesService) List(projectsId string) *ProjectsLogService
 // the log. A service is associated with an entry if its name is in the
 // entry's `LogEntryMetadata.serviceName` field.
 func (c *ProjectsLogServicesListCall) Log(log string) *ProjectsLogServicesListCall {
-	c.opt_["log"] = log
+	c.opt_.Set("log", fmt.Sprintf("%v", log))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of `LogService` objects to return in one operation.
 func (c *ProjectsLogServicesListCall) PageSize(pageSize int64) *ProjectsLogServicesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -1022,21 +1024,21 @@ func (c *ProjectsLogServicesListCall) PageSize(pageSize int64) *ProjectsLogServi
 // ignored, and instead the previous `ListLogServices` operation is
 // continued.
 func (c *ProjectsLogServicesListCall) PageToken(pageToken string) *ProjectsLogServicesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogServicesListCall) Fields(s ...googleapi.Field) *ProjectsLogServicesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogServicesListCall) Context(ctx context.Context) *ProjectsLogServicesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1044,22 +1046,9 @@ func (c *ProjectsLogServicesListCall) Context(ctx context.Context) *ProjectsLogS
 
 func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["log"]; ok {
-		params.Set("log", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -1136,13 +1125,13 @@ type ProjectsLogServicesIndexesListCall struct {
 	s             *Service
 	projectsId    string
 	logServicesId string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // List: Lists the current index values for a log service.
 func (r *ProjectsLogServicesIndexesService) List(projectsId string, logServicesId string) *ProjectsLogServicesIndexesListCall {
-	c := &ProjectsLogServicesIndexesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogServicesIndexesListCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logServicesId = logServicesId
 	return c
@@ -1159,7 +1148,7 @@ func (r *ProjectsLogServicesIndexesService) List(projectsId string, logServicesI
 // be any positive value less than the number of components in
 // `indexPrefix`.
 func (c *ProjectsLogServicesIndexesListCall) Depth(depth int64) *ProjectsLogServicesIndexesListCall {
-	c.opt_["depth"] = depth
+	c.opt_.Set("depth", fmt.Sprintf("%v", depth))
 	return c
 }
 
@@ -1176,7 +1165,7 @@ func (c *ProjectsLogServicesIndexesListCall) Depth(depth int64) *ProjectsLogServ
 // `/Mod/10` and `/Mod/11` but not `/ModA/10`. + "/Mod/10/" retrieves
 // `/Mod/10` only. + An empty prefix or "/" retrieves all values.
 func (c *ProjectsLogServicesIndexesListCall) IndexPrefix(indexPrefix string) *ProjectsLogServicesIndexesListCall {
-	c.opt_["indexPrefix"] = indexPrefix
+	c.opt_.Set("indexPrefix", fmt.Sprintf("%v", indexPrefix))
 	return c
 }
 
@@ -1185,14 +1174,14 @@ func (c *ProjectsLogServicesIndexesListCall) IndexPrefix(indexPrefix string) *Pr
 // indexes are returned for any service associated with entries in the
 // log.
 func (c *ProjectsLogServicesIndexesListCall) Log(log string) *ProjectsLogServicesIndexesListCall {
-	c.opt_["log"] = log
+	c.opt_.Set("log", fmt.Sprintf("%v", log))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of log service index resources to return in one operation.
 func (c *ProjectsLogServicesIndexesListCall) PageSize(pageSize int64) *ProjectsLogServicesIndexesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -1202,21 +1191,21 @@ func (c *ProjectsLogServicesIndexesListCall) PageSize(pageSize int64) *ProjectsL
 // request are ignored, and instead the previous `ListLogServiceIndexes`
 // operation is continued.
 func (c *ProjectsLogServicesIndexesListCall) PageToken(pageToken string) *ProjectsLogServicesIndexesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogServicesIndexesListCall) Fields(s ...googleapi.Field) *ProjectsLogServicesIndexesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogServicesIndexesListCall) Context(ctx context.Context) *ProjectsLogServicesIndexesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1224,28 +1213,9 @@ func (c *ProjectsLogServicesIndexesListCall) Context(ctx context.Context) *Proje
 
 func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["depth"]; ok {
-		params.Set("depth", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["indexPrefix"]; ok {
-		params.Set("indexPrefix", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["log"]; ok {
-		params.Set("log", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/indexes")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId":    c.projectsId,
@@ -1342,31 +1312,31 @@ type ProjectsLogServicesSinksCreateCall struct {
 	projectsId    string
 	logServicesId string
 	logsink       *LogSink
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // Create: Creates a log service sink. All log entries from a specified
 // log service are written to the destination.
 func (r *ProjectsLogServicesSinksService) Create(projectsId string, logServicesId string, logsink *LogSink) *ProjectsLogServicesSinksCreateCall {
-	c := &ProjectsLogServicesSinksCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogServicesSinksCreateCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logServicesId = logServicesId
 	c.logsink = logsink
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogServicesSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogServicesSinksCreateCall) Context(ctx context.Context) *ProjectsLogServicesSinksCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1379,13 +1349,9 @@ func (c *ProjectsLogServicesSinksCreateCall) doRequest(alt string) (*http.Respon
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId":    c.projectsId,
@@ -1457,31 +1423,31 @@ type ProjectsLogServicesSinksDeleteCall struct {
 	projectsId    string
 	logServicesId string
 	sinksId       string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // Delete: Deletes a log service sink. After deletion, no new log
 // entries are written to the destination.
 func (r *ProjectsLogServicesSinksService) Delete(projectsId string, logServicesId string, sinksId string) *ProjectsLogServicesSinksDeleteCall {
-	c := &ProjectsLogServicesSinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogServicesSinksDeleteCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logServicesId = logServicesId
 	c.sinksId = sinksId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogServicesSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogServicesSinksDeleteCall) Context(ctx context.Context) *ProjectsLogServicesSinksDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1489,13 +1455,9 @@ func (c *ProjectsLogServicesSinksDeleteCall) Context(ctx context.Context) *Proje
 
 func (c *ProjectsLogServicesSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId":    c.projectsId,
@@ -1571,30 +1533,30 @@ type ProjectsLogServicesSinksGetCall struct {
 	projectsId    string
 	logServicesId string
 	sinksId       string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // Get: Gets a log service sink.
 func (r *ProjectsLogServicesSinksService) Get(projectsId string, logServicesId string, sinksId string) *ProjectsLogServicesSinksGetCall {
-	c := &ProjectsLogServicesSinksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogServicesSinksGetCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logServicesId = logServicesId
 	c.sinksId = sinksId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogServicesSinksGetCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogServicesSinksGetCall) Context(ctx context.Context) *ProjectsLogServicesSinksGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1602,13 +1564,9 @@ func (c *ProjectsLogServicesSinksGetCall) Context(ctx context.Context) *Projects
 
 func (c *ProjectsLogServicesSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId":    c.projectsId,
@@ -1685,29 +1643,29 @@ type ProjectsLogServicesSinksListCall struct {
 	s             *Service
 	projectsId    string
 	logServicesId string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // List: Lists log service sinks associated with a log service.
 func (r *ProjectsLogServicesSinksService) List(projectsId string, logServicesId string) *ProjectsLogServicesSinksListCall {
-	c := &ProjectsLogServicesSinksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogServicesSinksListCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logServicesId = logServicesId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogServicesSinksListCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogServicesSinksListCall) Context(ctx context.Context) *ProjectsLogServicesSinksListCall {
 	c.ctx_ = ctx
 	return c
@@ -1715,13 +1673,9 @@ func (c *ProjectsLogServicesSinksListCall) Context(ctx context.Context) *Project
 
 func (c *ProjectsLogServicesSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId":    c.projectsId,
@@ -1792,14 +1746,14 @@ type ProjectsLogServicesSinksUpdateCall struct {
 	logServicesId string
 	sinksId       string
 	logsink       *LogSink
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // Update: Updates a log service sink. If the sink does not exist, it is
 // created.
 func (r *ProjectsLogServicesSinksService) Update(projectsId string, logServicesId string, sinksId string, logsink *LogSink) *ProjectsLogServicesSinksUpdateCall {
-	c := &ProjectsLogServicesSinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogServicesSinksUpdateCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logServicesId = logServicesId
 	c.sinksId = sinksId
@@ -1807,17 +1761,17 @@ func (r *ProjectsLogServicesSinksService) Update(projectsId string, logServicesI
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogServicesSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsLogServicesSinksUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogServicesSinksUpdateCall) Context(ctx context.Context) *ProjectsLogServicesSinksUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1830,13 +1784,9 @@ func (c *ProjectsLogServicesSinksUpdateCall) doRequest(alt string) (*http.Respon
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId":    c.projectsId,
@@ -1915,30 +1865,30 @@ type ProjectsLogsDeleteCall struct {
 	s          *Service
 	projectsId string
 	logsId     string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Delete: Deletes a log and all its log entries. The log will reappear
 // if it receives new entries.
 func (r *ProjectsLogsService) Delete(projectsId string, logsId string) *ProjectsLogsDeleteCall {
-	c := &ProjectsLogsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogsDeleteCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logsId = logsId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogsDeleteCall) Context(ctx context.Context) *ProjectsLogsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1946,13 +1896,9 @@ func (c *ProjectsLogsDeleteCall) Context(ctx context.Context) *ProjectsLogsDelet
 
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2018,14 +1964,14 @@ func (c *ProjectsLogsDeleteCall) Do() (*Empty, error) {
 type ProjectsLogsListCall struct {
 	s          *Service
 	projectsId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists the logs in the project. Only logs that have entries are
 // listed.
 func (r *ProjectsLogsService) List(projectsId string) *ProjectsLogsListCall {
-	c := &ProjectsLogsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogsListCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	return c
 }
@@ -2033,7 +1979,7 @@ func (r *ProjectsLogsService) List(projectsId string) *ProjectsLogsListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return.
 func (c *ProjectsLogsListCall) PageSize(pageSize int64) *ProjectsLogsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -2042,7 +1988,7 @@ func (c *ProjectsLogsListCall) PageSize(pageSize int64) *ProjectsLogsListCall {
 // `pageToken` is supplied, then the other fields of this request are
 // ignored, and instead the previous `ListLogs` operation is continued.
 func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
@@ -2056,7 +2002,7 @@ func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall
 // index, etc. An empty value (a single slash) for an index matches all
 // values, and you can omit values for later indexes entirely.
 func (c *ProjectsLogsListCall) ServiceIndexPrefix(serviceIndexPrefix string) *ProjectsLogsListCall {
-	c.opt_["serviceIndexPrefix"] = serviceIndexPrefix
+	c.opt_.Set("serviceIndexPrefix", fmt.Sprintf("%v", serviceIndexPrefix))
 	return c
 }
 
@@ -2065,21 +2011,21 @@ func (c *ProjectsLogsListCall) ServiceIndexPrefix(serviceIndexPrefix string) *Pr
 // "compute.googleapis.com". Only logs associated with that that log
 // service are listed.
 func (c *ProjectsLogsListCall) ServiceName(serviceName string) *ProjectsLogsListCall {
-	c.opt_["serviceName"] = serviceName
+	c.opt_.Set("serviceName", fmt.Sprintf("%v", serviceName))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogsListCall) Fields(s ...googleapi.Field) *ProjectsLogsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogsListCall) Context(ctx context.Context) *ProjectsLogsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2087,25 +2033,9 @@ func (c *ProjectsLogsListCall) Context(ctx context.Context) *ProjectsLogsListCal
 
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["serviceIndexPrefix"]; ok {
-		params.Set("serviceIndexPrefix", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["serviceName"]; ok {
-		params.Set("serviceName", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2188,7 +2118,7 @@ type ProjectsLogsEntriesWriteCall struct {
 	projectsId             string
 	logsId                 string
 	writelogentriesrequest *WriteLogEntriesRequest
-	opt_                   map[string]interface{}
+	opt_                   url.Values
 	ctx_                   context.Context
 }
 
@@ -2199,24 +2129,24 @@ type ProjectsLogsEntriesWriteCall struct {
 // `entries[].metadata.labels` map in each entry, saving you the trouble
 // of creating identical copies for each entry.
 func (r *ProjectsLogsEntriesService) Write(projectsId string, logsId string, writelogentriesrequest *WriteLogEntriesRequest) *ProjectsLogsEntriesWriteCall {
-	c := &ProjectsLogsEntriesWriteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogsEntriesWriteCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logsId = logsId
 	c.writelogentriesrequest = writelogentriesrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogsEntriesWriteCall) Fields(s ...googleapi.Field) *ProjectsLogsEntriesWriteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogsEntriesWriteCall) Context(ctx context.Context) *ProjectsLogsEntriesWriteCall {
 	c.ctx_ = ctx
 	return c
@@ -2229,13 +2159,9 @@ func (c *ProjectsLogsEntriesWriteCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/entries:write")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2308,31 +2234,31 @@ type ProjectsLogsSinksCreateCall struct {
 	projectsId string
 	logsId     string
 	logsink    *LogSink
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Create: Creates a log sink. All log entries for a specified log are
 // written to the destination.
 func (r *ProjectsLogsSinksService) Create(projectsId string, logsId string, logsink *LogSink) *ProjectsLogsSinksCreateCall {
-	c := &ProjectsLogsSinksCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogsSinksCreateCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logsId = logsId
 	c.logsink = logsink
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogsSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogsSinksCreateCall) Context(ctx context.Context) *ProjectsLogsSinksCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -2345,13 +2271,9 @@ func (c *ProjectsLogsSinksCreateCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2423,31 +2345,31 @@ type ProjectsLogsSinksDeleteCall struct {
 	projectsId string
 	logsId     string
 	sinksId    string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Delete: Deletes a log sink. After deletion, no new log entries are
 // written to the destination.
 func (r *ProjectsLogsSinksService) Delete(projectsId string, logsId string, sinksId string) *ProjectsLogsSinksDeleteCall {
-	c := &ProjectsLogsSinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogsSinksDeleteCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logsId = logsId
 	c.sinksId = sinksId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogsSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogsSinksDeleteCall) Context(ctx context.Context) *ProjectsLogsSinksDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2455,13 +2377,9 @@ func (c *ProjectsLogsSinksDeleteCall) Context(ctx context.Context) *ProjectsLogs
 
 func (c *ProjectsLogsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2537,30 +2455,30 @@ type ProjectsLogsSinksGetCall struct {
 	projectsId string
 	logsId     string
 	sinksId    string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Gets a log sink.
 func (r *ProjectsLogsSinksService) Get(projectsId string, logsId string, sinksId string) *ProjectsLogsSinksGetCall {
-	c := &ProjectsLogsSinksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogsSinksGetCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logsId = logsId
 	c.sinksId = sinksId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogsSinksGetCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogsSinksGetCall) Context(ctx context.Context) *ProjectsLogsSinksGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2568,13 +2486,9 @@ func (c *ProjectsLogsSinksGetCall) Context(ctx context.Context) *ProjectsLogsSin
 
 func (c *ProjectsLogsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2651,29 +2565,29 @@ type ProjectsLogsSinksListCall struct {
 	s          *Service
 	projectsId string
 	logsId     string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists log sinks associated with a log.
 func (r *ProjectsLogsSinksService) List(projectsId string, logsId string) *ProjectsLogsSinksListCall {
-	c := &ProjectsLogsSinksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogsSinksListCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logsId = logsId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogsSinksListCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogsSinksListCall) Context(ctx context.Context) *ProjectsLogsSinksListCall {
 	c.ctx_ = ctx
 	return c
@@ -2681,13 +2595,9 @@ func (c *ProjectsLogsSinksListCall) Context(ctx context.Context) *ProjectsLogsSi
 
 func (c *ProjectsLogsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2758,14 +2668,14 @@ type ProjectsLogsSinksUpdateCall struct {
 	logsId     string
 	sinksId    string
 	logsink    *LogSink
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Update: Updates a log sink. If the sink does not exist, it is
 // created.
 func (r *ProjectsLogsSinksService) Update(projectsId string, logsId string, sinksId string, logsink *LogSink) *ProjectsLogsSinksUpdateCall {
-	c := &ProjectsLogsSinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsLogsSinksUpdateCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logsId = logsId
 	c.sinksId = sinksId
@@ -2773,17 +2683,17 @@ func (r *ProjectsLogsSinksService) Update(projectsId string, logsId string, sink
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsLogsSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsLogsSinksUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsLogsSinksUpdateCall) Context(ctx context.Context) *ProjectsLogsSinksUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2796,13 +2706,9 @@ func (c *ProjectsLogsSinksUpdateCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/logs/{logsId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2881,30 +2787,30 @@ type ProjectsSinksCreateCall struct {
 	s          *Service
 	projectsId string
 	logsink    *LogSink
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Create: Creates a project sink. A logs filter determines which log
 // entries are written to the destination.
 func (r *ProjectsSinksService) Create(projectsId string, logsink *LogSink) *ProjectsSinksCreateCall {
-	c := &ProjectsSinksCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsSinksCreateCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.logsink = logsink
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsSinksCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsSinksCreateCall) Context(ctx context.Context) *ProjectsSinksCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -2917,13 +2823,9 @@ func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/sinks")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -2986,30 +2888,30 @@ type ProjectsSinksDeleteCall struct {
 	s          *Service
 	projectsId string
 	sinksId    string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Delete: Deletes a project sink. After deletion, no new log entries
 // are written to the destination.
 func (r *ProjectsSinksService) Delete(projectsId string, sinksId string) *ProjectsSinksDeleteCall {
-	c := &ProjectsSinksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsSinksDeleteCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.sinksId = sinksId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsSinksDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsSinksDeleteCall) Context(ctx context.Context) *ProjectsSinksDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -3017,13 +2919,9 @@ func (c *ProjectsSinksDeleteCall) Context(ctx context.Context) *ProjectsSinksDel
 
 func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -3090,29 +2988,29 @@ type ProjectsSinksGetCall struct {
 	s          *Service
 	projectsId string
 	sinksId    string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Get: Gets a project sink.
 func (r *ProjectsSinksService) Get(projectsId string, sinksId string) *ProjectsSinksGetCall {
-	c := &ProjectsSinksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsSinksGetCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.sinksId = sinksId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsSinksGetCall) Fields(s ...googleapi.Field) *ProjectsSinksGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsSinksGetCall) Context(ctx context.Context) *ProjectsSinksGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3120,13 +3018,9 @@ func (c *ProjectsSinksGetCall) Context(ctx context.Context) *ProjectsSinksGetCal
 
 func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -3194,28 +3088,28 @@ func (c *ProjectsSinksGetCall) Do() (*LogSink, error) {
 type ProjectsSinksListCall struct {
 	s          *Service
 	projectsId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists project sinks associated with a project.
 func (r *ProjectsSinksService) List(projectsId string) *ProjectsSinksListCall {
-	c := &ProjectsSinksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsSinksListCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsSinksListCall) Fields(s ...googleapi.Field) *ProjectsSinksListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsSinksListCall) Context(ctx context.Context) *ProjectsSinksListCall {
 	c.ctx_ = ctx
 	return c
@@ -3223,13 +3117,9 @@ func (c *ProjectsSinksListCall) Context(ctx context.Context) *ProjectsSinksListC
 
 func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/sinks")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,
@@ -3291,31 +3181,31 @@ type ProjectsSinksUpdateCall struct {
 	projectsId string
 	sinksId    string
 	logsink    *LogSink
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Update: Updates a project sink. If the sink does not exist, it is
 // created. The destination, filter, or both may be updated.
 func (r *ProjectsSinksService) Update(projectsId string, sinksId string, logsink *LogSink) *ProjectsSinksUpdateCall {
-	c := &ProjectsSinksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsSinksUpdateCall{s: r.s, opt_: urlValues()}
 	c.projectsId = projectsId
 	c.sinksId = sinksId
 	c.logsink = logsink
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsSinksUpdateCall) Fields(s ...googleapi.Field) *ProjectsSinksUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsSinksUpdateCall) Context(ctx context.Context) *ProjectsSinksUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -3328,13 +3218,9 @@ func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/sinks/{sinksId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectsId": c.projectsId,

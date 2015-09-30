@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "d55b5e6b_9947bb8a",
+        "filename": "deploymentmanager/v2/deploymentmanager-gen.go",
+        "patchSetId": 6
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-30T03:27:18Z",
+      "side": 1,
+      "message": "I personally think it is nice to have the original API\u0027s id here because it makes it easier to perform a Google search if you know the ID you are looking for, especially if you are coming from the API Explorer, like here:\nhttps://developers.google.com/apis-explorer/#search/deploymentmanager/m/deploymentmanager/v2beta1/deploymentmanager.deployments.get\n\nYou could do a Google search for \"golang deploymentmanager.deployments.get\" and it would hopefully point you to:\nhttps://godoc.org/google.golang.org/api/deploymentmanager/v2#DeploymentsGetCall\nbecause of this comment.  (Obviously, it doesn\u0027t yet.)\n\nAs for the CallOption, I haven\u0027t used it, but I\u0027m not fond of returning a named interface with no methods because it seems like a lot more work to use the results... whereas an http.Header is pretty easy to Get results from.\n\nLet\u0027s see what Brad says.",
+      "parentUuid": "0e6de1ec_1d1f37f3",
+      "revId": "ce7b4be5a6b248256095f0d64e7d4dab3679caf2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e4d7d85_e2fcd6a6",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 6

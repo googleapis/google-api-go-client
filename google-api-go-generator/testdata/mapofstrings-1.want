@@ -41,6 +41,8 @@ const apiName = "additionalprops"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/discovery/v1/apis"
 
+func urlValues() url.Values { return url.Values{} }
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -108,27 +110,27 @@ func (s *TimeseriesDescriptor) MarshalJSON() ([]byte, error) {
 
 type AtlasGetMapCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // GetMap: Get a map.
 func (r *AtlasService) GetMap() *AtlasGetMapCall {
-	c := &AtlasGetMapCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AtlasGetMapCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AtlasGetMapCall) Fields(s ...googleapi.Field) *AtlasGetMapCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AtlasGetMapCall) Context(ctx context.Context) *AtlasGetMapCall {
 	c.ctx_ = ctx
 	return c
@@ -136,13 +138,9 @@ func (c *AtlasGetMapCall) Context(ctx context.Context) *AtlasGetMapCall {
 
 func (c *AtlasGetMapCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "map")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())

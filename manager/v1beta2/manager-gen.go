@@ -43,6 +43,8 @@ const apiName = "manager"
 const apiVersion = "v1beta2"
 const basePath = "https://www.googleapis.com/manager/v1beta2/projects/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your applications deployed on Google App Engine
@@ -1142,30 +1144,30 @@ type DeploymentsDeleteCall struct {
 	projectId      string
 	region         string
 	deploymentName string
-	opt_           map[string]interface{}
+	opt_           url.Values
 	ctx_           context.Context
 }
 
 // Delete:
 func (r *DeploymentsService) Delete(projectId string, region string, deploymentName string) *DeploymentsDeleteCall {
-	c := &DeploymentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DeploymentsDeleteCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	c.region = region
 	c.deploymentName = deploymentName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DeploymentsDeleteCall) Fields(s ...googleapi.Field) *DeploymentsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DeploymentsDeleteCall) Context(ctx context.Context) *DeploymentsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1173,13 +1175,9 @@ func (c *DeploymentsDeleteCall) Context(ctx context.Context) *DeploymentsDeleteC
 
 func (c *DeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/regions/{region}/deployments/{deploymentName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId":      c.projectId,
@@ -1245,30 +1243,30 @@ type DeploymentsGetCall struct {
 	projectId      string
 	region         string
 	deploymentName string
-	opt_           map[string]interface{}
+	opt_           url.Values
 	ctx_           context.Context
 }
 
 // Get:
 func (r *DeploymentsService) Get(projectId string, region string, deploymentName string) *DeploymentsGetCall {
-	c := &DeploymentsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DeploymentsGetCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	c.region = region
 	c.deploymentName = deploymentName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DeploymentsGetCall) Fields(s ...googleapi.Field) *DeploymentsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DeploymentsGetCall) Context(ctx context.Context) *DeploymentsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1276,13 +1274,9 @@ func (c *DeploymentsGetCall) Context(ctx context.Context) *DeploymentsGetCall {
 
 func (c *DeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/regions/{region}/deployments/{deploymentName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId":      c.projectId,
@@ -1357,30 +1351,30 @@ type DeploymentsInsertCall struct {
 	projectId  string
 	region     string
 	deployment *Deployment
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Insert:
 func (r *DeploymentsService) Insert(projectId string, region string, deployment *Deployment) *DeploymentsInsertCall {
-	c := &DeploymentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DeploymentsInsertCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	c.region = region
 	c.deployment = deployment
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DeploymentsInsertCall) Fields(s ...googleapi.Field) *DeploymentsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DeploymentsInsertCall) Context(ctx context.Context) *DeploymentsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1393,13 +1387,9 @@ func (c *DeploymentsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/regions/{region}/deployments")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -1471,13 +1461,13 @@ type DeploymentsListCall struct {
 	s         *Service
 	projectId string
 	region    string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List:
 func (r *DeploymentsService) List(projectId string, region string) *DeploymentsListCall {
-	c := &DeploymentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DeploymentsListCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	c.region = region
 	return c
@@ -1487,7 +1477,7 @@ func (r *DeploymentsService) List(projectId string, region string) *DeploymentsL
 // results to be returned. Acceptable values are 0 to 100, inclusive.
 // (Default: 50)
 func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1496,21 +1486,21 @@ func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall 
 // used to request the next page of results from a previous list
 // request.
 func (c *DeploymentsListCall) PageToken(pageToken string) *DeploymentsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DeploymentsListCall) Fields(s ...googleapi.Field) *DeploymentsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DeploymentsListCall) Context(ctx context.Context) *DeploymentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1518,19 +1508,9 @@ func (c *DeploymentsListCall) Context(ctx context.Context) *DeploymentsListCall 
 
 func (c *DeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/regions/{region}/deployments")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -1611,29 +1591,29 @@ type TemplatesDeleteCall struct {
 	s            *Service
 	projectId    string
 	templateName string
-	opt_         map[string]interface{}
+	opt_         url.Values
 	ctx_         context.Context
 }
 
 // Delete:
 func (r *TemplatesService) Delete(projectId string, templateName string) *TemplatesDeleteCall {
-	c := &TemplatesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplatesDeleteCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	c.templateName = templateName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplatesDeleteCall) Fields(s ...googleapi.Field) *TemplatesDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplatesDeleteCall) Context(ctx context.Context) *TemplatesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1641,13 +1621,9 @@ func (c *TemplatesDeleteCall) Context(ctx context.Context) *TemplatesDeleteCall 
 
 func (c *TemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/templates/{templateName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId":    c.projectId,
@@ -1705,29 +1681,29 @@ type TemplatesGetCall struct {
 	s            *Service
 	projectId    string
 	templateName string
-	opt_         map[string]interface{}
+	opt_         url.Values
 	ctx_         context.Context
 }
 
 // Get:
 func (r *TemplatesService) Get(projectId string, templateName string) *TemplatesGetCall {
-	c := &TemplatesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplatesGetCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	c.templateName = templateName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplatesGetCall) Fields(s ...googleapi.Field) *TemplatesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplatesGetCall) Context(ctx context.Context) *TemplatesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1735,13 +1711,9 @@ func (c *TemplatesGetCall) Context(ctx context.Context) *TemplatesGetCall {
 
 func (c *TemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/templates/{templateName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId":    c.projectId,
@@ -1808,29 +1780,29 @@ type TemplatesInsertCall struct {
 	s         *Service
 	projectId string
 	template  *Template
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Insert:
 func (r *TemplatesService) Insert(projectId string, template *Template) *TemplatesInsertCall {
-	c := &TemplatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplatesInsertCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	c.template = template
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplatesInsertCall) Fields(s ...googleapi.Field) *TemplatesInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplatesInsertCall) Context(ctx context.Context) *TemplatesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1843,13 +1815,9 @@ func (c *TemplatesInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/templates")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -1910,13 +1878,13 @@ func (c *TemplatesInsertCall) Do() (*Template, error) {
 type TemplatesListCall struct {
 	s         *Service
 	projectId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List:
 func (r *TemplatesService) List(projectId string) *TemplatesListCall {
-	c := &TemplatesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplatesListCall{s: r.s, opt_: urlValues()}
 	c.projectId = projectId
 	return c
 }
@@ -1925,7 +1893,7 @@ func (r *TemplatesService) List(projectId string) *TemplatesListCall {
 // results to be returned. Acceptable values are 0 to 100, inclusive.
 // (Default: 50)
 func (c *TemplatesListCall) MaxResults(maxResults int64) *TemplatesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1934,21 +1902,21 @@ func (c *TemplatesListCall) MaxResults(maxResults int64) *TemplatesListCall {
 // used to request the next page of results from a previous list
 // request.
 func (c *TemplatesListCall) PageToken(pageToken string) *TemplatesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplatesListCall) Fields(s ...googleapi.Field) *TemplatesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplatesListCall) Context(ctx context.Context) *TemplatesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1956,19 +1924,9 @@ func (c *TemplatesListCall) Context(ctx context.Context) *TemplatesListCall {
 
 func (c *TemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectId}/templates")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,

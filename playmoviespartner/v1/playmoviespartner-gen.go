@@ -43,6 +43,8 @@ const apiName = "playmoviespartner"
 const apiVersion = "v1"
 const basePath = "https://playmoviespartner.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View the digital assets you publish on Google Play Movies and TV
@@ -802,7 +804,7 @@ func (s *StoreInfo) MarshalJSON() ([]byte, error) {
 type AccountsAvailsListCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -810,7 +812,7 @@ type AccountsAvailsListCall struct {
 // _Authentication and Authorization rules_ and _List methods rules_ for
 // more information about this method.
 func (r *AccountsAvailsService) List(accountId string) *AccountsAvailsListCall {
-	c := &AccountsAvailsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsAvailsListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -818,71 +820,83 @@ func (r *AccountsAvailsService) List(accountId string) *AccountsAvailsListCall {
 // AltId sets the optional parameter "altId": Filter Avails that match a
 // case-insensitive, partner-specific custom id.
 func (c *AccountsAvailsListCall) AltId(altId string) *AccountsAvailsListCall {
-	c.opt_["altId"] = altId
+	c.opt_.Set("altId", fmt.Sprintf("%v", altId))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": See _List methods
 // rules_ for info about this field.
 func (c *AccountsAvailsListCall) PageSize(pageSize int64) *AccountsAvailsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": See _List methods
 // rules_ for info about this field.
 func (c *AccountsAvailsListCall) PageToken(pageToken string) *AccountsAvailsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsAvailsListCall) PphNames(pphNames string) *AccountsAvailsListCall {
-	c.opt_["pphNames"] = pphNames
+func (c *AccountsAvailsListCall) PphNames(pphNames []string) *AccountsAvailsListCall {
+	c.opt_.Del("pphNames")
+	for _, v := range pphNames {
+		c.opt_.Add("pphNames", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsAvailsListCall) StudioNames(studioNames string) *AccountsAvailsListCall {
-	c.opt_["studioNames"] = studioNames
+func (c *AccountsAvailsListCall) StudioNames(studioNames []string) *AccountsAvailsListCall {
+	c.opt_.Del("studioNames")
+	for _, v := range studioNames {
+		c.opt_.Add("studioNames", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // Territories sets the optional parameter "territories": Filter Avails
 // that match (case-insensitive) any of the given country codes, using
 // the "ISO 3166-1 alpha-2" format (examples: "US", "us", "Us").
-func (c *AccountsAvailsListCall) Territories(territories string) *AccountsAvailsListCall {
-	c.opt_["territories"] = territories
+func (c *AccountsAvailsListCall) Territories(territories []string) *AccountsAvailsListCall {
+	c.opt_.Del("territories")
+	for _, v := range territories {
+		c.opt_.Add("territories", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // Title sets the optional parameter "title": Filter Avails that match a
 // case-insensitive substring of the default Title name.
 func (c *AccountsAvailsListCall) Title(title string) *AccountsAvailsListCall {
-	c.opt_["title"] = title
+	c.opt_.Set("title", fmt.Sprintf("%v", title))
 	return c
 }
 
 // VideoIds sets the optional parameter "videoIds": Filter Avails that
 // match any of the given `video_id`s.
-func (c *AccountsAvailsListCall) VideoIds(videoIds string) *AccountsAvailsListCall {
-	c.opt_["videoIds"] = videoIds
+func (c *AccountsAvailsListCall) VideoIds(videoIds []string) *AccountsAvailsListCall {
+	c.opt_.Del("videoIds")
+	for _, v := range videoIds {
+		c.opt_.Add("videoIds", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsAvailsListCall) Fields(s ...googleapi.Field) *AccountsAvailsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsAvailsListCall) Context(ctx context.Context) *AccountsAvailsListCall {
 	c.ctx_ = ctx
 	return c
@@ -890,37 +904,9 @@ func (c *AccountsAvailsListCall) Context(ctx context.Context) *AccountsAvailsLis
 
 func (c *AccountsAvailsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["altId"]; ok {
-		params.Set("altId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pphNames"]; ok {
-		params.Set("pphNames", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["studioNames"]; ok {
-		params.Set("studioNames", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["territories"]; ok {
-		params.Set("territories", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["title"]; ok {
-		params.Set("title", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["videoIds"]; ok {
-		params.Set("videoIds", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts/{accountId}/avails")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -1023,7 +1009,7 @@ type AccountsExperienceLocalesGetCall struct {
 	s         *Service
 	accountId string
 	elId      string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -1031,23 +1017,23 @@ type AccountsExperienceLocalesGetCall struct {
 // Authorization rules_ and _Get methods rules_ for more information
 // about this method.
 func (r *AccountsExperienceLocalesService) Get(accountId string, elId string) *AccountsExperienceLocalesGetCall {
-	c := &AccountsExperienceLocalesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsExperienceLocalesGetCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.elId = elId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsExperienceLocalesGetCall) Fields(s ...googleapi.Field) *AccountsExperienceLocalesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsExperienceLocalesGetCall) Context(ctx context.Context) *AccountsExperienceLocalesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1055,13 +1041,9 @@ func (c *AccountsExperienceLocalesGetCall) Context(ctx context.Context) *Account
 
 func (c *AccountsExperienceLocalesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts/{accountId}/experienceLocales/{elId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -1126,7 +1108,7 @@ func (c *AccountsExperienceLocalesGetCall) Do() (*ExperienceLocale, error) {
 type AccountsExperienceLocalesListCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -1134,7 +1116,7 @@ type AccountsExperienceLocalesListCall struct {
 // _Authentication and Authorization rules_ and _List methods rules_ for
 // more information about this method.
 func (r *AccountsExperienceLocalesService) List(accountId string) *AccountsExperienceLocalesListCall {
-	c := &AccountsExperienceLocalesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsExperienceLocalesListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -1143,7 +1125,7 @@ func (r *AccountsExperienceLocalesService) List(accountId string) *AccountsExper
 // ExperienceLocales that match a case-insensitive, partner-specific
 // Alternative Cut ID.
 func (c *AccountsExperienceLocalesListCall) AltCutId(altCutId string) *AccountsExperienceLocalesListCall {
-	c.opt_["altCutId"] = altCutId
+	c.opt_.Set("altCutId", fmt.Sprintf("%v", altCutId))
 	return c
 }
 
@@ -1151,35 +1133,38 @@ func (c *AccountsExperienceLocalesListCall) AltCutId(altCutId string) *AccountsE
 // ExperienceLocales that match a case-insensitive, partner-specific
 // custom id.
 func (c *AccountsExperienceLocalesListCall) CustomId(customId string) *AccountsExperienceLocalesListCall {
-	c.opt_["customId"] = customId
+	c.opt_.Set("customId", fmt.Sprintf("%v", customId))
 	return c
 }
 
 // EditLevelEidr sets the optional parameter "editLevelEidr": Filter
 // ExperienceLocales that match a given edit-level EIDR.
 func (c *AccountsExperienceLocalesListCall) EditLevelEidr(editLevelEidr string) *AccountsExperienceLocalesListCall {
-	c.opt_["editLevelEidr"] = editLevelEidr
+	c.opt_.Set("editLevelEidr", fmt.Sprintf("%v", editLevelEidr))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": See _List methods
 // rules_ for info about this field.
 func (c *AccountsExperienceLocalesListCall) PageSize(pageSize int64) *AccountsExperienceLocalesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": See _List methods
 // rules_ for info about this field.
 func (c *AccountsExperienceLocalesListCall) PageToken(pageToken string) *AccountsExperienceLocalesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsExperienceLocalesListCall) PphNames(pphNames string) *AccountsExperienceLocalesListCall {
-	c.opt_["pphNames"] = pphNames
+func (c *AccountsExperienceLocalesListCall) PphNames(pphNames []string) *AccountsExperienceLocalesListCall {
+	c.opt_.Del("pphNames")
+	for _, v := range pphNames {
+		c.opt_.Add("pphNames", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -1193,36 +1178,42 @@ func (c *AccountsExperienceLocalesListCall) PphNames(pphNames string) *AccountsE
 //   "STATUS_PROCESSING"
 //   "STATUS_UNFULFILLED"
 //   "STATUS_NOT_AVAILABLE"
-func (c *AccountsExperienceLocalesListCall) Status(status string) *AccountsExperienceLocalesListCall {
-	c.opt_["status"] = status
+func (c *AccountsExperienceLocalesListCall) Status(status []string) *AccountsExperienceLocalesListCall {
+	c.opt_.Del("status")
+	for _, v := range status {
+		c.opt_.Add("status", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsExperienceLocalesListCall) StudioNames(studioNames string) *AccountsExperienceLocalesListCall {
-	c.opt_["studioNames"] = studioNames
+func (c *AccountsExperienceLocalesListCall) StudioNames(studioNames []string) *AccountsExperienceLocalesListCall {
+	c.opt_.Del("studioNames")
+	for _, v := range studioNames {
+		c.opt_.Add("studioNames", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // TitleLevelEidr sets the optional parameter "titleLevelEidr": Filter
 // ExperienceLocales that match a given title-level EIDR.
 func (c *AccountsExperienceLocalesListCall) TitleLevelEidr(titleLevelEidr string) *AccountsExperienceLocalesListCall {
-	c.opt_["titleLevelEidr"] = titleLevelEidr
+	c.opt_.Set("titleLevelEidr", fmt.Sprintf("%v", titleLevelEidr))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsExperienceLocalesListCall) Fields(s ...googleapi.Field) *AccountsExperienceLocalesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsExperienceLocalesListCall) Context(ctx context.Context) *AccountsExperienceLocalesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1230,40 +1221,9 @@ func (c *AccountsExperienceLocalesListCall) Context(ctx context.Context) *Accoun
 
 func (c *AccountsExperienceLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["altCutId"]; ok {
-		params.Set("altCutId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customId"]; ok {
-		params.Set("customId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["editLevelEidr"]; ok {
-		params.Set("editLevelEidr", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pphNames"]; ok {
-		params.Set("pphNames", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["studioNames"]; ok {
-		params.Set("studioNames", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["titleLevelEidr"]; ok {
-		params.Set("titleLevelEidr", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts/{accountId}/experienceLocales")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -1378,7 +1338,7 @@ type AccountsOrdersGetCall struct {
 	s         *Service
 	accountId string
 	orderId   string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -1386,23 +1346,23 @@ type AccountsOrdersGetCall struct {
 // rules_ and _Get methods rules_ for more information about this
 // method.
 func (r *AccountsOrdersService) Get(accountId string, orderId string) *AccountsOrdersGetCall {
-	c := &AccountsOrdersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsOrdersGetCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.orderId = orderId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsOrdersGetCall) Fields(s ...googleapi.Field) *AccountsOrdersGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsOrdersGetCall) Context(ctx context.Context) *AccountsOrdersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1410,13 +1370,9 @@ func (c *AccountsOrdersGetCall) Context(ctx context.Context) *AccountsOrdersGetC
 
 func (c *AccountsOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts/{accountId}/orders/{orderId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -1481,7 +1437,7 @@ func (c *AccountsOrdersGetCall) Do() (*Order, error) {
 type AccountsOrdersListCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -1489,7 +1445,7 @@ type AccountsOrdersListCall struct {
 // _Authentication and Authorization rules_ and _List methods rules_ for
 // more information about this method.
 func (r *AccountsOrdersService) List(accountId string) *AccountsOrdersListCall {
-	c := &AccountsOrdersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsOrdersListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -1497,35 +1453,38 @@ func (r *AccountsOrdersService) List(accountId string) *AccountsOrdersListCall {
 // CustomId sets the optional parameter "customId": Filter Orders that
 // match a case-insensitive, partner-specific custom id.
 func (c *AccountsOrdersListCall) CustomId(customId string) *AccountsOrdersListCall {
-	c.opt_["customId"] = customId
+	c.opt_.Set("customId", fmt.Sprintf("%v", customId))
 	return c
 }
 
 // Name sets the optional parameter "name": Filter Orders that match a
 // title name (case-insensitive, sub-string match).
 func (c *AccountsOrdersListCall) Name(name string) *AccountsOrdersListCall {
-	c.opt_["name"] = name
+	c.opt_.Set("name", fmt.Sprintf("%v", name))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": See _List methods
 // rules_ for info about this field.
 func (c *AccountsOrdersListCall) PageSize(pageSize int64) *AccountsOrdersListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": See _List methods
 // rules_ for info about this field.
 func (c *AccountsOrdersListCall) PageToken(pageToken string) *AccountsOrdersListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsOrdersListCall) PphNames(pphNames string) *AccountsOrdersListCall {
-	c.opt_["pphNames"] = pphNames
+func (c *AccountsOrdersListCall) PphNames(pphNames []string) *AccountsOrdersListCall {
+	c.opt_.Del("pphNames")
+	for _, v := range pphNames {
+		c.opt_.Add("pphNames", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -1539,29 +1498,35 @@ func (c *AccountsOrdersListCall) PphNames(pphNames string) *AccountsOrdersListCa
 //   "STATUS_PROCESSING"
 //   "STATUS_UNFULFILLED"
 //   "STATUS_NOT_AVAILABLE"
-func (c *AccountsOrdersListCall) Status(status string) *AccountsOrdersListCall {
-	c.opt_["status"] = status
+func (c *AccountsOrdersListCall) Status(status []string) *AccountsOrdersListCall {
+	c.opt_.Del("status")
+	for _, v := range status {
+		c.opt_.Add("status", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsOrdersListCall) StudioNames(studioNames string) *AccountsOrdersListCall {
-	c.opt_["studioNames"] = studioNames
+func (c *AccountsOrdersListCall) StudioNames(studioNames []string) *AccountsOrdersListCall {
+	c.opt_.Del("studioNames")
+	for _, v := range studioNames {
+		c.opt_.Add("studioNames", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsOrdersListCall) Fields(s ...googleapi.Field) *AccountsOrdersListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsOrdersListCall) Context(ctx context.Context) *AccountsOrdersListCall {
 	c.ctx_ = ctx
 	return c
@@ -1569,34 +1534,9 @@ func (c *AccountsOrdersListCall) Context(ctx context.Context) *AccountsOrdersLis
 
 func (c *AccountsOrdersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["customId"]; ok {
-		params.Set("customId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["name"]; ok {
-		params.Set("name", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pphNames"]; ok {
-		params.Set("pphNames", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["studioNames"]; ok {
-		params.Set("studioNames", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts/{accountId}/orders")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -1700,7 +1640,7 @@ func (c *AccountsOrdersListCall) Do() (*ListOrdersResponse, error) {
 type AccountsStoreInfosListCall struct {
 	s         *Service
 	accountId string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -1708,7 +1648,7 @@ type AccountsStoreInfosListCall struct {
 // _Authentication and Authorization rules_ and _List methods rules_ for
 // more information about this method.
 func (r *AccountsStoreInfosService) List(accountId string) *AccountsStoreInfosListCall {
-	c := &AccountsStoreInfosListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsStoreInfosListCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	return c
 }
@@ -1716,43 +1656,52 @@ func (r *AccountsStoreInfosService) List(accountId string) *AccountsStoreInfosLi
 // Countries sets the optional parameter "countries": Filter StoreInfos
 // that match (case-insensitive) any of the given country codes, using
 // the "ISO 3166-1 alpha-2" format (examples: "US", "us", "Us").
-func (c *AccountsStoreInfosListCall) Countries(countries string) *AccountsStoreInfosListCall {
-	c.opt_["countries"] = countries
+func (c *AccountsStoreInfosListCall) Countries(countries []string) *AccountsStoreInfosListCall {
+	c.opt_.Del("countries")
+	for _, v := range countries {
+		c.opt_.Add("countries", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // Name sets the optional parameter "name": Filter StoreInfos that match
 // a case-insensitive substring of the default name.
 func (c *AccountsStoreInfosListCall) Name(name string) *AccountsStoreInfosListCall {
-	c.opt_["name"] = name
+	c.opt_.Set("name", fmt.Sprintf("%v", name))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": See _List methods
 // rules_ for info about this field.
 func (c *AccountsStoreInfosListCall) PageSize(pageSize int64) *AccountsStoreInfosListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": See _List methods
 // rules_ for info about this field.
 func (c *AccountsStoreInfosListCall) PageToken(pageToken string) *AccountsStoreInfosListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsStoreInfosListCall) PphNames(pphNames string) *AccountsStoreInfosListCall {
-	c.opt_["pphNames"] = pphNames
+func (c *AccountsStoreInfosListCall) PphNames(pphNames []string) *AccountsStoreInfosListCall {
+	c.opt_.Del("pphNames")
+	for _, v := range pphNames {
+		c.opt_.Add("pphNames", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsStoreInfosListCall) StudioNames(studioNames string) *AccountsStoreInfosListCall {
-	c.opt_["studioNames"] = studioNames
+func (c *AccountsStoreInfosListCall) StudioNames(studioNames []string) *AccountsStoreInfosListCall {
+	c.opt_.Del("studioNames")
+	for _, v := range studioNames {
+		c.opt_.Add("studioNames", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -1760,28 +1709,31 @@ func (c *AccountsStoreInfosListCall) StudioNames(studioNames string) *AccountsSt
 // match a given `video_id`. NOTE: this field is deprecated and will be
 // removed on V2; `video_ids` should be used instead.
 func (c *AccountsStoreInfosListCall) VideoId(videoId string) *AccountsStoreInfosListCall {
-	c.opt_["videoId"] = videoId
+	c.opt_.Set("videoId", fmt.Sprintf("%v", videoId))
 	return c
 }
 
 // VideoIds sets the optional parameter "videoIds": Filter StoreInfos
 // that match any of the given `video_id`s.
-func (c *AccountsStoreInfosListCall) VideoIds(videoIds string) *AccountsStoreInfosListCall {
-	c.opt_["videoIds"] = videoIds
+func (c *AccountsStoreInfosListCall) VideoIds(videoIds []string) *AccountsStoreInfosListCall {
+	c.opt_.Del("videoIds")
+	for _, v := range videoIds {
+		c.opt_.Add("videoIds", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsStoreInfosListCall) Fields(s ...googleapi.Field) *AccountsStoreInfosListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsStoreInfosListCall) Context(ctx context.Context) *AccountsStoreInfosListCall {
 	c.ctx_ = ctx
 	return c
@@ -1789,37 +1741,9 @@ func (c *AccountsStoreInfosListCall) Context(ctx context.Context) *AccountsStore
 
 func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["countries"]; ok {
-		params.Set("countries", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["name"]; ok {
-		params.Set("name", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pphNames"]; ok {
-		params.Set("pphNames", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["studioNames"]; ok {
-		params.Set("studioNames", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["videoId"]; ok {
-		params.Set("videoId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["videoIds"]; ok {
-		params.Set("videoIds", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts/{accountId}/storeInfos")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
@@ -1923,7 +1847,7 @@ type AccountsStoreInfosCountryGetCall struct {
 	accountId string
 	videoId   string
 	country   string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
@@ -1931,24 +1855,24 @@ type AccountsStoreInfosCountryGetCall struct {
 // _Authentication and Authorization rules_ and _Get methods rules_ for
 // more information about this method.
 func (r *AccountsStoreInfosCountryService) Get(accountId string, videoId string, country string) *AccountsStoreInfosCountryGetCall {
-	c := &AccountsStoreInfosCountryGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsStoreInfosCountryGetCall{s: r.s, opt_: urlValues()}
 	c.accountId = accountId
 	c.videoId = videoId
 	c.country = country
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsStoreInfosCountryGetCall) Fields(s ...googleapi.Field) *AccountsStoreInfosCountryGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsStoreInfosCountryGetCall) Context(ctx context.Context) *AccountsStoreInfosCountryGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1956,13 +1880,9 @@ func (c *AccountsStoreInfosCountryGetCall) Context(ctx context.Context) *Account
 
 func (c *AccountsStoreInfosCountryGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/accounts/{accountId}/storeInfos/{videoId}/country/{country}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,

@@ -43,6 +43,8 @@ const apiName = "classroom"
 const apiVersion = "v1"
 const basePath = "https://classroom.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage your Google Classroom classes
@@ -643,7 +645,7 @@ func (s *UserProfile) MarshalJSON() ([]byte, error) {
 type CoursesCreateCall struct {
 	s      *Service
 	course *Course
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
@@ -656,22 +658,22 @@ type CoursesCreateCall struct {
 // course owner's account is disabled. * `ALREADY_EXISTS` if an alias
 // was specified in the `id` and already exists.
 func (r *CoursesService) Create(course *Course) *CoursesCreateCall {
-	c := &CoursesCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesCreateCall{s: r.s, opt_: urlValues()}
 	c.course = course
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesCreateCall) Fields(s ...googleapi.Field) *CoursesCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesCreateCall) Context(ctx context.Context) *CoursesCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -684,13 +686,9 @@ func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -759,7 +757,7 @@ func (c *CoursesCreateCall) Do() (*Course, error) {
 type CoursesDeleteCall struct {
 	s    *Service
 	id   string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -769,22 +767,22 @@ type CoursesDeleteCall struct {
 // errors][User Permission Errors]. * `NOT_FOUND` if no course exists
 // with the requested ID.
 func (r *CoursesService) Delete(id string) *CoursesDeleteCall {
-	c := &CoursesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesDeleteCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesDeleteCall) Fields(s ...googleapi.Field) *CoursesDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesDeleteCall) Context(ctx context.Context) *CoursesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -792,13 +790,9 @@ func (c *CoursesDeleteCall) Context(ctx context.Context) *CoursesDeleteCall {
 
 func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -876,7 +870,7 @@ func (c *CoursesDeleteCall) Do() (*Empty, error) {
 type CoursesGetCall struct {
 	s    *Service
 	id   string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -886,16 +880,16 @@ type CoursesGetCall struct {
 // errors][User Permission Errors]. * `NOT_FOUND` if no course exists
 // with the requested ID.
 func (r *CoursesService) Get(id string) *CoursesGetCall {
-	c := &CoursesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesGetCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesGetCall) Fields(s ...googleapi.Field) *CoursesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -905,13 +899,13 @@ func (c *CoursesGetCall) Fields(s ...googleapi.Field) *CoursesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CoursesGetCall) IfNoneMatch(entityTag string) *CoursesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesGetCall) Context(ctx context.Context) *CoursesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -919,21 +913,14 @@ func (c *CoursesGetCall) Context(ctx context.Context) *CoursesGetCall {
 
 func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1006,7 +993,7 @@ func (c *CoursesGetCall) Do() (*Course, error) {
 
 type CoursesListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -1017,7 +1004,7 @@ type CoursesListCall struct {
 // if the query argument is malformed. * `NOT_FOUND` if any users
 // specified in the query arguments do not exist.
 func (r *CoursesService) List() *CoursesListCall {
-	c := &CoursesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
@@ -1026,7 +1013,7 @@ func (r *CoursesService) List() *CoursesListCall {
 // assign a maximum. The server may return fewer than the specified
 // number of results.
 func (c *CoursesListCall) PageSize(pageSize int64) *CoursesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -1038,7 +1025,7 @@ func (c *CoursesListCall) PageSize(pageSize int64) *CoursesListCall {
 // [list][google.classroom.v1.Courses.ListCourses] request must be
 // otherwise identical to the one that resulted in this token.
 func (c *CoursesListCall) PageToken(pageToken string) *CoursesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
@@ -1048,7 +1035,7 @@ func (c *CoursesListCall) PageToken(pageToken string) *CoursesListCall {
 // the user * the email address of the user * the string literal "me",
 // indicating the requesting user
 func (c *CoursesListCall) StudentId(studentId string) *CoursesListCall {
-	c.opt_["studentId"] = studentId
+	c.opt_.Set("studentId", fmt.Sprintf("%v", studentId))
 	return c
 }
 
@@ -1058,15 +1045,15 @@ func (c *CoursesListCall) StudentId(studentId string) *CoursesListCall {
 // the user * the email address of the user * the string literal "me",
 // indicating the requesting user
 func (c *CoursesListCall) TeacherId(teacherId string) *CoursesListCall {
-	c.opt_["teacherId"] = teacherId
+	c.opt_.Set("teacherId", fmt.Sprintf("%v", teacherId))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesListCall) Fields(s ...googleapi.Field) *CoursesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1076,13 +1063,13 @@ func (c *CoursesListCall) Fields(s ...googleapi.Field) *CoursesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CoursesListCall) IfNoneMatch(entityTag string) *CoursesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesListCall) Context(ctx context.Context) *CoursesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1090,31 +1077,12 @@ func (c *CoursesListCall) Context(ctx context.Context) *CoursesListCall {
 
 func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["studentId"]; ok {
-		params.Set("studentId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["teacherId"]; ok {
-		params.Set("teacherId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1201,7 +1169,7 @@ type CoursesPatchCall struct {
 	s      *Service
 	id     string
 	course *Course
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
@@ -1213,7 +1181,7 @@ type CoursesPatchCall struct {
 // fields are specified in the update mask or if no update mask is
 // supplied.
 func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
-	c := &CoursesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesPatchCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	c.course = course
 	return c
@@ -1227,21 +1195,21 @@ func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 // set in a query parameter, this field should be specified as
 // `updateMask=,,...`
 func (c *CoursesPatchCall) UpdateMask(updateMask string) *CoursesPatchCall {
-	c.opt_["updateMask"] = updateMask
+	c.opt_.Set("updateMask", fmt.Sprintf("%v", updateMask))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesPatchCall) Fields(s ...googleapi.Field) *CoursesPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesPatchCall) Context(ctx context.Context) *CoursesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1254,16 +1222,9 @@ func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["updateMask"]; ok {
-		params.Set("updateMask", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -1351,7 +1312,7 @@ type CoursesUpdateCall struct {
 	s      *Service
 	id     string
 	course *Course
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
@@ -1361,23 +1322,23 @@ type CoursesUpdateCall struct {
 // errors][User Permission Errors]. * `NOT_FOUND` if no course exists
 // with the requested ID.
 func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
-	c := &CoursesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesUpdateCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	c.course = course
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesUpdateCall) Fields(s ...googleapi.Field) *CoursesUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesUpdateCall) Context(ctx context.Context) *CoursesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1390,13 +1351,9 @@ func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -1479,7 +1436,7 @@ type CoursesAliasesCreateCall struct {
 	s           *Service
 	courseId    string
 	coursealias *CourseAlias
-	opt_        map[string]interface{}
+	opt_        url.Values
 	ctx_        context.Context
 }
 
@@ -1489,23 +1446,23 @@ type CoursesAliasesCreateCall struct {
 // errors][User Permission Errors]. * `NOT_FOUND` if the course does not
 // exist. * `ALREADY_EXISTS` if the alias already exists.
 func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias) *CoursesAliasesCreateCall {
-	c := &CoursesAliasesCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesAliasesCreateCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	c.coursealias = coursealias
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesAliasesCreateCall) Fields(s ...googleapi.Field) *CoursesAliasesCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesAliasesCreateCall) Context(ctx context.Context) *CoursesAliasesCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1518,13 +1475,9 @@ func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/aliases")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
@@ -1607,7 +1560,7 @@ type CoursesAliasesDeleteCall struct {
 	s        *Service
 	courseId string
 	aliasid  string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -1617,23 +1570,23 @@ type CoursesAliasesDeleteCall struct {
 // errors][User Permission Errors]. * `NOT_FOUND` if the alias does not
 // exist.
 func (r *CoursesAliasesService) Delete(courseId string, aliasid string) *CoursesAliasesDeleteCall {
-	c := &CoursesAliasesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesAliasesDeleteCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	c.aliasid = aliasid
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesAliasesDeleteCall) Fields(s ...googleapi.Field) *CoursesAliasesDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesAliasesDeleteCall) Context(ctx context.Context) *CoursesAliasesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1641,13 +1594,9 @@ func (c *CoursesAliasesDeleteCall) Context(ctx context.Context) *CoursesAliasesD
 
 func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/aliases/{alias}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
@@ -1733,7 +1682,7 @@ func (c *CoursesAliasesDeleteCall) Do() (*Empty, error) {
 type CoursesAliasesListCall struct {
 	s        *Service
 	courseId string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -1743,7 +1692,7 @@ type CoursesAliasesListCall struct {
 // errors][User Permission Errors]. * `NOT_FOUND` if the course does not
 // exist.
 func (r *CoursesAliasesService) List(courseId string) *CoursesAliasesListCall {
-	c := &CoursesAliasesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesAliasesListCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	return c
 }
@@ -1753,7 +1702,7 @@ func (r *CoursesAliasesService) List(courseId string) *CoursesAliasesListCall {
 // assign a maximum. The server may return fewer than the specified
 // number of results.
 func (c *CoursesAliasesListCall) PageSize(pageSize int64) *CoursesAliasesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -1765,15 +1714,15 @@ func (c *CoursesAliasesListCall) PageSize(pageSize int64) *CoursesAliasesListCal
 // The [list][google.classroom.v1.Courses.ListCourseAliases] request
 // must be otherwise identical to the one that resulted in this token.
 func (c *CoursesAliasesListCall) PageToken(pageToken string) *CoursesAliasesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesAliasesListCall) Fields(s ...googleapi.Field) *CoursesAliasesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1783,13 +1732,13 @@ func (c *CoursesAliasesListCall) Fields(s ...googleapi.Field) *CoursesAliasesLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CoursesAliasesListCall) IfNoneMatch(entityTag string) *CoursesAliasesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesAliasesListCall) Context(ctx context.Context) *CoursesAliasesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1797,27 +1746,14 @@ func (c *CoursesAliasesListCall) Context(ctx context.Context) *CoursesAliasesLis
 
 func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/aliases")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1903,7 +1839,7 @@ type CoursesStudentsCreateCall struct {
 	s        *Service
 	courseId string
 	student  *Student
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -1915,7 +1851,7 @@ type CoursesStudentsCreateCall struct {
 // requested user's account is disabled. * `ALREADY_EXISTS` if the user
 // is already a student or teacher in the course.
 func (r *CoursesStudentsService) Create(courseId string, student *Student) *CoursesStudentsCreateCall {
-	c := &CoursesStudentsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesStudentsCreateCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	c.student = student
 	return c
@@ -1927,21 +1863,21 @@ func (r *CoursesStudentsService) Create(courseId string, student *Student) *Cour
 // to the requesting user; it may be omitted if the requesting user has
 // administrative permissions to create students for any user.
 func (c *CoursesStudentsCreateCall) EnrollmentCode(enrollmentCode string) *CoursesStudentsCreateCall {
-	c.opt_["enrollmentCode"] = enrollmentCode
+	c.opt_.Set("enrollmentCode", fmt.Sprintf("%v", enrollmentCode))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesStudentsCreateCall) Fields(s ...googleapi.Field) *CoursesStudentsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesStudentsCreateCall) Context(ctx context.Context) *CoursesStudentsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1954,16 +1890,9 @@ func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["enrollmentCode"]; ok {
-		params.Set("enrollmentCode", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/students")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
@@ -2053,7 +1982,7 @@ type CoursesStudentsDeleteCall struct {
 	s        *Service
 	courseId string
 	userId   string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -2064,23 +1993,23 @@ type CoursesStudentsDeleteCall struct {
 // student of this course has the requested ID or if the course does not
 // exist.
 func (r *CoursesStudentsService) Delete(courseId string, userId string) *CoursesStudentsDeleteCall {
-	c := &CoursesStudentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesStudentsDeleteCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesStudentsDeleteCall) Fields(s ...googleapi.Field) *CoursesStudentsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesStudentsDeleteCall) Context(ctx context.Context) *CoursesStudentsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2088,13 +2017,9 @@ func (c *CoursesStudentsDeleteCall) Context(ctx context.Context) *CoursesStudent
 
 func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/students/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
@@ -2181,7 +2106,7 @@ type CoursesStudentsGetCall struct {
 	s        *Service
 	courseId string
 	userId   string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -2192,17 +2117,17 @@ type CoursesStudentsGetCall struct {
 // student of this course has the requested ID or if the course does not
 // exist.
 func (r *CoursesStudentsService) Get(courseId string, userId string) *CoursesStudentsGetCall {
-	c := &CoursesStudentsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesStudentsGetCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesStudentsGetCall) Fields(s ...googleapi.Field) *CoursesStudentsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2212,13 +2137,13 @@ func (c *CoursesStudentsGetCall) Fields(s ...googleapi.Field) *CoursesStudentsGe
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CoursesStudentsGetCall) IfNoneMatch(entityTag string) *CoursesStudentsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesStudentsGetCall) Context(ctx context.Context) *CoursesStudentsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2226,22 +2151,15 @@ func (c *CoursesStudentsGetCall) Context(ctx context.Context) *CoursesStudentsGe
 
 func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/students/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2324,7 +2242,7 @@ func (c *CoursesStudentsGetCall) Do() (*Student, error) {
 type CoursesStudentsListCall struct {
 	s        *Service
 	courseId string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -2333,7 +2251,7 @@ type CoursesStudentsListCall struct {
 // `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
 // [general user permission errors][User Permission Errors].
 func (r *CoursesStudentsService) List(courseId string) *CoursesStudentsListCall {
-	c := &CoursesStudentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesStudentsListCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	return c
 }
@@ -2342,7 +2260,7 @@ func (r *CoursesStudentsService) List(courseId string) *CoursesStudentsListCall 
 // items to return. Zero means no maximum. The server may return fewer
 // than the specified number of results.
 func (c *CoursesStudentsListCall) PageSize(pageSize int64) *CoursesStudentsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -2354,15 +2272,15 @@ func (c *CoursesStudentsListCall) PageSize(pageSize int64) *CoursesStudentsListC
 // [list][google.classroom.v1.Users.ListStudents] request must be
 // otherwise identical to the one that resulted in this token.
 func (c *CoursesStudentsListCall) PageToken(pageToken string) *CoursesStudentsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesStudentsListCall) Fields(s ...googleapi.Field) *CoursesStudentsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2372,13 +2290,13 @@ func (c *CoursesStudentsListCall) Fields(s ...googleapi.Field) *CoursesStudentsL
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CoursesStudentsListCall) IfNoneMatch(entityTag string) *CoursesStudentsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesStudentsListCall) Context(ctx context.Context) *CoursesStudentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2386,27 +2304,14 @@ func (c *CoursesStudentsListCall) Context(ctx context.Context) *CoursesStudentsL
 
 func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/students")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2494,7 +2399,7 @@ type CoursesTeachersCreateCall struct {
 	s        *Service
 	courseId string
 	teacher  *Teacher
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -2506,23 +2411,23 @@ type CoursesTeachersCreateCall struct {
 // requested user's account is disabled. * `ALREADY_EXISTS` if the user
 // is already a teacher or student in the course.
 func (r *CoursesTeachersService) Create(courseId string, teacher *Teacher) *CoursesTeachersCreateCall {
-	c := &CoursesTeachersCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesTeachersCreateCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	c.teacher = teacher
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesTeachersCreateCall) Fields(s ...googleapi.Field) *CoursesTeachersCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesTeachersCreateCall) Context(ctx context.Context) *CoursesTeachersCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -2535,13 +2440,9 @@ func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/teachers")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
@@ -2626,7 +2527,7 @@ type CoursesTeachersDeleteCall struct {
 	s        *Service
 	courseId string
 	userId   string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -2638,23 +2539,23 @@ type CoursesTeachersDeleteCall struct {
 // exist. * `FAILED_PRECONDITION` if the requested ID belongs to the
 // primary teacher of this course.
 func (r *CoursesTeachersService) Delete(courseId string, userId string) *CoursesTeachersDeleteCall {
-	c := &CoursesTeachersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesTeachersDeleteCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesTeachersDeleteCall) Fields(s ...googleapi.Field) *CoursesTeachersDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesTeachersDeleteCall) Context(ctx context.Context) *CoursesTeachersDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2662,13 +2563,9 @@ func (c *CoursesTeachersDeleteCall) Context(ctx context.Context) *CoursesTeacher
 
 func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/teachers/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
@@ -2755,7 +2652,7 @@ type CoursesTeachersGetCall struct {
 	s        *Service
 	courseId string
 	userId   string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -2766,17 +2663,17 @@ type CoursesTeachersGetCall struct {
 // teacher of this course has the requested ID or if the course does not
 // exist.
 func (r *CoursesTeachersService) Get(courseId string, userId string) *CoursesTeachersGetCall {
-	c := &CoursesTeachersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesTeachersGetCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesTeachersGetCall) Fields(s ...googleapi.Field) *CoursesTeachersGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2786,13 +2683,13 @@ func (c *CoursesTeachersGetCall) Fields(s ...googleapi.Field) *CoursesTeachersGe
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CoursesTeachersGetCall) IfNoneMatch(entityTag string) *CoursesTeachersGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesTeachersGetCall) Context(ctx context.Context) *CoursesTeachersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2800,22 +2697,15 @@ func (c *CoursesTeachersGetCall) Context(ctx context.Context) *CoursesTeachersGe
 
 func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/teachers/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 		"userId":   c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2898,7 +2788,7 @@ func (c *CoursesTeachersGetCall) Do() (*Teacher, error) {
 type CoursesTeachersListCall struct {
 	s        *Service
 	courseId string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
@@ -2907,7 +2797,7 @@ type CoursesTeachersListCall struct {
 // `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
 // [general user permission errors][User Permission Errors].
 func (r *CoursesTeachersService) List(courseId string) *CoursesTeachersListCall {
-	c := &CoursesTeachersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CoursesTeachersListCall{s: r.s, opt_: urlValues()}
 	c.courseId = courseId
 	return c
 }
@@ -2916,7 +2806,7 @@ func (r *CoursesTeachersService) List(courseId string) *CoursesTeachersListCall 
 // items to return. Zero means no maximum. The server may return fewer
 // than the specified number of results.
 func (c *CoursesTeachersListCall) PageSize(pageSize int64) *CoursesTeachersListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -2928,15 +2818,15 @@ func (c *CoursesTeachersListCall) PageSize(pageSize int64) *CoursesTeachersListC
 // [list][google.classroom.v1.Users.ListTeachers] request must be
 // otherwise identical to the one that resulted in this token.
 func (c *CoursesTeachersListCall) PageToken(pageToken string) *CoursesTeachersListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CoursesTeachersListCall) Fields(s ...googleapi.Field) *CoursesTeachersListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2946,13 +2836,13 @@ func (c *CoursesTeachersListCall) Fields(s ...googleapi.Field) *CoursesTeachersL
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CoursesTeachersListCall) IfNoneMatch(entityTag string) *CoursesTeachersListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CoursesTeachersListCall) Context(ctx context.Context) *CoursesTeachersListCall {
 	c.ctx_ = ctx
 	return c
@@ -2960,27 +2850,14 @@ func (c *CoursesTeachersListCall) Context(ctx context.Context) *CoursesTeachersL
 
 func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/teachers")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"courseId": c.courseId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3067,7 +2944,7 @@ func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
 type InvitationsAcceptCall struct {
 	s    *Service
 	id   string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -3079,22 +2956,22 @@ type InvitationsAcceptCall struct {
 // or for [general user permission errors][User Permission Errors]. *
 // `NOT_FOUND` if no invitation exists with the requested ID.
 func (r *InvitationsService) Accept(id string) *InvitationsAcceptCall {
-	c := &InvitationsAcceptCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InvitationsAcceptCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InvitationsAcceptCall) Fields(s ...googleapi.Field) *InvitationsAcceptCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InvitationsAcceptCall) Context(ctx context.Context) *InvitationsAcceptCall {
 	c.ctx_ = ctx
 	return c
@@ -3102,13 +2979,9 @@ func (c *InvitationsAcceptCall) Context(ctx context.Context) *InvitationsAcceptC
 
 func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/invitations/{id}:accept")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -3186,7 +3059,7 @@ func (c *InvitationsAcceptCall) Do() (*Empty, error) {
 type InvitationsCreateCall struct {
 	s          *Service
 	invitation *Invitation
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
@@ -3201,22 +3074,22 @@ type InvitationsCreateCall struct {
 // with greater permissions. * `ALREADY_EXISTS` if an invitation for the
 // specified user and course already exists.
 func (r *InvitationsService) Create(invitation *Invitation) *InvitationsCreateCall {
-	c := &InvitationsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InvitationsCreateCall{s: r.s, opt_: urlValues()}
 	c.invitation = invitation
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InvitationsCreateCall) Fields(s ...googleapi.Field) *InvitationsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InvitationsCreateCall) Context(ctx context.Context) *InvitationsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -3229,13 +3102,9 @@ func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/invitations")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -3304,7 +3173,7 @@ func (c *InvitationsCreateCall) Do() (*Invitation, error) {
 type InvitationsDeleteCall struct {
 	s    *Service
 	id   string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -3314,22 +3183,22 @@ type InvitationsDeleteCall struct {
 // permission errors][User Permission Errors]. * `NOT_FOUND` if no
 // invitation exists with the requested ID.
 func (r *InvitationsService) Delete(id string) *InvitationsDeleteCall {
-	c := &InvitationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InvitationsDeleteCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InvitationsDeleteCall) Fields(s ...googleapi.Field) *InvitationsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InvitationsDeleteCall) Context(ctx context.Context) *InvitationsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -3337,13 +3206,9 @@ func (c *InvitationsDeleteCall) Context(ctx context.Context) *InvitationsDeleteC
 
 func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/invitations/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -3421,7 +3286,7 @@ func (c *InvitationsDeleteCall) Do() (*Empty, error) {
 type InvitationsGetCall struct {
 	s    *Service
 	id   string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -3431,16 +3296,16 @@ type InvitationsGetCall struct {
 // errors][User Permission Errors]. * `NOT_FOUND` if no invitation
 // exists with the requested ID.
 func (r *InvitationsService) Get(id string) *InvitationsGetCall {
-	c := &InvitationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InvitationsGetCall{s: r.s, opt_: urlValues()}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InvitationsGetCall) Fields(s ...googleapi.Field) *InvitationsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3450,13 +3315,13 @@ func (c *InvitationsGetCall) Fields(s ...googleapi.Field) *InvitationsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *InvitationsGetCall) IfNoneMatch(entityTag string) *InvitationsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InvitationsGetCall) Context(ctx context.Context) *InvitationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3464,21 +3329,14 @@ func (c *InvitationsGetCall) Context(ctx context.Context) *InvitationsGetCall {
 
 func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/invitations/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3551,7 +3409,7 @@ func (c *InvitationsGetCall) Do() (*Invitation, error) {
 
 type InvitationsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -3562,14 +3420,14 @@ type InvitationsListCall struct {
 // codes: * `PERMISSION_DENIED` for [general user permission
 // errors][User Permission Errors].
 func (r *InvitationsService) List() *InvitationsListCall {
-	c := &InvitationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InvitationsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
 // CourseId sets the optional parameter "courseId": Restricts returned
 // invitations to those for a course with the specified identifier.
 func (c *InvitationsListCall) CourseId(courseId string) *InvitationsListCall {
-	c.opt_["courseId"] = courseId
+	c.opt_.Set("courseId", fmt.Sprintf("%v", courseId))
 	return c
 }
 
@@ -3577,7 +3435,7 @@ func (c *InvitationsListCall) CourseId(courseId string) *InvitationsListCall {
 // items to return. Zero means no maximum. The server may return fewer
 // than the specified number of results.
 func (c *InvitationsListCall) PageSize(pageSize int64) *InvitationsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.opt_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -3589,7 +3447,7 @@ func (c *InvitationsListCall) PageSize(pageSize int64) *InvitationsListCall {
 // The [list][google.classroom.v1.Invitations.ListInvitations] request
 // must be otherwise identical to the one that resulted in this token.
 func (c *InvitationsListCall) PageToken(pageToken string) *InvitationsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
@@ -3599,15 +3457,15 @@ func (c *InvitationsListCall) PageToken(pageToken string) *InvitationsListCall {
 // address of the user * the string literal "me", indicating the
 // requesting user
 func (c *InvitationsListCall) UserId(userId string) *InvitationsListCall {
-	c.opt_["userId"] = userId
+	c.opt_.Set("userId", fmt.Sprintf("%v", userId))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InvitationsListCall) Fields(s ...googleapi.Field) *InvitationsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3617,13 +3475,13 @@ func (c *InvitationsListCall) Fields(s ...googleapi.Field) *InvitationsListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *InvitationsListCall) IfNoneMatch(entityTag string) *InvitationsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InvitationsListCall) Context(ctx context.Context) *InvitationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3631,31 +3489,12 @@ func (c *InvitationsListCall) Context(ctx context.Context) *InvitationsListCall 
 
 func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["courseId"]; ok {
-		params.Set("courseId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["userId"]; ok {
-		params.Set("userId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/invitations")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -3741,7 +3580,7 @@ func (c *InvitationsListCall) Do() (*ListInvitationsResponse, error) {
 type UserProfilesGetCall struct {
 	s      *Service
 	userId string
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
@@ -3751,16 +3590,16 @@ type UserProfilesGetCall struct {
 // requested ID or for [general user permission errors][User Permission
 // Errors].
 func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
-	c := &UserProfilesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UserProfilesGetCall{s: r.s, opt_: urlValues()}
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3770,13 +3609,13 @@ func (c *UserProfilesGetCall) Fields(s ...googleapi.Field) *UserProfilesGetCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UserProfilesGetCall) IfNoneMatch(entityTag string) *UserProfilesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UserProfilesGetCall) Context(ctx context.Context) *UserProfilesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3784,21 +3623,14 @@ func (c *UserProfilesGetCall) Context(ctx context.Context) *UserProfilesGetCall 
 
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/userProfiles/{userId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

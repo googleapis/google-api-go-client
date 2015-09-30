@@ -467,21 +467,21 @@ func (a *API) GenerateCode() ([]byte, error) {
 	p, pn := a.p, a.pn
 	reslist := a.Resources(a.m, "")
 
-	p("// Package %s provides access to the %s.\n", pkg, jstr(m, "title"))
+	pn("// Package %s provides access to the %s.", pkg, jstr(m, "title"))
 	docsLink = jstr(m, "documentationLink")
 	if docsLink != "" {
-		p("//\n")
-		p("// See %s\n", docsLink)
+		pn("//")
+		pn("// See %s", docsLink)
 	}
-	p("//\n// Usage example:\n")
-	p("//\n")
-	p("//   import %q\n", a.Target())
-	p("//   ...\n")
-	p("//   %sService, err := %s.New(oauthHttpClient)\n", pkg, pkg)
+	pn("//\n// Usage example:")
+	pn("//")
+	pn("//   import %q", a.Target())
+	pn("//   ...")
+	pn("//   %sService, err := %s.New(oauthHttpClient)", pkg, pkg)
 
-	p("package %s // import %q\n", pkg, a.Target())
+	pn("package %s // import %q", pkg, a.Target())
 	p("\n")
-	p("import (\n")
+	pn("import (")
 	for _, pkg := range []string{
 		"bytes",
 		*apiPackageBase + "/googleapi",
@@ -497,10 +497,10 @@ func (a *API) GenerateCode() ([]byte, error) {
 		*contextPkg,
 		path.Join(*contextPkg, "ctxhttp"),
 	} {
-		p("\t%q\n", pkg)
+		pn("\t%q", pkg)
 	}
-	p(")\n\n")
-	pn("// Always reference these packages, just in case the auto-generated code")
+	pn(")")
+	pn("\n// Always reference these packages, just in case the auto-generated code")
 	pn("// below doesn't.")
 	pn("var _ = bytes.NewBuffer")
 	pn("var _ = strconv.Itoa")
@@ -516,8 +516,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("const apiId = %q", jstr(m, "id"))
 	pn("const apiName = %q", jstr(m, "name"))
 	pn("const apiVersion = %q", jstr(m, "version"))
-	p("const basePath = %q\n", a.apiBaseURL())
-	p("\n")
+	pn("const basePath = %q", a.apiBaseURL())
 
 	a.generateScopeConstants()
 
@@ -532,15 +531,15 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("}")
 
 	a.GetName("Service") // ignore return value; no user-defined names yet
-	p("\ntype Service struct {\n")
-	p("\tclient *http.Client\n")
-	p("\tBasePath string // API endpoint base URL\n")
-	pn("\tUserAgent string // optional additional User-Agent fragment")
+	pn("\ntype Service struct {")
+	pn(" client *http.Client")
+	pn(" BasePath string // API endpoint base URL")
+	pn(" UserAgent string // optional additional User-Agent fragment")
 
 	for _, res := range reslist {
-		p("\n\t%s\t*%s\n", res.GoField(), res.GoType())
+		pn("\n\t%s\t*%s", res.GoField(), res.GoType())
 	}
-	p("}\n")
+	pn("}")
 	pn("\nfunc (s *Service) userAgent() string {")
 	pn(` if s.UserAgent == "" { return googleapi.UserAgent }`)
 	pn(` return googleapi.UserAgent + " " + s.UserAgent`)
@@ -593,8 +592,8 @@ func (a *API) generateScopeConstants() {
 		return
 	}
 
-	a.p("// OAuth2 scopes used by this API.\n")
-	a.p("const (\n")
+	a.pn("// OAuth2 scopes used by this API.")
+	a.pn("const (")
 	n := 0
 	for _, scopeName := range sortedKeys(scopes) {
 		mi := scopes[scopeName]
@@ -606,7 +605,7 @@ func (a *API) generateScopeConstants() {
 		if des := jstr(mi.(map[string]interface{}), "description"); des != "" {
 			a.p("%s", asComment("\t", des))
 		}
-		a.p("\t%s = %q\n", ident, scopeName)
+		a.pn("\t%s = %q", ident, scopeName)
 	}
 	a.p(")\n\n")
 }
@@ -1138,7 +1137,7 @@ func (s *Schema) GoReturnType() string {
 
 func (s *Schema) writeSchemaCode(api *API) {
 	if s.Type().IsAny() {
-		s.api.p("\ntype %s interface{}\n", s.GoName())
+		s.api.pn("\ntype %s interface{}", s.GoName())
 		return
 	}
 	if s.Type().IsStruct() && !s.Type().IsMap() {
@@ -1153,16 +1152,16 @@ func (s *Schema) writeSchemaCode(api *API) {
 
 	if destSchema, ok := s.Type().ReferenceSchema(); ok {
 		// Convert it to a struct using embedding.
-		s.api.p("\ntype %s struct {\n", s.GoName())
-		s.api.p("\t%s\n", destSchema.GoName())
-		s.api.p("}\n")
+		s.api.pn("\ntype %s struct {", s.GoName())
+		s.api.pn(" %s", destSchema.GoName())
+		s.api.pn("}")
 		return
 	}
 
 	if s.Type().IsSimple() {
 		apitype := jstr(s.m, "type")
 		typ := mustSimpleTypeConvert(apitype, jstr(s.m, "format"))
-		s.api.p("\ntype %s %s\n", s.GoName(), typ)
+		s.api.pn("\ntype %s %s", s.GoName(), typ)
 		return
 	}
 
@@ -1178,8 +1177,8 @@ func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
 	s.api.p("\ntype %s map[string]interface{}\n\n", s.GoName())
 
 	// Write out the "Type" method that identifies the variant type.
-	s.api.p("func (t %s) Type() string {\n", s.GoName())
-	s.api.p("  return googleapi.VariantType(t)\n")
+	s.api.pn("func (t %s) Type() string {", s.GoName())
+	s.api.pn("  return googleapi.VariantType(t)")
 	s.api.p("}\n\n")
 
 	// Write out helper methods to convert each possible variant.
@@ -1197,12 +1196,12 @@ func (s *Schema) writeVariant(api *API, v map[string]interface{}) {
 			continue
 		}
 
-		s.api.p("func (t %s) %s() (r %s, ok bool) {\n", s.GoName(), initialCap(val), reftype)
-		s.api.p("  if t.Type() != %q {\n", initialCap(val))
-		s.api.p("    return r, false\n")
-		s.api.p("  }\n")
-		s.api.p("  ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)\n")
-		s.api.p("  return r, ok\n")
+		s.api.pn("func (t %s) %s() (r %s, ok bool) {", s.GoName(), initialCap(val), reftype)
+		s.api.pn(" if t.Type() != %q {", initialCap(val))
+		s.api.pn("  return r, false")
+		s.api.pn(" }")
+		s.api.pn(" ok = googleapi.ConvertVariant(map[string]interface{}(t), &r)")
+		s.api.pn(" return r, ok")
 		s.api.p("}\n\n")
 	}
 }
@@ -1221,7 +1220,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 	if des != "" {
 		s.api.p("%s", asComment("", fmt.Sprintf("%s: %s", s.GoName(), des)))
 	}
-	s.api.p("type %s struct {\n", s.GoName())
+	s.api.pn("type %s struct {", s.GoName())
 
 	np := new(namePool)
 	forceSendName := np.Get("ForceSendFields")
@@ -1251,7 +1250,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			typ = "*" + typ
 		}
 
-		s.api.p("\t%s %s `json:\"%s,omitempty%s\"`\n", pname, typ, p.APIName(), extraOpt)
+		s.api.pn(" %s %s `json:\"%s,omitempty%s\"`", pname, typ, p.APIName(), extraOpt)
 		if firstFieldName == "" {
 			firstFieldName = pname
 		}
@@ -1262,7 +1261,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			s.api.p("\n")
 		}
 		s.api.p("%s", asComment("\t", "ServerResponse contains the HTTP response code and headers from the server."))
-		s.api.p("\tgoogleapi.ServerResponse `json:\"-\"`\n")
+		s.api.pn(" googleapi.ServerResponse `json:\"-\"`")
 	}
 
 	if firstFieldName == "" {
@@ -1350,7 +1349,7 @@ type Resource struct {
 }
 
 func (r *Resource) generateType() {
-	p, pn := r.api.p, r.api.pn
+	pn := r.api.pn
 	t := r.GoType()
 	pn(fmt.Sprintf("func New%s(s *Service) *%s {", t, t))
 	pn("rs := &%s{s : s}", t)
@@ -1360,12 +1359,12 @@ func (r *Resource) generateType() {
 	pn("return rs")
 	pn("}")
 
-	p("\ntype %s struct {\n", t)
-	p("\ts *Service\n")
+	pn("\ntype %s struct {", t)
+	pn(" s *Service")
 	for _, res := range r.resources {
-		p("\n\t%s\t*%s\n", res.GoField(), res.GoType())
+		pn("\n\t%s\t*%s", res.GoField(), res.GoType())
 	}
-	p("}\n")
+	pn("}")
 
 	for _, res := range r.resources {
 		res.generateType()
@@ -1493,22 +1492,20 @@ func (m *Method) OptParams() []*Param {
 	})
 }
 
-func (m *Method) RequiredRepeatedQueryParams() []*Param {
-	return m.grepParams(func(p *Param) bool {
-		return p.IsRequired() && p.IsRepeated() && p.Location() == "query"
-	})
-}
-
-func (m *Method) RequiredQueryParams() []*Param {
-	return m.grepParams(func(p *Param) bool {
-		return p.IsRequired() && !p.IsRepeated() && p.Location() == "query"
-	})
-}
-
 func (meth *Method) cacheResponseTypes(api *API) {
 	if retType := responseType(api, meth.m); retType != "" && strings.HasPrefix(retType, "*") {
 		api.responseTypes[retType] = true
 	}
+}
+
+// convertMultiParams builds a []string temp variable from a slice
+// of non-strings and returns the name of the temp variable.
+func convertMultiParams(a *API, prefix, param string) string {
+	a.pn(" var %v_ []string", param)
+	a.pn(" for _, v := range %v%v {", prefix, param)
+	a.pn(`  %v_ = append(%v_, fmt.Sprintf("%%v", v))`, param, param)
+	a.pn(" }")
+	return param + "_"
 }
 
 func (meth *Method) generateCode() {
@@ -1532,20 +1529,27 @@ func (meth *Method) generateCode() {
 	}
 	callName := a.GetName(prefix + methodName + "Call")
 
-	p("\ntype %s struct {\n", callName)
-	p("\ts *Service\n")
+	pn("\ntype %s struct {", callName)
+	pn(" s *Service")
 	for _, arg := range args.l {
-		p("\t%s %s\n", arg.goname, arg.gotype)
+		if arg.location != "query" {
+			pn(" %s %s", arg.goname, arg.gotype)
+		}
 	}
-	p("\topt_ map[string]interface{}\n")
+	pn(" urlParams_ internal.URLParams")
+	httpMethod := jstr(meth.m, "httpMethod")
+	if httpMethod == "GET" {
+		pn(" ifNoneMatch_ string")
+	}
 	if meth.supportsMediaUpload() {
-		p("\tmedia_     io.Reader\n")
-		p("\tresumable_ googleapi.SizeReaderAt\n")
-		p("\tmediaType_ string\n")
-		p("\tprotocol_  string\n")
+		pn(" media_     io.Reader")
+		pn(" resumable_ googleapi.SizeReaderAt")
+		pn(" mediaType_ string")
+		pn(" protocol_  string")
+		pn(" progressUpdater_  googleapi.ProgressUpdater")
 	}
-	p("\tctx_ context.Context\n")
-	p("}\n")
+	pn(" ctx_ context.Context")
+	pn("}")
 
 	p("\n%s", asComment("", methodName+": "+jstr(meth.m, "description")))
 	if res != nil {
@@ -1556,19 +1560,39 @@ func (meth *Method) generateCode() {
 
 	var servicePtr string
 	if res == nil {
-		p("func (s *Service) %s(%s) *%s {\n", methodName, args, callName)
+		pn("func (s *Service) %s(%s) *%s {", methodName, args, callName)
 		servicePtr = "s"
 	} else {
-		p("func (r *%s) %s(%s) *%s {\n", res.GoType(), methodName, args, callName)
+		pn("func (r *%s) %s(%s) *%s {", res.GoType(), methodName, args, callName)
 		servicePtr = "r.s"
 	}
 
-	p("\tc := &%s{s: %s, opt_: make(map[string]interface{})}\n", callName, servicePtr)
+	pn(" c := &%s{s: %s, urlParams_: make(internal.URLParams)}", callName, servicePtr)
 	for _, arg := range args.l {
-		p("\tc.%s = %s\n", arg.goname, arg.goname)
+		if arg.location == "query" {
+			switch arg.gotype {
+			case "[]string":
+				pn(" c.urlParams_.SetMulti(%q, append([]string{}, %v...))", arg.goname, arg.goname)
+			case "string":
+				pn(" c.urlParams_.Set(%q, %v)", arg.goname, arg.goname)
+			default:
+				if strings.HasPrefix(arg.gotype, "[]") {
+					tmpVar := convertMultiParams(a, "", arg.goname)
+					pn(" c.urlParams_.SetMulti(%q, %v)", arg.goname, tmpVar)
+				} else {
+					pn(" c.urlParams_.Set(%q, fmt.Sprintf(\"%%v\", %v))", arg.goname, arg.goname)
+				}
+			}
+			continue
+		}
+		if arg.gotype == "[]string" {
+			pn(" c.%s = append([]string{}, %s...)", arg.goname, arg.goname) // Make a copy of the []string.
+			continue
+		}
+		pn(" c.%s = %s", arg.goname, arg.goname)
 	}
-	p("\treturn c\n")
-	p("}\n")
+	pn(" return c")
+	pn("}")
 
 	for _, opt := range meth.OptParams() {
 		setter := initialCap(opt.name)
@@ -1580,26 +1604,45 @@ func (meth *Method) generateCode() {
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
 		paramName := np.Get(validGoIdentifer(opt.name))
-		p("func (c *%s) %s(%s %s) *%s {\n", callName, setter, paramName, opt.GoType(), callName)
-		p("c.opt_[%q] = %s\n", opt.name, paramName)
-		p("return c\n")
-		p("}\n")
+		goType := opt.GoType()
+		if opt.IsRepeated() {
+			goType = "[]" + goType
+		}
+		pn("func (c *%s) %s(%s %s) *%s {", callName, setter, paramName, goType, callName)
+		if opt.IsRepeated() {
+			if goType == "[]string" {
+				pn("c.urlParams_.SetMulti(%q, append([]string{}, %v...))", paramName, paramName)
+			} else {
+				tmpVar := convertMultiParams(a, "", paramName)
+				pn(" c.urlParams_.SetMulti(%q, %v)", paramName, tmpVar)
+			}
+		} else {
+			if goType == "string" {
+				pn("c.urlParams_.Set(%q, %v)", paramName, paramName)
+			} else {
+				pn("c.urlParams_.Set(%q, fmt.Sprintf(\"%%v\", %v))", paramName, paramName)
+			}
+		}
+		pn("return c")
+		pn("}")
 	}
 
 	if meth.supportsMediaUpload() {
-		pn("\n// Media specifies the media to upload in a single chunk.")
-		pn("// At most one of Media and ResumableMedia may be set.")
+		comment := "Media specifies the media to upload in a single chunk. " +
+			"At most one of Media and ResumableMedia may be set."
+		p("\n%s", asComment("", comment))
 		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
 		pn("c.media_ = r")
 		pn(`c.protocol_ = "multipart"`)
 		pn("return c")
 		pn("}")
-		pn("\n// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.")
-		pn("// At most one of Media and ResumableMedia may be set.")
-		pn(`// mediaType identifies the MIME media type of the upload, such as "image/png".`)
-		pn(`// If mediaType is "", it will be auto-detected.`)
-		pn(`// The provided ctx will supersede any context previously provided to `)
-		pn(`// the Context method.`)
+		comment = "ResumableMedia specifies the media to upload in chunks and can be canceled with ctx. " +
+			"At most one of Media and ResumableMedia may be set. " +
+			`mediaType identifies the MIME media type of the upload, such as "image/png". ` +
+			`If mediaType is "", it will be auto-detected. ` +
+			`The provided ctx will supersede any context previously provided to ` +
+			`the Context method.`
+		p("\n%s", asComment("", comment))
 		pn("func (c *%s) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *%s {", callName, callName)
 		pn("c.ctx_ = ctx")
 		pn("c.resumable_ = io.NewSectionReader(r, 0, size)")
@@ -1607,23 +1650,24 @@ func (meth *Method) generateCode() {
 		pn(`c.protocol_ = "resumable"`)
 		pn("return c")
 		pn("}")
-		pn("\n// ProgressUpdater provides a callback function that will be called after every chunk.")
-		pn("// It should be a low-latency function in order to not slow down the upload operation.")
-		pn("// This should only be called when using ResumableMedia (as opposed to Media).")
+		comment = "ProgressUpdater provides a callback function that will be called after every chunk. " +
+			"It should be a low-latency function in order to not slow down the upload operation. " +
+			"This should only be called when using ResumableMedia (as opposed to Media)."
+		p("\n%s", asComment("", comment))
 		pn("func (c *%s) ProgressUpdater(pu googleapi.ProgressUpdater) *%s {", callName, callName)
-		pn(`c.opt_["progressUpdater"] = pu`)
+		pn(`c.progressUpdater_ = pu`)
 		pn("return c")
 		pn("}")
 	}
 
-	pn("\n// Fields allows partial responses to be retrieved.")
-	pn("// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse")
-	pn("// for more information.")
+	comment := "Fields allows partial responses to be retrieved. " +
+		"See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse " +
+		"for more information."
+	p("\n%s", asComment("", comment))
 	pn("func (c *%s) Fields(s ...googleapi.Field) *%s {", callName, callName)
-	pn(`c.opt_["fields"] = googleapi.CombineFields(s)`)
+	pn(`c.urlParams_.Set("fields", googleapi.CombineFields(s))`)
 	pn("return c")
 	pn("}")
-	httpMethod := jstr(meth.m, "httpMethod")
 	if httpMethod == "GET" {
 		// Note that non-GET responses are excluded from supporting If-None-Match.
 		// See https://github.com/google/google-api-go-client/issues/107 for more info.
@@ -1634,8 +1678,8 @@ func (meth *Method) generateCode() {
 			"is the result of In-None-Match."
 		p("\n%s", asComment("", comment))
 		pn("func (c *%s) IfNoneMatch(entityTag string) *%s {", callName, callName)
-		pn(`c.opt_["ifNoneMatch"] = entityTag`)
-		pn("return c")
+		pn(" c.ifNoneMatch_ = entityTag")
+		pn(" return c")
 		pn("}")
 	}
 
@@ -1643,12 +1687,14 @@ func (meth *Method) generateCode() {
 	if meth.supportsMediaDownload() {
 		doMethod = "Do and Download methods"
 	}
-	pn("\n// Context sets the context to be used in this call's %s.", doMethod)
-	pn("// Any pending HTTP request will be aborted if the provided context")
-	pn("// is canceled.")
+	commentFmtStr := "Context sets the context to be used in this call's %s. " +
+		"Any pending HTTP request will be aborted if the provided context is canceled."
+	comment = fmt.Sprintf(commentFmtStr, doMethod)
+	p("\n%s", asComment("", comment))
 	if meth.supportsMediaUpload() {
-		pn("// This context will supersede any context previously provided to ")
-		pn("// the ResumableMedia method.")
+		comment = "This context will supersede any context previously provided to " +
+			"the ResumableMedia method."
+		p("%s", asComment("", comment))
 	}
 	pn("func (c *%s) Context(ctx context.Context) *%s {", callName, callName)
 	pn(`c.ctx_ = ctx`)
@@ -1668,33 +1714,19 @@ func (meth *Method) generateCode() {
 		pn(`ctype := "application/json"`)
 		hasContentType = true
 	}
-	pn("params := make(url.Values)")
-	pn(`params.Set("alt", alt)`)
-	for _, p := range meth.RequiredQueryParams() {
-		pn("params.Set(%q, fmt.Sprintf(\"%%v\", c.%s))", p.name, p.goCallFieldName())
-	}
-	for _, p := range meth.RequiredRepeatedQueryParams() {
-		pn("for _, v := range c.%s { params.Add(%q, fmt.Sprintf(\"%%v\", v)) }",
-			p.name, p.name)
-	}
-	opts := meth.OptParams()
-	opts = append(opts, &Param{name: "fields"})
-	for _, p := range opts {
-		pn("if v, ok := c.opt_[%q]; ok { params.Set(%q, fmt.Sprintf(\"%%v\", v)) }",
-			p.name, p.name)
-	}
+	pn(`c.urlParams_.Set("alt", alt)`)
 
-	p("urls := googleapi.ResolveRelative(c.s.BasePath, %q)\n", jstr(meth.m, "path"))
+	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", jstr(meth.m, "path"))
 	if meth.supportsMediaUpload() {
 		pn("if c.media_ != nil || c.resumable_ != nil {")
 		// Hack guess, since we get a 404 otherwise:
 		//pn("urls = googleapi.ResolveRelative(%q, %q)", a.apiBaseURL(), meth.mediaUploadPath())
 		// Further hack.  Discovery doc is wrong?
 		pn("urls = strings.Replace(urls, %q, %q, 1)", "https://www.googleapis.com/", "https://www.googleapis.com/upload/")
-		pn(`params.Set("uploadType", c.protocol_)`)
+		pn(`c.urlParams_.Set("uploadType", c.protocol_)`)
 		pn("}")
 	}
-	pn("urls += \"?\" + params.Encode()")
+	pn("urls += \"?\" + c.urlParams_.Encode()")
 	if meth.supportsMediaUpload() && httpMethod != "GET" {
 		if !hasContentType { // Support mediaUpload but no ctype set.
 			pn("body = new(bytes.Buffer)")
@@ -1737,8 +1769,8 @@ func (meth *Method) generateCode() {
 	}
 	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
 	if httpMethod == "GET" {
-		pn(`if v, ok := c.opt_["ifNoneMatch"]; ok {`)
-		pn("	req.Header.Set(\"If-None-Match\", fmt.Sprintf(\"%%v\", v))")
+		pn(`if c.ifNoneMatch_ != "" {`)
+		pn(` req.Header.Set("If-None-Match", c.ifNoneMatch_)`)
 		pn("}")
 	}
 	pn("if c.ctx_ != nil {")
@@ -1793,12 +1825,6 @@ func (meth *Method) generateCode() {
 	pn("defer googleapi.CloseBody(res)")
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
 	if meth.supportsMediaUpload() {
-		pn("var progressUpdater_ googleapi.ProgressUpdater")
-		pn("if v, ok := c.opt_[\"progressUpdater\"]; ok {")
-		pn(" if pu, ok := v.(googleapi.ProgressUpdater); ok {")
-		pn("  progressUpdater_ = pu")
-		pn(" }")
-		pn("}")
 		pn(`if c.protocol_ == "resumable" {`)
 		pn(` loc := res.Header.Get("Location")`)
 		pn(" rx := &googleapi.ResumableUpload{")
@@ -1808,7 +1834,7 @@ func (meth *Method) generateCode() {
 		pn("  Media:         c.resumable_,")
 		pn("  MediaType:     c.mediaType_,")
 		pn("  ContentLength: c.resumable_.Size(),")
-		pn("  Callback:      progressUpdater_,")
+		pn("  Callback:      c.progressUpdater_,")
 		pn(" }")
 		pn(" res, err = rx.Upload(c.ctx_)")
 		pn(" if err != nil { return %serr }", nilRet)

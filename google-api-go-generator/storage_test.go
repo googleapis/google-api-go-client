@@ -5,11 +5,14 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"reflect"
 	"strings"
 	"testing"
 	"testing/iotest"
 
 	"golang.org/x/net/context"
+	dfa "google.golang.org/api/dfareporting/v2.2"
 	storage "google.golang.org/api/storage/v1"
 )
 
@@ -17,11 +20,18 @@ type myHandler struct {
 	location string
 	r        *http.Request
 	body     []byte
+	reqURIs  []string
 	err      error
 }
 
 func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.r = r
+	v, err := url.ParseRequestURI(r.URL.RequestURI())
+	if err != nil {
+		h.err = err
+		return
+	}
+	h.reqURIs = append(h.reqURIs, v.String())
 	if h.location != "" {
 		w.Header().Set("Location", h.location)
 	}
@@ -319,5 +329,72 @@ func TestUserAgent(t *testing.T) {
 	g := handler.r
 	if w, k := "google-api-go-client/0.5 myagent/1.0", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
+	}
+}
+
+func myProgressUpdater(current, total int64) {}
+
+func TestParams(t *testing.T) {
+	handler := &myHandler{}
+	server := httptest.NewServer(handler)
+	defer server.Close()
+
+	handler.location = server.URL + "/uploadURL"
+	client := &http.Client{}
+	s, err := storage.New(client)
+	if err != nil {
+		t.Fatalf("unable to create service: %v", err)
+	}
+	s.BasePath = server.URL
+	s.UserAgent = "myagent/1.0"
+
+	const data = "fake media data"
+	f := strings.NewReader(data)
+	o := &storage.Object{
+		Bucket:          "mybucket",
+		Name:            "filename",
+		ContentType:     "plain/text",
+		ContentEncoding: "utf-8",
+		ContentLanguage: "en",
+	}
+	_, err = s.Objects.Insert("mybucket", o).Name(o.Name).IfGenerationMatch(42).ResumableMedia(context.Background(), f, int64(len(data)), "plain/text").ProgressUpdater(myProgressUpdater).Projection("full").Do()
+	if err != nil {
+		t.Fatalf("unable to insert object: %v", err)
+	}
+	if g, w := len(handler.reqURIs), 2; g != w {
+		t.Fatalf("len(reqURIs) = %v, want %v", g, w)
+	}
+	want := []string{
+		"/b/mybucket/o?alt=json&ifGenerationMatch=42&name=filename&projection=full&uploadType=resumable",
+		"/uploadURL",
+	}
+	if !reflect.DeepEqual(handler.reqURIs, want) {
+		t.Errorf("reqURIs = %#v, want = %#v", handler.reqURIs, want)
+	}
+}
+
+func TestRepeatedParams(t *testing.T) {
+	handler := &myHandler{}
+	server := httptest.NewServer(handler)
+	defer server.Close()
+
+	client := &http.Client{}
+	s, err := dfa.New(client)
+	if err != nil {
+		t.Fatalf("unable to create service: %v", err)
+	}
+	s.BasePath = server.URL
+	s.UserAgent = "myagent/1.0"
+	cs := dfa.NewCreativesService(s)
+
+	_, err = cs.List(10).Active(true).MaxResults(1).Ids([]int64{2, 3}).PageToken("abc").SizeIds([]int64{4, 5}).Types([]string{"def", "ghi"}).IfNoneMatch("not-a-param").Do()
+	if err != nil {
+		t.Fatalf("dfa.List: %v", err)
+	}
+	want := []string{
+		"/userprofiles/10/creatives?active=true&alt=json&ids=2&ids=3&maxResults=1&pageToken=abc&sizeIds=4&sizeIds=5&types=def&types=ghi",
+	}
+	if !reflect.DeepEqual(handler.reqURIs, want) {
+		t.Errorf("reqURIs = %#v, want = %#v", handler.reqURIs, want)
 	}
 }

@@ -955,24 +955,25 @@ func (s *UrlChannels) MarshalJSON() ([]byte, error) {
 // method id "adexchangeseller.accounts.get":
 
 type AccountsGetCall struct {
-	s         *Service
-	accountId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	accountId    string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Get information about the selected Ad Exchange account.
 func (r *AccountsService) Get(accountId string) *AccountsGetCall {
-	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -982,13 +983,13 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -996,20 +997,16 @@ func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": c.accountId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1082,21 +1079,22 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 // method id "adexchangeseller.adclients.list":
 
 type AdclientsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List all ad clients in this Ad Exchange account.
 func (r *AdclientsService) List() *AdclientsListCall {
-	c := &AdclientsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdclientsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad clients to include in the response, used for paging.
 func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1105,15 +1103,15 @@ func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AdclientsListCall) PageToken(pageToken string) *AdclientsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdclientsListCall) Fields(s ...googleapi.Field) *AdclientsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1123,13 +1121,13 @@ func (c *AdclientsListCall) Fields(s ...googleapi.Field) *AdclientsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AdclientsListCall) IfNoneMatch(entityTag string) *AdclientsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdclientsListCall) Context(ctx context.Context) *AdclientsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1137,24 +1135,14 @@ func (c *AdclientsListCall) Context(ctx context.Context) *AdclientsListCall {
 
 func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1231,26 +1219,27 @@ func (c *AdclientsListCall) Do() (*AdClients, error) {
 // method id "adexchangeseller.adunits.get":
 
 type AdunitsGetCall struct {
-	s          *Service
-	adClientId string
-	adUnitId   string
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	adClientId   string
+	adUnitId     string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets the specified ad unit in the specified ad client.
 func (r *AdunitsService) Get(adClientId string, adUnitId string) *AdunitsGetCall {
-	c := &AdunitsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdunitsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.adClientId = adClientId
 	c.adUnitId = adUnitId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdunitsGetCall) Fields(s ...googleapi.Field) *AdunitsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1260,13 +1249,13 @@ func (c *AdunitsGetCall) Fields(s ...googleapi.Field) *AdunitsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AdunitsGetCall) IfNoneMatch(entityTag string) *AdunitsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdunitsGetCall) Context(ctx context.Context) *AdunitsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1274,21 +1263,17 @@ func (c *AdunitsGetCall) Context(ctx context.Context) *AdunitsGetCall {
 
 func (c *AdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/adunits/{adUnitId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1368,16 +1353,17 @@ func (c *AdunitsGetCall) Do() (*AdUnit, error) {
 // method id "adexchangeseller.adunits.list":
 
 type AdunitsListCall struct {
-	s          *Service
-	adClientId string
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	adClientId   string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List all ad units in the specified ad client for this Ad
 // Exchange account.
 func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
-	c := &AdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdunitsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.adClientId = adClientId
 	return c
 }
@@ -1385,14 +1371,14 @@ func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *AdunitsListCall) IncludeInactive(includeInactive bool) *AdunitsListCall {
-	c.opt_["includeInactive"] = includeInactive
+	c.urlParams_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1401,15 +1387,15 @@ func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
 // this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *AdunitsListCall) PageToken(pageToken string) *AdunitsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdunitsListCall) Fields(s ...googleapi.Field) *AdunitsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1419,13 +1405,13 @@ func (c *AdunitsListCall) Fields(s ...googleapi.Field) *AdunitsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AdunitsListCall) IfNoneMatch(entityTag string) *AdunitsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdunitsListCall) Context(ctx context.Context) *AdunitsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1433,29 +1419,16 @@ func (c *AdunitsListCall) Context(ctx context.Context) *AdunitsListCall {
 
 func (c *AdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["includeInactive"]; ok {
-		params.Set("includeInactive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/adunits")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1546,17 +1519,18 @@ func (c *AdunitsListCall) Do() (*AdUnits, error) {
 // method id "adexchangeseller.adunits.customchannels.list":
 
 type AdunitsCustomchannelsListCall struct {
-	s          *Service
-	adClientId string
-	adUnitId   string
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	adClientId   string
+	adUnitId     string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List all custom channels which the specified ad unit belongs
 // to.
 func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) *AdunitsCustomchannelsListCall {
-	c := &AdunitsCustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AdunitsCustomchannelsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.adClientId = adClientId
 	c.adUnitId = adUnitId
 	return c
@@ -1566,7 +1540,7 @@ func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) 
 // number of custom channels to include in the response, used for
 // paging.
 func (c *AdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AdunitsCustomchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1575,15 +1549,15 @@ func (c *AdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AdunitsCus
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *AdunitsCustomchannelsListCall) PageToken(pageToken string) *AdunitsCustomchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdunitsCustomchannelsListCall) Fields(s ...googleapi.Field) *AdunitsCustomchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1593,13 +1567,13 @@ func (c *AdunitsCustomchannelsListCall) Fields(s ...googleapi.Field) *AdunitsCus
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AdunitsCustomchannelsListCall) IfNoneMatch(entityTag string) *AdunitsCustomchannelsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AdunitsCustomchannelsListCall) Context(ctx context.Context) *AdunitsCustomchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1607,27 +1581,17 @@ func (c *AdunitsCustomchannelsListCall) Context(ctx context.Context) *AdunitsCus
 
 func (c *AdunitsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/adunits/{adUnitId}/customchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 		"adUnitId":   c.adUnitId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1720,14 +1684,15 @@ func (c *AdunitsCustomchannelsListCall) Do() (*CustomChannels, error) {
 // method id "adexchangeseller.alerts.list":
 
 type AlertsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List the alerts for this Ad Exchange account.
 func (r *AlertsService) List() *AlertsListCall {
-	c := &AlertsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AlertsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -1736,15 +1701,15 @@ func (r *AlertsService) List() *AlertsListCall {
 // is not supplied. The AdSense default (English) will be used if the
 // supplied locale is invalid or unsupported.
 func (c *AlertsListCall) Locale(locale string) *AlertsListCall {
-	c.opt_["locale"] = locale
+	c.urlParams_.Set("locale", locale)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AlertsListCall) Fields(s ...googleapi.Field) *AlertsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1754,13 +1719,13 @@ func (c *AlertsListCall) Fields(s ...googleapi.Field) *AlertsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AlertsListCall) IfNoneMatch(entityTag string) *AlertsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AlertsListCall) Context(ctx context.Context) *AlertsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1768,21 +1733,14 @@ func (c *AlertsListCall) Context(ctx context.Context) *AlertsListCall {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "alerts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1854,23 +1812,24 @@ type CustomchannelsGetCall struct {
 	s               *Service
 	adClientId      string
 	customChannelId string
-	opt_            map[string]interface{}
+	urlParams_      internal.URLParams
+	ifNoneMatch_    string
 	ctx_            context.Context
 }
 
 // Get: Get the specified custom channel from the specified ad client.
 func (r *CustomchannelsService) Get(adClientId string, customChannelId string) *CustomchannelsGetCall {
-	c := &CustomchannelsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CustomchannelsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.adClientId = adClientId
 	c.customChannelId = customChannelId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CustomchannelsGetCall) Fields(s ...googleapi.Field) *CustomchannelsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1880,13 +1839,13 @@ func (c *CustomchannelsGetCall) Fields(s ...googleapi.Field) *CustomchannelsGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CustomchannelsGetCall) IfNoneMatch(entityTag string) *CustomchannelsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CustomchannelsGetCall) Context(ctx context.Context) *CustomchannelsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1894,21 +1853,17 @@ func (c *CustomchannelsGetCall) Context(ctx context.Context) *CustomchannelsGetC
 
 func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels/{customChannelId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId":      c.adClientId,
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1988,16 +1943,17 @@ func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
 // method id "adexchangeseller.customchannels.list":
 
 type CustomchannelsListCall struct {
-	s          *Service
-	adClientId string
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	adClientId   string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List all custom channels in the specified ad client for this Ad
 // Exchange account.
 func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall {
-	c := &CustomchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CustomchannelsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.adClientId = adClientId
 	return c
 }
@@ -2006,7 +1962,7 @@ func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall 
 // number of custom channels to include in the response, used for
 // paging.
 func (c *CustomchannelsListCall) MaxResults(maxResults int64) *CustomchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -2015,15 +1971,15 @@ func (c *CustomchannelsListCall) MaxResults(maxResults int64) *CustomchannelsLis
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *CustomchannelsListCall) PageToken(pageToken string) *CustomchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CustomchannelsListCall) Fields(s ...googleapi.Field) *CustomchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2033,13 +1989,13 @@ func (c *CustomchannelsListCall) Fields(s ...googleapi.Field) *CustomchannelsLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CustomchannelsListCall) IfNoneMatch(entityTag string) *CustomchannelsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CustomchannelsListCall) Context(ctx context.Context) *CustomchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2047,26 +2003,16 @@ func (c *CustomchannelsListCall) Context(ctx context.Context) *CustomchannelsLis
 
 func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2155,13 +2101,14 @@ type CustomchannelsAdunitsListCall struct {
 	s               *Service
 	adClientId      string
 	customChannelId string
-	opt_            map[string]interface{}
+	urlParams_      internal.URLParams
+	ifNoneMatch_    string
 	ctx_            context.Context
 }
 
 // List: List all ad units in the specified custom channel.
 func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId string) *CustomchannelsAdunitsListCall {
-	c := &CustomchannelsAdunitsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CustomchannelsAdunitsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.adClientId = adClientId
 	c.customChannelId = customChannelId
 	return c
@@ -2170,14 +2117,14 @@ func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId s
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *CustomchannelsAdunitsListCall) IncludeInactive(includeInactive bool) *CustomchannelsAdunitsListCall {
-	c.opt_["includeInactive"] = includeInactive
+	c.urlParams_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *CustomchannelsAdunitsListCall) MaxResults(maxResults int64) *CustomchannelsAdunitsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -2186,15 +2133,15 @@ func (c *CustomchannelsAdunitsListCall) MaxResults(maxResults int64) *Customchan
 // this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *CustomchannelsAdunitsListCall) PageToken(pageToken string) *CustomchannelsAdunitsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CustomchannelsAdunitsListCall) Fields(s ...googleapi.Field) *CustomchannelsAdunitsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2204,13 +2151,13 @@ func (c *CustomchannelsAdunitsListCall) Fields(s ...googleapi.Field) *Customchan
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CustomchannelsAdunitsListCall) IfNoneMatch(entityTag string) *CustomchannelsAdunitsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CustomchannelsAdunitsListCall) Context(ctx context.Context) *CustomchannelsAdunitsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2218,30 +2165,17 @@ func (c *CustomchannelsAdunitsListCall) Context(ctx context.Context) *Customchan
 
 func (c *CustomchannelsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["includeInactive"]; ok {
-		params.Set("includeInactive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/customchannels/{customChannelId}/adunits")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId":      c.adClientId,
 		"customChannelId": c.customChannelId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2339,23 +2273,24 @@ func (c *CustomchannelsAdunitsListCall) Do() (*AdUnits, error) {
 // method id "adexchangeseller.metadata.dimensions.list":
 
 type MetadataDimensionsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List the metadata for the dimensions available to this
 // AdExchange account.
 func (r *MetadataDimensionsService) List() *MetadataDimensionsListCall {
-	c := &MetadataDimensionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MetadataDimensionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MetadataDimensionsListCall) Fields(s ...googleapi.Field) *MetadataDimensionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2365,13 +2300,13 @@ func (c *MetadataDimensionsListCall) Fields(s ...googleapi.Field) *MetadataDimen
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MetadataDimensionsListCall) IfNoneMatch(entityTag string) *MetadataDimensionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MetadataDimensionsListCall) Context(ctx context.Context) *MetadataDimensionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2379,18 +2314,14 @@ func (c *MetadataDimensionsListCall) Context(ctx context.Context) *MetadataDimen
 
 func (c *MetadataDimensionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "metadata/dimensions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2452,23 +2383,24 @@ func (c *MetadataDimensionsListCall) Do() (*Metadata, error) {
 // method id "adexchangeseller.metadata.metrics.list":
 
 type MetadataMetricsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List the metadata for the metrics available to this AdExchange
 // account.
 func (r *MetadataMetricsService) List() *MetadataMetricsListCall {
-	c := &MetadataMetricsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MetadataMetricsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MetadataMetricsListCall) Fields(s ...googleapi.Field) *MetadataMetricsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2478,13 +2410,13 @@ func (c *MetadataMetricsListCall) Fields(s ...googleapi.Field) *MetadataMetricsL
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MetadataMetricsListCall) IfNoneMatch(entityTag string) *MetadataMetricsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MetadataMetricsListCall) Context(ctx context.Context) *MetadataMetricsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2492,18 +2424,14 @@ func (c *MetadataMetricsListCall) Context(ctx context.Context) *MetadataMetricsL
 
 func (c *MetadataMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "metadata/metrics")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2565,24 +2493,25 @@ func (c *MetadataMetricsListCall) Do() (*Metadata, error) {
 // method id "adexchangeseller.preferreddeals.get":
 
 type PreferreddealsGetCall struct {
-	s      *Service
-	dealId string
-	opt_   map[string]interface{}
-	ctx_   context.Context
+	s            *Service
+	dealId       string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Get information about the selected Ad Exchange Preferred Deal.
 func (r *PreferreddealsService) Get(dealId string) *PreferreddealsGetCall {
-	c := &PreferreddealsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PreferreddealsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.dealId = dealId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PreferreddealsGetCall) Fields(s ...googleapi.Field) *PreferreddealsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2592,13 +2521,13 @@ func (c *PreferreddealsGetCall) Fields(s ...googleapi.Field) *PreferreddealsGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PreferreddealsGetCall) IfNoneMatch(entityTag string) *PreferreddealsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PreferreddealsGetCall) Context(ctx context.Context) *PreferreddealsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2606,20 +2535,16 @@ func (c *PreferreddealsGetCall) Context(ctx context.Context) *PreferreddealsGetC
 
 func (c *PreferreddealsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "preferreddeals/{dealId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"dealId": c.dealId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2692,22 +2617,23 @@ func (c *PreferreddealsGetCall) Do() (*PreferredDeal, error) {
 // method id "adexchangeseller.preferreddeals.list":
 
 type PreferreddealsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List the preferred deals for this Ad Exchange account.
 func (r *PreferreddealsService) List() *PreferreddealsListCall {
-	c := &PreferreddealsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PreferreddealsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PreferreddealsListCall) Fields(s ...googleapi.Field) *PreferreddealsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2717,13 +2643,13 @@ func (c *PreferreddealsListCall) Fields(s ...googleapi.Field) *PreferreddealsLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PreferreddealsListCall) IfNoneMatch(entityTag string) *PreferreddealsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PreferreddealsListCall) Context(ctx context.Context) *PreferreddealsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2731,18 +2657,14 @@ func (c *PreferreddealsListCall) Context(ctx context.Context) *PreferreddealsLis
 
 func (c *PreferreddealsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "preferreddeals")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2804,34 +2726,35 @@ func (c *PreferreddealsListCall) Do() (*PreferredDeals, error) {
 // method id "adexchangeseller.reports.generate":
 
 type ReportsGenerateCall struct {
-	s         *Service
-	startDate string
-	endDate   string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	startDate    string
+	endDate      string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Generate: Generate an Ad Exchange report based on the report request
 // sent in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
 func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGenerateCall {
-	c := &ReportsGenerateCall{s: r.s, opt_: make(map[string]interface{})}
-	c.startDate = startDate
-	c.endDate = endDate
+	c := &ReportsGenerateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c.urlParams_.Set("startDate", startDate)
+	c.urlParams_.Set("endDate", endDate)
 	return c
 }
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *ReportsGenerateCall) Dimension(dimension string) *ReportsGenerateCall {
-	c.opt_["dimension"] = dimension
+func (c *ReportsGenerateCall) Dimension(dimension []string) *ReportsGenerateCall {
+	c.urlParams_.SetMulti("dimension", append([]string{}, dimension...))
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *ReportsGenerateCall) Filter(filter string) *ReportsGenerateCall {
-	c.opt_["filter"] = filter
+func (c *ReportsGenerateCall) Filter(filter []string) *ReportsGenerateCall {
+	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
 	return c
 }
 
@@ -2839,21 +2762,21 @@ func (c *ReportsGenerateCall) Filter(filter string) *ReportsGenerateCall {
 // for translating report output to a local language. Defaults to
 // "en_US" if not specified.
 func (c *ReportsGenerateCall) Locale(locale string) *ReportsGenerateCall {
-	c.opt_["locale"] = locale
+	c.urlParams_.Set("locale", locale)
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *ReportsGenerateCall) MaxResults(maxResults int64) *ReportsGenerateCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *ReportsGenerateCall) Metric(metric string) *ReportsGenerateCall {
-	c.opt_["metric"] = metric
+func (c *ReportsGenerateCall) Metric(metric []string) *ReportsGenerateCall {
+	c.urlParams_.SetMulti("metric", append([]string{}, metric...))
 	return c
 }
 
@@ -2861,23 +2784,23 @@ func (c *ReportsGenerateCall) Metric(metric string) *ReportsGenerateCall {
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *ReportsGenerateCall) Sort(sort string) *ReportsGenerateCall {
-	c.opt_["sort"] = sort
+func (c *ReportsGenerateCall) Sort(sort []string) *ReportsGenerateCall {
+	c.urlParams_.SetMulti("sort", append([]string{}, sort...))
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall {
-	c.opt_["startIndex"] = startIndex
+	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsGenerateCall) Fields(s ...googleapi.Field) *ReportsGenerateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2887,13 +2810,13 @@ func (c *ReportsGenerateCall) Fields(s ...googleapi.Field) *ReportsGenerateCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ReportsGenerateCall) IfNoneMatch(entityTag string) *ReportsGenerateCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download methods.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
 func (c *ReportsGenerateCall) Context(ctx context.Context) *ReportsGenerateCall {
 	c.ctx_ = ctx
 	return c
@@ -2901,41 +2824,16 @@ func (c *ReportsGenerateCall) Context(ctx context.Context) *ReportsGenerateCall 
 
 func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("endDate", fmt.Sprintf("%v", c.endDate))
-	params.Set("startDate", fmt.Sprintf("%v", c.startDate))
-	if v, ok := c.opt_["dimension"]; ok {
-		params.Set("dimension", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["metric"]; ok {
-		params.Set("metric", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("endDate", fmt.Sprintf("%v", c.endDate))
+	c.urlParams_.Set("startDate", fmt.Sprintf("%v", c.startDate))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3085,14 +2983,15 @@ func (c *ReportsGenerateCall) Do() (*Report, error) {
 type ReportsSavedGenerateCall struct {
 	s             *Service
 	savedReportId string
-	opt_          map[string]interface{}
+	urlParams_    internal.URLParams
+	ifNoneMatch_  string
 	ctx_          context.Context
 }
 
 // Generate: Generate an Ad Exchange report based on the saved report ID
 // sent in the query parameters.
 func (r *ReportsSavedService) Generate(savedReportId string) *ReportsSavedGenerateCall {
-	c := &ReportsSavedGenerateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsSavedGenerateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.savedReportId = savedReportId
 	return c
 }
@@ -3101,29 +3000,29 @@ func (r *ReportsSavedService) Generate(savedReportId string) *ReportsSavedGenera
 // for translating report output to a local language. Defaults to
 // "en_US" if not specified.
 func (c *ReportsSavedGenerateCall) Locale(locale string) *ReportsSavedGenerateCall {
-	c.opt_["locale"] = locale
+	c.urlParams_.Set("locale", locale)
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *ReportsSavedGenerateCall) MaxResults(maxResults int64) *ReportsSavedGenerateCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *ReportsSavedGenerateCall) StartIndex(startIndex int64) *ReportsSavedGenerateCall {
-	c.opt_["startIndex"] = startIndex
+	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsSavedGenerateCall) Fields(s ...googleapi.Field) *ReportsSavedGenerateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3133,13 +3032,13 @@ func (c *ReportsSavedGenerateCall) Fields(s ...googleapi.Field) *ReportsSavedGen
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ReportsSavedGenerateCall) IfNoneMatch(entityTag string) *ReportsSavedGenerateCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsSavedGenerateCall) Context(ctx context.Context) *ReportsSavedGenerateCall {
 	c.ctx_ = ctx
 	return c
@@ -3147,29 +3046,16 @@ func (c *ReportsSavedGenerateCall) Context(ctx context.Context) *ReportsSavedGen
 
 func (c *ReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/{savedReportId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"savedReportId": c.savedReportId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3264,21 +3150,22 @@ func (c *ReportsSavedGenerateCall) Do() (*Report, error) {
 // method id "adexchangeseller.reports.saved.list":
 
 type ReportsSavedListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List all saved reports in this Ad Exchange account.
 func (r *ReportsSavedService) List() *ReportsSavedListCall {
-	c := &ReportsSavedListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportsSavedListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of saved reports to include in the response, used for paging.
 func (c *ReportsSavedListCall) MaxResults(maxResults int64) *ReportsSavedListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3287,15 +3174,15 @@ func (c *ReportsSavedListCall) MaxResults(maxResults int64) *ReportsSavedListCal
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *ReportsSavedListCall) PageToken(pageToken string) *ReportsSavedListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsSavedListCall) Fields(s ...googleapi.Field) *ReportsSavedListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3305,13 +3192,13 @@ func (c *ReportsSavedListCall) Fields(s ...googleapi.Field) *ReportsSavedListCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ReportsSavedListCall) IfNoneMatch(entityTag string) *ReportsSavedListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportsSavedListCall) Context(ctx context.Context) *ReportsSavedListCall {
 	c.ctx_ = ctx
 	return c
@@ -3319,24 +3206,14 @@ func (c *ReportsSavedListCall) Context(ctx context.Context) *ReportsSavedListCal
 
 func (c *ReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reports/saved")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3413,16 +3290,17 @@ func (c *ReportsSavedListCall) Do() (*SavedReports, error) {
 // method id "adexchangeseller.urlchannels.list":
 
 type UrlchannelsListCall struct {
-	s          *Service
-	adClientId string
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	adClientId   string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List all URL channels in the specified ad client for this Ad
 // Exchange account.
 func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
-	c := &UrlchannelsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlchannelsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.adClientId = adClientId
 	return c
 }
@@ -3430,7 +3308,7 @@ func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of URL channels to include in the response, used for paging.
 func (c *UrlchannelsListCall) MaxResults(maxResults int64) *UrlchannelsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3439,15 +3317,15 @@ func (c *UrlchannelsListCall) MaxResults(maxResults int64) *UrlchannelsListCall 
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *UrlchannelsListCall) PageToken(pageToken string) *UrlchannelsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlchannelsListCall) Fields(s ...googleapi.Field) *UrlchannelsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3457,13 +3335,13 @@ func (c *UrlchannelsListCall) Fields(s ...googleapi.Field) *UrlchannelsListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UrlchannelsListCall) IfNoneMatch(entityTag string) *UrlchannelsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlchannelsListCall) Context(ctx context.Context) *UrlchannelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3471,26 +3349,16 @@ func (c *UrlchannelsListCall) Context(ctx context.Context) *UrlchannelsListCall 
 
 func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "adclients/{adClientId}/urlchannels")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"adClientId": c.adClientId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

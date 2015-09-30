@@ -43,6 +43,8 @@ const apiName = "webfonts"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/webfonts/v1/"
 
+func urlValues() url.Values { return url.Values{} }
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -149,14 +151,14 @@ func (s *WebfontList) MarshalJSON() ([]byte, error) {
 
 type WebfontsListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Retrieves the list of fonts currently served by the Google
 // Fonts Developer API
 func (r *WebfontsService) List() *WebfontsListCall {
-	c := &WebfontsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WebfontsListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
@@ -169,15 +171,15 @@ func (r *WebfontsService) List() *WebfontsListCall {
 //   "style" - Sort by number of styles
 //   "trending" - Sort by trending
 func (c *WebfontsListCall) Sort(sort string) *WebfontsListCall {
-	c.opt_["sort"] = sort
+	c.opt_.Set("sort", fmt.Sprintf("%v", sort))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WebfontsListCall) Fields(s ...googleapi.Field) *WebfontsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -187,13 +189,13 @@ func (c *WebfontsListCall) Fields(s ...googleapi.Field) *WebfontsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *WebfontsListCall) IfNoneMatch(entityTag string) *WebfontsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WebfontsListCall) Context(ctx context.Context) *WebfontsListCall {
 	c.ctx_ = ctx
 	return c
@@ -201,22 +203,12 @@ func (c *WebfontsListCall) Context(ctx context.Context) *WebfontsListCall {
 
 func (c *WebfontsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webfonts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

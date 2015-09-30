@@ -43,6 +43,8 @@ const apiName = "taskqueue"
 const apiVersion = "v1beta1"
 const basePath = "https://www.googleapis.com/taskqueue/v1beta1/projects/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage your Tasks and Taskqueues
@@ -296,13 +298,13 @@ type TaskqueuesGetCall struct {
 	s         *Service
 	project   string
 	taskqueue string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Get: Get detailed information about a TaskQueue.
 func (r *TaskqueuesService) Get(project string, taskqueue string) *TaskqueuesGetCall {
-	c := &TaskqueuesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TaskqueuesGetCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.taskqueue = taskqueue
 	return c
@@ -311,15 +313,15 @@ func (r *TaskqueuesService) Get(project string, taskqueue string) *TaskqueuesGet
 // GetStats sets the optional parameter "getStats": Whether to get
 // stats.
 func (c *TaskqueuesGetCall) GetStats(getStats bool) *TaskqueuesGetCall {
-	c.opt_["getStats"] = getStats
+	c.opt_.Set("getStats", fmt.Sprintf("%v", getStats))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TaskqueuesGetCall) Fields(s ...googleapi.Field) *TaskqueuesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -329,13 +331,13 @@ func (c *TaskqueuesGetCall) Fields(s ...googleapi.Field) *TaskqueuesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TaskqueuesGetCall) IfNoneMatch(entityTag string) *TaskqueuesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TaskqueuesGetCall) Context(ctx context.Context) *TaskqueuesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -343,25 +345,15 @@ func (c *TaskqueuesGetCall) Context(ctx context.Context) *TaskqueuesGetCall {
 
 func (c *TaskqueuesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["getStats"]; ok {
-		params.Set("getStats", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
 		"taskqueue": c.taskqueue,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -449,30 +441,30 @@ type TasksDeleteCall struct {
 	project   string
 	taskqueue string
 	task      string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Delete: Delete a task from a TaskQueue.
 func (r *TasksService) Delete(project string, taskqueue string, task string) *TasksDeleteCall {
-	c := &TasksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TasksDeleteCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.taskqueue = taskqueue
 	c.task = task
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TasksDeleteCall) Context(ctx context.Context) *TasksDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -480,13 +472,9 @@ func (c *TasksDeleteCall) Context(ctx context.Context) *TasksDeleteCall {
 
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks/{task}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
@@ -556,24 +544,24 @@ type TasksGetCall struct {
 	project   string
 	taskqueue string
 	task      string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Get: Get a particular task from a TaskQueue.
 func (r *TasksService) Get(project string, taskqueue string, task string) *TasksGetCall {
-	c := &TasksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TasksGetCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.taskqueue = taskqueue
 	c.task = task
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -583,13 +571,13 @@ func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TasksGetCall) IfNoneMatch(entityTag string) *TasksGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TasksGetCall) Context(ctx context.Context) *TasksGetCall {
 	c.ctx_ = ctx
 	return c
@@ -597,13 +585,9 @@ func (c *TasksGetCall) Context(ctx context.Context) *TasksGetCall {
 
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks/{task}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
@@ -611,9 +595,6 @@ func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 		"task":      c.task,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -704,13 +685,13 @@ type TasksLeaseCall struct {
 	taskqueue string
 	numTasks  int64
 	leaseSecs int64
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Lease: Lease 1 or more tasks from a TaskQueue.
 func (r *TasksService) Lease(project string, taskqueue string, numTasks int64, leaseSecs int64) *TasksLeaseCall {
-	c := &TasksLeaseCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TasksLeaseCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.taskqueue = taskqueue
 	c.numTasks = numTasks
@@ -718,17 +699,17 @@ func (r *TasksService) Lease(project string, taskqueue string, numTasks int64, l
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksLeaseCall) Fields(s ...googleapi.Field) *TasksLeaseCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TasksLeaseCall) Context(ctx context.Context) *TasksLeaseCall {
 	c.ctx_ = ctx
 	return c
@@ -736,15 +717,11 @@ func (c *TasksLeaseCall) Context(ctx context.Context) *TasksLeaseCall {
 
 func (c *TasksLeaseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("leaseSecs", fmt.Sprintf("%v", c.leaseSecs))
-	params.Set("numTasks", fmt.Sprintf("%v", c.numTasks))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("leaseSecs", fmt.Sprintf("%v", c.leaseSecs))
+	c.opt_.Set("numTasks", fmt.Sprintf("%v", c.numTasks))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks/lease")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
@@ -848,23 +825,23 @@ type TasksListCall struct {
 	s         *Service
 	project   string
 	taskqueue string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // List: List Tasks in a TaskQueue
 func (r *TasksService) List(project string, taskqueue string) *TasksListCall {
-	c := &TasksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TasksListCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.taskqueue = taskqueue
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -874,13 +851,13 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TasksListCall) IfNoneMatch(entityTag string) *TasksListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TasksListCall) Context(ctx context.Context) *TasksListCall {
 	c.ctx_ = ctx
 	return c
@@ -888,22 +865,15 @@ func (c *TasksListCall) Context(ctx context.Context) *TasksListCall {
 
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/taskqueues/{taskqueue}/tasks")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
 		"taskqueue": c.taskqueue,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

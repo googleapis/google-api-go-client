@@ -43,6 +43,8 @@ const apiName = "androidpublisher"
 const apiVersion = "v1.1"
 const basePath = "https://www.googleapis.com/androidpublisher/v1.1/applications/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your Google Play Developer account
@@ -185,24 +187,24 @@ type InapppurchasesGetCall struct {
 	packageName string
 	productId   string
 	token       string
-	opt_        map[string]interface{}
+	opt_        url.Values
 	ctx_        context.Context
 }
 
 // Get: Checks the purchase and consumption status of an inapp item.
 func (r *InapppurchasesService) Get(packageName string, productId string, token string) *InapppurchasesGetCall {
-	c := &InapppurchasesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InapppurchasesGetCall{s: r.s, opt_: urlValues()}
 	c.packageName = packageName
 	c.productId = productId
 	c.token = token
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InapppurchasesGetCall) Fields(s ...googleapi.Field) *InapppurchasesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -212,13 +214,13 @@ func (c *InapppurchasesGetCall) Fields(s ...googleapi.Field) *InapppurchasesGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *InapppurchasesGetCall) IfNoneMatch(entityTag string) *InapppurchasesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InapppurchasesGetCall) Context(ctx context.Context) *InapppurchasesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -226,13 +228,9 @@ func (c *InapppurchasesGetCall) Context(ctx context.Context) *InapppurchasesGetC
 
 func (c *InapppurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/inapp/{productId}/purchases/{token}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
@@ -240,9 +238,6 @@ func (c *InapppurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"token":       c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -331,31 +326,31 @@ type PurchasesCancelCall struct {
 	packageName    string
 	subscriptionId string
 	token          string
-	opt_           map[string]interface{}
+	opt_           url.Values
 	ctx_           context.Context
 }
 
 // Cancel: Cancels a user's subscription purchase. The subscription
 // remains valid until its expiration time.
 func (r *PurchasesService) Cancel(packageName string, subscriptionId string, token string) *PurchasesCancelCall {
-	c := &PurchasesCancelCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PurchasesCancelCall{s: r.s, opt_: urlValues()}
 	c.packageName = packageName
 	c.subscriptionId = subscriptionId
 	c.token = token
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PurchasesCancelCall) Fields(s ...googleapi.Field) *PurchasesCancelCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PurchasesCancelCall) Context(ctx context.Context) *PurchasesCancelCall {
 	c.ctx_ = ctx
 	return c
@@ -363,13 +358,9 @@ func (c *PurchasesCancelCall) Context(ctx context.Context) *PurchasesCancelCall 
 
 func (c *PurchasesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/subscriptions/{subscriptionId}/purchases/{token}/cancel")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName":    c.packageName,
@@ -438,25 +429,25 @@ type PurchasesGetCall struct {
 	packageName    string
 	subscriptionId string
 	token          string
-	opt_           map[string]interface{}
+	opt_           url.Values
 	ctx_           context.Context
 }
 
 // Get: Checks whether a user's subscription purchase is valid and
 // returns its expiry time.
 func (r *PurchasesService) Get(packageName string, subscriptionId string, token string) *PurchasesGetCall {
-	c := &PurchasesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PurchasesGetCall{s: r.s, opt_: urlValues()}
 	c.packageName = packageName
 	c.subscriptionId = subscriptionId
 	c.token = token
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -466,13 +457,13 @@ func (c *PurchasesGetCall) Fields(s ...googleapi.Field) *PurchasesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PurchasesGetCall) IfNoneMatch(entityTag string) *PurchasesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PurchasesGetCall) Context(ctx context.Context) *PurchasesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -480,13 +471,9 @@ func (c *PurchasesGetCall) Context(ctx context.Context) *PurchasesGetCall {
 
 func (c *PurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/subscriptions/{subscriptionId}/purchases/{token}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName":    c.packageName,
@@ -494,9 +481,6 @@ func (c *PurchasesGetCall) doRequest(alt string) (*http.Response, error) {
 		"token":          c.token,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

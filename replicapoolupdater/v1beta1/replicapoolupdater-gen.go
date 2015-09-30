@@ -43,6 +43,8 @@ const apiName = "replicapoolupdater"
 const apiVersion = "v1beta1"
 const basePath = "https://www.googleapis.com/replicapoolupdater/v1beta1/projects/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -679,7 +681,7 @@ type RollingUpdatesCancelCall struct {
 	project       string
 	zone          string
 	rollingUpdate string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
@@ -687,24 +689,24 @@ type RollingUpdatesCancelCall struct {
 // cancelled. This has no effect if the update is already CANCELLED.
 // For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#cancelrollingupdate
 func (r *RollingUpdatesService) Cancel(project string, zone string, rollingUpdate string) *RollingUpdatesCancelCall {
-	c := &RollingUpdatesCancelCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RollingUpdatesCancelCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.rollingUpdate = rollingUpdate
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RollingUpdatesCancelCall) Fields(s ...googleapi.Field) *RollingUpdatesCancelCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RollingUpdatesCancelCall) Context(ctx context.Context) *RollingUpdatesCancelCall {
 	c.ctx_ = ctx
 	return c
@@ -712,13 +714,9 @@ func (c *RollingUpdatesCancelCall) Context(ctx context.Context) *RollingUpdatesC
 
 func (c *RollingUpdatesCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/cancel")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":       c.project,
@@ -816,25 +814,25 @@ type RollingUpdatesGetCall struct {
 	project       string
 	zone          string
 	rollingUpdate string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // Get: Returns information about an update.
 // For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate
 func (r *RollingUpdatesService) Get(project string, zone string, rollingUpdate string) *RollingUpdatesGetCall {
-	c := &RollingUpdatesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RollingUpdatesGetCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.rollingUpdate = rollingUpdate
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RollingUpdatesGetCall) Fields(s ...googleapi.Field) *RollingUpdatesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -844,13 +842,13 @@ func (c *RollingUpdatesGetCall) Fields(s ...googleapi.Field) *RollingUpdatesGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RollingUpdatesGetCall) IfNoneMatch(entityTag string) *RollingUpdatesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RollingUpdatesGetCall) Context(ctx context.Context) *RollingUpdatesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -858,13 +856,9 @@ func (c *RollingUpdatesGetCall) Context(ctx context.Context) *RollingUpdatesGetC
 
 func (c *RollingUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":       c.project,
@@ -872,9 +866,6 @@ func (c *RollingUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -967,31 +958,31 @@ type RollingUpdatesInsertCall struct {
 	project       string
 	zone          string
 	rollingupdate *RollingUpdate
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
 // Insert: Inserts and starts a new update.
 // For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#starting_an_update
 func (r *RollingUpdatesService) Insert(project string, zone string, rollingupdate *RollingUpdate) *RollingUpdatesInsertCall {
-	c := &RollingUpdatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RollingUpdatesInsertCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.rollingupdate = rollingupdate
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RollingUpdatesInsertCall) Fields(s ...googleapi.Field) *RollingUpdatesInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RollingUpdatesInsertCall) Context(ctx context.Context) *RollingUpdatesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1004,13 +995,9 @@ func (c *RollingUpdatesInsertCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
@@ -1103,7 +1090,7 @@ type RollingUpdatesListCall struct {
 	s       *Service
 	project string
 	zone    string
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
@@ -1111,7 +1098,7 @@ type RollingUpdatesListCall struct {
 // reverse chronological order and paginated format.
 // For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate
 func (r *RollingUpdatesService) List(project string, zone string) *RollingUpdatesListCall {
-	c := &RollingUpdatesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RollingUpdatesListCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	return c
@@ -1120,7 +1107,7 @@ func (r *RollingUpdatesService) List(project string, zone string) *RollingUpdate
 // Filter sets the optional parameter "filter": Filter expression for
 // filtering listed resources.
 func (c *RollingUpdatesListCall) Filter(filter string) *RollingUpdatesListCall {
-	c.opt_["filter"] = filter
+	c.opt_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
@@ -1128,7 +1115,7 @@ func (c *RollingUpdatesListCall) Filter(filter string) *RollingUpdatesListCall {
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *RollingUpdatesListCall) MaxResults(maxResults int64) *RollingUpdatesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1136,15 +1123,15 @@ func (c *RollingUpdatesListCall) MaxResults(maxResults int64) *RollingUpdatesLis
 // previous list request truncated by maxResults. Used to continue a
 // previous list request.
 func (c *RollingUpdatesListCall) PageToken(pageToken string) *RollingUpdatesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RollingUpdatesListCall) Fields(s ...googleapi.Field) *RollingUpdatesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1154,13 +1141,13 @@ func (c *RollingUpdatesListCall) Fields(s ...googleapi.Field) *RollingUpdatesLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RollingUpdatesListCall) IfNoneMatch(entityTag string) *RollingUpdatesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RollingUpdatesListCall) Context(ctx context.Context) *RollingUpdatesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1168,31 +1155,15 @@ func (c *RollingUpdatesListCall) Context(ctx context.Context) *RollingUpdatesLis
 
 func (c *RollingUpdatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1297,7 +1268,7 @@ type RollingUpdatesListInstanceUpdatesCall struct {
 	project       string
 	zone          string
 	rollingUpdate string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
@@ -1305,7 +1276,7 @@ type RollingUpdatesListInstanceUpdatesCall struct {
 // within a given update.
 // For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#getlistrollingupdate
 func (r *RollingUpdatesService) ListInstanceUpdates(project string, zone string, rollingUpdate string) *RollingUpdatesListInstanceUpdatesCall {
-	c := &RollingUpdatesListInstanceUpdatesCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RollingUpdatesListInstanceUpdatesCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.rollingUpdate = rollingUpdate
@@ -1315,7 +1286,7 @@ func (r *RollingUpdatesService) ListInstanceUpdates(project string, zone string,
 // Filter sets the optional parameter "filter": Filter expression for
 // filtering listed resources.
 func (c *RollingUpdatesListInstanceUpdatesCall) Filter(filter string) *RollingUpdatesListInstanceUpdatesCall {
-	c.opt_["filter"] = filter
+	c.opt_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
@@ -1323,7 +1294,7 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Filter(filter string) *RollingUp
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *RollingUpdatesListInstanceUpdatesCall) MaxResults(maxResults int64) *RollingUpdatesListInstanceUpdatesCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1331,15 +1302,15 @@ func (c *RollingUpdatesListInstanceUpdatesCall) MaxResults(maxResults int64) *Ro
 // previous list request truncated by maxResults. Used to continue a
 // previous list request.
 func (c *RollingUpdatesListInstanceUpdatesCall) PageToken(pageToken string) *RollingUpdatesListInstanceUpdatesCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RollingUpdatesListInstanceUpdatesCall) Fields(s ...googleapi.Field) *RollingUpdatesListInstanceUpdatesCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1349,13 +1320,13 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Fields(s ...googleapi.Field) *Ro
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RollingUpdatesListInstanceUpdatesCall) IfNoneMatch(entityTag string) *RollingUpdatesListInstanceUpdatesCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RollingUpdatesListInstanceUpdatesCall) Context(ctx context.Context) *RollingUpdatesListInstanceUpdatesCall {
 	c.ctx_ = ctx
 	return c
@@ -1363,22 +1334,9 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Context(ctx context.Context) *Ro
 
 func (c *RollingUpdatesListInstanceUpdatesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/instanceUpdates")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":       c.project,
@@ -1386,9 +1344,6 @@ func (c *RollingUpdatesListInstanceUpdatesCall) doRequest(alt string) (*http.Res
 		"rollingUpdate": c.rollingUpdate,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1500,7 +1455,7 @@ type RollingUpdatesPauseCall struct {
 	project       string
 	zone          string
 	rollingUpdate string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
@@ -1509,24 +1464,24 @@ type RollingUpdatesPauseCall struct {
 // is PAUSED.
 // For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#pausing_a_rolling_update
 func (r *RollingUpdatesService) Pause(project string, zone string, rollingUpdate string) *RollingUpdatesPauseCall {
-	c := &RollingUpdatesPauseCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RollingUpdatesPauseCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.rollingUpdate = rollingUpdate
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RollingUpdatesPauseCall) Fields(s ...googleapi.Field) *RollingUpdatesPauseCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RollingUpdatesPauseCall) Context(ctx context.Context) *RollingUpdatesPauseCall {
 	c.ctx_ = ctx
 	return c
@@ -1534,13 +1489,9 @@ func (c *RollingUpdatesPauseCall) Context(ctx context.Context) *RollingUpdatesPa
 
 func (c *RollingUpdatesPauseCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/pause")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":       c.project,
@@ -1638,7 +1589,7 @@ type RollingUpdatesResumeCall struct {
 	project       string
 	zone          string
 	rollingUpdate string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
@@ -1646,24 +1597,24 @@ type RollingUpdatesResumeCall struct {
 // when the state of the update is ROLLED_OUT.
 // For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#continuerollingupdate
 func (r *RollingUpdatesService) Resume(project string, zone string, rollingUpdate string) *RollingUpdatesResumeCall {
-	c := &RollingUpdatesResumeCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RollingUpdatesResumeCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.rollingUpdate = rollingUpdate
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RollingUpdatesResumeCall) Fields(s ...googleapi.Field) *RollingUpdatesResumeCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RollingUpdatesResumeCall) Context(ctx context.Context) *RollingUpdatesResumeCall {
 	c.ctx_ = ctx
 	return c
@@ -1671,13 +1622,9 @@ func (c *RollingUpdatesResumeCall) Context(ctx context.Context) *RollingUpdatesR
 
 func (c *RollingUpdatesResumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/resume")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":       c.project,
@@ -1775,7 +1722,7 @@ type RollingUpdatesRollbackCall struct {
 	project       string
 	zone          string
 	rollingUpdate string
-	opt_          map[string]interface{}
+	opt_          url.Values
 	ctx_          context.Context
 }
 
@@ -1784,24 +1731,24 @@ type RollingUpdatesRollbackCall struct {
 // ROLLED_BACK.
 // For details, see https://cloud.google.com/compute/docs/instance-groups/manager/#rollingbackupdate
 func (r *RollingUpdatesService) Rollback(project string, zone string, rollingUpdate string) *RollingUpdatesRollbackCall {
-	c := &RollingUpdatesRollbackCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RollingUpdatesRollbackCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.rollingUpdate = rollingUpdate
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RollingUpdatesRollbackCall) Fields(s ...googleapi.Field) *RollingUpdatesRollbackCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RollingUpdatesRollbackCall) Context(ctx context.Context) *RollingUpdatesRollbackCall {
 	c.ctx_ = ctx
 	return c
@@ -1809,13 +1756,9 @@ func (c *RollingUpdatesRollbackCall) Context(ctx context.Context) *RollingUpdate
 
 func (c *RollingUpdatesRollbackCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/rollingUpdates/{rollingUpdate}/rollback")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":       c.project,
@@ -1913,24 +1856,24 @@ type ZoneOperationsGetCall struct {
 	project   string
 	zone      string
 	operation string
-	opt_      map[string]interface{}
+	opt_      url.Values
 	ctx_      context.Context
 }
 
 // Get: Retrieves the specified zone-specific operation resource.
 func (r *ZoneOperationsService) Get(project string, zone string, operation string) *ZoneOperationsGetCall {
-	c := &ZoneOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ZoneOperationsGetCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.operation = operation
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1940,13 +1883,13 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZoneOperationsGetCall) IfNoneMatch(entityTag string) *ZoneOperationsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ZoneOperationsGetCall) Context(ctx context.Context) *ZoneOperationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1954,13 +1897,9 @@ func (c *ZoneOperationsGetCall) Context(ctx context.Context) *ZoneOperationsGetC
 
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations/{operation}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
@@ -1968,9 +1907,6 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2060,14 +1996,14 @@ type ZoneOperationsListCall struct {
 	s       *Service
 	project string
 	zone    string
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
 // List: Retrieves the list of Operation resources contained within the
 // specified zone.
 func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperationsListCall {
-	c := &ZoneOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ZoneOperationsListCall{s: r.s, opt_: urlValues()}
 	c.project = project
 	c.zone = zone
 	return c
@@ -2076,7 +2012,7 @@ func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperation
 // Filter sets the optional parameter "filter": Filter expression for
 // filtering listed resources.
 func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
-	c.opt_["filter"] = filter
+	c.opt_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
@@ -2084,7 +2020,7 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -2092,15 +2028,15 @@ func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsLis
 // previous list request truncated by maxResults. Used to continue a
 // previous list request.
 func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2110,13 +2046,13 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZoneOperationsListCall) IfNoneMatch(entityTag string) *ZoneOperationsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ZoneOperationsListCall) Context(ctx context.Context) *ZoneOperationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2124,31 +2060,15 @@ func (c *ZoneOperationsListCall) Context(ctx context.Context) *ZoneOperationsLis
 
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

@@ -43,6 +43,8 @@ const apiName = "clouddebugger"
 const apiVersion = "v2"
 const basePath = "https://clouddebugger.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -966,7 +968,7 @@ func (s *Variable) MarshalJSON() ([]byte, error) {
 type ControllerDebuggeesRegisterCall struct {
 	s                       *Service
 	registerdebuggeerequest *RegisterDebuggeeRequest
-	opt_                    map[string]interface{}
+	opt_                    url.Values
 	ctx_                    context.Context
 }
 
@@ -978,22 +980,22 @@ type ControllerDebuggeesRegisterCall struct {
 // or recover from any registration loss. If the debuggee is disabled
 // server, the response will have is_disabled' set to true.
 func (r *ControllerDebuggeesService) Register(registerdebuggeerequest *RegisterDebuggeeRequest) *ControllerDebuggeesRegisterCall {
-	c := &ControllerDebuggeesRegisterCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ControllerDebuggeesRegisterCall{s: r.s, opt_: urlValues()}
 	c.registerdebuggeerequest = registerdebuggeerequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ControllerDebuggeesRegisterCall) Fields(s ...googleapi.Field) *ControllerDebuggeesRegisterCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ControllerDebuggeesRegisterCall) Context(ctx context.Context) *ControllerDebuggeesRegisterCall {
 	c.ctx_ = ctx
 	return c
@@ -1006,13 +1008,9 @@ func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/controller/debuggees/register")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1082,7 +1080,7 @@ func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error
 type ControllerDebuggeesBreakpointsListCall struct {
 	s          *Service
 	debuggeeId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
@@ -1097,7 +1095,7 @@ type ControllerDebuggeesBreakpointsListCall struct {
 // breakpoints that are complete until the controller removes them from
 // the active list to avoid setting those breakpoints again.
 func (r *ControllerDebuggeesBreakpointsService) List(debuggeeId string) *ControllerDebuggeesBreakpointsListCall {
-	c := &ControllerDebuggeesBreakpointsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ControllerDebuggeesBreakpointsListCall{s: r.s, opt_: urlValues()}
 	c.debuggeeId = debuggeeId
 	return c
 }
@@ -1109,15 +1107,15 @@ func (r *ControllerDebuggeesBreakpointsService) List(debuggeeId string) *Control
 // code google.rpc.Code.ABORTED is returned on wait timeout (which does
 // not require the agent to re-register with the server)
 func (c *ControllerDebuggeesBreakpointsListCall) WaitToken(waitToken string) *ControllerDebuggeesBreakpointsListCall {
-	c.opt_["waitToken"] = waitToken
+	c.opt_.Set("waitToken", fmt.Sprintf("%v", waitToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ControllerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *ControllerDebuggeesBreakpointsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1127,13 +1125,13 @@ func (c *ControllerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *C
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ControllerDebuggeesBreakpointsListCall) IfNoneMatch(entityTag string) *ControllerDebuggeesBreakpointsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ControllerDebuggeesBreakpointsListCall) Context(ctx context.Context) *ControllerDebuggeesBreakpointsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1141,24 +1139,14 @@ func (c *ControllerDebuggeesBreakpointsListCall) Context(ctx context.Context) *C
 
 func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["waitToken"]; ok {
-		params.Set("waitToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/controller/debuggees/{debuggeeId}/breakpoints")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1239,7 +1227,7 @@ type ControllerDebuggeesBreakpointsUpdateCall struct {
 	debuggeeId                    string
 	id                            string
 	updateactivebreakpointrequest *UpdateActiveBreakpointRequest
-	opt_                          map[string]interface{}
+	opt_                          url.Values
 	ctx_                          context.Context
 }
 
@@ -1251,24 +1239,24 @@ type ControllerDebuggeesBreakpointsUpdateCall struct {
 // semantics. They are restricted to changes such as canonicalizing a
 // value or snapping the location to the correct line of code.
 func (r *ControllerDebuggeesBreakpointsService) Update(debuggeeId string, id string, updateactivebreakpointrequest *UpdateActiveBreakpointRequest) *ControllerDebuggeesBreakpointsUpdateCall {
-	c := &ControllerDebuggeesBreakpointsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ControllerDebuggeesBreakpointsUpdateCall{s: r.s, opt_: urlValues()}
 	c.debuggeeId = debuggeeId
 	c.id = id
 	c.updateactivebreakpointrequest = updateactivebreakpointrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ControllerDebuggeesBreakpointsUpdateCall) Fields(s ...googleapi.Field) *ControllerDebuggeesBreakpointsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ControllerDebuggeesBreakpointsUpdateCall) Context(ctx context.Context) *ControllerDebuggeesBreakpointsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1281,13 +1269,9 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/controller/debuggees/{debuggeeId}/breakpoints/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
@@ -1377,13 +1361,13 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpoint
 
 type DebuggerDebuggeesListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Lists all the debuggees that the user can set breakpoints to.
 func (r *DebuggerDebuggeesService) List() *DebuggerDebuggeesListCall {
-	c := &DebuggerDebuggeesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DebuggerDebuggeesListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
@@ -1391,7 +1375,7 @@ func (r *DebuggerDebuggeesService) List() *DebuggerDebuggeesListCall {
 // set to true the result includes all debuggees, otherwise only
 // debugees that are active.
 func (c *DebuggerDebuggeesListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesListCall {
-	c.opt_["includeInactive"] = includeInactive
+	c.opt_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
 	return c
 }
 
@@ -1399,15 +1383,15 @@ func (c *DebuggerDebuggeesListCall) IncludeInactive(includeInactive bool) *Debug
 // number of the Google Cloud Platform to list the debuggees that are
 // part of that project.
 func (c *DebuggerDebuggeesListCall) Project(project string) *DebuggerDebuggeesListCall {
-	c.opt_["project"] = project
+	c.opt_.Set("project", fmt.Sprintf("%v", project))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DebuggerDebuggeesListCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1417,13 +1401,13 @@ func (c *DebuggerDebuggeesListCall) Fields(s ...googleapi.Field) *DebuggerDebugg
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DebuggerDebuggeesListCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DebuggerDebuggeesListCall) Context(ctx context.Context) *DebuggerDebuggeesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1431,25 +1415,12 @@ func (c *DebuggerDebuggeesListCall) Context(ctx context.Context) *DebuggerDebugg
 
 func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["includeInactive"]; ok {
-		params.Set("includeInactive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["project"]; ok {
-		params.Set("project", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/debugger/debuggees")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1525,29 +1496,29 @@ type DebuggerDebuggeesBreakpointsDeleteCall struct {
 	s            *Service
 	debuggeeId   string
 	breakpointId string
-	opt_         map[string]interface{}
+	opt_         url.Values
 	ctx_         context.Context
 }
 
 // Delete: Deletes the breakpoint from the debuggee.
 func (r *DebuggerDebuggeesBreakpointsService) Delete(debuggeeId string, breakpointId string) *DebuggerDebuggeesBreakpointsDeleteCall {
-	c := &DebuggerDebuggeesBreakpointsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DebuggerDebuggeesBreakpointsDeleteCall{s: r.s, opt_: urlValues()}
 	c.debuggeeId = debuggeeId
 	c.breakpointId = breakpointId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) Context(ctx context.Context) *DebuggerDebuggeesBreakpointsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1555,13 +1526,9 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Context(ctx context.Context) *D
 
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/debugger/debuggees/{debuggeeId}/breakpoints/{breakpointId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId":   c.debuggeeId,
@@ -1649,23 +1616,23 @@ type DebuggerDebuggeesBreakpointsGetCall struct {
 	s            *Service
 	debuggeeId   string
 	breakpointId string
-	opt_         map[string]interface{}
+	opt_         url.Values
 	ctx_         context.Context
 }
 
 // Get: Gets breakpoint information.
 func (r *DebuggerDebuggeesBreakpointsService) Get(debuggeeId string, breakpointId string) *DebuggerDebuggeesBreakpointsGetCall {
-	c := &DebuggerDebuggeesBreakpointsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DebuggerDebuggeesBreakpointsGetCall{s: r.s, opt_: urlValues()}
 	c.debuggeeId = debuggeeId
 	c.breakpointId = breakpointId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DebuggerDebuggeesBreakpointsGetCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1675,13 +1642,13 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Fields(s ...googleapi.Field) *Debu
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DebuggerDebuggeesBreakpointsGetCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesBreakpointsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DebuggerDebuggeesBreakpointsGetCall) Context(ctx context.Context) *DebuggerDebuggeesBreakpointsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1689,22 +1656,15 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Context(ctx context.Context) *Debu
 
 func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/debugger/debuggees/{debuggeeId}/breakpoints/{breakpointId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId":   c.debuggeeId,
 		"breakpointId": c.breakpointId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1785,14 +1745,14 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Do() (*GetBreakpointResponse, erro
 type DebuggerDebuggeesBreakpointsListCall struct {
 	s          *Service
 	debuggeeId string
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // List: Lists all breakpoints of the debuggee that the user has access
 // to.
 func (r *DebuggerDebuggeesBreakpointsService) List(debuggeeId string) *DebuggerDebuggeesBreakpointsListCall {
-	c := &DebuggerDebuggeesBreakpointsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DebuggerDebuggeesBreakpointsListCall{s: r.s, opt_: urlValues()}
 	c.debuggeeId = debuggeeId
 	return c
 }
@@ -1804,7 +1764,7 @@ func (r *DebuggerDebuggeesBreakpointsService) List(debuggeeId string) *DebuggerD
 //   "CAPTURE"
 //   "LOG"
 func (c *DebuggerDebuggeesBreakpointsListCall) ActionValue(actionValue string) *DebuggerDebuggeesBreakpointsListCall {
-	c.opt_["action.value"] = actionValue
+	c.opt_.Set("actionValue", fmt.Sprintf("%v", actionValue))
 	return c
 }
 
@@ -1812,7 +1772,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) ActionValue(actionValue string) *
 // set to true the response includes the list of breakpoints set by any
 // user, otherwise only breakpoints set by the caller.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeAllUsers(includeAllUsers bool) *DebuggerDebuggeesBreakpointsListCall {
-	c.opt_["includeAllUsers"] = includeAllUsers
+	c.opt_.Set("includeAllUsers", fmt.Sprintf("%v", includeAllUsers))
 	return c
 }
 
@@ -1820,7 +1780,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) IncludeAllUsers(includeAllUsers b
 // set to true the response includes active and inactive breakpoints,
 // otherwise only active breakpoints are returned.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesBreakpointsListCall {
-	c.opt_["includeInactive"] = includeInactive
+	c.opt_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
 	return c
 }
 
@@ -1828,7 +1788,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) IncludeInactive(includeInactive b
 // true the response breakpoints will be stripped of the results fields:
 // stack_frames, evaluated_expressions and variable_table.
 func (c *DebuggerDebuggeesBreakpointsListCall) StripResults(stripResults bool) *DebuggerDebuggeesBreakpointsListCall {
-	c.opt_["stripResults"] = stripResults
+	c.opt_.Set("stripResults", fmt.Sprintf("%v", stripResults))
 	return c
 }
 
@@ -1839,15 +1799,15 @@ func (c *DebuggerDebuggeesBreakpointsListCall) StripResults(stripResults bool) *
 // returned on wait timeout, which should be called again with the same
 // wait_token.
 func (c *DebuggerDebuggeesBreakpointsListCall) WaitToken(waitToken string) *DebuggerDebuggeesBreakpointsListCall {
-	c.opt_["waitToken"] = waitToken
+	c.opt_.Set("waitToken", fmt.Sprintf("%v", waitToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DebuggerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1857,13 +1817,13 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *Deb
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DebuggerDebuggeesBreakpointsListCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesBreakpointsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DebuggerDebuggeesBreakpointsListCall) Context(ctx context.Context) *DebuggerDebuggeesBreakpointsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1871,36 +1831,14 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Context(ctx context.Context) *Deb
 
 func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["action.value"]; ok {
-		params.Set("action.value", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["includeAllUsers"]; ok {
-		params.Set("includeAllUsers", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["includeInactive"]; ok {
-		params.Set("includeInactive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["stripResults"]; ok {
-		params.Set("stripResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["waitToken"]; ok {
-		params.Set("waitToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/debugger/debuggees/{debuggeeId}/breakpoints")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2004,29 +1942,29 @@ type DebuggerDebuggeesBreakpointsSetCall struct {
 	s          *Service
 	debuggeeId string
 	breakpoint *Breakpoint
-	opt_       map[string]interface{}
+	opt_       url.Values
 	ctx_       context.Context
 }
 
 // Set: Sets the breakpoint to the debuggee.
 func (r *DebuggerDebuggeesBreakpointsService) Set(debuggeeId string, breakpoint *Breakpoint) *DebuggerDebuggeesBreakpointsSetCall {
-	c := &DebuggerDebuggeesBreakpointsSetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DebuggerDebuggeesBreakpointsSetCall{s: r.s, opt_: urlValues()}
 	c.debuggeeId = debuggeeId
 	c.breakpoint = breakpoint
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DebuggerDebuggeesBreakpointsSetCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsSetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DebuggerDebuggeesBreakpointsSetCall) Context(ctx context.Context) *DebuggerDebuggeesBreakpointsSetCall {
 	c.ctx_ = ctx
 	return c
@@ -2039,13 +1977,9 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Respo
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/debugger/debuggees/{debuggeeId}/breakpoints/set")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,

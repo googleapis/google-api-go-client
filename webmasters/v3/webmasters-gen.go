@@ -43,6 +43,8 @@ const apiName = "webmasters"
 const apiVersion = "v3"
 const basePath = "https://www.googleapis.com/webmasters/v3/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and modify Webmaster Tools data for your verified sites
@@ -631,7 +633,7 @@ type SearchanalyticsQueryCall struct {
 	s                           *Service
 	siteUrl                     string
 	searchanalyticsqueryrequest *SearchAnalyticsQueryRequest
-	opt_                        map[string]interface{}
+	opt_                        url.Values
 	ctx_                        context.Context
 }
 
@@ -644,23 +646,23 @@ type SearchanalyticsQueryCall struct {
 // data, issue a broad date range query grouped by date for any metric,
 // and see which day rows are returned.
 func (r *SearchanalyticsService) Query(siteUrl string, searchanalyticsqueryrequest *SearchAnalyticsQueryRequest) *SearchanalyticsQueryCall {
-	c := &SearchanalyticsQueryCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SearchanalyticsQueryCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	c.searchanalyticsqueryrequest = searchanalyticsqueryrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SearchanalyticsQueryCall) Fields(s ...googleapi.Field) *SearchanalyticsQueryCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SearchanalyticsQueryCall) Context(ctx context.Context) *SearchanalyticsQueryCall {
 	c.ctx_ = ctx
 	return c
@@ -673,13 +675,9 @@ func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/searchAnalytics/query")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
@@ -763,29 +761,29 @@ type SitemapsDeleteCall struct {
 	s        *Service
 	siteUrl  string
 	feedpath string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // Delete: Deletes a sitemap from this site.
 func (r *SitemapsService) Delete(siteUrl string, feedpath string) *SitemapsDeleteCall {
-	c := &SitemapsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SitemapsDeleteCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	c.feedpath = feedpath
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SitemapsDeleteCall) Fields(s ...googleapi.Field) *SitemapsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SitemapsDeleteCall) Context(ctx context.Context) *SitemapsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -793,13 +791,9 @@ func (c *SitemapsDeleteCall) Context(ctx context.Context) *SitemapsDeleteCall {
 
 func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/sitemaps/{feedpath}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl":  c.siteUrl,
@@ -859,23 +853,23 @@ type SitemapsGetCall struct {
 	s        *Service
 	siteUrl  string
 	feedpath string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // Get: Retrieves information about a specific sitemap.
 func (r *SitemapsService) Get(siteUrl string, feedpath string) *SitemapsGetCall {
-	c := &SitemapsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SitemapsGetCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	c.feedpath = feedpath
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -885,13 +879,13 @@ func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SitemapsGetCall) IfNoneMatch(entityTag string) *SitemapsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SitemapsGetCall) Context(ctx context.Context) *SitemapsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -899,22 +893,15 @@ func (c *SitemapsGetCall) Context(ctx context.Context) *SitemapsGetCall {
 
 func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/sitemaps/{feedpath}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl":  c.siteUrl,
 		"feedpath": c.feedpath,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -995,7 +982,7 @@ func (c *SitemapsGetCall) Do() (*WmxSitemap, error) {
 type SitemapsListCall struct {
 	s       *Service
 	siteUrl string
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
@@ -1003,7 +990,7 @@ type SitemapsListCall struct {
 // in the sitemap index file (if sitemapIndex is specified in the
 // request).
 func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
-	c := &SitemapsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SitemapsListCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	return c
 }
@@ -1012,15 +999,15 @@ func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 // site's sitemap index. For example:
 // http://www.example.com/sitemapindex.xml
 func (c *SitemapsListCall) SitemapIndex(sitemapIndex string) *SitemapsListCall {
-	c.opt_["sitemapIndex"] = sitemapIndex
+	c.opt_.Set("sitemapIndex", fmt.Sprintf("%v", sitemapIndex))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1030,13 +1017,13 @@ func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SitemapsListCall) IfNoneMatch(entityTag string) *SitemapsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SitemapsListCall) Context(ctx context.Context) *SitemapsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1044,24 +1031,14 @@ func (c *SitemapsListCall) Context(ctx context.Context) *SitemapsListCall {
 
 func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["sitemapIndex"]; ok {
-		params.Set("sitemapIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/sitemaps")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1141,29 +1118,29 @@ type SitemapsSubmitCall struct {
 	s        *Service
 	siteUrl  string
 	feedpath string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // Submit: Submits a sitemap for a site.
 func (r *SitemapsService) Submit(siteUrl string, feedpath string) *SitemapsSubmitCall {
-	c := &SitemapsSubmitCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SitemapsSubmitCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	c.feedpath = feedpath
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SitemapsSubmitCall) Fields(s ...googleapi.Field) *SitemapsSubmitCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SitemapsSubmitCall) Context(ctx context.Context) *SitemapsSubmitCall {
 	c.ctx_ = ctx
 	return c
@@ -1171,13 +1148,9 @@ func (c *SitemapsSubmitCall) Context(ctx context.Context) *SitemapsSubmitCall {
 
 func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/sitemaps/{feedpath}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl":  c.siteUrl,
@@ -1236,28 +1209,28 @@ func (c *SitemapsSubmitCall) Do() error {
 type SitesAddCall struct {
 	s       *Service
 	siteUrl string
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
 // Add: Adds a site to the set of the user's sites in Webmaster Tools.
 func (r *SitesService) Add(siteUrl string) *SitesAddCall {
-	c := &SitesAddCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SitesAddCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SitesAddCall) Fields(s ...googleapi.Field) *SitesAddCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SitesAddCall) Context(ctx context.Context) *SitesAddCall {
 	c.ctx_ = ctx
 	return c
@@ -1265,13 +1238,9 @@ func (c *SitesAddCall) Context(ctx context.Context) *SitesAddCall {
 
 func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
@@ -1322,29 +1291,29 @@ func (c *SitesAddCall) Do() error {
 type SitesDeleteCall struct {
 	s       *Service
 	siteUrl string
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
 // Delete: Removes a site from the set of the user's Webmaster Tools
 // sites.
 func (r *SitesService) Delete(siteUrl string) *SitesDeleteCall {
-	c := &SitesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SitesDeleteCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SitesDeleteCall) Fields(s ...googleapi.Field) *SitesDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SitesDeleteCall) Context(ctx context.Context) *SitesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1352,13 +1321,9 @@ func (c *SitesDeleteCall) Context(ctx context.Context) *SitesDeleteCall {
 
 func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
@@ -1409,22 +1374,22 @@ func (c *SitesDeleteCall) Do() error {
 type SitesGetCall struct {
 	s       *Service
 	siteUrl string
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
 // Get: Retrieves information about specific site.
 func (r *SitesService) Get(siteUrl string) *SitesGetCall {
-	c := &SitesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SitesGetCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1434,13 +1399,13 @@ func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SitesGetCall) IfNoneMatch(entityTag string) *SitesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SitesGetCall) Context(ctx context.Context) *SitesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1448,21 +1413,14 @@ func (c *SitesGetCall) Context(ctx context.Context) *SitesGetCall {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1535,21 +1493,21 @@ func (c *SitesGetCall) Do() (*WmxSite, error) {
 
 type SitesListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Lists the user's Webmaster Tools sites.
 func (r *SitesService) List() *SitesListCall {
-	c := &SitesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SitesListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1559,13 +1517,13 @@ func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SitesListCall) IfNoneMatch(entityTag string) *SitesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SitesListCall) Context(ctx context.Context) *SitesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1573,19 +1531,12 @@ func (c *SitesListCall) Context(ctx context.Context) *SitesListCall {
 
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1648,14 +1599,14 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 type UrlcrawlerrorscountsQueryCall struct {
 	s       *Service
 	siteUrl string
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
 // Query: Retrieves a time series of the number of URL crawl errors per
 // error category and platform.
 func (r *UrlcrawlerrorscountsService) Query(siteUrl string) *UrlcrawlerrorscountsQueryCall {
-	c := &UrlcrawlerrorscountsQueryCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlcrawlerrorscountsQueryCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	return c
 }
@@ -1674,14 +1625,14 @@ func (r *UrlcrawlerrorscountsService) Query(siteUrl string) *Urlcrawlerrorscount
 //   "serverError"
 //   "soft404"
 func (c *UrlcrawlerrorscountsQueryCall) Category(category string) *UrlcrawlerrorscountsQueryCall {
-	c.opt_["category"] = category
+	c.opt_.Set("category", fmt.Sprintf("%v", category))
 	return c
 }
 
 // LatestCountsOnly sets the optional parameter "latestCountsOnly": If
 // true, returns only the latest crawl error counts.
 func (c *UrlcrawlerrorscountsQueryCall) LatestCountsOnly(latestCountsOnly bool) *UrlcrawlerrorscountsQueryCall {
-	c.opt_["latestCountsOnly"] = latestCountsOnly
+	c.opt_.Set("latestCountsOnly", fmt.Sprintf("%v", latestCountsOnly))
 	return c
 }
 
@@ -1694,15 +1645,15 @@ func (c *UrlcrawlerrorscountsQueryCall) LatestCountsOnly(latestCountsOnly bool) 
 //   "smartphoneOnly"
 //   "web"
 func (c *UrlcrawlerrorscountsQueryCall) Platform(platform string) *UrlcrawlerrorscountsQueryCall {
-	c.opt_["platform"] = platform
+	c.opt_.Set("platform", fmt.Sprintf("%v", platform))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlcrawlerrorscountsQueryCall) Fields(s ...googleapi.Field) *UrlcrawlerrorscountsQueryCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1712,13 +1663,13 @@ func (c *UrlcrawlerrorscountsQueryCall) Fields(s ...googleapi.Field) *Urlcrawler
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UrlcrawlerrorscountsQueryCall) IfNoneMatch(entityTag string) *UrlcrawlerrorscountsQueryCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlcrawlerrorscountsQueryCall) Context(ctx context.Context) *UrlcrawlerrorscountsQueryCall {
 	c.ctx_ = ctx
 	return c
@@ -1726,30 +1677,14 @@ func (c *UrlcrawlerrorscountsQueryCall) Context(ctx context.Context) *Urlcrawler
 
 func (c *UrlcrawlerrorscountsQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["category"]; ok {
-		params.Set("category", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["latestCountsOnly"]; ok {
-		params.Set("latestCountsOnly", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["platform"]; ok {
-		params.Set("platform", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/urlCrawlErrorsCounts/query")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1873,13 +1808,13 @@ type UrlcrawlerrorssamplesGetCall struct {
 	url      string
 	category string
 	platform string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // Get: Retrieves details about crawl errors for a site's sample URL.
 func (r *UrlcrawlerrorssamplesService) Get(siteUrl string, url string, category string, platform string) *UrlcrawlerrorssamplesGetCall {
-	c := &UrlcrawlerrorssamplesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlcrawlerrorssamplesGetCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	c.url = url
 	c.category = category
@@ -1887,11 +1822,11 @@ func (r *UrlcrawlerrorssamplesService) Get(siteUrl string, url string, category 
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlcrawlerrorssamplesGetCall) Fields(s ...googleapi.Field) *UrlcrawlerrorssamplesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1901,13 +1836,13 @@ func (c *UrlcrawlerrorssamplesGetCall) Fields(s ...googleapi.Field) *Urlcrawlerr
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UrlcrawlerrorssamplesGetCall) IfNoneMatch(entityTag string) *UrlcrawlerrorssamplesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlcrawlerrorssamplesGetCall) Context(ctx context.Context) *UrlcrawlerrorssamplesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1915,24 +1850,17 @@ func (c *UrlcrawlerrorssamplesGetCall) Context(ctx context.Context) *Urlcrawlerr
 
 func (c *UrlcrawlerrorssamplesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("category", fmt.Sprintf("%v", c.category))
-	params.Set("platform", fmt.Sprintf("%v", c.platform))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("category", fmt.Sprintf("%v", c.category))
+	c.opt_.Set("platform", fmt.Sprintf("%v", c.platform))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/urlCrawlErrorsSamples/{url}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 		"url":     c.url,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2059,25 +1987,25 @@ type UrlcrawlerrorssamplesListCall struct {
 	siteUrl  string
 	category string
 	platform string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // List: Lists a site's sample URLs for the specified crawl error
 // category and platform.
 func (r *UrlcrawlerrorssamplesService) List(siteUrl string, category string, platform string) *UrlcrawlerrorssamplesListCall {
-	c := &UrlcrawlerrorssamplesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlcrawlerrorssamplesListCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	c.category = category
 	c.platform = platform
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlcrawlerrorssamplesListCall) Fields(s ...googleapi.Field) *UrlcrawlerrorssamplesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2087,13 +2015,13 @@ func (c *UrlcrawlerrorssamplesListCall) Fields(s ...googleapi.Field) *Urlcrawler
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UrlcrawlerrorssamplesListCall) IfNoneMatch(entityTag string) *UrlcrawlerrorssamplesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlcrawlerrorssamplesListCall) Context(ctx context.Context) *UrlcrawlerrorssamplesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2101,23 +2029,16 @@ func (c *UrlcrawlerrorssamplesListCall) Context(ctx context.Context) *Urlcrawler
 
 func (c *UrlcrawlerrorssamplesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("category", fmt.Sprintf("%v", c.category))
-	params.Set("platform", fmt.Sprintf("%v", c.platform))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("category", fmt.Sprintf("%v", c.category))
+	c.opt_.Set("platform", fmt.Sprintf("%v", c.platform))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/urlCrawlErrorsSamples")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2239,14 +2160,14 @@ type UrlcrawlerrorssamplesMarkAsFixedCall struct {
 	url      string
 	category string
 	platform string
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // MarkAsFixed: Marks the provided site's sample URL as fixed, and
 // removes it from the samples list.
 func (r *UrlcrawlerrorssamplesService) MarkAsFixed(siteUrl string, url string, category string, platform string) *UrlcrawlerrorssamplesMarkAsFixedCall {
-	c := &UrlcrawlerrorssamplesMarkAsFixedCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlcrawlerrorssamplesMarkAsFixedCall{s: r.s, opt_: urlValues()}
 	c.siteUrl = siteUrl
 	c.url = url
 	c.category = category
@@ -2254,17 +2175,17 @@ func (r *UrlcrawlerrorssamplesService) MarkAsFixed(siteUrl string, url string, c
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Fields(s ...googleapi.Field) *UrlcrawlerrorssamplesMarkAsFixedCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Context(ctx context.Context) *UrlcrawlerrorssamplesMarkAsFixedCall {
 	c.ctx_ = ctx
 	return c
@@ -2272,15 +2193,11 @@ func (c *UrlcrawlerrorssamplesMarkAsFixedCall) Context(ctx context.Context) *Url
 
 func (c *UrlcrawlerrorssamplesMarkAsFixedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("category", fmt.Sprintf("%v", c.category))
-	params.Set("platform", fmt.Sprintf("%v", c.platform))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("category", fmt.Sprintf("%v", c.category))
+	c.opt_.Set("platform", fmt.Sprintf("%v", c.platform))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sites/{siteUrl}/urlCrawlErrorsSamples/{url}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"siteUrl": c.siteUrl,

@@ -43,6 +43,8 @@ const apiName = "coordinate"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/coordinate/v1/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your Google Maps Coordinate jobs
@@ -697,22 +699,22 @@ func (s *WorkerListResponse) MarshalJSON() ([]byte, error) {
 type CustomFieldDefListCall struct {
 	s      *Service
 	teamId string
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
 // List: Retrieves a list of custom field definitions for a team.
 func (r *CustomFieldDefService) List(teamId string) *CustomFieldDefListCall {
-	c := &CustomFieldDefListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CustomFieldDefListCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CustomFieldDefListCall) Fields(s ...googleapi.Field) *CustomFieldDefListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -722,13 +724,13 @@ func (c *CustomFieldDefListCall) Fields(s ...googleapi.Field) *CustomFieldDefLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CustomFieldDefListCall) IfNoneMatch(entityTag string) *CustomFieldDefListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CustomFieldDefListCall) Context(ctx context.Context) *CustomFieldDefListCall {
 	c.ctx_ = ctx
 	return c
@@ -736,21 +738,14 @@ func (c *CustomFieldDefListCall) Context(ctx context.Context) *CustomFieldDefLis
 
 func (c *CustomFieldDefListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/custom_fields")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -825,23 +820,23 @@ type JobsGetCall struct {
 	s      *Service
 	teamId string
 	jobId  uint64
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
 // Get: Retrieves a job, including all the changes made to the job.
 func (r *JobsService) Get(teamId string, jobId uint64) *JobsGetCall {
-	c := &JobsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsGetCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	c.jobId = jobId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -851,13 +846,13 @@ func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsGetCall) IfNoneMatch(entityTag string) *JobsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsGetCall) Context(ctx context.Context) *JobsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -865,22 +860,15 @@ func (c *JobsGetCall) Context(ctx context.Context) *JobsGetCall {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -967,14 +955,14 @@ type JobsInsertCall struct {
 	lng     float64
 	title   string
 	job     *Job
-	opt_    map[string]interface{}
+	opt_    url.Values
 	ctx_    context.Context
 }
 
 // Insert: Inserts a new job. Only the state field of the job should be
 // set.
 func (r *JobsService) Insert(teamId string, address string, lat float64, lng float64, title string, job *Job) *JobsInsertCall {
-	c := &JobsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsInsertCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	c.address = address
 	c.lat = lat
@@ -987,7 +975,7 @@ func (r *JobsService) Insert(teamId string, address string, lat float64, lng flo
 // Assignee sets the optional parameter "assignee": Assignee email
 // address, or empty string to unassign.
 func (c *JobsInsertCall) Assignee(assignee string) *JobsInsertCall {
-	c.opt_["assignee"] = assignee
+	c.opt_.Set("assignee", fmt.Sprintf("%v", assignee))
 	return c
 }
 
@@ -998,43 +986,46 @@ func (c *JobsInsertCall) Assignee(assignee string) *JobsInsertCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsInsertCall) CustomField(customField string) *JobsInsertCall {
-	c.opt_["customField"] = customField
+func (c *JobsInsertCall) CustomField(customField []string) *JobsInsertCall {
+	c.opt_.Del("customField")
+	for _, v := range customField {
+		c.opt_.Add("customField", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // CustomerName sets the optional parameter "customerName": Customer
 // name
 func (c *JobsInsertCall) CustomerName(customerName string) *JobsInsertCall {
-	c.opt_["customerName"] = customerName
+	c.opt_.Set("customerName", fmt.Sprintf("%v", customerName))
 	return c
 }
 
 // CustomerPhoneNumber sets the optional parameter
 // "customerPhoneNumber": Customer phone number
 func (c *JobsInsertCall) CustomerPhoneNumber(customerPhoneNumber string) *JobsInsertCall {
-	c.opt_["customerPhoneNumber"] = customerPhoneNumber
+	c.opt_.Set("customerPhoneNumber", fmt.Sprintf("%v", customerPhoneNumber))
 	return c
 }
 
 // Note sets the optional parameter "note": Job note as newline (Unix)
 // separated string
 func (c *JobsInsertCall) Note(note string) *JobsInsertCall {
-	c.opt_["note"] = note
+	c.opt_.Set("note", fmt.Sprintf("%v", note))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsInsertCall) Context(ctx context.Context) *JobsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1047,32 +1038,13 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("address", fmt.Sprintf("%v", c.address))
-	params.Set("lat", fmt.Sprintf("%v", c.lat))
-	params.Set("lng", fmt.Sprintf("%v", c.lng))
-	params.Set("title", fmt.Sprintf("%v", c.title))
-	if v, ok := c.opt_["assignee"]; ok {
-		params.Set("assignee", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customField"]; ok {
-		params.Set("customField", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customerName"]; ok {
-		params.Set("customerName", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customerPhoneNumber"]; ok {
-		params.Set("customerPhoneNumber", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["note"]; ok {
-		params.Set("note", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("address", fmt.Sprintf("%v", c.address))
+	c.opt_.Set("lat", fmt.Sprintf("%v", c.lat))
+	c.opt_.Set("lng", fmt.Sprintf("%v", c.lng))
+	c.opt_.Set("title", fmt.Sprintf("%v", c.title))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
@@ -1210,13 +1182,13 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 type JobsListCall struct {
 	s      *Service
 	teamId string
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
 // List: Retrieves jobs created or modified since the given timestamp.
 func (r *JobsService) List(teamId string) *JobsListCall {
-	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsListCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	return c
 }
@@ -1224,7 +1196,7 @@ func (r *JobsService) List(teamId string) *JobsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return in one page.
 func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1232,28 +1204,28 @@ func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
 // "minModifiedTimestampMs": Minimum time a job was modified in
 // milliseconds since epoch.
 func (c *JobsListCall) MinModifiedTimestampMs(minModifiedTimestampMs uint64) *JobsListCall {
-	c.opt_["minModifiedTimestampMs"] = minModifiedTimestampMs
+	c.opt_.Set("minModifiedTimestampMs", fmt.Sprintf("%v", minModifiedTimestampMs))
 	return c
 }
 
 // OmitJobChanges sets the optional parameter "omitJobChanges": Whether
 // to omit detail job history information.
 func (c *JobsListCall) OmitJobChanges(omitJobChanges bool) *JobsListCall {
-	c.opt_["omitJobChanges"] = omitJobChanges
+	c.opt_.Set("omitJobChanges", fmt.Sprintf("%v", omitJobChanges))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1263,13 +1235,13 @@ func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsListCall) IfNoneMatch(entityTag string) *JobsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsListCall) Context(ctx context.Context) *JobsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1277,33 +1249,14 @@ func (c *JobsListCall) Context(ctx context.Context) *JobsListCall {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minModifiedTimestampMs"]; ok {
-		params.Set("minModifiedTimestampMs", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["omitJobChanges"]; ok {
-		params.Set("omitJobChanges", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -1401,14 +1354,14 @@ type JobsPatchCall struct {
 	teamId string
 	jobId  uint64
 	job    *Job
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
 // Patch: Updates a job. Fields that are set in the job state will be
 // updated. This method supports patch semantics.
 func (r *JobsService) Patch(teamId string, jobId uint64, job *Job) *JobsPatchCall {
-	c := &JobsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsPatchCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	c.jobId = jobId
 	c.job = job
@@ -1418,14 +1371,14 @@ func (r *JobsService) Patch(teamId string, jobId uint64, job *Job) *JobsPatchCal
 // Address sets the optional parameter "address": Job address as newline
 // (Unix) separated string
 func (c *JobsPatchCall) Address(address string) *JobsPatchCall {
-	c.opt_["address"] = address
+	c.opt_.Set("address", fmt.Sprintf("%v", address))
 	return c
 }
 
 // Assignee sets the optional parameter "assignee": Assignee email
 // address, or empty string to unassign.
 func (c *JobsPatchCall) Assignee(assignee string) *JobsPatchCall {
-	c.opt_["assignee"] = assignee
+	c.opt_.Set("assignee", fmt.Sprintf("%v", assignee))
 	return c
 }
 
@@ -1436,43 +1389,46 @@ func (c *JobsPatchCall) Assignee(assignee string) *JobsPatchCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsPatchCall) CustomField(customField string) *JobsPatchCall {
-	c.opt_["customField"] = customField
+func (c *JobsPatchCall) CustomField(customField []string) *JobsPatchCall {
+	c.opt_.Del("customField")
+	for _, v := range customField {
+		c.opt_.Add("customField", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // CustomerName sets the optional parameter "customerName": Customer
 // name
 func (c *JobsPatchCall) CustomerName(customerName string) *JobsPatchCall {
-	c.opt_["customerName"] = customerName
+	c.opt_.Set("customerName", fmt.Sprintf("%v", customerName))
 	return c
 }
 
 // CustomerPhoneNumber sets the optional parameter
 // "customerPhoneNumber": Customer phone number
 func (c *JobsPatchCall) CustomerPhoneNumber(customerPhoneNumber string) *JobsPatchCall {
-	c.opt_["customerPhoneNumber"] = customerPhoneNumber
+	c.opt_.Set("customerPhoneNumber", fmt.Sprintf("%v", customerPhoneNumber))
 	return c
 }
 
 // Lat sets the optional parameter "lat": The latitude coordinate of
 // this job's location.
 func (c *JobsPatchCall) Lat(lat float64) *JobsPatchCall {
-	c.opt_["lat"] = lat
+	c.opt_.Set("lat", fmt.Sprintf("%v", lat))
 	return c
 }
 
 // Lng sets the optional parameter "lng": The longitude coordinate of
 // this job's location.
 func (c *JobsPatchCall) Lng(lng float64) *JobsPatchCall {
-	c.opt_["lng"] = lng
+	c.opt_.Set("lng", fmt.Sprintf("%v", lng))
 	return c
 }
 
 // Note sets the optional parameter "note": Job note as newline (Unix)
 // separated string
 func (c *JobsPatchCall) Note(note string) *JobsPatchCall {
-	c.opt_["note"] = note
+	c.opt_.Set("note", fmt.Sprintf("%v", note))
 	return c
 }
 
@@ -1485,27 +1441,27 @@ func (c *JobsPatchCall) Note(note string) *JobsPatchCall {
 //   "NOT_STARTED" - Not started
 //   "OBSOLETE" - Obsolete
 func (c *JobsPatchCall) Progress(progress string) *JobsPatchCall {
-	c.opt_["progress"] = progress
+	c.opt_.Set("progress", fmt.Sprintf("%v", progress))
 	return c
 }
 
 // Title sets the optional parameter "title": Job title
 func (c *JobsPatchCall) Title(title string) *JobsPatchCall {
-	c.opt_["title"] = title
+	c.opt_.Set("title", fmt.Sprintf("%v", title))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsPatchCall) Fields(s ...googleapi.Field) *JobsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsPatchCall) Context(ctx context.Context) *JobsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1518,43 +1474,9 @@ func (c *JobsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["address"]; ok {
-		params.Set("address", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["assignee"]; ok {
-		params.Set("assignee", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customField"]; ok {
-		params.Set("customField", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customerName"]; ok {
-		params.Set("customerName", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customerPhoneNumber"]; ok {
-		params.Set("customerPhoneNumber", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lat"]; ok {
-		params.Set("lat", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lng"]; ok {
-		params.Set("lng", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["note"]; ok {
-		params.Set("note", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["progress"]; ok {
-		params.Set("progress", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["title"]; ok {
-		params.Set("title", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
@@ -1714,14 +1636,14 @@ type JobsUpdateCall struct {
 	teamId string
 	jobId  uint64
 	job    *Job
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
 // Update: Updates a job. Fields that are set in the job state will be
 // updated.
 func (r *JobsService) Update(teamId string, jobId uint64, job *Job) *JobsUpdateCall {
-	c := &JobsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsUpdateCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	c.jobId = jobId
 	c.job = job
@@ -1731,14 +1653,14 @@ func (r *JobsService) Update(teamId string, jobId uint64, job *Job) *JobsUpdateC
 // Address sets the optional parameter "address": Job address as newline
 // (Unix) separated string
 func (c *JobsUpdateCall) Address(address string) *JobsUpdateCall {
-	c.opt_["address"] = address
+	c.opt_.Set("address", fmt.Sprintf("%v", address))
 	return c
 }
 
 // Assignee sets the optional parameter "assignee": Assignee email
 // address, or empty string to unassign.
 func (c *JobsUpdateCall) Assignee(assignee string) *JobsUpdateCall {
-	c.opt_["assignee"] = assignee
+	c.opt_.Set("assignee", fmt.Sprintf("%v", assignee))
 	return c
 }
 
@@ -1749,43 +1671,46 @@ func (c *JobsUpdateCall) Assignee(assignee string) *JobsUpdateCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsUpdateCall) CustomField(customField string) *JobsUpdateCall {
-	c.opt_["customField"] = customField
+func (c *JobsUpdateCall) CustomField(customField []string) *JobsUpdateCall {
+	c.opt_.Del("customField")
+	for _, v := range customField {
+		c.opt_.Add("customField", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // CustomerName sets the optional parameter "customerName": Customer
 // name
 func (c *JobsUpdateCall) CustomerName(customerName string) *JobsUpdateCall {
-	c.opt_["customerName"] = customerName
+	c.opt_.Set("customerName", fmt.Sprintf("%v", customerName))
 	return c
 }
 
 // CustomerPhoneNumber sets the optional parameter
 // "customerPhoneNumber": Customer phone number
 func (c *JobsUpdateCall) CustomerPhoneNumber(customerPhoneNumber string) *JobsUpdateCall {
-	c.opt_["customerPhoneNumber"] = customerPhoneNumber
+	c.opt_.Set("customerPhoneNumber", fmt.Sprintf("%v", customerPhoneNumber))
 	return c
 }
 
 // Lat sets the optional parameter "lat": The latitude coordinate of
 // this job's location.
 func (c *JobsUpdateCall) Lat(lat float64) *JobsUpdateCall {
-	c.opt_["lat"] = lat
+	c.opt_.Set("lat", fmt.Sprintf("%v", lat))
 	return c
 }
 
 // Lng sets the optional parameter "lng": The longitude coordinate of
 // this job's location.
 func (c *JobsUpdateCall) Lng(lng float64) *JobsUpdateCall {
-	c.opt_["lng"] = lng
+	c.opt_.Set("lng", fmt.Sprintf("%v", lng))
 	return c
 }
 
 // Note sets the optional parameter "note": Job note as newline (Unix)
 // separated string
 func (c *JobsUpdateCall) Note(note string) *JobsUpdateCall {
-	c.opt_["note"] = note
+	c.opt_.Set("note", fmt.Sprintf("%v", note))
 	return c
 }
 
@@ -1798,27 +1723,27 @@ func (c *JobsUpdateCall) Note(note string) *JobsUpdateCall {
 //   "NOT_STARTED" - Not started
 //   "OBSOLETE" - Obsolete
 func (c *JobsUpdateCall) Progress(progress string) *JobsUpdateCall {
-	c.opt_["progress"] = progress
+	c.opt_.Set("progress", fmt.Sprintf("%v", progress))
 	return c
 }
 
 // Title sets the optional parameter "title": Job title
 func (c *JobsUpdateCall) Title(title string) *JobsUpdateCall {
-	c.opt_["title"] = title
+	c.opt_.Set("title", fmt.Sprintf("%v", title))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsUpdateCall) Fields(s ...googleapi.Field) *JobsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsUpdateCall) Context(ctx context.Context) *JobsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1831,43 +1756,9 @@ func (c *JobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["address"]; ok {
-		params.Set("address", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["assignee"]; ok {
-		params.Set("assignee", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customField"]; ok {
-		params.Set("customField", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customerName"]; ok {
-		params.Set("customerName", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["customerPhoneNumber"]; ok {
-		params.Set("customerPhoneNumber", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lat"]; ok {
-		params.Set("lat", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lng"]; ok {
-		params.Set("lng", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["note"]; ok {
-		params.Set("note", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["progress"]; ok {
-		params.Set("progress", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["title"]; ok {
-		params.Set("title", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
@@ -2027,13 +1918,13 @@ type LocationListCall struct {
 	teamId           string
 	workerEmail      string
 	startTimestampMs uint64
-	opt_             map[string]interface{}
+	opt_             url.Values
 	ctx_             context.Context
 }
 
 // List: Retrieves a list of locations for a worker.
 func (r *LocationService) List(teamId string, workerEmail string, startTimestampMs uint64) *LocationListCall {
-	c := &LocationListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LocationListCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	c.workerEmail = workerEmail
 	c.startTimestampMs = startTimestampMs
@@ -2043,21 +1934,21 @@ func (r *LocationService) List(teamId string, workerEmail string, startTimestamp
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return in one page.
 func (c *LocationListCall) MaxResults(maxResults int64) *LocationListCall {
-	c.opt_["maxResults"] = maxResults
+	c.opt_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 func (c *LocationListCall) PageToken(pageToken string) *LocationListCall {
-	c.opt_["pageToken"] = pageToken
+	c.opt_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LocationListCall) Fields(s ...googleapi.Field) *LocationListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2067,13 +1958,13 @@ func (c *LocationListCall) Fields(s ...googleapi.Field) *LocationListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LocationListCall) IfNoneMatch(entityTag string) *LocationListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LocationListCall) Context(ctx context.Context) *LocationListCall {
 	c.ctx_ = ctx
 	return c
@@ -2081,29 +1972,16 @@ func (c *LocationListCall) Context(ctx context.Context) *LocationListCall {
 
 func (c *LocationListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("startTimestampMs", fmt.Sprintf("%v", c.startTimestampMs))
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("startTimestampMs", fmt.Sprintf("%v", c.startTimestampMs))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/workers/{workerEmail}/locations")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId":      c.teamId,
 		"workerEmail": c.workerEmail,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2204,23 +2082,23 @@ type ScheduleGetCall struct {
 	s      *Service
 	teamId string
 	jobId  uint64
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
 // Get: Retrieves the schedule for a job.
 func (r *ScheduleService) Get(teamId string, jobId uint64) *ScheduleGetCall {
-	c := &ScheduleGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ScheduleGetCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	c.jobId = jobId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ScheduleGetCall) Fields(s ...googleapi.Field) *ScheduleGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2230,13 +2108,13 @@ func (c *ScheduleGetCall) Fields(s ...googleapi.Field) *ScheduleGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ScheduleGetCall) IfNoneMatch(entityTag string) *ScheduleGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ScheduleGetCall) Context(ctx context.Context) *ScheduleGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2244,22 +2122,15 @@ func (c *ScheduleGetCall) Context(ctx context.Context) *ScheduleGetCall {
 
 func (c *ScheduleGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}/schedule")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 		"jobId":  strconv.FormatUint(c.jobId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2343,14 +2214,14 @@ type SchedulePatchCall struct {
 	teamId   string
 	jobId    uint64
 	schedule *Schedule
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // Patch: Replaces the schedule of a job with the provided schedule.
 // This method supports patch semantics.
 func (r *ScheduleService) Patch(teamId string, jobId uint64, schedule *Schedule) *SchedulePatchCall {
-	c := &SchedulePatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SchedulePatchCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	c.jobId = jobId
 	c.schedule = schedule
@@ -2361,42 +2232,42 @@ func (r *ScheduleService) Patch(teamId string, jobId uint64, schedule *Schedule)
 // scheduled for the whole day. Time of day in start/end times is
 // ignored if this is true.
 func (c *SchedulePatchCall) AllDay(allDay bool) *SchedulePatchCall {
-	c.opt_["allDay"] = allDay
+	c.opt_.Set("allDay", fmt.Sprintf("%v", allDay))
 	return c
 }
 
 // Duration sets the optional parameter "duration": Job duration in
 // milliseconds.
 func (c *SchedulePatchCall) Duration(duration uint64) *SchedulePatchCall {
-	c.opt_["duration"] = duration
+	c.opt_.Set("duration", fmt.Sprintf("%v", duration))
 	return c
 }
 
 // EndTime sets the optional parameter "endTime": Scheduled end time in
 // milliseconds since epoch.
 func (c *SchedulePatchCall) EndTime(endTime uint64) *SchedulePatchCall {
-	c.opt_["endTime"] = endTime
+	c.opt_.Set("endTime", fmt.Sprintf("%v", endTime))
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": Scheduled start
 // time in milliseconds since epoch.
 func (c *SchedulePatchCall) StartTime(startTime uint64) *SchedulePatchCall {
-	c.opt_["startTime"] = startTime
+	c.opt_.Set("startTime", fmt.Sprintf("%v", startTime))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SchedulePatchCall) Fields(s ...googleapi.Field) *SchedulePatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SchedulePatchCall) Context(ctx context.Context) *SchedulePatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2409,25 +2280,9 @@ func (c *SchedulePatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["allDay"]; ok {
-		params.Set("allDay", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["duration"]; ok {
-		params.Set("duration", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["endTime"]; ok {
-		params.Set("endTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startTime"]; ok {
-		params.Set("startTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}/schedule")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
@@ -2543,13 +2398,13 @@ type ScheduleUpdateCall struct {
 	teamId   string
 	jobId    uint64
 	schedule *Schedule
-	opt_     map[string]interface{}
+	opt_     url.Values
 	ctx_     context.Context
 }
 
 // Update: Replaces the schedule of a job with the provided schedule.
 func (r *ScheduleService) Update(teamId string, jobId uint64, schedule *Schedule) *ScheduleUpdateCall {
-	c := &ScheduleUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ScheduleUpdateCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	c.jobId = jobId
 	c.schedule = schedule
@@ -2560,42 +2415,42 @@ func (r *ScheduleService) Update(teamId string, jobId uint64, schedule *Schedule
 // scheduled for the whole day. Time of day in start/end times is
 // ignored if this is true.
 func (c *ScheduleUpdateCall) AllDay(allDay bool) *ScheduleUpdateCall {
-	c.opt_["allDay"] = allDay
+	c.opt_.Set("allDay", fmt.Sprintf("%v", allDay))
 	return c
 }
 
 // Duration sets the optional parameter "duration": Job duration in
 // milliseconds.
 func (c *ScheduleUpdateCall) Duration(duration uint64) *ScheduleUpdateCall {
-	c.opt_["duration"] = duration
+	c.opt_.Set("duration", fmt.Sprintf("%v", duration))
 	return c
 }
 
 // EndTime sets the optional parameter "endTime": Scheduled end time in
 // milliseconds since epoch.
 func (c *ScheduleUpdateCall) EndTime(endTime uint64) *ScheduleUpdateCall {
-	c.opt_["endTime"] = endTime
+	c.opt_.Set("endTime", fmt.Sprintf("%v", endTime))
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": Scheduled start
 // time in milliseconds since epoch.
 func (c *ScheduleUpdateCall) StartTime(startTime uint64) *ScheduleUpdateCall {
-	c.opt_["startTime"] = startTime
+	c.opt_.Set("startTime", fmt.Sprintf("%v", startTime))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ScheduleUpdateCall) Fields(s ...googleapi.Field) *ScheduleUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ScheduleUpdateCall) Context(ctx context.Context) *ScheduleUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2608,25 +2463,9 @@ func (c *ScheduleUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["allDay"]; ok {
-		params.Set("allDay", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["duration"]; ok {
-		params.Set("duration", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["endTime"]; ok {
-		params.Set("endTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startTime"]; ok {
-		params.Set("startTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/jobs/{jobId}/schedule")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
@@ -2739,42 +2578,42 @@ func (c *ScheduleUpdateCall) Do() (*Schedule, error) {
 
 type TeamListCall struct {
 	s    *Service
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
 // List: Retrieves a list of teams for a user.
 func (r *TeamService) List() *TeamListCall {
-	c := &TeamListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TeamListCall{s: r.s, opt_: urlValues()}
 	return c
 }
 
 // Admin sets the optional parameter "admin": Whether to include teams
 // for which the user has the Admin role.
 func (c *TeamListCall) Admin(admin bool) *TeamListCall {
-	c.opt_["admin"] = admin
+	c.opt_.Set("admin", fmt.Sprintf("%v", admin))
 	return c
 }
 
 // Dispatcher sets the optional parameter "dispatcher": Whether to
 // include teams for which the user has the Dispatcher role.
 func (c *TeamListCall) Dispatcher(dispatcher bool) *TeamListCall {
-	c.opt_["dispatcher"] = dispatcher
+	c.opt_.Set("dispatcher", fmt.Sprintf("%v", dispatcher))
 	return c
 }
 
 // Worker sets the optional parameter "worker": Whether to include teams
 // for which the user has the Worker role.
 func (c *TeamListCall) Worker(worker bool) *TeamListCall {
-	c.opt_["worker"] = worker
+	c.opt_.Set("worker", fmt.Sprintf("%v", worker))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TeamListCall) Fields(s ...googleapi.Field) *TeamListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2784,13 +2623,13 @@ func (c *TeamListCall) Fields(s ...googleapi.Field) *TeamListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TeamListCall) IfNoneMatch(entityTag string) *TeamListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TeamListCall) Context(ctx context.Context) *TeamListCall {
 	c.ctx_ = ctx
 	return c
@@ -2798,28 +2637,12 @@ func (c *TeamListCall) Context(ctx context.Context) *TeamListCall {
 
 func (c *TeamListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["admin"]; ok {
-		params.Set("admin", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["dispatcher"]; ok {
-		params.Set("dispatcher", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["worker"]; ok {
-		params.Set("worker", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
@@ -2899,22 +2722,22 @@ func (c *TeamListCall) Do() (*TeamListResponse, error) {
 type WorkerListCall struct {
 	s      *Service
 	teamId string
-	opt_   map[string]interface{}
+	opt_   url.Values
 	ctx_   context.Context
 }
 
 // List: Retrieves a list of workers in a team.
 func (r *WorkerService) List(teamId string) *WorkerListCall {
-	c := &WorkerListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &WorkerListCall{s: r.s, opt_: urlValues()}
 	c.teamId = teamId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *WorkerListCall) Fields(s ...googleapi.Field) *WorkerListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2924,13 +2747,13 @@ func (c *WorkerListCall) Fields(s ...googleapi.Field) *WorkerListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *WorkerListCall) IfNoneMatch(entityTag string) *WorkerListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *WorkerListCall) Context(ctx context.Context) *WorkerListCall {
 	c.ctx_ = ctx
 	return c
@@ -2938,21 +2761,14 @@ func (c *WorkerListCall) Context(ctx context.Context) *WorkerListCall {
 
 func (c *WorkerListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "teams/{teamId}/workers")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"teamId": c.teamId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

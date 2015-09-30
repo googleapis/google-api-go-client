@@ -43,6 +43,8 @@ const apiName = "pagespeedonline"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/pagespeedonline/v1/"
 
+func urlValues() url.Values { return url.Values{} }
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -293,7 +295,7 @@ func (s *ResultVersion) MarshalJSON() ([]byte, error) {
 type PagespeedapiRunpagespeedCall struct {
 	s    *Service
 	url  string
-	opt_ map[string]interface{}
+	opt_ url.Values
 	ctx_ context.Context
 }
 
@@ -301,7 +303,7 @@ type PagespeedapiRunpagespeedCall struct {
 // URL, and returns a PageSpeed score, a list of suggestions to make
 // that page faster, and other information.
 func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeedCall {
-	c := &PagespeedapiRunpagespeedCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PagespeedapiRunpagespeedCall{s: r.s, opt_: urlValues()}
 	c.url = url
 	return c
 }
@@ -310,28 +312,31 @@ func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeed
 // "filter_third_party_resources": Indicates if third party resources
 // should be filtered out before PageSpeed analysis.
 func (c *PagespeedapiRunpagespeedCall) FilterThirdPartyResources(filterThirdPartyResources bool) *PagespeedapiRunpagespeedCall {
-	c.opt_["filter_third_party_resources"] = filterThirdPartyResources
+	c.opt_.Set("filterThirdPartyResources", fmt.Sprintf("%v", filterThirdPartyResources))
 	return c
 }
 
 // Locale sets the optional parameter "locale": The locale used to
 // localize formatted results
 func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpagespeedCall {
-	c.opt_["locale"] = locale
+	c.opt_.Set("locale", fmt.Sprintf("%v", locale))
 	return c
 }
 
 // Rule sets the optional parameter "rule": A PageSpeed rule to run; if
 // none are given, all rules are run
-func (c *PagespeedapiRunpagespeedCall) Rule(rule string) *PagespeedapiRunpagespeedCall {
-	c.opt_["rule"] = rule
+func (c *PagespeedapiRunpagespeedCall) Rule(rule []string) *PagespeedapiRunpagespeedCall {
+	c.opt_.Del("rule")
+	for _, v := range rule {
+		c.opt_.Add("rule", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // Screenshot sets the optional parameter "screenshot": Indicates if
 // binary data containing a screenshot should be included
 func (c *PagespeedapiRunpagespeedCall) Screenshot(screenshot bool) *PagespeedapiRunpagespeedCall {
-	c.opt_["screenshot"] = screenshot
+	c.opt_.Set("screenshot", fmt.Sprintf("%v", screenshot))
 	return c
 }
 
@@ -342,15 +347,15 @@ func (c *PagespeedapiRunpagespeedCall) Screenshot(screenshot bool) *Pagespeedapi
 //   "desktop" - Fetch and analyze the URL for desktop browsers
 //   "mobile" - Fetch and analyze the URL for mobile devices
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
-	c.opt_["strategy"] = strategy
+	c.opt_.Set("strategy", fmt.Sprintf("%v", strategy))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagespeedapiRunpagespeedCall) Fields(s ...googleapi.Field) *PagespeedapiRunpagespeedCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.opt_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -360,13 +365,13 @@ func (c *PagespeedapiRunpagespeedCall) Fields(s ...googleapi.Field) *Pagespeedap
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PagespeedapiRunpagespeedCall) IfNoneMatch(entityTag string) *PagespeedapiRunpagespeedCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.opt_.Set("If-None-Match", entityTag)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PagespeedapiRunpagespeedCall) Context(ctx context.Context) *PagespeedapiRunpagespeedCall {
 	c.ctx_ = ctx
 	return c
@@ -374,35 +379,13 @@ func (c *PagespeedapiRunpagespeedCall) Context(ctx context.Context) *Pagespeedap
 
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("url", fmt.Sprintf("%v", c.url))
-	if v, ok := c.opt_["filter_third_party_resources"]; ok {
-		params.Set("filter_third_party_resources", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["locale"]; ok {
-		params.Set("locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["rule"]; ok {
-		params.Set("rule", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["screenshot"]; ok {
-		params.Set("screenshot", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["strategy"]; ok {
-		params.Set("strategy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.opt_.Set("alt", alt)
+	c.opt_.Set("url", fmt.Sprintf("%v", c.url))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "runPagespeed")
-	urls += "?" + params.Encode()
+	urls += "?" + c.opt_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
-	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}

@@ -43,6 +43,8 @@ const apiName = "replicapool"
 const apiVersion = "v1beta2"
 const basePath = "https://www.googleapis.com/replicapool/v1beta2/projects/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -639,7 +641,7 @@ type InstanceGroupManagersAbandonInstancesCall struct {
 	zone                                         string
 	instanceGroupManager                         string
 	instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest
-	opt_                                         map[string]interface{}
+	urlParams_                                   url.Values
 	ctx_                                         context.Context
 }
 
@@ -647,7 +649,7 @@ type InstanceGroupManagersAbandonInstancesCall struct {
 // instance group, and from any target pools of which they were members,
 // without deleting the instances.
 func (r *InstanceGroupManagersService) AbandonInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest) *InstanceGroupManagersAbandonInstancesCall {
-	c := &InstanceGroupManagersAbandonInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersAbandonInstancesCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
@@ -655,17 +657,17 @@ func (r *InstanceGroupManagersService) AbandonInstances(project string, zone str
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersAbandonInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersAbandonInstancesCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersAbandonInstancesCall) Context(ctx context.Context) *InstanceGroupManagersAbandonInstancesCall {
 	c.ctx_ = ctx
 	return c
@@ -678,13 +680,9 @@ func (c *InstanceGroupManagersAbandonInstancesCall) doRequest(alt string) (*http
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/abandonInstances")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":              c.project,
@@ -788,7 +786,7 @@ type InstanceGroupManagersDeleteCall struct {
 	project              string
 	zone                 string
 	instanceGroupManager string
-	opt_                 map[string]interface{}
+	urlParams_           url.Values
 	ctx_                 context.Context
 }
 
@@ -797,24 +795,24 @@ type InstanceGroupManagersDeleteCall struct {
 // deleting the instances, you must first abandon the instances to
 // remove them from the group.
 func (r *InstanceGroupManagersService) Delete(project string, zone string, instanceGroupManager string) *InstanceGroupManagersDeleteCall {
-	c := &InstanceGroupManagersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersDeleteCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersDeleteCall) Fields(s ...googleapi.Field) *InstanceGroupManagersDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersDeleteCall) Context(ctx context.Context) *InstanceGroupManagersDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -822,13 +820,9 @@ func (c *InstanceGroupManagersDeleteCall) Context(ctx context.Context) *Instance
 
 func (c *InstanceGroupManagersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":              c.project,
@@ -929,7 +923,7 @@ type InstanceGroupManagersDeleteInstancesCall struct {
 	zone                                        string
 	instanceGroupManager                        string
 	instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest
-	opt_                                        map[string]interface{}
+	urlParams_                                  url.Values
 	ctx_                                        context.Context
 }
 
@@ -938,7 +932,7 @@ type InstanceGroupManagersDeleteInstancesCall struct {
 // which they were a member. The targetSize of the instance group
 // manager is reduced by the number of instances deleted.
 func (r *InstanceGroupManagersService) DeleteInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest) *InstanceGroupManagersDeleteInstancesCall {
-	c := &InstanceGroupManagersDeleteInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersDeleteInstancesCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
@@ -946,17 +940,17 @@ func (r *InstanceGroupManagersService) DeleteInstances(project string, zone stri
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersDeleteInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersDeleteInstancesCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersDeleteInstancesCall) Context(ctx context.Context) *InstanceGroupManagersDeleteInstancesCall {
 	c.ctx_ = ctx
 	return c
@@ -969,13 +963,9 @@ func (c *InstanceGroupManagersDeleteInstancesCall) doRequest(alt string) (*http.
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/deleteInstances")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":              c.project,
@@ -1079,24 +1069,25 @@ type InstanceGroupManagersGetCall struct {
 	project              string
 	zone                 string
 	instanceGroupManager string
-	opt_                 map[string]interface{}
+	urlParams_           url.Values
+	ifNoneMatch_         string
 	ctx_                 context.Context
 }
 
 // Get: Returns the specified Instance Group Manager resource.
 func (r *InstanceGroupManagersService) Get(project string, zone string, instanceGroupManager string) *InstanceGroupManagersGetCall {
-	c := &InstanceGroupManagersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersGetCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersGetCall) Fields(s ...googleapi.Field) *InstanceGroupManagersGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1106,13 +1097,13 @@ func (c *InstanceGroupManagersGetCall) Fields(s ...googleapi.Field) *InstanceGro
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *InstanceGroupManagersGetCall) IfNoneMatch(entityTag string) *InstanceGroupManagersGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersGetCall) Context(ctx context.Context) *InstanceGroupManagersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1120,13 +1111,9 @@ func (c *InstanceGroupManagersGetCall) Context(ctx context.Context) *InstanceGro
 
 func (c *InstanceGroupManagersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":              c.project,
@@ -1134,8 +1121,8 @@ func (c *InstanceGroupManagersGetCall) doRequest(alt string) (*http.Response, er
 		"instanceGroupManager": c.instanceGroupManager,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1232,14 +1219,14 @@ type InstanceGroupManagersInsertCall struct {
 	zone                 string
 	size                 int64
 	instancegroupmanager *InstanceGroupManager
-	opt_                 map[string]interface{}
+	urlParams_           url.Values
 	ctx_                 context.Context
 }
 
 // Insert: Creates an instance group manager, as well as the instance
 // group and the specified number of instances.
 func (r *InstanceGroupManagersService) Insert(project string, zone string, size int64, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersInsertCall {
-	c := &InstanceGroupManagersInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersInsertCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.size = size
@@ -1247,17 +1234,17 @@ func (r *InstanceGroupManagersService) Insert(project string, zone string, size 
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersInsertCall) Fields(s ...googleapi.Field) *InstanceGroupManagersInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersInsertCall) Context(ctx context.Context) *InstanceGroupManagersInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1270,14 +1257,10 @@ func (c *InstanceGroupManagersInsertCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("size", fmt.Sprintf("%v", c.size))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("size", fmt.Sprintf("%v", c.size))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
@@ -1377,17 +1360,18 @@ func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
 // method id "replicapool.instanceGroupManagers.list":
 
 type InstanceGroupManagersListCall struct {
-	s       *Service
-	project string
-	zone    string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	project      string
+	zone         string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves the list of Instance Group Manager resources
 // contained within the specified zone.
 func (r *InstanceGroupManagersService) List(project string, zone string) *InstanceGroupManagersListCall {
-	c := &InstanceGroupManagersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersListCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	return c
@@ -1396,7 +1380,7 @@ func (r *InstanceGroupManagersService) List(project string, zone string) *Instan
 // Filter sets the optional parameter "filter": Filter expression for
 // filtering listed resources.
 func (c *InstanceGroupManagersListCall) Filter(filter string) *InstanceGroupManagersListCall {
-	c.opt_["filter"] = filter
+	c.urlParams_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
@@ -1404,7 +1388,7 @@ func (c *InstanceGroupManagersListCall) Filter(filter string) *InstanceGroupMana
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *InstanceGroupManagersListCall) MaxResults(maxResults int64) *InstanceGroupManagersListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -1412,15 +1396,15 @@ func (c *InstanceGroupManagersListCall) MaxResults(maxResults int64) *InstanceGr
 // previous list request truncated by maxResults. Used to continue a
 // previous list request.
 func (c *InstanceGroupManagersListCall) PageToken(pageToken string) *InstanceGroupManagersListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersListCall) Fields(s ...googleapi.Field) *InstanceGroupManagersListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1430,13 +1414,13 @@ func (c *InstanceGroupManagersListCall) Fields(s ...googleapi.Field) *InstanceGr
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *InstanceGroupManagersListCall) IfNoneMatch(entityTag string) *InstanceGroupManagersListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersListCall) Context(ctx context.Context) *InstanceGroupManagersListCall {
 	c.ctx_ = ctx
 	return c
@@ -1444,30 +1428,17 @@ func (c *InstanceGroupManagersListCall) Context(ctx context.Context) *InstanceGr
 
 func (c *InstanceGroupManagersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1575,7 +1546,7 @@ type InstanceGroupManagersRecreateInstancesCall struct {
 	zone                                          string
 	instanceGroupManager                          string
 	instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest
-	opt_                                          map[string]interface{}
+	urlParams_                                    url.Values
 	ctx_                                          context.Context
 }
 
@@ -1583,7 +1554,7 @@ type InstanceGroupManagersRecreateInstancesCall struct {
 // are deleted, then recreated using the instance group manager's
 // current instance template.
 func (r *InstanceGroupManagersService) RecreateInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest) *InstanceGroupManagersRecreateInstancesCall {
-	c := &InstanceGroupManagersRecreateInstancesCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersRecreateInstancesCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
@@ -1591,17 +1562,17 @@ func (r *InstanceGroupManagersService) RecreateInstances(project string, zone st
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersRecreateInstancesCall) Fields(s ...googleapi.Field) *InstanceGroupManagersRecreateInstancesCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersRecreateInstancesCall) Context(ctx context.Context) *InstanceGroupManagersRecreateInstancesCall {
 	c.ctx_ = ctx
 	return c
@@ -1614,13 +1585,9 @@ func (c *InstanceGroupManagersRecreateInstancesCall) doRequest(alt string) (*htt
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/recreateInstances")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":              c.project,
@@ -1725,7 +1692,7 @@ type InstanceGroupManagersResizeCall struct {
 	zone                 string
 	instanceGroupManager string
 	size                 int64
-	opt_                 map[string]interface{}
+	urlParams_           url.Values
 	ctx_                 context.Context
 }
 
@@ -1734,7 +1701,7 @@ type InstanceGroupManagersResizeCall struct {
 // resized down, instances are removed in the order outlined in Resizing
 // a managed instance group.
 func (r *InstanceGroupManagersService) Resize(project string, zone string, instanceGroupManager string, size int64) *InstanceGroupManagersResizeCall {
-	c := &InstanceGroupManagersResizeCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersResizeCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
@@ -1742,17 +1709,17 @@ func (r *InstanceGroupManagersService) Resize(project string, zone string, insta
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersResizeCall) Fields(s ...googleapi.Field) *InstanceGroupManagersResizeCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersResizeCall) Context(ctx context.Context) *InstanceGroupManagersResizeCall {
 	c.ctx_ = ctx
 	return c
@@ -1760,14 +1727,10 @@ func (c *InstanceGroupManagersResizeCall) Context(ctx context.Context) *Instance
 
 func (c *InstanceGroupManagersResizeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("size", fmt.Sprintf("%v", c.size))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("size", fmt.Sprintf("%v", c.size))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/resize")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":              c.project,
@@ -1877,14 +1840,14 @@ type InstanceGroupManagersSetInstanceTemplateCall struct {
 	zone                                            string
 	instanceGroupManager                            string
 	instancegroupmanagerssetinstancetemplaterequest *InstanceGroupManagersSetInstanceTemplateRequest
-	opt_                                            map[string]interface{}
+	urlParams_                                      url.Values
 	ctx_                                            context.Context
 }
 
 // SetInstanceTemplate: Sets the instance template to use when creating
 // new instances in this group. Existing instances are not affected.
 func (r *InstanceGroupManagersService) SetInstanceTemplate(project string, zone string, instanceGroupManager string, instancegroupmanagerssetinstancetemplaterequest *InstanceGroupManagersSetInstanceTemplateRequest) *InstanceGroupManagersSetInstanceTemplateCall {
-	c := &InstanceGroupManagersSetInstanceTemplateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersSetInstanceTemplateCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
@@ -1892,17 +1855,17 @@ func (r *InstanceGroupManagersService) SetInstanceTemplate(project string, zone 
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersSetInstanceTemplateCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetInstanceTemplateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersSetInstanceTemplateCall) Context(ctx context.Context) *InstanceGroupManagersSetInstanceTemplateCall {
 	c.ctx_ = ctx
 	return c
@@ -1915,13 +1878,9 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) doRequest(alt string) (*h
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setInstanceTemplate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":              c.project,
@@ -2026,7 +1985,7 @@ type InstanceGroupManagersSetTargetPoolsCall struct {
 	zone                                       string
 	instanceGroupManager                       string
 	instancegroupmanagerssettargetpoolsrequest *InstanceGroupManagersSetTargetPoolsRequest
-	opt_                                       map[string]interface{}
+	urlParams_                                 url.Values
 	ctx_                                       context.Context
 }
 
@@ -2034,7 +1993,7 @@ type InstanceGroupManagersSetTargetPoolsCall struct {
 // in this group are assigned. Existing instances in the group are not
 // affected.
 func (r *InstanceGroupManagersService) SetTargetPools(project string, zone string, instanceGroupManager string, instancegroupmanagerssettargetpoolsrequest *InstanceGroupManagersSetTargetPoolsRequest) *InstanceGroupManagersSetTargetPoolsCall {
-	c := &InstanceGroupManagersSetTargetPoolsCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &InstanceGroupManagersSetTargetPoolsCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
@@ -2042,17 +2001,17 @@ func (r *InstanceGroupManagersService) SetTargetPools(project string, zone strin
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstanceGroupManagersSetTargetPoolsCall) Fields(s ...googleapi.Field) *InstanceGroupManagersSetTargetPoolsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *InstanceGroupManagersSetTargetPoolsCall) Context(ctx context.Context) *InstanceGroupManagersSetTargetPoolsCall {
 	c.ctx_ = ctx
 	return c
@@ -2065,13 +2024,9 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) doRequest(alt string) (*http.R
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setTargetPools")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":              c.project,
@@ -2171,28 +2126,29 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 // method id "replicapool.zoneOperations.get":
 
 type ZoneOperationsGetCall struct {
-	s         *Service
-	project   string
-	zone      string
-	operation string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	project      string
+	zone         string
+	operation    string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Retrieves the specified zone-specific operation resource.
 func (r *ZoneOperationsService) Get(project string, zone string, operation string) *ZoneOperationsGetCall {
-	c := &ZoneOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ZoneOperationsGetCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	c.operation = operation
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2202,13 +2158,13 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZoneOperationsGetCall) IfNoneMatch(entityTag string) *ZoneOperationsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ZoneOperationsGetCall) Context(ctx context.Context) *ZoneOperationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2216,13 +2172,9 @@ func (c *ZoneOperationsGetCall) Context(ctx context.Context) *ZoneOperationsGetC
 
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations/{operation}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
@@ -2230,8 +2182,8 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2321,17 +2273,18 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 // method id "replicapool.zoneOperations.list":
 
 type ZoneOperationsListCall struct {
-	s       *Service
-	project string
-	zone    string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	project      string
+	zone         string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves the list of operation resources contained within the
 // specified zone.
 func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperationsListCall {
-	c := &ZoneOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ZoneOperationsListCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	c.zone = zone
 	return c
@@ -2340,7 +2293,7 @@ func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperation
 // Filter sets the optional parameter "filter": Filter expression for
 // filtering listed resources.
 func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
-	c.opt_["filter"] = filter
+	c.urlParams_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
@@ -2348,7 +2301,7 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -2356,15 +2309,15 @@ func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsLis
 // previous list request truncated by maxResults. Used to continue a
 // previous list request.
 func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2374,13 +2327,13 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZoneOperationsListCall) IfNoneMatch(entityTag string) *ZoneOperationsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ZoneOperationsListCall) Context(ctx context.Context) *ZoneOperationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2388,30 +2341,17 @@ func (c *ZoneOperationsListCall) Context(ctx context.Context) *ZoneOperationsLis
 
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

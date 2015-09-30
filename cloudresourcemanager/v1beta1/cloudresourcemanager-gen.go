@@ -43,6 +43,8 @@ const apiName = "cloudresourcemanager"
 const apiVersion = "v1beta1"
 const basePath = "https://cloudresourcemanager.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -498,22 +500,23 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 type OrganizationsGetCall struct {
 	s              *Service
 	organizationId string
-	opt_           map[string]interface{}
+	urlParams_     url.Values
+	ifNoneMatch_   string
 	ctx_           context.Context
 }
 
 // Get: Fetches an Organization resource by id.
 func (r *OrganizationsService) Get(organizationId string) *OrganizationsGetCall {
-	c := &OrganizationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrganizationsGetCall{s: r.s, urlParams_: urlValues()}
 	c.organizationId = organizationId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrganizationsGetCall) Fields(s ...googleapi.Field) *OrganizationsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -523,13 +526,13 @@ func (c *OrganizationsGetCall) Fields(s ...googleapi.Field) *OrganizationsGetCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *OrganizationsGetCall) IfNoneMatch(entityTag string) *OrganizationsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrganizationsGetCall) Context(ctx context.Context) *OrganizationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -537,20 +540,16 @@ func (c *OrganizationsGetCall) Context(ctx context.Context) *OrganizationsGetCal
 
 func (c *OrganizationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{organizationId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"organizationId": c.organizationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -625,30 +624,30 @@ type OrganizationsGetIamPolicyCall struct {
 	s                   *Service
 	resource            string
 	getiampolicyrequest *GetIamPolicyRequest
-	opt_                map[string]interface{}
+	urlParams_          url.Values
 	ctx_                context.Context
 }
 
 // GetIamPolicy: Gets the access control policy for a Organization
 // resource. May be empty if no such policy or resource exists.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
-	c := &OrganizationsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: urlValues()}
 	c.resource = resource
 	c.getiampolicyrequest = getiampolicyrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrganizationsGetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsGetIamPolicyCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrganizationsGetIamPolicyCall) Context(ctx context.Context) *OrganizationsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
@@ -661,13 +660,9 @@ func (c *OrganizationsGetIamPolicyCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:getIamPolicy")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -747,14 +742,15 @@ func (c *OrganizationsGetIamPolicyCall) Do() (*Policy, error) {
 // method id "cloudresourcemanager.organizations.list":
 
 type OrganizationsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Query Organization resources.
 func (r *OrganizationsService) List() *OrganizationsListCall {
-	c := &OrganizationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrganizationsListCall{s: r.s, urlParams_: urlValues()}
 	return c
 }
 
@@ -769,14 +765,14 @@ func (r *OrganizationsService) List() *OrganizationsListCall {
 // |domain:google.com|Organizations corresponding to the domain
 // `google.com`.| This field is optional.
 func (c *OrganizationsListCall) Filter(filter string) *OrganizationsListCall {
-	c.opt_["filter"] = filter
+	c.urlParams_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of Organizations to return in the response. This field is optional.
 func (c *OrganizationsListCall) PageSize(pageSize int64) *OrganizationsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -784,15 +780,15 @@ func (c *OrganizationsListCall) PageSize(pageSize int64) *OrganizationsListCall 
 // returned from a previous call to ListOrganizations that indicates
 // from where listing should continue. This field is optional.
 func (c *OrganizationsListCall) PageToken(pageToken string) *OrganizationsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrganizationsListCall) Fields(s ...googleapi.Field) *OrganizationsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -802,13 +798,13 @@ func (c *OrganizationsListCall) Fields(s ...googleapi.Field) *OrganizationsListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *OrganizationsListCall) IfNoneMatch(entityTag string) *OrganizationsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrganizationsListCall) Context(ctx context.Context) *OrganizationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -816,27 +812,14 @@ func (c *OrganizationsListCall) Context(ctx context.Context) *OrganizationsListC
 
 func (c *OrganizationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -918,30 +901,30 @@ type OrganizationsSetIamPolicyCall struct {
 	s                   *Service
 	resource            string
 	setiampolicyrequest *SetIamPolicyRequest
-	opt_                map[string]interface{}
+	urlParams_          url.Values
 	ctx_                context.Context
 }
 
 // SetIamPolicy: Sets the access control policy on a Organization
 // resource. Replaces any existing policy.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
-	c := &OrganizationsSetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: urlValues()}
 	c.resource = resource
 	c.setiampolicyrequest = setiampolicyrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrganizationsSetIamPolicyCall) Fields(s ...googleapi.Field) *OrganizationsSetIamPolicyCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrganizationsSetIamPolicyCall) Context(ctx context.Context) *OrganizationsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
@@ -954,13 +937,9 @@ func (c *OrganizationsSetIamPolicyCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:setIamPolicy")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -1043,30 +1022,30 @@ type OrganizationsTestIamPermissionsCall struct {
 	s                         *Service
 	resource                  string
 	testiampermissionsrequest *TestIamPermissionsRequest
-	opt_                      map[string]interface{}
+	urlParams_                url.Values
 	ctx_                      context.Context
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified Organization.
 func (r *OrganizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsTestIamPermissionsCall {
-	c := &OrganizationsTestIamPermissionsCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrganizationsTestIamPermissionsCall{s: r.s, urlParams_: urlValues()}
 	c.resource = resource
 	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrganizationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *OrganizationsTestIamPermissionsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrganizationsTestIamPermissionsCall) Context(ctx context.Context) *OrganizationsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
@@ -1079,13 +1058,9 @@ func (c *OrganizationsTestIamPermissionsCall) doRequest(alt string) (*http.Respo
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{resource}:testIamPermissions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -1168,29 +1143,29 @@ type OrganizationsUpdateCall struct {
 	s              *Service
 	organizationId string
 	organization   *Organization
-	opt_           map[string]interface{}
+	urlParams_     url.Values
 	ctx_           context.Context
 }
 
 // Update: Updates an Organization resource.
 func (r *OrganizationsService) Update(organizationId string, organization *Organization) *OrganizationsUpdateCall {
-	c := &OrganizationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &OrganizationsUpdateCall{s: r.s, urlParams_: urlValues()}
 	c.organizationId = organizationId
 	c.organization = organization
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OrganizationsUpdateCall) Fields(s ...googleapi.Field) *OrganizationsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *OrganizationsUpdateCall) Context(ctx context.Context) *OrganizationsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1203,13 +1178,9 @@ func (c *OrganizationsUpdateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/organizations/{organizationId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"organizationId": c.organizationId,
@@ -1289,10 +1260,10 @@ func (c *OrganizationsUpdateCall) Do() (*Organization, error) {
 // method id "cloudresourcemanager.projects.create":
 
 type ProjectsCreateCall struct {
-	s       *Service
-	project *Project
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	project    *Project
+	urlParams_ url.Values
+	ctx_       context.Context
 }
 
 // Create: Creates a project resource. Initially, the project resource
@@ -1301,22 +1272,22 @@ type ProjectsCreateCall struct {
 // activated automatically for the project, including Google Cloud
 // Storage.
 func (r *ProjectsService) Create(project *Project) *ProjectsCreateCall {
-	c := &ProjectsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsCreateCall{s: r.s, urlParams_: urlValues()}
 	c.project = project
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsCreateCall) Fields(s ...googleapi.Field) *ProjectsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsCreateCall) Context(ctx context.Context) *ProjectsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1329,13 +1300,9 @@ func (c *ProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1402,10 +1369,10 @@ func (c *ProjectsCreateCall) Do() (*Project, error) {
 // method id "cloudresourcemanager.projects.delete":
 
 type ProjectsDeleteCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	projectId  string
+	urlParams_ url.Values
+	ctx_       context.Context
 }
 
 // Delete: Marks the project identified by the specified `project_id`
@@ -1434,22 +1401,22 @@ type ProjectsDeleteCall struct {
 // ojects] methods. The caller must have modify permissions for this
 // project.
 func (r *ProjectsService) Delete(projectId string) *ProjectsDeleteCall {
-	c := &ProjectsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsDeleteCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsDeleteCall) Fields(s ...googleapi.Field) *ProjectsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsDeleteCall) Context(ctx context.Context) *ProjectsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1457,13 +1424,9 @@ func (c *ProjectsDeleteCall) Context(ctx context.Context) *ProjectsDeleteCall {
 
 func (c *ProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{projectId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -1539,26 +1502,27 @@ func (c *ProjectsDeleteCall) Do() (*Empty, error) {
 // method id "cloudresourcemanager.projects.get":
 
 type ProjectsGetCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Retrieves the project identified by the specified `project_id`
 // (for example, `my-project-123`). The caller must have read
 // permissions for this project.
 func (r *ProjectsService) Get(projectId string) *ProjectsGetCall {
-	c := &ProjectsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsGetCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1568,13 +1532,13 @@ func (c *ProjectsGetCall) Fields(s ...googleapi.Field) *ProjectsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsGetCall) IfNoneMatch(entityTag string) *ProjectsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsGetCall) Context(ctx context.Context) *ProjectsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1582,20 +1546,16 @@ func (c *ProjectsGetCall) Context(ctx context.Context) *ProjectsGetCall {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{projectId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1670,30 +1630,30 @@ type ProjectsGetIamPolicyCall struct {
 	s                   *Service
 	resource            string
 	getiampolicyrequest *GetIamPolicyRequest
-	opt_                map[string]interface{}
+	urlParams_          url.Values
 	ctx_                context.Context
 }
 
 // GetIamPolicy: Returns the IAM access control policy for specified
 // project.
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
-	c := &ProjectsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: urlValues()}
 	c.resource = resource
 	c.getiampolicyrequest = getiampolicyrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsGetIamPolicyCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsGetIamPolicyCall) Context(ctx context.Context) *ProjectsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
@@ -1706,13 +1666,9 @@ func (c *ProjectsGetIamPolicyCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{resource}:getIamPolicy")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -1792,16 +1748,17 @@ func (c *ProjectsGetIamPolicyCall) Do() (*Policy, error) {
 // method id "cloudresourcemanager.projects.list":
 
 type ProjectsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists projects that are visible to the user and satisfy the
 // specified filter. This method returns projects in an unspecified
 // order. New projects do not necessarily appear at the end of the list.
 func (r *ProjectsService) List() *ProjectsListCall {
-	c := &ProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsListCall{s: r.s, urlParams_: urlValues()}
 	return c
 }
 
@@ -1817,7 +1774,7 @@ func (r *ProjectsService) List() *ProjectsListCall {
 // value `red`.| |labels.color:red label.size:big|The project's label
 // `color` has the value `red` and its label `size` has the value `big`.
 func (c *ProjectsListCall) Filter(filter string) *ProjectsListCall {
-	c.opt_["filter"] = filter
+	c.urlParams_.Set("filter", fmt.Sprintf("%v", filter))
 	return c
 }
 
@@ -1827,7 +1784,7 @@ func (c *ProjectsListCall) Filter(filter string) *ProjectsListCall {
 // default. Note: pagination is not yet supported; the server ignores
 // this field.
 func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -1836,15 +1793,15 @@ func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
 // where listing should continue. Note: pagination is not yet supported;
 // the server ignores this field.
 func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1854,13 +1811,13 @@ func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsListCall) IfNoneMatch(entityTag string) *ProjectsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsListCall) Context(ctx context.Context) *ProjectsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1868,27 +1825,14 @@ func (c *ProjectsListCall) Context(ctx context.Context) *ProjectsListCall {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1970,7 +1914,7 @@ type ProjectsSetIamPolicyCall struct {
 	s                   *Service
 	resource            string
 	setiampolicyrequest *SetIamPolicyRequest
-	opt_                map[string]interface{}
+	urlParams_          url.Values
 	ctx_                context.Context
 }
 
@@ -1979,23 +1923,23 @@ type ProjectsSetIamPolicyCall struct {
 // Binding of a Policy. Calling this method requires enabling the App
 // Engine Admin API.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
-	c := &ProjectsSetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: urlValues()}
 	c.resource = resource
 	c.setiampolicyrequest = setiampolicyrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsSetIamPolicyCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsSetIamPolicyCall) Context(ctx context.Context) *ProjectsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
@@ -2008,13 +1952,9 @@ func (c *ProjectsSetIamPolicyCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{resource}:setIamPolicy")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -2097,30 +2037,30 @@ type ProjectsTestIamPermissionsCall struct {
 	s                         *Service
 	resource                  string
 	testiampermissionsrequest *TestIamPermissionsRequest
-	opt_                      map[string]interface{}
+	urlParams_                url.Values
 	ctx_                      context.Context
 }
 
 // TestIamPermissions: Tests the specified permissions against the IAM
 // access control policy for the specified project.
 func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
-	c := &ProjectsTestIamPermissionsCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: urlValues()}
 	c.resource = resource
 	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsTestIamPermissionsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
@@ -2133,13 +2073,9 @@ func (c *ProjectsTestIamPermissionsCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{resource}:testIamPermissions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
@@ -2219,10 +2155,10 @@ func (c *ProjectsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 // method id "cloudresourcemanager.projects.undelete":
 
 type ProjectsUndeleteCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	projectId  string
+	urlParams_ url.Values
+	ctx_       context.Context
 }
 
 // Undelete: Restores the project identified by the specified
@@ -2235,22 +2171,22 @@ type ProjectsUndeleteCall struct {
 // _PROGRESS], the project cannot be restored. The caller must have
 // modify permissions for this project.
 func (r *ProjectsService) Undelete(projectId string) *ProjectsUndeleteCall {
-	c := &ProjectsUndeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsUndeleteCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsUndeleteCall) Fields(s ...googleapi.Field) *ProjectsUndeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsUndeleteCall) Context(ctx context.Context) *ProjectsUndeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2258,13 +2194,9 @@ func (c *ProjectsUndeleteCall) Context(ctx context.Context) *ProjectsUndeleteCal
 
 func (c *ProjectsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{projectId}:undelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -2340,34 +2272,34 @@ func (c *ProjectsUndeleteCall) Do() (*Empty, error) {
 // method id "cloudresourcemanager.projects.update":
 
 type ProjectsUpdateCall struct {
-	s         *Service
-	projectId string
-	project   *Project
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	projectId  string
+	project    *Project
+	urlParams_ url.Values
+	ctx_       context.Context
 }
 
 // Update: Updates the attributes of the project identified by the
 // specified `project_id` (for example, `my-project-123`). The caller
 // must have modify permissions for this project.
 func (r *ProjectsService) Update(projectId string, project *Project) *ProjectsUpdateCall {
-	c := &ProjectsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsUpdateCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.project = project
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsUpdateCall) Fields(s ...googleapi.Field) *ProjectsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsUpdateCall) Context(ctx context.Context) *ProjectsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2380,13 +2312,9 @@ func (c *ProjectsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{projectId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,

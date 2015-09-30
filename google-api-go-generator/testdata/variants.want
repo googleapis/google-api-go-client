@@ -41,6 +41,8 @@ const apiName = "additionalpropsobjs"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/discovery/v1/apis"
 
+func urlValues() url.Values { return url.Values{} }
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")

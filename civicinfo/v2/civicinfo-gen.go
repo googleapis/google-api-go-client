@@ -1287,7 +1287,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeO
 //   "special"
 //   "subLocality1"
 //   "subLocality2"
-func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels string) *RepresentativesRepresentativeInfoByAddressCall {
+func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels []string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.opt_["levels"] = levels
 	return c
 }
@@ -1309,7 +1309,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels string) *
 //   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
-func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles string) *RepresentativesRepresentativeInfoByAddressCall {
+func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles []string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.opt_["roles"] = roles
 	return c
 }
@@ -1341,10 +1341,18 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (
 		params.Set("includeOffices", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["levels"]; ok {
-		params.Set("levels", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("levels", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["roles"]; ok {
-		params.Set("roles", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("roles", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -1491,7 +1499,7 @@ func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *Rep
 //   "special"
 //   "subLocality1"
 //   "subLocality2"
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels string) *RepresentativesRepresentativeInfoByDivisionCall {
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels []string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.opt_["levels"] = levels
 	return c
 }
@@ -1523,7 +1531,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 //   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles string) *RepresentativesRepresentativeInfoByDivisionCall {
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles []string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.opt_["roles"] = roles
 	return c
 }
@@ -1549,13 +1557,21 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) 
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["levels"]; ok {
-		params.Set("levels", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("levels", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["recursive"]; ok {
 		params.Set("recursive", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["roles"]; ok {
-		params.Set("roles", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("roles", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

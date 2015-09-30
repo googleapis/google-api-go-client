@@ -2239,7 +2239,7 @@ func (r *CreativesService) List() *CreativesListCall {
 
 // AccountId sets the optional parameter "accountId": When specified,
 // only creatives for the given account ids are returned.
-func (c *CreativesListCall) AccountId(accountId int64) *CreativesListCall {
+func (c *CreativesListCall) AccountId(accountId []int64) *CreativesListCall {
 	c.opt_["accountId"] = accountId
 	return c
 }
@@ -2247,7 +2247,7 @@ func (c *CreativesListCall) AccountId(accountId int64) *CreativesListCall {
 // BuyerCreativeId sets the optional parameter "buyerCreativeId": When
 // specified, only creatives for the given buyer creative ids are
 // returned.
-func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId string) *CreativesListCall {
+func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId []string) *CreativesListCall {
 	c.opt_["buyerCreativeId"] = buyerCreativeId
 	return c
 }
@@ -2302,10 +2302,18 @@ func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["accountId"]; ok {
-		params.Set("accountId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("accountId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["buyerCreativeId"]; ok {
-		params.Set("buyerCreativeId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("buyerCreativeId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))

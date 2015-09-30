@@ -10801,7 +10801,7 @@ func (c *AccountUserProfilesListCall) Active(active bool) *AccountUserProfilesLi
 
 // Ids sets the optional parameter "ids": Select only user profiles with
 // these IDs.
-func (c *AccountUserProfilesListCall) Ids(ids int64) *AccountUserProfilesListCall {
+func (c *AccountUserProfilesListCall) Ids(ids []int64) *AccountUserProfilesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -10894,7 +10894,11 @@ func (c *AccountUserProfilesListCall) doRequest(alt string) (*http.Response, err
 		params.Set("active", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -11390,7 +11394,7 @@ func (c *AccountsListCall) Active(active bool) *AccountsListCall {
 
 // Ids sets the optional parameter "ids": Select only accounts with
 // these IDs.
-func (c *AccountsListCall) Ids(ids int64) *AccountsListCall {
+func (c *AccountsListCall) Ids(ids []int64) *AccountsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -11468,7 +11472,11 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("active", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -12062,14 +12070,14 @@ func (c *AdsListCall) Archived(archived bool) *AdsListCall {
 
 // AudienceSegmentIds sets the optional parameter "audienceSegmentIds":
 // Select only ads with these audience segment IDs.
-func (c *AdsListCall) AudienceSegmentIds(audienceSegmentIds int64) *AdsListCall {
+func (c *AdsListCall) AudienceSegmentIds(audienceSegmentIds []int64) *AdsListCall {
 	c.opt_["audienceSegmentIds"] = audienceSegmentIds
 	return c
 }
 
 // CampaignIds sets the optional parameter "campaignIds": Select only
 // ads with these campaign IDs.
-func (c *AdsListCall) CampaignIds(campaignIds int64) *AdsListCall {
+func (c *AdsListCall) CampaignIds(campaignIds []int64) *AdsListCall {
 	c.opt_["campaignIds"] = campaignIds
 	return c
 }
@@ -12095,7 +12103,7 @@ func (c *AdsListCall) Compatibility(compatibility string) *AdsListCall {
 
 // CreativeIds sets the optional parameter "creativeIds": Select only
 // ads with these creative IDs assigned.
-func (c *AdsListCall) CreativeIds(creativeIds int64) *AdsListCall {
+func (c *AdsListCall) CreativeIds(creativeIds []int64) *AdsListCall {
 	c.opt_["creativeIds"] = creativeIds
 	return c
 }
@@ -12103,7 +12111,7 @@ func (c *AdsListCall) CreativeIds(creativeIds int64) *AdsListCall {
 // CreativeOptimizationConfigurationIds sets the optional parameter
 // "creativeOptimizationConfigurationIds": Select only ads with these
 // creative optimization configuration IDs.
-func (c *AdsListCall) CreativeOptimizationConfigurationIds(creativeOptimizationConfigurationIds int64) *AdsListCall {
+func (c *AdsListCall) CreativeOptimizationConfigurationIds(creativeOptimizationConfigurationIds []int64) *AdsListCall {
 	c.opt_["creativeOptimizationConfigurationIds"] = creativeOptimizationConfigurationIds
 	return c
 }
@@ -12153,14 +12161,14 @@ func (c *AdsListCall) DynamicClickTracker(dynamicClickTracker bool) *AdsListCall
 
 // Ids sets the optional parameter "ids": Select only ads with these
 // IDs.
-func (c *AdsListCall) Ids(ids int64) *AdsListCall {
+func (c *AdsListCall) Ids(ids []int64) *AdsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
 
 // LandingPageIds sets the optional parameter "landingPageIds": Select
 // only ads with these landing page IDs.
-func (c *AdsListCall) LandingPageIds(landingPageIds int64) *AdsListCall {
+func (c *AdsListCall) LandingPageIds(landingPageIds []int64) *AdsListCall {
 	c.opt_["landingPageIds"] = landingPageIds
 	return c
 }
@@ -12189,7 +12197,7 @@ func (c *AdsListCall) PageToken(pageToken string) *AdsListCall {
 
 // PlacementIds sets the optional parameter "placementIds": Select only
 // ads with these placement IDs assigned.
-func (c *AdsListCall) PlacementIds(placementIds int64) *AdsListCall {
+func (c *AdsListCall) PlacementIds(placementIds []int64) *AdsListCall {
 	c.opt_["placementIds"] = placementIds
 	return c
 }
@@ -12197,7 +12205,7 @@ func (c *AdsListCall) PlacementIds(placementIds int64) *AdsListCall {
 // RemarketingListIds sets the optional parameter "remarketingListIds":
 // Select only ads whose list targeting expression use these remarketing
 // list IDs.
-func (c *AdsListCall) RemarketingListIds(remarketingListIds int64) *AdsListCall {
+func (c *AdsListCall) RemarketingListIds(remarketingListIds []int64) *AdsListCall {
 	c.opt_["remarketingListIds"] = remarketingListIds
 	return c
 }
@@ -12216,7 +12224,7 @@ func (c *AdsListCall) SearchString(searchString string) *AdsListCall {
 
 // SizeIds sets the optional parameter "sizeIds": Select only ads with
 // these size IDs.
-func (c *AdsListCall) SizeIds(sizeIds int64) *AdsListCall {
+func (c *AdsListCall) SizeIds(sizeIds []int64) *AdsListCall {
 	c.opt_["sizeIds"] = sizeIds
 	return c
 }
@@ -12265,7 +12273,7 @@ func (c *AdsListCall) SslRequired(sslRequired bool) *AdsListCall {
 //   "AD_SERVING_DEFAULT_AD"
 //   "AD_SERVING_STANDARD_AD"
 //   "AD_SERVING_TRACKING"
-func (c *AdsListCall) Type(type_ string) *AdsListCall {
+func (c *AdsListCall) Type(type_ []string) *AdsListCall {
 	c.opt_["type"] = type_
 	return c
 }
@@ -12300,19 +12308,35 @@ func (c *AdsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("archived", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["audienceSegmentIds"]; ok {
-		params.Set("audienceSegmentIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("audienceSegmentIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["campaignIds"]; ok {
-		params.Set("campaignIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("campaignIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["compatibility"]; ok {
 		params.Set("compatibility", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["creativeIds"]; ok {
-		params.Set("creativeIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("creativeIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["creativeOptimizationConfigurationIds"]; ok {
-		params.Set("creativeOptimizationConfigurationIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("creativeOptimizationConfigurationIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["creativeType"]; ok {
 		params.Set("creativeType", fmt.Sprintf("%v", v))
@@ -12321,10 +12345,18 @@ func (c *AdsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("dynamicClickTracker", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["landingPageIds"]; ok {
-		params.Set("landingPageIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("landingPageIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -12336,16 +12368,28 @@ func (c *AdsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["placementIds"]; ok {
-		params.Set("placementIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("placementIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["remarketingListIds"]; ok {
-		params.Set("remarketingListIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("remarketingListIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["searchString"]; ok {
 		params.Set("searchString", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["sizeIds"]; ok {
-		params.Set("sizeIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("sizeIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["sortField"]; ok {
 		params.Set("sortField", fmt.Sprintf("%v", v))
@@ -12360,7 +12404,11 @@ func (c *AdsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("sslRequired", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["type"]; ok {
-		params.Set("type", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("type", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -13197,7 +13245,7 @@ func (r *AdvertiserGroupsService) List(profileId int64) *AdvertiserGroupsListCal
 
 // Ids sets the optional parameter "ids": Select only advertiser groups
 // with these IDs.
-func (c *AdvertiserGroupsListCall) Ids(ids int64) *AdvertiserGroupsListCall {
+func (c *AdvertiserGroupsListCall) Ids(ids []int64) *AdvertiserGroupsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -13273,7 +13321,11 @@ func (c *AdvertiserGroupsListCall) doRequest(alt string) (*http.Response, error)
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -13842,7 +13894,7 @@ func (r *AdvertisersService) List(profileId int64) *AdvertisersListCall {
 
 // AdvertiserGroupIds sets the optional parameter "advertiserGroupIds":
 // Select only advertisers with these advertiser group IDs.
-func (c *AdvertisersListCall) AdvertiserGroupIds(advertiserGroupIds int64) *AdvertisersListCall {
+func (c *AdvertisersListCall) AdvertiserGroupIds(advertiserGroupIds []int64) *AdvertisersListCall {
 	c.opt_["advertiserGroupIds"] = advertiserGroupIds
 	return c
 }
@@ -13850,14 +13902,14 @@ func (c *AdvertisersListCall) AdvertiserGroupIds(advertiserGroupIds int64) *Adve
 // FloodlightConfigurationIds sets the optional parameter
 // "floodlightConfigurationIds": Select only advertisers with these
 // floodlight configuration IDs.
-func (c *AdvertisersListCall) FloodlightConfigurationIds(floodlightConfigurationIds int64) *AdvertisersListCall {
+func (c *AdvertisersListCall) FloodlightConfigurationIds(floodlightConfigurationIds []int64) *AdvertisersListCall {
 	c.opt_["floodlightConfigurationIds"] = floodlightConfigurationIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only advertisers with
 // these IDs.
-func (c *AdvertisersListCall) Ids(ids int64) *AdvertisersListCall {
+func (c *AdvertisersListCall) Ids(ids []int64) *AdvertisersListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -13965,13 +14017,25 @@ func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserGroupIds"]; ok {
-		params.Set("advertiserGroupIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("advertiserGroupIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["floodlightConfigurationIds"]; ok {
-		params.Set("floodlightConfigurationIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("floodlightConfigurationIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["includeAdvertisersWithoutGroupsOnly"]; ok {
 		params.Set("includeAdvertisersWithoutGroupsOnly", fmt.Sprintf("%v", v))
@@ -14989,14 +15053,14 @@ func (r *CampaignsService) List(profileId int64) *CampaignsListCall {
 // AdvertiserGroupIds sets the optional parameter "advertiserGroupIds":
 // Select only campaigns whose advertisers belong to these advertiser
 // groups.
-func (c *CampaignsListCall) AdvertiserGroupIds(advertiserGroupIds int64) *CampaignsListCall {
+func (c *CampaignsListCall) AdvertiserGroupIds(advertiserGroupIds []int64) *CampaignsListCall {
 	c.opt_["advertiserGroupIds"] = advertiserGroupIds
 	return c
 }
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only campaigns that belong to these advertisers.
-func (c *CampaignsListCall) AdvertiserIds(advertiserIds int64) *CampaignsListCall {
+func (c *CampaignsListCall) AdvertiserIds(advertiserIds []int64) *CampaignsListCall {
 	c.opt_["advertiserIds"] = advertiserIds
 	return c
 }
@@ -15019,14 +15083,14 @@ func (c *CampaignsListCall) AtLeastOneOptimizationActivity(atLeastOneOptimizatio
 
 // ExcludedIds sets the optional parameter "excludedIds": Exclude
 // campaigns with these IDs.
-func (c *CampaignsListCall) ExcludedIds(excludedIds int64) *CampaignsListCall {
+func (c *CampaignsListCall) ExcludedIds(excludedIds []int64) *CampaignsListCall {
 	c.opt_["excludedIds"] = excludedIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only campaigns with
 // these IDs.
-func (c *CampaignsListCall) Ids(ids int64) *CampaignsListCall {
+func (c *CampaignsListCall) Ids(ids []int64) *CampaignsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -15116,10 +15180,18 @@ func (c *CampaignsListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserGroupIds"]; ok {
-		params.Set("advertiserGroupIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("advertiserGroupIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["advertiserIds"]; ok {
-		params.Set("advertiserIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("advertiserIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["archived"]; ok {
 		params.Set("archived", fmt.Sprintf("%v", v))
@@ -15128,10 +15200,18 @@ func (c *CampaignsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("atLeastOneOptimizationActivity", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["excludedIds"]; ok {
-		params.Set("excludedIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("excludedIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -15671,7 +15751,7 @@ func (c *ChangeLogsListCall) Action(action string) *ChangeLogsListCall {
 
 // Ids sets the optional parameter "ids": Select only change logs with
 // these IDs.
-func (c *ChangeLogsListCall) Ids(ids int64) *ChangeLogsListCall {
+func (c *ChangeLogsListCall) Ids(ids []int64) *ChangeLogsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -15711,7 +15791,7 @@ func (c *ChangeLogsListCall) MinChangeTime(minChangeTime string) *ChangeLogsList
 
 // ObjectIds sets the optional parameter "objectIds": Select only change
 // logs with these object IDs.
-func (c *ChangeLogsListCall) ObjectIds(objectIds int64) *ChangeLogsListCall {
+func (c *ChangeLogsListCall) ObjectIds(objectIds []int64) *ChangeLogsListCall {
 	c.opt_["objectIds"] = objectIds
 	return c
 }
@@ -15778,7 +15858,7 @@ func (c *ChangeLogsListCall) SearchString(searchString string) *ChangeLogsListCa
 
 // UserProfileIds sets the optional parameter "userProfileIds": Select
 // only change logs with these user profile IDs.
-func (c *ChangeLogsListCall) UserProfileIds(userProfileIds int64) *ChangeLogsListCall {
+func (c *ChangeLogsListCall) UserProfileIds(userProfileIds []int64) *ChangeLogsListCall {
 	c.opt_["userProfileIds"] = userProfileIds
 	return c
 }
@@ -15807,7 +15887,11 @@ func (c *ChangeLogsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("action", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxChangeTime"]; ok {
 		params.Set("maxChangeTime", fmt.Sprintf("%v", v))
@@ -15819,7 +15903,11 @@ func (c *ChangeLogsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("minChangeTime", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["objectIds"]; ok {
-		params.Set("objectIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("objectIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["objectType"]; ok {
 		params.Set("objectType", fmt.Sprintf("%v", v))
@@ -15831,7 +15919,11 @@ func (c *ChangeLogsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("searchString", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["userProfileIds"]; ok {
-		params.Set("userProfileIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("userProfileIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -16079,14 +16171,14 @@ func (r *CitiesService) List(profileId int64) *CitiesListCall {
 
 // CountryDartIds sets the optional parameter "countryDartIds": Select
 // only cities from these countries.
-func (c *CitiesListCall) CountryDartIds(countryDartIds int64) *CitiesListCall {
+func (c *CitiesListCall) CountryDartIds(countryDartIds []int64) *CitiesListCall {
 	c.opt_["countryDartIds"] = countryDartIds
 	return c
 }
 
 // DartIds sets the optional parameter "dartIds": Select only cities
 // with these DART IDs.
-func (c *CitiesListCall) DartIds(dartIds int64) *CitiesListCall {
+func (c *CitiesListCall) DartIds(dartIds []int64) *CitiesListCall {
 	c.opt_["dartIds"] = dartIds
 	return c
 }
@@ -16100,7 +16192,7 @@ func (c *CitiesListCall) NamePrefix(namePrefix string) *CitiesListCall {
 
 // RegionDartIds sets the optional parameter "regionDartIds": Select
 // only cities from these regions.
-func (c *CitiesListCall) RegionDartIds(regionDartIds int64) *CitiesListCall {
+func (c *CitiesListCall) RegionDartIds(regionDartIds []int64) *CitiesListCall {
 	c.opt_["regionDartIds"] = regionDartIds
 	return c
 }
@@ -16126,16 +16218,28 @@ func (c *CitiesListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["countryDartIds"]; ok {
-		params.Set("countryDartIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("countryDartIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["dartIds"]; ok {
-		params.Set("dartIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("dartIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["namePrefix"]; ok {
 		params.Set("namePrefix", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["regionDartIds"]; ok {
-		params.Set("regionDartIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("regionDartIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -16740,7 +16844,7 @@ func (r *ContentCategoriesService) List(profileId int64) *ContentCategoriesListC
 
 // Ids sets the optional parameter "ids": Select only content categories
 // with these IDs.
-func (c *ContentCategoriesListCall) Ids(ids int64) *ContentCategoriesListCall {
+func (c *ContentCategoriesListCall) Ids(ids []int64) *ContentCategoriesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -16816,7 +16920,11 @@ func (c *ContentCategoriesListCall) doRequest(alt string) (*http.Response, error
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -17924,7 +18032,7 @@ func (r *CreativeFieldValuesService) List(profileId int64, creativeFieldId int64
 
 // Ids sets the optional parameter "ids": Select only creative field
 // values with these IDs.
-func (c *CreativeFieldValuesListCall) Ids(ids int64) *CreativeFieldValuesListCall {
+func (c *CreativeFieldValuesListCall) Ids(ids []int64) *CreativeFieldValuesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -17994,7 +18102,11 @@ func (c *CreativeFieldValuesListCall) doRequest(alt string) (*http.Response, err
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -18691,14 +18803,14 @@ func (r *CreativeFieldsService) List(profileId int64) *CreativeFieldsListCall {
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only creative fields that belong to these advertisers.
-func (c *CreativeFieldsListCall) AdvertiserIds(advertiserIds int64) *CreativeFieldsListCall {
+func (c *CreativeFieldsListCall) AdvertiserIds(advertiserIds []int64) *CreativeFieldsListCall {
 	c.opt_["advertiserIds"] = advertiserIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only creative fields
 // with these IDs.
-func (c *CreativeFieldsListCall) Ids(ids int64) *CreativeFieldsListCall {
+func (c *CreativeFieldsListCall) Ids(ids []int64) *CreativeFieldsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -18774,10 +18886,18 @@ func (c *CreativeFieldsListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserIds"]; ok {
-		params.Set("advertiserIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("advertiserIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -19353,7 +19473,7 @@ func (r *CreativeGroupsService) List(profileId int64) *CreativeGroupsListCall {
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only creative groups that belong to these advertisers.
-func (c *CreativeGroupsListCall) AdvertiserIds(advertiserIds int64) *CreativeGroupsListCall {
+func (c *CreativeGroupsListCall) AdvertiserIds(advertiserIds []int64) *CreativeGroupsListCall {
 	c.opt_["advertiserIds"] = advertiserIds
 	return c
 }
@@ -19367,7 +19487,7 @@ func (c *CreativeGroupsListCall) GroupNumber(groupNumber int64) *CreativeGroupsL
 
 // Ids sets the optional parameter "ids": Select only creative groups
 // with these IDs.
-func (c *CreativeGroupsListCall) Ids(ids int64) *CreativeGroupsListCall {
+func (c *CreativeGroupsListCall) Ids(ids []int64) *CreativeGroupsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -19443,13 +19563,21 @@ func (c *CreativeGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserIds"]; ok {
-		params.Set("advertiserIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("advertiserIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["groupNumber"]; ok {
 		params.Set("groupNumber", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -20060,21 +20188,21 @@ func (c *CreativesListCall) CampaignId(campaignId int64) *CreativesListCall {
 // CompanionCreativeIds sets the optional parameter
 // "companionCreativeIds": Select only in-stream video creatives with
 // these companion IDs.
-func (c *CreativesListCall) CompanionCreativeIds(companionCreativeIds int64) *CreativesListCall {
+func (c *CreativesListCall) CompanionCreativeIds(companionCreativeIds []int64) *CreativesListCall {
 	c.opt_["companionCreativeIds"] = companionCreativeIds
 	return c
 }
 
 // CreativeFieldIds sets the optional parameter "creativeFieldIds":
 // Select only creatives with these creative field IDs.
-func (c *CreativesListCall) CreativeFieldIds(creativeFieldIds int64) *CreativesListCall {
+func (c *CreativesListCall) CreativeFieldIds(creativeFieldIds []int64) *CreativesListCall {
 	c.opt_["creativeFieldIds"] = creativeFieldIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only creatives with
 // these IDs.
-func (c *CreativesListCall) Ids(ids int64) *CreativesListCall {
+func (c *CreativesListCall) Ids(ids []int64) *CreativesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -20095,7 +20223,7 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 
 // RenderingIds sets the optional parameter "renderingIds": Select only
 // creatives with these rendering IDs.
-func (c *CreativesListCall) RenderingIds(renderingIds int64) *CreativesListCall {
+func (c *CreativesListCall) RenderingIds(renderingIds []int64) *CreativesListCall {
 	c.opt_["renderingIds"] = renderingIds
 	return c
 }
@@ -20115,7 +20243,7 @@ func (c *CreativesListCall) SearchString(searchString string) *CreativesListCall
 
 // SizeIds sets the optional parameter "sizeIds": Select only creatives
 // with these size IDs.
-func (c *CreativesListCall) SizeIds(sizeIds int64) *CreativesListCall {
+func (c *CreativesListCall) SizeIds(sizeIds []int64) *CreativesListCall {
 	c.opt_["sizeIds"] = sizeIds
 	return c
 }
@@ -20177,7 +20305,7 @@ func (c *CreativesListCall) StudioCreativeId(studioCreativeId int64) *CreativesL
 //   "VAST_REDIRECT"
 //   "VPAID_LINEAR"
 //   "VPAID_NON_LINEAR"
-func (c *CreativesListCall) Types(types string) *CreativesListCall {
+func (c *CreativesListCall) Types(types []string) *CreativesListCall {
 	c.opt_["types"] = types
 	return c
 }
@@ -20215,13 +20343,25 @@ func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("campaignId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["companionCreativeIds"]; ok {
-		params.Set("companionCreativeIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("companionCreativeIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["creativeFieldIds"]; ok {
-		params.Set("creativeFieldIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("creativeFieldIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -20230,13 +20370,21 @@ func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["renderingIds"]; ok {
-		params.Set("renderingIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("renderingIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["searchString"]; ok {
 		params.Set("searchString", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["sizeIds"]; ok {
-		params.Set("sizeIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("sizeIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["sortField"]; ok {
 		params.Set("sortField", fmt.Sprintf("%v", v))
@@ -20248,7 +20396,11 @@ func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("studioCreativeId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["types"]; ok {
-		params.Set("types", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("types", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -20951,14 +21103,14 @@ func (r *DirectorySiteContactsService) List(profileId int64) *DirectorySiteConta
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
 // Select only directory site contacts with these directory site IDs.
 // This is a required field.
-func (c *DirectorySiteContactsListCall) DirectorySiteIds(directorySiteIds int64) *DirectorySiteContactsListCall {
+func (c *DirectorySiteContactsListCall) DirectorySiteIds(directorySiteIds []int64) *DirectorySiteContactsListCall {
 	c.opt_["directorySiteIds"] = directorySiteIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only directory site
 // contacts with these IDs.
-func (c *DirectorySiteContactsListCall) Ids(ids int64) *DirectorySiteContactsListCall {
+func (c *DirectorySiteContactsListCall) Ids(ids []int64) *DirectorySiteContactsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -21035,10 +21187,18 @@ func (c *DirectorySiteContactsListCall) doRequest(alt string) (*http.Response, e
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["directorySiteIds"]; ok {
-		params.Set("directorySiteIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("directorySiteIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -21440,7 +21600,7 @@ func (c *DirectorySitesListCall) DfpNetworkCode(dfpNetworkCode string) *Director
 
 // Ids sets the optional parameter "ids": Select only directory sites
 // with these IDs.
-func (c *DirectorySitesListCall) Ids(ids int64) *DirectorySitesListCall {
+func (c *DirectorySitesListCall) Ids(ids []int64) *DirectorySitesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -21541,7 +21701,11 @@ func (c *DirectorySitesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("dfp_network_code", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -22082,14 +22246,14 @@ func (c *EventTagsListCall) Enabled(enabled bool) *EventTagsListCall {
 //   "CLICK_THROUGH_EVENT_TAG"
 //   "IMPRESSION_IMAGE_EVENT_TAG"
 //   "IMPRESSION_JAVASCRIPT_EVENT_TAG"
-func (c *EventTagsListCall) EventTagTypes(eventTagTypes string) *EventTagsListCall {
+func (c *EventTagsListCall) EventTagTypes(eventTagTypes []string) *EventTagsListCall {
 	c.opt_["eventTagTypes"] = eventTagTypes
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only event tags with
 // these IDs.
-func (c *EventTagsListCall) Ids(ids int64) *EventTagsListCall {
+func (c *EventTagsListCall) Ids(ids []int64) *EventTagsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -22165,10 +22329,18 @@ func (c *EventTagsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("enabled", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["eventTagTypes"]; ok {
-		params.Set("eventTagTypes", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("eventTagTypes", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["searchString"]; ok {
 		params.Set("searchString", fmt.Sprintf("%v", v))
@@ -23314,7 +23486,7 @@ func (c *FloodlightActivitiesListCall) AdvertiserId(advertiserId int64) *Floodli
 // FloodlightActivityGroupIds sets the optional parameter
 // "floodlightActivityGroupIds": Select only floodlight activities with
 // the specified floodlight activity group IDs.
-func (c *FloodlightActivitiesListCall) FloodlightActivityGroupIds(floodlightActivityGroupIds int64) *FloodlightActivitiesListCall {
+func (c *FloodlightActivitiesListCall) FloodlightActivityGroupIds(floodlightActivityGroupIds []int64) *FloodlightActivitiesListCall {
 	c.opt_["floodlightActivityGroupIds"] = floodlightActivityGroupIds
 	return c
 }
@@ -23359,7 +23531,7 @@ func (c *FloodlightActivitiesListCall) FloodlightConfigurationId(floodlightConfi
 // Ids sets the optional parameter "ids": Select only floodlight
 // activities with the specified IDs. Must specify either ids,
 // advertiserId, or floodlightConfigurationId for a non-empty result.
-func (c *FloodlightActivitiesListCall) Ids(ids int64) *FloodlightActivitiesListCall {
+func (c *FloodlightActivitiesListCall) Ids(ids []int64) *FloodlightActivitiesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -23445,7 +23617,11 @@ func (c *FloodlightActivitiesListCall) doRequest(alt string) (*http.Response, er
 		params.Set("advertiserId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["floodlightActivityGroupIds"]; ok {
-		params.Set("floodlightActivityGroupIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("floodlightActivityGroupIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["floodlightActivityGroupName"]; ok {
 		params.Set("floodlightActivityGroupName", fmt.Sprintf("%v", v))
@@ -23460,7 +23636,11 @@ func (c *FloodlightActivitiesListCall) doRequest(alt string) (*http.Response, er
 		params.Set("floodlightConfigurationId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -24196,7 +24376,7 @@ func (c *FloodlightActivityGroupsListCall) FloodlightConfigurationId(floodlightC
 // Ids sets the optional parameter "ids": Select only floodlight
 // activity groups with the specified IDs. Must specify either
 // advertiserId or floodlightConfigurationId for a non-empty result.
-func (c *FloodlightActivityGroupsListCall) Ids(ids int64) *FloodlightActivityGroupsListCall {
+func (c *FloodlightActivityGroupsListCall) Ids(ids []int64) *FloodlightActivityGroupsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -24290,7 +24470,11 @@ func (c *FloodlightActivityGroupsListCall) doRequest(alt string) (*http.Response
 		params.Set("floodlightConfigurationId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -24785,7 +24969,7 @@ func (r *FloodlightConfigurationsService) List(profileId int64) *FloodlightConfi
 // Ids sets the optional parameter "ids": Set of IDs of floodlight
 // configurations to retrieve. Required field; otherwise an empty list
 // will be returned.
-func (c *FloodlightConfigurationsListCall) Ids(ids int64) *FloodlightConfigurationsListCall {
+func (c *FloodlightConfigurationsListCall) Ids(ids []int64) *FloodlightConfigurationsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -24811,7 +24995,11 @@ func (c *FloodlightConfigurationsListCall) doRequest(alt string) (*http.Response
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -25232,7 +25420,7 @@ func (r *InventoryItemsService) List(profileId int64, projectId int64) *Inventor
 
 // Ids sets the optional parameter "ids": Select only inventory items
 // with these IDs.
-func (c *InventoryItemsListCall) Ids(ids int64) *InventoryItemsListCall {
+func (c *InventoryItemsListCall) Ids(ids []int64) *InventoryItemsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -25253,7 +25441,7 @@ func (c *InventoryItemsListCall) MaxResults(maxResults int64) *InventoryItemsLis
 
 // OrderId sets the optional parameter "orderId": Select only inventory
 // items that belong to specified orders.
-func (c *InventoryItemsListCall) OrderId(orderId int64) *InventoryItemsListCall {
+func (c *InventoryItemsListCall) OrderId(orderId []int64) *InventoryItemsListCall {
 	c.opt_["orderId"] = orderId
 	return c
 }
@@ -25267,7 +25455,7 @@ func (c *InventoryItemsListCall) PageToken(pageToken string) *InventoryItemsList
 
 // SiteId sets the optional parameter "siteId": Select only inventory
 // items that are associated with these sites.
-func (c *InventoryItemsListCall) SiteId(siteId int64) *InventoryItemsListCall {
+func (c *InventoryItemsListCall) SiteId(siteId []int64) *InventoryItemsListCall {
 	c.opt_["siteId"] = siteId
 	return c
 }
@@ -25315,7 +25503,11 @@ func (c *InventoryItemsListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["inPlan"]; ok {
 		params.Set("inPlan", fmt.Sprintf("%v", v))
@@ -25324,13 +25516,21 @@ func (c *InventoryItemsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["orderId"]; ok {
-		params.Set("orderId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("orderId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["siteId"]; ok {
-		params.Set("siteId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("siteId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["sortField"]; ok {
 		params.Set("sortField", fmt.Sprintf("%v", v))
@@ -26977,7 +27177,7 @@ func (c *OrderDocumentsListCall) Approved(approved bool) *OrderDocumentsListCall
 
 // Ids sets the optional parameter "ids": Select only order documents
 // with these IDs.
-func (c *OrderDocumentsListCall) Ids(ids int64) *OrderDocumentsListCall {
+func (c *OrderDocumentsListCall) Ids(ids []int64) *OrderDocumentsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -26991,7 +27191,7 @@ func (c *OrderDocumentsListCall) MaxResults(maxResults int64) *OrderDocumentsLis
 
 // OrderId sets the optional parameter "orderId": Select only order
 // documents for specified orders.
-func (c *OrderDocumentsListCall) OrderId(orderId int64) *OrderDocumentsListCall {
+func (c *OrderDocumentsListCall) OrderId(orderId []int64) *OrderDocumentsListCall {
 	c.opt_["orderId"] = orderId
 	return c
 }
@@ -27019,7 +27219,7 @@ func (c *OrderDocumentsListCall) SearchString(searchString string) *OrderDocumen
 
 // SiteId sets the optional parameter "siteId": Select only order
 // documents that are associated with these sites.
-func (c *OrderDocumentsListCall) SiteId(siteId int64) *OrderDocumentsListCall {
+func (c *OrderDocumentsListCall) SiteId(siteId []int64) *OrderDocumentsListCall {
 	c.opt_["siteId"] = siteId
 	return c
 }
@@ -27070,13 +27270,21 @@ func (c *OrderDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("approved", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["orderId"]; ok {
-		params.Set("orderId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("orderId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["pageToken"]; ok {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
@@ -27085,7 +27293,11 @@ func (c *OrderDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("searchString", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["siteId"]; ok {
-		params.Set("siteId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("siteId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["sortField"]; ok {
 		params.Set("sortField", fmt.Sprintf("%v", v))
@@ -27362,7 +27574,7 @@ func (r *OrdersService) List(profileId int64, projectId int64) *OrdersListCall {
 
 // Ids sets the optional parameter "ids": Select only orders with these
 // IDs.
-func (c *OrdersListCall) Ids(ids int64) *OrdersListCall {
+func (c *OrdersListCall) Ids(ids []int64) *OrdersListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -27395,7 +27607,7 @@ func (c *OrdersListCall) SearchString(searchString string) *OrdersListCall {
 
 // SiteId sets the optional parameter "siteId": Select only orders that
 // are associated with these site IDs.
-func (c *OrdersListCall) SiteId(siteId int64) *OrdersListCall {
+func (c *OrdersListCall) SiteId(siteId []int64) *OrdersListCall {
 	c.opt_["siteId"] = siteId
 	return c
 }
@@ -27443,7 +27655,11 @@ func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -27455,7 +27671,11 @@ func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("searchString", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["siteId"]; ok {
-		params.Set("siteId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("siteId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["sortField"]; ok {
 		params.Set("sortField", fmt.Sprintf("%v", v))
@@ -27811,7 +28031,7 @@ func (r *PlacementGroupsService) List(profileId int64) *PlacementGroupsListCall 
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only placement groups that belong to these advertisers.
-func (c *PlacementGroupsListCall) AdvertiserIds(advertiserIds int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) AdvertiserIds(advertiserIds []int64) *PlacementGroupsListCall {
 	c.opt_["advertiserIds"] = advertiserIds
 	return c
 }
@@ -27826,7 +28046,7 @@ func (c *PlacementGroupsListCall) Archived(archived bool) *PlacementGroupsListCa
 
 // CampaignIds sets the optional parameter "campaignIds": Select only
 // placement groups that belong to these campaigns.
-func (c *PlacementGroupsListCall) CampaignIds(campaignIds int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) CampaignIds(campaignIds []int64) *PlacementGroupsListCall {
 	c.opt_["campaignIds"] = campaignIds
 	return c
 }
@@ -27834,7 +28054,7 @@ func (c *PlacementGroupsListCall) CampaignIds(campaignIds int64) *PlacementGroup
 // ContentCategoryIds sets the optional parameter "contentCategoryIds":
 // Select only placement groups that are associated with these content
 // categories.
-func (c *PlacementGroupsListCall) ContentCategoryIds(contentCategoryIds int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) ContentCategoryIds(contentCategoryIds []int64) *PlacementGroupsListCall {
 	c.opt_["contentCategoryIds"] = contentCategoryIds
 	return c
 }
@@ -27842,14 +28062,14 @@ func (c *PlacementGroupsListCall) ContentCategoryIds(contentCategoryIds int64) *
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
 // Select only placement groups that are associated with these directory
 // sites.
-func (c *PlacementGroupsListCall) DirectorySiteIds(directorySiteIds int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) DirectorySiteIds(directorySiteIds []int64) *PlacementGroupsListCall {
 	c.opt_["directorySiteIds"] = directorySiteIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only placement groups
 // with these IDs.
-func (c *PlacementGroupsListCall) Ids(ids int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) Ids(ids []int64) *PlacementGroupsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -27919,7 +28139,7 @@ func (c *PlacementGroupsListCall) PlacementGroupType(placementGroupType string) 
 // PlacementStrategyIds sets the optional parameter
 // "placementStrategyIds": Select only placement groups that are
 // associated with these placement strategies.
-func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds []int64) *PlacementGroupsListCall {
 	c.opt_["placementStrategyIds"] = placementStrategyIds
 	return c
 }
@@ -27933,7 +28153,7 @@ func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds int6
 //   "PRICING_TYPE_CPM"
 //   "PRICING_TYPE_FLAT_RATE_CLICKS"
 //   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
-func (c *PlacementGroupsListCall) PricingTypes(pricingTypes string) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) PricingTypes(pricingTypes []string) *PlacementGroupsListCall {
 	c.opt_["pricingTypes"] = pricingTypes
 	return c
 }
@@ -27954,7 +28174,7 @@ func (c *PlacementGroupsListCall) SearchString(searchString string) *PlacementGr
 
 // SiteIds sets the optional parameter "siteIds": Select only placement
 // groups that are associated with these sites.
-func (c *PlacementGroupsListCall) SiteIds(siteIds int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) SiteIds(siteIds []int64) *PlacementGroupsListCall {
 	c.opt_["siteIds"] = siteIds
 	return c
 }
@@ -28002,22 +28222,42 @@ func (c *PlacementGroupsListCall) doRequest(alt string) (*http.Response, error) 
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserIds"]; ok {
-		params.Set("advertiserIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("advertiserIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["archived"]; ok {
 		params.Set("archived", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["campaignIds"]; ok {
-		params.Set("campaignIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("campaignIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["contentCategoryIds"]; ok {
-		params.Set("contentCategoryIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("contentCategoryIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["directorySiteIds"]; ok {
-		params.Set("directorySiteIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("directorySiteIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxEndDate"]; ok {
 		params.Set("maxEndDate", fmt.Sprintf("%v", v))
@@ -28041,16 +28281,28 @@ func (c *PlacementGroupsListCall) doRequest(alt string) (*http.Response, error) 
 		params.Set("placementGroupType", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["placementStrategyIds"]; ok {
-		params.Set("placementStrategyIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("placementStrategyIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["pricingTypes"]; ok {
-		params.Set("pricingTypes", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("pricingTypes", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["searchString"]; ok {
 		params.Set("searchString", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["siteIds"]; ok {
-		params.Set("siteIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("siteIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["sortField"]; ok {
 		params.Set("sortField", fmt.Sprintf("%v", v))
@@ -28807,7 +29059,7 @@ func (r *PlacementStrategiesService) List(profileId int64) *PlacementStrategiesL
 
 // Ids sets the optional parameter "ids": Select only placement
 // strategies with these IDs.
-func (c *PlacementStrategiesListCall) Ids(ids int64) *PlacementStrategiesListCall {
+func (c *PlacementStrategiesListCall) Ids(ids []int64) *PlacementStrategiesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -28883,7 +29135,11 @@ func (c *PlacementStrategiesListCall) doRequest(alt string) (*http.Response, err
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -29251,7 +29507,7 @@ func (c *PlacementsGeneratetagsCall) CampaignId(campaignId int64) *PlacementsGen
 
 // PlacementIds sets the optional parameter "placementIds": Generate
 // tags for these placements.
-func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds int64) *PlacementsGeneratetagsCall {
+func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds []int64) *PlacementsGeneratetagsCall {
 	c.opt_["placementIds"] = placementIds
 	return c
 }
@@ -29278,7 +29534,7 @@ func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds int64) *Placement
 //   "PLACEMENT_TAG_TRACKING"
 //   "PLACEMENT_TAG_TRACKING_IFRAME"
 //   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
-func (c *PlacementsGeneratetagsCall) TagFormats(tagFormats string) *PlacementsGeneratetagsCall {
+func (c *PlacementsGeneratetagsCall) TagFormats(tagFormats []string) *PlacementsGeneratetagsCall {
 	c.opt_["tagFormats"] = tagFormats
 	return c
 }
@@ -29307,10 +29563,18 @@ func (c *PlacementsGeneratetagsCall) doRequest(alt string) (*http.Response, erro
 		params.Set("campaignId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["placementIds"]; ok {
-		params.Set("placementIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("placementIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["tagFormats"]; ok {
-		params.Set("tagFormats", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("tagFormats", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -29654,7 +29918,7 @@ func (r *PlacementsService) List(profileId int64) *PlacementsListCall {
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only placements that belong to these advertisers.
-func (c *PlacementsListCall) AdvertiserIds(advertiserIds int64) *PlacementsListCall {
+func (c *PlacementsListCall) AdvertiserIds(advertiserIds []int64) *PlacementsListCall {
 	c.opt_["advertiserIds"] = advertiserIds
 	return c
 }
@@ -29669,7 +29933,7 @@ func (c *PlacementsListCall) Archived(archived bool) *PlacementsListCall {
 
 // CampaignIds sets the optional parameter "campaignIds": Select only
 // placements that belong to these campaigns.
-func (c *PlacementsListCall) CampaignIds(campaignIds int64) *PlacementsListCall {
+func (c *PlacementsListCall) CampaignIds(campaignIds []int64) *PlacementsListCall {
 	c.opt_["campaignIds"] = campaignIds
 	return c
 }
@@ -29688,7 +29952,7 @@ func (c *PlacementsListCall) CampaignIds(campaignIds int64) *PlacementsListCall 
 //   "IN_STREAM_VIDEO"
 //   "WEB"
 //   "WEB_INTERSTITIAL"
-func (c *PlacementsListCall) Compatibilities(compatibilities string) *PlacementsListCall {
+func (c *PlacementsListCall) Compatibilities(compatibilities []string) *PlacementsListCall {
 	c.opt_["compatibilities"] = compatibilities
 	return c
 }
@@ -29696,7 +29960,7 @@ func (c *PlacementsListCall) Compatibilities(compatibilities string) *Placements
 // ContentCategoryIds sets the optional parameter "contentCategoryIds":
 // Select only placements that are associated with these content
 // categories.
-func (c *PlacementsListCall) ContentCategoryIds(contentCategoryIds int64) *PlacementsListCall {
+func (c *PlacementsListCall) ContentCategoryIds(contentCategoryIds []int64) *PlacementsListCall {
 	c.opt_["contentCategoryIds"] = contentCategoryIds
 	return c
 }
@@ -29704,21 +29968,21 @@ func (c *PlacementsListCall) ContentCategoryIds(contentCategoryIds int64) *Place
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
 // Select only placements that are associated with these directory
 // sites.
-func (c *PlacementsListCall) DirectorySiteIds(directorySiteIds int64) *PlacementsListCall {
+func (c *PlacementsListCall) DirectorySiteIds(directorySiteIds []int64) *PlacementsListCall {
 	c.opt_["directorySiteIds"] = directorySiteIds
 	return c
 }
 
 // GroupIds sets the optional parameter "groupIds": Select only
 // placements that belong to these placement groups.
-func (c *PlacementsListCall) GroupIds(groupIds int64) *PlacementsListCall {
+func (c *PlacementsListCall) GroupIds(groupIds []int64) *PlacementsListCall {
 	c.opt_["groupIds"] = groupIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only placements with
 // these IDs.
-func (c *PlacementsListCall) Ids(ids int64) *PlacementsListCall {
+func (c *PlacementsListCall) Ids(ids []int64) *PlacementsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -29783,7 +30047,7 @@ func (c *PlacementsListCall) PaymentSource(paymentSource string) *PlacementsList
 // PlacementStrategyIds sets the optional parameter
 // "placementStrategyIds": Select only placements that are associated
 // with these placement strategies.
-func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds int64) *PlacementsListCall {
+func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds []int64) *PlacementsListCall {
 	c.opt_["placementStrategyIds"] = placementStrategyIds
 	return c
 }
@@ -29797,7 +30061,7 @@ func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds int64) *P
 //   "PRICING_TYPE_CPM"
 //   "PRICING_TYPE_FLAT_RATE_CLICKS"
 //   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
-func (c *PlacementsListCall) PricingTypes(pricingTypes string) *PlacementsListCall {
+func (c *PlacementsListCall) PricingTypes(pricingTypes []string) *PlacementsListCall {
 	c.opt_["pricingTypes"] = pricingTypes
 	return c
 }
@@ -29817,14 +30081,14 @@ func (c *PlacementsListCall) SearchString(searchString string) *PlacementsListCa
 
 // SiteIds sets the optional parameter "siteIds": Select only placements
 // that are associated with these sites.
-func (c *PlacementsListCall) SiteIds(siteIds int64) *PlacementsListCall {
+func (c *PlacementsListCall) SiteIds(siteIds []int64) *PlacementsListCall {
 	c.opt_["siteIds"] = siteIds
 	return c
 }
 
 // SizeIds sets the optional parameter "sizeIds": Select only placements
 // that are associated with these sizes.
-func (c *PlacementsListCall) SizeIds(sizeIds int64) *PlacementsListCall {
+func (c *PlacementsListCall) SizeIds(sizeIds []int64) *PlacementsListCall {
 	c.opt_["sizeIds"] = sizeIds
 	return c
 }
@@ -29872,28 +30136,56 @@ func (c *PlacementsListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserIds"]; ok {
-		params.Set("advertiserIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("advertiserIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["archived"]; ok {
 		params.Set("archived", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["campaignIds"]; ok {
-		params.Set("campaignIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("campaignIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["compatibilities"]; ok {
-		params.Set("compatibilities", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("compatibilities", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["contentCategoryIds"]; ok {
-		params.Set("contentCategoryIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("contentCategoryIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["directorySiteIds"]; ok {
-		params.Set("directorySiteIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("directorySiteIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["groupIds"]; ok {
-		params.Set("groupIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("groupIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxEndDate"]; ok {
 		params.Set("maxEndDate", fmt.Sprintf("%v", v))
@@ -29917,19 +30209,35 @@ func (c *PlacementsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("paymentSource", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["placementStrategyIds"]; ok {
-		params.Set("placementStrategyIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("placementStrategyIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["pricingTypes"]; ok {
-		params.Set("pricingTypes", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("pricingTypes", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["searchString"]; ok {
 		params.Set("searchString", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["siteIds"]; ok {
-		params.Set("siteIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("siteIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["sizeIds"]; ok {
-		params.Set("sizeIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("sizeIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["sortField"]; ok {
 		params.Set("sortField", fmt.Sprintf("%v", v))
@@ -30912,14 +31220,14 @@ func (r *ProjectsService) List(profileId int64) *ProjectsListCall {
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only projects with these advertiser IDs.
-func (c *ProjectsListCall) AdvertiserIds(advertiserIds int64) *ProjectsListCall {
+func (c *ProjectsListCall) AdvertiserIds(advertiserIds []int64) *ProjectsListCall {
 	c.opt_["advertiserIds"] = advertiserIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only projects with
 // these IDs.
-func (c *ProjectsListCall) Ids(ids int64) *ProjectsListCall {
+func (c *ProjectsListCall) Ids(ids []int64) *ProjectsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -30994,10 +31302,18 @@ func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["advertiserIds"]; ok {
-		params.Set("advertiserIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("advertiserIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -33775,21 +34091,21 @@ func (c *SitesListCall) Approved(approved bool) *SitesListCall {
 
 // CampaignIds sets the optional parameter "campaignIds": Select only
 // sites with these campaign IDs.
-func (c *SitesListCall) CampaignIds(campaignIds int64) *SitesListCall {
+func (c *SitesListCall) CampaignIds(campaignIds []int64) *SitesListCall {
 	c.opt_["campaignIds"] = campaignIds
 	return c
 }
 
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
 // Select only sites with these directory site IDs.
-func (c *SitesListCall) DirectorySiteIds(directorySiteIds int64) *SitesListCall {
+func (c *SitesListCall) DirectorySiteIds(directorySiteIds []int64) *SitesListCall {
 	c.opt_["directorySiteIds"] = directorySiteIds
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only sites with these
 // IDs.
-func (c *SitesListCall) Ids(ids int64) *SitesListCall {
+func (c *SitesListCall) Ids(ids []int64) *SitesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -33892,13 +34208,25 @@ func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("approved", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["campaignIds"]; ok {
-		params.Set("campaignIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("campaignIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["directorySiteIds"]; ok {
-		params.Set("directorySiteIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("directorySiteIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -34537,7 +34865,7 @@ func (c *SizesListCall) IabStandard(iabStandard bool) *SizesListCall {
 
 // Ids sets the optional parameter "ids": Select only sizes with these
 // IDs.
-func (c *SizesListCall) Ids(ids int64) *SizesListCall {
+func (c *SizesListCall) Ids(ids []int64) *SizesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -34576,7 +34904,11 @@ func (c *SizesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("iabStandard", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["width"]; ok {
 		params.Set("width", fmt.Sprintf("%v", v))
@@ -34888,7 +35220,7 @@ func (r *SubaccountsService) List(profileId int64) *SubaccountsListCall {
 
 // Ids sets the optional parameter "ids": Select only subaccounts with
 // these IDs.
-func (c *SubaccountsListCall) Ids(ids int64) *SubaccountsListCall {
+func (c *SubaccountsListCall) Ids(ids []int64) *SubaccountsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -34963,7 +35295,11 @@ func (c *SubaccountsListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -36127,7 +36463,7 @@ func (r *UserRolePermissionsService) List(profileId int64) *UserRolePermissionsL
 
 // Ids sets the optional parameter "ids": Select only user role
 // permissions with these IDs.
-func (c *UserRolePermissionsListCall) Ids(ids int64) *UserRolePermissionsListCall {
+func (c *UserRolePermissionsListCall) Ids(ids []int64) *UserRolePermissionsListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -36153,7 +36489,11 @@ func (c *UserRolePermissionsListCall) doRequest(alt string) (*http.Response, err
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -36550,7 +36890,7 @@ func (c *UserRolesListCall) AccountUserRoleOnly(accountUserRoleOnly bool) *UserR
 
 // Ids sets the optional parameter "ids": Select only user roles with
 // the specified IDs.
-func (c *UserRolesListCall) Ids(ids int64) *UserRolesListCall {
+func (c *UserRolesListCall) Ids(ids []int64) *UserRolesListCall {
 	c.opt_["ids"] = ids
 	return c
 }
@@ -36635,7 +36975,11 @@ func (c *UserRolesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("accountUserRoleOnly", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["ids"]; ok {
-		params.Set("ids", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]int64); ok {
+			for _, p := range v2 {
+				params.Add("ids", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))

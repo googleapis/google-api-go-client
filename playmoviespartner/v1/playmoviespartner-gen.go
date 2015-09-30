@@ -838,14 +838,14 @@ func (c *AccountsAvailsListCall) PageToken(pageToken string) *AccountsAvailsList
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsAvailsListCall) PphNames(pphNames string) *AccountsAvailsListCall {
+func (c *AccountsAvailsListCall) PphNames(pphNames []string) *AccountsAvailsListCall {
 	c.opt_["pphNames"] = pphNames
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsAvailsListCall) StudioNames(studioNames string) *AccountsAvailsListCall {
+func (c *AccountsAvailsListCall) StudioNames(studioNames []string) *AccountsAvailsListCall {
 	c.opt_["studioNames"] = studioNames
 	return c
 }
@@ -853,7 +853,7 @@ func (c *AccountsAvailsListCall) StudioNames(studioNames string) *AccountsAvails
 // Territories sets the optional parameter "territories": Filter Avails
 // that match (case-insensitive) any of the given country codes, using
 // the "ISO 3166-1 alpha-2" format (examples: "US", "us", "Us").
-func (c *AccountsAvailsListCall) Territories(territories string) *AccountsAvailsListCall {
+func (c *AccountsAvailsListCall) Territories(territories []string) *AccountsAvailsListCall {
 	c.opt_["territories"] = territories
 	return c
 }
@@ -867,7 +867,7 @@ func (c *AccountsAvailsListCall) Title(title string) *AccountsAvailsListCall {
 
 // VideoIds sets the optional parameter "videoIds": Filter Avails that
 // match any of the given `video_id`s.
-func (c *AccountsAvailsListCall) VideoIds(videoIds string) *AccountsAvailsListCall {
+func (c *AccountsAvailsListCall) VideoIds(videoIds []string) *AccountsAvailsListCall {
 	c.opt_["videoIds"] = videoIds
 	return c
 }
@@ -902,19 +902,35 @@ func (c *AccountsAvailsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pphNames"]; ok {
-		params.Set("pphNames", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("pphNames", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["studioNames"]; ok {
-		params.Set("studioNames", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("studioNames", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["territories"]; ok {
-		params.Set("territories", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("territories", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["title"]; ok {
 		params.Set("title", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["videoIds"]; ok {
-		params.Set("videoIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("videoIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -1178,7 +1194,7 @@ func (c *AccountsExperienceLocalesListCall) PageToken(pageToken string) *Account
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsExperienceLocalesListCall) PphNames(pphNames string) *AccountsExperienceLocalesListCall {
+func (c *AccountsExperienceLocalesListCall) PphNames(pphNames []string) *AccountsExperienceLocalesListCall {
 	c.opt_["pphNames"] = pphNames
 	return c
 }
@@ -1193,14 +1209,14 @@ func (c *AccountsExperienceLocalesListCall) PphNames(pphNames string) *AccountsE
 //   "STATUS_PROCESSING"
 //   "STATUS_UNFULFILLED"
 //   "STATUS_NOT_AVAILABLE"
-func (c *AccountsExperienceLocalesListCall) Status(status string) *AccountsExperienceLocalesListCall {
+func (c *AccountsExperienceLocalesListCall) Status(status []string) *AccountsExperienceLocalesListCall {
 	c.opt_["status"] = status
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsExperienceLocalesListCall) StudioNames(studioNames string) *AccountsExperienceLocalesListCall {
+func (c *AccountsExperienceLocalesListCall) StudioNames(studioNames []string) *AccountsExperienceLocalesListCall {
 	c.opt_["studioNames"] = studioNames
 	return c
 }
@@ -1248,13 +1264,25 @@ func (c *AccountsExperienceLocalesListCall) doRequest(alt string) (*http.Respons
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pphNames"]; ok {
-		params.Set("pphNames", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("pphNames", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("status", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["studioNames"]; ok {
-		params.Set("studioNames", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("studioNames", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["titleLevelEidr"]; ok {
 		params.Set("titleLevelEidr", fmt.Sprintf("%v", v))
@@ -1524,7 +1552,7 @@ func (c *AccountsOrdersListCall) PageToken(pageToken string) *AccountsOrdersList
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsOrdersListCall) PphNames(pphNames string) *AccountsOrdersListCall {
+func (c *AccountsOrdersListCall) PphNames(pphNames []string) *AccountsOrdersListCall {
 	c.opt_["pphNames"] = pphNames
 	return c
 }
@@ -1539,14 +1567,14 @@ func (c *AccountsOrdersListCall) PphNames(pphNames string) *AccountsOrdersListCa
 //   "STATUS_PROCESSING"
 //   "STATUS_UNFULFILLED"
 //   "STATUS_NOT_AVAILABLE"
-func (c *AccountsOrdersListCall) Status(status string) *AccountsOrdersListCall {
+func (c *AccountsOrdersListCall) Status(status []string) *AccountsOrdersListCall {
 	c.opt_["status"] = status
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsOrdersListCall) StudioNames(studioNames string) *AccountsOrdersListCall {
+func (c *AccountsOrdersListCall) StudioNames(studioNames []string) *AccountsOrdersListCall {
 	c.opt_["studioNames"] = studioNames
 	return c
 }
@@ -1584,13 +1612,25 @@ func (c *AccountsOrdersListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pphNames"]; ok {
-		params.Set("pphNames", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("pphNames", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["status"]; ok {
-		params.Set("status", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("status", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["studioNames"]; ok {
-		params.Set("studioNames", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("studioNames", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -1716,7 +1756,7 @@ func (r *AccountsStoreInfosService) List(accountId string) *AccountsStoreInfosLi
 // Countries sets the optional parameter "countries": Filter StoreInfos
 // that match (case-insensitive) any of the given country codes, using
 // the "ISO 3166-1 alpha-2" format (examples: "US", "us", "Us").
-func (c *AccountsStoreInfosListCall) Countries(countries string) *AccountsStoreInfosListCall {
+func (c *AccountsStoreInfosListCall) Countries(countries []string) *AccountsStoreInfosListCall {
 	c.opt_["countries"] = countries
 	return c
 }
@@ -1744,14 +1784,14 @@ func (c *AccountsStoreInfosListCall) PageToken(pageToken string) *AccountsStoreI
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsStoreInfosListCall) PphNames(pphNames string) *AccountsStoreInfosListCall {
+func (c *AccountsStoreInfosListCall) PphNames(pphNames []string) *AccountsStoreInfosListCall {
 	c.opt_["pphNames"] = pphNames
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsStoreInfosListCall) StudioNames(studioNames string) *AccountsStoreInfosListCall {
+func (c *AccountsStoreInfosListCall) StudioNames(studioNames []string) *AccountsStoreInfosListCall {
 	c.opt_["studioNames"] = studioNames
 	return c
 }
@@ -1766,7 +1806,7 @@ func (c *AccountsStoreInfosListCall) VideoId(videoId string) *AccountsStoreInfos
 
 // VideoIds sets the optional parameter "videoIds": Filter StoreInfos
 // that match any of the given `video_id`s.
-func (c *AccountsStoreInfosListCall) VideoIds(videoIds string) *AccountsStoreInfosListCall {
+func (c *AccountsStoreInfosListCall) VideoIds(videoIds []string) *AccountsStoreInfosListCall {
 	c.opt_["videoIds"] = videoIds
 	return c
 }
@@ -1792,7 +1832,11 @@ func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, erro
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["countries"]; ok {
-		params.Set("countries", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("countries", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["name"]; ok {
 		params.Set("name", fmt.Sprintf("%v", v))
@@ -1804,16 +1848,28 @@ func (c *AccountsStoreInfosListCall) doRequest(alt string) (*http.Response, erro
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pphNames"]; ok {
-		params.Set("pphNames", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("pphNames", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["studioNames"]; ok {
-		params.Set("studioNames", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("studioNames", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["videoId"]; ok {
 		params.Set("videoId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["videoIds"]; ok {
-		params.Set("videoIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("videoIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

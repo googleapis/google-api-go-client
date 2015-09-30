@@ -4943,7 +4943,7 @@ func (c *EventsListCall) PageToken(pageToken string) *EventsListCall {
 // as propertyName=value. Matches only private properties. This
 // parameter might be repeated multiple times to return events that
 // match all given constraints.
-func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty string) *EventsListCall {
+func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty []string) *EventsListCall {
 	c.opt_["privateExtendedProperty"] = privateExtendedProperty
 	return c
 }
@@ -4961,7 +4961,7 @@ func (c *EventsListCall) Q(q string) *EventsListCall {
 // propertyName=value. Matches only shared properties. This parameter
 // might be repeated multiple times to return events that match all
 // given constraints.
-func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty string) *EventsListCall {
+func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty []string) *EventsListCall {
 	c.opt_["sharedExtendedProperty"] = sharedExtendedProperty
 	return c
 }
@@ -5100,13 +5100,21 @@ func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["privateExtendedProperty"]; ok {
-		params.Set("privateExtendedProperty", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("privateExtendedProperty", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["q"]; ok {
 		params.Set("q", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["sharedExtendedProperty"]; ok {
-		params.Set("sharedExtendedProperty", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("sharedExtendedProperty", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["showDeleted"]; ok {
 		params.Set("showDeleted", fmt.Sprintf("%v", v))
@@ -5987,7 +5995,7 @@ func (c *EventsWatchCall) PageToken(pageToken string) *EventsWatchCall {
 // as propertyName=value. Matches only private properties. This
 // parameter might be repeated multiple times to return events that
 // match all given constraints.
-func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty string) *EventsWatchCall {
+func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty []string) *EventsWatchCall {
 	c.opt_["privateExtendedProperty"] = privateExtendedProperty
 	return c
 }
@@ -6005,7 +6013,7 @@ func (c *EventsWatchCall) Q(q string) *EventsWatchCall {
 // propertyName=value. Matches only shared properties. This parameter
 // might be repeated multiple times to return events that match all
 // given constraints.
-func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty string) *EventsWatchCall {
+func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty []string) *EventsWatchCall {
 	c.opt_["sharedExtendedProperty"] = sharedExtendedProperty
 	return c
 }
@@ -6149,13 +6157,21 @@ func (c *EventsWatchCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["privateExtendedProperty"]; ok {
-		params.Set("privateExtendedProperty", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("privateExtendedProperty", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["q"]; ok {
 		params.Set("q", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["sharedExtendedProperty"]; ok {
-		params.Set("sharedExtendedProperty", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("sharedExtendedProperty", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["showDeleted"]; ok {
 		params.Set("showDeleted", fmt.Sprintf("%v", v))

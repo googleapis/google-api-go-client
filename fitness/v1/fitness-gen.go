@@ -1282,7 +1282,7 @@ func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall 
 // DataTypeName sets the optional parameter "dataTypeName": The names of
 // data types to include in the list. If not specified, all data sources
 // will be returned.
-func (c *UsersDataSourcesListCall) DataTypeName(dataTypeName string) *UsersDataSourcesListCall {
+func (c *UsersDataSourcesListCall) DataTypeName(dataTypeName []string) *UsersDataSourcesListCall {
 	c.opt_["dataTypeName"] = dataTypeName
 	return c
 }
@@ -1308,7 +1308,11 @@ func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error)
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["dataTypeName"]; ok {
-		params.Set("dataTypeName", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("dataTypeName", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

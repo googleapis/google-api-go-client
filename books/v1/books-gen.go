@@ -4233,7 +4233,7 @@ func (r *LayersAnnotationDataService) List(volumeId string, layerId string, cont
 // AnnotationDataId sets the optional parameter "annotationDataId": The
 // list of Annotation Data Ids to retrieve. Pagination is ignored if
 // this is set.
-func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId string) *LayersAnnotationDataListCall {
+func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId []string) *LayersAnnotationDataListCall {
 	c.opt_["annotationDataId"] = annotationDataId
 	return c
 }
@@ -4326,7 +4326,11 @@ func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, er
 	params.Set("alt", alt)
 	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
 	if v, ok := c.opt_["annotationDataId"]; ok {
-		params.Set("annotationDataId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("annotationDataId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["h"]; ok {
 		params.Set("h", fmt.Sprintf("%v", v))
@@ -5330,7 +5334,7 @@ func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksve
 //
 // Possible values:
 //   "RENTALS" - Client supports rentals.
-func (c *MyconfigSyncVolumeLicensesCall) Features(features string) *MyconfigSyncVolumeLicensesCall {
+func (c *MyconfigSyncVolumeLicensesCall) Features(features []string) *MyconfigSyncVolumeLicensesCall {
 	c.opt_["features"] = features
 	return c
 }
@@ -5351,7 +5355,7 @@ func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *Myco
 
 // VolumeIds sets the optional parameter "volumeIds": The volume(s) to
 // request download restrictions for.
-func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds string) *MyconfigSyncVolumeLicensesCall {
+func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds []string) *MyconfigSyncVolumeLicensesCall {
 	c.opt_["volumeIds"] = volumeIds
 	return c
 }
@@ -5380,7 +5384,11 @@ func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, 
 	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
 	params.Set("source", fmt.Sprintf("%v", c.source))
 	if v, ok := c.opt_["features"]; ok {
-		params.Set("features", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("features", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
@@ -5389,7 +5397,11 @@ func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, 
 		params.Set("showPreorders", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["volumeIds"]; ok {
-		params.Set("volumeIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("volumeIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -5843,7 +5855,7 @@ func (c *MylibraryAnnotationsListCall) LayerId(layerId string) *MylibraryAnnotat
 
 // LayerIds sets the optional parameter "layerIds": The layer ID(s) to
 // limit annotation by.
-func (c *MylibraryAnnotationsListCall) LayerIds(layerIds string) *MylibraryAnnotationsListCall {
+func (c *MylibraryAnnotationsListCall) LayerIds(layerIds []string) *MylibraryAnnotationsListCall {
 	c.opt_["layerIds"] = layerIds
 	return c
 }
@@ -5927,7 +5939,11 @@ func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, er
 		params.Set("layerId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["layerIds"]; ok {
-		params.Set("layerIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("layerIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxResults"]; ok {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
@@ -7604,7 +7620,7 @@ func (r *OnboardingService) ListCategoryVolumes() *OnboardingListCategoryVolumes
 
 // CategoryId sets the optional parameter "categoryId": List of category
 // ids requested.
-func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId string) *OnboardingListCategoryVolumesCall {
+func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId []string) *OnboardingListCategoryVolumesCall {
 	c.opt_["categoryId"] = categoryId
 	return c
 }
@@ -7664,7 +7680,11 @@ func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Respons
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["categoryId"]; ok {
-		params.Set("categoryId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("categoryId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
@@ -9018,7 +9038,7 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 //   "RENTED" - User-rented books
 //   "SAMPLE" - Sample books
 //   "UPLOADED" - User uploaded books
-func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod string) *VolumesMybooksListCall {
+func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod []string) *VolumesMybooksListCall {
 	c.opt_["acquireMethod"] = acquireMethod
 	return c
 }
@@ -9046,7 +9066,7 @@ func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksLis
 //   "COMPLETED_FAILED" - The volume processing hase failed.
 //   "COMPLETED_SUCCESS" - The volume processing was completed.
 //   "RUNNING" - The volume processing is not completed.
-func (c *VolumesMybooksListCall) ProcessingState(processingState string) *VolumesMybooksListCall {
+func (c *VolumesMybooksListCall) ProcessingState(processingState []string) *VolumesMybooksListCall {
 	c.opt_["processingState"] = processingState
 	return c
 }
@@ -9086,7 +9106,11 @@ func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["acquireMethod"]; ok {
-		params.Set("acquireMethod", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("acquireMethod", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["locale"]; ok {
 		params.Set("locale", fmt.Sprintf("%v", v))
@@ -9095,7 +9119,11 @@ func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["processingState"]; ok {
-		params.Set("processingState", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("processingState", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
@@ -9528,7 +9556,7 @@ func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseru
 //   "COMPLETED_FAILED" - The volume processing hase failed.
 //   "COMPLETED_SUCCESS" - The volume processing was completed.
 //   "RUNNING" - The volume processing is not completed.
-func (c *VolumesUseruploadedListCall) ProcessingState(processingState string) *VolumesUseruploadedListCall {
+func (c *VolumesUseruploadedListCall) ProcessingState(processingState []string) *VolumesUseruploadedListCall {
 	c.opt_["processingState"] = processingState
 	return c
 }
@@ -9550,7 +9578,7 @@ func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseru
 // VolumeId sets the optional parameter "volumeId": The ids of the
 // volumes to be returned. If not specified all that match the
 // processingState are returned.
-func (c *VolumesUseruploadedListCall) VolumeId(volumeId string) *VolumesUseruploadedListCall {
+func (c *VolumesUseruploadedListCall) VolumeId(volumeId []string) *VolumesUseruploadedListCall {
 	c.opt_["volumeId"] = volumeId
 	return c
 }
@@ -9582,7 +9610,11 @@ func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, err
 		params.Set("maxResults", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["processingState"]; ok {
-		params.Set("processingState", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("processingState", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["source"]; ok {
 		params.Set("source", fmt.Sprintf("%v", v))
@@ -9591,7 +9623,11 @@ func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, err
 		params.Set("startIndex", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["volumeId"]; ok {
-		params.Set("volumeId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("volumeId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

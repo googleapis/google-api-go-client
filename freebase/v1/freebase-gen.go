@@ -228,14 +228,14 @@ func (c *ReconcileCall) Confidence(confidence float64) *ReconcileCall {
 
 // Kind sets the optional parameter "kind": Classifications of entity
 // e.g. type, category, title.
-func (c *ReconcileCall) Kind(kind string) *ReconcileCall {
+func (c *ReconcileCall) Kind(kind []string) *ReconcileCall {
 	c.opt_["kind"] = kind
 	return c
 }
 
 // Lang sets the optional parameter "lang": Languages for names and
 // values. First language is used for display. Default is 'en'.
-func (c *ReconcileCall) Lang(lang string) *ReconcileCall {
+func (c *ReconcileCall) Lang(lang []string) *ReconcileCall {
 	c.opt_["lang"] = lang
 	return c
 }
@@ -256,7 +256,7 @@ func (c *ReconcileCall) Name(name string) *ReconcileCall {
 // Prop sets the optional parameter "prop": Property values for entity
 // formatted as
 // :
-func (c *ReconcileCall) Prop(prop string) *ReconcileCall {
+func (c *ReconcileCall) Prop(prop []string) *ReconcileCall {
 	c.opt_["prop"] = prop
 	return c
 }
@@ -285,10 +285,18 @@ func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("confidence", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["kind"]; ok {
-		params.Set("kind", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("kind", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["lang"]; ok {
-		params.Set("lang", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("lang", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["limit"]; ok {
 		params.Set("limit", fmt.Sprintf("%v", v))
@@ -297,7 +305,11 @@ func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("name", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["prop"]; ok {
-		params.Set("prop", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("prop", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -419,7 +431,7 @@ func (c *SearchCall) Cursor(cursor int64) *SearchCall {
 
 // Domain sets the optional parameter "domain": Restrict to topics with
 // this Freebase domain id.
-func (c *SearchCall) Domain(domain string) *SearchCall {
+func (c *SearchCall) Domain(domain []string) *SearchCall {
 	c.opt_["domain"] = domain
 	return c
 }
@@ -447,7 +459,7 @@ func (c *SearchCall) Exact(exact bool) *SearchCall {
 
 // Filter sets the optional parameter "filter": A filter to apply to the
 // query.
-func (c *SearchCall) Filter(filter string) *SearchCall {
+func (c *SearchCall) Filter(filter []string) *SearchCall {
 	c.opt_["filter"] = filter
 	return c
 }
@@ -491,7 +503,7 @@ func (c *SearchCall) Indent(indent bool) *SearchCall {
 
 // Lang sets the optional parameter "lang": The code of the language to
 // run the query with. Default is 'en'.
-func (c *SearchCall) Lang(lang string) *SearchCall {
+func (c *SearchCall) Lang(lang []string) *SearchCall {
 	c.opt_["lang"] = lang
 	return c
 }
@@ -505,7 +517,7 @@ func (c *SearchCall) Limit(limit int64) *SearchCall {
 
 // Mid sets the optional parameter "mid": A mid to use instead of a
 // query.
-func (c *SearchCall) Mid(mid string) *SearchCall {
+func (c *SearchCall) Mid(mid []string) *SearchCall {
 	c.opt_["mid"] = mid
 	return c
 }
@@ -572,20 +584,20 @@ func (c *SearchCall) Stemmed(stemmed bool) *SearchCall {
 
 // Type sets the optional parameter "type": Restrict to topics with this
 // Freebase type id.
-func (c *SearchCall) Type(type_ string) *SearchCall {
+func (c *SearchCall) Type(type_ []string) *SearchCall {
 	c.opt_["type"] = type_
 	return c
 }
 
 // With sets the optional parameter "with": A rule to match against.
-func (c *SearchCall) With(with string) *SearchCall {
+func (c *SearchCall) With(with []string) *SearchCall {
 	c.opt_["with"] = with
 	return c
 }
 
 // Without sets the optional parameter "without": A rule to not match
 // against.
-func (c *SearchCall) Without(without string) *SearchCall {
+func (c *SearchCall) Without(without []string) *SearchCall {
 	c.opt_["without"] = without
 	return c
 }
@@ -620,7 +632,11 @@ func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("cursor", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["domain"]; ok {
-		params.Set("domain", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("domain", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["encode"]; ok {
 		params.Set("encode", fmt.Sprintf("%v", v))
@@ -629,7 +645,11 @@ func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("exact", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("filter", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["format"]; ok {
 		params.Set("format", fmt.Sprintf("%v", v))
@@ -641,13 +661,21 @@ func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("indent", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["lang"]; ok {
-		params.Set("lang", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("lang", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["limit"]; ok {
 		params.Set("limit", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["mid"]; ok {
-		params.Set("mid", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("mid", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["mql_output"]; ok {
 		params.Set("mql_output", fmt.Sprintf("%v", v))
@@ -671,13 +699,25 @@ func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("stemmed", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["type"]; ok {
-		params.Set("type", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("type", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["with"]; ok {
-		params.Set("with", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("with", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["without"]; ok {
-		params.Set("without", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("without", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

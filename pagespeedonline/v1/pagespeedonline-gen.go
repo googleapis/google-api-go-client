@@ -319,7 +319,7 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 
 // Rule sets the optional parameter "rule": A PageSpeed rule to run; if
 // none are given, all rules are run
-func (c *PagespeedapiRunpagespeedCall) Rule(rule string) *PagespeedapiRunpagespeedCall {
+func (c *PagespeedapiRunpagespeedCall) Rule(rule []string) *PagespeedapiRunpagespeedCall {
 	c.opt_["rule"] = rule
 	return c
 }
@@ -370,7 +370,11 @@ func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, er
 		params.Set("locale", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["rule"]; ok {
-		params.Set("rule", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("rule", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["screenshot"]; ok {
 		params.Set("screenshot", fmt.Sprintf("%v", v))

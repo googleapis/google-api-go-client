@@ -2581,14 +2581,14 @@ func (r *CirclesService) AddPeople(circleId string) *CirclesAddPeopleCall {
 
 // Email sets the optional parameter "email": Email of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesAddPeopleCall) Email(email string) *CirclesAddPeopleCall {
+func (c *CirclesAddPeopleCall) Email(email []string) *CirclesAddPeopleCall {
 	c.opt_["email"] = email
 	return c
 }
 
 // UserId sets the optional parameter "userId": IDs of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesAddPeopleCall) UserId(userId string) *CirclesAddPeopleCall {
+func (c *CirclesAddPeopleCall) UserId(userId []string) *CirclesAddPeopleCall {
 	c.opt_["userId"] = userId
 	return c
 }
@@ -2614,10 +2614,18 @@ func (c *CirclesAddPeopleCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["email"]; ok {
-		params.Set("email", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("email", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["userId"]; ok {
-		params.Set("userId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("userId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -3227,14 +3235,14 @@ func (r *CirclesService) RemovePeople(circleId string) *CirclesRemovePeopleCall 
 
 // Email sets the optional parameter "email": Email of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesRemovePeopleCall) Email(email string) *CirclesRemovePeopleCall {
+func (c *CirclesRemovePeopleCall) Email(email []string) *CirclesRemovePeopleCall {
 	c.opt_["email"] = email
 	return c
 }
 
 // UserId sets the optional parameter "userId": IDs of the people to
 // remove from the circle. Optional, can be repeated.
-func (c *CirclesRemovePeopleCall) UserId(userId string) *CirclesRemovePeopleCall {
+func (c *CirclesRemovePeopleCall) UserId(userId []string) *CirclesRemovePeopleCall {
 	c.opt_["userId"] = userId
 	return c
 }
@@ -3260,10 +3268,18 @@ func (c *CirclesRemovePeopleCall) doRequest(alt string) (*http.Response, error) 
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["email"]; ok {
-		params.Set("email", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("email", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["userId"]; ok {
-		params.Set("userId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("userId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

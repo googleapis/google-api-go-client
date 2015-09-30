@@ -3537,21 +3537,21 @@ func (r *AccountsContainersMoveFoldersService) Update(accountId string, containe
 
 // TagId sets the optional parameter "tagId": The tags to be moved to
 // the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) TagId(tagId string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) TagId(tagId []string) *AccountsContainersMoveFoldersUpdateCall {
 	c.opt_["tagId"] = tagId
 	return c
 }
 
 // TriggerId sets the optional parameter "triggerId": The triggers to be
 // moved to the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) TriggerId(triggerId string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) TriggerId(triggerId []string) *AccountsContainersMoveFoldersUpdateCall {
 	c.opt_["triggerId"] = triggerId
 	return c
 }
 
 // VariableId sets the optional parameter "variableId": The variables to
 // be moved to the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) VariableId(variableId string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) VariableId(variableId []string) *AccountsContainersMoveFoldersUpdateCall {
 	c.opt_["variableId"] = variableId
 	return c
 }
@@ -3577,13 +3577,25 @@ func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.R
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["tagId"]; ok {
-		params.Set("tagId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("tagId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["triggerId"]; ok {
-		params.Set("triggerId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("triggerId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["variableId"]; ok {
-		params.Set("variableId", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("variableId", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))

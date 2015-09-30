@@ -1319,7 +1319,7 @@ func (c *CompaniesGetCall) OrderBy(orderBy string) *CompaniesGetCall {
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *CompaniesGetCall) RequestMetadataExperimentIds(requestMetadataExperimentIds string) *CompaniesGetCall {
+func (c *CompaniesGetCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *CompaniesGetCall {
 	c.opt_["requestMetadata.experimentIds"] = requestMetadataExperimentIds
 	return c
 }
@@ -1413,7 +1413,11 @@ func (c *CompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("orderBy", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["requestMetadata.experimentIds"]; ok {
-		params.Set("requestMetadata.experimentIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("requestMetadata.experimentIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["requestMetadata.locale"]; ok {
 		params.Set("requestMetadata.locale", fmt.Sprintf("%v", v))
@@ -1586,7 +1590,7 @@ func (c *CompaniesListCall) CompanyName(companyName string) *CompaniesListCall {
 //   "GPSM_HELP_WITH_ADVERTISING"
 //   "GPSM_HELP_WITH_WEBSITE"
 //   "GPSM_NO_WEBSITE"
-func (c *CompaniesListCall) GpsMotivations(gpsMotivations string) *CompaniesListCall {
+func (c *CompaniesListCall) GpsMotivations(gpsMotivations []string) *CompaniesListCall {
 	c.opt_["gpsMotivations"] = gpsMotivations
 	return c
 }
@@ -1606,7 +1610,7 @@ func (c *CompaniesListCall) GpsMotivations(gpsMotivations string) *CompaniesList
 //   "I_RETAIL"
 //   "I_TECHNOLOGY"
 //   "I_TRAVEL"
-func (c *CompaniesListCall) Industries(industries string) *CompaniesListCall {
+func (c *CompaniesListCall) Industries(industries []string) *CompaniesListCall {
 	c.opt_["industries"] = industries
 	return c
 }
@@ -1615,7 +1619,7 @@ func (c *CompaniesListCall) Industries(industries string) *CompaniesListCall {
 // language codes that company can support. Only primary language
 // subtags are accepted as defined by BCP 47 (IETF BCP 47, "Tags for
 // Identifying Languages").
-func (c *CompaniesListCall) LanguageCodes(languageCodes string) *CompaniesListCall {
+func (c *CompaniesListCall) LanguageCodes(languageCodes []string) *CompaniesListCall {
 	c.opt_["languageCodes"] = languageCodes
 	return c
 }
@@ -1706,7 +1710,7 @@ func (c *CompaniesListCall) PageToken(pageToken string) *CompaniesListCall {
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *CompaniesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds string) *CompaniesListCall {
+func (c *CompaniesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *CompaniesListCall {
 	c.opt_["requestMetadata.experimentIds"] = requestMetadataExperimentIds
 	return c
 }
@@ -1769,7 +1773,7 @@ func (c *CompaniesListCall) RequestMetadataUserOverridesUserId(requestMetadataUs
 //   "S_AN_ENHANCED_WEBSITE"
 //   "S_AN_ONLINE_MARKETING_PLAN"
 //   "S_MOBILE_AND_VIDEO_ADS"
-func (c *CompaniesListCall) Services(services string) *CompaniesListCall {
+func (c *CompaniesListCall) Services(services []string) *CompaniesListCall {
 	c.opt_["services"] = services
 	return c
 }
@@ -1819,13 +1823,25 @@ func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("companyName", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["gpsMotivations"]; ok {
-		params.Set("gpsMotivations", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("gpsMotivations", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["industries"]; ok {
-		params.Set("industries", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("industries", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["languageCodes"]; ok {
-		params.Set("languageCodes", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("languageCodes", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["maxMonthlyBudget.currencyCode"]; ok {
 		params.Set("maxMonthlyBudget.currencyCode", fmt.Sprintf("%v", v))
@@ -1855,7 +1871,11 @@ func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("pageToken", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["requestMetadata.experimentIds"]; ok {
-		params.Set("requestMetadata.experimentIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("requestMetadata.experimentIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["requestMetadata.locale"]; ok {
 		params.Set("requestMetadata.locale", fmt.Sprintf("%v", v))
@@ -1876,7 +1896,11 @@ func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 		params.Set("requestMetadata.userOverrides.userId", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["services"]; ok {
-		params.Set("services", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("services", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["view"]; ok {
 		params.Set("view", fmt.Sprintf("%v", v))
@@ -2289,7 +2313,7 @@ func (r *UserStatesService) List() *UserStatesListCall {
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *UserStatesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds string) *UserStatesListCall {
+func (c *UserStatesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *UserStatesListCall {
 	c.opt_["requestMetadata.experimentIds"] = requestMetadataExperimentIds
 	return c
 }
@@ -2363,7 +2387,11 @@ func (c *UserStatesListCall) doRequest(alt string) (*http.Response, error) {
 	params := make(url.Values)
 	params.Set("alt", alt)
 	if v, ok := c.opt_["requestMetadata.experimentIds"]; ok {
-		params.Set("requestMetadata.experimentIds", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("requestMetadata.experimentIds", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["requestMetadata.locale"]; ok {
 		params.Set("requestMetadata.locale", fmt.Sprintf("%v", v))

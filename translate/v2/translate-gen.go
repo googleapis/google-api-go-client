@@ -437,7 +437,7 @@ func (r *TranslationsService) List(q []string, target string) *TranslationsListC
 
 // Cid sets the optional parameter "cid": The customization id for
 // translate
-func (c *TranslationsListCall) Cid(cid string) *TranslationsListCall {
+func (c *TranslationsListCall) Cid(cid []string) *TranslationsListCall {
 	c.opt_["cid"] = cid
 	return c
 }
@@ -484,7 +484,11 @@ func (c *TranslationsListCall) doRequest(alt string) (*http.Response, error) {
 		params.Add("q", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["cid"]; ok {
-		params.Set("cid", fmt.Sprintf("%v", v))
+		if v2, ok := v.([]string); ok {
+			for _, p := range v2 {
+				params.Add("cid", fmt.Sprintf("%v", p))
+			}
+		}
 	}
 	if v, ok := c.opt_["format"]; ok {
 		params.Set("format", fmt.Sprintf("%v", v))

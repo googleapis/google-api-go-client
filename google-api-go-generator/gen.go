@@ -1542,7 +1542,11 @@ func (meth *Method) generateCode() {
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
 		paramName := np.Get(validGoIdentifer(opt.name))
-		p("func (c *%s) %s(%s %s) *%s {\n", callName, setter, paramName, opt.GoType(), callName)
+		goType := opt.GoType()
+		if opt.IsRepeated() {
+			goType = "[]" + goType
+		}
+		p("func (c *%s) %s(%s %s) *%s {\n", callName, setter, paramName, goType, callName)
 		p("c.opt_[%q] = %s\n", opt.name, paramName)
 		p("return c\n")
 		p("}\n")
@@ -1628,8 +1632,17 @@ func (meth *Method) generateCode() {
 	opts := meth.OptParams()
 	opts = append(opts, &Param{name: "fields"})
 	for _, p := range opts {
-		pn("if v, ok := c.opt_[%q]; ok { params.Set(%q, fmt.Sprintf(\"%%v\", v)) }",
-			p.name, p.name)
+		pn("if v, ok := c.opt_[%q]; ok {", p.name)
+		if p.IsRepeated() {
+			pn("if v2, ok := v.([]%v); ok {", p.GoType())
+			pn(" for _, p := range v2 {")
+			pn("  params.Add(%q, fmt.Sprintf(\"%%v\", p))", p.name)
+			pn(" }")
+			pn("}")
+		} else {
+			pn("params.Set(%q, fmt.Sprintf(\"%%v\", v))", p.name)
+		}
+		pn("}")
 	}
 
 	p("urls := googleapi.ResolveRelative(c.s.BasePath, %q)\n", jstr(meth.m, "path"))

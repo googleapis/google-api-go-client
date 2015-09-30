@@ -43,6 +43,16 @@ const apiName = "prediction"
 const apiVersion = "v1.4"
 const basePath = "https://www.googleapis.com/prediction/v1.4/"
 
+type urlParams map[string][]string
+
+func (u urlParams) set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u urlParams) setMulti(key string, values []string) {
+	u[key] = append([]string{}, values...)
+}
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage your data and permissions in Google Cloud Storage
@@ -387,29 +397,29 @@ type HostedmodelsPredictCall struct {
 	s               *Service
 	hostedModelName string
 	input           *Input
-	opt_            map[string]interface{}
+	urlParams_      urlParams
 	ctx_            context.Context
 }
 
 // Predict: Submit input and request an output against a hosted model.
 func (r *HostedmodelsService) Predict(hostedModelName string, input *Input) *HostedmodelsPredictCall {
-	c := &HostedmodelsPredictCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &HostedmodelsPredictCall{s: r.s, urlParams_: make(urlParams)}
 	c.hostedModelName = hostedModelName
 	c.input = input
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *HostedmodelsPredictCall) Fields(s ...googleapi.Field) *HostedmodelsPredictCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *HostedmodelsPredictCall) Context(ctx context.Context) *HostedmodelsPredictCall {
 	c.ctx_ = ctx
 	return c
@@ -422,13 +432,9 @@ func (c *HostedmodelsPredictCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "hostedmodels/{hostedModelName}/predict")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"hostedModelName": c.hostedModelName,
@@ -508,30 +514,30 @@ func (c *HostedmodelsPredictCall) Do() (*Output, error) {
 // method id "prediction.trainedmodels.delete":
 
 type TrainedmodelsDeleteCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Delete: Delete a trained model.
 func (r *TrainedmodelsService) Delete(id string) *TrainedmodelsDeleteCall {
-	c := &TrainedmodelsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TrainedmodelsDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TrainedmodelsDeleteCall) Fields(s ...googleapi.Field) *TrainedmodelsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TrainedmodelsDeleteCall) Context(ctx context.Context) *TrainedmodelsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -539,13 +545,9 @@ func (c *TrainedmodelsDeleteCall) Context(ctx context.Context) *TrainedmodelsDel
 
 func (c *TrainedmodelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "trainedmodels/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -594,24 +596,25 @@ func (c *TrainedmodelsDeleteCall) Do() error {
 // method id "prediction.trainedmodels.get":
 
 type TrainedmodelsGetCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Check training status of your model.
 func (r *TrainedmodelsService) Get(id string) *TrainedmodelsGetCall {
-	c := &TrainedmodelsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TrainedmodelsGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TrainedmodelsGetCall) Fields(s ...googleapi.Field) *TrainedmodelsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -621,13 +624,13 @@ func (c *TrainedmodelsGetCall) Fields(s ...googleapi.Field) *TrainedmodelsGetCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TrainedmodelsGetCall) IfNoneMatch(entityTag string) *TrainedmodelsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TrainedmodelsGetCall) Context(ctx context.Context) *TrainedmodelsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -635,20 +638,16 @@ func (c *TrainedmodelsGetCall) Context(ctx context.Context) *TrainedmodelsGetCal
 
 func (c *TrainedmodelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "trainedmodels/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -720,30 +719,30 @@ func (c *TrainedmodelsGetCall) Do() (*Training, error) {
 // method id "prediction.trainedmodels.insert":
 
 type TrainedmodelsInsertCall struct {
-	s        *Service
-	training *Training
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s          *Service
+	training   *Training
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Insert: Begin training your model.
 func (r *TrainedmodelsService) Insert(training *Training) *TrainedmodelsInsertCall {
-	c := &TrainedmodelsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TrainedmodelsInsertCall{s: r.s, urlParams_: make(urlParams)}
 	c.training = training
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TrainedmodelsInsertCall) Fields(s ...googleapi.Field) *TrainedmodelsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TrainedmodelsInsertCall) Context(ctx context.Context) *TrainedmodelsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -756,13 +755,9 @@ func (c *TrainedmodelsInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "trainedmodels")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -832,32 +827,32 @@ func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
 // method id "prediction.trainedmodels.predict":
 
 type TrainedmodelsPredictCall struct {
-	s     *Service
-	id    string
-	input *Input
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	id         string
+	input      *Input
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Predict: Submit model id and request a prediction
 func (r *TrainedmodelsService) Predict(id string, input *Input) *TrainedmodelsPredictCall {
-	c := &TrainedmodelsPredictCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TrainedmodelsPredictCall{s: r.s, urlParams_: make(urlParams)}
 	c.id = id
 	c.input = input
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TrainedmodelsPredictCall) Fields(s ...googleapi.Field) *TrainedmodelsPredictCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TrainedmodelsPredictCall) Context(ctx context.Context) *TrainedmodelsPredictCall {
 	c.ctx_ = ctx
 	return c
@@ -870,13 +865,9 @@ func (c *TrainedmodelsPredictCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "trainedmodels/{id}/predict")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -956,32 +947,32 @@ func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
 // method id "prediction.trainedmodels.update":
 
 type TrainedmodelsUpdateCall struct {
-	s      *Service
-	id     string
-	update *Update
-	opt_   map[string]interface{}
-	ctx_   context.Context
+	s          *Service
+	id         string
+	update     *Update
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Update: Add new data to a trained model.
 func (r *TrainedmodelsService) Update(id string, update *Update) *TrainedmodelsUpdateCall {
-	c := &TrainedmodelsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TrainedmodelsUpdateCall{s: r.s, urlParams_: make(urlParams)}
 	c.id = id
 	c.update = update
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TrainedmodelsUpdateCall) Fields(s ...googleapi.Field) *TrainedmodelsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TrainedmodelsUpdateCall) Context(ctx context.Context) *TrainedmodelsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -994,13 +985,9 @@ func (c *TrainedmodelsUpdateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "trainedmodels/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,

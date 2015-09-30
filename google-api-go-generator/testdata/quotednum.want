@@ -43,6 +43,16 @@ const apiName = "adexchangebuyer"
 const apiVersion = "v1.1"
 const basePath = "https://www.googleapis.com/adexchangebuyer/v1.1/"
 
+type urlParams map[string][]string
+
+func (u urlParams) set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u urlParams) setMulti(key string, values []string) {
+	u[key] = append([]string{}, values...)
+}
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage your Ad Exchange buyer account configuration

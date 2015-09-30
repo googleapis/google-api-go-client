@@ -43,6 +43,16 @@ const apiName = "groupssettings"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/groups/v1/groups/"
 
+type urlParams map[string][]string
+
+func (u urlParams) set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u urlParams) setMulti(key string, values []string) {
+	u[key] = append([]string{}, values...)
+}
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage the settings of a Google Apps Group
@@ -215,22 +225,23 @@ func (s *Groups) MarshalJSON() ([]byte, error) {
 type GroupsGetCall struct {
 	s             *Service
 	groupUniqueId string
-	opt_          map[string]interface{}
+	urlParams_    urlParams
+	ifNoneMatch_  string
 	ctx_          context.Context
 }
 
 // Get: Gets one resource by id.
 func (r *GroupsService) Get(groupUniqueId string) *GroupsGetCall {
-	c := &GroupsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &GroupsGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.groupUniqueId = groupUniqueId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *GroupsGetCall) Fields(s ...googleapi.Field) *GroupsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -240,13 +251,13 @@ func (c *GroupsGetCall) Fields(s ...googleapi.Field) *GroupsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *GroupsGetCall) IfNoneMatch(entityTag string) *GroupsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *GroupsGetCall) Context(ctx context.Context) *GroupsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -254,20 +265,16 @@ func (c *GroupsGetCall) Context(ctx context.Context) *GroupsGetCall {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"groupUniqueId": c.groupUniqueId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -342,30 +349,30 @@ type GroupsPatchCall struct {
 	s             *Service
 	groupUniqueId string
 	groups        *Groups
-	opt_          map[string]interface{}
+	urlParams_    urlParams
 	ctx_          context.Context
 }
 
 // Patch: Updates an existing resource. This method supports patch
 // semantics.
 func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
-	c := &GroupsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &GroupsPatchCall{s: r.s, urlParams_: make(urlParams)}
 	c.groupUniqueId = groupUniqueId
 	c.groups = groups
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *GroupsPatchCall) Fields(s ...googleapi.Field) *GroupsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *GroupsPatchCall) Context(ctx context.Context) *GroupsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -378,13 +385,9 @@ func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"groupUniqueId": c.groupUniqueId,
@@ -467,29 +470,29 @@ type GroupsUpdateCall struct {
 	s             *Service
 	groupUniqueId string
 	groups        *Groups
-	opt_          map[string]interface{}
+	urlParams_    urlParams
 	ctx_          context.Context
 }
 
 // Update: Updates an existing resource.
 func (r *GroupsService) Update(groupUniqueId string, groups *Groups) *GroupsUpdateCall {
-	c := &GroupsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &GroupsUpdateCall{s: r.s, urlParams_: make(urlParams)}
 	c.groupUniqueId = groupUniqueId
 	c.groups = groups
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *GroupsUpdateCall) Context(ctx context.Context) *GroupsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -502,13 +505,9 @@ func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupUniqueId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"groupUniqueId": c.groupUniqueId,

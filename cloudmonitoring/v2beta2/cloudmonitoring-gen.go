@@ -43,6 +43,16 @@ const apiName = "cloudmonitoring"
 const apiVersion = "v2beta2"
 const basePath = "https://www.googleapis.com/cloudmonitoring/v2beta2/projects/"
 
+type urlParams map[string][]string
+
+func (u urlParams) set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u urlParams) setMulti(key string, values []string) {
+	u[key] = append([]string{}, values...)
+}
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -740,29 +750,29 @@ type MetricDescriptorsCreateCall struct {
 	s                *Service
 	project          string
 	metricdescriptor *MetricDescriptor
-	opt_             map[string]interface{}
+	urlParams_       urlParams
 	ctx_             context.Context
 }
 
 // Create: Create a new metric.
 func (r *MetricDescriptorsService) Create(project string, metricdescriptor *MetricDescriptor) *MetricDescriptorsCreateCall {
-	c := &MetricDescriptorsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MetricDescriptorsCreateCall{s: r.s, urlParams_: make(urlParams)}
 	c.project = project
 	c.metricdescriptor = metricdescriptor
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MetricDescriptorsCreateCall) Fields(s ...googleapi.Field) *MetricDescriptorsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MetricDescriptorsCreateCall) Context(ctx context.Context) *MetricDescriptorsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -775,13 +785,9 @@ func (c *MetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/metricDescriptors")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
@@ -862,32 +868,32 @@ func (c *MetricDescriptorsCreateCall) Do() (*MetricDescriptor, error) {
 // method id "cloudmonitoring.metricDescriptors.delete":
 
 type MetricDescriptorsDeleteCall struct {
-	s       *Service
-	project string
-	metric  string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	project    string
+	metric     string
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Delete: Delete an existing metric.
 func (r *MetricDescriptorsService) Delete(project string, metric string) *MetricDescriptorsDeleteCall {
-	c := &MetricDescriptorsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MetricDescriptorsDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.project = project
 	c.metric = metric
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MetricDescriptorsDeleteCall) Fields(s ...googleapi.Field) *MetricDescriptorsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MetricDescriptorsDeleteCall) Context(ctx context.Context) *MetricDescriptorsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -895,13 +901,9 @@ func (c *MetricDescriptorsDeleteCall) Context(ctx context.Context) *MetricDescri
 
 func (c *MetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/metricDescriptors/{metric}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
@@ -989,7 +991,8 @@ type MetricDescriptorsListCall struct {
 	s                            *Service
 	project                      string
 	listmetricdescriptorsrequest *ListMetricDescriptorsRequest
-	opt_                         map[string]interface{}
+	urlParams_                   urlParams
+	ifNoneMatch_                 string
 	ctx_                         context.Context
 }
 
@@ -999,7 +1002,7 @@ type MetricDescriptorsListCall struct {
 // response to request subsequent pages of results by setting the
 // pageToken query parameter to the value of the nextPageToken.
 func (r *MetricDescriptorsService) List(project string, listmetricdescriptorsrequest *ListMetricDescriptorsRequest) *MetricDescriptorsListCall {
-	c := &MetricDescriptorsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MetricDescriptorsListCall{s: r.s, urlParams_: make(urlParams)}
 	c.project = project
 	c.listmetricdescriptorsrequest = listmetricdescriptorsrequest
 	return c
@@ -1009,7 +1012,7 @@ func (r *MetricDescriptorsService) List(project string, listmetricdescriptorsreq
 // descriptors per page. Used for pagination. If not specified, count =
 // 100.
 func (c *MetricDescriptorsListCall) Count(count int64) *MetricDescriptorsListCall {
-	c.opt_["count"] = count
+	c.urlParams_.set("count", fmt.Sprintf("%v", count))
 	return c
 }
 
@@ -1018,7 +1021,7 @@ func (c *MetricDescriptorsListCall) Count(count int64) *MetricDescriptorsListCal
 // value to the value of the nextPageToken to retrieve the next page of
 // results.
 func (c *MetricDescriptorsListCall) PageToken(pageToken string) *MetricDescriptorsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
@@ -1029,15 +1032,15 @@ func (c *MetricDescriptorsListCall) PageToken(pageToken string) *MetricDescripto
 // returned. If an empty string is passed with this field, no metrics
 // are returned.
 func (c *MetricDescriptorsListCall) Query(query string) *MetricDescriptorsListCall {
-	c.opt_["query"] = query
+	c.urlParams_.set("query", query)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescriptorsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1047,13 +1050,13 @@ func (c *MetricDescriptorsListCall) Fields(s ...googleapi.Field) *MetricDescript
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MetricDescriptorsListCall) IfNoneMatch(entityTag string) *MetricDescriptorsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MetricDescriptorsListCall) Context(ctx context.Context) *MetricDescriptorsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1061,29 +1064,16 @@ func (c *MetricDescriptorsListCall) Context(ctx context.Context) *MetricDescript
 
 func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["count"]; ok {
-		params.Set("count", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["query"]; ok {
-		params.Set("query", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/metricDescriptors")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1183,7 +1173,8 @@ type TimeseriesListCall struct {
 	metric                string
 	youngest              string
 	listtimeseriesrequest *ListTimeseriesRequest
-	opt_                  map[string]interface{}
+	urlParams_            urlParams
+	ifNoneMatch_          string
 	ctx_                  context.Context
 }
 
@@ -1193,7 +1184,7 @@ type TimeseriesListCall struct {
 // response to request subsequent pages of results by setting the
 // pageToken query parameter to the value of the nextPageToken.
 func (r *TimeseriesService) List(project string, metric string, youngest string, listtimeseriesrequest *ListTimeseriesRequest) *TimeseriesListCall {
-	c := &TimeseriesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TimeseriesListCall{s: r.s, urlParams_: make(urlParams)}
 	c.project = project
 	c.metric = metric
 	c.youngest = youngest
@@ -1212,14 +1203,14 @@ func (r *TimeseriesService) List(project string, metric string, youngest string,
 //   "min"
 //   "sum"
 func (c *TimeseriesListCall) Aggregator(aggregator string) *TimeseriesListCall {
-	c.opt_["aggregator"] = aggregator
+	c.urlParams_.set("aggregator", aggregator)
 	return c
 }
 
 // Count sets the optional parameter "count": Maximum number of data
 // points per page, which is used for pagination of results.
 func (c *TimeseriesListCall) Count(count int64) *TimeseriesListCall {
-	c.opt_["count"] = count
+	c.urlParams_.set("count", fmt.Sprintf("%v", count))
 	return c
 }
 
@@ -1233,8 +1224,8 @@ func (c *TimeseriesListCall) Count(count int64) *TimeseriesListCall {
 // you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
-func (c *TimeseriesListCall) Labels(labels string) *TimeseriesListCall {
-	c.opt_["labels"] = labels
+func (c *TimeseriesListCall) Labels(labels []string) *TimeseriesListCall {
+	c.urlParams_.setMulti("labels", labels)
 	return c
 }
 
@@ -1243,7 +1234,7 @@ func (c *TimeseriesListCall) Labels(labels string) *TimeseriesListCall {
 // neither oldest nor timespan is specified, the default time interval
 // will be (youngest - 4 hours, youngest]
 func (c *TimeseriesListCall) Oldest(oldest string) *TimeseriesListCall {
-	c.opt_["oldest"] = oldest
+	c.urlParams_.set("oldest", oldest)
 	return c
 }
 
@@ -1252,7 +1243,7 @@ func (c *TimeseriesListCall) Oldest(oldest string) *TimeseriesListCall {
 // value to the value of the nextPageToken to retrieve the next page of
 // results.
 func (c *TimeseriesListCall) PageToken(pageToken string) *TimeseriesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
@@ -1270,7 +1261,7 @@ func (c *TimeseriesListCall) PageToken(pageToken string) *TimeseriesListCall {
 // If neither oldest nor timespan is specified, the default time
 // interval will be (youngest - 4 hours, youngest].
 func (c *TimeseriesListCall) Timespan(timespan string) *TimeseriesListCall {
-	c.opt_["timespan"] = timespan
+	c.urlParams_.set("timespan", timespan)
 	return c
 }
 
@@ -1284,15 +1275,15 @@ func (c *TimeseriesListCall) Timespan(timespan string) *TimeseriesListCall {
 // - w: week  Examples: 3m, 4w. Only one unit is allowed, for example:
 // 2w3d is not allowed; you should use 17d instead.
 func (c *TimeseriesListCall) Window(window string) *TimeseriesListCall {
-	c.opt_["window"] = window
+	c.urlParams_.set("window", window)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1302,13 +1293,13 @@ func (c *TimeseriesListCall) Fields(s ...googleapi.Field) *TimeseriesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TimeseriesListCall) IfNoneMatch(entityTag string) *TimeseriesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TimeseriesListCall) Context(ctx context.Context) *TimeseriesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1316,43 +1307,18 @@ func (c *TimeseriesListCall) Context(ctx context.Context) *TimeseriesListCall {
 
 func (c *TimeseriesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("youngest", fmt.Sprintf("%v", c.youngest))
-	if v, ok := c.opt_["aggregator"]; ok {
-		params.Set("aggregator", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["count"]; ok {
-		params.Set("count", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["labels"]; ok {
-		params.Set("labels", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["oldest"]; ok {
-		params.Set("oldest", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["timespan"]; ok {
-		params.Set("timespan", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["window"]; ok {
-		params.Set("window", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
+	c.urlParams_.set("youngest", fmt.Sprintf("%v", c.youngest))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/timeseries/{metric}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1500,7 +1466,7 @@ type TimeseriesWriteCall struct {
 	s                      *Service
 	project                string
 	writetimeseriesrequest *WriteTimeseriesRequest
-	opt_                   map[string]interface{}
+	urlParams_             urlParams
 	ctx_                   context.Context
 }
 
@@ -1513,23 +1479,23 @@ type TimeseriesWriteCall struct {
 // a time series are written sequentially in the order of their end
 // time.
 func (r *TimeseriesService) Write(project string, writetimeseriesrequest *WriteTimeseriesRequest) *TimeseriesWriteCall {
-	c := &TimeseriesWriteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TimeseriesWriteCall{s: r.s, urlParams_: make(urlParams)}
 	c.project = project
 	c.writetimeseriesrequest = writetimeseriesrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TimeseriesWriteCall) Fields(s ...googleapi.Field) *TimeseriesWriteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TimeseriesWriteCall) Context(ctx context.Context) *TimeseriesWriteCall {
 	c.ctx_ = ctx
 	return c
@@ -1542,13 +1508,9 @@ func (c *TimeseriesWriteCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/timeseries:write")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
@@ -1634,7 +1596,8 @@ type TimeseriesDescriptorsListCall struct {
 	metric                           string
 	youngest                         string
 	listtimeseriesdescriptorsrequest *ListTimeseriesDescriptorsRequest
-	opt_                             map[string]interface{}
+	urlParams_                       urlParams
+	ifNoneMatch_                     string
 	ctx_                             context.Context
 }
 
@@ -1644,7 +1607,7 @@ type TimeseriesDescriptorsListCall struct {
 // response to request subsequent pages of results by setting the
 // pageToken query parameter to the value of the nextPageToken.
 func (r *TimeseriesDescriptorsService) List(project string, metric string, youngest string, listtimeseriesdescriptorsrequest *ListTimeseriesDescriptorsRequest) *TimeseriesDescriptorsListCall {
-	c := &TimeseriesDescriptorsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TimeseriesDescriptorsListCall{s: r.s, urlParams_: make(urlParams)}
 	c.project = project
 	c.metric = metric
 	c.youngest = youngest
@@ -1663,7 +1626,7 @@ func (r *TimeseriesDescriptorsService) List(project string, metric string, young
 //   "min"
 //   "sum"
 func (c *TimeseriesDescriptorsListCall) Aggregator(aggregator string) *TimeseriesDescriptorsListCall {
-	c.opt_["aggregator"] = aggregator
+	c.urlParams_.set("aggregator", aggregator)
 	return c
 }
 
@@ -1671,7 +1634,7 @@ func (c *TimeseriesDescriptorsListCall) Aggregator(aggregator string) *Timeserie
 // series descriptors per page. Used for pagination. If not specified,
 // count = 100.
 func (c *TimeseriesDescriptorsListCall) Count(count int64) *TimeseriesDescriptorsListCall {
-	c.opt_["count"] = count
+	c.urlParams_.set("count", fmt.Sprintf("%v", count))
 	return c
 }
 
@@ -1685,8 +1648,8 @@ func (c *TimeseriesDescriptorsListCall) Count(count int64) *TimeseriesDescriptor
 // you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
-func (c *TimeseriesDescriptorsListCall) Labels(labels string) *TimeseriesDescriptorsListCall {
-	c.opt_["labels"] = labels
+func (c *TimeseriesDescriptorsListCall) Labels(labels []string) *TimeseriesDescriptorsListCall {
+	c.urlParams_.setMulti("labels", labels)
 	return c
 }
 
@@ -1695,7 +1658,7 @@ func (c *TimeseriesDescriptorsListCall) Labels(labels string) *TimeseriesDescrip
 // neither oldest nor timespan is specified, the default time interval
 // will be (youngest - 4 hours, youngest]
 func (c *TimeseriesDescriptorsListCall) Oldest(oldest string) *TimeseriesDescriptorsListCall {
-	c.opt_["oldest"] = oldest
+	c.urlParams_.set("oldest", oldest)
 	return c
 }
 
@@ -1704,7 +1667,7 @@ func (c *TimeseriesDescriptorsListCall) Oldest(oldest string) *TimeseriesDescrip
 // value to the value of the nextPageToken to retrieve the next page of
 // results.
 func (c *TimeseriesDescriptorsListCall) PageToken(pageToken string) *TimeseriesDescriptorsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
@@ -1722,7 +1685,7 @@ func (c *TimeseriesDescriptorsListCall) PageToken(pageToken string) *TimeseriesD
 // If neither oldest nor timespan is specified, the default time
 // interval will be (youngest - 4 hours, youngest].
 func (c *TimeseriesDescriptorsListCall) Timespan(timespan string) *TimeseriesDescriptorsListCall {
-	c.opt_["timespan"] = timespan
+	c.urlParams_.set("timespan", timespan)
 	return c
 }
 
@@ -1736,15 +1699,15 @@ func (c *TimeseriesDescriptorsListCall) Timespan(timespan string) *TimeseriesDes
 // - w: week  Examples: 3m, 4w. Only one unit is allowed, for example:
 // 2w3d is not allowed; you should use 17d instead.
 func (c *TimeseriesDescriptorsListCall) Window(window string) *TimeseriesDescriptorsListCall {
-	c.opt_["window"] = window
+	c.urlParams_.set("window", window)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *TimeseriesDescriptorsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1754,13 +1717,13 @@ func (c *TimeseriesDescriptorsListCall) Fields(s ...googleapi.Field) *Timeseries
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TimeseriesDescriptorsListCall) IfNoneMatch(entityTag string) *TimeseriesDescriptorsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TimeseriesDescriptorsListCall) Context(ctx context.Context) *TimeseriesDescriptorsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1768,43 +1731,18 @@ func (c *TimeseriesDescriptorsListCall) Context(ctx context.Context) *Timeseries
 
 func (c *TimeseriesDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("youngest", fmt.Sprintf("%v", c.youngest))
-	if v, ok := c.opt_["aggregator"]; ok {
-		params.Set("aggregator", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["count"]; ok {
-		params.Set("count", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["labels"]; ok {
-		params.Set("labels", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["oldest"]; ok {
-		params.Set("oldest", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["timespan"]; ok {
-		params.Set("timespan", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["window"]; ok {
-		params.Set("window", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
+	c.urlParams_.set("youngest", fmt.Sprintf("%v", c.youngest))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/timeseriesDescriptors/{metric}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 		"metric":  c.metric,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

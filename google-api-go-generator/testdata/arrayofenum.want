@@ -41,6 +41,16 @@ const apiName = "arrayofenum"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/discovery/v1/apis"
 
+type urlParams map[string][]string
+
+func (u urlParams) set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u urlParams) setMulti(key string, values []string) {
+	u[key] = append([]string{}, values...)
+}
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")

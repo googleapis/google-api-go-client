@@ -43,6 +43,16 @@ const apiName = "pubsub"
 const apiVersion = "v1beta1"
 const basePath = "https://www.googleapis.com/pubsub/v1beta1/"
 
+type urlParams map[string][]string
+
+func (u urlParams) set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u urlParams) setMulti(key string, values []string) {
+	u[key] = append([]string{}, values...)
+}
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -641,7 +651,7 @@ func (s *Topic) MarshalJSON() ([]byte, error) {
 type SubscriptionsAcknowledgeCall struct {
 	s                  *Service
 	acknowledgerequest *AcknowledgeRequest
-	opt_               map[string]interface{}
+	urlParams_         urlParams
 	ctx_               context.Context
 }
 
@@ -652,22 +662,22 @@ type SubscriptionsAcknowledgeCall struct {
 // message more than once will not result in an error. This is only used
 // for messages received via pull.
 func (r *SubscriptionsService) Acknowledge(acknowledgerequest *AcknowledgeRequest) *SubscriptionsAcknowledgeCall {
-	c := &SubscriptionsAcknowledgeCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsAcknowledgeCall{s: r.s, urlParams_: make(urlParams)}
 	c.acknowledgerequest = acknowledgerequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsAcknowledgeCall) Fields(s ...googleapi.Field) *SubscriptionsAcknowledgeCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsAcknowledgeCall) Context(ctx context.Context) *SubscriptionsAcknowledgeCall {
 	c.ctx_ = ctx
 	return c
@@ -680,13 +690,9 @@ func (c *SubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/acknowledge")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -729,7 +735,7 @@ func (c *SubscriptionsAcknowledgeCall) Do() error {
 type SubscriptionsCreateCall struct {
 	s            *Service
 	subscription *Subscription
-	opt_         map[string]interface{}
+	urlParams_   urlParams
 	ctx_         context.Context
 }
 
@@ -741,22 +747,22 @@ type SubscriptionsCreateCall struct {
 // If the name is not provided in the request, the server will assign a
 // random name for this subscription on the same project as the topic.
 func (r *SubscriptionsService) Create(subscription *Subscription) *SubscriptionsCreateCall {
-	c := &SubscriptionsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsCreateCall{s: r.s, urlParams_: make(urlParams)}
 	c.subscription = subscription
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsCreateCall) Fields(s ...googleapi.Field) *SubscriptionsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsCreateCall) Context(ctx context.Context) *SubscriptionsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -769,13 +775,9 @@ func (c *SubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -845,7 +847,7 @@ func (c *SubscriptionsCreateCall) Do() (*Subscription, error) {
 type SubscriptionsDeleteCall struct {
 	s            *Service
 	subscription string
-	opt_         map[string]interface{}
+	urlParams_   urlParams
 	ctx_         context.Context
 }
 
@@ -853,22 +855,22 @@ type SubscriptionsDeleteCall struct {
 // subscription are immediately dropped. Calls to Pull after deletion
 // will return NOT_FOUND.
 func (r *SubscriptionsService) Delete(subscription string) *SubscriptionsDeleteCall {
-	c := &SubscriptionsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.subscription = subscription
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -876,13 +878,9 @@ func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDel
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/{+subscription}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
@@ -934,22 +932,23 @@ func (c *SubscriptionsDeleteCall) Do() error {
 type SubscriptionsGetCall struct {
 	s            *Service
 	subscription string
-	opt_         map[string]interface{}
+	urlParams_   urlParams
+	ifNoneMatch_ string
 	ctx_         context.Context
 }
 
 // Get: Gets the configuration details of a subscription.
 func (r *SubscriptionsService) Get(subscription string) *SubscriptionsGetCall {
-	c := &SubscriptionsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.subscription = subscription
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -959,13 +958,13 @@ func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SubscriptionsGetCall) IfNoneMatch(entityTag string) *SubscriptionsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -973,20 +972,16 @@ func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCal
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/{+subscription}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1059,43 +1054,44 @@ func (c *SubscriptionsGetCall) Do() (*Subscription, error) {
 // method id "pubsub.subscriptions.list":
 
 type SubscriptionsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists matching subscriptions.
 func (r *SubscriptionsService) List() *SubscriptionsListCall {
-	c := &SubscriptionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsListCall{s: r.s, urlParams_: make(urlParams)}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of subscriptions to return.
 func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value obtained
 // in the last ListSubscriptionsResponse for continuation.
 func (c *SubscriptionsListCall) PageToken(pageToken string) *SubscriptionsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
 // Query sets the optional parameter "query": A valid label query
 // expression.
 func (c *SubscriptionsListCall) Query(query string) *SubscriptionsListCall {
-	c.opt_["query"] = query
+	c.urlParams_.set("query", query)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1105,13 +1101,13 @@ func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SubscriptionsListCall) IfNoneMatch(entityTag string) *SubscriptionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1119,27 +1115,14 @@ func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListC
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["query"]; ok {
-		params.Set("query", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1221,29 +1204,29 @@ func (c *SubscriptionsListCall) Do() (*ListSubscriptionsResponse, error) {
 type SubscriptionsModifyAckDeadlineCall struct {
 	s                        *Service
 	modifyackdeadlinerequest *ModifyAckDeadlineRequest
-	opt_                     map[string]interface{}
+	urlParams_               urlParams
 	ctx_                     context.Context
 }
 
 // ModifyAckDeadline: Modifies the Ack deadline for a message received
 // from a pull request.
 func (r *SubscriptionsService) ModifyAckDeadline(modifyackdeadlinerequest *ModifyAckDeadlineRequest) *SubscriptionsModifyAckDeadlineCall {
-	c := &SubscriptionsModifyAckDeadlineCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsModifyAckDeadlineCall{s: r.s, urlParams_: make(urlParams)}
 	c.modifyackdeadlinerequest = modifyackdeadlinerequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsModifyAckDeadlineCall) Fields(s ...googleapi.Field) *SubscriptionsModifyAckDeadlineCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsModifyAckDeadlineCall) Context(ctx context.Context) *SubscriptionsModifyAckDeadlineCall {
 	c.ctx_ = ctx
 	return c
@@ -1256,13 +1239,9 @@ func (c *SubscriptionsModifyAckDeadlineCall) doRequest(alt string) (*http.Respon
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/modifyAckDeadline")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1305,7 +1284,7 @@ func (c *SubscriptionsModifyAckDeadlineCall) Do() error {
 type SubscriptionsModifyPushConfigCall struct {
 	s                       *Service
 	modifypushconfigrequest *ModifyPushConfigRequest
-	opt_                    map[string]interface{}
+	urlParams_              urlParams
 	ctx_                    context.Context
 }
 
@@ -1315,22 +1294,22 @@ type SubscriptionsModifyPushConfigCall struct {
 // Messages will be accumulated for delivery even if no push
 // configuration is defined or while the configuration is modified.
 func (r *SubscriptionsService) ModifyPushConfig(modifypushconfigrequest *ModifyPushConfigRequest) *SubscriptionsModifyPushConfigCall {
-	c := &SubscriptionsModifyPushConfigCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsModifyPushConfigCall{s: r.s, urlParams_: make(urlParams)}
 	c.modifypushconfigrequest = modifypushconfigrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsModifyPushConfigCall) Fields(s ...googleapi.Field) *SubscriptionsModifyPushConfigCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsModifyPushConfigCall) Context(ctx context.Context) *SubscriptionsModifyPushConfigCall {
 	c.ctx_ = ctx
 	return c
@@ -1343,13 +1322,9 @@ func (c *SubscriptionsModifyPushConfigCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/modifyPushConfig")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1392,7 +1367,7 @@ func (c *SubscriptionsModifyPushConfigCall) Do() error {
 type SubscriptionsPullCall struct {
 	s           *Service
 	pullrequest *PullRequest
-	opt_        map[string]interface{}
+	urlParams_  urlParams
 	ctx_        context.Context
 }
 
@@ -1402,22 +1377,22 @@ type SubscriptionsPullCall struct {
 // UNAVAILABLE error if no messages are available in a reasonable amount
 // of time (to reduce system load).
 func (r *SubscriptionsService) Pull(pullrequest *PullRequest) *SubscriptionsPullCall {
-	c := &SubscriptionsPullCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsPullCall{s: r.s, urlParams_: make(urlParams)}
 	c.pullrequest = pullrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsPullCall) Fields(s ...googleapi.Field) *SubscriptionsPullCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsPullCall) Context(ctx context.Context) *SubscriptionsPullCall {
 	c.ctx_ = ctx
 	return c
@@ -1430,13 +1405,9 @@ func (c *SubscriptionsPullCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/pull")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1506,7 +1477,7 @@ func (c *SubscriptionsPullCall) Do() (*PullResponse, error) {
 type SubscriptionsPullBatchCall struct {
 	s                *Service
 	pullbatchrequest *PullBatchRequest
-	opt_             map[string]interface{}
+	urlParams_       urlParams
 	ctx_             context.Context
 }
 
@@ -1515,22 +1486,22 @@ type SubscriptionsPullBatchCall struct {
 // return UNAVAILABLE if there are too many pull requests outstanding
 // for the given subscription.
 func (r *SubscriptionsService) PullBatch(pullbatchrequest *PullBatchRequest) *SubscriptionsPullBatchCall {
-	c := &SubscriptionsPullBatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &SubscriptionsPullBatchCall{s: r.s, urlParams_: make(urlParams)}
 	c.pullbatchrequest = pullbatchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SubscriptionsPullBatchCall) Fields(s ...googleapi.Field) *SubscriptionsPullBatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *SubscriptionsPullBatchCall) Context(ctx context.Context) *SubscriptionsPullBatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1543,13 +1514,9 @@ func (c *SubscriptionsPullBatchCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions/pullBatch")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1617,30 +1584,30 @@ func (c *SubscriptionsPullBatchCall) Do() (*PullBatchResponse, error) {
 // method id "pubsub.topics.create":
 
 type TopicsCreateCall struct {
-	s     *Service
-	topic *Topic
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	topic      *Topic
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Create: Creates the given topic with the given name.
 func (r *TopicsService) Create(topic *Topic) *TopicsCreateCall {
-	c := &TopicsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TopicsCreateCall{s: r.s, urlParams_: make(urlParams)}
 	c.topic = topic
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TopicsCreateCall) Fields(s ...googleapi.Field) *TopicsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TopicsCreateCall) Context(ctx context.Context) *TopicsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1653,13 +1620,9 @@ func (c *TopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "topics")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1727,32 +1690,32 @@ func (c *TopicsCreateCall) Do() (*Topic, error) {
 // method id "pubsub.topics.delete":
 
 type TopicsDeleteCall struct {
-	s     *Service
-	topic string
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	topic      string
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes the topic with the given name. Returns NOT_FOUND if
 // the topic does not exist. After a topic is deleted, a new topic may
 // be created with the same name.
 func (r *TopicsService) Delete(topic string) *TopicsDeleteCall {
-	c := &TopicsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TopicsDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.topic = topic
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TopicsDeleteCall) Fields(s ...googleapi.Field) *TopicsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TopicsDeleteCall) Context(ctx context.Context) *TopicsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1760,13 +1723,9 @@ func (c *TopicsDeleteCall) Context(ctx context.Context) *TopicsDeleteCall {
 
 func (c *TopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "topics/{+topic}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
@@ -1816,10 +1775,11 @@ func (c *TopicsDeleteCall) Do() error {
 // method id "pubsub.topics.get":
 
 type TopicsGetCall struct {
-	s     *Service
-	topic string
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s            *Service
+	topic        string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets the configuration of a topic. Since the topic only has the
@@ -1827,16 +1787,16 @@ type TopicsGetCall struct {
 // a topic. If other attributes are added in the future, they will be
 // returned here.
 func (r *TopicsService) Get(topic string) *TopicsGetCall {
-	c := &TopicsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TopicsGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.topic = topic
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TopicsGetCall) Fields(s ...googleapi.Field) *TopicsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1846,13 +1806,13 @@ func (c *TopicsGetCall) Fields(s ...googleapi.Field) *TopicsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TopicsGetCall) IfNoneMatch(entityTag string) *TopicsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TopicsGetCall) Context(ctx context.Context) *TopicsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1860,20 +1820,16 @@ func (c *TopicsGetCall) Context(ctx context.Context) *TopicsGetCall {
 
 func (c *TopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "topics/{+topic}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1946,43 +1902,44 @@ func (c *TopicsGetCall) Do() (*Topic, error) {
 // method id "pubsub.topics.list":
 
 type TopicsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists matching topics.
 func (r *TopicsService) List() *TopicsListCall {
-	c := &TopicsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TopicsListCall{s: r.s, urlParams_: make(urlParams)}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of topics to return.
 func (c *TopicsListCall) MaxResults(maxResults int64) *TopicsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value obtained
 // in the last ListTopicsResponse for continuation.
 func (c *TopicsListCall) PageToken(pageToken string) *TopicsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
 // Query sets the optional parameter "query": A valid label query
 // expression.
 func (c *TopicsListCall) Query(query string) *TopicsListCall {
-	c.opt_["query"] = query
+	c.urlParams_.set("query", query)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TopicsListCall) Fields(s ...googleapi.Field) *TopicsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1992,13 +1949,13 @@ func (c *TopicsListCall) Fields(s ...googleapi.Field) *TopicsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TopicsListCall) IfNoneMatch(entityTag string) *TopicsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TopicsListCall) Context(ctx context.Context) *TopicsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2006,27 +1963,14 @@ func (c *TopicsListCall) Context(ctx context.Context) *TopicsListCall {
 
 func (c *TopicsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["query"]; ok {
-		params.Set("query", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "topics")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2108,29 +2052,29 @@ func (c *TopicsListCall) Do() (*ListTopicsResponse, error) {
 type TopicsPublishCall struct {
 	s              *Service
 	publishrequest *PublishRequest
-	opt_           map[string]interface{}
+	urlParams_     urlParams
 	ctx_           context.Context
 }
 
 // Publish: Adds a message to the topic. Returns NOT_FOUND if the topic
 // does not exist.
 func (r *TopicsService) Publish(publishrequest *PublishRequest) *TopicsPublishCall {
-	c := &TopicsPublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TopicsPublishCall{s: r.s, urlParams_: make(urlParams)}
 	c.publishrequest = publishrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TopicsPublishCall) Fields(s ...googleapi.Field) *TopicsPublishCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TopicsPublishCall) Context(ctx context.Context) *TopicsPublishCall {
 	c.ctx_ = ctx
 	return c
@@ -2143,13 +2087,9 @@ func (c *TopicsPublishCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "topics/publish")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -2192,29 +2132,29 @@ func (c *TopicsPublishCall) Do() error {
 type TopicsPublishBatchCall struct {
 	s                   *Service
 	publishbatchrequest *PublishBatchRequest
-	opt_                map[string]interface{}
+	urlParams_          urlParams
 	ctx_                context.Context
 }
 
 // PublishBatch: Adds one or more messages to the topic. Returns
 // NOT_FOUND if the topic does not exist.
 func (r *TopicsService) PublishBatch(publishbatchrequest *PublishBatchRequest) *TopicsPublishBatchCall {
-	c := &TopicsPublishBatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TopicsPublishBatchCall{s: r.s, urlParams_: make(urlParams)}
 	c.publishbatchrequest = publishbatchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TopicsPublishBatchCall) Fields(s ...googleapi.Field) *TopicsPublishBatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TopicsPublishBatchCall) Context(ctx context.Context) *TopicsPublishBatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2227,13 +2167,9 @@ func (c *TopicsPublishBatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "topics/publishBatch")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)

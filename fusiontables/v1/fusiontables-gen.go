@@ -43,6 +43,16 @@ const apiName = "fusiontables"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/fusiontables/v1/"
 
+type urlParams map[string][]string
+
+func (u urlParams) set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u urlParams) setMulti(key string, values []string) {
+	u[key] = append([]string{}, values...)
+}
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage your Fusion Tables
@@ -961,32 +971,32 @@ func (s *TemplateList) MarshalJSON() ([]byte, error) {
 // method id "fusiontables.column.delete":
 
 type ColumnDeleteCall struct {
-	s        *Service
-	tableId  string
-	columnId string
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s          *Service
+	tableId    string
+	columnId   string
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes the column.
 func (r *ColumnService) Delete(tableId string, columnId string) *ColumnDeleteCall {
-	c := &ColumnDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ColumnDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.columnId = columnId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ColumnDeleteCall) Fields(s ...googleapi.Field) *ColumnDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ColumnDeleteCall) Context(ctx context.Context) *ColumnDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -994,13 +1004,9 @@ func (c *ColumnDeleteCall) Context(ctx context.Context) *ColumnDeleteCall {
 
 func (c *ColumnDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns/{columnId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId":  c.tableId,
@@ -1057,26 +1063,27 @@ func (c *ColumnDeleteCall) Do() error {
 // method id "fusiontables.column.get":
 
 type ColumnGetCall struct {
-	s        *Service
-	tableId  string
-	columnId string
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s            *Service
+	tableId      string
+	columnId     string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Retrieves a specific column by its id.
 func (r *ColumnService) Get(tableId string, columnId string) *ColumnGetCall {
-	c := &ColumnGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ColumnGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.columnId = columnId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ColumnGetCall) Fields(s ...googleapi.Field) *ColumnGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1086,13 +1093,13 @@ func (c *ColumnGetCall) Fields(s ...googleapi.Field) *ColumnGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ColumnGetCall) IfNoneMatch(entityTag string) *ColumnGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ColumnGetCall) Context(ctx context.Context) *ColumnGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1100,21 +1107,17 @@ func (c *ColumnGetCall) Context(ctx context.Context) *ColumnGetCall {
 
 func (c *ColumnGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns/{columnId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId":  c.tableId,
 		"columnId": c.columnId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1194,32 +1197,32 @@ func (c *ColumnGetCall) Do() (*Column, error) {
 // method id "fusiontables.column.insert":
 
 type ColumnInsertCall struct {
-	s       *Service
-	tableId string
-	column  *Column
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	tableId    string
+	column     *Column
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Insert: Adds a new column to the table.
 func (r *ColumnService) Insert(tableId string, column *Column) *ColumnInsertCall {
-	c := &ColumnInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ColumnInsertCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.column = column
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ColumnInsertCall) Fields(s ...googleapi.Field) *ColumnInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ColumnInsertCall) Context(ctx context.Context) *ColumnInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1232,13 +1235,9 @@ func (c *ColumnInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -1318,15 +1317,16 @@ func (c *ColumnInsertCall) Do() (*Column, error) {
 // method id "fusiontables.column.list":
 
 type ColumnListCall struct {
-	s       *Service
-	tableId string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	tableId      string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of columns.
 func (r *ColumnService) List(tableId string) *ColumnListCall {
-	c := &ColumnListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ColumnListCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	return c
 }
@@ -1334,22 +1334,22 @@ func (r *ColumnService) List(tableId string) *ColumnListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of columns to return.  Default is 5.
 func (c *ColumnListCall) MaxResults(maxResults int64) *ColumnListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // specifying which result page to return.
 func (c *ColumnListCall) PageToken(pageToken string) *ColumnListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ColumnListCall) Fields(s ...googleapi.Field) *ColumnListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1359,13 +1359,13 @@ func (c *ColumnListCall) Fields(s ...googleapi.Field) *ColumnListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ColumnListCall) IfNoneMatch(entityTag string) *ColumnListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ColumnListCall) Context(ctx context.Context) *ColumnListCall {
 	c.ctx_ = ctx
 	return c
@@ -1373,26 +1373,16 @@ func (c *ColumnListCall) Context(ctx context.Context) *ColumnListCall {
 
 func (c *ColumnListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1477,35 +1467,35 @@ func (c *ColumnListCall) Do() (*ColumnList, error) {
 // method id "fusiontables.column.patch":
 
 type ColumnPatchCall struct {
-	s        *Service
-	tableId  string
-	columnId string
-	column   *Column
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s          *Service
+	tableId    string
+	columnId   string
+	column     *Column
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Patch: Updates the name or type of an existing column. This method
 // supports patch semantics.
 func (r *ColumnService) Patch(tableId string, columnId string, column *Column) *ColumnPatchCall {
-	c := &ColumnPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ColumnPatchCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.columnId = columnId
 	c.column = column
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ColumnPatchCall) Fields(s ...googleapi.Field) *ColumnPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ColumnPatchCall) Context(ctx context.Context) *ColumnPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1518,13 +1508,9 @@ func (c *ColumnPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns/{columnId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId":  c.tableId,
@@ -1612,34 +1598,34 @@ func (c *ColumnPatchCall) Do() (*Column, error) {
 // method id "fusiontables.column.update":
 
 type ColumnUpdateCall struct {
-	s        *Service
-	tableId  string
-	columnId string
-	column   *Column
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s          *Service
+	tableId    string
+	columnId   string
+	column     *Column
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Update: Updates the name or type of an existing column.
 func (r *ColumnService) Update(tableId string, columnId string, column *Column) *ColumnUpdateCall {
-	c := &ColumnUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ColumnUpdateCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.columnId = columnId
 	c.column = column
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ColumnUpdateCall) Fields(s ...googleapi.Field) *ColumnUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ColumnUpdateCall) Context(ctx context.Context) *ColumnUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1652,13 +1638,9 @@ func (c *ColumnUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns/{columnId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId":  c.tableId,
@@ -1746,16 +1728,16 @@ func (c *ColumnUpdateCall) Do() (*Column, error) {
 // method id "fusiontables.query.sql":
 
 type QuerySqlCall struct {
-	s    *Service
-	sql  string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	sql        string
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Sql: Executes an SQL SELECT/INSERT/UPDATE/DELETE/SHOW/DESCRIBE/CREATE
 // statement.
 func (r *QueryService) Sql(sql string) *QuerySqlCall {
-	c := &QuerySqlCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &QuerySqlCall{s: r.s, urlParams_: make(urlParams)}
 	c.sql = sql
 	return c
 }
@@ -1763,7 +1745,7 @@ func (r *QueryService) Sql(sql string) *QuerySqlCall {
 // Hdrs sets the optional parameter "hdrs": Should column names be
 // included (in the first row)?. Default is true.
 func (c *QuerySqlCall) Hdrs(hdrs bool) *QuerySqlCall {
-	c.opt_["hdrs"] = hdrs
+	c.urlParams_.set("hdrs", fmt.Sprintf("%v", hdrs))
 	return c
 }
 
@@ -1771,21 +1753,21 @@ func (c *QuerySqlCall) Hdrs(hdrs bool) *QuerySqlCall {
 // returned in the (JSON) response -- numbers for numeric values and
 // parsed geometries for KML values? Default is true.
 func (c *QuerySqlCall) Typed(typed bool) *QuerySqlCall {
-	c.opt_["typed"] = typed
+	c.urlParams_.set("typed", fmt.Sprintf("%v", typed))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QuerySqlCall) Fields(s ...googleapi.Field) *QuerySqlCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download methods.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
 func (c *QuerySqlCall) Context(ctx context.Context) *QuerySqlCall {
 	c.ctx_ = ctx
 	return c
@@ -1793,20 +1775,10 @@ func (c *QuerySqlCall) Context(ctx context.Context) *QuerySqlCall {
 
 func (c *QuerySqlCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("sql", fmt.Sprintf("%v", c.sql))
-	if v, ok := c.opt_["hdrs"]; ok {
-		params.Set("hdrs", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["typed"]; ok {
-		params.Set("typed", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
+	c.urlParams_.set("sql", fmt.Sprintf("%v", c.sql))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1907,15 +1879,16 @@ func (c *QuerySqlCall) Do() (*Sqlresponse, error) {
 // method id "fusiontables.query.sqlGet":
 
 type QuerySqlGetCall struct {
-	s    *Service
-	sql  string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	sql          string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // SqlGet: Executes an SQL SELECT/SHOW/DESCRIBE statement.
 func (r *QueryService) SqlGet(sql string) *QuerySqlGetCall {
-	c := &QuerySqlGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &QuerySqlGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.sql = sql
 	return c
 }
@@ -1923,7 +1896,7 @@ func (r *QueryService) SqlGet(sql string) *QuerySqlGetCall {
 // Hdrs sets the optional parameter "hdrs": Should column names be
 // included (in the first row)?. Default is true.
 func (c *QuerySqlGetCall) Hdrs(hdrs bool) *QuerySqlGetCall {
-	c.opt_["hdrs"] = hdrs
+	c.urlParams_.set("hdrs", fmt.Sprintf("%v", hdrs))
 	return c
 }
 
@@ -1931,15 +1904,15 @@ func (c *QuerySqlGetCall) Hdrs(hdrs bool) *QuerySqlGetCall {
 // returned in the (JSON) response -- numbers for numeric values and
 // parsed geometries for KML values? Default is true.
 func (c *QuerySqlGetCall) Typed(typed bool) *QuerySqlGetCall {
-	c.opt_["typed"] = typed
+	c.urlParams_.set("typed", fmt.Sprintf("%v", typed))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QuerySqlGetCall) Fields(s ...googleapi.Field) *QuerySqlGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1949,13 +1922,13 @@ func (c *QuerySqlGetCall) Fields(s ...googleapi.Field) *QuerySqlGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *QuerySqlGetCall) IfNoneMatch(entityTag string) *QuerySqlGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download methods.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
 func (c *QuerySqlGetCall) Context(ctx context.Context) *QuerySqlGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1963,25 +1936,15 @@ func (c *QuerySqlGetCall) Context(ctx context.Context) *QuerySqlGetCall {
 
 func (c *QuerySqlGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("sql", fmt.Sprintf("%v", c.sql))
-	if v, ok := c.opt_["hdrs"]; ok {
-		params.Set("hdrs", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["typed"]; ok {
-		params.Set("typed", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
+	c.urlParams_.set("sql", fmt.Sprintf("%v", c.sql))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2080,32 +2043,32 @@ func (c *QuerySqlGetCall) Do() (*Sqlresponse, error) {
 // method id "fusiontables.style.delete":
 
 type StyleDeleteCall struct {
-	s       *Service
-	tableId string
-	styleId int64
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	tableId    string
+	styleId    int64
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes a style.
 func (r *StyleService) Delete(tableId string, styleId int64) *StyleDeleteCall {
-	c := &StyleDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StyleDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.styleId = styleId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StyleDeleteCall) Fields(s ...googleapi.Field) *StyleDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StyleDeleteCall) Context(ctx context.Context) *StyleDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2113,13 +2076,9 @@ func (c *StyleDeleteCall) Context(ctx context.Context) *StyleDeleteCall {
 
 func (c *StyleDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles/{styleId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -2177,26 +2136,27 @@ func (c *StyleDeleteCall) Do() error {
 // method id "fusiontables.style.get":
 
 type StyleGetCall struct {
-	s       *Service
-	tableId string
-	styleId int64
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	tableId      string
+	styleId      int64
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets a specific style.
 func (r *StyleService) Get(tableId string, styleId int64) *StyleGetCall {
-	c := &StyleGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StyleGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.styleId = styleId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StyleGetCall) Fields(s ...googleapi.Field) *StyleGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2206,13 +2166,13 @@ func (c *StyleGetCall) Fields(s ...googleapi.Field) *StyleGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *StyleGetCall) IfNoneMatch(entityTag string) *StyleGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StyleGetCall) Context(ctx context.Context) *StyleGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2220,21 +2180,17 @@ func (c *StyleGetCall) Context(ctx context.Context) *StyleGetCall {
 
 func (c *StyleGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles/{styleId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 		"styleId": strconv.FormatInt(c.styleId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2318,29 +2274,29 @@ type StyleInsertCall struct {
 	s            *Service
 	tableId      string
 	stylesetting *StyleSetting
-	opt_         map[string]interface{}
+	urlParams_   urlParams
 	ctx_         context.Context
 }
 
 // Insert: Adds a new style for the table.
 func (r *StyleService) Insert(tableId string, stylesetting *StyleSetting) *StyleInsertCall {
-	c := &StyleInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StyleInsertCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.stylesetting = stylesetting
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StyleInsertCall) Fields(s ...googleapi.Field) *StyleInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StyleInsertCall) Context(ctx context.Context) *StyleInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -2353,13 +2309,9 @@ func (c *StyleInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -2439,15 +2391,16 @@ func (c *StyleInsertCall) Do() (*StyleSetting, error) {
 // method id "fusiontables.style.list":
 
 type StyleListCall struct {
-	s       *Service
-	tableId string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	tableId      string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of styles.
 func (r *StyleService) List(tableId string) *StyleListCall {
-	c := &StyleListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StyleListCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	return c
 }
@@ -2455,22 +2408,22 @@ func (r *StyleService) List(tableId string) *StyleListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of styles to return.  Default is 5.
 func (c *StyleListCall) MaxResults(maxResults int64) *StyleListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // specifying which result page to return.
 func (c *StyleListCall) PageToken(pageToken string) *StyleListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StyleListCall) Fields(s ...googleapi.Field) *StyleListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2480,13 +2433,13 @@ func (c *StyleListCall) Fields(s ...googleapi.Field) *StyleListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *StyleListCall) IfNoneMatch(entityTag string) *StyleListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StyleListCall) Context(ctx context.Context) *StyleListCall {
 	c.ctx_ = ctx
 	return c
@@ -2494,26 +2447,16 @@ func (c *StyleListCall) Context(ctx context.Context) *StyleListCall {
 
 func (c *StyleListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2602,31 +2545,31 @@ type StylePatchCall struct {
 	tableId      string
 	styleId      int64
 	stylesetting *StyleSetting
-	opt_         map[string]interface{}
+	urlParams_   urlParams
 	ctx_         context.Context
 }
 
 // Patch: Updates an existing style. This method supports patch
 // semantics.
 func (r *StyleService) Patch(tableId string, styleId int64, stylesetting *StyleSetting) *StylePatchCall {
-	c := &StylePatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StylePatchCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.styleId = styleId
 	c.stylesetting = stylesetting
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StylePatchCall) Fields(s ...googleapi.Field) *StylePatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StylePatchCall) Context(ctx context.Context) *StylePatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2639,13 +2582,9 @@ func (c *StylePatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles/{styleId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -2738,30 +2677,30 @@ type StyleUpdateCall struct {
 	tableId      string
 	styleId      int64
 	stylesetting *StyleSetting
-	opt_         map[string]interface{}
+	urlParams_   urlParams
 	ctx_         context.Context
 }
 
 // Update: Updates an existing style.
 func (r *StyleService) Update(tableId string, styleId int64, stylesetting *StyleSetting) *StyleUpdateCall {
-	c := &StyleUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StyleUpdateCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.styleId = styleId
 	c.stylesetting = stylesetting
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StyleUpdateCall) Fields(s ...googleapi.Field) *StyleUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StyleUpdateCall) Context(ctx context.Context) *StyleUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2774,13 +2713,9 @@ func (c *StyleUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles/{styleId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -2869,15 +2804,15 @@ func (c *StyleUpdateCall) Do() (*StyleSetting, error) {
 // method id "fusiontables.table.copy":
 
 type TableCopyCall struct {
-	s       *Service
-	tableId string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	tableId    string
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Copy: Copies a table.
 func (r *TableService) Copy(tableId string) *TableCopyCall {
-	c := &TableCopyCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TableCopyCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	return c
 }
@@ -2885,21 +2820,21 @@ func (r *TableService) Copy(tableId string) *TableCopyCall {
 // CopyPresentation sets the optional parameter "copyPresentation":
 // Whether to also copy tabs, styles, and templates. Default is false.
 func (c *TableCopyCall) CopyPresentation(copyPresentation bool) *TableCopyCall {
-	c.opt_["copyPresentation"] = copyPresentation
+	c.urlParams_.set("copyPresentation", fmt.Sprintf("%v", copyPresentation))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TableCopyCall) Fields(s ...googleapi.Field) *TableCopyCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TableCopyCall) Context(ctx context.Context) *TableCopyCall {
 	c.ctx_ = ctx
 	return c
@@ -2907,16 +2842,9 @@ func (c *TableCopyCall) Context(ctx context.Context) *TableCopyCall {
 
 func (c *TableCopyCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["copyPresentation"]; ok {
-		params.Set("copyPresentation", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/copy")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -2998,30 +2926,30 @@ func (c *TableCopyCall) Do() (*Table, error) {
 // method id "fusiontables.table.delete":
 
 type TableDeleteCall struct {
-	s       *Service
-	tableId string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	tableId    string
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes a table.
 func (r *TableService) Delete(tableId string) *TableDeleteCall {
-	c := &TableDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TableDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TableDeleteCall) Fields(s ...googleapi.Field) *TableDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TableDeleteCall) Context(ctx context.Context) *TableDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -3029,13 +2957,9 @@ func (c *TableDeleteCall) Context(ctx context.Context) *TableDeleteCall {
 
 func (c *TableDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -3084,24 +3008,25 @@ func (c *TableDeleteCall) Do() error {
 // method id "fusiontables.table.get":
 
 type TableGetCall struct {
-	s       *Service
-	tableId string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	tableId      string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Retrieves a specific table by its id.
 func (r *TableService) Get(tableId string) *TableGetCall {
-	c := &TableGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TableGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TableGetCall) Fields(s ...googleapi.Field) *TableGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3111,13 +3036,13 @@ func (c *TableGetCall) Fields(s ...googleapi.Field) *TableGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TableGetCall) IfNoneMatch(entityTag string) *TableGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TableGetCall) Context(ctx context.Context) *TableGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3125,20 +3050,16 @@ func (c *TableGetCall) Context(ctx context.Context) *TableGetCall {
 
 func (c *TableGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3211,19 +3132,20 @@ func (c *TableGetCall) Do() (*Table, error) {
 // method id "fusiontables.table.importRows":
 
 type TableImportRowsCall struct {
-	s          *Service
-	tableId    string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	protocol_  string
-	ctx_       context.Context
+	s                *Service
+	tableId          string
+	urlParams_       urlParams
+	media_           io.Reader
+	resumable_       googleapi.SizeReaderAt
+	mediaType_       string
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // ImportRows: Import more rows into a table.
 func (r *TableService) ImportRows(tableId string) *TableImportRowsCall {
-	c := &TableImportRowsCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TableImportRowsCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	return c
 }
@@ -3232,7 +3154,7 @@ func (r *TableService) ImportRows(tableId string) *TableImportRowsCall {
 // to separate cell values. This can only consist of a single character.
 // Default is ','.
 func (c *TableImportRowsCall) Delimiter(delimiter string) *TableImportRowsCall {
-	c.opt_["delimiter"] = delimiter
+	c.urlParams_.set("delimiter", delimiter)
 	return c
 }
 
@@ -3240,7 +3162,7 @@ func (c *TableImportRowsCall) Delimiter(delimiter string) *TableImportRowsCall {
 // content. Default is UTF-8. Use 'auto-detect' if you are unsure of the
 // encoding.
 func (c *TableImportRowsCall) Encoding(encoding string) *TableImportRowsCall {
-	c.opt_["encoding"] = encoding
+	c.urlParams_.set("encoding", encoding)
 	return c
 }
 
@@ -3254,7 +3176,7 @@ func (c *TableImportRowsCall) Encoding(encoding string) *TableImportRowsCall {
 // number of lines in the file, and the number of imported lines will be
 // N + endLine - startLine.
 func (c *TableImportRowsCall) EndLine(endLine int64) *TableImportRowsCall {
-	c.opt_["endLine"] = endLine
+	c.urlParams_.set("endLine", fmt.Sprintf("%v", endLine))
 	return c
 }
 
@@ -3262,31 +3184,31 @@ func (c *TableImportRowsCall) EndLine(endLine int64) *TableImportRowsCall {
 // have the same number of values for each row. If false, rows with
 // fewer values will be padded with empty values. Default is true.
 func (c *TableImportRowsCall) IsStrict(isStrict bool) *TableImportRowsCall {
-	c.opt_["isStrict"] = isStrict
+	c.urlParams_.set("isStrict", fmt.Sprintf("%v", isStrict))
 	return c
 }
 
 // StartLine sets the optional parameter "startLine": The index of the
 // first line from which to start importing, inclusive. Default is 0.
 func (c *TableImportRowsCall) StartLine(startLine int64) *TableImportRowsCall {
-	c.opt_["startLine"] = startLine
+	c.urlParams_.set("startLine", fmt.Sprintf("%v", startLine))
 	return c
 }
 
-// Media specifies the media to upload in a single chunk.
-// At most one of Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk. At most one of
+// Media and ResumableMedia may be set.
 func (c *TableImportRowsCall) Media(r io.Reader) *TableImportRowsCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
-// At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-// The provided ctx will supersede any context previously provided to
-// the Context method.
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx. At most one of Media and ResumableMedia may be
+// set. mediaType identifies the MIME media type of the upload, such as
+// "image/png". If mediaType is "", it will be auto-detected. The
+// provided ctx will supersede any context previously provided to the
+// Context method.
 func (c *TableImportRowsCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableImportRowsCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -3295,27 +3217,28 @@ func (c *TableImportRowsCall) ResumableMedia(ctx context.Context, r io.ReaderAt,
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
 func (c *TableImportRowsCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TableImportRowsCall {
-	c.opt_["progressUpdater"] = pu
+	c.progressUpdater_ = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TableImportRowsCall) Fields(s ...googleapi.Field) *TableImportRowsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
-// This context will supersede any context previously provided to
-// the ResumableMedia method.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
 func (c *TableImportRowsCall) Context(ctx context.Context) *TableImportRowsCall {
 	c.ctx_ = ctx
 	return c
@@ -3323,32 +3246,13 @@ func (c *TableImportRowsCall) Context(ctx context.Context) *TableImportRowsCall 
 
 func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["delimiter"]; ok {
-		params.Set("delimiter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encoding"]; ok {
-		params.Set("encoding", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["endLine"]; ok {
-		params.Set("endLine", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["isStrict"]; ok {
-		params.Set("isStrict", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startLine"]; ok {
-		params.Set("startLine", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/import")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", c.protocol_)
+		c.urlParams_.set("uploadType", c.protocol_)
 	}
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
@@ -3403,12 +3307,6 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -3418,7 +3316,7 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
+			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -3509,19 +3407,20 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 // method id "fusiontables.table.importTable":
 
 type TableImportTableCall struct {
-	s          *Service
-	name       string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	protocol_  string
-	ctx_       context.Context
+	s                *Service
+	name             string
+	urlParams_       urlParams
+	media_           io.Reader
+	resumable_       googleapi.SizeReaderAt
+	mediaType_       string
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // ImportTable: Import a new table.
 func (r *TableService) ImportTable(name string) *TableImportTableCall {
-	c := &TableImportTableCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TableImportTableCall{s: r.s, urlParams_: make(urlParams)}
 	c.name = name
 	return c
 }
@@ -3530,7 +3429,7 @@ func (r *TableService) ImportTable(name string) *TableImportTableCall {
 // to separate cell values. This can only consist of a single character.
 // Default is ','.
 func (c *TableImportTableCall) Delimiter(delimiter string) *TableImportTableCall {
-	c.opt_["delimiter"] = delimiter
+	c.urlParams_.set("delimiter", delimiter)
 	return c
 }
 
@@ -3538,24 +3437,24 @@ func (c *TableImportTableCall) Delimiter(delimiter string) *TableImportTableCall
 // content. Default is UTF-8. Use 'auto-detect' if you are unsure of the
 // encoding.
 func (c *TableImportTableCall) Encoding(encoding string) *TableImportTableCall {
-	c.opt_["encoding"] = encoding
+	c.urlParams_.set("encoding", encoding)
 	return c
 }
 
-// Media specifies the media to upload in a single chunk.
-// At most one of Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk. At most one of
+// Media and ResumableMedia may be set.
 func (c *TableImportTableCall) Media(r io.Reader) *TableImportTableCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
-// At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-// The provided ctx will supersede any context previously provided to
-// the Context method.
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx. At most one of Media and ResumableMedia may be
+// set. mediaType identifies the MIME media type of the upload, such as
+// "image/png". If mediaType is "", it will be auto-detected. The
+// provided ctx will supersede any context previously provided to the
+// Context method.
 func (c *TableImportTableCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableImportTableCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -3564,27 +3463,28 @@ func (c *TableImportTableCall) ResumableMedia(ctx context.Context, r io.ReaderAt
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
 func (c *TableImportTableCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TableImportTableCall {
-	c.opt_["progressUpdater"] = pu
+	c.progressUpdater_ = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TableImportTableCall) Fields(s ...googleapi.Field) *TableImportTableCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
-// This context will supersede any context previously provided to
-// the ResumableMedia method.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
 func (c *TableImportTableCall) Context(ctx context.Context) *TableImportTableCall {
 	c.ctx_ = ctx
 	return c
@@ -3592,24 +3492,14 @@ func (c *TableImportTableCall) Context(ctx context.Context) *TableImportTableCal
 
 func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("name", fmt.Sprintf("%v", c.name))
-	if v, ok := c.opt_["delimiter"]; ok {
-		params.Set("delimiter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["encoding"]; ok {
-		params.Set("encoding", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
+	c.urlParams_.set("name", fmt.Sprintf("%v", c.name))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/import")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", c.protocol_)
+		c.urlParams_.set("uploadType", c.protocol_)
 	}
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
@@ -3662,12 +3552,6 @@ func (c *TableImportTableCall) Do() (*Table, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -3677,7 +3561,7 @@ func (c *TableImportTableCall) Do() (*Table, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
+			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -3751,30 +3635,30 @@ func (c *TableImportTableCall) Do() (*Table, error) {
 // method id "fusiontables.table.insert":
 
 type TableInsertCall struct {
-	s     *Service
-	table *Table
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	table      *Table
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Insert: Creates a new table.
 func (r *TableService) Insert(table *Table) *TableInsertCall {
-	c := &TableInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TableInsertCall{s: r.s, urlParams_: make(urlParams)}
 	c.table = table
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TableInsertCall) Fields(s ...googleapi.Field) *TableInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TableInsertCall) Context(ctx context.Context) *TableInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -3787,13 +3671,9 @@ func (c *TableInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -3860,36 +3740,37 @@ func (c *TableInsertCall) Do() (*Table, error) {
 // method id "fusiontables.table.list":
 
 type TableListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of tables a user owns.
 func (r *TableService) List() *TableListCall {
-	c := &TableListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TableListCall{s: r.s, urlParams_: make(urlParams)}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of styles to return.  Default is 5.
 func (c *TableListCall) MaxResults(maxResults int64) *TableListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // specifying which result page to return.
 func (c *TableListCall) PageToken(pageToken string) *TableListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TableListCall) Fields(s ...googleapi.Field) *TableListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3899,13 +3780,13 @@ func (c *TableListCall) Fields(s ...googleapi.Field) *TableListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TableListCall) IfNoneMatch(entityTag string) *TableListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TableListCall) Context(ctx context.Context) *TableListCall {
 	c.ctx_ = ctx
 	return c
@@ -3913,24 +3794,14 @@ func (c *TableListCall) Context(ctx context.Context) *TableListCall {
 
 func (c *TableListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4006,18 +3877,18 @@ func (c *TableListCall) Do() (*TableList, error) {
 // method id "fusiontables.table.patch":
 
 type TablePatchCall struct {
-	s       *Service
-	tableId string
-	table   *Table
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	tableId    string
+	table      *Table
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Patch: Updates an existing table. Unless explicitly requested, only
 // the name, description, and attribution will be updated. This method
 // supports patch semantics.
 func (r *TableService) Patch(tableId string, table *Table) *TablePatchCall {
-	c := &TablePatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablePatchCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.table = table
 	return c
@@ -4028,21 +3899,21 @@ func (r *TableService) Patch(tableId string, table *Table) *TablePatchCall {
 // The specified view definition replaces the existing one. Only a view
 // can be updated with a new definition.
 func (c *TablePatchCall) ReplaceViewDefinition(replaceViewDefinition bool) *TablePatchCall {
-	c.opt_["replaceViewDefinition"] = replaceViewDefinition
+	c.urlParams_.set("replaceViewDefinition", fmt.Sprintf("%v", replaceViewDefinition))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablePatchCall) Fields(s ...googleapi.Field) *TablePatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablePatchCall) Context(ctx context.Context) *TablePatchCall {
 	c.ctx_ = ctx
 	return c
@@ -4055,16 +3926,9 @@ func (c *TablePatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["replaceViewDefinition"]; ok {
-		params.Set("replaceViewDefinition", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -4149,17 +4013,17 @@ func (c *TablePatchCall) Do() (*Table, error) {
 // method id "fusiontables.table.update":
 
 type TableUpdateCall struct {
-	s       *Service
-	tableId string
-	table   *Table
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	tableId    string
+	table      *Table
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Update: Updates an existing table. Unless explicitly requested, only
 // the name, description, and attribution will be updated.
 func (r *TableService) Update(tableId string, table *Table) *TableUpdateCall {
-	c := &TableUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TableUpdateCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.table = table
 	return c
@@ -4170,21 +4034,21 @@ func (r *TableService) Update(tableId string, table *Table) *TableUpdateCall {
 // The specified view definition replaces the existing one. Only a view
 // can be updated with a new definition.
 func (c *TableUpdateCall) ReplaceViewDefinition(replaceViewDefinition bool) *TableUpdateCall {
-	c.opt_["replaceViewDefinition"] = replaceViewDefinition
+	c.urlParams_.set("replaceViewDefinition", fmt.Sprintf("%v", replaceViewDefinition))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TableUpdateCall) Fields(s ...googleapi.Field) *TableUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TableUpdateCall) Context(ctx context.Context) *TableUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -4197,16 +4061,9 @@ func (c *TableUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["replaceViewDefinition"]; ok {
-		params.Set("replaceViewDefinition", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -4291,32 +4148,32 @@ func (c *TableUpdateCall) Do() (*Table, error) {
 // method id "fusiontables.task.delete":
 
 type TaskDeleteCall struct {
-	s       *Service
-	tableId string
-	taskId  string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	tableId    string
+	taskId     string
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes the task, unless already started.
 func (r *TaskService) Delete(tableId string, taskId string) *TaskDeleteCall {
-	c := &TaskDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TaskDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.taskId = taskId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TaskDeleteCall) Fields(s ...googleapi.Field) *TaskDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TaskDeleteCall) Context(ctx context.Context) *TaskDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -4324,13 +4181,9 @@ func (c *TaskDeleteCall) Context(ctx context.Context) *TaskDeleteCall {
 
 func (c *TaskDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/tasks/{taskId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -4386,26 +4239,27 @@ func (c *TaskDeleteCall) Do() error {
 // method id "fusiontables.task.get":
 
 type TaskGetCall struct {
-	s       *Service
-	tableId string
-	taskId  string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	tableId      string
+	taskId       string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Retrieves a specific task by its id.
 func (r *TaskService) Get(tableId string, taskId string) *TaskGetCall {
-	c := &TaskGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TaskGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.taskId = taskId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TaskGetCall) Fields(s ...googleapi.Field) *TaskGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -4415,13 +4269,13 @@ func (c *TaskGetCall) Fields(s ...googleapi.Field) *TaskGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TaskGetCall) IfNoneMatch(entityTag string) *TaskGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TaskGetCall) Context(ctx context.Context) *TaskGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4429,21 +4283,17 @@ func (c *TaskGetCall) Context(ctx context.Context) *TaskGetCall {
 
 func (c *TaskGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/tasks/{taskId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 		"taskId":  c.taskId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4522,15 +4372,16 @@ func (c *TaskGetCall) Do() (*Task, error) {
 // method id "fusiontables.task.list":
 
 type TaskListCall struct {
-	s       *Service
-	tableId string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	tableId      string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of tasks.
 func (r *TaskService) List(tableId string) *TaskListCall {
-	c := &TaskListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TaskListCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	return c
 }
@@ -4538,27 +4389,27 @@ func (r *TaskService) List(tableId string) *TaskListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of columns to return.  Default is 5.
 func (c *TaskListCall) MaxResults(maxResults int64) *TaskListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken":
 func (c *TaskListCall) PageToken(pageToken string) *TaskListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex":
 func (c *TaskListCall) StartIndex(startIndex int64) *TaskListCall {
-	c.opt_["startIndex"] = startIndex
+	c.urlParams_.set("startIndex", fmt.Sprintf("%v", startIndex))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TaskListCall) Fields(s ...googleapi.Field) *TaskListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -4568,13 +4419,13 @@ func (c *TaskListCall) Fields(s ...googleapi.Field) *TaskListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TaskListCall) IfNoneMatch(entityTag string) *TaskListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TaskListCall) Context(ctx context.Context) *TaskListCall {
 	c.ctx_ = ctx
 	return c
@@ -4582,29 +4433,16 @@ func (c *TaskListCall) Context(ctx context.Context) *TaskListCall {
 
 func (c *TaskListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startIndex"]; ok {
-		params.Set("startIndex", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/tasks")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4696,29 +4534,29 @@ type TemplateDeleteCall struct {
 	s          *Service
 	tableId    string
 	templateId int64
-	opt_       map[string]interface{}
+	urlParams_ urlParams
 	ctx_       context.Context
 }
 
 // Delete: Deletes a template
 func (r *TemplateService) Delete(tableId string, templateId int64) *TemplateDeleteCall {
-	c := &TemplateDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplateDeleteCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.templateId = templateId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplateDeleteCall) Fields(s ...googleapi.Field) *TemplateDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplateDeleteCall) Context(ctx context.Context) *TemplateDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -4726,13 +4564,9 @@ func (c *TemplateDeleteCall) Context(ctx context.Context) *TemplateDeleteCall {
 
 func (c *TemplateDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates/{templateId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId":    c.tableId,
@@ -4790,26 +4624,27 @@ func (c *TemplateDeleteCall) Do() error {
 // method id "fusiontables.template.get":
 
 type TemplateGetCall struct {
-	s          *Service
-	tableId    string
-	templateId int64
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	tableId      string
+	templateId   int64
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Retrieves a specific template by its id
 func (r *TemplateService) Get(tableId string, templateId int64) *TemplateGetCall {
-	c := &TemplateGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplateGetCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.templateId = templateId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplateGetCall) Fields(s ...googleapi.Field) *TemplateGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -4819,13 +4654,13 @@ func (c *TemplateGetCall) Fields(s ...googleapi.Field) *TemplateGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TemplateGetCall) IfNoneMatch(entityTag string) *TemplateGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplateGetCall) Context(ctx context.Context) *TemplateGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4833,21 +4668,17 @@ func (c *TemplateGetCall) Context(ctx context.Context) *TemplateGetCall {
 
 func (c *TemplateGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates/{templateId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId":    c.tableId,
 		"templateId": strconv.FormatInt(c.templateId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4928,32 +4759,32 @@ func (c *TemplateGetCall) Do() (*Template, error) {
 // method id "fusiontables.template.insert":
 
 type TemplateInsertCall struct {
-	s        *Service
-	tableId  string
-	template *Template
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s          *Service
+	tableId    string
+	template   *Template
+	urlParams_ urlParams
+	ctx_       context.Context
 }
 
 // Insert: Creates a new template for the table.
 func (r *TemplateService) Insert(tableId string, template *Template) *TemplateInsertCall {
-	c := &TemplateInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplateInsertCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.template = template
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplateInsertCall) Fields(s ...googleapi.Field) *TemplateInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplateInsertCall) Context(ctx context.Context) *TemplateInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -4966,13 +4797,9 @@ func (c *TemplateInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
@@ -5052,15 +4879,16 @@ func (c *TemplateInsertCall) Do() (*Template, error) {
 // method id "fusiontables.template.list":
 
 type TemplateListCall struct {
-	s       *Service
-	tableId string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	tableId      string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of templates.
 func (r *TemplateService) List(tableId string) *TemplateListCall {
-	c := &TemplateListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplateListCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	return c
 }
@@ -5068,22 +4896,22 @@ func (r *TemplateService) List(tableId string) *TemplateListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of templates to return.  Default is 5.
 func (c *TemplateListCall) MaxResults(maxResults int64) *TemplateListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // specifying which results page to return.
 func (c *TemplateListCall) PageToken(pageToken string) *TemplateListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplateListCall) Fields(s ...googleapi.Field) *TemplateListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -5093,13 +4921,13 @@ func (c *TemplateListCall) Fields(s ...googleapi.Field) *TemplateListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TemplateListCall) IfNoneMatch(entityTag string) *TemplateListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplateListCall) Context(ctx context.Context) *TemplateListCall {
 	c.ctx_ = ctx
 	return c
@@ -5107,26 +4935,16 @@ func (c *TemplateListCall) Context(ctx context.Context) *TemplateListCall {
 
 func (c *TemplateListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5215,31 +5033,31 @@ type TemplatePatchCall struct {
 	tableId    string
 	templateId int64
 	template   *Template
-	opt_       map[string]interface{}
+	urlParams_ urlParams
 	ctx_       context.Context
 }
 
 // Patch: Updates an existing template. This method supports patch
 // semantics.
 func (r *TemplateService) Patch(tableId string, templateId int64, template *Template) *TemplatePatchCall {
-	c := &TemplatePatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplatePatchCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.templateId = templateId
 	c.template = template
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplatePatchCall) Fields(s ...googleapi.Field) *TemplatePatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplatePatchCall) Context(ctx context.Context) *TemplatePatchCall {
 	c.ctx_ = ctx
 	return c
@@ -5252,13 +5070,9 @@ func (c *TemplatePatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates/{templateId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId":    c.tableId,
@@ -5351,30 +5165,30 @@ type TemplateUpdateCall struct {
 	tableId    string
 	templateId int64
 	template   *Template
-	opt_       map[string]interface{}
+	urlParams_ urlParams
 	ctx_       context.Context
 }
 
 // Update: Updates an existing template
 func (r *TemplateService) Update(tableId string, templateId int64, template *Template) *TemplateUpdateCall {
-	c := &TemplateUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TemplateUpdateCall{s: r.s, urlParams_: make(urlParams)}
 	c.tableId = tableId
 	c.templateId = templateId
 	c.template = template
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TemplateUpdateCall) Fields(s ...googleapi.Field) *TemplateUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TemplateUpdateCall) Context(ctx context.Context) *TemplateUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -5387,13 +5201,9 @@ func (c *TemplateUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates/{templateId}")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId":    c.tableId,

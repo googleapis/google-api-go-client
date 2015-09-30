@@ -43,6 +43,16 @@ const apiName = "customsearch"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/customsearch/"
 
+type urlParams map[string][]string
+
+func (u urlParams) set(key, value string) {
+	u[key] = []string{value}
+}
+
+func (u urlParams) setMulti(key string, values []string) {
+	u[key] = append([]string{}, values...)
+}
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -486,16 +496,17 @@ func (s *SearchUrl) MarshalJSON() ([]byte, error) {
 // method id "search.cse.list":
 
 type CseListCall struct {
-	s    *Service
-	q    string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	q            string
+	urlParams_   urlParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Returns metadata about the search performed, metadata about the
 // custom search engine used for the search, and the search results.
 func (r *CseService) List(q string) *CseListCall {
-	c := &CseListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CseListCall{s: r.s, urlParams_: make(urlParams)}
 	c.q = q
 	return c
 }
@@ -503,41 +514,41 @@ func (r *CseService) List(q string) *CseListCall {
 // C2coff sets the optional parameter "c2coff": Turns off the
 // translation between zh-CN and zh-TW.
 func (c *CseListCall) C2coff(c2coff string) *CseListCall {
-	c.opt_["c2coff"] = c2coff
+	c.urlParams_.set("c2coff", c2coff)
 	return c
 }
 
 // Cr sets the optional parameter "cr": Country restrict(s).
 func (c *CseListCall) Cr(cr string) *CseListCall {
-	c.opt_["cr"] = cr
+	c.urlParams_.set("cr", cr)
 	return c
 }
 
 // Cref sets the optional parameter "cref": The URL of a linked custom
 // search engine
 func (c *CseListCall) Cref(cref string) *CseListCall {
-	c.opt_["cref"] = cref
+	c.urlParams_.set("cref", cref)
 	return c
 }
 
 // Cx sets the optional parameter "cx": The custom search engine ID to
 // scope this search query
 func (c *CseListCall) Cx(cx string) *CseListCall {
-	c.opt_["cx"] = cx
+	c.urlParams_.set("cx", cx)
 	return c
 }
 
 // DateRestrict sets the optional parameter "dateRestrict": Specifies
 // all search results are from a time period
 func (c *CseListCall) DateRestrict(dateRestrict string) *CseListCall {
-	c.opt_["dateRestrict"] = dateRestrict
+	c.urlParams_.set("dateRestrict", dateRestrict)
 	return c
 }
 
 // ExactTerms sets the optional parameter "exactTerms": Identifies a
 // phrase that all documents in the search results must contain
 func (c *CseListCall) ExactTerms(exactTerms string) *CseListCall {
-	c.opt_["exactTerms"] = exactTerms
+	c.urlParams_.set("exactTerms", exactTerms)
 	return c
 }
 
@@ -545,7 +556,7 @@ func (c *CseListCall) ExactTerms(exactTerms string) *CseListCall {
 // word or phrase that should not appear in any documents in the search
 // results
 func (c *CseListCall) ExcludeTerms(excludeTerms string) *CseListCall {
-	c.opt_["excludeTerms"] = excludeTerms
+	c.urlParams_.set("excludeTerms", excludeTerms)
 	return c
 }
 
@@ -553,7 +564,7 @@ func (c *CseListCall) ExcludeTerms(excludeTerms string) *CseListCall {
 // specified type. Some of the allowed values are: bmp, gif, png, jpg,
 // svg, pdf, ...
 func (c *CseListCall) FileType(fileType string) *CseListCall {
-	c.opt_["fileType"] = fileType
+	c.urlParams_.set("fileType", fileType)
 	return c
 }
 
@@ -564,41 +575,41 @@ func (c *CseListCall) FileType(fileType string) *CseListCall {
 //   "0" - Turns off duplicate content filter.
 //   "1" - Turns on duplicate content filter.
 func (c *CseListCall) Filter(filter string) *CseListCall {
-	c.opt_["filter"] = filter
+	c.urlParams_.set("filter", filter)
 	return c
 }
 
 // Gl sets the optional parameter "gl": Geolocation of end user.
 func (c *CseListCall) Gl(gl string) *CseListCall {
-	c.opt_["gl"] = gl
+	c.urlParams_.set("gl", gl)
 	return c
 }
 
 // Googlehost sets the optional parameter "googlehost": The local Google
 // domain to use to perform the search.
 func (c *CseListCall) Googlehost(googlehost string) *CseListCall {
-	c.opt_["googlehost"] = googlehost
+	c.urlParams_.set("googlehost", googlehost)
 	return c
 }
 
 // HighRange sets the optional parameter "highRange": Creates a range in
 // form as_nlo value..as_nhi value and attempts to append it to query
 func (c *CseListCall) HighRange(highRange string) *CseListCall {
-	c.opt_["highRange"] = highRange
+	c.urlParams_.set("highRange", highRange)
 	return c
 }
 
 // Hl sets the optional parameter "hl": Sets the user interface
 // language.
 func (c *CseListCall) Hl(hl string) *CseListCall {
-	c.opt_["hl"] = hl
+	c.urlParams_.set("hl", hl)
 	return c
 }
 
 // Hq sets the optional parameter "hq": Appends the extra query terms to
 // the query.
 func (c *CseListCall) Hq(hq string) *CseListCall {
-	c.opt_["hq"] = hq
+	c.urlParams_.set("hq", hq)
 	return c
 }
 
@@ -610,7 +621,7 @@ func (c *CseListCall) Hq(hq string) *CseListCall {
 //   "gray" - gray
 //   "mono" - mono
 func (c *CseListCall) ImgColorType(imgColorType string) *CseListCall {
-	c.opt_["imgColorType"] = imgColorType
+	c.urlParams_.set("imgColorType", imgColorType)
 	return c
 }
 
@@ -630,7 +641,7 @@ func (c *CseListCall) ImgColorType(imgColorType string) *CseListCall {
 //   "white" - white
 //   "yellow" - yellow
 func (c *CseListCall) ImgDominantColor(imgDominantColor string) *CseListCall {
-	c.opt_["imgDominantColor"] = imgDominantColor
+	c.urlParams_.set("imgDominantColor", imgDominantColor)
 	return c
 }
 
@@ -647,7 +658,7 @@ func (c *CseListCall) ImgDominantColor(imgDominantColor string) *CseListCall {
 //   "xlarge" - xlarge
 //   "xxlarge" - xxlarge
 func (c *CseListCall) ImgSize(imgSize string) *CseListCall {
-	c.opt_["imgSize"] = imgSize
+	c.urlParams_.set("imgSize", imgSize)
 	return c
 }
 
@@ -661,21 +672,21 @@ func (c *CseListCall) ImgSize(imgSize string) *CseListCall {
 //   "news" - news
 //   "photo" - photo
 func (c *CseListCall) ImgType(imgType string) *CseListCall {
-	c.opt_["imgType"] = imgType
+	c.urlParams_.set("imgType", imgType)
 	return c
 }
 
 // LinkSite sets the optional parameter "linkSite": Specifies that all
 // search results should contain a link to a particular URL
 func (c *CseListCall) LinkSite(linkSite string) *CseListCall {
-	c.opt_["linkSite"] = linkSite
+	c.urlParams_.set("linkSite", linkSite)
 	return c
 }
 
 // LowRange sets the optional parameter "lowRange": Creates a range in
 // form as_nlo value..as_nhi value and attempts to append it to query
 func (c *CseListCall) LowRange(lowRange string) *CseListCall {
-	c.opt_["lowRange"] = lowRange
+	c.urlParams_.set("lowRange", lowRange)
 	return c
 }
 
@@ -719,14 +730,14 @@ func (c *CseListCall) LowRange(lowRange string) *CseListCall {
 //   "lang_zh-CN" - Chinese (Simplified)
 //   "lang_zh-TW" - Chinese (Traditional)
 func (c *CseListCall) Lr(lr string) *CseListCall {
-	c.opt_["lr"] = lr
+	c.urlParams_.set("lr", lr)
 	return c
 }
 
 // Num sets the optional parameter "num": Number of search results to
 // return
 func (c *CseListCall) Num(num int64) *CseListCall {
-	c.opt_["num"] = num
+	c.urlParams_.set("num", fmt.Sprintf("%v", num))
 	return c
 }
 
@@ -735,7 +746,7 @@ func (c *CseListCall) Num(num int64) *CseListCall {
 // search results must contain at least one of the additional search
 // terms
 func (c *CseListCall) OrTerms(orTerms string) *CseListCall {
-	c.opt_["orTerms"] = orTerms
+	c.urlParams_.set("orTerms", orTerms)
 	return c
 }
 
@@ -743,7 +754,7 @@ func (c *CseListCall) OrTerms(orTerms string) *CseListCall {
 // all search results should be pages that are related to the specified
 // URL
 func (c *CseListCall) RelatedSite(relatedSite string) *CseListCall {
-	c.opt_["relatedSite"] = relatedSite
+	c.urlParams_.set("relatedSite", relatedSite)
 	return c
 }
 
@@ -752,7 +763,7 @@ func (c *CseListCall) RelatedSite(relatedSite string) *CseListCall {
 // cc_sharealike, cc_noncommercial, cc_nonderived and combinations of
 // these.
 func (c *CseListCall) Rights(rights string) *CseListCall {
-	c.opt_["rights"] = rights
+	c.urlParams_.set("rights", rights)
 	return c
 }
 
@@ -763,7 +774,7 @@ func (c *CseListCall) Rights(rights string) *CseListCall {
 //   "medium" - Enables moderate safe search filtering.
 //   "off" (default) - Disables safe search filtering.
 func (c *CseListCall) Safe(safe string) *CseListCall {
-	c.opt_["safe"] = safe
+	c.urlParams_.set("safe", safe)
 	return c
 }
 
@@ -773,14 +784,14 @@ func (c *CseListCall) Safe(safe string) *CseListCall {
 // Possible values:
 //   "image" - custom image search
 func (c *CseListCall) SearchType(searchType string) *CseListCall {
-	c.opt_["searchType"] = searchType
+	c.urlParams_.set("searchType", searchType)
 	return c
 }
 
 // SiteSearch sets the optional parameter "siteSearch": Specifies all
 // search results should be pages from a given site
 func (c *CseListCall) SiteSearch(siteSearch string) *CseListCall {
-	c.opt_["siteSearch"] = siteSearch
+	c.urlParams_.set("siteSearch", siteSearch)
 	return c
 }
 
@@ -792,29 +803,29 @@ func (c *CseListCall) SiteSearch(siteSearch string) *CseListCall {
 //   "e" - exclude
 //   "i" - include
 func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
-	c.opt_["siteSearchFilter"] = siteSearchFilter
+	c.urlParams_.set("siteSearchFilter", siteSearchFilter)
 	return c
 }
 
 // Sort sets the optional parameter "sort": The sort expression to apply
 // to the results
 func (c *CseListCall) Sort(sort string) *CseListCall {
-	c.opt_["sort"] = sort
+	c.urlParams_.set("sort", sort)
 	return c
 }
 
 // Start sets the optional parameter "start": The index of the first
 // result to return
 func (c *CseListCall) Start(start int64) *CseListCall {
-	c.opt_["start"] = start
+	c.urlParams_.set("start", fmt.Sprintf("%v", start))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CseListCall) Fields(s ...googleapi.Field) *CseListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -824,13 +835,13 @@ func (c *CseListCall) Fields(s ...googleapi.Field) *CseListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CseListCall) IfNoneMatch(entityTag string) *CseListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CseListCall) Context(ctx context.Context) *CseListCall {
 	c.ctx_ = ctx
 	return c
@@ -838,112 +849,15 @@ func (c *CseListCall) Context(ctx context.Context) *CseListCall {
 
 func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("q", fmt.Sprintf("%v", c.q))
-	if v, ok := c.opt_["c2coff"]; ok {
-		params.Set("c2coff", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cr"]; ok {
-		params.Set("cr", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cref"]; ok {
-		params.Set("cref", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["cx"]; ok {
-		params.Set("cx", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["dateRestrict"]; ok {
-		params.Set("dateRestrict", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["exactTerms"]; ok {
-		params.Set("exactTerms", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["excludeTerms"]; ok {
-		params.Set("excludeTerms", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fileType"]; ok {
-		params.Set("fileType", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["gl"]; ok {
-		params.Set("gl", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["googlehost"]; ok {
-		params.Set("googlehost", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["highRange"]; ok {
-		params.Set("highRange", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["hl"]; ok {
-		params.Set("hl", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["hq"]; ok {
-		params.Set("hq", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["imgColorType"]; ok {
-		params.Set("imgColorType", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["imgDominantColor"]; ok {
-		params.Set("imgDominantColor", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["imgSize"]; ok {
-		params.Set("imgSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["imgType"]; ok {
-		params.Set("imgType", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["linkSite"]; ok {
-		params.Set("linkSite", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lowRange"]; ok {
-		params.Set("lowRange", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["lr"]; ok {
-		params.Set("lr", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["num"]; ok {
-		params.Set("num", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orTerms"]; ok {
-		params.Set("orTerms", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["relatedSite"]; ok {
-		params.Set("relatedSite", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["rights"]; ok {
-		params.Set("rights", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["safe"]; ok {
-		params.Set("safe", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["searchType"]; ok {
-		params.Set("searchType", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["siteSearch"]; ok {
-		params.Set("siteSearch", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["siteSearchFilter"]; ok {
-		params.Set("siteSearchFilter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["sort"]; ok {
-		params.Set("sort", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["start"]; ok {
-		params.Set("start", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.set("alt", alt)
+	c.urlParams_.set("q", fmt.Sprintf("%v", c.q))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1")
-	urls += "?" + params.Encode()
+	urls += "?" + url.Values(c.urlParams_).Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

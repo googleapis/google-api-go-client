@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d55b5e6b_399caf63",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-30T03:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e6de1ec_bd9c0bd1",
+      "revId": "f92ccc0115f5d11efcf06c9905ea23cef30c2481",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e6de1ec_fda28312",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d55b5e6b_19a1eb95",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-30T03:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e6de1ec_fda28312",
+      "range": {
+        "startLine": 1234,
+        "startChar": 30,
+        "endLine": 1234,
+        "endChar": 46
+      },
+      "revId": "f92ccc0115f5d11efcf06c9905ea23cef30c2481",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e6de1ec_5d15afd0",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 9
@@ -53,6 +95,24 @@
       "writtenOn": "2015-09-30T01:29:20Z",
       "side": 1,
       "message": "Also, ServerResponse and ForceSendFields should probably appear together in the struct.  I put ForceSendFields at the end because it won\u0027t be used in most cases, and I think that ServerResponse is similar. Can you move it to the end of the struct?",
+      "revId": "f92ccc0115f5d11efcf06c9905ea23cef30c2481",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d55b5e6b_79a627af",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 9
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-09-30T03:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e6de1ec_5d15afd0",
       "revId": "f92ccc0115f5d11efcf06c9905ea23cef30c2481",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

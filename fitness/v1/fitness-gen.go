@@ -965,7 +965,7 @@ type UsersDataSourcesCreateCall struct {
 	s          *Service
 	userId     string
 	datasource *DataSource
-	opt_       map[string]interface{}
+	urlParams_ internal.URLParams
 	ctx_       context.Context
 }
 
@@ -979,23 +979,23 @@ type UsersDataSourcesCreateCall struct {
 // number is obfuscated when read by any other developer reading public
 // data types.
 func (r *UsersDataSourcesService) Create(userId string, datasource *DataSource) *UsersDataSourcesCreateCall {
-	c := &UsersDataSourcesCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.datasource = datasource
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesCreateCall) Fields(s ...googleapi.Field) *UsersDataSourcesCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesCreateCall) Context(ctx context.Context) *UsersDataSourcesCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1008,13 +1008,9 @@ func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -1099,30 +1095,30 @@ type UsersDataSourcesDeleteCall struct {
 	s            *Service
 	userId       string
 	dataSourceId string
-	opt_         map[string]interface{}
+	urlParams_   internal.URLParams
 	ctx_         context.Context
 }
 
 // Delete: Delete the data source if there are no datapoints associated
 // with it
 func (r *UsersDataSourcesService) Delete(userId string, dataSourceId string) *UsersDataSourcesDeleteCall {
-	c := &UsersDataSourcesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesDeleteCall) Fields(s ...googleapi.Field) *UsersDataSourcesDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesDeleteCall) Context(ctx context.Context) *UsersDataSourcesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1130,13 +1126,9 @@ func (c *UsersDataSourcesDeleteCall) Context(ctx context.Context) *UsersDataSour
 
 func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources/{dataSourceId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":       c.userId,
@@ -1225,23 +1217,24 @@ type UsersDataSourcesGetCall struct {
 	s            *Service
 	userId       string
 	dataSourceId string
-	opt_         map[string]interface{}
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
 	ctx_         context.Context
 }
 
 // Get: Returns a data source identified by a data stream ID.
 func (r *UsersDataSourcesService) Get(userId string, dataSourceId string) *UsersDataSourcesGetCall {
-	c := &UsersDataSourcesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesGetCall) Fields(s ...googleapi.Field) *UsersDataSourcesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1251,13 +1244,13 @@ func (c *UsersDataSourcesGetCall) Fields(s ...googleapi.Field) *UsersDataSources
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersDataSourcesGetCall) IfNoneMatch(entityTag string) *UsersDataSourcesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesGetCall) Context(ctx context.Context) *UsersDataSourcesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1265,21 +1258,17 @@ func (c *UsersDataSourcesGetCall) Context(ctx context.Context) *UsersDataSources
 
 func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources/{dataSourceId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":       c.userId,
 		"dataSourceId": c.dataSourceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1363,10 +1352,11 @@ func (c *UsersDataSourcesGetCall) Do() (*DataSource, error) {
 // method id "fitness.users.dataSources.list":
 
 type UsersDataSourcesListCall struct {
-	s      *Service
-	userId string
-	opt_   map[string]interface{}
-	ctx_   context.Context
+	s            *Service
+	userId       string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists all data sources that are visible to the developer, using
@@ -1374,7 +1364,7 @@ type UsersDataSourcesListCall struct {
 // have private data sources that are only visible to other developers
 // or calls using other scopes.
 func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall {
-	c := &UsersDataSourcesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	return c
 }
@@ -1382,16 +1372,16 @@ func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall 
 // DataTypeName sets the optional parameter "dataTypeName": The names of
 // data types to include in the list. If not specified, all data sources
 // will be returned.
-func (c *UsersDataSourcesListCall) DataTypeName(dataTypeName string) *UsersDataSourcesListCall {
-	c.opt_["dataTypeName"] = dataTypeName
+func (c *UsersDataSourcesListCall) DataTypeName(dataTypeName []string) *UsersDataSourcesListCall {
+	c.urlParams_.SetMulti("dataTypeName", append([]string{}, dataTypeName...))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesListCall) Fields(s ...googleapi.Field) *UsersDataSourcesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1401,13 +1391,13 @@ func (c *UsersDataSourcesListCall) Fields(s ...googleapi.Field) *UsersDataSource
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersDataSourcesListCall) IfNoneMatch(entityTag string) *UsersDataSourcesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesListCall) Context(ctx context.Context) *UsersDataSourcesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1415,23 +1405,16 @@ func (c *UsersDataSourcesListCall) Context(ctx context.Context) *UsersDataSource
 
 func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["dataTypeName"]; ok {
-		params.Set("dataTypeName", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1518,7 +1501,7 @@ type UsersDataSourcesPatchCall struct {
 	userId       string
 	dataSourceId string
 	datasource   *DataSource
-	opt_         map[string]interface{}
+	urlParams_   internal.URLParams
 	ctx_         context.Context
 }
 
@@ -1531,24 +1514,24 @@ type UsersDataSourcesPatchCall struct {
 // Data sources are identified by their data stream ID. This method
 // supports patch semantics.
 func (r *UsersDataSourcesService) Patch(userId string, dataSourceId string, datasource *DataSource) *UsersDataSourcesPatchCall {
-	c := &UsersDataSourcesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	c.datasource = datasource
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesPatchCall) Fields(s ...googleapi.Field) *UsersDataSourcesPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesPatchCall) Context(ctx context.Context) *UsersDataSourcesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1561,13 +1544,9 @@ func (c *UsersDataSourcesPatchCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources/{dataSourceId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":       c.userId,
@@ -1661,7 +1640,7 @@ type UsersDataSourcesUpdateCall struct {
 	userId       string
 	dataSourceId string
 	datasource   *DataSource
-	opt_         map[string]interface{}
+	urlParams_   internal.URLParams
 	ctx_         context.Context
 }
 
@@ -1673,24 +1652,24 @@ type UsersDataSourcesUpdateCall struct {
 //
 // Data sources are identified by their data stream ID.
 func (r *UsersDataSourcesService) Update(userId string, dataSourceId string, datasource *DataSource) *UsersDataSourcesUpdateCall {
-	c := &UsersDataSourcesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	c.datasource = datasource
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesUpdateCall) Fields(s ...googleapi.Field) *UsersDataSourcesUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesUpdateCall) Context(ctx context.Context) *UsersDataSourcesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1703,13 +1682,9 @@ func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources/{dataSourceId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":       c.userId,
@@ -1803,7 +1778,7 @@ type UsersDataSourcesDatasetsDeleteCall struct {
 	userId       string
 	dataSourceId string
 	datasetId    string
-	opt_         map[string]interface{}
+	urlParams_   internal.URLParams
 	ctx_         context.Context
 }
 
@@ -1815,7 +1790,7 @@ type UsersDataSourcesDatasetsDeleteCall struct {
 // straddles either end point of the dataset, only the overlapping
 // portion of the data point will be deleted.
 func (r *UsersDataSourcesDatasetsService) Delete(userId string, dataSourceId string, datasetId string) *UsersDataSourcesDatasetsDeleteCall {
-	c := &UsersDataSourcesDatasetsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesDatasetsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	c.datasetId = datasetId
@@ -1825,28 +1800,28 @@ func (r *UsersDataSourcesDatasetsService) Delete(userId string, dataSourceId str
 // CurrentTimeMillis sets the optional parameter "currentTimeMillis":
 // The client's current time in milliseconds since epoch.
 func (c *UsersDataSourcesDatasetsDeleteCall) CurrentTimeMillis(currentTimeMillis int64) *UsersDataSourcesDatasetsDeleteCall {
-	c.opt_["currentTimeMillis"] = currentTimeMillis
+	c.urlParams_.Set("currentTimeMillis", fmt.Sprintf("%v", currentTimeMillis))
 	return c
 }
 
 // ModifiedTimeMillis sets the optional parameter "modifiedTimeMillis":
 // When the operation was performed on the client.
 func (c *UsersDataSourcesDatasetsDeleteCall) ModifiedTimeMillis(modifiedTimeMillis int64) *UsersDataSourcesDatasetsDeleteCall {
-	c.opt_["modifiedTimeMillis"] = modifiedTimeMillis
+	c.urlParams_.Set("modifiedTimeMillis", fmt.Sprintf("%v", modifiedTimeMillis))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesDatasetsDeleteCall) Fields(s ...googleapi.Field) *UsersDataSourcesDatasetsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesDatasetsDeleteCall) Context(ctx context.Context) *UsersDataSourcesDatasetsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1854,19 +1829,9 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Context(ctx context.Context) *Users
 
 func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["currentTimeMillis"]; ok {
-		params.Set("currentTimeMillis", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedTimeMillis"]; ok {
-		params.Set("modifiedTimeMillis", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources/{dataSourceId}/datasets/{datasetId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":       c.userId,
@@ -1949,7 +1914,8 @@ type UsersDataSourcesDatasetsGetCall struct {
 	userId       string
 	dataSourceId string
 	datasetId    string
-	opt_         map[string]interface{}
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
 	ctx_         context.Context
 }
 
@@ -1959,7 +1925,7 @@ type UsersDataSourcesDatasetsGetCall struct {
 // time is less than or equal to the dataset end time and whose end time
 // is greater than or equal to the dataset start time.
 func (r *UsersDataSourcesDatasetsService) Get(userId string, dataSourceId string, datasetId string) *UsersDataSourcesDatasetsGetCall {
-	c := &UsersDataSourcesDatasetsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesDatasetsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	c.datasetId = datasetId
@@ -1971,7 +1937,7 @@ func (r *UsersDataSourcesDatasetsService) Get(userId string, dataSourceId string
 // are more data points in the dataset, nextPageToken will be set in the
 // dataset response.
 func (c *UsersDataSourcesDatasetsGetCall) Limit(limit int64) *UsersDataSourcesDatasetsGetCall {
-	c.opt_["limit"] = limit
+	c.urlParams_.Set("limit", fmt.Sprintf("%v", limit))
 	return c
 }
 
@@ -1982,15 +1948,15 @@ func (c *UsersDataSourcesDatasetsGetCall) Limit(limit int64) *UsersDataSourcesDa
 // dataset with data point end timestamps that are strictly smaller than
 // those in the previous partial response.
 func (c *UsersDataSourcesDatasetsGetCall) PageToken(pageToken string) *UsersDataSourcesDatasetsGetCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesDatasetsGetCall) Fields(s ...googleapi.Field) *UsersDataSourcesDatasetsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2000,13 +1966,13 @@ func (c *UsersDataSourcesDatasetsGetCall) Fields(s ...googleapi.Field) *UsersDat
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersDataSourcesDatasetsGetCall) IfNoneMatch(entityTag string) *UsersDataSourcesDatasetsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesDatasetsGetCall) Context(ctx context.Context) *UsersDataSourcesDatasetsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2014,19 +1980,9 @@ func (c *UsersDataSourcesDatasetsGetCall) Context(ctx context.Context) *UsersDat
 
 func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["limit"]; ok {
-		params.Set("limit", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources/{dataSourceId}/datasets/{datasetId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":       c.userId,
@@ -2034,8 +1990,8 @@ func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response,
 		"datasetId":    c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2142,7 +2098,7 @@ type UsersDataSourcesDatasetsPatchCall struct {
 	dataSourceId string
 	datasetId    string
 	dataset      *Dataset
-	opt_         map[string]interface{}
+	urlParams_   internal.URLParams
 	ctx_         context.Context
 }
 
@@ -2152,7 +2108,7 @@ type UsersDataSourcesDatasetsPatchCall struct {
 // can belong to more than one dataset. This method does not use patch
 // semantics.
 func (r *UsersDataSourcesDatasetsService) Patch(userId string, dataSourceId string, datasetId string, dataset *Dataset) *UsersDataSourcesDatasetsPatchCall {
-	c := &UsersDataSourcesDatasetsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDataSourcesDatasetsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	c.datasetId = datasetId
@@ -2165,21 +2121,21 @@ func (r *UsersDataSourcesDatasetsService) Patch(userId string, dataSourceId stri
 // minStartTimeNs and maxEndTimeNs properties in the request body are in
 // nanoseconds instead of milliseconds.
 func (c *UsersDataSourcesDatasetsPatchCall) CurrentTimeMillis(currentTimeMillis int64) *UsersDataSourcesDatasetsPatchCall {
-	c.opt_["currentTimeMillis"] = currentTimeMillis
+	c.urlParams_.Set("currentTimeMillis", fmt.Sprintf("%v", currentTimeMillis))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDataSourcesDatasetsPatchCall) Fields(s ...googleapi.Field) *UsersDataSourcesDatasetsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDataSourcesDatasetsPatchCall) Context(ctx context.Context) *UsersDataSourcesDatasetsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2192,16 +2148,9 @@ func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["currentTimeMillis"]; ok {
-		params.Set("currentTimeMillis", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataSources/{dataSourceId}/datasets/{datasetId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":       c.userId,
@@ -2308,7 +2257,7 @@ type UsersDatasetAggregateCall struct {
 	s                *Service
 	userId           string
 	aggregaterequest *AggregateRequest
-	opt_             map[string]interface{}
+	urlParams_       internal.URLParams
 	ctx_             context.Context
 }
 
@@ -2317,23 +2266,23 @@ type UsersDatasetAggregateCall struct {
 // types and from multiple sources can be aggreated into exactly one
 // bucket type per request.
 func (r *UsersDatasetService) Aggregate(userId string, aggregaterequest *AggregateRequest) *UsersDatasetAggregateCall {
-	c := &UsersDatasetAggregateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersDatasetAggregateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.aggregaterequest = aggregaterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDatasetAggregateCall) Fields(s ...googleapi.Field) *UsersDatasetAggregateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersDatasetAggregateCall) Context(ctx context.Context) *UsersDatasetAggregateCall {
 	c.ctx_ = ctx
 	return c
@@ -2346,13 +2295,9 @@ func (c *UsersDatasetAggregateCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/dataset:aggregate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -2434,16 +2379,16 @@ func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
 // method id "fitness.users.sessions.delete":
 
 type UsersSessionsDeleteCall struct {
-	s         *Service
-	userId    string
-	sessionId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	userId     string
+	sessionId  string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes a session specified by the given session ID.
 func (r *UsersSessionsService) Delete(userId string, sessionId string) *UsersSessionsDeleteCall {
-	c := &UsersSessionsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersSessionsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.sessionId = sessionId
 	return c
@@ -2452,21 +2397,21 @@ func (r *UsersSessionsService) Delete(userId string, sessionId string) *UsersSes
 // CurrentTimeMillis sets the optional parameter "currentTimeMillis":
 // The client's current time in milliseconds since epoch.
 func (c *UsersSessionsDeleteCall) CurrentTimeMillis(currentTimeMillis int64) *UsersSessionsDeleteCall {
-	c.opt_["currentTimeMillis"] = currentTimeMillis
+	c.urlParams_.Set("currentTimeMillis", fmt.Sprintf("%v", currentTimeMillis))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersSessionsDeleteCall) Fields(s ...googleapi.Field) *UsersSessionsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersSessionsDeleteCall) Context(ctx context.Context) *UsersSessionsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2474,16 +2419,9 @@ func (c *UsersSessionsDeleteCall) Context(ctx context.Context) *UsersSessionsDel
 
 func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["currentTimeMillis"]; ok {
-		params.Set("currentTimeMillis", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/sessions/{sessionId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":    c.userId,
@@ -2546,15 +2484,16 @@ func (c *UsersSessionsDeleteCall) Do() error {
 // method id "fitness.users.sessions.list":
 
 type UsersSessionsListCall struct {
-	s      *Service
-	userId string
-	opt_   map[string]interface{}
-	ctx_   context.Context
+	s            *Service
+	userId       string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists sessions previously created.
 func (r *UsersSessionsService) List(userId string) *UsersSessionsListCall {
-	c := &UsersSessionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersSessionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	return c
 }
@@ -2563,7 +2502,7 @@ func (r *UsersSessionsService) List(userId string) *UsersSessionsListCall {
 // Only sessions ending between the start and end times will be included
 // in the response.
 func (c *UsersSessionsListCall) EndTime(endTime string) *UsersSessionsListCall {
-	c.opt_["endTime"] = endTime
+	c.urlParams_.Set("endTime", endTime)
 	return c
 }
 
@@ -2572,7 +2511,7 @@ func (c *UsersSessionsListCall) EndTime(endTime string) *UsersSessionsListCall {
 // returned in this response will only have an ID and will not have any
 // other fields.
 func (c *UsersSessionsListCall) IncludeDeleted(includeDeleted bool) *UsersSessionsListCall {
-	c.opt_["includeDeleted"] = includeDeleted
+	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
 	return c
 }
 
@@ -2581,7 +2520,7 @@ func (c *UsersSessionsListCall) IncludeDeleted(includeDeleted bool) *UsersSessio
 // next page of results, set this parameter to the value of
 // nextPageToken from the previous response.
 func (c *UsersSessionsListCall) PageToken(pageToken string) *UsersSessionsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -2589,15 +2528,15 @@ func (c *UsersSessionsListCall) PageToken(pageToken string) *UsersSessionsListCa
 // timestamp. Only sessions ending between the start and end times will
 // be included in the response.
 func (c *UsersSessionsListCall) StartTime(startTime string) *UsersSessionsListCall {
-	c.opt_["startTime"] = startTime
+	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersSessionsListCall) Fields(s ...googleapi.Field) *UsersSessionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2607,13 +2546,13 @@ func (c *UsersSessionsListCall) Fields(s ...googleapi.Field) *UsersSessionsListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersSessionsListCall) IfNoneMatch(entityTag string) *UsersSessionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersSessionsListCall) Context(ctx context.Context) *UsersSessionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2621,32 +2560,16 @@ func (c *UsersSessionsListCall) Context(ctx context.Context) *UsersSessionsListC
 
 func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["endTime"]; ok {
-		params.Set("endTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["includeDeleted"]; ok {
-		params.Set("includeDeleted", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startTime"]; ok {
-		params.Set("startTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/sessions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2743,17 +2666,17 @@ func (c *UsersSessionsListCall) Do() (*ListSessionsResponse, error) {
 // method id "fitness.users.sessions.update":
 
 type UsersSessionsUpdateCall struct {
-	s         *Service
-	userId    string
-	sessionId string
-	session   *Session
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	userId     string
+	sessionId  string
+	session    *Session
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Update: Updates or insert a given session.
 func (r *UsersSessionsService) Update(userId string, sessionId string, session *Session) *UsersSessionsUpdateCall {
-	c := &UsersSessionsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UsersSessionsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.userId = userId
 	c.sessionId = sessionId
 	c.session = session
@@ -2763,21 +2686,21 @@ func (r *UsersSessionsService) Update(userId string, sessionId string, session *
 // CurrentTimeMillis sets the optional parameter "currentTimeMillis":
 // The client's current time in milliseconds since epoch.
 func (c *UsersSessionsUpdateCall) CurrentTimeMillis(currentTimeMillis int64) *UsersSessionsUpdateCall {
-	c.opt_["currentTimeMillis"] = currentTimeMillis
+	c.urlParams_.Set("currentTimeMillis", fmt.Sprintf("%v", currentTimeMillis))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersSessionsUpdateCall) Fields(s ...googleapi.Field) *UsersSessionsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UsersSessionsUpdateCall) Context(ctx context.Context) *UsersSessionsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2790,16 +2713,9 @@ func (c *UsersSessionsUpdateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["currentTimeMillis"]; ok {
-		params.Set("currentTimeMillis", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/sessions/{sessionId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":    c.userId,

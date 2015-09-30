@@ -43,6 +43,8 @@ const apiName = "proximitybeacon"
 const apiVersion = "v1beta1"
 const basePath = "https://proximitybeacon.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -758,29 +760,29 @@ func (s *Observation) MarshalJSON() ([]byte, error) {
 type BeaconinfoGetforobservedCall struct {
 	s                                *Service
 	getinfoforobservedbeaconsrequest *GetInfoForObservedBeaconsRequest
-	opt_                             map[string]interface{}
+	urlParams_                       url.Values
 	ctx_                             context.Context
 }
 
 // Getforobserved: Given one or more beacon observations, returns any
 // beacon information and attachments accessible to your application.
 func (r *BeaconinfoService) Getforobserved(getinfoforobservedbeaconsrequest *GetInfoForObservedBeaconsRequest) *BeaconinfoGetforobservedCall {
-	c := &BeaconinfoGetforobservedCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconinfoGetforobservedCall{s: r.s, urlParams_: urlValues()}
 	c.getinfoforobservedbeaconsrequest = getinfoforobservedbeaconsrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconinfoGetforobservedCall) Fields(s ...googleapi.Field) *BeaconinfoGetforobservedCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconinfoGetforobservedCall) Context(ctx context.Context) *BeaconinfoGetforobservedCall {
 	c.ctx_ = ctx
 	return c
@@ -793,13 +795,9 @@ func (c *BeaconinfoGetforobservedCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/beaconinfo:getforobserved")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -866,7 +864,7 @@ func (c *BeaconinfoGetforobservedCall) Do() (*GetInfoForObservedBeaconsResponse,
 type BeaconsActivateCall struct {
 	s          *Service
 	beaconName string
-	opt_       map[string]interface{}
+	urlParams_ url.Values
 	ctx_       context.Context
 }
 
@@ -875,22 +873,22 @@ type BeaconsActivateCall struct {
 // `beaconinfo.getforobserved`. Calling this method on an already active
 // beacon will do nothing (but will return a successful response code).
 func (r *BeaconsService) Activate(beaconName string) *BeaconsActivateCall {
-	c := &BeaconsActivateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsActivateCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsActivateCall) Fields(s ...googleapi.Field) *BeaconsActivateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsActivateCall) Context(ctx context.Context) *BeaconsActivateCall {
 	c.ctx_ = ctx
 	return c
@@ -898,13 +896,9 @@ func (c *BeaconsActivateCall) Context(ctx context.Context) *BeaconsActivateCall 
 
 func (c *BeaconsActivateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}:activate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
@@ -980,7 +974,7 @@ func (c *BeaconsActivateCall) Do() (*Empty, error) {
 type BeaconsDeactivateCall struct {
 	s          *Service
 	beaconName string
-	opt_       map[string]interface{}
+	urlParams_ url.Values
 	ctx_       context.Context
 }
 
@@ -990,22 +984,22 @@ type BeaconsDeactivateCall struct {
 // inactive beacon will do nothing (but will return a successful
 // response code).
 func (r *BeaconsService) Deactivate(beaconName string) *BeaconsDeactivateCall {
-	c := &BeaconsDeactivateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsDeactivateCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsDeactivateCall) Fields(s ...googleapi.Field) *BeaconsDeactivateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsDeactivateCall) Context(ctx context.Context) *BeaconsDeactivateCall {
 	c.ctx_ = ctx
 	return c
@@ -1013,13 +1007,9 @@ func (c *BeaconsDeactivateCall) Context(ctx context.Context) *BeaconsDeactivateC
 
 func (c *BeaconsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}:deactivate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
@@ -1095,7 +1085,7 @@ func (c *BeaconsDeactivateCall) Do() (*Empty, error) {
 type BeaconsDecommissionCall struct {
 	s          *Service
 	beaconName string
-	opt_       map[string]interface{}
+	urlParams_ url.Values
 	ctx_       context.Context
 }
 
@@ -1104,22 +1094,22 @@ type BeaconsDecommissionCall struct {
 // This operation is permanent -- you will not be able to re-register a
 // beacon with this ID again.
 func (r *BeaconsService) Decommission(beaconName string) *BeaconsDecommissionCall {
-	c := &BeaconsDecommissionCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsDecommissionCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsDecommissionCall) Fields(s ...googleapi.Field) *BeaconsDecommissionCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsDecommissionCall) Context(ctx context.Context) *BeaconsDecommissionCall {
 	c.ctx_ = ctx
 	return c
@@ -1127,13 +1117,9 @@ func (c *BeaconsDecommissionCall) Context(ctx context.Context) *BeaconsDecommiss
 
 func (c *BeaconsDecommissionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}:decommission")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
@@ -1207,24 +1193,25 @@ func (c *BeaconsDecommissionCall) Do() (*Empty, error) {
 // method id "proximitybeacon.beacons.get":
 
 type BeaconsGetCall struct {
-	s          *Service
-	beaconName string
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	beaconName   string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Returns detailed information about the specified beacon.
 func (r *BeaconsService) Get(beaconName string) *BeaconsGetCall {
-	c := &BeaconsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsGetCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsGetCall) Fields(s ...googleapi.Field) *BeaconsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1234,13 +1221,13 @@ func (c *BeaconsGetCall) Fields(s ...googleapi.Field) *BeaconsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BeaconsGetCall) IfNoneMatch(entityTag string) *BeaconsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsGetCall) Context(ctx context.Context) *BeaconsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1248,20 +1235,16 @@ func (c *BeaconsGetCall) Context(ctx context.Context) *BeaconsGetCall {
 
 func (c *BeaconsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1331,16 +1314,17 @@ func (c *BeaconsGetCall) Do() (*Beacon, error) {
 // method id "proximitybeacon.beacons.list":
 
 type BeaconsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Searches the beacon registry for beacons that match the given
 // search criteria. Only those beacons that the client has permission to
 // list will be returned.
 func (r *BeaconsService) List() *BeaconsListCall {
-	c := &BeaconsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsListCall{s: r.s, urlParams_: urlValues()}
 	return c
 }
 
@@ -1348,14 +1332,14 @@ func (r *BeaconsService) List() *BeaconsListCall {
 // of records to return for this request, up to a server-defined upper
 // limit.
 func (c *BeaconsListCall) PageSize(pageSize int64) *BeaconsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
 // obtained from a previous request to list beacons.
 func (c *BeaconsListCall) PageToken(pageToken string) *BeaconsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
@@ -1407,15 +1391,15 @@ func (c *BeaconsListCall) PageToken(pageToken string) *BeaconsListCall {
 // /v1beta1/beacons?q=status:active%20lat:51.123%20lng:-1.095%20radius:10
 // 00`
 func (c *BeaconsListCall) Q(q string) *BeaconsListCall {
-	c.opt_["q"] = q
+	c.urlParams_.Set("q", fmt.Sprintf("%v", q))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsListCall) Fields(s ...googleapi.Field) *BeaconsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1425,13 +1409,13 @@ func (c *BeaconsListCall) Fields(s ...googleapi.Field) *BeaconsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BeaconsListCall) IfNoneMatch(entityTag string) *BeaconsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsListCall) Context(ctx context.Context) *BeaconsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1439,27 +1423,14 @@ func (c *BeaconsListCall) Context(ctx context.Context) *BeaconsListCall {
 
 func (c *BeaconsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["q"]; ok {
-		params.Set("q", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/beacons")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1535,32 +1506,32 @@ func (c *BeaconsListCall) Do() (*ListBeaconsResponse, error) {
 // method id "proximitybeacon.beacons.register":
 
 type BeaconsRegisterCall struct {
-	s      *Service
-	beacon *Beacon
-	opt_   map[string]interface{}
-	ctx_   context.Context
+	s          *Service
+	beacon     *Beacon
+	urlParams_ url.Values
+	ctx_       context.Context
 }
 
 // Register: Registers a previously unregistered beacon given its
 // `advertisedId`. These IDs are unique within the system. An ID can be
 // registered only once.
 func (r *BeaconsService) Register(beacon *Beacon) *BeaconsRegisterCall {
-	c := &BeaconsRegisterCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsRegisterCall{s: r.s, urlParams_: urlValues()}
 	c.beacon = beacon
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsRegisterCall) Fields(s ...googleapi.Field) *BeaconsRegisterCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsRegisterCall) Context(ctx context.Context) *BeaconsRegisterCall {
 	c.ctx_ = ctx
 	return c
@@ -1573,13 +1544,9 @@ func (c *BeaconsRegisterCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/beacons:register")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1646,7 +1613,7 @@ type BeaconsUpdateCall struct {
 	s          *Service
 	beaconName string
 	beacon     *Beacon
-	opt_       map[string]interface{}
+	urlParams_ url.Values
 	ctx_       context.Context
 }
 
@@ -1658,23 +1625,23 @@ type BeaconsUpdateCall struct {
 // status, use the separate methods on this API for (de)activation and
 // decommissioning.
 func (r *BeaconsService) Update(beaconName string, beacon *Beacon) *BeaconsUpdateCall {
-	c := &BeaconsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsUpdateCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	c.beacon = beacon
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsUpdateCall) Fields(s ...googleapi.Field) *BeaconsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsUpdateCall) Context(ctx context.Context) *BeaconsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1687,13 +1654,9 @@ func (c *BeaconsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
@@ -1773,7 +1736,7 @@ func (c *BeaconsUpdateCall) Do() (*Beacon, error) {
 type BeaconsAttachmentsBatchDeleteCall struct {
 	s          *Service
 	beaconName string
-	opt_       map[string]interface{}
+	urlParams_ url.Values
 	ctx_       context.Context
 }
 
@@ -1784,7 +1747,7 @@ type BeaconsAttachmentsBatchDeleteCall struct {
 // on the given beacon will be deleted. You also may explicitly specify
 // `*/*` to delete all.
 func (r *BeaconsAttachmentsService) BatchDelete(beaconName string) *BeaconsAttachmentsBatchDeleteCall {
-	c := &BeaconsAttachmentsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsAttachmentsBatchDeleteCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	return c
 }
@@ -1794,21 +1757,21 @@ func (r *BeaconsAttachmentsService) BatchDelete(beaconName string) *BeaconsAttac
 // `namespace/type` format. Accepts `*/*` to specify "all types in all
 // namespaces".
 func (c *BeaconsAttachmentsBatchDeleteCall) NamespacedType(namespacedType string) *BeaconsAttachmentsBatchDeleteCall {
-	c.opt_["namespacedType"] = namespacedType
+	c.urlParams_.Set("namespacedType", fmt.Sprintf("%v", namespacedType))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsAttachmentsBatchDeleteCall) Fields(s ...googleapi.Field) *BeaconsAttachmentsBatchDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsAttachmentsBatchDeleteCall) Context(ctx context.Context) *BeaconsAttachmentsBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1816,16 +1779,9 @@ func (c *BeaconsAttachmentsBatchDeleteCall) Context(ctx context.Context) *Beacon
 
 func (c *BeaconsAttachmentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["namespacedType"]; ok {
-		params.Set("namespacedType", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}/attachments:batchDelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
@@ -1907,7 +1863,7 @@ type BeaconsAttachmentsCreateCall struct {
 	s                *Service
 	beaconName       string
 	beaconattachment *BeaconAttachment
-	opt_             map[string]interface{}
+	urlParams_       url.Values
 	ctx_             context.Context
 }
 
@@ -1921,23 +1877,23 @@ type BeaconsAttachmentsCreateCall struct {
 // to 100 characters in length. Attachment data can be up to 1024 bytes
 // long.
 func (r *BeaconsAttachmentsService) Create(beaconName string, beaconattachment *BeaconAttachment) *BeaconsAttachmentsCreateCall {
-	c := &BeaconsAttachmentsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsAttachmentsCreateCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	c.beaconattachment = beaconattachment
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsAttachmentsCreateCall) Fields(s ...googleapi.Field) *BeaconsAttachmentsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsAttachmentsCreateCall) Context(ctx context.Context) *BeaconsAttachmentsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1950,13 +1906,9 @@ func (c *BeaconsAttachmentsCreateCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}/attachments")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
@@ -2036,7 +1988,7 @@ func (c *BeaconsAttachmentsCreateCall) Do() (*BeaconAttachment, error) {
 type BeaconsAttachmentsDeleteCall struct {
 	s              *Service
 	attachmentName string
-	opt_           map[string]interface{}
+	urlParams_     url.Values
 	ctx_           context.Context
 }
 
@@ -2046,22 +1998,22 @@ type BeaconsAttachmentsDeleteCall struct {
 // this with the delete request to control which attachment is removed.
 // This operation cannot be undone.
 func (r *BeaconsAttachmentsService) Delete(attachmentName string) *BeaconsAttachmentsDeleteCall {
-	c := &BeaconsAttachmentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsAttachmentsDeleteCall{s: r.s, urlParams_: urlValues()}
 	c.attachmentName = attachmentName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsAttachmentsDeleteCall) Fields(s ...googleapi.Field) *BeaconsAttachmentsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsAttachmentsDeleteCall) Context(ctx context.Context) *BeaconsAttachmentsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2069,13 +2021,9 @@ func (c *BeaconsAttachmentsDeleteCall) Context(ctx context.Context) *BeaconsAtta
 
 func (c *BeaconsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+attachmentName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"attachmentName": c.attachmentName,
@@ -2149,10 +2097,11 @@ func (c *BeaconsAttachmentsDeleteCall) Do() (*Empty, error) {
 // method id "proximitybeacon.beacons.attachments.list":
 
 type BeaconsAttachmentsListCall struct {
-	s          *Service
-	beaconName string
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	beaconName   string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Returns the attachments for the specified beacon that match the
@@ -2162,7 +2111,7 @@ type BeaconsAttachmentsListCall struct {
 // namespace must be one of the ones returned from the `namespaces`
 // endpoint.
 func (r *BeaconsAttachmentsService) List(beaconName string) *BeaconsAttachmentsListCall {
-	c := &BeaconsAttachmentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsAttachmentsListCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	return c
 }
@@ -2172,15 +2121,15 @@ func (r *BeaconsAttachmentsService) List(beaconName string) *BeaconsAttachmentsL
 // in namespace/type format. Accepts `*/*` to specify "all types in all
 // namespaces".
 func (c *BeaconsAttachmentsListCall) NamespacedType(namespacedType string) *BeaconsAttachmentsListCall {
-	c.opt_["namespacedType"] = namespacedType
+	c.urlParams_.Set("namespacedType", fmt.Sprintf("%v", namespacedType))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsAttachmentsListCall) Fields(s ...googleapi.Field) *BeaconsAttachmentsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2190,13 +2139,13 @@ func (c *BeaconsAttachmentsListCall) Fields(s ...googleapi.Field) *BeaconsAttach
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BeaconsAttachmentsListCall) IfNoneMatch(entityTag string) *BeaconsAttachmentsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsAttachmentsListCall) Context(ctx context.Context) *BeaconsAttachmentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2204,23 +2153,16 @@ func (c *BeaconsAttachmentsListCall) Context(ctx context.Context) *BeaconsAttach
 
 func (c *BeaconsAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["namespacedType"]; ok {
-		params.Set("namespacedType", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}/attachments")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2295,17 +2237,18 @@ func (c *BeaconsAttachmentsListCall) Do() (*ListBeaconAttachmentsResponse, error
 // method id "proximitybeacon.beacons.diagnostics.list":
 
 type BeaconsDiagnosticsListCall struct {
-	s          *Service
-	beaconName string
-	opt_       map[string]interface{}
-	ctx_       context.Context
+	s            *Service
+	beaconName   string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List the diagnostics for a single beacon. You can also list
 // diagnostics for all the beacons owned by your Google Developers
 // Console project by using the beacon name `beacons/-`.
 func (r *BeaconsDiagnosticsService) List(beaconName string) *BeaconsDiagnosticsListCall {
-	c := &BeaconsDiagnosticsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BeaconsDiagnosticsListCall{s: r.s, urlParams_: urlValues()}
 	c.beaconName = beaconName
 	return c
 }
@@ -2319,14 +2262,14 @@ func (r *BeaconsDiagnosticsService) List(beaconName string) *BeaconsDiagnosticsL
 //   "WRONG_LOCATION"
 //   "LOW_BATTERY"
 func (c *BeaconsDiagnosticsListCall) AlertFilter(alertFilter string) *BeaconsDiagnosticsListCall {
-	c.opt_["alertFilter"] = alertFilter
+	c.urlParams_.Set("alertFilter", fmt.Sprintf("%v", alertFilter))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Specifies the
 // maximum number of results to return. Defaults to 10. Maximum 1000.
 func (c *BeaconsDiagnosticsListCall) PageSize(pageSize int64) *BeaconsDiagnosticsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -2334,15 +2277,15 @@ func (c *BeaconsDiagnosticsListCall) PageSize(pageSize int64) *BeaconsDiagnostic
 // that occur after the `page_token`, obtained from the response to a
 // previous request.
 func (c *BeaconsDiagnosticsListCall) PageToken(pageToken string) *BeaconsDiagnosticsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BeaconsDiagnosticsListCall) Fields(s ...googleapi.Field) *BeaconsDiagnosticsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2352,13 +2295,13 @@ func (c *BeaconsDiagnosticsListCall) Fields(s ...googleapi.Field) *BeaconsDiagno
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BeaconsDiagnosticsListCall) IfNoneMatch(entityTag string) *BeaconsDiagnosticsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BeaconsDiagnosticsListCall) Context(ctx context.Context) *BeaconsDiagnosticsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2366,29 +2309,16 @@ func (c *BeaconsDiagnosticsListCall) Context(ctx context.Context) *BeaconsDiagno
 
 func (c *BeaconsDiagnosticsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["alertFilter"]; ok {
-		params.Set("alertFilter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+beaconName}/diagnostics")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"beaconName": c.beaconName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2479,9 +2409,10 @@ func (c *BeaconsDiagnosticsListCall) Do() (*ListDiagnosticsResponse, error) {
 // method id "proximitybeacon.namespaces.list":
 
 type NamespacesListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists all attachment namespaces owned by your Google Developers
@@ -2489,15 +2420,15 @@ type NamespacesListCall struct {
 // include a namespaced type, and the namespace must be owned by your
 // project.
 func (r *NamespacesService) List() *NamespacesListCall {
-	c := &NamespacesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &NamespacesListCall{s: r.s, urlParams_: urlValues()}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *NamespacesListCall) Fields(s ...googleapi.Field) *NamespacesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2507,13 +2438,13 @@ func (c *NamespacesListCall) Fields(s ...googleapi.Field) *NamespacesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *NamespacesListCall) IfNoneMatch(entityTag string) *NamespacesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *NamespacesListCall) Context(ctx context.Context) *NamespacesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2521,18 +2452,14 @@ func (c *NamespacesListCall) Context(ctx context.Context) *NamespacesListCall {
 
 func (c *NamespacesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/namespaces")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

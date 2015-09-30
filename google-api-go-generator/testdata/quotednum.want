@@ -43,6 +43,8 @@ const apiName = "adexchangebuyer"
 const apiVersion = "v1.1"
 const basePath = "https://www.googleapis.com/adexchangebuyer/v1.1/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// Manage your Ad Exchange buyer account configuration

@@ -43,6 +43,8 @@ const apiName = "container"
 const apiVersion = "v1"
 const basePath = "https://container.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 // OAuth2 scopes used by this API.
 const (
 	// View and manage your data across Google Cloud Platform services
@@ -534,27 +536,28 @@ func (s *UpdateClusterRequest) MarshalJSON() ([]byte, error) {
 // method id "container.projects.zones.getServerconfig":
 
 type ProjectsZonesGetServerconfigCall struct {
-	s         *Service
-	projectId string
-	zone      string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	zone         string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // GetServerconfig: Returns configuration info about the Container
 // Engine service.
 func (r *ProjectsZonesService) GetServerconfig(projectId string, zone string) *ProjectsZonesGetServerconfigCall {
-	c := &ProjectsZonesGetServerconfigCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsZonesGetServerconfigCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.zone = zone
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsZonesGetServerconfigCall) Fields(s ...googleapi.Field) *ProjectsZonesGetServerconfigCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -564,13 +567,13 @@ func (c *ProjectsZonesGetServerconfigCall) Fields(s ...googleapi.Field) *Project
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsZonesGetServerconfigCall) IfNoneMatch(entityTag string) *ProjectsZonesGetServerconfigCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsZonesGetServerconfigCall) Context(ctx context.Context) *ProjectsZonesGetServerconfigCall {
 	c.ctx_ = ctx
 	return c
@@ -578,21 +581,17 @@ func (c *ProjectsZonesGetServerconfigCall) Context(ctx context.Context) *Project
 
 func (c *ProjectsZonesGetServerconfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/serverconfig")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"zone":      c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -675,7 +674,7 @@ type ProjectsZonesClustersCreateCall struct {
 	projectId            string
 	zone                 string
 	createclusterrequest *CreateClusterRequest
-	opt_                 map[string]interface{}
+	urlParams_           url.Values
 	ctx_                 context.Context
 }
 
@@ -689,24 +688,24 @@ type ProjectsZonesClustersCreateCall struct {
 // entry is added to the project's global metadata indicating which CIDR
 // range is being used by the cluster.
 func (r *ProjectsZonesClustersService) Create(projectId string, zone string, createclusterrequest *CreateClusterRequest) *ProjectsZonesClustersCreateCall {
-	c := &ProjectsZonesClustersCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsZonesClustersCreateCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.zone = zone
 	c.createclusterrequest = createclusterrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsZonesClustersCreateCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsZonesClustersCreateCall) Context(ctx context.Context) *ProjectsZonesClustersCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -719,13 +718,9 @@ func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -813,36 +808,36 @@ func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 // method id "container.projects.zones.clusters.delete":
 
 type ProjectsZonesClustersDeleteCall struct {
-	s         *Service
-	projectId string
-	zone      string
-	clusterId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	projectId  string
+	zone       string
+	clusterId  string
+	urlParams_ url.Values
+	ctx_       context.Context
 }
 
 // Delete: Deletes the cluster, including the Kubernetes endpoint and
 // all worker nodes. Firewalls and routes that were configured during
 // cluster creation are also deleted.
 func (r *ProjectsZonesClustersService) Delete(projectId string, zone string, clusterId string) *ProjectsZonesClustersDeleteCall {
-	c := &ProjectsZonesClustersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsZonesClustersDeleteCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.zone = zone
 	c.clusterId = clusterId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsZonesClustersDeleteCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsZonesClustersDeleteCall) Context(ctx context.Context) *ProjectsZonesClustersDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -850,13 +845,9 @@ func (c *ProjectsZonesClustersDeleteCall) Context(ctx context.Context) *Projects
 
 func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -948,28 +939,29 @@ func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
 // method id "container.projects.zones.clusters.get":
 
 type ProjectsZonesClustersGetCall struct {
-	s         *Service
-	projectId string
-	zone      string
-	clusterId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	zone         string
+	clusterId    string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets a specific cluster.
 func (r *ProjectsZonesClustersService) Get(projectId string, zone string, clusterId string) *ProjectsZonesClustersGetCall {
-	c := &ProjectsZonesClustersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsZonesClustersGetCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.zone = zone
 	c.clusterId = clusterId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -979,13 +971,13 @@ func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZon
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsZonesClustersGetCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsZonesClustersGetCall) Context(ctx context.Context) *ProjectsZonesClustersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -993,13 +985,9 @@ func (c *ProjectsZonesClustersGetCall) Context(ctx context.Context) *ProjectsZon
 
 func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -1007,8 +995,8 @@ func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, er
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1094,27 +1082,28 @@ func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
 // method id "container.projects.zones.clusters.list":
 
 type ProjectsZonesClustersListCall struct {
-	s         *Service
-	projectId string
-	zone      string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	zone         string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists all clusters owned by a project in either the specified
 // zone or all zones.
 func (r *ProjectsZonesClustersService) List(projectId string, zone string) *ProjectsZonesClustersListCall {
-	c := &ProjectsZonesClustersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsZonesClustersListCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.zone = zone
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1124,13 +1113,13 @@ func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZo
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsZonesClustersListCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsZonesClustersListCall) Context(ctx context.Context) *ProjectsZonesClustersListCall {
 	c.ctx_ = ctx
 	return c
@@ -1138,21 +1127,17 @@ func (c *ProjectsZonesClustersListCall) Context(ctx context.Context) *ProjectsZo
 
 func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"zone":      c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1236,13 +1221,13 @@ type ProjectsZonesClustersUpdateCall struct {
 	zone                 string
 	clusterId            string
 	updateclusterrequest *UpdateClusterRequest
-	opt_                 map[string]interface{}
+	urlParams_           url.Values
 	ctx_                 context.Context
 }
 
 // Update: Update settings of a specific cluster.
 func (r *ProjectsZonesClustersService) Update(projectId string, zone string, clusterId string, updateclusterrequest *UpdateClusterRequest) *ProjectsZonesClustersUpdateCall {
-	c := &ProjectsZonesClustersUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsZonesClustersUpdateCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.zone = zone
 	c.clusterId = clusterId
@@ -1250,17 +1235,17 @@ func (r *ProjectsZonesClustersService) Update(projectId string, zone string, clu
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsZonesClustersUpdateCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsZonesClustersUpdateCall) Context(ctx context.Context) *ProjectsZonesClustersUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1273,13 +1258,9 @@ func (c *ProjectsZonesClustersUpdateCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -1375,28 +1356,29 @@ func (c *ProjectsZonesClustersUpdateCall) Do() (*Operation, error) {
 // method id "container.projects.zones.operations.get":
 
 type ProjectsZonesOperationsGetCall struct {
-	s           *Service
-	projectId   string
-	zone        string
-	operationId string
-	opt_        map[string]interface{}
-	ctx_        context.Context
+	s            *Service
+	projectId    string
+	zone         string
+	operationId  string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets the specified operation.
 func (r *ProjectsZonesOperationsService) Get(projectId string, zone string, operationId string) *ProjectsZonesOperationsGetCall {
-	c := &ProjectsZonesOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsZonesOperationsGetCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.zone = zone
 	c.operationId = operationId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZonesOperationsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1406,13 +1388,13 @@ func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZ
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsZonesOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsZonesOperationsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsZonesOperationsGetCall) Context(ctx context.Context) *ProjectsZonesOperationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1420,13 +1402,9 @@ func (c *ProjectsZonesOperationsGetCall) Context(ctx context.Context) *ProjectsZ
 
 func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/operations/{operationId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId":   c.projectId,
@@ -1434,8 +1412,8 @@ func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, 
 		"operationId": c.operationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1521,27 +1499,28 @@ func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
 // method id "container.projects.zones.operations.list":
 
 type ProjectsZonesOperationsListCall struct {
-	s         *Service
-	projectId string
-	zone      string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	zone         string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists all operations in a project in a specific zone or all
 // zones.
 func (r *ProjectsZonesOperationsService) List(projectId string, zone string) *ProjectsZonesOperationsListCall {
-	c := &ProjectsZonesOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsZonesOperationsListCall{s: r.s, urlParams_: urlValues()}
 	c.projectId = projectId
 	c.zone = zone
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *ProjectsZonesOperationsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1551,13 +1530,13 @@ func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *Projects
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsZonesOperationsListCall) IfNoneMatch(entityTag string) *ProjectsZonesOperationsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsZonesOperationsListCall) Context(ctx context.Context) *ProjectsZonesOperationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1565,21 +1544,17 @@ func (c *ProjectsZonesOperationsListCall) Context(ctx context.Context) *Projects
 
 func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/zones/{zone}/operations")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"zone":      c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

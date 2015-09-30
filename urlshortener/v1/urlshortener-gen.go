@@ -261,15 +261,16 @@ func (s *UrlHistory) MarshalJSON() ([]byte, error) {
 // method id "urlshortener.url.get":
 
 type UrlGetCall struct {
-	s        *Service
-	shortUrl string
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s            *Service
+	shortUrl     string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Expands a short URL or gets creation time and analytics.
 func (r *UrlService) Get(shortUrl string) *UrlGetCall {
-	c := &UrlGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.shortUrl = shortUrl
 	return c
 }
@@ -283,15 +284,15 @@ func (r *UrlService) Get(shortUrl string) *UrlGetCall {
 //   "FULL" - Returns the creation timestamp and all available
 // analytics.
 func (c *UrlGetCall) Projection(projection string) *UrlGetCall {
-	c.opt_["projection"] = projection
+	c.urlParams_.Set("projection", projection)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlGetCall) Fields(s ...googleapi.Field) *UrlGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -301,13 +302,13 @@ func (c *UrlGetCall) Fields(s ...googleapi.Field) *UrlGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UrlGetCall) IfNoneMatch(entityTag string) *UrlGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlGetCall) Context(ctx context.Context) *UrlGetCall {
 	c.ctx_ = ctx
 	return c
@@ -315,22 +316,15 @@ func (c *UrlGetCall) Context(ctx context.Context) *UrlGetCall {
 
 func (c *UrlGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("shortUrl", fmt.Sprintf("%v", c.shortUrl))
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("shortUrl", fmt.Sprintf("%v", c.shortUrl))
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -417,30 +411,30 @@ func (c *UrlGetCall) Do() (*Url, error) {
 // method id "urlshortener.url.insert":
 
 type UrlInsertCall struct {
-	s    *Service
-	url  *Url
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	url        *Url
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Insert: Creates a new short URL.
 func (r *UrlService) Insert(url *Url) *UrlInsertCall {
-	c := &UrlInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.url = url
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlInsertCall) Fields(s ...googleapi.Field) *UrlInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlInsertCall) Context(ctx context.Context) *UrlInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -453,13 +447,9 @@ func (c *UrlInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -526,14 +516,15 @@ func (c *UrlInsertCall) Do() (*Url, error) {
 // method id "urlshortener.url.list":
 
 type UrlListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of URLs shortened by a user.
 func (r *UrlService) List() *UrlListCall {
-	c := &UrlListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UrlListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -544,22 +535,22 @@ func (r *UrlService) List() *UrlListCall {
 //   "ANALYTICS_CLICKS" - Returns short URL click counts.
 //   "FULL" - Returns short URL click counts.
 func (c *UrlListCall) Projection(projection string) *UrlListCall {
-	c.opt_["projection"] = projection
+	c.urlParams_.Set("projection", projection)
 	return c
 }
 
 // StartToken sets the optional parameter "start-token": Token for
 // requesting successive pages of results.
 func (c *UrlListCall) StartToken(startToken string) *UrlListCall {
-	c.opt_["start-token"] = startToken
+	c.urlParams_.Set("startToken", startToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UrlListCall) Fields(s ...googleapi.Field) *UrlListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -569,13 +560,13 @@ func (c *UrlListCall) Fields(s ...googleapi.Field) *UrlListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UrlListCall) IfNoneMatch(entityTag string) *UrlListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UrlListCall) Context(ctx context.Context) *UrlListCall {
 	c.ctx_ = ctx
 	return c
@@ -583,24 +574,14 @@ func (c *UrlListCall) Context(ctx context.Context) *UrlListCall {
 
 func (c *UrlListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["projection"]; ok {
-		params.Set("projection", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["start-token"]; ok {
-		params.Set("start-token", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "url/history")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

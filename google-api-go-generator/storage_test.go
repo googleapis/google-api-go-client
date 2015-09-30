@@ -10,6 +10,7 @@ import (
 	"testing/iotest"
 
 	"golang.org/x/net/context"
+	gmail "google.golang.org/api/gmail/v1"
 	storage "google.golang.org/api/storage/v1"
 )
 
@@ -17,11 +18,13 @@ type myHandler struct {
 	location string
 	r        *http.Request
 	body     []byte
+	reqURIs  []string
 	err      error
 }
 
 func (h *myHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h.r = r
+	h.reqURIs = append(h.reqURIs, r.RequestURI)
 	if h.location != "" {
 		w.Header().Set("Location", h.location)
 	}
@@ -319,5 +322,72 @@ func TestUserAgent(t *testing.T) {
 	g := handler.r
 	if w, k := "google-api-go-client/0.5 myagent/1.0", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
+	}
+}
+
+func myProgressUpdater(current, total int64) {}
+
+func TestParams(t *testing.T) {
+	handler := &myHandler{}
+	server := httptest.NewServer(handler)
+	defer server.Close()
+
+	handler.location = server.URL
+	client := &http.Client{}
+	s, err := storage.New(client)
+	if err != nil {
+		t.Fatalf("unable to create service: %v", err)
+	}
+	s.BasePath = server.URL
+	s.UserAgent = "myagent/1.0"
+
+	const data = "fake media data"
+	f := strings.NewReader(data)
+	o := &storage.Object{
+		Bucket:          "mybucket",
+		Name:            "filename",
+		ContentType:     "plain/text",
+		ContentEncoding: "utf-8",
+		ContentLanguage: "en",
+	}
+	_, err = s.Objects.Insert("mybucket", o).Name(o.Name).ResumableMedia(context.Background(), f, int64(len(data)), "plain/text").ProgressUpdater(myProgressUpdater).Projection("full").Do()
+	if err != nil {
+		t.Fatalf("unable to insert object: %v", err)
+	}
+	if g, w := len(handler.reqURIs), 2; g != w {
+		t.Fatalf("len(reqURIs) = %v, want %v", g, w)
+	}
+	if g, w := strings.SplitN(handler.reqURIs[0], "/", 4), "b/mybucket/o?alt=json&name=filename&projection=full&uploadType=resumable"; g[3] != w {
+		t.Errorf("reqURIs[0] = %v, want %v", g[3], w)
+	}
+	if g, w := handler.reqURIs[1], "/"; g != w {
+		t.Errorf("reqURIs[1] = %v, want %v", g, w)
+	}
+}
+
+func TestRepeatedParams(t *testing.T) {
+	handler := &myHandler{}
+	server := httptest.NewServer(handler)
+	defer server.Close()
+
+	client := &http.Client{}
+	s, err := gmail.New(client)
+	if err != nil {
+		t.Fatalf("unable to create service: %v", err)
+	}
+	s.BasePath = server.URL
+	s.UserAgent = "myagent/1.0"
+	us := gmail.NewUsersService(s)
+
+	labels := []string{"label1", "label2", "label3"}
+	_, err = us.Messages.List("myID").IncludeSpamTrash(true).LabelIds(labels).MaxResults(10).PageToken("next1234").Do()
+	if err != nil {
+		t.Fatalf("gmail.List: %v", err)
+	}
+	if g, w := len(handler.reqURIs), 1; g != w {
+		t.Fatalf("len(reqURIs) = %v, want %v", g, w)
+	}
+	if g, w := strings.SplitN(handler.reqURIs[0], "/", 4), "myID/messages?alt=json&includeSpamTrash=true&labelIds=label1&labelIds=label2&labelIds=label3&maxResults=10&pageToken=next1234"; g[3] != w {
+		t.Errorf("reqURIs[0] = %v, want %v", g[3], w)
 	}
 }

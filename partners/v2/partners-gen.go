@@ -43,6 +43,8 @@ const apiName = "partners"
 const apiVersion = "v2"
 const basePath = "https://partners.googleapis.com/"
 
+func urlValues() url.Values { return url.Values{} }
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -1215,7 +1217,7 @@ func (s *UserOverrides) MarshalJSON() ([]byte, error) {
 type ClientMessagesLogCall struct {
 	s                 *Service
 	logmessagerequest *LogMessageRequest
-	opt_              map[string]interface{}
+	urlParams_        url.Values
 	ctx_              context.Context
 }
 
@@ -1223,22 +1225,22 @@ type ClientMessagesLogCall struct {
 // render component`, `Profile page is running slow`, `More than 500
 // users have accessed this result.`, etc.
 func (r *ClientMessagesService) Log(logmessagerequest *LogMessageRequest) *ClientMessagesLogCall {
-	c := &ClientMessagesLogCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ClientMessagesLogCall{s: r.s, urlParams_: urlValues()}
 	c.logmessagerequest = logmessagerequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ClientMessagesLogCall) Fields(s ...googleapi.Field) *ClientMessagesLogCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ClientMessagesLogCall) Context(ctx context.Context) *ClientMessagesLogCall {
 	c.ctx_ = ctx
 	return c
@@ -1251,13 +1253,9 @@ func (c *ClientMessagesLogCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/clientMessages:log")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1321,15 +1319,16 @@ func (c *ClientMessagesLogCall) Do() (*LogMessageResponse, error) {
 // method id "partners.companies.get":
 
 type CompaniesGetCall struct {
-	s         *Service
-	companyId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	companyId    string
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets a company.
 func (r *CompaniesService) Get(companyId string) *CompaniesGetCall {
-	c := &CompaniesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CompaniesGetCall{s: r.s, urlParams_: urlValues()}
 	c.companyId = companyId
 	return c
 }
@@ -1339,7 +1338,7 @@ func (r *CompaniesService) Get(companyId string) *CompaniesGetCall {
 // geo-located address of the request is used. Used when order_by is
 // set.
 func (c *CompaniesGetCall) Address(address string) *CompaniesGetCall {
-	c.opt_["address"] = address
+	c.urlParams_.Set("address", fmt.Sprintf("%v", address))
 	return c
 }
 
@@ -1347,7 +1346,7 @@ func (c *CompaniesGetCall) Address(address string) *CompaniesGetCall {
 // company's budget is in a different currency code than this one, then
 // the converted budget is converted to this currency code.
 func (c *CompaniesGetCall) CurrencyCode(currencyCode string) *CompaniesGetCall {
-	c.opt_["currencyCode"] = currencyCode
+	c.urlParams_.Set("currencyCode", fmt.Sprintf("%v", currencyCode))
 	return c
 }
 
@@ -1357,29 +1356,32 @@ func (c *CompaniesGetCall) CurrencyCode(currencyCode string) *CompaniesGetCall {
 // distance from given address and farthest to closest distance from
 // given address respectively.
 func (c *CompaniesGetCall) OrderBy(orderBy string) *CompaniesGetCall {
-	c.opt_["orderBy"] = orderBy
+	c.urlParams_.Set("orderBy", fmt.Sprintf("%v", orderBy))
 	return c
 }
 
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *CompaniesGetCall) RequestMetadataExperimentIds(requestMetadataExperimentIds string) *CompaniesGetCall {
-	c.opt_["requestMetadata.experimentIds"] = requestMetadataExperimentIds
+func (c *CompaniesGetCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *CompaniesGetCall {
+	c.urlParams_.Del("requestMetadataExperimentIds")
+	for _, v := range requestMetadataExperimentIds {
+		c.urlParams_.Add("requestMetadataExperimentIds", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // RequestMetadataLocale sets the optional parameter
 // "requestMetadata.locale": Locale to use for the current request.
 func (c *CompaniesGetCall) RequestMetadataLocale(requestMetadataLocale string) *CompaniesGetCall {
-	c.opt_["requestMetadata.locale"] = requestMetadataLocale
+	c.urlParams_.Set("requestMetadataLocale", fmt.Sprintf("%v", requestMetadataLocale))
 	return c
 }
 
 // RequestMetadataPartnersSessionId sets the optional parameter
 // "requestMetadata.partnersSessionId": Google Partners session ID.
 func (c *CompaniesGetCall) RequestMetadataPartnersSessionId(requestMetadataPartnersSessionId string) *CompaniesGetCall {
-	c.opt_["requestMetadata.partnersSessionId"] = requestMetadataPartnersSessionId
+	c.urlParams_.Set("requestMetadataPartnersSessionId", fmt.Sprintf("%v", requestMetadataPartnersSessionId))
 	return c
 }
 
@@ -1388,7 +1390,7 @@ func (c *CompaniesGetCall) RequestMetadataPartnersSessionId(requestMetadataPartn
 // to indicate where the traffic comes from. An identifier has multiple
 // letters created by a team which redirected the traffic to us.
 func (c *CompaniesGetCall) RequestMetadataTrafficSourceTrafficSourceId(requestMetadataTrafficSourceTrafficSourceId string) *CompaniesGetCall {
-	c.opt_["requestMetadata.trafficSource.trafficSourceId"] = requestMetadataTrafficSourceTrafficSourceId
+	c.urlParams_.Set("requestMetadataTrafficSourceTrafficSourceId", fmt.Sprintf("%v", requestMetadataTrafficSourceTrafficSourceId))
 	return c
 }
 
@@ -1397,7 +1399,7 @@ func (c *CompaniesGetCall) RequestMetadataTrafficSourceTrafficSourceId(requestMe
 // to indicate where the traffic comes from. An identifier has multiple
 // letters created by a team which redirected the traffic to us.
 func (c *CompaniesGetCall) RequestMetadataTrafficSourceTrafficSubId(requestMetadataTrafficSourceTrafficSubId string) *CompaniesGetCall {
-	c.opt_["requestMetadata.trafficSource.trafficSubId"] = requestMetadataTrafficSourceTrafficSubId
+	c.urlParams_.Set("requestMetadataTrafficSourceTrafficSubId", fmt.Sprintf("%v", requestMetadataTrafficSourceTrafficSubId))
 	return c
 }
 
@@ -1405,7 +1407,7 @@ func (c *CompaniesGetCall) RequestMetadataTrafficSourceTrafficSubId(requestMetad
 // "requestMetadata.userOverrides.ipAddress": IP address to use instead
 // of the user's geo-located IP address.
 func (c *CompaniesGetCall) RequestMetadataUserOverridesIpAddress(requestMetadataUserOverridesIpAddress string) *CompaniesGetCall {
-	c.opt_["requestMetadata.userOverrides.ipAddress"] = requestMetadataUserOverridesIpAddress
+	c.urlParams_.Set("requestMetadataUserOverridesIpAddress", fmt.Sprintf("%v", requestMetadataUserOverridesIpAddress))
 	return c
 }
 
@@ -1413,7 +1415,7 @@ func (c *CompaniesGetCall) RequestMetadataUserOverridesIpAddress(requestMetadata
 // "requestMetadata.userOverrides.userId": Logged-in user ID to
 // impersonate instead of the user's ID.
 func (c *CompaniesGetCall) RequestMetadataUserOverridesUserId(requestMetadataUserOverridesUserId string) *CompaniesGetCall {
-	c.opt_["requestMetadata.userOverrides.userId"] = requestMetadataUserOverridesUserId
+	c.urlParams_.Set("requestMetadataUserOverridesUserId", fmt.Sprintf("%v", requestMetadataUserOverridesUserId))
 	return c
 }
 
@@ -1424,15 +1426,15 @@ func (c *CompaniesGetCall) RequestMetadataUserOverridesUserId(requestMetadataUse
 //   "COMPANY_VIEW_UNSPECIFIED"
 //   "CV_GOOGLE_PARTNER_SEARCH"
 func (c *CompaniesGetCall) View(view string) *CompaniesGetCall {
-	c.opt_["view"] = view
+	c.urlParams_.Set("view", fmt.Sprintf("%v", view))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CompaniesGetCall) Fields(s ...googleapi.Field) *CompaniesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1442,13 +1444,13 @@ func (c *CompaniesGetCall) Fields(s ...googleapi.Field) *CompaniesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CompaniesGetCall) IfNoneMatch(entityTag string) *CompaniesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CompaniesGetCall) Context(ctx context.Context) *CompaniesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1456,53 +1458,16 @@ func (c *CompaniesGetCall) Context(ctx context.Context) *CompaniesGetCall {
 
 func (c *CompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["address"]; ok {
-		params.Set("address", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["currencyCode"]; ok {
-		params.Set("currencyCode", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.experimentIds"]; ok {
-		params.Set("requestMetadata.experimentIds", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.locale"]; ok {
-		params.Set("requestMetadata.locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.partnersSessionId"]; ok {
-		params.Set("requestMetadata.partnersSessionId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSourceId"]; ok {
-		params.Set("requestMetadata.trafficSource.trafficSourceId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSubId"]; ok {
-		params.Set("requestMetadata.trafficSource.trafficSubId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.userOverrides.ipAddress"]; ok {
-		params.Set("requestMetadata.userOverrides.ipAddress", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.userOverrides.userId"]; ok {
-		params.Set("requestMetadata.userOverrides.userId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["view"]; ok {
-		params.Set("view", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/companies/{companyId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"companyId": c.companyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1631,14 +1596,15 @@ func (c *CompaniesGetCall) Do() (*GetCompanyResponse, error) {
 // method id "partners.companies.list":
 
 type CompaniesListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists companies.
 func (r *CompaniesService) List() *CompaniesListCall {
-	c := &CompaniesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CompaniesListCall{s: r.s, urlParams_: urlValues()}
 	return c
 }
 
@@ -1646,14 +1612,14 @@ func (r *CompaniesService) List() *CompaniesListCall {
 // when searching for companies. If not given, the geo-located address
 // of the request is used.
 func (c *CompaniesListCall) Address(address string) *CompaniesListCall {
-	c.opt_["address"] = address
+	c.urlParams_.Set("address", fmt.Sprintf("%v", address))
 	return c
 }
 
 // CompanyName sets the optional parameter "companyName": Company name
 // to search for.
 func (c *CompaniesListCall) CompanyName(companyName string) *CompaniesListCall {
-	c.opt_["companyName"] = companyName
+	c.urlParams_.Set("companyName", fmt.Sprintf("%v", companyName))
 	return c
 }
 
@@ -1665,8 +1631,11 @@ func (c *CompaniesListCall) CompanyName(companyName string) *CompaniesListCall {
 //   "GPSM_HELP_WITH_ADVERTISING"
 //   "GPSM_HELP_WITH_WEBSITE"
 //   "GPSM_NO_WEBSITE"
-func (c *CompaniesListCall) GpsMotivations(gpsMotivations string) *CompaniesListCall {
-	c.opt_["gpsMotivations"] = gpsMotivations
+func (c *CompaniesListCall) GpsMotivations(gpsMotivations []string) *CompaniesListCall {
+	c.urlParams_.Del("gpsMotivations")
+	for _, v := range gpsMotivations {
+		c.urlParams_.Add("gpsMotivations", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -1685,8 +1654,11 @@ func (c *CompaniesListCall) GpsMotivations(gpsMotivations string) *CompaniesList
 //   "I_RETAIL"
 //   "I_TECHNOLOGY"
 //   "I_TRAVEL"
-func (c *CompaniesListCall) Industries(industries string) *CompaniesListCall {
-	c.opt_["industries"] = industries
+func (c *CompaniesListCall) Industries(industries []string) *CompaniesListCall {
+	c.urlParams_.Del("industries")
+	for _, v := range industries {
+		c.urlParams_.Add("industries", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -1694,8 +1666,11 @@ func (c *CompaniesListCall) Industries(industries string) *CompaniesListCall {
 // language codes that company can support. Only primary language
 // subtags are accepted as defined by BCP 47 (IETF BCP 47, "Tags for
 // Identifying Languages").
-func (c *CompaniesListCall) LanguageCodes(languageCodes string) *CompaniesListCall {
-	c.opt_["languageCodes"] = languageCodes
+func (c *CompaniesListCall) LanguageCodes(languageCodes []string) *CompaniesListCall {
+	c.urlParams_.Del("languageCodes")
+	for _, v := range languageCodes {
+		c.urlParams_.Add("languageCodes", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -1703,7 +1678,7 @@ func (c *CompaniesListCall) LanguageCodes(languageCodes string) *CompaniesListCa
 // "maxMonthlyBudget.currencyCode": The 3-letter currency code defined
 // in ISO 4217.
 func (c *CompaniesListCall) MaxMonthlyBudgetCurrencyCode(maxMonthlyBudgetCurrencyCode string) *CompaniesListCall {
-	c.opt_["maxMonthlyBudget.currencyCode"] = maxMonthlyBudgetCurrencyCode
+	c.urlParams_.Set("maxMonthlyBudgetCurrencyCode", fmt.Sprintf("%v", maxMonthlyBudgetCurrencyCode))
 	return c
 }
 
@@ -1715,7 +1690,7 @@ func (c *CompaniesListCall) MaxMonthlyBudgetCurrencyCode(maxMonthlyBudgetCurrenc
 // negative, `nanos` must be negative or zero. For example $-1.75 is
 // represented as `units`=-1 and `nanos`=-750,000,000.
 func (c *CompaniesListCall) MaxMonthlyBudgetNanos(maxMonthlyBudgetNanos int64) *CompaniesListCall {
-	c.opt_["maxMonthlyBudget.nanos"] = maxMonthlyBudgetNanos
+	c.urlParams_.Set("maxMonthlyBudgetNanos", fmt.Sprintf("%v", maxMonthlyBudgetNanos))
 	return c
 }
 
@@ -1723,7 +1698,7 @@ func (c *CompaniesListCall) MaxMonthlyBudgetNanos(maxMonthlyBudgetNanos int64) *
 // "maxMonthlyBudget.units": The whole units of the amount. For example
 // if `currencyCode` is "USD", then 1 unit is one US dollar.
 func (c *CompaniesListCall) MaxMonthlyBudgetUnits(maxMonthlyBudgetUnits int64) *CompaniesListCall {
-	c.opt_["maxMonthlyBudget.units"] = maxMonthlyBudgetUnits
+	c.urlParams_.Set("maxMonthlyBudgetUnits", fmt.Sprintf("%v", maxMonthlyBudgetUnits))
 	return c
 }
 
@@ -1731,7 +1706,7 @@ func (c *CompaniesListCall) MaxMonthlyBudgetUnits(maxMonthlyBudgetUnits int64) *
 // "minMonthlyBudget.currencyCode": The 3-letter currency code defined
 // in ISO 4217.
 func (c *CompaniesListCall) MinMonthlyBudgetCurrencyCode(minMonthlyBudgetCurrencyCode string) *CompaniesListCall {
-	c.opt_["minMonthlyBudget.currencyCode"] = minMonthlyBudgetCurrencyCode
+	c.urlParams_.Set("minMonthlyBudgetCurrencyCode", fmt.Sprintf("%v", minMonthlyBudgetCurrencyCode))
 	return c
 }
 
@@ -1743,7 +1718,7 @@ func (c *CompaniesListCall) MinMonthlyBudgetCurrencyCode(minMonthlyBudgetCurrenc
 // negative, `nanos` must be negative or zero. For example $-1.75 is
 // represented as `units`=-1 and `nanos`=-750,000,000.
 func (c *CompaniesListCall) MinMonthlyBudgetNanos(minMonthlyBudgetNanos int64) *CompaniesListCall {
-	c.opt_["minMonthlyBudget.nanos"] = minMonthlyBudgetNanos
+	c.urlParams_.Set("minMonthlyBudgetNanos", fmt.Sprintf("%v", minMonthlyBudgetNanos))
 	return c
 }
 
@@ -1751,7 +1726,7 @@ func (c *CompaniesListCall) MinMonthlyBudgetNanos(minMonthlyBudgetNanos int64) *
 // "minMonthlyBudget.units": The whole units of the amount. For example
 // if `currencyCode` is "USD", then 1 unit is one US dollar.
 func (c *CompaniesListCall) MinMonthlyBudgetUnits(minMonthlyBudgetUnits int64) *CompaniesListCall {
-	c.opt_["minMonthlyBudget.units"] = minMonthlyBudgetUnits
+	c.urlParams_.Set("minMonthlyBudgetUnits", fmt.Sprintf("%v", minMonthlyBudgetUnits))
 	return c
 }
 
@@ -1761,7 +1736,7 @@ func (c *CompaniesListCall) MinMonthlyBudgetUnits(minMonthlyBudgetUnits int64) *
 // distance from given address and farthest to closest distance from
 // given address respectively.
 func (c *CompaniesListCall) OrderBy(orderBy string) *CompaniesListCall {
-	c.opt_["orderBy"] = orderBy
+	c.urlParams_.Set("orderBy", fmt.Sprintf("%v", orderBy))
 	return c
 }
 
@@ -1769,7 +1744,7 @@ func (c *CompaniesListCall) OrderBy(orderBy string) *CompaniesListCall {
 // Server may return fewer companies than requested. If unspecified,
 // server picks an appropriate default.
 func (c *CompaniesListCall) PageSize(pageSize int64) *CompaniesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -1778,29 +1753,32 @@ func (c *CompaniesListCall) PageSize(pageSize int64) *CompaniesListCall {
 // this is the value of `ListCompaniesResponse.next_page_token` returned
 // from the previous call to ListCompanies.
 func (c *CompaniesListCall) PageToken(pageToken string) *CompaniesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", fmt.Sprintf("%v", pageToken))
 	return c
 }
 
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *CompaniesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds string) *CompaniesListCall {
-	c.opt_["requestMetadata.experimentIds"] = requestMetadataExperimentIds
+func (c *CompaniesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *CompaniesListCall {
+	c.urlParams_.Del("requestMetadataExperimentIds")
+	for _, v := range requestMetadataExperimentIds {
+		c.urlParams_.Add("requestMetadataExperimentIds", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // RequestMetadataLocale sets the optional parameter
 // "requestMetadata.locale": Locale to use for the current request.
 func (c *CompaniesListCall) RequestMetadataLocale(requestMetadataLocale string) *CompaniesListCall {
-	c.opt_["requestMetadata.locale"] = requestMetadataLocale
+	c.urlParams_.Set("requestMetadataLocale", fmt.Sprintf("%v", requestMetadataLocale))
 	return c
 }
 
 // RequestMetadataPartnersSessionId sets the optional parameter
 // "requestMetadata.partnersSessionId": Google Partners session ID.
 func (c *CompaniesListCall) RequestMetadataPartnersSessionId(requestMetadataPartnersSessionId string) *CompaniesListCall {
-	c.opt_["requestMetadata.partnersSessionId"] = requestMetadataPartnersSessionId
+	c.urlParams_.Set("requestMetadataPartnersSessionId", fmt.Sprintf("%v", requestMetadataPartnersSessionId))
 	return c
 }
 
@@ -1809,7 +1787,7 @@ func (c *CompaniesListCall) RequestMetadataPartnersSessionId(requestMetadataPart
 // to indicate where the traffic comes from. An identifier has multiple
 // letters created by a team which redirected the traffic to us.
 func (c *CompaniesListCall) RequestMetadataTrafficSourceTrafficSourceId(requestMetadataTrafficSourceTrafficSourceId string) *CompaniesListCall {
-	c.opt_["requestMetadata.trafficSource.trafficSourceId"] = requestMetadataTrafficSourceTrafficSourceId
+	c.urlParams_.Set("requestMetadataTrafficSourceTrafficSourceId", fmt.Sprintf("%v", requestMetadataTrafficSourceTrafficSourceId))
 	return c
 }
 
@@ -1818,7 +1796,7 @@ func (c *CompaniesListCall) RequestMetadataTrafficSourceTrafficSourceId(requestM
 // to indicate where the traffic comes from. An identifier has multiple
 // letters created by a team which redirected the traffic to us.
 func (c *CompaniesListCall) RequestMetadataTrafficSourceTrafficSubId(requestMetadataTrafficSourceTrafficSubId string) *CompaniesListCall {
-	c.opt_["requestMetadata.trafficSource.trafficSubId"] = requestMetadataTrafficSourceTrafficSubId
+	c.urlParams_.Set("requestMetadataTrafficSourceTrafficSubId", fmt.Sprintf("%v", requestMetadataTrafficSourceTrafficSubId))
 	return c
 }
 
@@ -1826,7 +1804,7 @@ func (c *CompaniesListCall) RequestMetadataTrafficSourceTrafficSubId(requestMeta
 // "requestMetadata.userOverrides.ipAddress": IP address to use instead
 // of the user's geo-located IP address.
 func (c *CompaniesListCall) RequestMetadataUserOverridesIpAddress(requestMetadataUserOverridesIpAddress string) *CompaniesListCall {
-	c.opt_["requestMetadata.userOverrides.ipAddress"] = requestMetadataUserOverridesIpAddress
+	c.urlParams_.Set("requestMetadataUserOverridesIpAddress", fmt.Sprintf("%v", requestMetadataUserOverridesIpAddress))
 	return c
 }
 
@@ -1834,7 +1812,7 @@ func (c *CompaniesListCall) RequestMetadataUserOverridesIpAddress(requestMetadat
 // "requestMetadata.userOverrides.userId": Logged-in user ID to
 // impersonate instead of the user's ID.
 func (c *CompaniesListCall) RequestMetadataUserOverridesUserId(requestMetadataUserOverridesUserId string) *CompaniesListCall {
-	c.opt_["requestMetadata.userOverrides.userId"] = requestMetadataUserOverridesUserId
+	c.urlParams_.Set("requestMetadataUserOverridesUserId", fmt.Sprintf("%v", requestMetadataUserOverridesUserId))
 	return c
 }
 
@@ -1848,8 +1826,11 @@ func (c *CompaniesListCall) RequestMetadataUserOverridesUserId(requestMetadataUs
 //   "S_AN_ENHANCED_WEBSITE"
 //   "S_AN_ONLINE_MARKETING_PLAN"
 //   "S_MOBILE_AND_VIDEO_ADS"
-func (c *CompaniesListCall) Services(services string) *CompaniesListCall {
-	c.opt_["services"] = services
+func (c *CompaniesListCall) Services(services []string) *CompaniesListCall {
+	c.urlParams_.Del("services")
+	for _, v := range services {
+		c.urlParams_.Add("services", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
@@ -1860,22 +1841,22 @@ func (c *CompaniesListCall) Services(services string) *CompaniesListCall {
 //   "COMPANY_VIEW_UNSPECIFIED"
 //   "CV_GOOGLE_PARTNER_SEARCH"
 func (c *CompaniesListCall) View(view string) *CompaniesListCall {
-	c.opt_["view"] = view
+	c.urlParams_.Set("view", fmt.Sprintf("%v", view))
 	return c
 }
 
 // WebsiteUrl sets the optional parameter "websiteUrl": Website URL that
 // will help to find a better matched company. .
 func (c *CompaniesListCall) WebsiteUrl(websiteUrl string) *CompaniesListCall {
-	c.opt_["websiteUrl"] = websiteUrl
+	c.urlParams_.Set("websiteUrl", fmt.Sprintf("%v", websiteUrl))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CompaniesListCall) Fields(s ...googleapi.Field) *CompaniesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1885,13 +1866,13 @@ func (c *CompaniesListCall) Fields(s ...googleapi.Field) *CompaniesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CompaniesListCall) IfNoneMatch(entityTag string) *CompaniesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CompaniesListCall) Context(ctx context.Context) *CompaniesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1899,90 +1880,14 @@ func (c *CompaniesListCall) Context(ctx context.Context) *CompaniesListCall {
 
 func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["address"]; ok {
-		params.Set("address", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["companyName"]; ok {
-		params.Set("companyName", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["gpsMotivations"]; ok {
-		params.Set("gpsMotivations", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["industries"]; ok {
-		params.Set("industries", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["languageCodes"]; ok {
-		params.Set("languageCodes", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxMonthlyBudget.currencyCode"]; ok {
-		params.Set("maxMonthlyBudget.currencyCode", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxMonthlyBudget.nanos"]; ok {
-		params.Set("maxMonthlyBudget.nanos", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxMonthlyBudget.units"]; ok {
-		params.Set("maxMonthlyBudget.units", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minMonthlyBudget.currencyCode"]; ok {
-		params.Set("minMonthlyBudget.currencyCode", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minMonthlyBudget.nanos"]; ok {
-		params.Set("minMonthlyBudget.nanos", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minMonthlyBudget.units"]; ok {
-		params.Set("minMonthlyBudget.units", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.experimentIds"]; ok {
-		params.Set("requestMetadata.experimentIds", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.locale"]; ok {
-		params.Set("requestMetadata.locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.partnersSessionId"]; ok {
-		params.Set("requestMetadata.partnersSessionId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSourceId"]; ok {
-		params.Set("requestMetadata.trafficSource.trafficSourceId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSubId"]; ok {
-		params.Set("requestMetadata.trafficSource.trafficSubId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.userOverrides.ipAddress"]; ok {
-		params.Set("requestMetadata.userOverrides.ipAddress", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.userOverrides.userId"]; ok {
-		params.Set("requestMetadata.userOverrides.userId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["services"]; ok {
-		params.Set("services", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["view"]; ok {
-		params.Set("view", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["websiteUrl"]; ok {
-		params.Set("websiteUrl", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/companies")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2206,29 +2111,29 @@ type CompaniesLeadsCreateCall struct {
 	s                 *Service
 	companyId         string
 	createleadrequest *CreateLeadRequest
-	opt_              map[string]interface{}
+	urlParams_        url.Values
 	ctx_              context.Context
 }
 
 // Create: Creates an advertiser lead for the given company ID.
 func (r *CompaniesLeadsService) Create(companyId string, createleadrequest *CreateLeadRequest) *CompaniesLeadsCreateCall {
-	c := &CompaniesLeadsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CompaniesLeadsCreateCall{s: r.s, urlParams_: urlValues()}
 	c.companyId = companyId
 	c.createleadrequest = createleadrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CompaniesLeadsCreateCall) Fields(s ...googleapi.Field) *CompaniesLeadsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CompaniesLeadsCreateCall) Context(ctx context.Context) *CompaniesLeadsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -2241,13 +2146,9 @@ func (c *CompaniesLeadsCreateCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/companies/{companyId}/leads")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"companyId": c.companyId,
@@ -2326,28 +2227,28 @@ func (c *CompaniesLeadsCreateCall) Do() (*CreateLeadResponse, error) {
 type UserEventsLogCall struct {
 	s                   *Service
 	logusereventrequest *LogUserEventRequest
-	opt_                map[string]interface{}
+	urlParams_          url.Values
 	ctx_                context.Context
 }
 
 // Log: Logs a user event.
 func (r *UserEventsService) Log(logusereventrequest *LogUserEventRequest) *UserEventsLogCall {
-	c := &UserEventsLogCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UserEventsLogCall{s: r.s, urlParams_: urlValues()}
 	c.logusereventrequest = logusereventrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UserEventsLogCall) Fields(s ...googleapi.Field) *UserEventsLogCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UserEventsLogCall) Context(ctx context.Context) *UserEventsLogCall {
 	c.ctx_ = ctx
 	return c
@@ -2360,13 +2261,9 @@ func (c *UserEventsLogCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/userEvents:log")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -2430,36 +2327,40 @@ func (c *UserEventsLogCall) Do() (*LogUserEventResponse, error) {
 // method id "partners.userStates.list":
 
 type UserStatesListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   url.Values
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists states for current user.
 func (r *UserStatesService) List() *UserStatesListCall {
-	c := &UserStatesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &UserStatesListCall{s: r.s, urlParams_: urlValues()}
 	return c
 }
 
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *UserStatesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds string) *UserStatesListCall {
-	c.opt_["requestMetadata.experimentIds"] = requestMetadataExperimentIds
+func (c *UserStatesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *UserStatesListCall {
+	c.urlParams_.Del("requestMetadataExperimentIds")
+	for _, v := range requestMetadataExperimentIds {
+		c.urlParams_.Add("requestMetadataExperimentIds", fmt.Sprintf("%v", v))
+	}
 	return c
 }
 
 // RequestMetadataLocale sets the optional parameter
 // "requestMetadata.locale": Locale to use for the current request.
 func (c *UserStatesListCall) RequestMetadataLocale(requestMetadataLocale string) *UserStatesListCall {
-	c.opt_["requestMetadata.locale"] = requestMetadataLocale
+	c.urlParams_.Set("requestMetadataLocale", fmt.Sprintf("%v", requestMetadataLocale))
 	return c
 }
 
 // RequestMetadataPartnersSessionId sets the optional parameter
 // "requestMetadata.partnersSessionId": Google Partners session ID.
 func (c *UserStatesListCall) RequestMetadataPartnersSessionId(requestMetadataPartnersSessionId string) *UserStatesListCall {
-	c.opt_["requestMetadata.partnersSessionId"] = requestMetadataPartnersSessionId
+	c.urlParams_.Set("requestMetadataPartnersSessionId", fmt.Sprintf("%v", requestMetadataPartnersSessionId))
 	return c
 }
 
@@ -2468,7 +2369,7 @@ func (c *UserStatesListCall) RequestMetadataPartnersSessionId(requestMetadataPar
 // to indicate where the traffic comes from. An identifier has multiple
 // letters created by a team which redirected the traffic to us.
 func (c *UserStatesListCall) RequestMetadataTrafficSourceTrafficSourceId(requestMetadataTrafficSourceTrafficSourceId string) *UserStatesListCall {
-	c.opt_["requestMetadata.trafficSource.trafficSourceId"] = requestMetadataTrafficSourceTrafficSourceId
+	c.urlParams_.Set("requestMetadataTrafficSourceTrafficSourceId", fmt.Sprintf("%v", requestMetadataTrafficSourceTrafficSourceId))
 	return c
 }
 
@@ -2477,7 +2378,7 @@ func (c *UserStatesListCall) RequestMetadataTrafficSourceTrafficSourceId(request
 // to indicate where the traffic comes from. An identifier has multiple
 // letters created by a team which redirected the traffic to us.
 func (c *UserStatesListCall) RequestMetadataTrafficSourceTrafficSubId(requestMetadataTrafficSourceTrafficSubId string) *UserStatesListCall {
-	c.opt_["requestMetadata.trafficSource.trafficSubId"] = requestMetadataTrafficSourceTrafficSubId
+	c.urlParams_.Set("requestMetadataTrafficSourceTrafficSubId", fmt.Sprintf("%v", requestMetadataTrafficSourceTrafficSubId))
 	return c
 }
 
@@ -2485,7 +2386,7 @@ func (c *UserStatesListCall) RequestMetadataTrafficSourceTrafficSubId(requestMet
 // "requestMetadata.userOverrides.ipAddress": IP address to use instead
 // of the user's geo-located IP address.
 func (c *UserStatesListCall) RequestMetadataUserOverridesIpAddress(requestMetadataUserOverridesIpAddress string) *UserStatesListCall {
-	c.opt_["requestMetadata.userOverrides.ipAddress"] = requestMetadataUserOverridesIpAddress
+	c.urlParams_.Set("requestMetadataUserOverridesIpAddress", fmt.Sprintf("%v", requestMetadataUserOverridesIpAddress))
 	return c
 }
 
@@ -2493,15 +2394,15 @@ func (c *UserStatesListCall) RequestMetadataUserOverridesIpAddress(requestMetada
 // "requestMetadata.userOverrides.userId": Logged-in user ID to
 // impersonate instead of the user's ID.
 func (c *UserStatesListCall) RequestMetadataUserOverridesUserId(requestMetadataUserOverridesUserId string) *UserStatesListCall {
-	c.opt_["requestMetadata.userOverrides.userId"] = requestMetadataUserOverridesUserId
+	c.urlParams_.Set("requestMetadataUserOverridesUserId", fmt.Sprintf("%v", requestMetadataUserOverridesUserId))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UserStatesListCall) Fields(s ...googleapi.Field) *UserStatesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2511,13 +2412,13 @@ func (c *UserStatesListCall) Fields(s ...googleapi.Field) *UserStatesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UserStatesListCall) IfNoneMatch(entityTag string) *UserStatesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *UserStatesListCall) Context(ctx context.Context) *UserStatesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2525,39 +2426,14 @@ func (c *UserStatesListCall) Context(ctx context.Context) *UserStatesListCall {
 
 func (c *UserStatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["requestMetadata.experimentIds"]; ok {
-		params.Set("requestMetadata.experimentIds", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.locale"]; ok {
-		params.Set("requestMetadata.locale", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.partnersSessionId"]; ok {
-		params.Set("requestMetadata.partnersSessionId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSourceId"]; ok {
-		params.Set("requestMetadata.trafficSource.trafficSourceId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.trafficSource.trafficSubId"]; ok {
-		params.Set("requestMetadata.trafficSource.trafficSubId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.userOverrides.ipAddress"]; ok {
-		params.Set("requestMetadata.userOverrides.ipAddress", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["requestMetadata.userOverrides.userId"]; ok {
-		params.Set("requestMetadata.userOverrides.userId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/userStates")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

@@ -52,6 +52,24 @@
       "revId": "8e15483ebceb6872bd7fd2c58ca7bf4cbeb92aec",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d55b5e6b_33ba083c",
+        "filename": "gmail/v1/gmail-gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-01T17:19:19Z",
+      "side": 1,
+      "message": "Then I think we should just simply change the name at that point to a new non-conflicting name.\n\nI think this is totally safe because this is not exported and nobody can use it directly.",
+      "parentUuid": "d55b5e6b_f33b7087",
+      "revId": "8e15483ebceb6872bd7fd2c58ca7bf4cbeb92aec",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

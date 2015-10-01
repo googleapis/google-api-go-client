@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d59c3e76_517fb4a2",
+        "filename": "gmail/v1/gmail-gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 3074,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-01T01:30:13Z",
+      "side": 1,
+      "message": "(ignore this comment if you choose to do as I suggest in my comment in gen.go)\n\nIf metadataHeaders is present in c.opt_ then its a bug if it\u0027s not a []string.  I don\u0027t think that silently skipping it otherwise is the right thing to do; I\u0027d suggest returning an error.",
+      "range": {
+        "startLine": 3074,
+        "startChar": 2,
+        "endLine": 3074,
+        "endChar": 33
+      },
+      "revId": "4f8fbe7248250bf5f2783fe1b4a50a25903cae89",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d59c3e76_f16fc8e9",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-01T01:30:13Z",
+      "side": 1,
+      "message": "Rather then generating code for every param here, I think it would make sense to push more of this into the individual methods which set the param in c.opt_ in the first place.  It removes the need for type assertions, and reduces the number of places in the generator that you need to care about the details of the parameters (such as whether they are repeated).\n\nSo, for example, you could make c.opts_ a url.Values.  Then the generated code can look like:\n\nfunc (c *UsersMessagesGetCall) Format(format string) *UsersMessagesGetCall {\n        c.opt_.Set(\"format\", fmt.Sprintf(\"%v\", format)}\n        return c\n}\n        \nfunc (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders []string) *UsersMessagesGetCall {\n        c.opt_.Del(\"metadataHeaders\")\n        for _, val :\u003d range metadataHeaders {\n                c.opt_.Add(\"metadataHeaders\", fmt.Sprintf(\"%v\", val))\n        }\n        return c\n}\n\nand then you don\u0027t really need anything to set params in doRequest.",
+      "range": {
+        "startLine": 1632,
+        "startChar": 1,
+        "endLine": 1646,
+        "endChar": 2
+      },
+      "revId": "4f8fbe7248250bf5f2783fe1b4a50a25903cae89",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

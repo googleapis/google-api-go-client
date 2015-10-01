@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55b5e6b_936954be",
+        "filename": "gmail/v1/gmail-gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-10-01T16:21:26Z",
+      "side": 1,
+      "message": "why?",
+      "revId": "8e15483ebceb6872bd7fd2c58ca7bf4cbeb92aec",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

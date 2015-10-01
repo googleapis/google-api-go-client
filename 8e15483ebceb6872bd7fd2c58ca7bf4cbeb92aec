@@ -16,6 +16,24 @@
       "revId": "8e15483ebceb6872bd7fd2c58ca7bf4cbeb92aec",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d55b5e6b_b3ea9863",
+        "filename": "gmail/v1/gmail-gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-01T16:48:20Z",
+      "side": 1,
+      "message": "Because without this, we get conflicts on the name \"url\" with auto-generated parameters.\n\nFor example, I ran into this:\n\nfunc (r *UrlcrawlerrorssamplesService) Get(siteUrl string, url string, category string, platform string) *UrlcrawlerrorssamplesGetCall {\n  c :\u003d \u0026UrlcrawlerrorssamplesGetCall{s: r.s, opt_: url.Values{}}\n  c.siteUrl \u003d siteUrl\n  c.url \u003d url\n  c.category \u003d category\n  c.platform \u003d platform\n  return c\n}\n\nI chatted with Michael, and we thought this was the best and cleanest solution.\n\nWe can now replace \"url.Values{}\" in the 2nd line of the func with \"urlValues()\" and everything works.",
+      "parentUuid": "d55b5e6b_936954be",
+      "revId": "8e15483ebceb6872bd7fd2c58ca7bf4cbeb92aec",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

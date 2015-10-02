@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "d55b5e6b_38a14096",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1592,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-02T15:49:35Z",
+      "side": 1,
+      "message": "Ah, I see what you are saying.\n\nYes, I agree... and in fact, this new mechanism... while it is possibly cleaner looking, doesn\u0027t seem as \"safe\".\nThis particular issue points out that the previous implementation was possibly more \"safe\" because only those parameters and their known types were allowed to get in (even if the c.opts_ interface{} had been polluted by stuff like progressUpdater_ which truthfully had no business being there [and which I had erroneously added to it months ago]).\n\nAnd yet, this new mechanism is nicer because it removes the interface{} and therefore isn\u0027t performing type casting all over the place.\n\nOne thing about this CL now that I don\u0027t like is \"c.opt_\" is no longer a collection of optional parameters... it is now a collection of *all* parameters being passed in.  It starts out being optional stuff, but then expands into all URL parameters.  I\u0027m wondering if either a variable rename is in order or if I should bring back \"params\" (from line 1619 of the base version) and then copy all the contents from c.opt_ into it?  That seems less efficient, but maybe cleaner?\n\nMeanwhile, I\u0027ll see if I can put together a regression test for building up parameters.",
+      "parentUuid": "d59c3e76_511c1402",
+      "range": {
+        "startLine": 1592,
+        "startChar": 2,
+        "endLine": 1592,
+        "endChar": 31
+      },
+      "revId": "8e15483ebceb6872bd7fd2c58ca7bf4cbeb92aec",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d59c3e76_31831094",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 3

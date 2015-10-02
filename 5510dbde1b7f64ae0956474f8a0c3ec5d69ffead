@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55b5e6b_d89124da",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 1774,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-10-02T17:26:53Z",
+      "side": 1,
+      "message": "sorry, my mistake earlier. I think I meant \"the returned error\".",
+      "revId": "5510dbde1b7f64ae0956474f8a0c3ec5d69ffead",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d55b5e6b_189c3ced",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-10-02T17:26:53Z",
+      "side": 1,
+      "message": "Go doc style nit:\n\ns/returns true if/reports whether/\n\nBut let\u0027s elaborate a bit:\n\n   // IsNotModified reports whether err is the result of the\n   // server replying with http.StatusNotModified.\n   // Such error values are sometimes returned by \"Do\" methods\n   // on calls when If-None-Match is used.",
+      "revId": "5510dbde1b7f64ae0956474f8a0c3ec5d69ffead",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

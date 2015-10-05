@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b7078c2_7fc2e71a",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-10-05T20:12:51Z",
+      "side": 1,
+      "message": "how will this internal package work for any value except the standard value?",
+      "revId": "5f4d134df5a09fb4b034d97c2f8c4119f54c44d5",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

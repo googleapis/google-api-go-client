@@ -52,6 +52,24 @@
       "revId": "5f4d134df5a09fb4b034d97c2f8c4119f54c44d5",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b7078c2_df59b3c5",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-05T21:04:12Z",
+      "side": 1,
+      "message": "Ah, maybe I\u0027m confused then. I thought they were trying to do something similar to what we have done by putting the entire API code base in a different canonical import hierarchy and add custom-built APIs to the mix.\n\nShould I abandon this CL completely and we can discuss the correct solution on github in #109?\nhttps://github.com/google/google-api-go-client/issues/109",
+      "parentUuid": "0b7078c2_1f6c0bc8",
+      "revId": "5f4d134df5a09fb4b034d97c2f8c4119f54c44d5",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

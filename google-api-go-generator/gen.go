@@ -36,13 +36,11 @@ var (
 
 	publicOnly = flag.Bool("publiconly", true, "Only build public, released APIs. Only applicable for Google employees.")
 
-	jsonFile     = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
-	output       = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
-	googleAPIPkg = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'googleapi' support package.")
-	contextPkg   = flag.String("context_pkg", "golang.org/x/net/context", "Go package path of the 'context' support package.")
+	jsonFile       = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
+	output         = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
+	apiPackageBase = flag.String("api_pkg_base", "google.golang.org/api", "Go package path of all APIs.")
+	contextPkg     = flag.String("context_pkg", "golang.org/x/net/context", "Go package path of the 'context' support package.")
 )
-
-const apiPackageBase = "google.golang.org/api"
 
 // API represents an API to generate, as well as its state while it's
 // generating.
@@ -369,7 +367,7 @@ func (a *API) Package() string {
 }
 
 func (a *API) Target() string {
-	return fmt.Sprintf("%s/%s/%s", apiPackageBase, a.Package(), renameVersion(a.Version))
+	return fmt.Sprintf("%s/%s/%s", *apiPackageBase, a.Package(), renameVersion(a.Version))
 }
 
 // GetName returns a free top-level function/type identifier in the package.
@@ -486,8 +484,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 	p("import (\n")
 	for _, pkg := range []string{
 		"bytes",
-		*googleAPIPkg,
-		apiPackageBase + "/internal",
+		*apiPackageBase + "/googleapi",
+		*apiPackageBase + "/internal",
 		"encoding/json",
 		"errors",
 		"fmt",

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50c9419b_d38ef4fc",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-07T23:23:17Z",
+      "side": 1,
+      "message": "This doesn\u0027t make a copy of the []string as line 1596 does.  But here would not be the place to do it anyway: you want to do it before returning from the method which accepts the []string in the first place.  Is there any reason why the required params need to be stored as separate fields in the Call object? It looks like they can just be stored in urlParams_ from the beginning like everything else.",
+      "range": {
+        "startLine": 1709,
+        "startChar": 3,
+        "endLine": 1709,
+        "endChar": 56
+      },
+      "revId": "5bbaf7353e49addc324e3fcad42591cb265dd205",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

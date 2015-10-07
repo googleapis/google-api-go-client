@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90673931_8992c991",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 12
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-07T16:41:36Z",
+      "side": 1,
+      "message": "Thank you, Michael!  I like this much better now.\nDone.",
+      "parentUuid": "50c9419b_13c10c60",
+      "range": {
+        "startLine": 527,
+        "startChar": 15,
+        "endLine": 527,
+        "endChar": 46
+      },
+      "revId": "9ffbecb0e69b72bd1a0a56075208042400b9d407",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c9419b_b3aff8bb",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2015-10-07T00:07:17Z",
       "side": 1,
       "message": "There\u0027s no need for this code to be generated.\n\nI think it\u0027s best to place code in the internal or googleapi packages where possible.  It\u0027s easier to work with regular code, rather than generated code.\n\nI\u0027d move this to internal, but make it a little more self contained by giving it an Encode method which performs the type conversion that you are currently doing on line 1737.",
+      "range": {
+        "startLine": 522,
+        "startChar": 1,
+        "endLine": 528,
+        "endChar": 8
+      },
+      "revId": "9ffbecb0e69b72bd1a0a56075208042400b9d407",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90673931_49a391f3",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 12
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-07T16:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c9419b_b3aff8bb",
       "range": {
         "startLine": 522,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "90673931_a9050590",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 12
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-07T16:41:36Z",
+      "side": 1,
+      "message": "I apologize for that.  I should have kept these changes separate.",
+      "parentUuid": "50c9419b_93b4fc12",
+      "range": {
+        "startLine": 544,
+        "startChar": 2,
+        "endLine": 544,
+        "endChar": 3
+      },
+      "revId": "9ffbecb0e69b72bd1a0a56075208042400b9d407",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c9419b_b3c81881",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "90673931_89280925",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 12
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-07T16:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c9419b_b3c81881",
+      "range": {
+        "startLine": 367,
+        "startChar": 26,
+        "endLine": 367,
+        "endChar": 39
+      },
+      "revId": "9ffbecb0e69b72bd1a0a56075208042400b9d407",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c9419b_d3d39437",
         "filename": "google-api-go-generator/storage_test.go",
         "patchSetId": 12
@@ -105,6 +201,30 @@
       "writtenOn": "2015-10-07T00:07:17Z",
       "side": 1,
       "message": "can you also test a repeated param that is not of string type?",
+      "range": {
+        "startLine": 392,
+        "startChar": 58,
+        "endLine": 392,
+        "endChar": 74
+      },
+      "revId": "9ffbecb0e69b72bd1a0a56075208042400b9d407",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90673931_69148dc6",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 12
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-07T16:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c9419b_d3d39437",
       "range": {
         "startLine": 392,
         "startChar": 58,

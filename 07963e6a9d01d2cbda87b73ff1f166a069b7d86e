@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65b5a5f7_5c255dc1",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-08T23:18:20Z",
+      "side": 1,
+      "message": "if you store query params in urlParams immediately, you won\u0027t need this.",
+      "range": {
+        "startLine": 1515,
+        "startChar": 32,
+        "endLine": 1515,
+        "endChar": 38
+      },
+      "revId": "07963e6a9d01d2cbda87b73ff1f166a069b7d86e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65b5a5f7_3c2291bb",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-08T23:18:20Z",
+      "side": 1,
+      "message": "The other 3 out of 4 cases in this if/else tree call urlParams_.Set* and it looks a bit odd that this one doesn\u0027t (because it is hidden inside convertMultiParams).  Since convertMultiParams does two things (convert the param values to strings, and store them in urlParams_), I think it would be more readable overall to simplify it to just convert the params, and then move the SetMulti here.  You could have convertMultiParams return the name of the variable that the converted data is stored in.",
+      "range": {
+        "startLine": 1610,
+        "startChar": 4,
+        "endLine": 1610,
+        "endChar": 40
+      },
+      "revId": "07963e6a9d01d2cbda87b73ff1f166a069b7d86e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

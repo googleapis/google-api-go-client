@@ -27,7 +27,7 @@ import (
 )
 
 var (
-	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
+	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.") // test
 	useCache      = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
 	genDir        = flag.String("gendir", "", "Directory to use to write out generated Go files")
 	build         = flag.Bool("build", false, "Compile generated packages.")

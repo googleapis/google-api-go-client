@@ -45,6 +45,30 @@
       "revId": "07963e6a9d01d2cbda87b73ff1f166a069b7d86e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8521b987_88417722",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 15
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-09T00:52:25Z",
+      "side": 1,
+      "message": "Hmmm... can we please hold a GVC early next week to discuss this?  I think I may just be having a mental block as to how you are planning on handling what is currently being done by:\nmeth.RequiredQueryParams() and meth.RequiredRepeatedQueryParams().\nPlease feel free to schedule any time on my calendar that works for you.  Even late PST evening is fine with me and I can dial in from home.",
+      "parentUuid": "65b5a5f7_3c2291bb",
+      "range": {
+        "startLine": 1610,
+        "startChar": 4,
+        "endLine": 1610,
+        "endChar": 40
+      },
+      "revId": "07963e6a9d01d2cbda87b73ff1f166a069b7d86e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

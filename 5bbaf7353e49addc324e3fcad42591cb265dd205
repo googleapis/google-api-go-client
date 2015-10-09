@@ -94,6 +94,30 @@
       "revId": "5bbaf7353e49addc324e3fcad42591cb265dd205",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8521b987_a85f1301",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 14
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-09T00:52:25Z",
+      "side": 1,
+      "message": "Hmmm... it looks very risky and messy to me.\n\nTake a look in testdata/any.want and search for c.logsink...\nAround lines 1030-1040, we have this:\n\tvar body io.Reader \u003d nil\n\tbody, err :\u003d googleapi.WithoutDataWrapper.JSONReader(c.logsink)\n\tif err !\u003d nil {\n\t\treturn nil, err\n\t}\n\tctype :\u003d \"application/json\"\n\tc.urlParams_.Set(\"alt\", alt)\n\turls :\u003d googleapi.ResolveRelative(c.s.BasePath, \"v1beta3/projects/{projectsId}/logServices/{logServicesId}/sinks\")\n\turls +\u003d \"?\" + c.urlParams_.Encode()\n\treq, _ :\u003d http.NewRequest(\"POST\", urls, body)\n\nAnd c.logsink is declared as:\n\tlogsink       *LogSink\nand assigned like this:\n// Create: Creates the specified log service sink resource.\nfunc (r *ProjectsLogServicesSinksService) Create(projectsId string, logServicesId string, logsink *LogSink) *ProjectsLogServicesSinksCreateCall {\n\tc :\u003d \u0026ProjectsLogServicesSinksCreateCall{s: r.s, urlParams_: make(internal.URLParams)}\n\tc.projectsId \u003d projectsId\n\tc.logServicesId \u003d logServicesId\n\tc.logsink \u003d logsink\n\treturn c\n}\n\nSo are you saying that you want me to move the actual body creation to (in this case) the Create method?\n\nIf yes, I can give it a shot, but that still seems really risky to me.",
+      "parentUuid": "65b5a5f7_7c28199d",
+      "range": {
+        "startLine": 1709,
+        "startChar": 3,
+        "endLine": 1709,
+        "endChar": 56
+      },
+      "revId": "5bbaf7353e49addc324e3fcad42591cb265dd205",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

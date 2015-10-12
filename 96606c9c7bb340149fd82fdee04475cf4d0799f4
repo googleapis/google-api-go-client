@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f30ba11_a2223eb3",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-12T16:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eadb2204_1092c421",
+      "range": {
+        "startLine": 1546,
+        "startChar": 1,
+        "endLine": 1548,
+        "endChar": 2
+      },
+      "revId": "96606c9c7bb340149fd82fdee04475cf4d0799f4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eadb2204_708d5002",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2015-10-12T06:00:56Z",
       "side": 1,
       "message": "you shouldn\u0027t need this any more, as each query param should already be in c.urlParams_.",
+      "range": {
+        "startLine": 1728,
+        "startChar": 0,
+        "endLine": 1738,
+        "endChar": 2
+      },
+      "revId": "96606c9c7bb340149fd82fdee04475cf4d0799f4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f30ba11_02b7aabf",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 17
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-12T16:17:16Z",
+      "side": 1,
+      "message": "Awesome.  Thank you for being patient with me as you walked me through this with the big vision!  I like the results now, as this cleaned up things a bit, I think.  I\u0027ll cancel today\u0027s GVC.",
+      "parentUuid": "eadb2204_708d5002",
       "range": {
         "startLine": 1728,
         "startChar": 0,

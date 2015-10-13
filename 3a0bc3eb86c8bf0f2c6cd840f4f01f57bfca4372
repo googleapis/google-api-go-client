@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eadb2204_b02df87a",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-13T04:42:04Z",
+      "side": 1,
+      "message": "you don\u0027t need this any more.",
+      "range": {
+        "startLine": 1503,
+        "startChar": 30,
+        "endLine": 1503,
+        "endChar": 38
+      },
+      "revId": "3a0bc3eb86c8bf0f2c6cd840f4f01f57bfca4372",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eadb2204_9030f4d1",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-13T04:42:04Z",
+      "side": 1,
+      "message": "Just a thought:\n\nBecause this function prints code which create a variable called something like param_, it becomes a bit more difficult to keep track of whether this interacts badly with other code that is being generated in the same function.\n\nYou could make this easier to reason about by introducing a new scope here, like:\n\nfunc convertMultiParamsFunc(param string) string {\n        f :\u003d \"func ()[]string {\" +\n        \" var result []string\" +        \n        \" for _, v :\u003d range \" + param + \" {\" +\n        `  result \u003d append(result, fmt.Sprintf(\"%%v\", v))` +\n        \" } \n        \" return result\n        \"}\"\n        return f\n}\n\nthen it could be called e.g. on line 1580 like:\n\npn(\" c.urlParams_.SetMulti(%q, %v())\", arg.goname, convertMultiParamsFunc(arg.goname)).\n\nI\u0027ll let you decide if you want to bother.",
+      "range": {
+        "startLine": 1504,
+        "startChar": 0,
+        "endLine": 1508,
+        "endChar": 19
+      },
+      "revId": "3a0bc3eb86c8bf0f2c6cd840f4f01f57bfca4372",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eadb2204_f0e4e099",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-13T04:42:04Z",
+      "side": 1,
+      "message": "Isn\u0027t there also the possibility that arg could be a slice of non-strings and still need to be copied?",
+      "range": {
+        "startLine": 1588,
+        "startChar": 20,
+        "endLine": 1588,
+        "endChar": 28
+      },
+      "revId": "3a0bc3eb86c8bf0f2c6cd840f4f01f57bfca4372",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eadb2204_90231477",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 18
+      },
+      "lineNbr": 1592,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-13T04:42:04Z",
+      "side": 1,
+      "message": "There are three things that need to be considered here\n\n1. is the arg repeated?\n2. is the arg of string type?\n3. what is the arg location?\n\nI think that separating these a bit more cleanly would (a) reduce duplication, (b) ensure that nothing is skipped (e.g. ensuring that slices of non-strings are copied). \n\nIdeally, you should be able to do somthing like:\n\n                if (arg.location \u003d \"body\") {\n                        pn(\"c.body \u003d %s\", arg.goname)\n                        continue \n                }\n\n                if strings.HasPrefix(arg.gotype, \"[]\") {\n                        pn(\"var toStore []string\")\n                        switch arg.gotype {\n                        // cases for []string and []othertype , which convert to []string and store the result in toStore.\n                        }\n                        \n                        switch arg.location {\n                        // cases for query,path that store toStore in the right place.\n                        }\n                } else {\n                        pn(\"var toStore string\")\n                        switch arg.gotype {\n                        // similar to above\n                        }\n\n                        switch arg.location {\n                        // similar to above\n                        }\n                }\n\nThis would give a structure which is pretty similar to lines 1612..1625, but also support path args.\n\nHowever, there is something that currently prevents this: path args are not currently stored as strings.  If you were to convert them to strings early (using exprAsString), then you could handle them in a very simiar way to the url params. You could even store them in a urlParams-type object directly, rather than copying them into one later.\n\nI think that this cleanup would be well worth doing, especially because it would mean that the duplication with lines 1612..1625 could be eliminated.  However, that deduplication would require further refactoring, so it\u0027s probably starting to get a bit too much to include in this change. If you\u0027re interested in doing it in a followup change, that would be good.",
+      "range": {
+        "startLine": 1572,
+        "startChar": 0,
+        "endLine": 1592,
+        "endChar": 42
+      },
+      "revId": "3a0bc3eb86c8bf0f2c6cd840f4f01f57bfca4372",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

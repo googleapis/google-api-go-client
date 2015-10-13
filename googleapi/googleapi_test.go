@@ -546,7 +546,7 @@ func TestInterruptedTransferChunks(t *testing.T) {
 		}
 	}
 	if len(tr.buf) != len(slurp) || bytes.Compare(tr.buf, slurp) != 0 {
-		t.Errorf("transfered file corrupted:\ngot %s\nwant %s", tr.buf, slurp)
+		t.Errorf("transferred file corrupted:\ngot %s\nwant %s", tr.buf, slurp)
 	}
 	w := ""
 	for i := chunkSize; i <= st.Size(); i += chunkSize {

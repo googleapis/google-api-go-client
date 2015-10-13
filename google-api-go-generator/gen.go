@@ -17,7 +17,6 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
-	"path"
 	"path/filepath"
 	"regexp"
 	"sort"
@@ -38,8 +37,12 @@ var (
 
 	jsonFile       = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
 	output         = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
-	apiPackageBase = flag.String("api_pkg_base", "google.golang.org/api", "Go package path of all APIs.")
-	contextPkg     = flag.String("context_pkg", "golang.org/x/net/context", "Go package path of the 'context' support package.")
+	apiPackageBase = flag.String("api_pkg_base", "google.golang.org/api", "Go package prefix to use for all generated APIs.")
+
+	contextHTTPPkg = flag.String("ctxhttp_pkg", "golang.org/x/net/context/ctxhttp", "Go package path of the 'ctxhttp' package.")
+	contextPkg     = flag.String("context_pkg", "golang.org/x/net/context", "Go package path of the 'context' package.")
+	googleapiPkg   = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
+	internalPkg    = flag.String("internal_pkg", "google.golang.org/api/internal", "Go package path of the 'api/internal' support package.")
 )
 
 // API represents an API to generate, as well as its state while it's
@@ -484,8 +487,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 	p("import (\n")
 	for _, pkg := range []string{
 		"bytes",
-		*apiPackageBase + "/googleapi",
-		*apiPackageBase + "/internal",
 		"encoding/json",
 		"errors",
 		"fmt",
@@ -494,8 +495,10 @@ func (a *API) GenerateCode() ([]byte, error) {
 		"net/url",
 		"strconv",
 		"strings",
+		*contextHTTPPkg,
 		*contextPkg,
-		path.Join(*contextPkg, "ctxhttp"),
+		*googleapiPkg,
+		*internalPkg,
 	} {
 		p("\t%q\n", pkg)
 	}

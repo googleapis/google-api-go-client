@@ -530,28 +530,28 @@ func (s *LocalizedStringBundle) MarshalJSON() ([]byte, error) {
 type AchievementConfigurationsDeleteCall struct {
 	s             *Service
 	achievementId string
-	opt_          map[string]interface{}
+	urlParams_    internal.URLParams
 	ctx_          context.Context
 }
 
 // Delete: Delete the achievement configuration with the given ID.
 func (r *AchievementConfigurationsService) Delete(achievementId string) *AchievementConfigurationsDeleteCall {
-	c := &AchievementConfigurationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AchievementConfigurationsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.achievementId = achievementId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementConfigurationsDeleteCall) Fields(s ...googleapi.Field) *AchievementConfigurationsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AchievementConfigurationsDeleteCall) Context(ctx context.Context) *AchievementConfigurationsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -559,13 +559,9 @@ func (c *AchievementConfigurationsDeleteCall) Context(ctx context.Context) *Achi
 
 func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
@@ -616,23 +612,24 @@ func (c *AchievementConfigurationsDeleteCall) Do() error {
 type AchievementConfigurationsGetCall struct {
 	s             *Service
 	achievementId string
-	opt_          map[string]interface{}
+	urlParams_    internal.URLParams
+	ifNoneMatch_  string
 	ctx_          context.Context
 }
 
 // Get: Retrieves the metadata of the achievement configuration with the
 // given ID.
 func (r *AchievementConfigurationsService) Get(achievementId string) *AchievementConfigurationsGetCall {
-	c := &AchievementConfigurationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AchievementConfigurationsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.achievementId = achievementId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementConfigurationsGetCall) Fields(s ...googleapi.Field) *AchievementConfigurationsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -642,13 +639,13 @@ func (c *AchievementConfigurationsGetCall) Fields(s ...googleapi.Field) *Achieve
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AchievementConfigurationsGetCall) IfNoneMatch(entityTag string) *AchievementConfigurationsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AchievementConfigurationsGetCall) Context(ctx context.Context) *AchievementConfigurationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -656,20 +653,16 @@ func (c *AchievementConfigurationsGetCall) Context(ctx context.Context) *Achieve
 
 func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -744,29 +737,29 @@ type AchievementConfigurationsInsertCall struct {
 	s                        *Service
 	applicationId            string
 	achievementconfiguration *AchievementConfiguration
-	opt_                     map[string]interface{}
+	urlParams_               internal.URLParams
 	ctx_                     context.Context
 }
 
 // Insert: Insert a new achievement configuration in this application.
 func (r *AchievementConfigurationsService) Insert(applicationId string, achievementconfiguration *AchievementConfiguration) *AchievementConfigurationsInsertCall {
-	c := &AchievementConfigurationsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AchievementConfigurationsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.applicationId = applicationId
 	c.achievementconfiguration = achievementconfiguration
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementConfigurationsInsertCall) Fields(s ...googleapi.Field) *AchievementConfigurationsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AchievementConfigurationsInsertCall) Context(ctx context.Context) *AchievementConfigurationsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -779,13 +772,9 @@ func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/achievements")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
@@ -867,14 +856,15 @@ func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, e
 type AchievementConfigurationsListCall struct {
 	s             *Service
 	applicationId string
-	opt_          map[string]interface{}
+	urlParams_    internal.URLParams
+	ifNoneMatch_  string
 	ctx_          context.Context
 }
 
 // List: Returns a list of the achievement configurations in this
 // application.
 func (r *AchievementConfigurationsService) List(applicationId string) *AchievementConfigurationsListCall {
-	c := &AchievementConfigurationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AchievementConfigurationsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.applicationId = applicationId
 	return c
 }
@@ -884,22 +874,22 @@ func (r *AchievementConfigurationsService) List(applicationId string) *Achieveme
 // paging. For any response, the actual number of resources returned may
 // be less than the specified maxResults.
 func (c *AchievementConfigurationsListCall) MaxResults(maxResults int64) *AchievementConfigurationsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *AchievementConfigurationsListCall) PageToken(pageToken string) *AchievementConfigurationsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementConfigurationsListCall) Fields(s ...googleapi.Field) *AchievementConfigurationsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -909,13 +899,13 @@ func (c *AchievementConfigurationsListCall) Fields(s ...googleapi.Field) *Achiev
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AchievementConfigurationsListCall) IfNoneMatch(entityTag string) *AchievementConfigurationsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AchievementConfigurationsListCall) Context(ctx context.Context) *AchievementConfigurationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -923,26 +913,16 @@ func (c *AchievementConfigurationsListCall) Context(ctx context.Context) *Achiev
 
 func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/achievements")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1031,30 +1011,30 @@ type AchievementConfigurationsPatchCall struct {
 	s                        *Service
 	achievementId            string
 	achievementconfiguration *AchievementConfiguration
-	opt_                     map[string]interface{}
+	urlParams_               internal.URLParams
 	ctx_                     context.Context
 }
 
 // Patch: Update the metadata of the achievement configuration with the
 // given ID. This method supports patch semantics.
 func (r *AchievementConfigurationsService) Patch(achievementId string, achievementconfiguration *AchievementConfiguration) *AchievementConfigurationsPatchCall {
-	c := &AchievementConfigurationsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AchievementConfigurationsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.achievementId = achievementId
 	c.achievementconfiguration = achievementconfiguration
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementConfigurationsPatchCall) Fields(s ...googleapi.Field) *AchievementConfigurationsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AchievementConfigurationsPatchCall) Context(ctx context.Context) *AchievementConfigurationsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1067,13 +1047,9 @@ func (c *AchievementConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
@@ -1156,30 +1132,30 @@ type AchievementConfigurationsUpdateCall struct {
 	s                        *Service
 	achievementId            string
 	achievementconfiguration *AchievementConfiguration
-	opt_                     map[string]interface{}
+	urlParams_               internal.URLParams
 	ctx_                     context.Context
 }
 
 // Update: Update the metadata of the achievement configuration with the
 // given ID.
 func (r *AchievementConfigurationsService) Update(achievementId string, achievementconfiguration *AchievementConfiguration) *AchievementConfigurationsUpdateCall {
-	c := &AchievementConfigurationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AchievementConfigurationsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.achievementId = achievementId
 	c.achievementconfiguration = achievementconfiguration
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementConfigurationsUpdateCall) Fields(s ...googleapi.Field) *AchievementConfigurationsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AchievementConfigurationsUpdateCall) Context(ctx context.Context) *AchievementConfigurationsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1192,13 +1168,9 @@ func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
@@ -1278,40 +1250,41 @@ func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, e
 // method id "gamesConfiguration.imageConfigurations.upload":
 
 type ImageConfigurationsUploadCall struct {
-	s          *Service
-	resourceId string
-	imageType  string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	protocol_  string
-	ctx_       context.Context
+	s                *Service
+	resourceId       string
+	imageType        string
+	urlParams_       internal.URLParams
+	media_           io.Reader
+	resumable_       googleapi.SizeReaderAt
+	mediaType_       string
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // Upload: Uploads an image for a resource with the given ID and image
 // type.
 func (r *ImageConfigurationsService) Upload(resourceId string, imageType string) *ImageConfigurationsUploadCall {
-	c := &ImageConfigurationsUploadCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ImageConfigurationsUploadCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.resourceId = resourceId
 	c.imageType = imageType
 	return c
 }
 
-// Media specifies the media to upload in a single chunk.
-// At most one of Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk. At most one of
+// Media and ResumableMedia may be set.
 func (c *ImageConfigurationsUploadCall) Media(r io.Reader) *ImageConfigurationsUploadCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
-// At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-// The provided ctx will supersede any context previously provided to
-// the Context method.
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx. At most one of Media and ResumableMedia may be
+// set. mediaType identifies the MIME media type of the upload, such as
+// "image/png". If mediaType is "", it will be auto-detected. The
+// provided ctx will supersede any context previously provided to the
+// Context method.
 func (c *ImageConfigurationsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ImageConfigurationsUploadCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -1320,27 +1293,28 @@ func (c *ImageConfigurationsUploadCall) ResumableMedia(ctx context.Context, r io
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
 func (c *ImageConfigurationsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ImageConfigurationsUploadCall {
-	c.opt_["progressUpdater"] = pu
+	c.progressUpdater_ = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ImageConfigurationsUploadCall) Fields(s ...googleapi.Field) *ImageConfigurationsUploadCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
-// This context will supersede any context previously provided to
-// the ResumableMedia method.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
 func (c *ImageConfigurationsUploadCall) Context(ctx context.Context) *ImageConfigurationsUploadCall {
 	c.ctx_ = ctx
 	return c
@@ -1348,17 +1322,13 @@ func (c *ImageConfigurationsUploadCall) Context(ctx context.Context) *ImageConfi
 
 func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "images/{resourceId}/imageType/{imageType}")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", c.protocol_)
+		c.urlParams_.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
@@ -1414,12 +1384,6 @@ func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -1429,7 +1393,7 @@ func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
+			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -1510,28 +1474,28 @@ func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 type LeaderboardConfigurationsDeleteCall struct {
 	s             *Service
 	leaderboardId string
-	opt_          map[string]interface{}
+	urlParams_    internal.URLParams
 	ctx_          context.Context
 }
 
 // Delete: Delete the leaderboard configuration with the given ID.
 func (r *LeaderboardConfigurationsService) Delete(leaderboardId string) *LeaderboardConfigurationsDeleteCall {
-	c := &LeaderboardConfigurationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LeaderboardConfigurationsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.leaderboardId = leaderboardId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LeaderboardConfigurationsDeleteCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LeaderboardConfigurationsDeleteCall) Context(ctx context.Context) *LeaderboardConfigurationsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1539,13 +1503,9 @@ func (c *LeaderboardConfigurationsDeleteCall) Context(ctx context.Context) *Lead
 
 func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
@@ -1596,23 +1556,24 @@ func (c *LeaderboardConfigurationsDeleteCall) Do() error {
 type LeaderboardConfigurationsGetCall struct {
 	s             *Service
 	leaderboardId string
-	opt_          map[string]interface{}
+	urlParams_    internal.URLParams
+	ifNoneMatch_  string
 	ctx_          context.Context
 }
 
 // Get: Retrieves the metadata of the leaderboard configuration with the
 // given ID.
 func (r *LeaderboardConfigurationsService) Get(leaderboardId string) *LeaderboardConfigurationsGetCall {
-	c := &LeaderboardConfigurationsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LeaderboardConfigurationsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.leaderboardId = leaderboardId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LeaderboardConfigurationsGetCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1622,13 +1583,13 @@ func (c *LeaderboardConfigurationsGetCall) Fields(s ...googleapi.Field) *Leaderb
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LeaderboardConfigurationsGetCall) IfNoneMatch(entityTag string) *LeaderboardConfigurationsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LeaderboardConfigurationsGetCall) Context(ctx context.Context) *LeaderboardConfigurationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1636,20 +1597,16 @@ func (c *LeaderboardConfigurationsGetCall) Context(ctx context.Context) *Leaderb
 
 func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1724,29 +1681,29 @@ type LeaderboardConfigurationsInsertCall struct {
 	s                        *Service
 	applicationId            string
 	leaderboardconfiguration *LeaderboardConfiguration
-	opt_                     map[string]interface{}
+	urlParams_               internal.URLParams
 	ctx_                     context.Context
 }
 
 // Insert: Insert a new leaderboard configuration in this application.
 func (r *LeaderboardConfigurationsService) Insert(applicationId string, leaderboardconfiguration *LeaderboardConfiguration) *LeaderboardConfigurationsInsertCall {
-	c := &LeaderboardConfigurationsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LeaderboardConfigurationsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.applicationId = applicationId
 	c.leaderboardconfiguration = leaderboardconfiguration
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LeaderboardConfigurationsInsertCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LeaderboardConfigurationsInsertCall) Context(ctx context.Context) *LeaderboardConfigurationsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1759,13 +1716,9 @@ func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/leaderboards")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
@@ -1847,14 +1800,15 @@ func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, e
 type LeaderboardConfigurationsListCall struct {
 	s             *Service
 	applicationId string
-	opt_          map[string]interface{}
+	urlParams_    internal.URLParams
+	ifNoneMatch_  string
 	ctx_          context.Context
 }
 
 // List: Returns a list of the leaderboard configurations in this
 // application.
 func (r *LeaderboardConfigurationsService) List(applicationId string) *LeaderboardConfigurationsListCall {
-	c := &LeaderboardConfigurationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LeaderboardConfigurationsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.applicationId = applicationId
 	return c
 }
@@ -1864,22 +1818,22 @@ func (r *LeaderboardConfigurationsService) List(applicationId string) *Leaderboa
 // paging. For any response, the actual number of resources returned may
 // be less than the specified maxResults.
 func (c *LeaderboardConfigurationsListCall) MaxResults(maxResults int64) *LeaderboardConfigurationsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *LeaderboardConfigurationsListCall) PageToken(pageToken string) *LeaderboardConfigurationsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LeaderboardConfigurationsListCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1889,13 +1843,13 @@ func (c *LeaderboardConfigurationsListCall) Fields(s ...googleapi.Field) *Leader
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LeaderboardConfigurationsListCall) IfNoneMatch(entityTag string) *LeaderboardConfigurationsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LeaderboardConfigurationsListCall) Context(ctx context.Context) *LeaderboardConfigurationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1903,26 +1857,16 @@ func (c *LeaderboardConfigurationsListCall) Context(ctx context.Context) *Leader
 
 func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/leaderboards")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2011,30 +1955,30 @@ type LeaderboardConfigurationsPatchCall struct {
 	s                        *Service
 	leaderboardId            string
 	leaderboardconfiguration *LeaderboardConfiguration
-	opt_                     map[string]interface{}
+	urlParams_               internal.URLParams
 	ctx_                     context.Context
 }
 
 // Patch: Update the metadata of the leaderboard configuration with the
 // given ID. This method supports patch semantics.
 func (r *LeaderboardConfigurationsService) Patch(leaderboardId string, leaderboardconfiguration *LeaderboardConfiguration) *LeaderboardConfigurationsPatchCall {
-	c := &LeaderboardConfigurationsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LeaderboardConfigurationsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.leaderboardId = leaderboardId
 	c.leaderboardconfiguration = leaderboardconfiguration
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LeaderboardConfigurationsPatchCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LeaderboardConfigurationsPatchCall) Context(ctx context.Context) *LeaderboardConfigurationsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2047,13 +1991,9 @@ func (c *LeaderboardConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
@@ -2136,30 +2076,30 @@ type LeaderboardConfigurationsUpdateCall struct {
 	s                        *Service
 	leaderboardId            string
 	leaderboardconfiguration *LeaderboardConfiguration
-	opt_                     map[string]interface{}
+	urlParams_               internal.URLParams
 	ctx_                     context.Context
 }
 
 // Update: Update the metadata of the leaderboard configuration with the
 // given ID.
 func (r *LeaderboardConfigurationsService) Update(leaderboardId string, leaderboardconfiguration *LeaderboardConfiguration) *LeaderboardConfigurationsUpdateCall {
-	c := &LeaderboardConfigurationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LeaderboardConfigurationsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.leaderboardId = leaderboardId
 	c.leaderboardconfiguration = leaderboardconfiguration
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LeaderboardConfigurationsUpdateCall) Fields(s ...googleapi.Field) *LeaderboardConfigurationsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LeaderboardConfigurationsUpdateCall) Context(ctx context.Context) *LeaderboardConfigurationsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2172,13 +2112,9 @@ func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,

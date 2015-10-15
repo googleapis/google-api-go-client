@@ -354,15 +354,15 @@ func (s *ReportType) MarshalJSON() ([]byte, error) {
 // method id "youtubereporting.jobs.create":
 
 type JobsCreateCall struct {
-	s    *Service
-	job  *Job
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	job        *Job
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Create: Creates a job and returns it.
 func (r *JobsService) Create(job *Job) *JobsCreateCall {
-	c := &JobsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.job = job
 	return c
 }
@@ -372,21 +372,21 @@ func (r *JobsService) Create(job *Job) *JobsCreateCall {
 // behalf the user is acting on. If not set, the user is acting for
 // himself (his own channel).
 func (c *JobsCreateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsCreateCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsCreateCall) Fields(s ...googleapi.Field) *JobsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsCreateCall) Context(ctx context.Context) *JobsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -399,16 +399,9 @@ func (c *JobsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/jobs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -483,15 +476,15 @@ func (c *JobsCreateCall) Do() (*Job, error) {
 // method id "youtubereporting.jobs.delete":
 
 type JobsDeleteCall struct {
-	s     *Service
-	jobId string
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	jobId      string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes a job.
 func (r *JobsService) Delete(jobId string) *JobsDeleteCall {
-	c := &JobsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.jobId = jobId
 	return c
 }
@@ -501,21 +494,21 @@ func (r *JobsService) Delete(jobId string) *JobsDeleteCall {
 // behalf the user is acting on. If not set, the user is acting for
 // himself (his own channel).
 func (c *JobsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsDeleteCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsDeleteCall) Fields(s ...googleapi.Field) *JobsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsDeleteCall) Context(ctx context.Context) *JobsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -523,16 +516,9 @@ func (c *JobsDeleteCall) Context(ctx context.Context) *JobsDeleteCall {
 
 func (c *JobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/jobs/{jobId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"jobId": c.jobId,
@@ -614,15 +600,16 @@ func (c *JobsDeleteCall) Do() (*Empty, error) {
 // method id "youtubereporting.jobs.get":
 
 type JobsGetCall struct {
-	s     *Service
-	jobId string
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s            *Service
+	jobId        string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets a job.
 func (r *JobsService) Get(jobId string) *JobsGetCall {
-	c := &JobsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.jobId = jobId
 	return c
 }
@@ -632,15 +619,15 @@ func (r *JobsService) Get(jobId string) *JobsGetCall {
 // behalf the user is acting on. If not set, the user is acting for
 // himself (his own channel).
 func (c *JobsGetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsGetCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -650,13 +637,13 @@ func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsGetCall) IfNoneMatch(entityTag string) *JobsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsGetCall) Context(ctx context.Context) *JobsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -664,23 +651,16 @@ func (c *JobsGetCall) Context(ctx context.Context) *JobsGetCall {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/jobs/{jobId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"jobId": c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -758,14 +738,15 @@ func (c *JobsGetCall) Do() (*Job, error) {
 // method id "youtubereporting.jobs.list":
 
 type JobsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists jobs.
 func (r *JobsService) List() *JobsListCall {
-	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -774,7 +755,7 @@ func (r *JobsService) List() *JobsListCall {
 // behalf the user is acting on. If not set, the user is acting for
 // himself (his own channel).
 func (c *JobsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
@@ -782,7 +763,7 @@ func (c *JobsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *Jo
 // Server may return fewer jobs than requested. If unspecified, server
 // will pick an appropriate default.
 func (c *JobsListCall) PageSize(pageSize int64) *JobsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -791,15 +772,15 @@ func (c *JobsListCall) PageSize(pageSize int64) *JobsListCall {
 // this is the value of ListReportTypesResponse.next_page_token returned
 // in response to the previous call to the `ListJobs` method.
 func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -809,13 +790,13 @@ func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsListCall) IfNoneMatch(entityTag string) *JobsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsListCall) Context(ctx context.Context) *JobsListCall {
 	c.ctx_ = ctx
 	return c
@@ -823,27 +804,14 @@ func (c *JobsListCall) Context(ctx context.Context) *JobsListCall {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/jobs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -923,16 +891,17 @@ func (c *JobsListCall) Do() (*ListJobsResponse, error) {
 // method id "youtubereporting.jobs.reports.get":
 
 type JobsReportsGetCall struct {
-	s        *Service
-	jobId    string
-	reportId string
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s            *Service
+	jobId        string
+	reportId     string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets the metadata of a specific report.
 func (r *JobsReportsService) Get(jobId string, reportId string) *JobsReportsGetCall {
-	c := &JobsReportsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsReportsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.jobId = jobId
 	c.reportId = reportId
 	return c
@@ -943,15 +912,15 @@ func (r *JobsReportsService) Get(jobId string, reportId string) *JobsReportsGetC
 // behalf the user is acting on. If not set, the user is acting for
 // himself (his own channel).
 func (c *JobsReportsGetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsReportsGetCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsReportsGetCall) Fields(s ...googleapi.Field) *JobsReportsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -961,13 +930,13 @@ func (c *JobsReportsGetCall) Fields(s ...googleapi.Field) *JobsReportsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsReportsGetCall) IfNoneMatch(entityTag string) *JobsReportsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsReportsGetCall) Context(ctx context.Context) *JobsReportsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -975,24 +944,17 @@ func (c *JobsReportsGetCall) Context(ctx context.Context) *JobsReportsGetCall {
 
 func (c *JobsReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/jobs/{jobId}/reports/{reportId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"jobId":    c.jobId,
 		"reportId": c.reportId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1077,16 +1039,17 @@ func (c *JobsReportsGetCall) Do() (*Report, error) {
 // method id "youtubereporting.jobs.reports.list":
 
 type JobsReportsListCall struct {
-	s     *Service
-	jobId string
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s            *Service
+	jobId        string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists reports created by a specific job. Returns NOT_FOUND if
 // the job does not exist.
 func (r *JobsReportsService) List(jobId string) *JobsReportsListCall {
-	c := &JobsReportsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &JobsReportsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.jobId = jobId
 	return c
 }
@@ -1096,7 +1059,7 @@ func (r *JobsReportsService) List(jobId string) *JobsReportsListCall {
 // behalf the user is acting on. If not set, the user is acting for
 // himself (his own channel).
 func (c *JobsReportsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsReportsListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
@@ -1104,7 +1067,7 @@ func (c *JobsReportsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 // Server may return fewer report types than requested. If unspecified,
 // server will pick an appropriate default.
 func (c *JobsReportsListCall) PageSize(pageSize int64) *JobsReportsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -1113,15 +1076,15 @@ func (c *JobsReportsListCall) PageSize(pageSize int64) *JobsReportsListCall {
 // this is the value of ListReportsResponse.next_page_token returned in
 // response to the previous call to the `ListReports` method.
 func (c *JobsReportsListCall) PageToken(pageToken string) *JobsReportsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsReportsListCall) Fields(s ...googleapi.Field) *JobsReportsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1131,13 +1094,13 @@ func (c *JobsReportsListCall) Fields(s ...googleapi.Field) *JobsReportsListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsReportsListCall) IfNoneMatch(entityTag string) *JobsReportsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *JobsReportsListCall) Context(ctx context.Context) *JobsReportsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1145,29 +1108,16 @@ func (c *JobsReportsListCall) Context(ctx context.Context) *JobsReportsListCall 
 
 func (c *JobsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/jobs/{jobId}/reports")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"jobId": c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1258,23 +1208,24 @@ func (c *JobsReportsListCall) Do() (*ListReportsResponse, error) {
 type MediaDownloadCall struct {
 	s            *Service
 	resourceName string
-	opt_         map[string]interface{}
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
 	ctx_         context.Context
 }
 
 // Download: Method for media download. Download is supported on the URI
 // `/v1/media/{+name}?alt=media`.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
-	c := &MediaDownloadCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MediaDownloadCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.resourceName = resourceName
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MediaDownloadCall) Fields(s ...googleapi.Field) *MediaDownloadCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1284,13 +1235,13 @@ func (c *MediaDownloadCall) Fields(s ...googleapi.Field) *MediaDownloadCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MediaDownloadCall) IfNoneMatch(entityTag string) *MediaDownloadCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download methods.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
 func (c *MediaDownloadCall) Context(ctx context.Context) *MediaDownloadCall {
 	c.ctx_ = ctx
 	return c
@@ -1298,20 +1249,16 @@ func (c *MediaDownloadCall) Context(ctx context.Context) *MediaDownloadCall {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/media/{+resourceName}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1401,14 +1348,15 @@ func (c *MediaDownloadCall) Do() (*Media, error) {
 // method id "youtubereporting.reportTypes.list":
 
 type ReportTypesListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists report types.
 func (r *ReportTypesService) List() *ReportTypesListCall {
-	c := &ReportTypesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ReportTypesListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -1417,7 +1365,7 @@ func (r *ReportTypesService) List() *ReportTypesListCall {
 // behalf the user is acting on. If not set, the user is acting for
 // himself (his own channel).
 func (c *ReportTypesListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ReportTypesListCall {
-	c.opt_["onBehalfOfContentOwner"] = onBehalfOfContentOwner
+	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
@@ -1425,7 +1373,7 @@ func (c *ReportTypesListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 // Server may return fewer report types than requested. If unspecified,
 // server will pick an appropriate default.
 func (c *ReportTypesListCall) PageSize(pageSize int64) *ReportTypesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -1434,15 +1382,15 @@ func (c *ReportTypesListCall) PageSize(pageSize int64) *ReportTypesListCall {
 // this is the value of ListReportTypesResponse.next_page_token returned
 // in response to the previous call to the `ListReportTypes` method.
 func (c *ReportTypesListCall) PageToken(pageToken string) *ReportTypesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportTypesListCall) Fields(s ...googleapi.Field) *ReportTypesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1452,13 +1400,13 @@ func (c *ReportTypesListCall) Fields(s ...googleapi.Field) *ReportTypesListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ReportTypesListCall) IfNoneMatch(entityTag string) *ReportTypesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ReportTypesListCall) Context(ctx context.Context) *ReportTypesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1466,27 +1414,14 @@ func (c *ReportTypesListCall) Context(ctx context.Context) *ReportTypesListCall 
 
 func (c *ReportTypesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
-		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/reportTypes")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

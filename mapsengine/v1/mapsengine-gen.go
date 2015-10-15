@@ -2986,24 +2986,25 @@ func (s *ZoomLevels) MarshalJSON() ([]byte, error) {
 // method id "mapsengine.assets.get":
 
 type AssetsGetCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Return metadata for a particular asset.
 func (r *AssetsService) Get(id string) *AssetsGetCall {
-	c := &AssetsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AssetsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AssetsGetCall) Fields(s ...googleapi.Field) *AssetsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3013,13 +3014,13 @@ func (c *AssetsGetCall) Fields(s ...googleapi.Field) *AssetsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AssetsGetCall) IfNoneMatch(entityTag string) *AssetsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AssetsGetCall) Context(ctx context.Context) *AssetsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3027,20 +3028,16 @@ func (c *AssetsGetCall) Context(ctx context.Context) *AssetsGetCall {
 
 func (c *AssetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3113,14 +3110,15 @@ func (c *AssetsGetCall) Do() (*Asset, error) {
 // method id "mapsengine.assets.list":
 
 type AssetsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all assets readable by the current user.
 func (r *AssetsService) List() *AssetsListCall {
-	c := &AssetsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AssetsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -3128,7 +3126,7 @@ func (r *AssetsService) List() *AssetsListCall {
 // "west,south,east,north". If set, only assets which intersect this
 // bounding box will be returned.
 func (c *AssetsListCall) Bbox(bbox string) *AssetsListCall {
-	c.opt_["bbox"] = bbox
+	c.urlParams_.Set("bbox", bbox)
 	return c
 }
 
@@ -3136,7 +3134,7 @@ func (c *AssetsListCall) Bbox(bbox string) *AssetsListCall {
 // formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or after this time.
 func (c *AssetsListCall) CreatedAfter(createdAfter string) *AssetsListCall {
-	c.opt_["createdAfter"] = createdAfter
+	c.urlParams_.Set("createdAfter", createdAfter)
 	return c
 }
 
@@ -3144,7 +3142,7 @@ func (c *AssetsListCall) CreatedAfter(createdAfter string) *AssetsListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or before this time.
 func (c *AssetsListCall) CreatedBefore(createdBefore string) *AssetsListCall {
-	c.opt_["createdBefore"] = createdBefore
+	c.urlParams_.Set("createdBefore", createdBefore)
 	return c
 }
 
@@ -3152,7 +3150,7 @@ func (c *AssetsListCall) CreatedBefore(createdBefore string) *AssetsListCall {
 // address representing a user. Returned assets that have been created
 // by the user associated with the provided email address.
 func (c *AssetsListCall) CreatorEmail(creatorEmail string) *AssetsListCall {
-	c.opt_["creatorEmail"] = creatorEmail
+	c.urlParams_.Set("creatorEmail", creatorEmail)
 	return c
 }
 
@@ -3160,7 +3158,7 @@ func (c *AssetsListCall) CreatorEmail(creatorEmail string) *AssetsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *AssetsListCall) MaxResults(maxResults int64) *AssetsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3168,7 +3166,7 @@ func (c *AssetsListCall) MaxResults(maxResults int64) *AssetsListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or after this time.
 func (c *AssetsListCall) ModifiedAfter(modifiedAfter string) *AssetsListCall {
-	c.opt_["modifiedAfter"] = modifiedAfter
+	c.urlParams_.Set("modifiedAfter", modifiedAfter)
 	return c
 }
 
@@ -3176,7 +3174,7 @@ func (c *AssetsListCall) ModifiedAfter(modifiedAfter string) *AssetsListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or before this time.
 func (c *AssetsListCall) ModifiedBefore(modifiedBefore string) *AssetsListCall {
-	c.opt_["modifiedBefore"] = modifiedBefore
+	c.urlParams_.Set("modifiedBefore", modifiedBefore)
 	return c
 }
 
@@ -3185,7 +3183,7 @@ func (c *AssetsListCall) ModifiedBefore(modifiedBefore string) *AssetsListCall {
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *AssetsListCall) PageToken(pageToken string) *AssetsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -3195,7 +3193,7 @@ func (c *AssetsListCall) PageToken(pageToken string) *AssetsListCall {
 // find your project ID as the value of the DashboardPlace:cid URL
 // parameter when signed in to mapsengine.google.com.
 func (c *AssetsListCall) ProjectId(projectId string) *AssetsListCall {
-	c.opt_["projectId"] = projectId
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
@@ -3208,21 +3206,21 @@ func (c *AssetsListCall) ProjectId(projectId string) *AssetsListCall {
 //   "reader" - The user can read the asset.
 //   "writer" - The user can read and write the asset.
 func (c *AssetsListCall) Role(role string) *AssetsListCall {
-	c.opt_["role"] = role
+	c.urlParams_.Set("role", role)
 	return c
 }
 
 // Search sets the optional parameter "search": An unstructured search
 // string used to filter the set of results based on asset metadata.
 func (c *AssetsListCall) Search(search string) *AssetsListCall {
-	c.opt_["search"] = search
+	c.urlParams_.Set("search", search)
 	return c
 }
 
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *AssetsListCall) Tags(tags string) *AssetsListCall {
-	c.opt_["tags"] = tags
+	c.urlParams_.Set("tags", tags)
 	return c
 }
 
@@ -3231,15 +3229,15 @@ func (c *AssetsListCall) Tags(tags string) *AssetsListCall {
 // provided list. Supported values are 'map', 'layer',
 // 'rasterCollection' and 'table'.
 func (c *AssetsListCall) Type(type_ string) *AssetsListCall {
-	c.opt_["type"] = type_
+	c.urlParams_.Set("type_", type_)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AssetsListCall) Fields(s ...googleapi.Field) *AssetsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3249,13 +3247,13 @@ func (c *AssetsListCall) Fields(s ...googleapi.Field) *AssetsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AssetsListCall) IfNoneMatch(entityTag string) *AssetsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AssetsListCall) Context(ctx context.Context) *AssetsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3263,57 +3261,14 @@ func (c *AssetsListCall) Context(ctx context.Context) *AssetsListCall {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["bbox"]; ok {
-		params.Set("bbox", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdAfter"]; ok {
-		params.Set("createdAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdBefore"]; ok {
-		params.Set("createdBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["creatorEmail"]; ok {
-		params.Set("creatorEmail", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedAfter"]; ok {
-		params.Set("modifiedAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedBefore"]; ok {
-		params.Set("modifiedBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["role"]; ok {
-		params.Set("role", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["search"]; ok {
-		params.Set("search", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["tags"]; ok {
-		params.Set("tags", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["type"]; ok {
-		params.Set("type", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3457,15 +3412,16 @@ func (c *AssetsListCall) Do() (*AssetsListResponse, error) {
 // method id "mapsengine.assets.parents.list":
 
 type AssetsParentsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all parent ids of the specified asset.
 func (r *AssetsParentsService) List(id string) *AssetsParentsListCall {
-	c := &AssetsParentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AssetsParentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -3474,7 +3430,7 @@ func (r *AssetsParentsService) List(id string) *AssetsParentsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *AssetsParentsListCall) MaxResults(maxResults int64) *AssetsParentsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3483,15 +3439,15 @@ func (c *AssetsParentsListCall) MaxResults(maxResults int64) *AssetsParentsListC
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *AssetsParentsListCall) PageToken(pageToken string) *AssetsParentsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AssetsParentsListCall) Fields(s ...googleapi.Field) *AssetsParentsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3501,13 +3457,13 @@ func (c *AssetsParentsListCall) Fields(s ...googleapi.Field) *AssetsParentsListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AssetsParentsListCall) IfNoneMatch(entityTag string) *AssetsParentsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AssetsParentsListCall) Context(ctx context.Context) *AssetsParentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3515,26 +3471,16 @@ func (c *AssetsParentsListCall) Context(ctx context.Context) *AssetsParentsListC
 
 func (c *AssetsParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}/parents")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3618,24 +3564,25 @@ func (c *AssetsParentsListCall) Do() (*ParentsListResponse, error) {
 // method id "mapsengine.assets.permissions.list":
 
 type AssetsPermissionsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
 func (r *AssetsPermissionsService) List(id string) *AssetsPermissionsListCall {
-	c := &AssetsPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AssetsPermissionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AssetsPermissionsListCall) Fields(s ...googleapi.Field) *AssetsPermissionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3645,13 +3592,13 @@ func (c *AssetsPermissionsListCall) Fields(s ...googleapi.Field) *AssetsPermissi
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AssetsPermissionsListCall) IfNoneMatch(entityTag string) *AssetsPermissionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AssetsPermissionsListCall) Context(ctx context.Context) *AssetsPermissionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3659,20 +3606,16 @@ func (c *AssetsPermissionsListCall) Context(ctx context.Context) *AssetsPermissi
 
 func (c *AssetsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "assets/{id}/permissions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3745,30 +3688,30 @@ func (c *AssetsPermissionsListCall) Do() (*PermissionsListResponse, error) {
 // method id "mapsengine.layers.cancelProcessing":
 
 type LayersCancelProcessingCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // CancelProcessing: Cancel processing on a layer asset.
 func (r *LayersService) CancelProcessing(id string) *LayersCancelProcessingCall {
-	c := &LayersCancelProcessingCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersCancelProcessingCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersCancelProcessingCall) Fields(s ...googleapi.Field) *LayersCancelProcessingCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersCancelProcessingCall) Context(ctx context.Context) *LayersCancelProcessingCall {
 	c.ctx_ = ctx
 	return c
@@ -3776,13 +3719,9 @@ func (c *LayersCancelProcessingCall) Context(ctx context.Context) *LayersCancelP
 
 func (c *LayersCancelProcessingCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/cancelProcessing")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -3858,15 +3797,15 @@ func (c *LayersCancelProcessingCall) Do() (*ProcessResponse, error) {
 // method id "mapsengine.layers.create":
 
 type LayersCreateCall struct {
-	s     *Service
-	layer *Layer
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	layer      *Layer
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Create: Create a layer asset.
 func (r *LayersService) Create(layer *Layer) *LayersCreateCall {
-	c := &LayersCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.layer = layer
 	return c
 }
@@ -3874,21 +3813,21 @@ func (r *LayersService) Create(layer *Layer) *LayersCreateCall {
 // Process sets the optional parameter "process": Whether to queue the
 // created layer for processing.
 func (c *LayersCreateCall) Process(process bool) *LayersCreateCall {
-	c.opt_["process"] = process
+	c.urlParams_.Set("process", fmt.Sprintf("%v", process))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersCreateCall) Fields(s ...googleapi.Field) *LayersCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersCreateCall) Context(ctx context.Context) *LayersCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -3901,16 +3840,9 @@ func (c *LayersCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["process"]; ok {
-		params.Set("process", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -3984,30 +3916,30 @@ func (c *LayersCreateCall) Do() (*Layer, error) {
 // method id "mapsengine.layers.delete":
 
 type LayersDeleteCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Delete a layer.
 func (r *LayersService) Delete(id string) *LayersDeleteCall {
-	c := &LayersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersDeleteCall) Fields(s ...googleapi.Field) *LayersDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersDeleteCall) Context(ctx context.Context) *LayersDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -4015,13 +3947,9 @@ func (c *LayersDeleteCall) Context(ctx context.Context) *LayersDeleteCall {
 
 func (c *LayersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -4070,15 +3998,16 @@ func (c *LayersDeleteCall) Do() error {
 // method id "mapsengine.layers.get":
 
 type LayersGetCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Return metadata for a particular layer.
 func (r *LayersService) Get(id string) *LayersGetCall {
-	c := &LayersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -4093,15 +4022,15 @@ func (r *LayersService) Get(id string) *LayersGetCall {
 //   "draft" - The draft version.
 //   "published" - The published version.
 func (c *LayersGetCall) Version(version string) *LayersGetCall {
-	c.opt_["version"] = version
+	c.urlParams_.Set("version", version)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -4111,13 +4040,13 @@ func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersGetCall) IfNoneMatch(entityTag string) *LayersGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersGetCall) Context(ctx context.Context) *LayersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4125,23 +4054,16 @@ func (c *LayersGetCall) Context(ctx context.Context) *LayersGetCall {
 
 func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["version"]; ok {
-		params.Set("version", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4227,24 +4149,25 @@ func (c *LayersGetCall) Do() (*Layer, error) {
 // method id "mapsengine.layers.getPublished":
 
 type LayersGetPublishedCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // GetPublished: Return the published metadata for a particular layer.
 func (r *LayersService) GetPublished(id string) *LayersGetPublishedCall {
-	c := &LayersGetPublishedCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersGetPublishedCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersGetPublishedCall) Fields(s ...googleapi.Field) *LayersGetPublishedCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -4254,13 +4177,13 @@ func (c *LayersGetPublishedCall) Fields(s ...googleapi.Field) *LayersGetPublishe
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersGetPublishedCall) IfNoneMatch(entityTag string) *LayersGetPublishedCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersGetPublishedCall) Context(ctx context.Context) *LayersGetPublishedCall {
 	c.ctx_ = ctx
 	return c
@@ -4268,20 +4191,16 @@ func (c *LayersGetPublishedCall) Context(ctx context.Context) *LayersGetPublishe
 
 func (c *LayersGetPublishedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/published")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4354,14 +4273,15 @@ func (c *LayersGetPublishedCall) Do() (*PublishedLayer, error) {
 // method id "mapsengine.layers.list":
 
 type LayersListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all layers readable by the current user.
 func (r *LayersService) List() *LayersListCall {
-	c := &LayersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -4369,7 +4289,7 @@ func (r *LayersService) List() *LayersListCall {
 // "west,south,east,north". If set, only assets which intersect this
 // bounding box will be returned.
 func (c *LayersListCall) Bbox(bbox string) *LayersListCall {
-	c.opt_["bbox"] = bbox
+	c.urlParams_.Set("bbox", bbox)
 	return c
 }
 
@@ -4377,7 +4297,7 @@ func (c *LayersListCall) Bbox(bbox string) *LayersListCall {
 // formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or after this time.
 func (c *LayersListCall) CreatedAfter(createdAfter string) *LayersListCall {
-	c.opt_["createdAfter"] = createdAfter
+	c.urlParams_.Set("createdAfter", createdAfter)
 	return c
 }
 
@@ -4385,7 +4305,7 @@ func (c *LayersListCall) CreatedAfter(createdAfter string) *LayersListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or before this time.
 func (c *LayersListCall) CreatedBefore(createdBefore string) *LayersListCall {
-	c.opt_["createdBefore"] = createdBefore
+	c.urlParams_.Set("createdBefore", createdBefore)
 	return c
 }
 
@@ -4393,7 +4313,7 @@ func (c *LayersListCall) CreatedBefore(createdBefore string) *LayersListCall {
 // address representing a user. Returned assets that have been created
 // by the user associated with the provided email address.
 func (c *LayersListCall) CreatorEmail(creatorEmail string) *LayersListCall {
-	c.opt_["creatorEmail"] = creatorEmail
+	c.urlParams_.Set("creatorEmail", creatorEmail)
 	return c
 }
 
@@ -4401,7 +4321,7 @@ func (c *LayersListCall) CreatorEmail(creatorEmail string) *LayersListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *LayersListCall) MaxResults(maxResults int64) *LayersListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -4409,7 +4329,7 @@ func (c *LayersListCall) MaxResults(maxResults int64) *LayersListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or after this time.
 func (c *LayersListCall) ModifiedAfter(modifiedAfter string) *LayersListCall {
-	c.opt_["modifiedAfter"] = modifiedAfter
+	c.urlParams_.Set("modifiedAfter", modifiedAfter)
 	return c
 }
 
@@ -4417,7 +4337,7 @@ func (c *LayersListCall) ModifiedAfter(modifiedAfter string) *LayersListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or before this time.
 func (c *LayersListCall) ModifiedBefore(modifiedBefore string) *LayersListCall {
-	c.opt_["modifiedBefore"] = modifiedBefore
+	c.urlParams_.Set("modifiedBefore", modifiedBefore)
 	return c
 }
 
@@ -4426,7 +4346,7 @@ func (c *LayersListCall) ModifiedBefore(modifiedBefore string) *LayersListCall {
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *LayersListCall) PageToken(pageToken string) *LayersListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -4439,7 +4359,7 @@ func (c *LayersListCall) PageToken(pageToken string) *LayersListCall {
 //   "processing" - The layer is processing.
 //   "ready" - The layer is ready for processing.
 func (c *LayersListCall) ProcessingStatus(processingStatus string) *LayersListCall {
-	c.opt_["processingStatus"] = processingStatus
+	c.urlParams_.Set("processingStatus", processingStatus)
 	return c
 }
 
@@ -4449,7 +4369,7 @@ func (c *LayersListCall) ProcessingStatus(processingStatus string) *LayersListCa
 // find your project ID as the value of the DashboardPlace:cid URL
 // parameter when signed in to mapsengine.google.com.
 func (c *LayersListCall) ProjectId(projectId string) *LayersListCall {
-	c.opt_["projectId"] = projectId
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
@@ -4462,29 +4382,29 @@ func (c *LayersListCall) ProjectId(projectId string) *LayersListCall {
 //   "reader" - The user can read the asset.
 //   "writer" - The user can read and write the asset.
 func (c *LayersListCall) Role(role string) *LayersListCall {
-	c.opt_["role"] = role
+	c.urlParams_.Set("role", role)
 	return c
 }
 
 // Search sets the optional parameter "search": An unstructured search
 // string used to filter the set of results based on asset metadata.
 func (c *LayersListCall) Search(search string) *LayersListCall {
-	c.opt_["search"] = search
+	c.urlParams_.Set("search", search)
 	return c
 }
 
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *LayersListCall) Tags(tags string) *LayersListCall {
-	c.opt_["tags"] = tags
+	c.urlParams_.Set("tags", tags)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -4494,13 +4414,13 @@ func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersListCall) IfNoneMatch(entityTag string) *LayersListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersListCall) Context(ctx context.Context) *LayersListCall {
 	c.ctx_ = ctx
 	return c
@@ -4508,57 +4428,14 @@ func (c *LayersListCall) Context(ctx context.Context) *LayersListCall {
 
 func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["bbox"]; ok {
-		params.Set("bbox", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdAfter"]; ok {
-		params.Set("createdAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdBefore"]; ok {
-		params.Set("createdBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["creatorEmail"]; ok {
-		params.Set("creatorEmail", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedAfter"]; ok {
-		params.Set("modifiedAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedBefore"]; ok {
-		params.Set("modifiedBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["processingStatus"]; ok {
-		params.Set("processingStatus", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["role"]; ok {
-		params.Set("role", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["search"]; ok {
-		params.Set("search", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["tags"]; ok {
-		params.Set("tags", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4715,15 +4592,16 @@ func (c *LayersListCall) Do() (*LayersListResponse, error) {
 // method id "mapsengine.layers.listPublished":
 
 type LayersListPublishedCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // ListPublished: Return all published layers readable by the current
 // user.
 func (r *LayersService) ListPublished() *LayersListPublishedCall {
-	c := &LayersListPublishedCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersListPublishedCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -4731,7 +4609,7 @@ func (r *LayersService) ListPublished() *LayersListPublishedCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *LayersListPublishedCall) MaxResults(maxResults int64) *LayersListPublishedCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -4740,7 +4618,7 @@ func (c *LayersListPublishedCall) MaxResults(maxResults int64) *LayersListPublis
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *LayersListPublishedCall) PageToken(pageToken string) *LayersListPublishedCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -4750,15 +4628,15 @@ func (c *LayersListPublishedCall) PageToken(pageToken string) *LayersListPublish
 // find your project ID as the value of the DashboardPlace:cid URL
 // parameter when signed in to mapsengine.google.com.
 func (c *LayersListPublishedCall) ProjectId(projectId string) *LayersListPublishedCall {
-	c.opt_["projectId"] = projectId
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersListPublishedCall) Fields(s ...googleapi.Field) *LayersListPublishedCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -4768,13 +4646,13 @@ func (c *LayersListPublishedCall) Fields(s ...googleapi.Field) *LayersListPublis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersListPublishedCall) IfNoneMatch(entityTag string) *LayersListPublishedCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersListPublishedCall) Context(ctx context.Context) *LayersListPublishedCall {
 	c.ctx_ = ctx
 	return c
@@ -4782,27 +4660,14 @@ func (c *LayersListPublishedCall) Context(ctx context.Context) *LayersListPublis
 
 func (c *LayersListPublishedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/published")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4882,32 +4747,32 @@ func (c *LayersListPublishedCall) Do() (*PublishedLayersListResponse, error) {
 // method id "mapsengine.layers.patch":
 
 type LayersPatchCall struct {
-	s     *Service
-	id    string
-	layer *Layer
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	id         string
+	layer      *Layer
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Patch: Mutate a layer asset.
 func (r *LayersService) Patch(id string, layer *Layer) *LayersPatchCall {
-	c := &LayersPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.layer = layer
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersPatchCall) Fields(s ...googleapi.Field) *LayersPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersPatchCall) Context(ctx context.Context) *LayersPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -4920,13 +4785,9 @@ func (c *LayersPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -4979,30 +4840,30 @@ func (c *LayersPatchCall) Do() error {
 // method id "mapsengine.layers.process":
 
 type LayersProcessCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Process: Process a layer asset.
 func (r *LayersService) Process(id string) *LayersProcessCall {
-	c := &LayersProcessCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersProcessCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersProcessCall) Fields(s ...googleapi.Field) *LayersProcessCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersProcessCall) Context(ctx context.Context) *LayersProcessCall {
 	c.ctx_ = ctx
 	return c
@@ -5010,13 +4871,9 @@ func (c *LayersProcessCall) Context(ctx context.Context) *LayersProcessCall {
 
 func (c *LayersProcessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/process")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -5092,15 +4949,15 @@ func (c *LayersProcessCall) Do() (*ProcessResponse, error) {
 // method id "mapsengine.layers.publish":
 
 type LayersPublishCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Publish: Publish a layer asset.
 func (r *LayersService) Publish(id string) *LayersPublishCall {
-	c := &LayersPublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersPublishCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -5110,21 +4967,21 @@ func (r *LayersService) Publish(id string) *LayersPublishCall {
 // true, you'll need to reprocess any out-of-date layer before
 // publishing.
 func (c *LayersPublishCall) Force(force bool) *LayersPublishCall {
-	c.opt_["force"] = force
+	c.urlParams_.Set("force", fmt.Sprintf("%v", force))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersPublishCall) Fields(s ...googleapi.Field) *LayersPublishCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersPublishCall) Context(ctx context.Context) *LayersPublishCall {
 	c.ctx_ = ctx
 	return c
@@ -5132,16 +4989,9 @@ func (c *LayersPublishCall) Context(ctx context.Context) *LayersPublishCall {
 
 func (c *LayersPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["force"]; ok {
-		params.Set("force", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/publish")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -5222,30 +5072,30 @@ func (c *LayersPublishCall) Do() (*PublishResponse, error) {
 // method id "mapsengine.layers.unpublish":
 
 type LayersUnpublishCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Unpublish: Unpublish a layer asset.
 func (r *LayersService) Unpublish(id string) *LayersUnpublishCall {
-	c := &LayersUnpublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersUnpublishCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersUnpublishCall) Fields(s ...googleapi.Field) *LayersUnpublishCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersUnpublishCall) Context(ctx context.Context) *LayersUnpublishCall {
 	c.ctx_ = ctx
 	return c
@@ -5253,13 +5103,9 @@ func (c *LayersUnpublishCall) Context(ctx context.Context) *LayersUnpublishCall 
 
 func (c *LayersUnpublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/unpublish")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -5335,15 +5181,16 @@ func (c *LayersUnpublishCall) Do() (*PublishResponse, error) {
 // method id "mapsengine.layers.parents.list":
 
 type LayersParentsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all parent ids of the specified layer.
 func (r *LayersParentsService) List(id string) *LayersParentsListCall {
-	c := &LayersParentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersParentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -5352,7 +5199,7 @@ func (r *LayersParentsService) List(id string) *LayersParentsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *LayersParentsListCall) MaxResults(maxResults int64) *LayersParentsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -5361,15 +5208,15 @@ func (c *LayersParentsListCall) MaxResults(maxResults int64) *LayersParentsListC
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *LayersParentsListCall) PageToken(pageToken string) *LayersParentsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersParentsListCall) Fields(s ...googleapi.Field) *LayersParentsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -5379,13 +5226,13 @@ func (c *LayersParentsListCall) Fields(s ...googleapi.Field) *LayersParentsListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersParentsListCall) IfNoneMatch(entityTag string) *LayersParentsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersParentsListCall) Context(ctx context.Context) *LayersParentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -5393,26 +5240,16 @@ func (c *LayersParentsListCall) Context(ctx context.Context) *LayersParentsListC
 
 func (c *LayersParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/parents")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5499,30 +5336,30 @@ type LayersPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
 // asset.
 func (r *LayersPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *LayersPermissionsBatchDeleteCall {
-	c := &LayersPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersPermissionsBatchDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *LayersPermissionsBatchDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersPermissionsBatchDeleteCall) Context(ctx context.Context) *LayersPermissionsBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -5535,13 +5372,9 @@ func (c *LayersPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions/batchDelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -5624,7 +5457,7 @@ type LayersPermissionsBatchUpdateCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
@@ -5634,23 +5467,23 @@ type LayersPermissionsBatchUpdateCall struct {
 // An asset can hold up to 20 different permission entries. Each
 // batchInsert request is atomic.
 func (r *LayersPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *LayersPermissionsBatchUpdateCall {
-	c := &LayersPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersPermissionsBatchUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *LayersPermissionsBatchUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersPermissionsBatchUpdateCall) Context(ctx context.Context) *LayersPermissionsBatchUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -5663,13 +5496,9 @@ func (c *LayersPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions/batchUpdate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -5749,24 +5578,25 @@ func (c *LayersPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateResponse
 // method id "mapsengine.layers.permissions.list":
 
 type LayersPermissionsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
 func (r *LayersPermissionsService) List(id string) *LayersPermissionsListCall {
-	c := &LayersPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &LayersPermissionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersPermissionsListCall) Fields(s ...googleapi.Field) *LayersPermissionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -5776,13 +5606,13 @@ func (c *LayersPermissionsListCall) Fields(s ...googleapi.Field) *LayersPermissi
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersPermissionsListCall) IfNoneMatch(entityTag string) *LayersPermissionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *LayersPermissionsListCall) Context(ctx context.Context) *LayersPermissionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -5790,20 +5620,16 @@ func (c *LayersPermissionsListCall) Context(ctx context.Context) *LayersPermissi
 
 func (c *LayersPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "layers/{id}/permissions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5876,30 +5702,30 @@ func (c *LayersPermissionsListCall) Do() (*PermissionsListResponse, error) {
 // method id "mapsengine.maps.create":
 
 type MapsCreateCall struct {
-	s    *Service
-	map_ *Map
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	map_       *Map
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Create: Create a map asset.
 func (r *MapsService) Create(map_ *Map) *MapsCreateCall {
-	c := &MapsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.map_ = map_
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsCreateCall) Fields(s ...googleapi.Field) *MapsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsCreateCall) Context(ctx context.Context) *MapsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -5912,13 +5738,9 @@ func (c *MapsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -5985,30 +5807,30 @@ func (c *MapsCreateCall) Do() (*Map, error) {
 // method id "mapsengine.maps.delete":
 
 type MapsDeleteCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Delete a map.
 func (r *MapsService) Delete(id string) *MapsDeleteCall {
-	c := &MapsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsDeleteCall) Fields(s ...googleapi.Field) *MapsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsDeleteCall) Context(ctx context.Context) *MapsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -6016,13 +5838,9 @@ func (c *MapsDeleteCall) Context(ctx context.Context) *MapsDeleteCall {
 
 func (c *MapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -6071,15 +5889,16 @@ func (c *MapsDeleteCall) Do() error {
 // method id "mapsengine.maps.get":
 
 type MapsGetCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Return metadata for a particular map.
 func (r *MapsService) Get(id string) *MapsGetCall {
-	c := &MapsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -6094,15 +5913,15 @@ func (r *MapsService) Get(id string) *MapsGetCall {
 //   "draft" - The draft version.
 //   "published" - The published version.
 func (c *MapsGetCall) Version(version string) *MapsGetCall {
-	c.opt_["version"] = version
+	c.urlParams_.Set("version", version)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsGetCall) Fields(s ...googleapi.Field) *MapsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -6112,13 +5931,13 @@ func (c *MapsGetCall) Fields(s ...googleapi.Field) *MapsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MapsGetCall) IfNoneMatch(entityTag string) *MapsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsGetCall) Context(ctx context.Context) *MapsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -6126,23 +5945,16 @@ func (c *MapsGetCall) Context(ctx context.Context) *MapsGetCall {
 
 func (c *MapsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["version"]; ok {
-		params.Set("version", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -6228,24 +6040,25 @@ func (c *MapsGetCall) Do() (*Map, error) {
 // method id "mapsengine.maps.getPublished":
 
 type MapsGetPublishedCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // GetPublished: Return the published metadata for a particular map.
 func (r *MapsService) GetPublished(id string) *MapsGetPublishedCall {
-	c := &MapsGetPublishedCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsGetPublishedCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsGetPublishedCall) Fields(s ...googleapi.Field) *MapsGetPublishedCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -6255,13 +6068,13 @@ func (c *MapsGetPublishedCall) Fields(s ...googleapi.Field) *MapsGetPublishedCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MapsGetPublishedCall) IfNoneMatch(entityTag string) *MapsGetPublishedCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsGetPublishedCall) Context(ctx context.Context) *MapsGetPublishedCall {
 	c.ctx_ = ctx
 	return c
@@ -6269,20 +6082,16 @@ func (c *MapsGetPublishedCall) Context(ctx context.Context) *MapsGetPublishedCal
 
 func (c *MapsGetPublishedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/published")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -6355,14 +6164,15 @@ func (c *MapsGetPublishedCall) Do() (*PublishedMap, error) {
 // method id "mapsengine.maps.list":
 
 type MapsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all maps readable by the current user.
 func (r *MapsService) List() *MapsListCall {
-	c := &MapsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -6370,7 +6180,7 @@ func (r *MapsService) List() *MapsListCall {
 // "west,south,east,north". If set, only assets which intersect this
 // bounding box will be returned.
 func (c *MapsListCall) Bbox(bbox string) *MapsListCall {
-	c.opt_["bbox"] = bbox
+	c.urlParams_.Set("bbox", bbox)
 	return c
 }
 
@@ -6378,7 +6188,7 @@ func (c *MapsListCall) Bbox(bbox string) *MapsListCall {
 // formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or after this time.
 func (c *MapsListCall) CreatedAfter(createdAfter string) *MapsListCall {
-	c.opt_["createdAfter"] = createdAfter
+	c.urlParams_.Set("createdAfter", createdAfter)
 	return c
 }
 
@@ -6386,7 +6196,7 @@ func (c *MapsListCall) CreatedAfter(createdAfter string) *MapsListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or before this time.
 func (c *MapsListCall) CreatedBefore(createdBefore string) *MapsListCall {
-	c.opt_["createdBefore"] = createdBefore
+	c.urlParams_.Set("createdBefore", createdBefore)
 	return c
 }
 
@@ -6394,7 +6204,7 @@ func (c *MapsListCall) CreatedBefore(createdBefore string) *MapsListCall {
 // address representing a user. Returned assets that have been created
 // by the user associated with the provided email address.
 func (c *MapsListCall) CreatorEmail(creatorEmail string) *MapsListCall {
-	c.opt_["creatorEmail"] = creatorEmail
+	c.urlParams_.Set("creatorEmail", creatorEmail)
 	return c
 }
 
@@ -6402,7 +6212,7 @@ func (c *MapsListCall) CreatorEmail(creatorEmail string) *MapsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *MapsListCall) MaxResults(maxResults int64) *MapsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -6410,7 +6220,7 @@ func (c *MapsListCall) MaxResults(maxResults int64) *MapsListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or after this time.
 func (c *MapsListCall) ModifiedAfter(modifiedAfter string) *MapsListCall {
-	c.opt_["modifiedAfter"] = modifiedAfter
+	c.urlParams_.Set("modifiedAfter", modifiedAfter)
 	return c
 }
 
@@ -6418,7 +6228,7 @@ func (c *MapsListCall) ModifiedAfter(modifiedAfter string) *MapsListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or before this time.
 func (c *MapsListCall) ModifiedBefore(modifiedBefore string) *MapsListCall {
-	c.opt_["modifiedBefore"] = modifiedBefore
+	c.urlParams_.Set("modifiedBefore", modifiedBefore)
 	return c
 }
 
@@ -6427,7 +6237,7 @@ func (c *MapsListCall) ModifiedBefore(modifiedBefore string) *MapsListCall {
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *MapsListCall) PageToken(pageToken string) *MapsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -6439,7 +6249,7 @@ func (c *MapsListCall) PageToken(pageToken string) *MapsListCall {
 //   "notReady" - The map is not ready for processing.
 //   "processing" - The map is processing.
 func (c *MapsListCall) ProcessingStatus(processingStatus string) *MapsListCall {
-	c.opt_["processingStatus"] = processingStatus
+	c.urlParams_.Set("processingStatus", processingStatus)
 	return c
 }
 
@@ -6449,7 +6259,7 @@ func (c *MapsListCall) ProcessingStatus(processingStatus string) *MapsListCall {
 // find your project ID as the value of the DashboardPlace:cid URL
 // parameter when signed in to mapsengine.google.com.
 func (c *MapsListCall) ProjectId(projectId string) *MapsListCall {
-	c.opt_["projectId"] = projectId
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
@@ -6462,29 +6272,29 @@ func (c *MapsListCall) ProjectId(projectId string) *MapsListCall {
 //   "reader" - The user can read the asset.
 //   "writer" - The user can read and write the asset.
 func (c *MapsListCall) Role(role string) *MapsListCall {
-	c.opt_["role"] = role
+	c.urlParams_.Set("role", role)
 	return c
 }
 
 // Search sets the optional parameter "search": An unstructured search
 // string used to filter the set of results based on asset metadata.
 func (c *MapsListCall) Search(search string) *MapsListCall {
-	c.opt_["search"] = search
+	c.urlParams_.Set("search", search)
 	return c
 }
 
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *MapsListCall) Tags(tags string) *MapsListCall {
-	c.opt_["tags"] = tags
+	c.urlParams_.Set("tags", tags)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsListCall) Fields(s ...googleapi.Field) *MapsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -6494,13 +6304,13 @@ func (c *MapsListCall) Fields(s ...googleapi.Field) *MapsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MapsListCall) IfNoneMatch(entityTag string) *MapsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsListCall) Context(ctx context.Context) *MapsListCall {
 	c.ctx_ = ctx
 	return c
@@ -6508,57 +6318,14 @@ func (c *MapsListCall) Context(ctx context.Context) *MapsListCall {
 
 func (c *MapsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["bbox"]; ok {
-		params.Set("bbox", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdAfter"]; ok {
-		params.Set("createdAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdBefore"]; ok {
-		params.Set("createdBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["creatorEmail"]; ok {
-		params.Set("creatorEmail", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedAfter"]; ok {
-		params.Set("modifiedAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedBefore"]; ok {
-		params.Set("modifiedBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["processingStatus"]; ok {
-		params.Set("processingStatus", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["role"]; ok {
-		params.Set("role", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["search"]; ok {
-		params.Set("search", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["tags"]; ok {
-		params.Set("tags", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -6713,15 +6480,16 @@ func (c *MapsListCall) Do() (*MapsListResponse, error) {
 // method id "mapsengine.maps.listPublished":
 
 type MapsListPublishedCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // ListPublished: Return all published maps readable by the current
 // user.
 func (r *MapsService) ListPublished() *MapsListPublishedCall {
-	c := &MapsListPublishedCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsListPublishedCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -6729,7 +6497,7 @@ func (r *MapsService) ListPublished() *MapsListPublishedCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *MapsListPublishedCall) MaxResults(maxResults int64) *MapsListPublishedCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -6738,7 +6506,7 @@ func (c *MapsListPublishedCall) MaxResults(maxResults int64) *MapsListPublishedC
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *MapsListPublishedCall) PageToken(pageToken string) *MapsListPublishedCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -6748,15 +6516,15 @@ func (c *MapsListPublishedCall) PageToken(pageToken string) *MapsListPublishedCa
 // find your project ID as the value of the DashboardPlace:cid URL
 // parameter when signed in to mapsengine.google.com.
 func (c *MapsListPublishedCall) ProjectId(projectId string) *MapsListPublishedCall {
-	c.opt_["projectId"] = projectId
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsListPublishedCall) Fields(s ...googleapi.Field) *MapsListPublishedCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -6766,13 +6534,13 @@ func (c *MapsListPublishedCall) Fields(s ...googleapi.Field) *MapsListPublishedC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MapsListPublishedCall) IfNoneMatch(entityTag string) *MapsListPublishedCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsListPublishedCall) Context(ctx context.Context) *MapsListPublishedCall {
 	c.ctx_ = ctx
 	return c
@@ -6780,27 +6548,14 @@ func (c *MapsListPublishedCall) Context(ctx context.Context) *MapsListPublishedC
 
 func (c *MapsListPublishedCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/published")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -6880,32 +6635,32 @@ func (c *MapsListPublishedCall) Do() (*PublishedMapsListResponse, error) {
 // method id "mapsengine.maps.patch":
 
 type MapsPatchCall struct {
-	s    *Service
-	id   string
-	map_ *Map
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	map_       *Map
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Patch: Mutate a map asset.
 func (r *MapsService) Patch(id string, map_ *Map) *MapsPatchCall {
-	c := &MapsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.map_ = map_
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsPatchCall) Fields(s ...googleapi.Field) *MapsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsPatchCall) Context(ctx context.Context) *MapsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -6918,13 +6673,9 @@ func (c *MapsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -6977,15 +6728,15 @@ func (c *MapsPatchCall) Do() error {
 // method id "mapsengine.maps.publish":
 
 type MapsPublishCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Publish: Publish a map asset.
 func (r *MapsService) Publish(id string) *MapsPublishCall {
-	c := &MapsPublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsPublishCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -6994,21 +6745,21 @@ func (r *MapsService) Publish(id string) *MapsPublishCall {
 // will allow publication of the map even if it's out of date. If false,
 // the map must have a processingStatus of complete before publishing.
 func (c *MapsPublishCall) Force(force bool) *MapsPublishCall {
-	c.opt_["force"] = force
+	c.urlParams_.Set("force", fmt.Sprintf("%v", force))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsPublishCall) Fields(s ...googleapi.Field) *MapsPublishCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsPublishCall) Context(ctx context.Context) *MapsPublishCall {
 	c.ctx_ = ctx
 	return c
@@ -7016,16 +6767,9 @@ func (c *MapsPublishCall) Context(ctx context.Context) *MapsPublishCall {
 
 func (c *MapsPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["force"]; ok {
-		params.Set("force", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/publish")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -7106,30 +6850,30 @@ func (c *MapsPublishCall) Do() (*PublishResponse, error) {
 // method id "mapsengine.maps.unpublish":
 
 type MapsUnpublishCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Unpublish: Unpublish a map asset.
 func (r *MapsService) Unpublish(id string) *MapsUnpublishCall {
-	c := &MapsUnpublishCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsUnpublishCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsUnpublishCall) Fields(s ...googleapi.Field) *MapsUnpublishCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsUnpublishCall) Context(ctx context.Context) *MapsUnpublishCall {
 	c.ctx_ = ctx
 	return c
@@ -7137,13 +6881,9 @@ func (c *MapsUnpublishCall) Context(ctx context.Context) *MapsUnpublishCall {
 
 func (c *MapsUnpublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/unpublish")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -7222,30 +6962,30 @@ type MapsPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
 // asset.
 func (r *MapsPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *MapsPermissionsBatchDeleteCall {
-	c := &MapsPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *MapsPermissionsBatchDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsPermissionsBatchDeleteCall) Context(ctx context.Context) *MapsPermissionsBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -7258,13 +6998,9 @@ func (c *MapsPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions/batchDelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -7347,7 +7083,7 @@ type MapsPermissionsBatchUpdateCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
@@ -7357,23 +7093,23 @@ type MapsPermissionsBatchUpdateCall struct {
 // An asset can hold up to 20 different permission entries. Each
 // batchInsert request is atomic.
 func (r *MapsPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *MapsPermissionsBatchUpdateCall {
-	c := &MapsPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsPermissionsBatchUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *MapsPermissionsBatchUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsPermissionsBatchUpdateCall) Context(ctx context.Context) *MapsPermissionsBatchUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -7386,13 +7122,9 @@ func (c *MapsPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions/batchUpdate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -7472,24 +7204,25 @@ func (c *MapsPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateResponse, 
 // method id "mapsengine.maps.permissions.list":
 
 type MapsPermissionsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
 func (r *MapsPermissionsService) List(id string) *MapsPermissionsListCall {
-	c := &MapsPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &MapsPermissionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MapsPermissionsListCall) Fields(s ...googleapi.Field) *MapsPermissionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -7499,13 +7232,13 @@ func (c *MapsPermissionsListCall) Fields(s ...googleapi.Field) *MapsPermissionsL
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MapsPermissionsListCall) IfNoneMatch(entityTag string) *MapsPermissionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *MapsPermissionsListCall) Context(ctx context.Context) *MapsPermissionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -7513,20 +7246,16 @@ func (c *MapsPermissionsListCall) Context(ctx context.Context) *MapsPermissionsL
 
 func (c *MapsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "maps/{id}/permissions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7599,22 +7328,23 @@ func (c *MapsPermissionsListCall) Do() (*PermissionsListResponse, error) {
 // method id "mapsengine.projects.list":
 
 type ProjectsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all projects readable by the current user.
 func (r *ProjectsService) List() *ProjectsListCall {
-	c := &ProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -7624,13 +7354,13 @@ func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsListCall) IfNoneMatch(entityTag string) *ProjectsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsListCall) Context(ctx context.Context) *ProjectsListCall {
 	c.ctx_ = ctx
 	return c
@@ -7638,18 +7368,14 @@ func (c *ProjectsListCall) Context(ctx context.Context) *ProjectsListCall {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7711,39 +7437,40 @@ func (c *ProjectsListCall) Do() (*ProjectsListResponse, error) {
 // method id "mapsengine.projects.icons.create":
 
 type ProjectsIconsCreateCall struct {
-	s          *Service
-	projectId  string
-	icon       *Icon
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	protocol_  string
-	ctx_       context.Context
+	s                *Service
+	projectId        string
+	icon             *Icon
+	urlParams_       internal.URLParams
+	media_           io.Reader
+	resumable_       googleapi.SizeReaderAt
+	mediaType_       string
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // Create: Create an icon.
 func (r *ProjectsIconsService) Create(projectId string, icon *Icon) *ProjectsIconsCreateCall {
-	c := &ProjectsIconsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsIconsCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.projectId = projectId
 	c.icon = icon
 	return c
 }
 
-// Media specifies the media to upload in a single chunk.
-// At most one of Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk. At most one of
+// Media and ResumableMedia may be set.
 func (c *ProjectsIconsCreateCall) Media(r io.Reader) *ProjectsIconsCreateCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
-// At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-// The provided ctx will supersede any context previously provided to
-// the Context method.
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx. At most one of Media and ResumableMedia may be
+// set. mediaType identifies the MIME media type of the upload, such as
+// "image/png". If mediaType is "", it will be auto-detected. The
+// provided ctx will supersede any context previously provided to the
+// Context method.
 func (c *ProjectsIconsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsIconsCreateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -7752,27 +7479,28 @@ func (c *ProjectsIconsCreateCall) ResumableMedia(ctx context.Context, r io.Reade
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
 func (c *ProjectsIconsCreateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsIconsCreateCall {
-	c.opt_["progressUpdater"] = pu
+	c.progressUpdater_ = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsIconsCreateCall) Fields(s ...googleapi.Field) *ProjectsIconsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
-// This context will supersede any context previously provided to
-// the ResumableMedia method.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
 func (c *ProjectsIconsCreateCall) Context(ctx context.Context) *ProjectsIconsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -7785,17 +7513,13 @@ func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", c.protocol_)
+		c.urlParams_.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -7848,12 +7572,6 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -7863,7 +7581,7 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
+			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -7930,26 +7648,27 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 // method id "mapsengine.projects.icons.get":
 
 type ProjectsIconsGetCall struct {
-	s         *Service
-	projectId string
-	id        string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Return an icon or its associated metadata
 func (r *ProjectsIconsService) Get(projectId string, id string) *ProjectsIconsGetCall {
-	c := &ProjectsIconsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsIconsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.projectId = projectId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsIconsGetCall) Fields(s ...googleapi.Field) *ProjectsIconsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -7959,13 +7678,13 @@ func (c *ProjectsIconsGetCall) Fields(s ...googleapi.Field) *ProjectsIconsGetCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsIconsGetCall) IfNoneMatch(entityTag string) *ProjectsIconsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download methods.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
 func (c *ProjectsIconsGetCall) Context(ctx context.Context) *ProjectsIconsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -7973,21 +7692,17 @@ func (c *ProjectsIconsGetCall) Context(ctx context.Context) *ProjectsIconsGetCal
 
 func (c *ProjectsIconsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"id":        c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8083,15 +7798,16 @@ func (c *ProjectsIconsGetCall) Do() (*Icon, error) {
 // method id "mapsengine.projects.icons.list":
 
 type ProjectsIconsListCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all icons in the current project
 func (r *ProjectsIconsService) List(projectId string) *ProjectsIconsListCall {
-	c := &ProjectsIconsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsIconsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.projectId = projectId
 	return c
 }
@@ -8100,7 +7816,7 @@ func (r *ProjectsIconsService) List(projectId string) *ProjectsIconsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *ProjectsIconsListCall) MaxResults(maxResults int64) *ProjectsIconsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -8109,15 +7825,15 @@ func (c *ProjectsIconsListCall) MaxResults(maxResults int64) *ProjectsIconsListC
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *ProjectsIconsListCall) PageToken(pageToken string) *ProjectsIconsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsIconsListCall) Fields(s ...googleapi.Field) *ProjectsIconsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -8127,13 +7843,13 @@ func (c *ProjectsIconsListCall) Fields(s ...googleapi.Field) *ProjectsIconsListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsIconsListCall) IfNoneMatch(entityTag string) *ProjectsIconsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsIconsListCall) Context(ctx context.Context) *ProjectsIconsListCall {
 	c.ctx_ = ctx
 	return c
@@ -8141,26 +7857,16 @@ func (c *ProjectsIconsListCall) Context(ctx context.Context) *ProjectsIconsListC
 
 func (c *ProjectsIconsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8244,30 +7950,30 @@ func (c *ProjectsIconsListCall) Do() (*IconsListResponse, error) {
 // method id "mapsengine.rasterCollections.cancelProcessing":
 
 type RasterCollectionsCancelProcessingCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // CancelProcessing: Cancel processing on a raster collection asset.
 func (r *RasterCollectionsService) CancelProcessing(id string) *RasterCollectionsCancelProcessingCall {
-	c := &RasterCollectionsCancelProcessingCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsCancelProcessingCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsCancelProcessingCall) Fields(s ...googleapi.Field) *RasterCollectionsCancelProcessingCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsCancelProcessingCall) Context(ctx context.Context) *RasterCollectionsCancelProcessingCall {
 	c.ctx_ = ctx
 	return c
@@ -8275,13 +7981,9 @@ func (c *RasterCollectionsCancelProcessingCall) Context(ctx context.Context) *Ra
 
 func (c *RasterCollectionsCancelProcessingCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/cancelProcessing")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -8359,28 +8061,28 @@ func (c *RasterCollectionsCancelProcessingCall) Do() (*ProcessResponse, error) {
 type RasterCollectionsCreateCall struct {
 	s                *Service
 	rastercollection *RasterCollection
-	opt_             map[string]interface{}
+	urlParams_       internal.URLParams
 	ctx_             context.Context
 }
 
 // Create: Create a raster collection asset.
 func (r *RasterCollectionsService) Create(rastercollection *RasterCollection) *RasterCollectionsCreateCall {
-	c := &RasterCollectionsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.rastercollection = rastercollection
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsCreateCall) Fields(s ...googleapi.Field) *RasterCollectionsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsCreateCall) Context(ctx context.Context) *RasterCollectionsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -8393,13 +8095,9 @@ func (c *RasterCollectionsCreateCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -8466,30 +8164,30 @@ func (c *RasterCollectionsCreateCall) Do() (*RasterCollection, error) {
 // method id "mapsengine.rasterCollections.delete":
 
 type RasterCollectionsDeleteCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Delete a raster collection.
 func (r *RasterCollectionsService) Delete(id string) *RasterCollectionsDeleteCall {
-	c := &RasterCollectionsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsDeleteCall) Fields(s ...googleapi.Field) *RasterCollectionsDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsDeleteCall) Context(ctx context.Context) *RasterCollectionsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -8497,13 +8195,9 @@ func (c *RasterCollectionsDeleteCall) Context(ctx context.Context) *RasterCollec
 
 func (c *RasterCollectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -8552,24 +8246,25 @@ func (c *RasterCollectionsDeleteCall) Do() error {
 // method id "mapsengine.rasterCollections.get":
 
 type RasterCollectionsGetCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Return metadata for a particular raster collection.
 func (r *RasterCollectionsService) Get(id string) *RasterCollectionsGetCall {
-	c := &RasterCollectionsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsGetCall) Fields(s ...googleapi.Field) *RasterCollectionsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -8579,13 +8274,13 @@ func (c *RasterCollectionsGetCall) Fields(s ...googleapi.Field) *RasterCollectio
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RasterCollectionsGetCall) IfNoneMatch(entityTag string) *RasterCollectionsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsGetCall) Context(ctx context.Context) *RasterCollectionsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -8593,20 +8288,16 @@ func (c *RasterCollectionsGetCall) Context(ctx context.Context) *RasterCollectio
 
 func (c *RasterCollectionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8679,14 +8370,15 @@ func (c *RasterCollectionsGetCall) Do() (*RasterCollection, error) {
 // method id "mapsengine.rasterCollections.list":
 
 type RasterCollectionsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all raster collections readable by the current user.
 func (r *RasterCollectionsService) List() *RasterCollectionsListCall {
-	c := &RasterCollectionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -8694,7 +8386,7 @@ func (r *RasterCollectionsService) List() *RasterCollectionsListCall {
 // "west,south,east,north". If set, only assets which intersect this
 // bounding box will be returned.
 func (c *RasterCollectionsListCall) Bbox(bbox string) *RasterCollectionsListCall {
-	c.opt_["bbox"] = bbox
+	c.urlParams_.Set("bbox", bbox)
 	return c
 }
 
@@ -8702,7 +8394,7 @@ func (c *RasterCollectionsListCall) Bbox(bbox string) *RasterCollectionsListCall
 // formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or after this time.
 func (c *RasterCollectionsListCall) CreatedAfter(createdAfter string) *RasterCollectionsListCall {
-	c.opt_["createdAfter"] = createdAfter
+	c.urlParams_.Set("createdAfter", createdAfter)
 	return c
 }
 
@@ -8710,7 +8402,7 @@ func (c *RasterCollectionsListCall) CreatedAfter(createdAfter string) *RasterCol
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or before this time.
 func (c *RasterCollectionsListCall) CreatedBefore(createdBefore string) *RasterCollectionsListCall {
-	c.opt_["createdBefore"] = createdBefore
+	c.urlParams_.Set("createdBefore", createdBefore)
 	return c
 }
 
@@ -8718,7 +8410,7 @@ func (c *RasterCollectionsListCall) CreatedBefore(createdBefore string) *RasterC
 // address representing a user. Returned assets that have been created
 // by the user associated with the provided email address.
 func (c *RasterCollectionsListCall) CreatorEmail(creatorEmail string) *RasterCollectionsListCall {
-	c.opt_["creatorEmail"] = creatorEmail
+	c.urlParams_.Set("creatorEmail", creatorEmail)
 	return c
 }
 
@@ -8726,7 +8418,7 @@ func (c *RasterCollectionsListCall) CreatorEmail(creatorEmail string) *RasterCol
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *RasterCollectionsListCall) MaxResults(maxResults int64) *RasterCollectionsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -8734,7 +8426,7 @@ func (c *RasterCollectionsListCall) MaxResults(maxResults int64) *RasterCollecti
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or after this time.
 func (c *RasterCollectionsListCall) ModifiedAfter(modifiedAfter string) *RasterCollectionsListCall {
-	c.opt_["modifiedAfter"] = modifiedAfter
+	c.urlParams_.Set("modifiedAfter", modifiedAfter)
 	return c
 }
 
@@ -8742,7 +8434,7 @@ func (c *RasterCollectionsListCall) ModifiedAfter(modifiedAfter string) *RasterC
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or before this time.
 func (c *RasterCollectionsListCall) ModifiedBefore(modifiedBefore string) *RasterCollectionsListCall {
-	c.opt_["modifiedBefore"] = modifiedBefore
+	c.urlParams_.Set("modifiedBefore", modifiedBefore)
 	return c
 }
 
@@ -8751,7 +8443,7 @@ func (c *RasterCollectionsListCall) ModifiedBefore(modifiedBefore string) *Raste
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *RasterCollectionsListCall) PageToken(pageToken string) *RasterCollectionsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -8764,7 +8456,7 @@ func (c *RasterCollectionsListCall) PageToken(pageToken string) *RasterCollectio
 //   "processing" - The raster collection is processing.
 //   "ready" - The raster collection is ready for processing.
 func (c *RasterCollectionsListCall) ProcessingStatus(processingStatus string) *RasterCollectionsListCall {
-	c.opt_["processingStatus"] = processingStatus
+	c.urlParams_.Set("processingStatus", processingStatus)
 	return c
 }
 
@@ -8774,7 +8466,7 @@ func (c *RasterCollectionsListCall) ProcessingStatus(processingStatus string) *R
 // find your project ID as the value of the DashboardPlace:cid URL
 // parameter when signed in to mapsengine.google.com.
 func (c *RasterCollectionsListCall) ProjectId(projectId string) *RasterCollectionsListCall {
-	c.opt_["projectId"] = projectId
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
@@ -8787,29 +8479,29 @@ func (c *RasterCollectionsListCall) ProjectId(projectId string) *RasterCollectio
 //   "reader" - The user can read the asset.
 //   "writer" - The user can read and write the asset.
 func (c *RasterCollectionsListCall) Role(role string) *RasterCollectionsListCall {
-	c.opt_["role"] = role
+	c.urlParams_.Set("role", role)
 	return c
 }
 
 // Search sets the optional parameter "search": An unstructured search
 // string used to filter the set of results based on asset metadata.
 func (c *RasterCollectionsListCall) Search(search string) *RasterCollectionsListCall {
-	c.opt_["search"] = search
+	c.urlParams_.Set("search", search)
 	return c
 }
 
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *RasterCollectionsListCall) Tags(tags string) *RasterCollectionsListCall {
-	c.opt_["tags"] = tags
+	c.urlParams_.Set("tags", tags)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsListCall) Fields(s ...googleapi.Field) *RasterCollectionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -8819,13 +8511,13 @@ func (c *RasterCollectionsListCall) Fields(s ...googleapi.Field) *RasterCollecti
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RasterCollectionsListCall) IfNoneMatch(entityTag string) *RasterCollectionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsListCall) Context(ctx context.Context) *RasterCollectionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -8833,57 +8525,14 @@ func (c *RasterCollectionsListCall) Context(ctx context.Context) *RasterCollecti
 
 func (c *RasterCollectionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["bbox"]; ok {
-		params.Set("bbox", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdAfter"]; ok {
-		params.Set("createdAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdBefore"]; ok {
-		params.Set("createdBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["creatorEmail"]; ok {
-		params.Set("creatorEmail", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedAfter"]; ok {
-		params.Set("modifiedAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedBefore"]; ok {
-		params.Set("modifiedBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["processingStatus"]; ok {
-		params.Set("processingStatus", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["role"]; ok {
-		params.Set("role", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["search"]; ok {
-		params.Set("search", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["tags"]; ok {
-		params.Set("tags", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9043,29 +8692,29 @@ type RasterCollectionsPatchCall struct {
 	s                *Service
 	id               string
 	rastercollection *RasterCollection
-	opt_             map[string]interface{}
+	urlParams_       internal.URLParams
 	ctx_             context.Context
 }
 
 // Patch: Mutate a raster collection asset.
 func (r *RasterCollectionsService) Patch(id string, rastercollection *RasterCollection) *RasterCollectionsPatchCall {
-	c := &RasterCollectionsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.rastercollection = rastercollection
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsPatchCall) Fields(s ...googleapi.Field) *RasterCollectionsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsPatchCall) Context(ctx context.Context) *RasterCollectionsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -9078,13 +8727,9 @@ func (c *RasterCollectionsPatchCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -9137,30 +8782,30 @@ func (c *RasterCollectionsPatchCall) Do() error {
 // method id "mapsengine.rasterCollections.process":
 
 type RasterCollectionsProcessCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Process: Process a raster collection asset.
 func (r *RasterCollectionsService) Process(id string) *RasterCollectionsProcessCall {
-	c := &RasterCollectionsProcessCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsProcessCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsProcessCall) Fields(s ...googleapi.Field) *RasterCollectionsProcessCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsProcessCall) Context(ctx context.Context) *RasterCollectionsProcessCall {
 	c.ctx_ = ctx
 	return c
@@ -9168,13 +8813,9 @@ func (c *RasterCollectionsProcessCall) Context(ctx context.Context) *RasterColle
 
 func (c *RasterCollectionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/process")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -9250,15 +8891,16 @@ func (c *RasterCollectionsProcessCall) Do() (*ProcessResponse, error) {
 // method id "mapsengine.rasterCollections.parents.list":
 
 type RasterCollectionsParentsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all parent ids of the specified raster collection.
 func (r *RasterCollectionsParentsService) List(id string) *RasterCollectionsParentsListCall {
-	c := &RasterCollectionsParentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsParentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -9267,7 +8909,7 @@ func (r *RasterCollectionsParentsService) List(id string) *RasterCollectionsPare
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *RasterCollectionsParentsListCall) MaxResults(maxResults int64) *RasterCollectionsParentsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -9276,15 +8918,15 @@ func (c *RasterCollectionsParentsListCall) MaxResults(maxResults int64) *RasterC
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *RasterCollectionsParentsListCall) PageToken(pageToken string) *RasterCollectionsParentsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsParentsListCall) Fields(s ...googleapi.Field) *RasterCollectionsParentsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -9294,13 +8936,13 @@ func (c *RasterCollectionsParentsListCall) Fields(s ...googleapi.Field) *RasterC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RasterCollectionsParentsListCall) IfNoneMatch(entityTag string) *RasterCollectionsParentsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsParentsListCall) Context(ctx context.Context) *RasterCollectionsParentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -9308,26 +8950,16 @@ func (c *RasterCollectionsParentsListCall) Context(ctx context.Context) *RasterC
 
 func (c *RasterCollectionsParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/parents")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9414,30 +9046,30 @@ type RasterCollectionsPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
 // asset.
 func (r *RasterCollectionsPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *RasterCollectionsPermissionsBatchDeleteCall {
-	c := &RasterCollectionsPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsPermissionsBatchDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *RasterCollectionsPermissionsBatchDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsPermissionsBatchDeleteCall) Context(ctx context.Context) *RasterCollectionsPermissionsBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -9450,13 +9082,9 @@ func (c *RasterCollectionsPermissionsBatchDeleteCall) doRequest(alt string) (*ht
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions/batchDelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -9539,7 +9167,7 @@ type RasterCollectionsPermissionsBatchUpdateCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
@@ -9549,23 +9177,23 @@ type RasterCollectionsPermissionsBatchUpdateCall struct {
 // An asset can hold up to 20 different permission entries. Each
 // batchInsert request is atomic.
 func (r *RasterCollectionsPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *RasterCollectionsPermissionsBatchUpdateCall {
-	c := &RasterCollectionsPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsPermissionsBatchUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *RasterCollectionsPermissionsBatchUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsPermissionsBatchUpdateCall) Context(ctx context.Context) *RasterCollectionsPermissionsBatchUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -9578,13 +9206,9 @@ func (c *RasterCollectionsPermissionsBatchUpdateCall) doRequest(alt string) (*ht
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions/batchUpdate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -9664,24 +9288,25 @@ func (c *RasterCollectionsPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpd
 // method id "mapsengine.rasterCollections.permissions.list":
 
 type RasterCollectionsPermissionsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
 func (r *RasterCollectionsPermissionsService) List(id string) *RasterCollectionsPermissionsListCall {
-	c := &RasterCollectionsPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsPermissionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsPermissionsListCall) Fields(s ...googleapi.Field) *RasterCollectionsPermissionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -9691,13 +9316,13 @@ func (c *RasterCollectionsPermissionsListCall) Fields(s ...googleapi.Field) *Ras
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RasterCollectionsPermissionsListCall) IfNoneMatch(entityTag string) *RasterCollectionsPermissionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsPermissionsListCall) Context(ctx context.Context) *RasterCollectionsPermissionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -9705,20 +9330,16 @@ func (c *RasterCollectionsPermissionsListCall) Context(ctx context.Context) *Ras
 
 func (c *RasterCollectionsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/permissions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9794,7 +9415,7 @@ type RasterCollectionsRastersBatchDeleteCall struct {
 	s                                         *Service
 	id                                        string
 	rastercollectionsrasterbatchdeleterequest *RasterCollectionsRasterBatchDeleteRequest
-	opt_                                      map[string]interface{}
+	urlParams_                                internal.URLParams
 	ctx_                                      context.Context
 }
 
@@ -9803,23 +9424,23 @@ type RasterCollectionsRastersBatchDeleteCall struct {
 // Up to 50 rasters can be included in a single batchDelete request.
 // Each batchDelete request is atomic.
 func (r *RasterCollectionsRastersService) BatchDelete(id string, rastercollectionsrasterbatchdeleterequest *RasterCollectionsRasterBatchDeleteRequest) *RasterCollectionsRastersBatchDeleteCall {
-	c := &RasterCollectionsRastersBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsRastersBatchDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.rastercollectionsrasterbatchdeleterequest = rastercollectionsrasterbatchdeleterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsRastersBatchDeleteCall) Fields(s ...googleapi.Field) *RasterCollectionsRastersBatchDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsRastersBatchDeleteCall) Context(ctx context.Context) *RasterCollectionsRastersBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -9832,13 +9453,9 @@ func (c *RasterCollectionsRastersBatchDeleteCall) doRequest(alt string) (*http.R
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters/batchDelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -9923,7 +9540,7 @@ type RasterCollectionsRastersBatchInsertCall struct {
 	s                                          *Service
 	id                                         string
 	rastercollectionsrastersbatchinsertrequest *RasterCollectionsRastersBatchInsertRequest
-	opt_                                       map[string]interface{}
+	urlParams_                                 internal.URLParams
 	ctx_                                       context.Context
 }
 
@@ -9934,23 +9551,23 @@ type RasterCollectionsRastersBatchInsertCall struct {
 // Up to 50 rasters can be included in a single batchInsert request.
 // Each batchInsert request is atomic.
 func (r *RasterCollectionsRastersService) BatchInsert(id string, rastercollectionsrastersbatchinsertrequest *RasterCollectionsRastersBatchInsertRequest) *RasterCollectionsRastersBatchInsertCall {
-	c := &RasterCollectionsRastersBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsRastersBatchInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.rastercollectionsrastersbatchinsertrequest = rastercollectionsrastersbatchinsertrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsRastersBatchInsertCall) Fields(s ...googleapi.Field) *RasterCollectionsRastersBatchInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsRastersBatchInsertCall) Context(ctx context.Context) *RasterCollectionsRastersBatchInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -9963,13 +9580,9 @@ func (c *RasterCollectionsRastersBatchInsertCall) doRequest(alt string) (*http.R
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters/batchInsert")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -10051,15 +9664,16 @@ func (c *RasterCollectionsRastersBatchInsertCall) Do() (*RasterCollectionsRaster
 // method id "mapsengine.rasterCollections.rasters.list":
 
 type RasterCollectionsRastersListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all rasters within a raster collection.
 func (r *RasterCollectionsRastersService) List(id string) *RasterCollectionsRastersListCall {
-	c := &RasterCollectionsRastersListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RasterCollectionsRastersListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -10068,7 +9682,7 @@ func (r *RasterCollectionsRastersService) List(id string) *RasterCollectionsRast
 // "west,south,east,north". If set, only assets which intersect this
 // bounding box will be returned.
 func (c *RasterCollectionsRastersListCall) Bbox(bbox string) *RasterCollectionsRastersListCall {
-	c.opt_["bbox"] = bbox
+	c.urlParams_.Set("bbox", bbox)
 	return c
 }
 
@@ -10076,7 +9690,7 @@ func (c *RasterCollectionsRastersListCall) Bbox(bbox string) *RasterCollectionsR
 // formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or after this time.
 func (c *RasterCollectionsRastersListCall) CreatedAfter(createdAfter string) *RasterCollectionsRastersListCall {
-	c.opt_["createdAfter"] = createdAfter
+	c.urlParams_.Set("createdAfter", createdAfter)
 	return c
 }
 
@@ -10084,7 +9698,7 @@ func (c *RasterCollectionsRastersListCall) CreatedAfter(createdAfter string) *Ra
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or before this time.
 func (c *RasterCollectionsRastersListCall) CreatedBefore(createdBefore string) *RasterCollectionsRastersListCall {
-	c.opt_["createdBefore"] = createdBefore
+	c.urlParams_.Set("createdBefore", createdBefore)
 	return c
 }
 
@@ -10092,7 +9706,7 @@ func (c *RasterCollectionsRastersListCall) CreatedBefore(createdBefore string) *
 // address representing a user. Returned assets that have been created
 // by the user associated with the provided email address.
 func (c *RasterCollectionsRastersListCall) CreatorEmail(creatorEmail string) *RasterCollectionsRastersListCall {
-	c.opt_["creatorEmail"] = creatorEmail
+	c.urlParams_.Set("creatorEmail", creatorEmail)
 	return c
 }
 
@@ -10100,7 +9714,7 @@ func (c *RasterCollectionsRastersListCall) CreatorEmail(creatorEmail string) *Ra
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *RasterCollectionsRastersListCall) MaxResults(maxResults int64) *RasterCollectionsRastersListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -10108,7 +9722,7 @@ func (c *RasterCollectionsRastersListCall) MaxResults(maxResults int64) *RasterC
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or after this time.
 func (c *RasterCollectionsRastersListCall) ModifiedAfter(modifiedAfter string) *RasterCollectionsRastersListCall {
-	c.opt_["modifiedAfter"] = modifiedAfter
+	c.urlParams_.Set("modifiedAfter", modifiedAfter)
 	return c
 }
 
@@ -10116,7 +9730,7 @@ func (c *RasterCollectionsRastersListCall) ModifiedAfter(modifiedAfter string) *
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or before this time.
 func (c *RasterCollectionsRastersListCall) ModifiedBefore(modifiedBefore string) *RasterCollectionsRastersListCall {
-	c.opt_["modifiedBefore"] = modifiedBefore
+	c.urlParams_.Set("modifiedBefore", modifiedBefore)
 	return c
 }
 
@@ -10125,7 +9739,7 @@ func (c *RasterCollectionsRastersListCall) ModifiedBefore(modifiedBefore string)
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *RasterCollectionsRastersListCall) PageToken(pageToken string) *RasterCollectionsRastersListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -10138,29 +9752,29 @@ func (c *RasterCollectionsRastersListCall) PageToken(pageToken string) *RasterCo
 //   "reader" - The user can read the asset.
 //   "writer" - The user can read and write the asset.
 func (c *RasterCollectionsRastersListCall) Role(role string) *RasterCollectionsRastersListCall {
-	c.opt_["role"] = role
+	c.urlParams_.Set("role", role)
 	return c
 }
 
 // Search sets the optional parameter "search": An unstructured search
 // string used to filter the set of results based on asset metadata.
 func (c *RasterCollectionsRastersListCall) Search(search string) *RasterCollectionsRastersListCall {
-	c.opt_["search"] = search
+	c.urlParams_.Set("search", search)
 	return c
 }
 
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *RasterCollectionsRastersListCall) Tags(tags string) *RasterCollectionsRastersListCall {
-	c.opt_["tags"] = tags
+	c.urlParams_.Set("tags", tags)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RasterCollectionsRastersListCall) Fields(s ...googleapi.Field) *RasterCollectionsRastersListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -10170,13 +9784,13 @@ func (c *RasterCollectionsRastersListCall) Fields(s ...googleapi.Field) *RasterC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RasterCollectionsRastersListCall) IfNoneMatch(entityTag string) *RasterCollectionsRastersListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RasterCollectionsRastersListCall) Context(ctx context.Context) *RasterCollectionsRastersListCall {
 	c.ctx_ = ctx
 	return c
@@ -10184,53 +9798,16 @@ func (c *RasterCollectionsRastersListCall) Context(ctx context.Context) *RasterC
 
 func (c *RasterCollectionsRastersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["bbox"]; ok {
-		params.Set("bbox", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdAfter"]; ok {
-		params.Set("createdAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdBefore"]; ok {
-		params.Set("createdBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["creatorEmail"]; ok {
-		params.Set("creatorEmail", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedAfter"]; ok {
-		params.Set("modifiedAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedBefore"]; ok {
-		params.Set("modifiedBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["role"]; ok {
-		params.Set("role", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["search"]; ok {
-		params.Set("search", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["tags"]; ok {
-		params.Set("tags", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasterCollections/{id}/rasters")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -10374,30 +9951,30 @@ func (c *RasterCollectionsRastersListCall) Do() (*RasterCollectionsRastersListRe
 // method id "mapsengine.rasters.delete":
 
 type RastersDeleteCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Delete a raster.
 func (r *RastersService) Delete(id string) *RastersDeleteCall {
-	c := &RastersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersDeleteCall) Fields(s ...googleapi.Field) *RastersDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersDeleteCall) Context(ctx context.Context) *RastersDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -10405,13 +9982,9 @@ func (c *RastersDeleteCall) Context(ctx context.Context) *RastersDeleteCall {
 
 func (c *RastersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -10460,24 +10033,25 @@ func (c *RastersDeleteCall) Do() error {
 // method id "mapsengine.rasters.get":
 
 type RastersGetCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Return metadata for a single raster.
 func (r *RastersService) Get(id string) *RastersGetCall {
-	c := &RastersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersGetCall) Fields(s ...googleapi.Field) *RastersGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -10487,13 +10061,13 @@ func (c *RastersGetCall) Fields(s ...googleapi.Field) *RastersGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RastersGetCall) IfNoneMatch(entityTag string) *RastersGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersGetCall) Context(ctx context.Context) *RastersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -10501,20 +10075,16 @@ func (c *RastersGetCall) Context(ctx context.Context) *RastersGetCall {
 
 func (c *RastersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -10587,16 +10157,16 @@ func (c *RastersGetCall) Do() (*Raster, error) {
 // method id "mapsengine.rasters.list":
 
 type RastersListCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all rasters readable by the current user.
 func (r *RastersService) List(projectId string) *RastersListCall {
-	c := &RastersListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.projectId = projectId
+	c := &RastersListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
@@ -10604,7 +10174,7 @@ func (r *RastersService) List(projectId string) *RastersListCall {
 // "west,south,east,north". If set, only assets which intersect this
 // bounding box will be returned.
 func (c *RastersListCall) Bbox(bbox string) *RastersListCall {
-	c.opt_["bbox"] = bbox
+	c.urlParams_.Set("bbox", bbox)
 	return c
 }
 
@@ -10612,7 +10182,7 @@ func (c *RastersListCall) Bbox(bbox string) *RastersListCall {
 // formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or after this time.
 func (c *RastersListCall) CreatedAfter(createdAfter string) *RastersListCall {
-	c.opt_["createdAfter"] = createdAfter
+	c.urlParams_.Set("createdAfter", createdAfter)
 	return c
 }
 
@@ -10620,7 +10190,7 @@ func (c *RastersListCall) CreatedAfter(createdAfter string) *RastersListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or before this time.
 func (c *RastersListCall) CreatedBefore(createdBefore string) *RastersListCall {
-	c.opt_["createdBefore"] = createdBefore
+	c.urlParams_.Set("createdBefore", createdBefore)
 	return c
 }
 
@@ -10628,7 +10198,7 @@ func (c *RastersListCall) CreatedBefore(createdBefore string) *RastersListCall {
 // address representing a user. Returned assets that have been created
 // by the user associated with the provided email address.
 func (c *RastersListCall) CreatorEmail(creatorEmail string) *RastersListCall {
-	c.opt_["creatorEmail"] = creatorEmail
+	c.urlParams_.Set("creatorEmail", creatorEmail)
 	return c
 }
 
@@ -10636,7 +10206,7 @@ func (c *RastersListCall) CreatorEmail(creatorEmail string) *RastersListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *RastersListCall) MaxResults(maxResults int64) *RastersListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -10644,7 +10214,7 @@ func (c *RastersListCall) MaxResults(maxResults int64) *RastersListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or after this time.
 func (c *RastersListCall) ModifiedAfter(modifiedAfter string) *RastersListCall {
-	c.opt_["modifiedAfter"] = modifiedAfter
+	c.urlParams_.Set("modifiedAfter", modifiedAfter)
 	return c
 }
 
@@ -10652,7 +10222,7 @@ func (c *RastersListCall) ModifiedAfter(modifiedAfter string) *RastersListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or before this time.
 func (c *RastersListCall) ModifiedBefore(modifiedBefore string) *RastersListCall {
-	c.opt_["modifiedBefore"] = modifiedBefore
+	c.urlParams_.Set("modifiedBefore", modifiedBefore)
 	return c
 }
 
@@ -10661,7 +10231,7 @@ func (c *RastersListCall) ModifiedBefore(modifiedBefore string) *RastersListCall
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *RastersListCall) PageToken(pageToken string) *RastersListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -10674,7 +10244,7 @@ func (c *RastersListCall) PageToken(pageToken string) *RastersListCall {
 //   "processing" - The raster is processing.
 //   "ready" - The raster is ready for processing.
 func (c *RastersListCall) ProcessingStatus(processingStatus string) *RastersListCall {
-	c.opt_["processingStatus"] = processingStatus
+	c.urlParams_.Set("processingStatus", processingStatus)
 	return c
 }
 
@@ -10687,29 +10257,29 @@ func (c *RastersListCall) ProcessingStatus(processingStatus string) *RastersList
 //   "reader" - The user can read the asset.
 //   "writer" - The user can read and write the asset.
 func (c *RastersListCall) Role(role string) *RastersListCall {
-	c.opt_["role"] = role
+	c.urlParams_.Set("role", role)
 	return c
 }
 
 // Search sets the optional parameter "search": An unstructured search
 // string used to filter the set of results based on asset metadata.
 func (c *RastersListCall) Search(search string) *RastersListCall {
-	c.opt_["search"] = search
+	c.urlParams_.Set("search", search)
 	return c
 }
 
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *RastersListCall) Tags(tags string) *RastersListCall {
-	c.opt_["tags"] = tags
+	c.urlParams_.Set("tags", tags)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersListCall) Fields(s ...googleapi.Field) *RastersListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -10719,13 +10289,13 @@ func (c *RastersListCall) Fields(s ...googleapi.Field) *RastersListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RastersListCall) IfNoneMatch(entityTag string) *RastersListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersListCall) Context(ctx context.Context) *RastersListCall {
 	c.ctx_ = ctx
 	return c
@@ -10733,55 +10303,14 @@ func (c *RastersListCall) Context(ctx context.Context) *RastersListCall {
 
 func (c *RastersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("projectId", fmt.Sprintf("%v", c.projectId))
-	if v, ok := c.opt_["bbox"]; ok {
-		params.Set("bbox", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdAfter"]; ok {
-		params.Set("createdAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdBefore"]; ok {
-		params.Set("createdBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["creatorEmail"]; ok {
-		params.Set("creatorEmail", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedAfter"]; ok {
-		params.Set("modifiedAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedBefore"]; ok {
-		params.Set("modifiedBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["processingStatus"]; ok {
-		params.Set("processingStatus", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["role"]; ok {
-		params.Set("role", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["search"]; ok {
-		params.Set("search", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["tags"]; ok {
-		params.Set("tags", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -10942,32 +10471,32 @@ func (c *RastersListCall) Do() (*RastersListResponse, error) {
 // method id "mapsengine.rasters.patch":
 
 type RastersPatchCall struct {
-	s      *Service
-	id     string
-	raster *Raster
-	opt_   map[string]interface{}
-	ctx_   context.Context
+	s          *Service
+	id         string
+	raster     *Raster
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Patch: Mutate a raster asset.
 func (r *RastersService) Patch(id string, raster *Raster) *RastersPatchCall {
-	c := &RastersPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.raster = raster
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersPatchCall) Fields(s ...googleapi.Field) *RastersPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersPatchCall) Context(ctx context.Context) *RastersPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -10980,13 +10509,9 @@ func (c *RastersPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -11039,30 +10564,30 @@ func (c *RastersPatchCall) Do() error {
 // method id "mapsengine.rasters.process":
 
 type RastersProcessCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Process: Process a raster asset.
 func (r *RastersService) Process(id string) *RastersProcessCall {
-	c := &RastersProcessCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersProcessCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersProcessCall) Fields(s ...googleapi.Field) *RastersProcessCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersProcessCall) Context(ctx context.Context) *RastersProcessCall {
 	c.ctx_ = ctx
 	return c
@@ -11070,13 +10595,9 @@ func (c *RastersProcessCall) Context(ctx context.Context) *RastersProcessCall {
 
 func (c *RastersProcessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/process")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -11152,30 +10673,30 @@ func (c *RastersProcessCall) Do() (*ProcessResponse, error) {
 // method id "mapsengine.rasters.upload":
 
 type RastersUploadCall struct {
-	s      *Service
-	raster *Raster
-	opt_   map[string]interface{}
-	ctx_   context.Context
+	s          *Service
+	raster     *Raster
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Upload: Create a skeleton raster asset for upload.
 func (r *RastersService) Upload(raster *Raster) *RastersUploadCall {
-	c := &RastersUploadCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersUploadCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.raster = raster
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersUploadCall) Fields(s ...googleapi.Field) *RastersUploadCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersUploadCall) Context(ctx context.Context) *RastersUploadCall {
 	c.ctx_ = ctx
 	return c
@@ -11188,13 +10709,9 @@ func (c *RastersUploadCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/upload")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -11261,39 +10778,39 @@ func (c *RastersUploadCall) Do() (*Raster, error) {
 // method id "mapsengine.rasters.files.insert":
 
 type RastersFilesInsertCall struct {
-	s          *Service
-	id         string
-	filename   string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	protocol_  string
-	ctx_       context.Context
+	s                *Service
+	id               string
+	urlParams_       internal.URLParams
+	media_           io.Reader
+	resumable_       googleapi.SizeReaderAt
+	mediaType_       string
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // Insert: Upload a file to a raster asset.
 func (r *RastersFilesService) Insert(id string, filename string) *RastersFilesInsertCall {
-	c := &RastersFilesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersFilesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
-	c.filename = filename
+	c.urlParams_.Set("filename", filename)
 	return c
 }
 
-// Media specifies the media to upload in a single chunk.
-// At most one of Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk. At most one of
+// Media and ResumableMedia may be set.
 func (c *RastersFilesInsertCall) Media(r io.Reader) *RastersFilesInsertCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
-// At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-// The provided ctx will supersede any context previously provided to
-// the Context method.
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx. At most one of Media and ResumableMedia may be
+// set. mediaType identifies the MIME media type of the upload, such as
+// "image/png". If mediaType is "", it will be auto-detected. The
+// provided ctx will supersede any context previously provided to the
+// Context method.
 func (c *RastersFilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *RastersFilesInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -11302,27 +10819,28 @@ func (c *RastersFilesInsertCall) ResumableMedia(ctx context.Context, r io.Reader
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
 func (c *RastersFilesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *RastersFilesInsertCall {
-	c.opt_["progressUpdater"] = pu
+	c.progressUpdater_ = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersFilesInsertCall) Fields(s ...googleapi.Field) *RastersFilesInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
-// This context will supersede any context previously provided to
-// the ResumableMedia method.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
 func (c *RastersFilesInsertCall) Context(ctx context.Context) *RastersFilesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -11330,18 +10848,13 @@ func (c *RastersFilesInsertCall) Context(ctx context.Context) *RastersFilesInser
 
 func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("filename", fmt.Sprintf("%v", c.filename))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/files")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", c.protocol_)
+		c.urlParams_.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
@@ -11381,12 +10894,6 @@ func (c *RastersFilesInsertCall) Do() error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -11396,7 +10903,7 @@ func (c *RastersFilesInsertCall) Do() error {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
+			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -11455,15 +10962,16 @@ func (c *RastersFilesInsertCall) Do() error {
 // method id "mapsengine.rasters.parents.list":
 
 type RastersParentsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all parent ids of the specified rasters.
 func (r *RastersParentsService) List(id string) *RastersParentsListCall {
-	c := &RastersParentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersParentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -11472,7 +10980,7 @@ func (r *RastersParentsService) List(id string) *RastersParentsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *RastersParentsListCall) MaxResults(maxResults int64) *RastersParentsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -11481,15 +10989,15 @@ func (c *RastersParentsListCall) MaxResults(maxResults int64) *RastersParentsLis
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *RastersParentsListCall) PageToken(pageToken string) *RastersParentsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersParentsListCall) Fields(s ...googleapi.Field) *RastersParentsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -11499,13 +11007,13 @@ func (c *RastersParentsListCall) Fields(s ...googleapi.Field) *RastersParentsLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RastersParentsListCall) IfNoneMatch(entityTag string) *RastersParentsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersParentsListCall) Context(ctx context.Context) *RastersParentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -11513,26 +11021,16 @@ func (c *RastersParentsListCall) Context(ctx context.Context) *RastersParentsLis
 
 func (c *RastersParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/parents")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -11619,30 +11117,30 @@ type RastersPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
 // asset.
 func (r *RastersPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *RastersPermissionsBatchDeleteCall {
-	c := &RastersPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersPermissionsBatchDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *RastersPermissionsBatchDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersPermissionsBatchDeleteCall) Context(ctx context.Context) *RastersPermissionsBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -11655,13 +11153,9 @@ func (c *RastersPermissionsBatchDeleteCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/permissions/batchDelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -11744,7 +11238,7 @@ type RastersPermissionsBatchUpdateCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
@@ -11754,23 +11248,23 @@ type RastersPermissionsBatchUpdateCall struct {
 // An asset can hold up to 20 different permission entries. Each
 // batchInsert request is atomic.
 func (r *RastersPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *RastersPermissionsBatchUpdateCall {
-	c := &RastersPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersPermissionsBatchUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *RastersPermissionsBatchUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersPermissionsBatchUpdateCall) Context(ctx context.Context) *RastersPermissionsBatchUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -11783,13 +11277,9 @@ func (c *RastersPermissionsBatchUpdateCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/permissions/batchUpdate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -11869,24 +11359,25 @@ func (c *RastersPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateRespons
 // method id "mapsengine.rasters.permissions.list":
 
 type RastersPermissionsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
 func (r *RastersPermissionsService) List(id string) *RastersPermissionsListCall {
-	c := &RastersPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RastersPermissionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RastersPermissionsListCall) Fields(s ...googleapi.Field) *RastersPermissionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -11896,13 +11387,13 @@ func (c *RastersPermissionsListCall) Fields(s ...googleapi.Field) *RastersPermis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RastersPermissionsListCall) IfNoneMatch(entityTag string) *RastersPermissionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RastersPermissionsListCall) Context(ctx context.Context) *RastersPermissionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -11910,20 +11401,16 @@ func (c *RastersPermissionsListCall) Context(ctx context.Context) *RastersPermis
 
 func (c *RastersPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/permissions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -11996,30 +11483,30 @@ func (c *RastersPermissionsListCall) Do() (*PermissionsListResponse, error) {
 // method id "mapsengine.tables.create":
 
 type TablesCreateCall struct {
-	s     *Service
-	table *Table
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	table      *Table
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Create: Create a table asset.
 func (r *TablesService) Create(table *Table) *TablesCreateCall {
-	c := &TablesCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.table = table
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesCreateCall) Fields(s ...googleapi.Field) *TablesCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesCreateCall) Context(ctx context.Context) *TablesCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -12032,13 +11519,9 @@ func (c *TablesCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -12105,30 +11588,30 @@ func (c *TablesCreateCall) Do() (*Table, error) {
 // method id "mapsengine.tables.delete":
 
 type TablesDeleteCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Delete a table.
 func (r *TablesService) Delete(id string) *TablesDeleteCall {
-	c := &TablesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesDeleteCall) Fields(s ...googleapi.Field) *TablesDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesDeleteCall) Context(ctx context.Context) *TablesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -12136,13 +11619,9 @@ func (c *TablesDeleteCall) Context(ctx context.Context) *TablesDeleteCall {
 
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -12191,15 +11670,16 @@ func (c *TablesDeleteCall) Do() error {
 // method id "mapsengine.tables.get":
 
 type TablesGetCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Return metadata for a particular table, including the schema.
 func (r *TablesService) Get(id string) *TablesGetCall {
-	c := &TablesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -12210,15 +11690,15 @@ func (r *TablesService) Get(id string) *TablesGetCall {
 //   "draft" - The draft version.
 //   "published" - The published version.
 func (c *TablesGetCall) Version(version string) *TablesGetCall {
-	c.opt_["version"] = version
+	c.urlParams_.Set("version", version)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -12228,13 +11708,13 @@ func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TablesGetCall) IfNoneMatch(entityTag string) *TablesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesGetCall) Context(ctx context.Context) *TablesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -12242,23 +11722,16 @@ func (c *TablesGetCall) Context(ctx context.Context) *TablesGetCall {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["version"]; ok {
-		params.Set("version", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -12343,14 +11816,15 @@ func (c *TablesGetCall) Do() (*Table, error) {
 // method id "mapsengine.tables.list":
 
 type TablesListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all tables readable by the current user.
 func (r *TablesService) List() *TablesListCall {
-	c := &TablesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
@@ -12358,7 +11832,7 @@ func (r *TablesService) List() *TablesListCall {
 // "west,south,east,north". If set, only assets which intersect this
 // bounding box will be returned.
 func (c *TablesListCall) Bbox(bbox string) *TablesListCall {
-	c.opt_["bbox"] = bbox
+	c.urlParams_.Set("bbox", bbox)
 	return c
 }
 
@@ -12366,7 +11840,7 @@ func (c *TablesListCall) Bbox(bbox string) *TablesListCall {
 // formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or after this time.
 func (c *TablesListCall) CreatedAfter(createdAfter string) *TablesListCall {
-	c.opt_["createdAfter"] = createdAfter
+	c.urlParams_.Set("createdAfter", createdAfter)
 	return c
 }
 
@@ -12374,7 +11848,7 @@ func (c *TablesListCall) CreatedAfter(createdAfter string) *TablesListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been created at or before this time.
 func (c *TablesListCall) CreatedBefore(createdBefore string) *TablesListCall {
-	c.opt_["createdBefore"] = createdBefore
+	c.urlParams_.Set("createdBefore", createdBefore)
 	return c
 }
 
@@ -12382,7 +11856,7 @@ func (c *TablesListCall) CreatedBefore(createdBefore string) *TablesListCall {
 // address representing a user. Returned assets that have been created
 // by the user associated with the provided email address.
 func (c *TablesListCall) CreatorEmail(creatorEmail string) *TablesListCall {
-	c.opt_["creatorEmail"] = creatorEmail
+	c.urlParams_.Set("creatorEmail", creatorEmail)
 	return c
 }
 
@@ -12390,7 +11864,7 @@ func (c *TablesListCall) CreatorEmail(creatorEmail string) *TablesListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *TablesListCall) MaxResults(maxResults int64) *TablesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -12398,7 +11872,7 @@ func (c *TablesListCall) MaxResults(maxResults int64) *TablesListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or after this time.
 func (c *TablesListCall) ModifiedAfter(modifiedAfter string) *TablesListCall {
-	c.opt_["modifiedAfter"] = modifiedAfter
+	c.urlParams_.Set("modifiedAfter", modifiedAfter)
 	return c
 }
 
@@ -12406,7 +11880,7 @@ func (c *TablesListCall) ModifiedAfter(modifiedAfter string) *TablesListCall {
 // 3339 formatted date-time value (e.g. 1970-01-01T00:00:00Z). Returned
 // assets will have been modified at or before this time.
 func (c *TablesListCall) ModifiedBefore(modifiedBefore string) *TablesListCall {
-	c.opt_["modifiedBefore"] = modifiedBefore
+	c.urlParams_.Set("modifiedBefore", modifiedBefore)
 	return c
 }
 
@@ -12415,7 +11889,7 @@ func (c *TablesListCall) ModifiedBefore(modifiedBefore string) *TablesListCall {
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *TablesListCall) PageToken(pageToken string) *TablesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -12428,7 +11902,7 @@ func (c *TablesListCall) PageToken(pageToken string) *TablesListCall {
 //   "processing" - The table is processing.
 //   "ready" - The table is ready for processing.
 func (c *TablesListCall) ProcessingStatus(processingStatus string) *TablesListCall {
-	c.opt_["processingStatus"] = processingStatus
+	c.urlParams_.Set("processingStatus", processingStatus)
 	return c
 }
 
@@ -12438,7 +11912,7 @@ func (c *TablesListCall) ProcessingStatus(processingStatus string) *TablesListCa
 // find your project ID as the value of the DashboardPlace:cid URL
 // parameter when signed in to mapsengine.google.com.
 func (c *TablesListCall) ProjectId(projectId string) *TablesListCall {
-	c.opt_["projectId"] = projectId
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
@@ -12451,29 +11925,29 @@ func (c *TablesListCall) ProjectId(projectId string) *TablesListCall {
 //   "reader" - The user can read the asset.
 //   "writer" - The user can read and write the asset.
 func (c *TablesListCall) Role(role string) *TablesListCall {
-	c.opt_["role"] = role
+	c.urlParams_.Set("role", role)
 	return c
 }
 
 // Search sets the optional parameter "search": An unstructured search
 // string used to filter the set of results based on asset metadata.
 func (c *TablesListCall) Search(search string) *TablesListCall {
-	c.opt_["search"] = search
+	c.urlParams_.Set("search", search)
 	return c
 }
 
 // Tags sets the optional parameter "tags": A comma separated list of
 // tags. Returned assets will contain all the tags from the list.
 func (c *TablesListCall) Tags(tags string) *TablesListCall {
-	c.opt_["tags"] = tags
+	c.urlParams_.Set("tags", tags)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -12483,13 +11957,13 @@ func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TablesListCall) IfNoneMatch(entityTag string) *TablesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesListCall) Context(ctx context.Context) *TablesListCall {
 	c.ctx_ = ctx
 	return c
@@ -12497,57 +11971,14 @@ func (c *TablesListCall) Context(ctx context.Context) *TablesListCall {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["bbox"]; ok {
-		params.Set("bbox", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdAfter"]; ok {
-		params.Set("createdAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["createdBefore"]; ok {
-		params.Set("createdBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["creatorEmail"]; ok {
-		params.Set("creatorEmail", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedAfter"]; ok {
-		params.Set("modifiedAfter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["modifiedBefore"]; ok {
-		params.Set("modifiedBefore", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["processingStatus"]; ok {
-		params.Set("processingStatus", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["projectId"]; ok {
-		params.Set("projectId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["role"]; ok {
-		params.Set("role", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["search"]; ok {
-		params.Set("search", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["tags"]; ok {
-		params.Set("tags", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -12704,32 +12135,32 @@ func (c *TablesListCall) Do() (*TablesListResponse, error) {
 // method id "mapsengine.tables.patch":
 
 type TablesPatchCall struct {
-	s     *Service
-	id    string
-	table *Table
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	id         string
+	table      *Table
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Patch: Mutate a table asset.
 func (r *TablesService) Patch(id string, table *Table) *TablesPatchCall {
-	c := &TablesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.table = table
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesPatchCall) Fields(s ...googleapi.Field) *TablesPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesPatchCall) Context(ctx context.Context) *TablesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -12742,13 +12173,9 @@ func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -12801,30 +12228,30 @@ func (c *TablesPatchCall) Do() error {
 // method id "mapsengine.tables.process":
 
 type TablesProcessCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s          *Service
+	id         string
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Process: Process a table asset.
 func (r *TablesService) Process(id string) *TablesProcessCall {
-	c := &TablesProcessCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesProcessCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesProcessCall) Fields(s ...googleapi.Field) *TablesProcessCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesProcessCall) Context(ctx context.Context) *TablesProcessCall {
 	c.ctx_ = ctx
 	return c
@@ -12832,13 +12259,9 @@ func (c *TablesProcessCall) Context(ctx context.Context) *TablesProcessCall {
 
 func (c *TablesProcessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/process")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -12914,10 +12337,10 @@ func (c *TablesProcessCall) Do() (*ProcessResponse, error) {
 // method id "mapsengine.tables.upload":
 
 type TablesUploadCall struct {
-	s     *Service
-	table *Table
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	table      *Table
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Upload: Create a placeholder table asset to which table files can be
@@ -12928,22 +12351,22 @@ type TablesUploadCall struct {
 // See Table Upload in the Developer's Guide or Table.files: insert in
 // the reference documentation for more information.
 func (r *TablesService) Upload(table *Table) *TablesUploadCall {
-	c := &TablesUploadCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesUploadCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.table = table
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesUploadCall) Fields(s ...googleapi.Field) *TablesUploadCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesUploadCall) Context(ctx context.Context) *TablesUploadCall {
 	c.ctx_ = ctx
 	return c
@@ -12956,13 +12379,9 @@ func (c *TablesUploadCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/upload")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -13032,29 +12451,29 @@ type TablesFeaturesBatchDeleteCall struct {
 	s                          *Service
 	id                         string
 	featuresbatchdeleterequest *FeaturesBatchDeleteRequest
-	opt_                       map[string]interface{}
+	urlParams_                 internal.URLParams
 	ctx_                       context.Context
 }
 
 // BatchDelete: Delete all features matching the given IDs.
 func (r *TablesFeaturesService) BatchDelete(id string, featuresbatchdeleterequest *FeaturesBatchDeleteRequest) *TablesFeaturesBatchDeleteCall {
-	c := &TablesFeaturesBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesFeaturesBatchDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.featuresbatchdeleterequest = featuresbatchdeleterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesFeaturesBatchDeleteCall) Fields(s ...googleapi.Field) *TablesFeaturesBatchDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesFeaturesBatchDeleteCall) Context(ctx context.Context) *TablesFeaturesBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -13067,13 +12486,9 @@ func (c *TablesFeaturesBatchDeleteCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchDelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -13129,7 +12544,7 @@ type TablesFeaturesBatchInsertCall struct {
 	s                          *Service
 	id                         string
 	featuresbatchinsertrequest *FeaturesBatchInsertRequest
-	opt_                       map[string]interface{}
+	urlParams_                 internal.URLParams
 	ctx_                       context.Context
 }
 
@@ -13146,23 +12561,23 @@ type TablesFeaturesBatchInsertCall struct {
 // For more information about inserting features, read Creating features
 // in the Google Maps Engine developer's guide.
 func (r *TablesFeaturesService) BatchInsert(id string, featuresbatchinsertrequest *FeaturesBatchInsertRequest) *TablesFeaturesBatchInsertCall {
-	c := &TablesFeaturesBatchInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesFeaturesBatchInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.featuresbatchinsertrequest = featuresbatchinsertrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesFeaturesBatchInsertCall) Fields(s ...googleapi.Field) *TablesFeaturesBatchInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesFeaturesBatchInsertCall) Context(ctx context.Context) *TablesFeaturesBatchInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -13175,13 +12590,9 @@ func (c *TablesFeaturesBatchInsertCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchInsert")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -13237,7 +12648,7 @@ type TablesFeaturesBatchPatchCall struct {
 	s                         *Service
 	id                        string
 	featuresbatchpatchrequest *FeaturesBatchPatchRequest
-	opt_                      map[string]interface{}
+	urlParams_                internal.URLParams
 	ctx_                      context.Context
 }
 
@@ -13264,23 +12675,23 @@ type TablesFeaturesBatchPatchCall struct {
 // For more information about updating features, read Updating features
 // in the Google Maps Engine developer's guide.
 func (r *TablesFeaturesService) BatchPatch(id string, featuresbatchpatchrequest *FeaturesBatchPatchRequest) *TablesFeaturesBatchPatchCall {
-	c := &TablesFeaturesBatchPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesFeaturesBatchPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.featuresbatchpatchrequest = featuresbatchpatchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesFeaturesBatchPatchCall) Fields(s ...googleapi.Field) *TablesFeaturesBatchPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesFeaturesBatchPatchCall) Context(ctx context.Context) *TablesFeaturesBatchPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -13293,13 +12704,9 @@ func (c *TablesFeaturesBatchPatchCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features/batchPatch")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -13352,16 +12759,17 @@ func (c *TablesFeaturesBatchPatchCall) Do() error {
 // method id "mapsengine.tables.features.get":
 
 type TablesFeaturesGetCall struct {
-	s       *Service
-	tableId string
-	id      string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	tableId      string
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Return a single feature, given its ID.
 func (r *TablesFeaturesService) Get(tableId string, id string) *TablesFeaturesGetCall {
-	c := &TablesFeaturesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesFeaturesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.tableId = tableId
 	c.id = id
 	return c
@@ -13371,7 +12779,7 @@ func (r *TablesFeaturesService) Get(tableId string, id string) *TablesFeaturesGe
 // clause used to specify returned properties. If this parameter is not
 // included, all properties are returned.
 func (c *TablesFeaturesGetCall) Select(select_ string) *TablesFeaturesGetCall {
-	c.opt_["select"] = select_
+	c.urlParams_.Set("select_", select_)
 	return c
 }
 
@@ -13382,15 +12790,15 @@ func (c *TablesFeaturesGetCall) Select(select_ string) *TablesFeaturesGetCall {
 //   "draft" - The draft version.
 //   "published" - The published version.
 func (c *TablesFeaturesGetCall) Version(version string) *TablesFeaturesGetCall {
-	c.opt_["version"] = version
+	c.urlParams_.Set("version", version)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesFeaturesGetCall) Fields(s ...googleapi.Field) *TablesFeaturesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -13400,13 +12808,13 @@ func (c *TablesFeaturesGetCall) Fields(s ...googleapi.Field) *TablesFeaturesGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TablesFeaturesGetCall) IfNoneMatch(entityTag string) *TablesFeaturesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesFeaturesGetCall) Context(ctx context.Context) *TablesFeaturesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -13414,27 +12822,17 @@ func (c *TablesFeaturesGetCall) Context(ctx context.Context) *TablesFeaturesGetC
 
 func (c *TablesFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["select"]; ok {
-		params.Set("select", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["version"]; ok {
-		params.Set("version", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/features/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 		"id":      c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -13532,15 +12930,16 @@ func (c *TablesFeaturesGetCall) Do() (*Feature, error) {
 // method id "mapsengine.tables.features.list":
 
 type TablesFeaturesListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all features readable by the current user.
 func (r *TablesFeaturesService) List(id string) *TablesFeaturesListCall {
-	c := &TablesFeaturesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesFeaturesListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -13548,14 +12947,14 @@ func (r *TablesFeaturesService) List(id string) *TablesFeaturesListCall {
 // Include sets the optional parameter "include": A comma separated list
 // of optional data to include. Optional data available: schema.
 func (c *TablesFeaturesListCall) Include(include string) *TablesFeaturesListCall {
-	c.opt_["include"] = include
+	c.urlParams_.Set("include", include)
 	return c
 }
 
 // Intersects sets the optional parameter "intersects": A geometry
 // literal that specifies the spatial restriction of the query.
 func (c *TablesFeaturesListCall) Intersects(intersects string) *TablesFeaturesListCall {
-	c.opt_["intersects"] = intersects
+	c.urlParams_.Set("intersects", intersects)
 	return c
 }
 
@@ -13563,7 +12962,7 @@ func (c *TablesFeaturesListCall) Intersects(intersects string) *TablesFeaturesLi
 // features to return from the query, irrespective of the number of
 // pages.
 func (c *TablesFeaturesListCall) Limit(limit int64) *TablesFeaturesListCall {
-	c.opt_["limit"] = limit
+	c.urlParams_.Set("limit", fmt.Sprintf("%v", limit))
 	return c
 }
 
@@ -13571,7 +12970,7 @@ func (c *TablesFeaturesListCall) Limit(limit int64) *TablesFeaturesListCall {
 // number of items to include in the response, used for paging. The
 // maximum supported value is 1000.
 func (c *TablesFeaturesListCall) MaxResults(maxResults int64) *TablesFeaturesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -13579,7 +12978,7 @@ func (c *TablesFeaturesListCall) MaxResults(maxResults int64) *TablesFeaturesLis
 // clause used to sort results. If this parameter is not included, the
 // order of features is undefined.
 func (c *TablesFeaturesListCall) OrderBy(orderBy string) *TablesFeaturesListCall {
-	c.opt_["orderBy"] = orderBy
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -13588,7 +12987,7 @@ func (c *TablesFeaturesListCall) OrderBy(orderBy string) *TablesFeaturesListCall
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *TablesFeaturesListCall) PageToken(pageToken string) *TablesFeaturesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -13596,7 +12995,7 @@ func (c *TablesFeaturesListCall) PageToken(pageToken string) *TablesFeaturesList
 // clause used to specify returned properties. If this parameter is not
 // included, all properties are returned.
 func (c *TablesFeaturesListCall) Select(select_ string) *TablesFeaturesListCall {
-	c.opt_["select"] = select_
+	c.urlParams_.Set("select_", select_)
 	return c
 }
 
@@ -13607,22 +13006,22 @@ func (c *TablesFeaturesListCall) Select(select_ string) *TablesFeaturesListCall 
 //   "draft" - The draft version.
 //   "published" - The published version.
 func (c *TablesFeaturesListCall) Version(version string) *TablesFeaturesListCall {
-	c.opt_["version"] = version
+	c.urlParams_.Set("version", version)
 	return c
 }
 
 // Where sets the optional parameter "where": An SQL-like predicate used
 // to filter results.
 func (c *TablesFeaturesListCall) Where(where string) *TablesFeaturesListCall {
-	c.opt_["where"] = where
+	c.urlParams_.Set("where", where)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesFeaturesListCall) Fields(s ...googleapi.Field) *TablesFeaturesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -13632,13 +13031,13 @@ func (c *TablesFeaturesListCall) Fields(s ...googleapi.Field) *TablesFeaturesLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TablesFeaturesListCall) IfNoneMatch(entityTag string) *TablesFeaturesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesFeaturesListCall) Context(ctx context.Context) *TablesFeaturesListCall {
 	c.ctx_ = ctx
 	return c
@@ -13646,47 +13045,16 @@ func (c *TablesFeaturesListCall) Context(ctx context.Context) *TablesFeaturesLis
 
 func (c *TablesFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["include"]; ok {
-		params.Set("include", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["intersects"]; ok {
-		params.Set("intersects", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["limit"]; ok {
-		params.Set("limit", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["select"]; ok {
-		params.Set("select", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["version"]; ok {
-		params.Set("version", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["where"]; ok {
-		params.Set("where", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/features")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -13814,15 +13182,15 @@ func (c *TablesFeaturesListCall) Do() (*FeaturesListResponse, error) {
 // method id "mapsengine.tables.files.insert":
 
 type TablesFilesInsertCall struct {
-	s          *Service
-	id         string
-	filename   string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	protocol_  string
-	ctx_       context.Context
+	s                *Service
+	id               string
+	urlParams_       internal.URLParams
+	media_           io.Reader
+	resumable_       googleapi.SizeReaderAt
+	mediaType_       string
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // Insert: Upload a file to a placeholder table asset. See Table Upload
@@ -13830,26 +13198,26 @@ type TablesFilesInsertCall struct {
 // Supported file types are listed in the Supported data formats and
 // limits article of the Google Maps Engine help center.
 func (r *TablesFilesService) Insert(id string, filename string) *TablesFilesInsertCall {
-	c := &TablesFilesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesFilesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
-	c.filename = filename
+	c.urlParams_.Set("filename", filename)
 	return c
 }
 
-// Media specifies the media to upload in a single chunk.
-// At most one of Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk. At most one of
+// Media and ResumableMedia may be set.
 func (c *TablesFilesInsertCall) Media(r io.Reader) *TablesFilesInsertCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
-// At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-// The provided ctx will supersede any context previously provided to
-// the Context method.
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx. At most one of Media and ResumableMedia may be
+// set. mediaType identifies the MIME media type of the upload, such as
+// "image/png". If mediaType is "", it will be auto-detected. The
+// provided ctx will supersede any context previously provided to the
+// Context method.
 func (c *TablesFilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TablesFilesInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -13858,27 +13226,28 @@ func (c *TablesFilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderA
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
 func (c *TablesFilesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TablesFilesInsertCall {
-	c.opt_["progressUpdater"] = pu
+	c.progressUpdater_ = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesFilesInsertCall) Fields(s ...googleapi.Field) *TablesFilesInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
-// This context will supersede any context previously provided to
-// the ResumableMedia method.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
 func (c *TablesFilesInsertCall) Context(ctx context.Context) *TablesFilesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -13886,18 +13255,13 @@ func (c *TablesFilesInsertCall) Context(ctx context.Context) *TablesFilesInsertC
 
 func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("filename", fmt.Sprintf("%v", c.filename))
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/files")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", c.protocol_)
+		c.urlParams_.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
@@ -13937,12 +13301,6 @@ func (c *TablesFilesInsertCall) Do() error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -13952,7 +13310,7 @@ func (c *TablesFilesInsertCall) Do() error {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
+			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -14011,15 +13369,16 @@ func (c *TablesFilesInsertCall) Do() error {
 // method id "mapsengine.tables.parents.list":
 
 type TablesParentsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all parent ids of the specified table.
 func (r *TablesParentsService) List(id string) *TablesParentsListCall {
-	c := &TablesParentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesParentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
@@ -14028,7 +13387,7 @@ func (r *TablesParentsService) List(id string) *TablesParentsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *TablesParentsListCall) MaxResults(maxResults int64) *TablesParentsListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -14037,15 +13396,15 @@ func (c *TablesParentsListCall) MaxResults(maxResults int64) *TablesParentsListC
 // of results, set this parameter to the value of nextPageToken from the
 // previous response.
 func (c *TablesParentsListCall) PageToken(pageToken string) *TablesParentsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesParentsListCall) Fields(s ...googleapi.Field) *TablesParentsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -14055,13 +13414,13 @@ func (c *TablesParentsListCall) Fields(s ...googleapi.Field) *TablesParentsListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TablesParentsListCall) IfNoneMatch(entityTag string) *TablesParentsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesParentsListCall) Context(ctx context.Context) *TablesParentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -14069,26 +13428,16 @@ func (c *TablesParentsListCall) Context(ctx context.Context) *TablesParentsListC
 
 func (c *TablesParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/parents")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -14175,30 +13524,30 @@ type TablesPermissionsBatchDeleteCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchdeleterequest *PermissionsBatchDeleteRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
 // BatchDelete: Remove permission entries from an already existing
 // asset.
 func (r *TablesPermissionsService) BatchDelete(id string, permissionsbatchdeleterequest *PermissionsBatchDeleteRequest) *TablesPermissionsBatchDeleteCall {
-	c := &TablesPermissionsBatchDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesPermissionsBatchDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchdeleterequest = permissionsbatchdeleterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *TablesPermissionsBatchDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesPermissionsBatchDeleteCall) Context(ctx context.Context) *TablesPermissionsBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -14211,13 +13560,9 @@ func (c *TablesPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions/batchDelete")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -14300,7 +13645,7 @@ type TablesPermissionsBatchUpdateCall struct {
 	s                             *Service
 	id                            string
 	permissionsbatchupdaterequest *PermissionsBatchUpdateRequest
-	opt_                          map[string]interface{}
+	urlParams_                    internal.URLParams
 	ctx_                          context.Context
 }
 
@@ -14310,23 +13655,23 @@ type TablesPermissionsBatchUpdateCall struct {
 // An asset can hold up to 20 different permission entries. Each
 // batchInsert request is atomic.
 func (r *TablesPermissionsService) BatchUpdate(id string, permissionsbatchupdaterequest *PermissionsBatchUpdateRequest) *TablesPermissionsBatchUpdateCall {
-	c := &TablesPermissionsBatchUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesPermissionsBatchUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.permissionsbatchupdaterequest = permissionsbatchupdaterequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesPermissionsBatchUpdateCall) Fields(s ...googleapi.Field) *TablesPermissionsBatchUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesPermissionsBatchUpdateCall) Context(ctx context.Context) *TablesPermissionsBatchUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -14339,13 +13684,9 @@ func (c *TablesPermissionsBatchUpdateCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions/batchUpdate")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
@@ -14425,24 +13766,25 @@ func (c *TablesPermissionsBatchUpdateCall) Do() (*PermissionsBatchUpdateResponse
 // method id "mapsengine.tables.permissions.list":
 
 type TablesPermissionsListCall struct {
-	s    *Service
-	id   string
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           string
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Return all of the permissions for the specified asset.
 func (r *TablesPermissionsService) List(id string) *TablesPermissionsListCall {
-	c := &TablesPermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &TablesPermissionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesPermissionsListCall) Fields(s ...googleapi.Field) *TablesPermissionsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -14452,13 +13794,13 @@ func (c *TablesPermissionsListCall) Fields(s ...googleapi.Field) *TablesPermissi
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TablesPermissionsListCall) IfNoneMatch(entityTag string) *TablesPermissionsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *TablesPermissionsListCall) Context(ctx context.Context) *TablesPermissionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -14466,20 +13808,16 @@ func (c *TablesPermissionsListCall) Context(ctx context.Context) *TablesPermissi
 
 func (c *TablesPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/permissions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

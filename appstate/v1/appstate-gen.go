@@ -211,17 +211,17 @@ func (s *WriteResult) MarshalJSON() ([]byte, error) {
 // method id "appstate.states.clear":
 
 type StatesClearCall struct {
-	s        *Service
-	stateKey int64
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s          *Service
+	stateKey   int64
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Clear: Clears (sets to empty) the data for the passed key if and only
 // if the passed version matches the currently stored version. This
 // method results in a conflict error on version mismatch.
 func (r *StatesService) Clear(stateKey int64) *StatesClearCall {
-	c := &StatesClearCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StatesClearCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.stateKey = stateKey
 	return c
 }
@@ -230,21 +230,21 @@ func (r *StatesService) Clear(stateKey int64) *StatesClearCall {
 // The version of the data to be cleared. Version strings are returned
 // by the server.
 func (c *StatesClearCall) CurrentDataVersion(currentDataVersion string) *StatesClearCall {
-	c.opt_["currentDataVersion"] = currentDataVersion
+	c.urlParams_.Set("currentDataVersion", currentDataVersion)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StatesClearCall) Fields(s ...googleapi.Field) *StatesClearCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StatesClearCall) Context(ctx context.Context) *StatesClearCall {
 	c.ctx_ = ctx
 	return c
@@ -252,16 +252,9 @@ func (c *StatesClearCall) Context(ctx context.Context) *StatesClearCall {
 
 func (c *StatesClearCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["currentDataVersion"]; ok {
-		params.Set("currentDataVersion", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "states/{stateKey}/clear")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
@@ -345,10 +338,10 @@ func (c *StatesClearCall) Do() (*WriteResult, error) {
 // method id "appstate.states.delete":
 
 type StatesDeleteCall struct {
-	s        *Service
-	stateKey int64
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s          *Service
+	stateKey   int64
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes a key and the data associated with it. The key is
@@ -358,22 +351,22 @@ type StatesDeleteCall struct {
 // this method in shipping code can result in data loss and data
 // corruption.
 func (r *StatesService) Delete(stateKey int64) *StatesDeleteCall {
-	c := &StatesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StatesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.stateKey = stateKey
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StatesDeleteCall) Fields(s ...googleapi.Field) *StatesDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StatesDeleteCall) Context(ctx context.Context) *StatesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -381,13 +374,9 @@ func (c *StatesDeleteCall) Context(ctx context.Context) *StatesDeleteCall {
 
 func (c *StatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "states/{stateKey}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
@@ -439,25 +428,26 @@ func (c *StatesDeleteCall) Do() error {
 // method id "appstate.states.get":
 
 type StatesGetCall struct {
-	s        *Service
-	stateKey int64
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s            *Service
+	stateKey     int64
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Retrieves the data corresponding to the passed key. If the key
 // does not exist on the server, an HTTP 404 will be returned.
 func (r *StatesService) Get(stateKey int64) *StatesGetCall {
-	c := &StatesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StatesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.stateKey = stateKey
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StatesGetCall) Fields(s ...googleapi.Field) *StatesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -467,13 +457,13 @@ func (c *StatesGetCall) Fields(s ...googleapi.Field) *StatesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *StatesGetCall) IfNoneMatch(entityTag string) *StatesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StatesGetCall) Context(ctx context.Context) *StatesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -481,20 +471,16 @@ func (c *StatesGetCall) Context(ctx context.Context) *StatesGetCall {
 
 func (c *StatesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "states/{stateKey}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"stateKey": strconv.FormatInt(c.stateKey, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -569,29 +555,30 @@ func (c *StatesGetCall) Do() (*GetResponse, error) {
 // method id "appstate.states.list":
 
 type StatesListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Lists all the states keys, and optionally the state data.
 func (r *StatesService) List() *StatesListCall {
-	c := &StatesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StatesListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
 // IncludeData sets the optional parameter "includeData": Whether to
 // include the full data in addition to the version number
 func (c *StatesListCall) IncludeData(includeData bool) *StatesListCall {
-	c.opt_["includeData"] = includeData
+	c.urlParams_.Set("includeData", fmt.Sprintf("%v", includeData))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StatesListCall) Fields(s ...googleapi.Field) *StatesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -601,13 +588,13 @@ func (c *StatesListCall) Fields(s ...googleapi.Field) *StatesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *StatesListCall) IfNoneMatch(entityTag string) *StatesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StatesListCall) Context(ctx context.Context) *StatesListCall {
 	c.ctx_ = ctx
 	return c
@@ -615,21 +602,14 @@ func (c *StatesListCall) Context(ctx context.Context) *StatesListCall {
 
 func (c *StatesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["includeData"]; ok {
-		params.Set("includeData", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "states")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -701,7 +681,7 @@ type StatesUpdateCall struct {
 	s             *Service
 	stateKey      int64
 	updaterequest *UpdateRequest
-	opt_          map[string]interface{}
+	urlParams_    internal.URLParams
 	ctx_          context.Context
 }
 
@@ -710,7 +690,7 @@ type StatesUpdateCall struct {
 // is safe in the face of concurrent writes. Maximum per-key size is
 // 128KB.
 func (r *StatesService) Update(stateKey int64, updaterequest *UpdateRequest) *StatesUpdateCall {
-	c := &StatesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StatesUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.stateKey = stateKey
 	c.updaterequest = updaterequest
 	return c
@@ -723,21 +703,21 @@ func (r *StatesService) Update(stateKey int64, updaterequest *UpdateRequest) *St
 // on the server for this key, the update will succeed irrespective of
 // the value of this parameter.
 func (c *StatesUpdateCall) CurrentStateVersion(currentStateVersion string) *StatesUpdateCall {
-	c.opt_["currentStateVersion"] = currentStateVersion
+	c.urlParams_.Set("currentStateVersion", currentStateVersion)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StatesUpdateCall) Fields(s ...googleapi.Field) *StatesUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StatesUpdateCall) Context(ctx context.Context) *StatesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -750,16 +730,9 @@ func (c *StatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["currentStateVersion"]; ok {
-		params.Set("currentStateVersion", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "states/{stateKey}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"stateKey": strconv.FormatInt(c.stateKey, 10),

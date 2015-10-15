@@ -1,0 +1,153 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"kEk3sFj6Ef5_yR1-H3bAO6qw9mI/3m5rB86FE5KuW1K3jAl88AxCreg\"",
+ "discoveryVersion": "v1",
+ "id": "paramrename:v1",
+ "name": "paramrename",
+ "version": "v1",
+ "title": "Example API",
+ "description": "The Example API demonstrates parameter renaming.",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
+ "protocol": "rest",
+ "schemas": {
+ },
+ "resources": {
+  "events": {
+   "methods": {
+    "move": {
+     "id": "calendar.events.move",
+     "path": "calendars/{calendarId}/events/{eventId}/move",
+     "httpMethod": "POST",
+     "description": "Moves an event to another calendar, i.e. changes an event's organizer.",
+     "parameters": {
+      "calendarId": {
+       "type": "string",
+       "description": "Calendar identifier of the source calendar where the event currently is on.",
+       "required": true,
+       "location": "path"
+      },
+      "destination": {
+       "type": "string",
+       "description": "Calendar identifier of the target calendar where the event is to be moved to.",
+       "required": true,
+       "location": "query"
+      },
+      "eventId": {
+       "type": "string",
+       "description": "Event identifier.",
+       "required": true,
+       "location": "path"
+      },
+      "sendNotifications": {
+       "type": "boolean",
+       "description": "Whether to send notifications about the change of the event's organizer. Optional. The default is False.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "calendarId",
+      "eventId",
+      "destination"
+     ],
+     "response": {
+      "$ref": "Event"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/calendar"
+     ]
+    }
+   }
+  },
+  "reports": {
+   "methods": {
+    "query": {
+     "id": "youtubeAnalytics.reports.query",
+     "path": "reports",
+     "httpMethod": "GET",
+     "description": "Retrieve your YouTube Analytics reports.",
+     "parameters": {
+      "currency": {
+       "type": "string",
+       "description": "The currency to which financial metrics should be converted. The default is US Dollar (USD). If the result contains no financial metrics, this flag will be ignored. Responds with an error if the specified currency is not recognized.",
+       "pattern": "[A-Z]{3}",
+       "location": "query"
+      },
+      "dimensions": {
+       "type": "string",
+       "description": "A comma-separated list of YouTube Analytics dimensions, such as views or ageGroup,gender. See the Available Reports document for a list of the reports that you can retrieve and the dimensions used for those reports. Also see the Dimensions document for definitions of those dimensions.",
+       "pattern": "[0-9a-zA-Z,]+",
+       "location": "query"
+      },
+      "end-date": {
+       "type": "string",
+       "description": "The end date for fetching YouTube Analytics data. The value should be in YYYY-MM-DD format.",
+       "required": true,
+       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+       "location": "query"
+      },
+      "filters": {
+       "type": "string",
+       "description": "A list of filters that should be applied when retrieving YouTube Analytics data. The Available Reports document identifies the dimensions that can be used to filter each report, and the Dimensions document defines those dimensions. If a request uses multiple filters, join them together with a semicolon (;), and the returned result table will satisfy both filters. For example, a filters parameter value of video==dMH0bHeiRNg;country==IT restricts the result set to include data for the given video in Italy.",
+       "location": "query"
+      },
+      "ids": {
+       "type": "string",
+       "description": "Identifies the YouTube channel or content owner for which you are retrieving YouTube Analytics data.\n- To request data for a YouTube user, set the ids parameter value to channel==CHANNEL_ID, where CHANNEL_ID specifies the unique YouTube channel ID.\n- To request data for a YouTube CMS content owner, set the ids parameter value to contentOwner==OWNER_NAME, where OWNER_NAME is the CMS name of the content owner.",
+       "required": true,
+       "pattern": "[a-zA-Z]+==[a-zA-Z0-9_+-]+",
+       "location": "query"
+      },
+      "max-results": {
+       "type": "integer",
+       "description": "The maximum number of rows to include in the response.",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      },
+      "metrics": {
+       "type": "string",
+       "description": "A comma-separated list of YouTube Analytics metrics, such as views or likes,dislikes. See the Available Reports document for a list of the reports that you can retrieve and the metrics available in each report, and see the Metrics document for definitions of those metrics.",
+       "required": true,
+       "pattern": "[0-9a-zA-Z,]+",
+       "location": "query"
+      },
+      "sort": {
+       "type": "string",
+       "description": "A comma-separated list of dimensions or metrics that determine the sort order for YouTube Analytics data. By default the sort order is ascending. The '-' prefix causes descending sort order.",
+       "pattern": "[-0-9a-zA-Z,]+",
+       "location": "query"
+      },
+      "start-date": {
+       "type": "string",
+       "description": "The start date for fetching YouTube Analytics data. The value should be in YYYY-MM-DD format.",
+       "required": true,
+       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+       "location": "query"
+      },
+      "start-index": {
+       "type": "integer",
+       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter (one-based, inclusive).",
+       "format": "int32",
+       "minimum": "1",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "ids",
+      "start-date",
+      "end-date",
+      "metrics"
+     ],
+     "response": {
+      "$ref": "ResultTable"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
+      "https://www.googleapis.com/auth/yt-analytics.readonly"
+     ]
+    }
+   }
+  }
+ }
+}

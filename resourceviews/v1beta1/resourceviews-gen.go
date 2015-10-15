@@ -438,13 +438,13 @@ type RegionViewsAddresourcesCall struct {
 	region                         string
 	resourceViewName               string
 	regionviewsaddresourcesrequest *RegionViewsAddResourcesRequest
-	urlParams_                     internal.URLParams
+	opt_                           map[string]interface{}
 	ctx_                           context.Context
 }
 
 // Addresources: Add resources to the view.
 func (r *RegionViewsService) Addresources(projectName string, region string, resourceViewName string, regionviewsaddresourcesrequest *RegionViewsAddResourcesRequest) *RegionViewsAddresourcesCall {
-	c := &RegionViewsAddresourcesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RegionViewsAddresourcesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.region = region
 	c.resourceViewName = resourceViewName
@@ -452,17 +452,17 @@ func (r *RegionViewsService) Addresources(projectName string, region string, res
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RegionViewsAddresourcesCall) Fields(s ...googleapi.Field) *RegionViewsAddresourcesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RegionViewsAddresourcesCall) Context(ctx context.Context) *RegionViewsAddresourcesCall {
 	c.ctx_ = ctx
 	return c
@@ -475,9 +475,13 @@ func (c *RegionViewsAddresourcesCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}/addResources")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -552,30 +556,30 @@ type RegionViewsDeleteCall struct {
 	projectName      string
 	region           string
 	resourceViewName string
-	urlParams_       internal.URLParams
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Delete: Delete a resource view.
 func (r *RegionViewsService) Delete(projectName string, region string, resourceViewName string) *RegionViewsDeleteCall {
-	c := &RegionViewsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RegionViewsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.region = region
 	c.resourceViewName = resourceViewName
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RegionViewsDeleteCall) Fields(s ...googleapi.Field) *RegionViewsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RegionViewsDeleteCall) Context(ctx context.Context) *RegionViewsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -583,9 +587,13 @@ func (c *RegionViewsDeleteCall) Context(ctx context.Context) *RegionViewsDeleteC
 
 func (c *RegionViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -656,25 +664,24 @@ type RegionViewsGetCall struct {
 	projectName      string
 	region           string
 	resourceViewName string
-	urlParams_       internal.URLParams
-	ifNoneMatch_     string
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Get: Get the information of a resource view.
 func (r *RegionViewsService) Get(projectName string, region string, resourceViewName string) *RegionViewsGetCall {
-	c := &RegionViewsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RegionViewsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.region = region
 	c.resourceViewName = resourceViewName
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RegionViewsGetCall) Fields(s ...googleapi.Field) *RegionViewsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -684,13 +691,13 @@ func (c *RegionViewsGetCall) Fields(s ...googleapi.Field) *RegionViewsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RegionViewsGetCall) IfNoneMatch(entityTag string) *RegionViewsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RegionViewsGetCall) Context(ctx context.Context) *RegionViewsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -698,9 +705,13 @@ func (c *RegionViewsGetCall) Context(ctx context.Context) *RegionViewsGetCall {
 
 func (c *RegionViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -708,8 +719,8 @@ func (c *RegionViewsGetCall) doRequest(alt string) (*http.Response, error) {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -804,30 +815,30 @@ type RegionViewsInsertCall struct {
 	projectName  string
 	region       string
 	resourceview *ResourceView
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Insert: Create a resource view.
 func (r *RegionViewsService) Insert(projectName string, region string, resourceview *ResourceView) *RegionViewsInsertCall {
-	c := &RegionViewsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RegionViewsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.region = region
 	c.resourceview = resourceview
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RegionViewsInsertCall) Fields(s ...googleapi.Field) *RegionViewsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RegionViewsInsertCall) Context(ctx context.Context) *RegionViewsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -840,9 +851,13 @@ func (c *RegionViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName": c.projectName,
@@ -932,17 +947,16 @@ func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
 // method id "resourceviews.regionViews.list":
 
 type RegionViewsListCall struct {
-	s            *Service
-	projectName  string
-	region       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s           *Service
+	projectName string
+	region      string
+	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: List resource views.
 func (r *RegionViewsService) List(projectName string, region string) *RegionViewsListCall {
-	c := &RegionViewsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RegionViewsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.region = region
 	return c
@@ -952,7 +966,7 @@ func (r *RegionViewsService) List(projectName string, region string) *RegionView
 // results to be returned. Acceptable values are 0 to 5000, inclusive.
 // (Default: 5000)
 func (c *RegionViewsListCall) MaxResults(maxResults int64) *RegionViewsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -961,15 +975,15 @@ func (c *RegionViewsListCall) MaxResults(maxResults int64) *RegionViewsListCall 
 // used to request the next page of results from a previous list
 // request.
 func (c *RegionViewsListCall) PageToken(pageToken string) *RegionViewsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RegionViewsListCall) Fields(s ...googleapi.Field) *RegionViewsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -979,13 +993,13 @@ func (c *RegionViewsListCall) Fields(s ...googleapi.Field) *RegionViewsListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RegionViewsListCall) IfNoneMatch(entityTag string) *RegionViewsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RegionViewsListCall) Context(ctx context.Context) *RegionViewsListCall {
 	c.ctx_ = ctx
 	return c
@@ -993,17 +1007,27 @@ func (c *RegionViewsListCall) Context(ctx context.Context) *RegionViewsListCall 
 
 func (c *RegionViewsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName": c.projectName,
 		"region":      c.region,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1105,13 +1129,13 @@ type RegionViewsListresourcesCall struct {
 	projectName      string
 	region           string
 	resourceViewName string
-	urlParams_       internal.URLParams
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Listresources: List the resources in the view.
 func (r *RegionViewsService) Listresources(projectName string, region string, resourceViewName string) *RegionViewsListresourcesCall {
-	c := &RegionViewsListresourcesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RegionViewsListresourcesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.region = region
 	c.resourceViewName = resourceViewName
@@ -1122,7 +1146,7 @@ func (r *RegionViewsService) Listresources(projectName string, region string, re
 // results to be returned. Acceptable values are 0 to 5000, inclusive.
 // (Default: 5000)
 func (c *RegionViewsListresourcesCall) MaxResults(maxResults int64) *RegionViewsListresourcesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -1131,21 +1155,21 @@ func (c *RegionViewsListresourcesCall) MaxResults(maxResults int64) *RegionViews
 // used to request the next page of results from a previous list
 // request.
 func (c *RegionViewsListresourcesCall) PageToken(pageToken string) *RegionViewsListresourcesCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RegionViewsListresourcesCall) Fields(s ...googleapi.Field) *RegionViewsListresourcesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RegionViewsListresourcesCall) Context(ctx context.Context) *RegionViewsListresourcesCall {
 	c.ctx_ = ctx
 	return c
@@ -1153,9 +1177,19 @@ func (c *RegionViewsListresourcesCall) Context(ctx context.Context) *RegionViews
 
 func (c *RegionViewsListresourcesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}/resources")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -1271,13 +1305,13 @@ type RegionViewsRemoveresourcesCall struct {
 	region                            string
 	resourceViewName                  string
 	regionviewsremoveresourcesrequest *RegionViewsRemoveResourcesRequest
-	urlParams_                        internal.URLParams
+	opt_                              map[string]interface{}
 	ctx_                              context.Context
 }
 
 // Removeresources: Remove resources from the view.
 func (r *RegionViewsService) Removeresources(projectName string, region string, resourceViewName string, regionviewsremoveresourcesrequest *RegionViewsRemoveResourcesRequest) *RegionViewsRemoveresourcesCall {
-	c := &RegionViewsRemoveresourcesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RegionViewsRemoveresourcesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.region = region
 	c.resourceViewName = resourceViewName
@@ -1285,17 +1319,17 @@ func (r *RegionViewsService) Removeresources(projectName string, region string, 
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RegionViewsRemoveresourcesCall) Fields(s ...googleapi.Field) *RegionViewsRemoveresourcesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RegionViewsRemoveresourcesCall) Context(ctx context.Context) *RegionViewsRemoveresourcesCall {
 	c.ctx_ = ctx
 	return c
@@ -1308,9 +1342,13 @@ func (c *RegionViewsRemoveresourcesCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/regions/{region}/resourceViews/{resourceViewName}/removeResources")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -1386,13 +1424,13 @@ type ZoneViewsAddresourcesCall struct {
 	zone                         string
 	resourceViewName             string
 	zoneviewsaddresourcesrequest *ZoneViewsAddResourcesRequest
-	urlParams_                   internal.URLParams
+	opt_                         map[string]interface{}
 	ctx_                         context.Context
 }
 
 // Addresources: Add resources to the view.
 func (r *ZoneViewsService) Addresources(projectName string, zone string, resourceViewName string, zoneviewsaddresourcesrequest *ZoneViewsAddResourcesRequest) *ZoneViewsAddresourcesCall {
-	c := &ZoneViewsAddresourcesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneViewsAddresourcesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.zone = zone
 	c.resourceViewName = resourceViewName
@@ -1400,17 +1438,17 @@ func (r *ZoneViewsService) Addresources(projectName string, zone string, resourc
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneViewsAddresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsAddresourcesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneViewsAddresourcesCall) Context(ctx context.Context) *ZoneViewsAddresourcesCall {
 	c.ctx_ = ctx
 	return c
@@ -1423,9 +1461,13 @@ func (c *ZoneViewsAddresourcesCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}/addResources")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -1500,30 +1542,30 @@ type ZoneViewsDeleteCall struct {
 	projectName      string
 	zone             string
 	resourceViewName string
-	urlParams_       internal.URLParams
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Delete: Delete a resource view.
 func (r *ZoneViewsService) Delete(projectName string, zone string, resourceViewName string) *ZoneViewsDeleteCall {
-	c := &ZoneViewsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneViewsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.zone = zone
 	c.resourceViewName = resourceViewName
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneViewsDeleteCall) Fields(s ...googleapi.Field) *ZoneViewsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneViewsDeleteCall) Context(ctx context.Context) *ZoneViewsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1531,9 +1573,13 @@ func (c *ZoneViewsDeleteCall) Context(ctx context.Context) *ZoneViewsDeleteCall 
 
 func (c *ZoneViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -1604,25 +1650,24 @@ type ZoneViewsGetCall struct {
 	projectName      string
 	zone             string
 	resourceViewName string
-	urlParams_       internal.URLParams
-	ifNoneMatch_     string
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Get: Get the information of a zonal resource view.
 func (r *ZoneViewsService) Get(projectName string, zone string, resourceViewName string) *ZoneViewsGetCall {
-	c := &ZoneViewsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneViewsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.zone = zone
 	c.resourceViewName = resourceViewName
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneViewsGetCall) Fields(s ...googleapi.Field) *ZoneViewsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1632,13 +1677,13 @@ func (c *ZoneViewsGetCall) Fields(s ...googleapi.Field) *ZoneViewsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZoneViewsGetCall) IfNoneMatch(entityTag string) *ZoneViewsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneViewsGetCall) Context(ctx context.Context) *ZoneViewsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1646,9 +1691,13 @@ func (c *ZoneViewsGetCall) Context(ctx context.Context) *ZoneViewsGetCall {
 
 func (c *ZoneViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -1656,8 +1705,8 @@ func (c *ZoneViewsGetCall) doRequest(alt string) (*http.Response, error) {
 		"resourceViewName": c.resourceViewName,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1752,30 +1801,30 @@ type ZoneViewsInsertCall struct {
 	projectName  string
 	zone         string
 	resourceview *ResourceView
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Insert: Create a resource view.
 func (r *ZoneViewsService) Insert(projectName string, zone string, resourceview *ResourceView) *ZoneViewsInsertCall {
-	c := &ZoneViewsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneViewsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.zone = zone
 	c.resourceview = resourceview
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneViewsInsertCall) Fields(s ...googleapi.Field) *ZoneViewsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneViewsInsertCall) Context(ctx context.Context) *ZoneViewsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1788,9 +1837,13 @@ func (c *ZoneViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName": c.projectName,
@@ -1880,17 +1933,16 @@ func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
 // method id "resourceviews.zoneViews.list":
 
 type ZoneViewsListCall struct {
-	s            *Service
-	projectName  string
-	zone         string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s           *Service
+	projectName string
+	zone        string
+	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // List: List resource views.
 func (r *ZoneViewsService) List(projectName string, zone string) *ZoneViewsListCall {
-	c := &ZoneViewsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneViewsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.zone = zone
 	return c
@@ -1900,7 +1952,7 @@ func (r *ZoneViewsService) List(projectName string, zone string) *ZoneViewsListC
 // results to be returned. Acceptable values are 0 to 5000, inclusive.
 // (Default: 5000)
 func (c *ZoneViewsListCall) MaxResults(maxResults int64) *ZoneViewsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -1909,15 +1961,15 @@ func (c *ZoneViewsListCall) MaxResults(maxResults int64) *ZoneViewsListCall {
 // used to request the next page of results from a previous list
 // request.
 func (c *ZoneViewsListCall) PageToken(pageToken string) *ZoneViewsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneViewsListCall) Fields(s ...googleapi.Field) *ZoneViewsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1927,13 +1979,13 @@ func (c *ZoneViewsListCall) Fields(s ...googleapi.Field) *ZoneViewsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZoneViewsListCall) IfNoneMatch(entityTag string) *ZoneViewsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneViewsListCall) Context(ctx context.Context) *ZoneViewsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1941,17 +1993,27 @@ func (c *ZoneViewsListCall) Context(ctx context.Context) *ZoneViewsListCall {
 
 func (c *ZoneViewsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName": c.projectName,
 		"zone":        c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2053,13 +2115,13 @@ type ZoneViewsListresourcesCall struct {
 	projectName      string
 	zone             string
 	resourceViewName string
-	urlParams_       internal.URLParams
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Listresources: List the resources of the resource view.
 func (r *ZoneViewsService) Listresources(projectName string, zone string, resourceViewName string) *ZoneViewsListresourcesCall {
-	c := &ZoneViewsListresourcesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneViewsListresourcesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.zone = zone
 	c.resourceViewName = resourceViewName
@@ -2070,7 +2132,7 @@ func (r *ZoneViewsService) Listresources(projectName string, zone string, resour
 // results to be returned. Acceptable values are 0 to 5000, inclusive.
 // (Default: 5000)
 func (c *ZoneViewsListresourcesCall) MaxResults(maxResults int64) *ZoneViewsListresourcesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -2079,21 +2141,21 @@ func (c *ZoneViewsListresourcesCall) MaxResults(maxResults int64) *ZoneViewsList
 // used to request the next page of results from a previous list
 // request.
 func (c *ZoneViewsListresourcesCall) PageToken(pageToken string) *ZoneViewsListresourcesCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneViewsListresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsListresourcesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneViewsListresourcesCall) Context(ctx context.Context) *ZoneViewsListresourcesCall {
 	c.ctx_ = ctx
 	return c
@@ -2101,9 +2163,19 @@ func (c *ZoneViewsListresourcesCall) Context(ctx context.Context) *ZoneViewsList
 
 func (c *ZoneViewsListresourcesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}/resources")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,
@@ -2219,13 +2291,13 @@ type ZoneViewsRemoveresourcesCall struct {
 	zone                            string
 	resourceViewName                string
 	zoneviewsremoveresourcesrequest *ZoneViewsRemoveResourcesRequest
-	urlParams_                      internal.URLParams
+	opt_                            map[string]interface{}
 	ctx_                            context.Context
 }
 
 // Removeresources: Remove resources from the view.
 func (r *ZoneViewsService) Removeresources(projectName string, zone string, resourceViewName string, zoneviewsremoveresourcesrequest *ZoneViewsRemoveResourcesRequest) *ZoneViewsRemoveresourcesCall {
-	c := &ZoneViewsRemoveresourcesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneViewsRemoveresourcesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectName = projectName
 	c.zone = zone
 	c.resourceViewName = resourceViewName
@@ -2233,17 +2305,17 @@ func (r *ZoneViewsService) Removeresources(projectName string, zone string, reso
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneViewsRemoveresourcesCall) Fields(s ...googleapi.Field) *ZoneViewsRemoveresourcesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneViewsRemoveresourcesCall) Context(ctx context.Context) *ZoneViewsRemoveresourcesCall {
 	c.ctx_ = ctx
 	return c
@@ -2256,9 +2328,13 @@ func (c *ZoneViewsRemoveresourcesCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{projectName}/zones/{zone}/resourceViews/{resourceViewName}/removeResources")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectName":      c.projectName,

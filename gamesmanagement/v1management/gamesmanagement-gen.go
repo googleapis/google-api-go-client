@@ -632,7 +632,7 @@ func (s *ScoresResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
 type AchievementsResetCall struct {
 	s             *Service
 	achievementId string
-	urlParams_    internal.URLParams
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
@@ -640,22 +640,22 @@ type AchievementsResetCall struct {
 // authenticated player. This method is only accessible to whitelisted
 // tester accounts for your application.
 func (r *AchievementsService) Reset(achievementId string) *AchievementsResetCall {
-	c := &AchievementsResetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AchievementsResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.achievementId = achievementId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementsResetCall) Fields(s ...googleapi.Field) *AchievementsResetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AchievementsResetCall) Context(ctx context.Context) *AchievementsResetCall {
 	c.ctx_ = ctx
 	return c
@@ -663,9 +663,13 @@ func (c *AchievementsResetCall) Context(ctx context.Context) *AchievementsResetC
 
 func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
@@ -742,30 +746,30 @@ func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
 // method id "gamesManagement.achievements.resetAll":
 
 type AchievementsResetAllCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAll: Resets all achievements for the currently authenticated
 // player for your application. This method is only accessible to
 // whitelisted tester accounts for your application.
 func (r *AchievementsService) ResetAll() *AchievementsResetAllCall {
-	c := &AchievementsResetAllCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AchievementsResetAllCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementsResetAllCall) Fields(s ...googleapi.Field) *AchievementsResetAllCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AchievementsResetAllCall) Context(ctx context.Context) *AchievementsResetAllCall {
 	c.ctx_ = ctx
 	return c
@@ -773,9 +777,13 @@ func (c *AchievementsResetAllCall) Context(ctx context.Context) *AchievementsRes
 
 func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -839,30 +847,30 @@ func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
 // method id "gamesManagement.achievements.resetAllForAllPlayers":
 
 type AchievementsResetAllForAllPlayersCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAllForAllPlayers: Resets all draft achievements for all players.
 // This method is only available to user accounts for your developer
 // console.
 func (r *AchievementsService) ResetAllForAllPlayers() *AchievementsResetAllForAllPlayersCall {
-	c := &AchievementsResetAllForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AchievementsResetAllForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *AchievementsResetAllForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AchievementsResetAllForAllPlayersCall) Context(ctx context.Context) *AchievementsResetAllForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -870,9 +878,13 @@ func (c *AchievementsResetAllForAllPlayersCall) Context(ctx context.Context) *Ac
 
 func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/resetAllForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -911,7 +923,7 @@ func (c *AchievementsResetAllForAllPlayersCall) Do() error {
 type AchievementsResetForAllPlayersCall struct {
 	s             *Service
 	achievementId string
-	urlParams_    internal.URLParams
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
@@ -919,22 +931,22 @@ type AchievementsResetForAllPlayersCall struct {
 // players. This method is only available to user accounts for your
 // developer console. Only draft achievements can be reset.
 func (r *AchievementsService) ResetForAllPlayers(achievementId string) *AchievementsResetForAllPlayersCall {
-	c := &AchievementsResetForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AchievementsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.achievementId = achievementId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementsResetForAllPlayersCall) Fields(s ...googleapi.Field) *AchievementsResetForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AchievementsResetForAllPlayersCall) Context(ctx context.Context) *AchievementsResetForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -942,9 +954,13 @@ func (c *AchievementsResetForAllPlayersCall) Context(ctx context.Context) *Achie
 
 func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/{achievementId}/resetForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"achievementId": c.achievementId,
@@ -996,7 +1012,7 @@ func (c *AchievementsResetForAllPlayersCall) Do() error {
 type AchievementsResetMultipleForAllPlayersCall struct {
 	s                                     *Service
 	achievementresetmultipleforallrequest *AchievementResetMultipleForAllRequest
-	urlParams_                            internal.URLParams
+	opt_                                  map[string]interface{}
 	ctx_                                  context.Context
 }
 
@@ -1004,22 +1020,22 @@ type AchievementsResetMultipleForAllPlayersCall struct {
 // for all players. This method is only available to user accounts for
 // your developer console. Only draft achievements may be reset.
 func (r *AchievementsService) ResetMultipleForAllPlayers(achievementresetmultipleforallrequest *AchievementResetMultipleForAllRequest) *AchievementsResetMultipleForAllPlayersCall {
-	c := &AchievementsResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AchievementsResetMultipleForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.achievementresetmultipleforallrequest = achievementresetmultipleforallrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AchievementsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *AchievementsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AchievementsResetMultipleForAllPlayersCall) Context(ctx context.Context) *AchievementsResetMultipleForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -1032,9 +1048,13 @@ func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*htt
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "achievements/resetMultipleForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1077,8 +1097,7 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
 type ApplicationsListHiddenCall struct {
 	s             *Service
 	applicationId string
-	urlParams_    internal.URLParams
-	ifNoneMatch_  string
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
@@ -1086,7 +1105,7 @@ type ApplicationsListHiddenCall struct {
 // application. This method is only available to user accounts for your
 // developer console.
 func (r *ApplicationsService) ListHidden(applicationId string) *ApplicationsListHiddenCall {
-	c := &ApplicationsListHiddenCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ApplicationsListHiddenCall{s: r.s, opt_: make(map[string]interface{})}
 	c.applicationId = applicationId
 	return c
 }
@@ -1096,22 +1115,22 @@ func (r *ApplicationsService) ListHidden(applicationId string) *ApplicationsList
 // paging. For any response, the actual number of player resources
 // returned may be less than the specified maxResults.
 func (c *ApplicationsListHiddenCall) MaxResults(maxResults int64) *ApplicationsListHiddenCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The token returned
 // by the previous request.
 func (c *ApplicationsListHiddenCall) PageToken(pageToken string) *ApplicationsListHiddenCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsListHiddenCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1121,13 +1140,13 @@ func (c *ApplicationsListHiddenCall) Fields(s ...googleapi.Field) *ApplicationsL
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ApplicationsListHiddenCall) IfNoneMatch(entityTag string) *ApplicationsListHiddenCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ApplicationsListHiddenCall) Context(ctx context.Context) *ApplicationsListHiddenCall {
 	c.ctx_ = ctx
 	return c
@@ -1135,16 +1154,26 @@ func (c *ApplicationsListHiddenCall) Context(ctx context.Context) *ApplicationsL
 
 func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/players/hidden")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1230,10 +1259,10 @@ func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
 // method id "gamesManagement.events.reset":
 
 type EventsResetCall struct {
-	s          *Service
-	eventId    string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	eventId string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Reset: Resets all player progress on the event with the given ID for
@@ -1241,22 +1270,22 @@ type EventsResetCall struct {
 // whitelisted tester accounts for your application. All quests for this
 // player that use the event will also be reset.
 func (r *EventsService) Reset(eventId string) *EventsResetCall {
-	c := &EventsResetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &EventsResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.eventId = eventId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *EventsResetCall) Fields(s ...googleapi.Field) *EventsResetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *EventsResetCall) Context(ctx context.Context) *EventsResetCall {
 	c.ctx_ = ctx
 	return c
@@ -1264,9 +1293,13 @@ func (c *EventsResetCall) Context(ctx context.Context) *EventsResetCall {
 
 func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "events/{eventId}/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"eventId": c.eventId,
@@ -1316,9 +1349,9 @@ func (c *EventsResetCall) Do() error {
 // method id "gamesManagement.events.resetAll":
 
 type EventsResetAllCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAll: Resets all player progress on all events for the currently
@@ -1326,21 +1359,21 @@ type EventsResetAllCall struct {
 // tester accounts for your application. All quests for this player will
 // also be reset.
 func (r *EventsService) ResetAll() *EventsResetAllCall {
-	c := &EventsResetAllCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &EventsResetAllCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *EventsResetAllCall) Fields(s ...googleapi.Field) *EventsResetAllCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *EventsResetAllCall) Context(ctx context.Context) *EventsResetAllCall {
 	c.ctx_ = ctx
 	return c
@@ -1348,9 +1381,13 @@ func (c *EventsResetAllCall) Context(ctx context.Context) *EventsResetAllCall {
 
 func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "events/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1387,30 +1424,30 @@ func (c *EventsResetAllCall) Do() error {
 // method id "gamesManagement.events.resetAllForAllPlayers":
 
 type EventsResetAllForAllPlayersCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAllForAllPlayers: Resets all draft events for all players. This
 // method is only available to user accounts for your developer console.
 // All quests that use any of these events will also be reset.
 func (r *EventsService) ResetAllForAllPlayers() *EventsResetAllForAllPlayersCall {
-	c := &EventsResetAllForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &EventsResetAllForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *EventsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *EventsResetAllForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *EventsResetAllForAllPlayersCall) Context(ctx context.Context) *EventsResetAllForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -1418,9 +1455,13 @@ func (c *EventsResetAllForAllPlayersCall) Context(ctx context.Context) *EventsRe
 
 func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "events/resetAllForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1457,10 +1498,10 @@ func (c *EventsResetAllForAllPlayersCall) Do() error {
 // method id "gamesManagement.events.resetForAllPlayers":
 
 type EventsResetForAllPlayersCall struct {
-	s          *Service
-	eventId    string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	eventId string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // ResetForAllPlayers: Resets the event with the given ID for all
@@ -1468,22 +1509,22 @@ type EventsResetForAllPlayersCall struct {
 // developer console. Only draft events can be reset. All quests that
 // use the event will also be reset.
 func (r *EventsService) ResetForAllPlayers(eventId string) *EventsResetForAllPlayersCall {
-	c := &EventsResetForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &EventsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.eventId = eventId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *EventsResetForAllPlayersCall) Fields(s ...googleapi.Field) *EventsResetForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *EventsResetForAllPlayersCall) Context(ctx context.Context) *EventsResetForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -1491,9 +1532,13 @@ func (c *EventsResetForAllPlayersCall) Context(ctx context.Context) *EventsReset
 
 func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "events/{eventId}/resetForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"eventId": c.eventId,
@@ -1545,7 +1590,7 @@ func (c *EventsResetForAllPlayersCall) Do() error {
 type EventsResetMultipleForAllPlayersCall struct {
 	s                                *Service
 	eventsresetmultipleforallrequest *EventsResetMultipleForAllRequest
-	urlParams_                       internal.URLParams
+	opt_                             map[string]interface{}
 	ctx_                             context.Context
 }
 
@@ -1554,22 +1599,22 @@ type EventsResetMultipleForAllPlayersCall struct {
 // developer console. Only draft events may be reset. All quests that
 // use any of the events will also be reset.
 func (r *EventsService) ResetMultipleForAllPlayers(eventsresetmultipleforallrequest *EventsResetMultipleForAllRequest) *EventsResetMultipleForAllPlayersCall {
-	c := &EventsResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &EventsResetMultipleForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.eventsresetmultipleforallrequest = eventsresetmultipleforallrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *EventsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *EventsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *EventsResetMultipleForAllPlayersCall) Context(ctx context.Context) *EventsResetMultipleForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -1582,9 +1627,13 @@ func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "events/resetMultipleForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1628,7 +1677,7 @@ type PlayersHideCall struct {
 	s             *Service
 	applicationId string
 	playerId      string
-	urlParams_    internal.URLParams
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
@@ -1636,23 +1685,23 @@ type PlayersHideCall struct {
 // application. This method is only available to user accounts for your
 // developer console.
 func (r *PlayersService) Hide(applicationId string, playerId string) *PlayersHideCall {
-	c := &PlayersHideCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PlayersHideCall{s: r.s, opt_: make(map[string]interface{})}
 	c.applicationId = applicationId
 	c.playerId = playerId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PlayersHideCall) Fields(s ...googleapi.Field) *PlayersHideCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PlayersHideCall) Context(ctx context.Context) *PlayersHideCall {
 	c.ctx_ = ctx
 	return c
@@ -1660,9 +1709,13 @@ func (c *PlayersHideCall) Context(ctx context.Context) *PlayersHideCall {
 
 func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/players/hidden/{playerId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
@@ -1723,7 +1776,7 @@ type PlayersUnhideCall struct {
 	s             *Service
 	applicationId string
 	playerId      string
-	urlParams_    internal.URLParams
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
@@ -1731,23 +1784,23 @@ type PlayersUnhideCall struct {
 // application. This method is only available to user accounts for your
 // developer console.
 func (r *PlayersService) Unhide(applicationId string, playerId string) *PlayersUnhideCall {
-	c := &PlayersUnhideCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PlayersUnhideCall{s: r.s, opt_: make(map[string]interface{})}
 	c.applicationId = applicationId
 	c.playerId = playerId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PlayersUnhideCall) Fields(s ...googleapi.Field) *PlayersUnhideCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PlayersUnhideCall) Context(ctx context.Context) *PlayersUnhideCall {
 	c.ctx_ = ctx
 	return c
@@ -1755,9 +1808,13 @@ func (c *PlayersUnhideCall) Context(ctx context.Context) *PlayersUnhideCall {
 
 func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}/players/hidden/{playerId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": c.applicationId,
@@ -1815,32 +1872,32 @@ func (c *PlayersUnhideCall) Do() error {
 // method id "gamesManagement.quests.reset":
 
 type QuestsResetCall struct {
-	s          *Service
-	questId    string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	questId string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Reset: Resets all player progress on the quest with the given ID for
 // the currently authenticated player. This method is only accessible to
 // whitelisted tester accounts for your application.
 func (r *QuestsService) Reset(questId string) *QuestsResetCall {
-	c := &QuestsResetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QuestsResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.questId = questId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QuestsResetCall) Fields(s ...googleapi.Field) *QuestsResetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QuestsResetCall) Context(ctx context.Context) *QuestsResetCall {
 	c.ctx_ = ctx
 	return c
@@ -1848,9 +1905,13 @@ func (c *QuestsResetCall) Context(ctx context.Context) *QuestsResetCall {
 
 func (c *QuestsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"questId": c.questId,
@@ -1900,30 +1961,30 @@ func (c *QuestsResetCall) Do() error {
 // method id "gamesManagement.quests.resetAll":
 
 type QuestsResetAllCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAll: Resets all player progress on all quests for the currently
 // authenticated player. This method is only accessible to whitelisted
 // tester accounts for your application.
 func (r *QuestsService) ResetAll() *QuestsResetAllCall {
-	c := &QuestsResetAllCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QuestsResetAllCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QuestsResetAllCall) Fields(s ...googleapi.Field) *QuestsResetAllCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QuestsResetAllCall) Context(ctx context.Context) *QuestsResetAllCall {
 	c.ctx_ = ctx
 	return c
@@ -1931,9 +1992,13 @@ func (c *QuestsResetAllCall) Context(ctx context.Context) *QuestsResetAllCall {
 
 func (c *QuestsResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1970,29 +2035,29 @@ func (c *QuestsResetAllCall) Do() error {
 // method id "gamesManagement.quests.resetAllForAllPlayers":
 
 type QuestsResetAllForAllPlayersCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAllForAllPlayers: Resets all draft quests for all players. This
 // method is only available to user accounts for your developer console.
 func (r *QuestsService) ResetAllForAllPlayers() *QuestsResetAllForAllPlayersCall {
-	c := &QuestsResetAllForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QuestsResetAllForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QuestsResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetAllForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QuestsResetAllForAllPlayersCall) Context(ctx context.Context) *QuestsResetAllForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -2000,9 +2065,13 @@ func (c *QuestsResetAllForAllPlayersCall) Context(ctx context.Context) *QuestsRe
 
 func (c *QuestsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/resetAllForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -2039,32 +2108,32 @@ func (c *QuestsResetAllForAllPlayersCall) Do() error {
 // method id "gamesManagement.quests.resetForAllPlayers":
 
 type QuestsResetForAllPlayersCall struct {
-	s          *Service
-	questId    string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	questId string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // ResetForAllPlayers: Resets all player progress on the quest with the
 // given ID for all players. This method is only available to user
 // accounts for your developer console. Only draft quests can be reset.
 func (r *QuestsService) ResetForAllPlayers(questId string) *QuestsResetForAllPlayersCall {
-	c := &QuestsResetForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QuestsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.questId = questId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QuestsResetForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QuestsResetForAllPlayersCall) Context(ctx context.Context) *QuestsResetForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -2072,9 +2141,13 @@ func (c *QuestsResetForAllPlayersCall) Context(ctx context.Context) *QuestsReset
 
 func (c *QuestsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/{questId}/resetForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"questId": c.questId,
@@ -2126,7 +2199,7 @@ func (c *QuestsResetForAllPlayersCall) Do() error {
 type QuestsResetMultipleForAllPlayersCall struct {
 	s                                *Service
 	questsresetmultipleforallrequest *QuestsResetMultipleForAllRequest
-	urlParams_                       internal.URLParams
+	opt_                             map[string]interface{}
 	ctx_                             context.Context
 }
 
@@ -2134,22 +2207,22 @@ type QuestsResetMultipleForAllPlayersCall struct {
 // players. This method is only available to user accounts for your
 // developer console. Only draft quests may be reset.
 func (r *QuestsService) ResetMultipleForAllPlayers(questsresetmultipleforallrequest *QuestsResetMultipleForAllRequest) *QuestsResetMultipleForAllPlayersCall {
-	c := &QuestsResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QuestsResetMultipleForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.questsresetmultipleforallrequest = questsresetmultipleforallrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QuestsResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *QuestsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QuestsResetMultipleForAllPlayersCall) Context(ctx context.Context) *QuestsResetMultipleForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -2162,9 +2235,13 @@ func (c *QuestsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "quests/resetMultipleForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -2205,30 +2282,30 @@ func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
 // method id "gamesManagement.rooms.reset":
 
 type RoomsResetCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Reset: Reset all rooms for the currently authenticated player for
 // your application. This method is only accessible to whitelisted
 // tester accounts for your application.
 func (r *RoomsService) Reset() *RoomsResetCall {
-	c := &RoomsResetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RoomsResetCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RoomsResetCall) Fields(s ...googleapi.Field) *RoomsResetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RoomsResetCall) Context(ctx context.Context) *RoomsResetCall {
 	c.ctx_ = ctx
 	return c
@@ -2236,9 +2313,13 @@ func (c *RoomsResetCall) Context(ctx context.Context) *RoomsResetCall {
 
 func (c *RoomsResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -2275,30 +2356,30 @@ func (c *RoomsResetCall) Do() error {
 // method id "gamesManagement.rooms.resetForAllPlayers":
 
 type RoomsResetForAllPlayersCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetForAllPlayers: Deletes rooms where the only room participants
 // are from whitelisted tester accounts for your application. This
 // method is only available to user accounts for your developer console.
 func (r *RoomsService) ResetForAllPlayers() *RoomsResetForAllPlayersCall {
-	c := &RoomsResetForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RoomsResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RoomsResetForAllPlayersCall) Fields(s ...googleapi.Field) *RoomsResetForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RoomsResetForAllPlayersCall) Context(ctx context.Context) *RoomsResetForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -2306,9 +2387,13 @@ func (c *RoomsResetForAllPlayersCall) Context(ctx context.Context) *RoomsResetFo
 
 func (c *RoomsResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rooms/resetForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -2347,7 +2432,7 @@ func (c *RoomsResetForAllPlayersCall) Do() error {
 type ScoresResetCall struct {
 	s             *Service
 	leaderboardId string
-	urlParams_    internal.URLParams
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
@@ -2355,22 +2440,22 @@ type ScoresResetCall struct {
 // currently authenticated player. This method is only accessible to
 // whitelisted tester accounts for your application.
 func (r *ScoresService) Reset(leaderboardId string) *ScoresResetCall {
-	c := &ScoresResetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ScoresResetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.leaderboardId = leaderboardId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ScoresResetCall) Fields(s ...googleapi.Field) *ScoresResetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ScoresResetCall) Context(ctx context.Context) *ScoresResetCall {
 	c.ctx_ = ctx
 	return c
@@ -2378,9 +2463,13 @@ func (c *ScoresResetCall) Context(ctx context.Context) *ScoresResetCall {
 
 func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/scores/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
@@ -2457,30 +2546,30 @@ func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
 // method id "gamesManagement.scores.resetAll":
 
 type ScoresResetAllCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAll: Resets all scores for all leaderboards for the currently
 // authenticated players. This method is only accessible to whitelisted
 // tester accounts for your application.
 func (r *ScoresService) ResetAll() *ScoresResetAllCall {
-	c := &ScoresResetAllCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ScoresResetAllCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ScoresResetAllCall) Fields(s ...googleapi.Field) *ScoresResetAllCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ScoresResetAllCall) Context(ctx context.Context) *ScoresResetAllCall {
 	c.ctx_ = ctx
 	return c
@@ -2488,9 +2577,13 @@ func (c *ScoresResetAllCall) Context(ctx context.Context) *ScoresResetAllCall {
 
 func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "scores/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -2554,30 +2647,30 @@ func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
 // method id "gamesManagement.scores.resetAllForAllPlayers":
 
 type ScoresResetAllForAllPlayersCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetAllForAllPlayers: Resets scores for all draft leaderboards for
 // all players. This method is only available to user accounts for your
 // developer console.
 func (r *ScoresService) ResetAllForAllPlayers() *ScoresResetAllForAllPlayersCall {
-	c := &ScoresResetAllForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ScoresResetAllForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ScoresResetAllForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresResetAllForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ScoresResetAllForAllPlayersCall) Context(ctx context.Context) *ScoresResetAllForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -2585,9 +2678,13 @@ func (c *ScoresResetAllForAllPlayersCall) Context(ctx context.Context) *ScoresRe
 
 func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "scores/resetAllForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -2626,7 +2723,7 @@ func (c *ScoresResetAllForAllPlayersCall) Do() error {
 type ScoresResetForAllPlayersCall struct {
 	s             *Service
 	leaderboardId string
-	urlParams_    internal.URLParams
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
@@ -2634,22 +2731,22 @@ type ScoresResetForAllPlayersCall struct {
 // ID for all players. This method is only available to user accounts
 // for your developer console. Only draft leaderboards can be reset.
 func (r *ScoresService) ResetForAllPlayers(leaderboardId string) *ScoresResetForAllPlayersCall {
-	c := &ScoresResetForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ScoresResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.leaderboardId = leaderboardId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ScoresResetForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresResetForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ScoresResetForAllPlayersCall) Context(ctx context.Context) *ScoresResetForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -2657,9 +2754,13 @@ func (c *ScoresResetForAllPlayersCall) Context(ctx context.Context) *ScoresReset
 
 func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "leaderboards/{leaderboardId}/scores/resetForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"leaderboardId": c.leaderboardId,
@@ -2711,7 +2812,7 @@ func (c *ScoresResetForAllPlayersCall) Do() error {
 type ScoresResetMultipleForAllPlayersCall struct {
 	s                                *Service
 	scoresresetmultipleforallrequest *ScoresResetMultipleForAllRequest
-	urlParams_                       internal.URLParams
+	opt_                             map[string]interface{}
 	ctx_                             context.Context
 }
 
@@ -2720,22 +2821,22 @@ type ScoresResetMultipleForAllPlayersCall struct {
 // accounts for your developer console. Only draft leaderboards may be
 // reset.
 func (r *ScoresService) ResetMultipleForAllPlayers(scoresresetmultipleforallrequest *ScoresResetMultipleForAllRequest) *ScoresResetMultipleForAllPlayersCall {
-	c := &ScoresResetMultipleForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ScoresResetMultipleForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	c.scoresresetmultipleforallrequest = scoresresetmultipleforallrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ScoresResetMultipleForAllPlayersCall) Fields(s ...googleapi.Field) *ScoresResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ScoresResetMultipleForAllPlayersCall) Context(ctx context.Context) *ScoresResetMultipleForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -2748,9 +2849,13 @@ func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "scores/resetMultipleForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -2791,29 +2896,29 @@ func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
 // method id "gamesManagement.turnBasedMatches.reset":
 
 type TurnBasedMatchesResetCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Reset: Reset all turn-based match data for a user. This method is
 // only accessible to whitelisted tester accounts for your application.
 func (r *TurnBasedMatchesService) Reset() *TurnBasedMatchesResetCall {
-	c := &TurnBasedMatchesResetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TurnBasedMatchesResetCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TurnBasedMatchesResetCall) Fields(s ...googleapi.Field) *TurnBasedMatchesResetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TurnBasedMatchesResetCall) Context(ctx context.Context) *TurnBasedMatchesResetCall {
 	c.ctx_ = ctx
 	return c
@@ -2821,9 +2926,13 @@ func (c *TurnBasedMatchesResetCall) Context(ctx context.Context) *TurnBasedMatch
 
 func (c *TurnBasedMatchesResetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/reset")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -2860,9 +2969,9 @@ func (c *TurnBasedMatchesResetCall) Do() error {
 // method id "gamesManagement.turnBasedMatches.resetForAllPlayers":
 
 type TurnBasedMatchesResetForAllPlayersCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ResetForAllPlayers: Deletes turn-based matches where the only match
@@ -2870,21 +2979,21 @@ type TurnBasedMatchesResetForAllPlayersCall struct {
 // application. This method is only available to user accounts for your
 // developer console.
 func (r *TurnBasedMatchesService) ResetForAllPlayers() *TurnBasedMatchesResetForAllPlayersCall {
-	c := &TurnBasedMatchesResetForAllPlayersCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TurnBasedMatchesResetForAllPlayersCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TurnBasedMatchesResetForAllPlayersCall) Fields(s ...googleapi.Field) *TurnBasedMatchesResetForAllPlayersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TurnBasedMatchesResetForAllPlayersCall) Context(ctx context.Context) *TurnBasedMatchesResetForAllPlayersCall {
 	c.ctx_ = ctx
 	return c
@@ -2892,9 +3001,13 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Context(ctx context.Context) *T
 
 func (c *TurnBasedMatchesResetForAllPlayersCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "turnbasedmatches/resetForAllPlayers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())

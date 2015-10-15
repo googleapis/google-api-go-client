@@ -456,10 +456,9 @@ func (s *User) MarshalJSON() ([]byte, error) {
 // method id "appsactivity.activities.list":
 
 type ActivitiesListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns a list of activities visible to the current logged in
@@ -469,7 +468,7 @@ type ActivitiesListCall struct {
 // they are similar. A request is scoped to activities from a given
 // Google service using the source parameter.
 func (r *ActivitiesService) List() *ActivitiesListCall {
-	c := &ActivitiesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ActivitiesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
@@ -477,14 +476,14 @@ func (r *ActivitiesService) List() *ActivitiesListCall {
 // Identifies the Drive folder containing the items for which to return
 // activities.
 func (c *ActivitiesListCall) DriveAncestorId(driveAncestorId string) *ActivitiesListCall {
-	c.urlParams_.Set("driveAncestorId", driveAncestorId)
+	c.opt_["drive.ancestorId"] = driveAncestorId
 	return c
 }
 
 // DriveFileId sets the optional parameter "drive.fileId": Identifies
 // the Drive item to return activities for.
 func (c *ActivitiesListCall) DriveFileId(driveFileId string) *ActivitiesListCall {
-	c.urlParams_.Set("driveFileId", driveFileId)
+	c.opt_["drive.fileId"] = driveFileId
 	return c
 }
 
@@ -496,7 +495,7 @@ func (c *ActivitiesListCall) DriveFileId(driveFileId string) *ActivitiesListCall
 //   "driveUi" (default)
 //   "none"
 func (c *ActivitiesListCall) GroupingStrategy(groupingStrategy string) *ActivitiesListCall {
-	c.urlParams_.Set("groupingStrategy", groupingStrategy)
+	c.opt_["groupingStrategy"] = groupingStrategy
 	return c
 }
 
@@ -504,14 +503,14 @@ func (c *ActivitiesListCall) GroupingStrategy(groupingStrategy string) *Activiti
 // of events to return on a page. The response includes a continuation
 // token if there are more events.
 func (c *ActivitiesListCall) PageSize(pageSize int64) *ActivitiesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.opt_["pageSize"] = pageSize
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token to
 // retrieve a specific page of results.
 func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -519,7 +518,7 @@ func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 // which to return activities. Possible values of source are:
 // - drive.google.com
 func (c *ActivitiesListCall) Source(source string) *ActivitiesListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
@@ -527,15 +526,15 @@ func (c *ActivitiesListCall) Source(source string) *ActivitiesListCall {
 // return activity for. Use the special value me to indicate the
 // currently authenticated user.
 func (c *ActivitiesListCall) UserId(userId string) *ActivitiesListCall {
-	c.urlParams_.Set("userId", userId)
+	c.opt_["userId"] = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -545,13 +544,13 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ActivitiesListCall) IfNoneMatch(entityTag string) *ActivitiesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ActivitiesListCall) Context(ctx context.Context) *ActivitiesListCall {
 	c.ctx_ = ctx
 	return c
@@ -559,14 +558,39 @@ func (c *ActivitiesListCall) Context(ctx context.Context) *ActivitiesListCall {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["drive.ancestorId"]; ok {
+		params.Set("drive.ancestorId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["drive.fileId"]; ok {
+		params.Set("drive.fileId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["groupingStrategy"]; ok {
+		params.Set("groupingStrategy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageSize"]; ok {
+		params.Set("pageSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["userId"]; ok {
+		params.Set("userId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

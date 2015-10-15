@@ -260,27 +260,26 @@ func (s *ProjectBillingInfo) MarshalJSON() ([]byte, error) {
 // method id "cloudbilling.billingAccounts.get":
 
 type BillingAccountsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	name string
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Gets information about a billing account. The current
 // authenticated user must be an [owner of the billing
 // account](https://support.google.com/cloud/answer/4430947).
 func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
-	c := &BillingAccountsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BillingAccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.name = name
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BillingAccountsGetCall) Fields(s ...googleapi.Field) *BillingAccountsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -290,13 +289,13 @@ func (c *BillingAccountsGetCall) Fields(s ...googleapi.Field) *BillingAccountsGe
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BillingAccountsGetCall) IfNoneMatch(entityTag string) *BillingAccountsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BillingAccountsGetCall) Context(ctx context.Context) *BillingAccountsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -304,16 +303,20 @@ func (c *BillingAccountsGetCall) Context(ctx context.Context) *BillingAccountsGe
 
 func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -386,23 +389,22 @@ func (c *BillingAccountsGetCall) Do() (*BillingAccount, error) {
 // method id "cloudbilling.billingAccounts.list":
 
 type BillingAccountsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the billing accounts that the current authenticated user
 // [owns](https://support.google.com/cloud/answer/4430947).
 func (r *BillingAccountsService) List() *BillingAccountsListCall {
-	c := &BillingAccountsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BillingAccountsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The maximum page size is 100; this is also the default.
 func (c *BillingAccountsListCall) PageSize(pageSize int64) *BillingAccountsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.opt_["pageSize"] = pageSize
 	return c
 }
 
@@ -412,15 +414,15 @@ func (c *BillingAccountsListCall) PageSize(pageSize int64) *BillingAccountsListC
 // `ListBillingAccounts` call. If unspecified, the first page of results
 // is returned.
 func (c *BillingAccountsListCall) PageToken(pageToken string) *BillingAccountsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BillingAccountsListCall) Fields(s ...googleapi.Field) *BillingAccountsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -430,13 +432,13 @@ func (c *BillingAccountsListCall) Fields(s ...googleapi.Field) *BillingAccountsL
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BillingAccountsListCall) IfNoneMatch(entityTag string) *BillingAccountsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BillingAccountsListCall) Context(ctx context.Context) *BillingAccountsListCall {
 	c.ctx_ = ctx
 	return c
@@ -444,14 +446,24 @@ func (c *BillingAccountsListCall) Context(ctx context.Context) *BillingAccountsL
 
 func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["pageSize"]; ok {
+		params.Set("pageSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/billingAccounts")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -525,18 +537,17 @@ func (c *BillingAccountsListCall) Do() (*ListBillingAccountsResponse, error) {
 // method id "cloudbilling.billingAccounts.projects.list":
 
 type BillingAccountsProjectsListCall struct {
-	s            *Service
-	name         string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	name string
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the projects associated with a billing account. The
 // current authenticated user must be an [owner of the billing
 // account](https://support.google.com/cloud/answer/4430947).
 func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProjectsListCall {
-	c := &BillingAccountsProjectsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BillingAccountsProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.name = name
 	return c
 }
@@ -544,7 +555,7 @@ func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProje
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The maximum page size is 100; this is also the default.
 func (c *BillingAccountsProjectsListCall) PageSize(pageSize int64) *BillingAccountsProjectsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.opt_["pageSize"] = pageSize
 	return c
 }
 
@@ -554,15 +565,15 @@ func (c *BillingAccountsProjectsListCall) PageSize(pageSize int64) *BillingAccou
 // `ListProjectBillingInfo` call. If unspecified, the first page of
 // results is returned.
 func (c *BillingAccountsProjectsListCall) PageToken(pageToken string) *BillingAccountsProjectsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BillingAccountsProjectsListCall) Fields(s ...googleapi.Field) *BillingAccountsProjectsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -572,13 +583,13 @@ func (c *BillingAccountsProjectsListCall) Fields(s ...googleapi.Field) *BillingA
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BillingAccountsProjectsListCall) IfNoneMatch(entityTag string) *BillingAccountsProjectsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BillingAccountsProjectsListCall) Context(ctx context.Context) *BillingAccountsProjectsListCall {
 	c.ctx_ = ctx
 	return c
@@ -586,16 +597,26 @@ func (c *BillingAccountsProjectsListCall) Context(ctx context.Context) *BillingA
 
 func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["pageSize"]; ok {
+		params.Set("pageSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/projects")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -679,11 +700,10 @@ func (c *BillingAccountsProjectsListCall) Do() (*ListProjectBillingInfoResponse,
 // method id "cloudbilling.projects.getBillingInfo":
 
 type ProjectsGetBillingInfoCall struct {
-	s            *Service
-	name         string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	name string
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetBillingInfo: Gets the billing information for a project. The
@@ -691,16 +711,16 @@ type ProjectsGetBillingInfoCall struct {
 // project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxof
 // vnoo ).
 func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCall {
-	c := &ProjectsGetBillingInfoCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ProjectsGetBillingInfoCall{s: r.s, opt_: make(map[string]interface{})}
 	c.name = name
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsGetBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsGetBillingInfoCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -710,13 +730,13 @@ func (c *ProjectsGetBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsGetBi
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsGetBillingInfoCall) IfNoneMatch(entityTag string) *ProjectsGetBillingInfoCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ProjectsGetBillingInfoCall) Context(ctx context.Context) *ProjectsGetBillingInfoCall {
 	c.ctx_ = ctx
 	return c
@@ -724,16 +744,20 @@ func (c *ProjectsGetBillingInfoCall) Context(ctx context.Context) *ProjectsGetBi
 
 func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/billingInfo")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -809,7 +833,7 @@ type ProjectsUpdateBillingInfoCall struct {
 	s                  *Service
 	name               string
 	projectbillinginfo *ProjectBillingInfo
-	urlParams_         internal.URLParams
+	opt_               map[string]interface{}
 	ctx_               context.Context
 }
 
@@ -842,23 +866,23 @@ type ProjectsUpdateBillingInfoCall struct {
 // wish to disable billing, you should always call this method with the
 // name of an *open* billing account.
 func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *ProjectBillingInfo) *ProjectsUpdateBillingInfoCall {
-	c := &ProjectsUpdateBillingInfoCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ProjectsUpdateBillingInfoCall{s: r.s, opt_: make(map[string]interface{})}
 	c.name = name
 	c.projectbillinginfo = projectbillinginfo
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsUpdateBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsUpdateBillingInfoCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ProjectsUpdateBillingInfoCall) Context(ctx context.Context) *ProjectsUpdateBillingInfoCall {
 	c.ctx_ = ctx
 	return c
@@ -871,9 +895,13 @@ func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/billingInfo")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,

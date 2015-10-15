@@ -1579,27 +1579,27 @@ type BackupRunsGetCall struct {
 	project             string
 	instance            string
 	backupConfiguration string
-	urlParams_          internal.URLParams
-	ifNoneMatch_        string
+	dueTime             string
+	opt_                map[string]interface{}
 	ctx_                context.Context
 }
 
 // Get: Retrieves information about a specified backup run for a Cloud
 // SQL instance.
 func (r *BackupRunsService) Get(project string, instance string, backupConfiguration string, dueTime string) *BackupRunsGetCall {
-	c := &BackupRunsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BackupRunsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.backupConfiguration = backupConfiguration
-	c.urlParams_.Set("dueTime", dueTime)
+	c.dueTime = dueTime
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BackupRunsGetCall) Fields(s ...googleapi.Field) *BackupRunsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1609,13 +1609,13 @@ func (c *BackupRunsGetCall) Fields(s ...googleapi.Field) *BackupRunsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BackupRunsGetCall) IfNoneMatch(entityTag string) *BackupRunsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BackupRunsGetCall) Context(ctx context.Context) *BackupRunsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1623,9 +1623,14 @@ func (c *BackupRunsGetCall) Context(ctx context.Context) *BackupRunsGetCall {
 
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("dueTime", fmt.Sprintf("%v", c.dueTime))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/backupRuns/{backupConfiguration}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":             c.project,
@@ -1633,8 +1638,8 @@ func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 		"backupConfiguration": c.backupConfiguration,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1728,27 +1733,27 @@ func (c *BackupRunsGetCall) Do() (*BackupRun, error) {
 // method id "sql.backupRuns.list":
 
 type BackupRunsListCall struct {
-	s            *Service
-	project      string
-	instance     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s                   *Service
+	project             string
+	instance            string
+	backupConfiguration string
+	opt_                map[string]interface{}
+	ctx_                context.Context
 }
 
 // List: Lists all backup runs associated with a Cloud SQL instance.
 func (r *BackupRunsService) List(project string, instance string, backupConfiguration string) *BackupRunsListCall {
-	c := &BackupRunsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BackupRunsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
-	c.urlParams_.Set("backupConfiguration", backupConfiguration)
+	c.backupConfiguration = backupConfiguration
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of backup runs per response.
 func (c *BackupRunsListCall) MaxResults(maxResults int64) *BackupRunsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -1756,15 +1761,15 @@ func (c *BackupRunsListCall) MaxResults(maxResults int64) *BackupRunsListCall {
 // previously-returned page token representing part of the larger set of
 // results to view.
 func (c *BackupRunsListCall) PageToken(pageToken string) *BackupRunsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BackupRunsListCall) Fields(s ...googleapi.Field) *BackupRunsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1774,13 +1779,13 @@ func (c *BackupRunsListCall) Fields(s ...googleapi.Field) *BackupRunsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BackupRunsListCall) IfNoneMatch(entityTag string) *BackupRunsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BackupRunsListCall) Context(ctx context.Context) *BackupRunsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1788,17 +1793,28 @@ func (c *BackupRunsListCall) Context(ctx context.Context) *BackupRunsListCall {
 
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("backupConfiguration", fmt.Sprintf("%v", c.backupConfiguration))
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/backupRuns")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1896,24 +1912,23 @@ func (c *BackupRunsListCall) Do() (*BackupRunsListResponse, error) {
 // method id "sql.flags.list":
 
 type FlagsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all database flags that can be set for Google Cloud SQL
 // instances.
 func (r *FlagsService) List() *FlagsListCall {
-	c := &FlagsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FlagsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FlagsListCall) Fields(s ...googleapi.Field) *FlagsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1923,13 +1938,13 @@ func (c *FlagsListCall) Fields(s ...googleapi.Field) *FlagsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *FlagsListCall) IfNoneMatch(entityTag string) *FlagsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FlagsListCall) Context(ctx context.Context) *FlagsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1937,14 +1952,18 @@ func (c *FlagsListCall) Context(ctx context.Context) *FlagsListCall {
 
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "flags")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2009,29 +2028,29 @@ type InstancesCloneCall struct {
 	s                     *Service
 	project               string
 	instancesclonerequest *InstancesCloneRequest
-	urlParams_            internal.URLParams
+	opt_                  map[string]interface{}
 	ctx_                  context.Context
 }
 
 // Clone: Creates a Cloud SQL instance as a clone of a source instance.
 func (r *InstancesService) Clone(project string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
-	c := &InstancesCloneCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesCloneCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instancesclonerequest = instancesclonerequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesCloneCall) Fields(s ...googleapi.Field) *InstancesCloneCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesCloneCall) Context(ctx context.Context) *InstancesCloneCall {
 	c.ctx_ = ctx
 	return c
@@ -2044,9 +2063,13 @@ func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/clone")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
@@ -2127,32 +2150,32 @@ func (c *InstancesCloneCall) Do() (*InstancesCloneResponse, error) {
 // method id "sql.instances.delete":
 
 type InstancesDeleteCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	project  string
+	instance string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Deletes a Cloud SQL instance.
 func (r *InstancesService) Delete(project string, instance string) *InstancesDeleteCall {
-	c := &InstancesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesDeleteCall) Fields(s ...googleapi.Field) *InstancesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesDeleteCall) Context(ctx context.Context) *InstancesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2160,9 +2183,13 @@ func (c *InstancesDeleteCall) Context(ctx context.Context) *InstancesDeleteCall 
 
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -2251,31 +2278,31 @@ type InstancesExportCall struct {
 	project                string
 	instance               string
 	instancesexportrequest *InstancesExportRequest
-	urlParams_             internal.URLParams
+	opt_                   map[string]interface{}
 	ctx_                   context.Context
 }
 
 // Export: Exports data from a Cloud SQL instance to a Google Cloud
 // Storage bucket as a MySQL dump file.
 func (r *InstancesService) Export(project string, instance string, instancesexportrequest *InstancesExportRequest) *InstancesExportCall {
-	c := &InstancesExportCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesExportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.instancesexportrequest = instancesexportrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesExportCall) Fields(s ...googleapi.Field) *InstancesExportCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesExportCall) Context(ctx context.Context) *InstancesExportCall {
 	c.ctx_ = ctx
 	return c
@@ -2288,9 +2315,13 @@ func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/export")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -2378,27 +2409,26 @@ func (c *InstancesExportCall) Do() (*InstancesExportResponse, error) {
 // method id "sql.instances.get":
 
 type InstancesGetCall struct {
-	s            *Service
-	project      string
-	instance     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	project  string
+	instance string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves information about a Cloud SQL instance.
 func (r *InstancesService) Get(project string, instance string) *InstancesGetCall {
-	c := &InstancesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesGetCall) Fields(s ...googleapi.Field) *InstancesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2408,13 +2438,13 @@ func (c *InstancesGetCall) Fields(s ...googleapi.Field) *InstancesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *InstancesGetCall) IfNoneMatch(entityTag string) *InstancesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesGetCall) Context(ctx context.Context) *InstancesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2422,17 +2452,21 @@ func (c *InstancesGetCall) Context(ctx context.Context) *InstancesGetCall {
 
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2516,31 +2550,31 @@ type InstancesImportCall struct {
 	project                string
 	instance               string
 	instancesimportrequest *InstancesImportRequest
-	urlParams_             internal.URLParams
+	opt_                   map[string]interface{}
 	ctx_                   context.Context
 }
 
 // Import: Imports data into a Cloud SQL instance from a MySQL dump file
 // stored in a Google Cloud Storage bucket.
 func (r *InstancesService) Import(project string, instance string, instancesimportrequest *InstancesImportRequest) *InstancesImportCall {
-	c := &InstancesImportCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.instancesimportrequest = instancesimportrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesImportCall) Fields(s ...googleapi.Field) *InstancesImportCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesImportCall) Context(ctx context.Context) *InstancesImportCall {
 	c.ctx_ = ctx
 	return c
@@ -2553,9 +2587,13 @@ func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/import")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -2646,29 +2684,29 @@ type InstancesInsertCall struct {
 	s                *Service
 	project          string
 	databaseinstance *DatabaseInstance
-	urlParams_       internal.URLParams
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Insert: Creates a new Cloud SQL instance.
 func (r *InstancesService) Insert(project string, databaseinstance *DatabaseInstance) *InstancesInsertCall {
-	c := &InstancesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.databaseinstance = databaseinstance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesInsertCall) Fields(s ...googleapi.Field) *InstancesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesInsertCall) Context(ctx context.Context) *InstancesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -2681,9 +2719,13 @@ func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
@@ -2764,17 +2806,16 @@ func (c *InstancesInsertCall) Do() (*InstancesInsertResponse, error) {
 // method id "sql.instances.list":
 
 type InstancesListCall struct {
-	s            *Service
-	project      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Lists instances for a given project, in alphabetical order by
 // instance name.
 func (r *InstancesService) List(project string) *InstancesListCall {
-	c := &InstancesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	return c
 }
@@ -2782,7 +2823,7 @@ func (r *InstancesService) List(project string) *InstancesListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results to return per response.
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -2790,15 +2831,15 @@ func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
 // previously-returned page token representing part of the larger set of
 // results to view.
 func (c *InstancesListCall) PageToken(pageToken string) *InstancesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesListCall) Fields(s ...googleapi.Field) *InstancesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2808,13 +2849,13 @@ func (c *InstancesListCall) Fields(s ...googleapi.Field) *InstancesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *InstancesListCall) IfNoneMatch(entityTag string) *InstancesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesListCall) Context(ctx context.Context) *InstancesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2822,16 +2863,26 @@ func (c *InstancesListCall) Context(ctx context.Context) *InstancesListCall {
 
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2919,31 +2970,31 @@ type InstancesPatchCall struct {
 	project          string
 	instance         string
 	databaseinstance *DatabaseInstance
-	urlParams_       internal.URLParams
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Patch: Updates the settings of a Cloud SQL instance. This method
 // supports patch semantics.
 func (r *InstancesService) Patch(project string, instance string, databaseinstance *DatabaseInstance) *InstancesPatchCall {
-	c := &InstancesPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.databaseinstance = databaseinstance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesPatchCall) Fields(s ...googleapi.Field) *InstancesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesPatchCall) Context(ctx context.Context) *InstancesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2956,9 +3007,13 @@ func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -3047,33 +3102,33 @@ func (c *InstancesPatchCall) Do() (*InstancesUpdateResponse, error) {
 // method id "sql.instances.promoteReplica":
 
 type InstancesPromoteReplicaCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	project  string
+	instance string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // PromoteReplica: Promotes the read replica instance to be a
 // stand-alone Cloud SQL instance.
 func (r *InstancesService) PromoteReplica(project string, instance string) *InstancesPromoteReplicaCall {
-	c := &InstancesPromoteReplicaCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesPromoteReplicaCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesPromoteReplicaCall) Fields(s ...googleapi.Field) *InstancesPromoteReplicaCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesPromoteReplicaCall) Context(ctx context.Context) *InstancesPromoteReplicaCall {
 	c.ctx_ = ctx
 	return c
@@ -3081,9 +3136,13 @@ func (c *InstancesPromoteReplicaCall) Context(ctx context.Context) *InstancesPro
 
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/promoteReplica")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -3168,33 +3227,33 @@ func (c *InstancesPromoteReplicaCall) Do() (*InstancesPromoteReplicaResponse, er
 // method id "sql.instances.resetSslConfig":
 
 type InstancesResetSslConfigCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	project  string
+	instance string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // ResetSslConfig: Deletes all client certificates and generates a new
 // server SSL certificate for a Cloud SQL instance.
 func (r *InstancesService) ResetSslConfig(project string, instance string) *InstancesResetSslConfigCall {
-	c := &InstancesResetSslConfigCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesResetSslConfigCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesResetSslConfigCall) Fields(s ...googleapi.Field) *InstancesResetSslConfigCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesResetSslConfigCall) Context(ctx context.Context) *InstancesResetSslConfigCall {
 	c.ctx_ = ctx
 	return c
@@ -3202,9 +3261,13 @@ func (c *InstancesResetSslConfigCall) Context(ctx context.Context) *InstancesRes
 
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/resetSslConfig")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -3289,32 +3352,32 @@ func (c *InstancesResetSslConfigCall) Do() (*InstancesResetSslConfigResponse, er
 // method id "sql.instances.restart":
 
 type InstancesRestartCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	project  string
+	instance string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Restart: Restarts a Cloud SQL instance.
 func (r *InstancesService) Restart(project string, instance string) *InstancesRestartCall {
-	c := &InstancesRestartCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesRestartCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesRestartCall) Fields(s ...googleapi.Field) *InstancesRestartCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesRestartCall) Context(ctx context.Context) *InstancesRestartCall {
 	c.ctx_ = ctx
 	return c
@@ -3322,9 +3385,13 @@ func (c *InstancesRestartCall) Context(ctx context.Context) *InstancesRestartCal
 
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/restart")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -3409,34 +3476,36 @@ func (c *InstancesRestartCall) Do() (*InstancesRestartResponse, error) {
 // method id "sql.instances.restoreBackup":
 
 type InstancesRestoreBackupCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s                     *Service
+	project               string
+	instance              string
+	backupConfigurationid string
+	dueTime               string
+	opt_                  map[string]interface{}
+	ctx_                  context.Context
 }
 
 // RestoreBackup: Restores a backup of a Cloud SQL instance.
 func (r *InstancesService) RestoreBackup(project string, instance string, backupConfigurationid string, dueTime string) *InstancesRestoreBackupCall {
-	c := &InstancesRestoreBackupCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesRestoreBackupCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
-	c.urlParams_.Set("backupConfigurationid", backupConfigurationid)
-	c.urlParams_.Set("dueTime", dueTime)
+	c.backupConfigurationid = backupConfigurationid
+	c.dueTime = dueTime
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesRestoreBackupCall) Fields(s ...googleapi.Field) *InstancesRestoreBackupCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesRestoreBackupCall) Context(ctx context.Context) *InstancesRestoreBackupCall {
 	c.ctx_ = ctx
 	return c
@@ -3444,9 +3513,15 @@ func (c *InstancesRestoreBackupCall) Context(ctx context.Context) *InstancesRest
 
 func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("backupConfiguration", fmt.Sprintf("%v", c.backupConfigurationid))
+	params.Set("dueTime", fmt.Sprintf("%v", c.dueTime))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/restoreBackup")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -3549,31 +3624,31 @@ type InstancesSetRootPasswordCall struct {
 	project                        string
 	instance                       string
 	instancesetrootpasswordrequest *InstanceSetRootPasswordRequest
-	urlParams_                     internal.URLParams
+	opt_                           map[string]interface{}
 	ctx_                           context.Context
 }
 
 // SetRootPassword: Sets the password for the root user of the specified
 // Cloud SQL instance.
 func (r *InstancesService) SetRootPassword(project string, instance string, instancesetrootpasswordrequest *InstanceSetRootPasswordRequest) *InstancesSetRootPasswordCall {
-	c := &InstancesSetRootPasswordCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesSetRootPasswordCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.instancesetrootpasswordrequest = instancesetrootpasswordrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesSetRootPasswordCall) Fields(s ...googleapi.Field) *InstancesSetRootPasswordCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesSetRootPasswordCall) Context(ctx context.Context) *InstancesSetRootPasswordCall {
 	c.ctx_ = ctx
 	return c
@@ -3586,9 +3661,13 @@ func (c *InstancesSetRootPasswordCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/setRootPassword")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -3681,30 +3760,30 @@ type InstancesUpdateCall struct {
 	project          string
 	instance         string
 	databaseinstance *DatabaseInstance
-	urlParams_       internal.URLParams
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Update: Updates the settings of a Cloud SQL instance.
 func (r *InstancesService) Update(project string, instance string, databaseinstance *DatabaseInstance) *InstancesUpdateCall {
-	c := &InstancesUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &InstancesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.databaseinstance = databaseinstance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *InstancesUpdateCall) Fields(s ...googleapi.Field) *InstancesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *InstancesUpdateCall) Context(ctx context.Context) *InstancesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -3717,9 +3796,13 @@ func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -3809,30 +3892,29 @@ func (c *InstancesUpdateCall) Do() (*InstancesUpdateResponse, error) {
 // method id "sql.operations.get":
 
 type OperationsGetCall struct {
-	s            *Service
-	project      string
-	instance     string
-	operation    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	project   string
+	instance  string
+	operation string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves information about a specific operation that was
 // performed on a Cloud SQL instance.
 func (r *OperationsService) Get(project string, instance string, operation string) *OperationsGetCall {
-	c := &OperationsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &OperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.operation = operation
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3842,13 +3924,13 @@ func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3856,9 +3938,13 @@ func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/operations/{operation}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
@@ -3866,8 +3952,8 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3954,18 +4040,17 @@ func (c *OperationsGetCall) Do() (*InstanceOperation, error) {
 // method id "sql.operations.list":
 
 type OperationsListCall struct {
-	s            *Service
-	project      string
-	instance     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	project  string
+	instance string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists all operations that have been performed on a Cloud SQL
 // instance.
 func (r *OperationsService) List(project string, instance string) *OperationsListCall {
-	c := &OperationsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &OperationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	return c
@@ -3974,7 +4059,7 @@ func (r *OperationsService) List(project string, instance string) *OperationsLis
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of operations per response.
 func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -3982,15 +4067,15 @@ func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
 // previously-returned page token representing part of the larger set of
 // results to view.
 func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4000,13 +4085,13 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4014,17 +4099,27 @@ func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/operations")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4119,30 +4214,30 @@ type SslCertsDeleteCall struct {
 	project         string
 	instance        string
 	sha1Fingerprint string
-	urlParams_      internal.URLParams
+	opt_            map[string]interface{}
 	ctx_            context.Context
 }
 
 // Delete: Deletes an SSL certificate from a Cloud SQL instance.
 func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprint string) *SslCertsDeleteCall {
-	c := &SslCertsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &SslCertsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.sha1Fingerprint = sha1Fingerprint
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SslCertsDeleteCall) Fields(s ...googleapi.Field) *SslCertsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *SslCertsDeleteCall) Context(ctx context.Context) *SslCertsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -4150,9 +4245,13 @@ func (c *SslCertsDeleteCall) Context(ctx context.Context) *SslCertsDeleteCall {
 
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":         c.project,
@@ -4249,26 +4348,25 @@ type SslCertsGetCall struct {
 	project         string
 	instance        string
 	sha1Fingerprint string
-	urlParams_      internal.URLParams
-	ifNoneMatch_    string
+	opt_            map[string]interface{}
 	ctx_            context.Context
 }
 
 // Get: Retrieves an SSL certificate as specified by its SHA-1
 // fingerprint.
 func (r *SslCertsService) Get(project string, instance string, sha1Fingerprint string) *SslCertsGetCall {
-	c := &SslCertsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &SslCertsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.sha1Fingerprint = sha1Fingerprint
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SslCertsGetCall) Fields(s ...googleapi.Field) *SslCertsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4278,13 +4376,13 @@ func (c *SslCertsGetCall) Fields(s ...googleapi.Field) *SslCertsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SslCertsGetCall) IfNoneMatch(entityTag string) *SslCertsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *SslCertsGetCall) Context(ctx context.Context) *SslCertsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4292,9 +4390,13 @@ func (c *SslCertsGetCall) Context(ctx context.Context) *SslCertsGetCall {
 
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts/{sha1Fingerprint}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":         c.project,
@@ -4302,8 +4404,8 @@ func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 		"sha1Fingerprint": c.sha1Fingerprint,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4394,31 +4496,31 @@ type SslCertsInsertCall struct {
 	project               string
 	instance              string
 	sslcertsinsertrequest *SslCertsInsertRequest
-	urlParams_            internal.URLParams
+	opt_                  map[string]interface{}
 	ctx_                  context.Context
 }
 
 // Insert: Creates an SSL certificate and returns the certificate, the
 // associated private key, and the server certificate authority.
 func (r *SslCertsService) Insert(project string, instance string, sslcertsinsertrequest *SslCertsInsertRequest) *SslCertsInsertCall {
-	c := &SslCertsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &SslCertsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	c.sslcertsinsertrequest = sslcertsinsertrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SslCertsInsertCall) Fields(s ...googleapi.Field) *SslCertsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *SslCertsInsertCall) Context(ctx context.Context) *SslCertsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -4431,9 +4533,13 @@ func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
@@ -4522,28 +4628,27 @@ func (c *SslCertsInsertCall) Do() (*SslCertsInsertResponse, error) {
 // method id "sql.sslCerts.list":
 
 type SslCertsListCall struct {
-	s            *Service
-	project      string
-	instance     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	project  string
+	instance string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists all of the current SSL certificates defined for a Cloud
 // SQL instance.
 func (r *SslCertsService) List(project string, instance string) *SslCertsListCall {
-	c := &SslCertsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &SslCertsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.instance = instance
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SslCertsListCall) Fields(s ...googleapi.Field) *SslCertsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4553,13 +4658,13 @@ func (c *SslCertsListCall) Fields(s ...googleapi.Field) *SslCertsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SslCertsListCall) IfNoneMatch(entityTag string) *SslCertsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *SslCertsListCall) Context(ctx context.Context) *SslCertsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4567,17 +4672,21 @@ func (c *SslCertsListCall) Context(ctx context.Context) *SslCertsListCall {
 
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/sslCerts")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":  c.project,
 		"instance": c.instance,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4657,26 +4766,25 @@ func (c *SslCertsListCall) Do() (*SslCertsListResponse, error) {
 // method id "sql.tiers.list":
 
 type TiersListCall struct {
-	s            *Service
-	project      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Lists service tiers that can be used to create Google Cloud SQL
 // instances.
 func (r *TiersService) List(project string) *TiersListCall {
-	c := &TiersListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TiersListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TiersListCall) Fields(s ...googleapi.Field) *TiersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4686,13 +4794,13 @@ func (c *TiersListCall) Fields(s ...googleapi.Field) *TiersListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TiersListCall) IfNoneMatch(entityTag string) *TiersListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TiersListCall) Context(ctx context.Context) *TiersListCall {
 	c.ctx_ = ctx
 	return c
@@ -4700,16 +4808,20 @@ func (c *TiersListCall) Context(ctx context.Context) *TiersListCall {
 
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/tiers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

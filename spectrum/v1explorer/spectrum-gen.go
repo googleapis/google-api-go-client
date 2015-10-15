@@ -1553,7 +1553,7 @@ func (s *VcardTypedText) MarshalJSON() ([]byte, error) {
 type PawsGetSpectrumCall struct {
 	s                      *Service
 	pawsgetspectrumrequest *PawsGetSpectrumRequest
-	urlParams_             internal.URLParams
+	opt_                   map[string]interface{}
 	ctx_                   context.Context
 }
 
@@ -1561,22 +1561,22 @@ type PawsGetSpectrumCall struct {
 // device at a location. Requests from a fixed-mode device must include
 // owner information so the device can be registered with the database.
 func (r *PawsService) GetSpectrum(pawsgetspectrumrequest *PawsGetSpectrumRequest) *PawsGetSpectrumCall {
-	c := &PawsGetSpectrumCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PawsGetSpectrumCall{s: r.s, opt_: make(map[string]interface{})}
 	c.pawsgetspectrumrequest = pawsgetspectrumrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PawsGetSpectrumCall) Fields(s ...googleapi.Field) *PawsGetSpectrumCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PawsGetSpectrumCall) Context(ctx context.Context) *PawsGetSpectrumCall {
 	c.ctx_ = ctx
 	return c
@@ -1589,9 +1589,13 @@ func (c *PawsGetSpectrumCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "getSpectrum")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1657,29 +1661,29 @@ func (c *PawsGetSpectrumCall) Do() (*PawsGetSpectrumResponse, error) {
 type PawsGetSpectrumBatchCall struct {
 	s                           *Service
 	pawsgetspectrumbatchrequest *PawsGetSpectrumBatchRequest
-	urlParams_                  internal.URLParams
+	opt_                        map[string]interface{}
 	ctx_                        context.Context
 }
 
 // GetSpectrumBatch: The Google Spectrum Database does not support batch
 // requests, so this method always yields an UNIMPLEMENTED error.
 func (r *PawsService) GetSpectrumBatch(pawsgetspectrumbatchrequest *PawsGetSpectrumBatchRequest) *PawsGetSpectrumBatchCall {
-	c := &PawsGetSpectrumBatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PawsGetSpectrumBatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.pawsgetspectrumbatchrequest = pawsgetspectrumbatchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PawsGetSpectrumBatchCall) Fields(s ...googleapi.Field) *PawsGetSpectrumBatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PawsGetSpectrumBatchCall) Context(ctx context.Context) *PawsGetSpectrumBatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1692,9 +1696,13 @@ func (c *PawsGetSpectrumBatchCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "getSpectrumBatch")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1760,29 +1768,29 @@ func (c *PawsGetSpectrumBatchCall) Do() (*PawsGetSpectrumBatchResponse, error) {
 type PawsInitCall struct {
 	s               *Service
 	pawsinitrequest *PawsInitRequest
-	urlParams_      internal.URLParams
+	opt_            map[string]interface{}
 	ctx_            context.Context
 }
 
 // Init: Initializes the connection between a white space device and the
 // database.
 func (r *PawsService) Init(pawsinitrequest *PawsInitRequest) *PawsInitCall {
-	c := &PawsInitCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PawsInitCall{s: r.s, opt_: make(map[string]interface{})}
 	c.pawsinitrequest = pawsinitrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PawsInitCall) Fields(s ...googleapi.Field) *PawsInitCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PawsInitCall) Context(ctx context.Context) *PawsInitCall {
 	c.ctx_ = ctx
 	return c
@@ -1795,9 +1803,13 @@ func (c *PawsInitCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "init")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1863,7 +1875,7 @@ func (c *PawsInitCall) Do() (*PawsInitResponse, error) {
 type PawsNotifySpectrumUseCall struct {
 	s                            *Service
 	pawsnotifyspectrumuserequest *PawsNotifySpectrumUseRequest
-	urlParams_                   internal.URLParams
+	opt_                         map[string]interface{}
 	ctx_                         context.Context
 }
 
@@ -1873,22 +1885,22 @@ type PawsNotifySpectrumUseCall struct {
 // operate in domains that require notification, so this always yields
 // an UNIMPLEMENTED error.
 func (r *PawsService) NotifySpectrumUse(pawsnotifyspectrumuserequest *PawsNotifySpectrumUseRequest) *PawsNotifySpectrumUseCall {
-	c := &PawsNotifySpectrumUseCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PawsNotifySpectrumUseCall{s: r.s, opt_: make(map[string]interface{})}
 	c.pawsnotifyspectrumuserequest = pawsnotifyspectrumuserequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PawsNotifySpectrumUseCall) Fields(s ...googleapi.Field) *PawsNotifySpectrumUseCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PawsNotifySpectrumUseCall) Context(ctx context.Context) *PawsNotifySpectrumUseCall {
 	c.ctx_ = ctx
 	return c
@@ -1901,9 +1913,13 @@ func (c *PawsNotifySpectrumUseCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "notifySpectrumUse")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1969,7 +1985,7 @@ func (c *PawsNotifySpectrumUseCall) Do() (*PawsNotifySpectrumUseResponse, error)
 type PawsRegisterCall struct {
 	s                   *Service
 	pawsregisterrequest *PawsRegisterRequest
-	urlParams_          internal.URLParams
+	opt_                map[string]interface{}
 	ctx_                context.Context
 }
 
@@ -1977,22 +1993,22 @@ type PawsRegisterCall struct {
 // getSpectrum method. As such this always returns an UNIMPLEMENTED
 // error.
 func (r *PawsService) Register(pawsregisterrequest *PawsRegisterRequest) *PawsRegisterCall {
-	c := &PawsRegisterCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PawsRegisterCall{s: r.s, opt_: make(map[string]interface{})}
 	c.pawsregisterrequest = pawsregisterrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PawsRegisterCall) Fields(s ...googleapi.Field) *PawsRegisterCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PawsRegisterCall) Context(ctx context.Context) *PawsRegisterCall {
 	c.ctx_ = ctx
 	return c
@@ -2005,9 +2021,13 @@ func (c *PawsRegisterCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "register")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -2073,7 +2093,7 @@ func (c *PawsRegisterCall) Do() (*PawsRegisterResponse, error) {
 type PawsVerifyDeviceCall struct {
 	s                       *Service
 	pawsverifydevicerequest *PawsVerifyDeviceRequest
-	urlParams_              internal.URLParams
+	opt_                    map[string]interface{}
 	ctx_                    context.Context
 }
 
@@ -2082,22 +2102,22 @@ type PawsVerifyDeviceCall struct {
 // master/slave configurations, so this always yields an UNIMPLEMENTED
 // error.
 func (r *PawsService) VerifyDevice(pawsverifydevicerequest *PawsVerifyDeviceRequest) *PawsVerifyDeviceCall {
-	c := &PawsVerifyDeviceCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PawsVerifyDeviceCall{s: r.s, opt_: make(map[string]interface{})}
 	c.pawsverifydevicerequest = pawsverifydevicerequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PawsVerifyDeviceCall) Fields(s ...googleapi.Field) *PawsVerifyDeviceCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PawsVerifyDeviceCall) Context(ctx context.Context) *PawsVerifyDeviceCall {
 	c.ctx_ = ctx
 	return c
@@ -2110,9 +2130,13 @@ func (c *PawsVerifyDeviceCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "verifyDevice")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)

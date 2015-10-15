@@ -1193,24 +1193,25 @@ func (s *PretargetingConfigList) MarshalJSON() ([]byte, error) {
 // method id "adexchangebuyer.accounts.get":
 
 type AccountsGetCall struct {
-	s    *Service
-	id   int64
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           int64
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets one account by ID.
 func (r *AccountsService) Get(id int64) *AccountsGetCall {
-	c := &AccountsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1220,13 +1221,13 @@ func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1234,20 +1235,16 @@ func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": strconv.FormatInt(c.id, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1320,22 +1317,23 @@ func (c *AccountsGetCall) Do() (*Account, error) {
 // method id "adexchangebuyer.accounts.list":
 
 type AccountsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves the authenticated user's list of accounts.
 func (r *AccountsService) List() *AccountsListCall {
-	c := &AccountsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1345,13 +1343,13 @@ func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AccountsListCall) IfNoneMatch(entityTag string) *AccountsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1359,18 +1357,14 @@ func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1431,33 +1425,33 @@ func (c *AccountsListCall) Do() (*AccountsList, error) {
 // method id "adexchangebuyer.accounts.patch":
 
 type AccountsPatchCall struct {
-	s       *Service
-	id      int64
-	account *Account
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	id         int64
+	account    *Account
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Patch: Updates an existing account. This method supports patch
 // semantics.
 func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
-	c := &AccountsPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.account = account
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsPatchCall) Fields(s ...googleapi.Field) *AccountsPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsPatchCall) Context(ctx context.Context) *AccountsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1470,13 +1464,9 @@ func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": strconv.FormatInt(c.id, 10),
@@ -1557,32 +1547,32 @@ func (c *AccountsPatchCall) Do() (*Account, error) {
 // method id "adexchangebuyer.accounts.update":
 
 type AccountsUpdateCall struct {
-	s       *Service
-	id      int64
-	account *Account
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s          *Service
+	id         int64
+	account    *Account
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Update: Updates an existing account.
 func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall {
-	c := &AccountsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &AccountsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	c.account = account
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *AccountsUpdateCall) Context(ctx context.Context) *AccountsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1595,13 +1585,9 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": strconv.FormatInt(c.id, 10),
@@ -1682,25 +1668,26 @@ func (c *AccountsUpdateCall) Do() (*Account, error) {
 // method id "adexchangebuyer.billingInfo.get":
 
 type BillingInfoGetCall struct {
-	s         *Service
-	accountId int64
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	accountId    int64
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Returns the billing information for one account specified by
 // account ID.
 func (r *BillingInfoService) Get(accountId int64) *BillingInfoGetCall {
-	c := &BillingInfoGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BillingInfoGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BillingInfoGetCall) Fields(s ...googleapi.Field) *BillingInfoGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1710,13 +1697,13 @@ func (c *BillingInfoGetCall) Fields(s ...googleapi.Field) *BillingInfoGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BillingInfoGetCall) IfNoneMatch(entityTag string) *BillingInfoGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BillingInfoGetCall) Context(ctx context.Context) *BillingInfoGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1724,20 +1711,16 @@ func (c *BillingInfoGetCall) Context(ctx context.Context) *BillingInfoGetCall {
 
 func (c *BillingInfoGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1810,23 +1793,24 @@ func (c *BillingInfoGetCall) Do() (*BillingInfo, error) {
 // method id "adexchangebuyer.billingInfo.list":
 
 type BillingInfoListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of billing information for all accounts of the
 // authenticated user.
 func (r *BillingInfoService) List() *BillingInfoListCall {
-	c := &BillingInfoListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BillingInfoListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BillingInfoListCall) Fields(s ...googleapi.Field) *BillingInfoListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1836,13 +1820,13 @@ func (c *BillingInfoListCall) Fields(s ...googleapi.Field) *BillingInfoListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BillingInfoListCall) IfNoneMatch(entityTag string) *BillingInfoListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BillingInfoListCall) Context(ctx context.Context) *BillingInfoListCall {
 	c.ctx_ = ctx
 	return c
@@ -1850,18 +1834,14 @@ func (c *BillingInfoListCall) Context(ctx context.Context) *BillingInfoListCall 
 
 func (c *BillingInfoListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1922,27 +1902,28 @@ func (c *BillingInfoListCall) Do() (*BillingInfoList, error) {
 // method id "adexchangebuyer.budget.get":
 
 type BudgetGetCall struct {
-	s         *Service
-	accountId int64
-	billingId int64
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	accountId    int64
+	billingId    int64
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Returns the budget information for the adgroup specified by the
 // accountId and billingId.
 func (r *BudgetService) Get(accountId int64, billingId int64) *BudgetGetCall {
-	c := &BudgetGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BudgetGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.billingId = billingId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BudgetGetCall) Fields(s ...googleapi.Field) *BudgetGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1952,13 +1933,13 @@ func (c *BudgetGetCall) Fields(s ...googleapi.Field) *BudgetGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BudgetGetCall) IfNoneMatch(entityTag string) *BudgetGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BudgetGetCall) Context(ctx context.Context) *BudgetGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1966,21 +1947,17 @@ func (c *BudgetGetCall) Context(ctx context.Context) *BudgetGetCall {
 
 func (c *BudgetGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo/{accountId}/{billingId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 		"billingId": strconv.FormatInt(c.billingId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2061,36 +2038,36 @@ func (c *BudgetGetCall) Do() (*Budget, error) {
 // method id "adexchangebuyer.budget.patch":
 
 type BudgetPatchCall struct {
-	s         *Service
-	accountId int64
-	billingId int64
-	budget    *Budget
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	accountId  int64
+	billingId  int64
+	budget     *Budget
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Patch: Updates the budget amount for the budget of the adgroup
 // specified by the accountId and billingId, with the budget amount in
 // the request. This method supports patch semantics.
 func (r *BudgetService) Patch(accountId int64, billingId int64, budget *Budget) *BudgetPatchCall {
-	c := &BudgetPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BudgetPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.billingId = billingId
 	c.budget = budget
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BudgetPatchCall) Fields(s ...googleapi.Field) *BudgetPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BudgetPatchCall) Context(ctx context.Context) *BudgetPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2103,13 +2080,9 @@ func (c *BudgetPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo/{accountId}/{billingId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
@@ -2199,36 +2172,36 @@ func (c *BudgetPatchCall) Do() (*Budget, error) {
 // method id "adexchangebuyer.budget.update":
 
 type BudgetUpdateCall struct {
-	s         *Service
-	accountId int64
-	billingId int64
-	budget    *Budget
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	accountId  int64
+	billingId  int64
+	budget     *Budget
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Update: Updates the budget amount for the budget of the adgroup
 // specified by the accountId and billingId, with the budget amount in
 // the request.
 func (r *BudgetService) Update(accountId int64, billingId int64, budget *Budget) *BudgetUpdateCall {
-	c := &BudgetUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &BudgetUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.billingId = billingId
 	c.budget = budget
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BudgetUpdateCall) Fields(s ...googleapi.Field) *BudgetUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *BudgetUpdateCall) Context(ctx context.Context) *BudgetUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2241,13 +2214,9 @@ func (c *BudgetUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "billinginfo/{accountId}/{billingId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
@@ -2340,24 +2309,25 @@ type CreativesGetCall struct {
 	s               *Service
 	accountId       int64
 	buyerCreativeId string
-	opt_            map[string]interface{}
+	urlParams_      internal.URLParams
+	ifNoneMatch_    string
 	ctx_            context.Context
 }
 
 // Get: Gets the status for a single creative. A creative will be
 // available 30-40 minutes after submission.
 func (r *CreativesService) Get(accountId int64, buyerCreativeId string) *CreativesGetCall {
-	c := &CreativesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CreativesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.buyerCreativeId = buyerCreativeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CreativesGetCall) Fields(s ...googleapi.Field) *CreativesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2367,13 +2337,13 @@ func (c *CreativesGetCall) Fields(s ...googleapi.Field) *CreativesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CreativesGetCall) IfNoneMatch(entityTag string) *CreativesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CreativesGetCall) Context(ctx context.Context) *CreativesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2381,21 +2351,17 @@ func (c *CreativesGetCall) Context(ctx context.Context) *CreativesGetCall {
 
 func (c *CreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives/{accountId}/{buyerCreativeId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId":       strconv.FormatInt(c.accountId, 10),
 		"buyerCreativeId": c.buyerCreativeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2475,30 +2441,30 @@ func (c *CreativesGetCall) Do() (*Creative, error) {
 // method id "adexchangebuyer.creatives.insert":
 
 type CreativesInsertCall struct {
-	s        *Service
-	creative *Creative
-	opt_     map[string]interface{}
-	ctx_     context.Context
+	s          *Service
+	creative   *Creative
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Insert: Submit a new creative.
 func (r *CreativesService) Insert(creative *Creative) *CreativesInsertCall {
-	c := &CreativesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CreativesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.creative = creative
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CreativesInsertCall) Fields(s ...googleapi.Field) *CreativesInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CreativesInsertCall) Context(ctx context.Context) *CreativesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -2511,13 +2477,9 @@ func (c *CreativesInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -2584,30 +2546,35 @@ func (c *CreativesInsertCall) Do() (*Creative, error) {
 // method id "adexchangebuyer.creatives.list":
 
 type CreativesListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of the authenticated user's active creatives.
 // A creative will be available 30-40 minutes after submission.
 func (r *CreativesService) List() *CreativesListCall {
-	c := &CreativesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &CreativesListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
 // AccountId sets the optional parameter "accountId": When specified,
 // only creatives for the given account ids are returned.
-func (c *CreativesListCall) AccountId(accountId int64) *CreativesListCall {
-	c.opt_["accountId"] = accountId
+func (c *CreativesListCall) AccountId(accountId []int64) *CreativesListCall {
+	var accountId_ []string
+	for _, v := range accountId {
+		accountId_ = append(accountId_, fmt.Sprintf("%v", v))
+	}
+	c.urlParams_.SetMulti("accountId", accountId_)
 	return c
 }
 
 // BuyerCreativeId sets the optional parameter "buyerCreativeId": When
 // specified, only creatives for the given buyer creative ids are
 // returned.
-func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId string) *CreativesListCall {
-	c.opt_["buyerCreativeId"] = buyerCreativeId
+func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId []string) *CreativesListCall {
+	c.urlParams_.SetMulti("buyerCreativeId", append([]string{}, buyerCreativeId...))
 	return c
 }
 
@@ -2615,7 +2582,7 @@ func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId string) *CreativesLi
 // of entries returned on one result page. If not set, the default is
 // 100.
 func (c *CreativesListCall) MaxResults(maxResults int64) *CreativesListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -2624,7 +2591,7 @@ func (c *CreativesListCall) MaxResults(maxResults int64) *CreativesListCall {
 // set this parameter to the value of "nextPageToken" from the previous
 // response.
 func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -2636,15 +2603,15 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 //   "disapproved" - Creatives which have been disapproved.
 //   "not_checked" - Creatives whose status is not yet checked.
 func (c *CreativesListCall) StatusFilter(statusFilter string) *CreativesListCall {
-	c.opt_["statusFilter"] = statusFilter
+	c.urlParams_.Set("statusFilter", statusFilter)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CreativesListCall) Fields(s ...googleapi.Field) *CreativesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2654,13 +2621,13 @@ func (c *CreativesListCall) Fields(s ...googleapi.Field) *CreativesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CreativesListCall) IfNoneMatch(entityTag string) *CreativesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *CreativesListCall) Context(ctx context.Context) *CreativesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2668,33 +2635,14 @@ func (c *CreativesListCall) Context(ctx context.Context) *CreativesListCall {
 
 func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["accountId"]; ok {
-		params.Set("accountId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["buyerCreativeId"]; ok {
-		params.Set("buyerCreativeId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["statusFilter"]; ok {
-		params.Set("statusFilter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2798,24 +2746,25 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 // method id "adexchangebuyer.directDeals.get":
 
 type DirectDealsGetCall struct {
-	s    *Service
-	id   int64
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	id           int64
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets one direct deal by ID.
 func (r *DirectDealsService) Get(id int64) *DirectDealsGetCall {
-	c := &DirectDealsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DirectDealsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DirectDealsGetCall) Fields(s ...googleapi.Field) *DirectDealsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2825,13 +2774,13 @@ func (c *DirectDealsGetCall) Fields(s ...googleapi.Field) *DirectDealsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DirectDealsGetCall) IfNoneMatch(entityTag string) *DirectDealsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DirectDealsGetCall) Context(ctx context.Context) *DirectDealsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2839,20 +2788,16 @@ func (c *DirectDealsGetCall) Context(ctx context.Context) *DirectDealsGetCall {
 
 func (c *DirectDealsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "directdeals/{id}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"id": strconv.FormatInt(c.id, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2925,22 +2870,23 @@ func (c *DirectDealsGetCall) Do() (*DirectDeal, error) {
 // method id "adexchangebuyer.directDeals.list":
 
 type DirectDealsListCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves the authenticated user's list of direct deals.
 func (r *DirectDealsService) List() *DirectDealsListCall {
-	c := &DirectDealsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DirectDealsListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DirectDealsListCall) Fields(s ...googleapi.Field) *DirectDealsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2950,13 +2896,13 @@ func (c *DirectDealsListCall) Fields(s ...googleapi.Field) *DirectDealsListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DirectDealsListCall) IfNoneMatch(entityTag string) *DirectDealsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DirectDealsListCall) Context(ctx context.Context) *DirectDealsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2964,18 +2910,14 @@ func (c *DirectDealsListCall) Context(ctx context.Context) *DirectDealsListCall 
 
 func (c *DirectDealsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "directdeals")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3036,20 +2978,18 @@ func (c *DirectDealsListCall) Do() (*DirectDealsList, error) {
 // method id "adexchangebuyer.performanceReport.list":
 
 type PerformanceReportListCall struct {
-	s             *Service
-	accountId     int64
-	endDateTime   string
-	startDateTime string
-	opt_          map[string]interface{}
-	ctx_          context.Context
+	s            *Service
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves the authenticated user's list of performance metrics.
 func (r *PerformanceReportService) List(accountId int64, endDateTime string, startDateTime string) *PerformanceReportListCall {
-	c := &PerformanceReportListCall{s: r.s, opt_: make(map[string]interface{})}
-	c.accountId = accountId
-	c.endDateTime = endDateTime
-	c.startDateTime = startDateTime
+	c := &PerformanceReportListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c.urlParams_.Set("accountId", fmt.Sprintf("%v", accountId))
+	c.urlParams_.Set("endDateTime", endDateTime)
+	c.urlParams_.Set("startDateTime", startDateTime)
 	return c
 }
 
@@ -3057,7 +2997,7 @@ func (r *PerformanceReportService) List(accountId int64, endDateTime string, sta
 // of entries returned on one result page. If not set, the default is
 // 100.
 func (c *PerformanceReportListCall) MaxResults(maxResults int64) *PerformanceReportListCall {
-	c.opt_["maxResults"] = maxResults
+	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
 	return c
 }
 
@@ -3066,15 +3006,15 @@ func (c *PerformanceReportListCall) MaxResults(maxResults int64) *PerformanceRep
 // page, set this parameter to the value of "nextPageToken" from the
 // previous response.
 func (c *PerformanceReportListCall) PageToken(pageToken string) *PerformanceReportListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PerformanceReportListCall) Fields(s ...googleapi.Field) *PerformanceReportListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3084,13 +3024,13 @@ func (c *PerformanceReportListCall) Fields(s ...googleapi.Field) *PerformanceRep
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PerformanceReportListCall) IfNoneMatch(entityTag string) *PerformanceReportListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PerformanceReportListCall) Context(ctx context.Context) *PerformanceReportListCall {
 	c.ctx_ = ctx
 	return c
@@ -3098,27 +3038,14 @@ func (c *PerformanceReportListCall) Context(ctx context.Context) *PerformanceRep
 
 func (c *PerformanceReportListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("accountId", fmt.Sprintf("%v", c.accountId))
-	params.Set("endDateTime", fmt.Sprintf("%v", c.endDateTime))
-	params.Set("startDateTime", fmt.Sprintf("%v", c.startDateTime))
-	if v, ok := c.opt_["maxResults"]; ok {
-		params.Set("maxResults", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "performancereport")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3218,32 +3145,32 @@ func (c *PerformanceReportListCall) Do() (*PerformanceReportList, error) {
 // method id "adexchangebuyer.pretargetingConfig.delete":
 
 type PretargetingConfigDeleteCall struct {
-	s         *Service
-	accountId int64
-	configId  int64
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	accountId  int64
+	configId   int64
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Delete: Deletes an existing pretargeting config.
 func (r *PretargetingConfigService) Delete(accountId int64, configId int64) *PretargetingConfigDeleteCall {
-	c := &PretargetingConfigDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PretargetingConfigDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.configId = configId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PretargetingConfigDeleteCall) Fields(s ...googleapi.Field) *PretargetingConfigDeleteCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PretargetingConfigDeleteCall) Context(ctx context.Context) *PretargetingConfigDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -3251,13 +3178,9 @@ func (c *PretargetingConfigDeleteCall) Context(ctx context.Context) *Pretargetin
 
 func (c *PretargetingConfigDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}/{configId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
@@ -3316,26 +3239,27 @@ func (c *PretargetingConfigDeleteCall) Do() error {
 // method id "adexchangebuyer.pretargetingConfig.get":
 
 type PretargetingConfigGetCall struct {
-	s         *Service
-	accountId int64
-	configId  int64
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	accountId    int64
+	configId     int64
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets a specific pretargeting configuration
 func (r *PretargetingConfigService) Get(accountId int64, configId int64) *PretargetingConfigGetCall {
-	c := &PretargetingConfigGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PretargetingConfigGetCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.configId = configId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PretargetingConfigGetCall) Fields(s ...googleapi.Field) *PretargetingConfigGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3345,13 +3269,13 @@ func (c *PretargetingConfigGetCall) Fields(s ...googleapi.Field) *PretargetingCo
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PretargetingConfigGetCall) IfNoneMatch(entityTag string) *PretargetingConfigGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PretargetingConfigGetCall) Context(ctx context.Context) *PretargetingConfigGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3359,21 +3283,17 @@ func (c *PretargetingConfigGetCall) Context(ctx context.Context) *PretargetingCo
 
 func (c *PretargetingConfigGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}/{configId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 		"configId":  strconv.FormatInt(c.configId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3457,29 +3377,29 @@ type PretargetingConfigInsertCall struct {
 	s                  *Service
 	accountId          int64
 	pretargetingconfig *PretargetingConfig
-	opt_               map[string]interface{}
+	urlParams_         internal.URLParams
 	ctx_               context.Context
 }
 
 // Insert: Inserts a new pretargeting configuration.
 func (r *PretargetingConfigService) Insert(accountId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigInsertCall {
-	c := &PretargetingConfigInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PretargetingConfigInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.pretargetingconfig = pretargetingconfig
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PretargetingConfigInsertCall) Fields(s ...googleapi.Field) *PretargetingConfigInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PretargetingConfigInsertCall) Context(ctx context.Context) *PretargetingConfigInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -3492,13 +3412,9 @@ func (c *PretargetingConfigInsertCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
@@ -3579,25 +3495,26 @@ func (c *PretargetingConfigInsertCall) Do() (*PretargetingConfig, error) {
 // method id "adexchangebuyer.pretargetingConfig.list":
 
 type PretargetingConfigListCall struct {
-	s         *Service
-	accountId int64
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	accountId    int64
+	urlParams_   internal.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Retrieves a list of the authenticated user's pretargeting
 // configurations.
 func (r *PretargetingConfigService) List(accountId int64) *PretargetingConfigListCall {
-	c := &PretargetingConfigListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PretargetingConfigListCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PretargetingConfigListCall) Fields(s ...googleapi.Field) *PretargetingConfigListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3607,13 +3524,13 @@ func (c *PretargetingConfigListCall) Fields(s ...googleapi.Field) *PretargetingC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PretargetingConfigListCall) IfNoneMatch(entityTag string) *PretargetingConfigListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PretargetingConfigListCall) Context(ctx context.Context) *PretargetingConfigListCall {
 	c.ctx_ = ctx
 	return c
@@ -3621,20 +3538,16 @@ func (c *PretargetingConfigListCall) Context(ctx context.Context) *PretargetingC
 
 func (c *PretargetingConfigListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3711,31 +3624,31 @@ type PretargetingConfigPatchCall struct {
 	accountId          int64
 	configId           int64
 	pretargetingconfig *PretargetingConfig
-	opt_               map[string]interface{}
+	urlParams_         internal.URLParams
 	ctx_               context.Context
 }
 
 // Patch: Updates an existing pretargeting config. This method supports
 // patch semantics.
 func (r *PretargetingConfigService) Patch(accountId int64, configId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigPatchCall {
-	c := &PretargetingConfigPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PretargetingConfigPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.configId = configId
 	c.pretargetingconfig = pretargetingconfig
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PretargetingConfigPatchCall) Fields(s ...googleapi.Field) *PretargetingConfigPatchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PretargetingConfigPatchCall) Context(ctx context.Context) *PretargetingConfigPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -3748,13 +3661,9 @@ func (c *PretargetingConfigPatchCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}/{configId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),
@@ -3848,30 +3757,30 @@ type PretargetingConfigUpdateCall struct {
 	accountId          int64
 	configId           int64
 	pretargetingconfig *PretargetingConfig
-	opt_               map[string]interface{}
+	urlParams_         internal.URLParams
 	ctx_               context.Context
 }
 
 // Update: Updates an existing pretargeting config.
 func (r *PretargetingConfigService) Update(accountId int64, configId int64, pretargetingconfig *PretargetingConfig) *PretargetingConfigUpdateCall {
-	c := &PretargetingConfigUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &PretargetingConfigUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.accountId = accountId
 	c.configId = configId
 	c.pretargetingconfig = pretargetingconfig
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PretargetingConfigUpdateCall) Fields(s ...googleapi.Field) *PretargetingConfigUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *PretargetingConfigUpdateCall) Context(ctx context.Context) *PretargetingConfigUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -3884,13 +3793,9 @@ func (c *PretargetingConfigUpdateCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "pretargetingconfigs/{accountId}/{configId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"accountId": strconv.FormatInt(c.accountId, 10),

@@ -317,24 +317,23 @@ func (s *DataTransfersListResponse) MarshalJSON() ([]byte, error) {
 type ApplicationsGetCall struct {
 	s             *Service
 	applicationId int64
-	urlParams_    internal.URLParams
-	ifNoneMatch_  string
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
 // Get: Retrieves information about an application for the given
 // application ID.
 func (r *ApplicationsService) Get(applicationId int64) *ApplicationsGetCall {
-	c := &ApplicationsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ApplicationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.applicationId = applicationId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -344,13 +343,13 @@ func (c *ApplicationsGetCall) Fields(s ...googleapi.Field) *ApplicationsGetCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ApplicationsGetCall) IfNoneMatch(entityTag string) *ApplicationsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ApplicationsGetCall) Context(ctx context.Context) *ApplicationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -358,16 +357,20 @@ func (c *ApplicationsGetCall) Context(ctx context.Context) *ApplicationsGetCall 
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications/{applicationId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"applicationId": strconv.FormatInt(c.applicationId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -441,45 +444,44 @@ func (c *ApplicationsGetCall) Do() (*Application, error) {
 // method id "datatransfer.applications.list":
 
 type ApplicationsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the applications available for data transfer for a
 // customer.
 func (r *ApplicationsService) List() *ApplicationsListCall {
-	c := &ApplicationsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ApplicationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // CustomerId sets the optional parameter "customerId": Immutable ID of
 // the Google Apps account.
 func (c *ApplicationsListCall) CustomerId(customerId string) *ApplicationsListCall {
-	c.urlParams_.Set("customerId", customerId)
+	c.opt_["customerId"] = customerId
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 100.
 func (c *ApplicationsListCall) MaxResults(maxResults int64) *ApplicationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Token to specify
 // next page in the list.
 func (c *ApplicationsListCall) PageToken(pageToken string) *ApplicationsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ApplicationsListCall) Fields(s ...googleapi.Field) *ApplicationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -489,13 +491,13 @@ func (c *ApplicationsListCall) Fields(s ...googleapi.Field) *ApplicationsListCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ApplicationsListCall) IfNoneMatch(entityTag string) *ApplicationsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ApplicationsListCall) Context(ctx context.Context) *ApplicationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -503,14 +505,27 @@ func (c *ApplicationsListCall) Context(ctx context.Context) *ApplicationsListCal
 
 func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["customerId"]; ok {
+		params.Set("customerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "applications")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -594,23 +609,22 @@ func (c *ApplicationsListCall) Do() (*ApplicationsListResponse, error) {
 type TransfersGetCall struct {
 	s              *Service
 	dataTransferId string
-	urlParams_     internal.URLParams
-	ifNoneMatch_   string
+	opt_           map[string]interface{}
 	ctx_           context.Context
 }
 
 // Get: Retrieves a data transfer request by its resource ID.
 func (r *TransfersService) Get(dataTransferId string) *TransfersGetCall {
-	c := &TransfersGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TransfersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.dataTransferId = dataTransferId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransfersGetCall) Fields(s ...googleapi.Field) *TransfersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -620,13 +634,13 @@ func (c *TransfersGetCall) Fields(s ...googleapi.Field) *TransfersGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TransfersGetCall) IfNoneMatch(entityTag string) *TransfersGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TransfersGetCall) Context(ctx context.Context) *TransfersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -634,16 +648,20 @@ func (c *TransfersGetCall) Context(ctx context.Context) *TransfersGetCall {
 
 func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "transfers/{dataTransferId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"dataTransferId": c.dataTransferId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -718,28 +736,28 @@ func (c *TransfersGetCall) Do() (*DataTransfer, error) {
 type TransfersInsertCall struct {
 	s            *Service
 	datatransfer *DataTransfer
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Insert: Inserts a data transfer request.
 func (r *TransfersService) Insert(datatransfer *DataTransfer) *TransfersInsertCall {
-	c := &TransfersInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TransfersInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.datatransfer = datatransfer
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransfersInsertCall) Fields(s ...googleapi.Field) *TransfersInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TransfersInsertCall) Context(ctx context.Context) *TransfersInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -752,9 +770,13 @@ func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "transfers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -821,65 +843,64 @@ func (c *TransfersInsertCall) Do() (*DataTransfer, error) {
 // method id "datatransfer.transfers.list":
 
 type TransfersListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the transfers for a customer by source user, destination
 // user, or status.
 func (r *TransfersService) List() *TransfersListCall {
-	c := &TransfersListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TransfersListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // CustomerId sets the optional parameter "customerId": Immutable ID of
 // the Google Apps account.
 func (c *TransfersListCall) CustomerId(customerId string) *TransfersListCall {
-	c.urlParams_.Set("customerId", customerId)
+	c.opt_["customerId"] = customerId
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 100.
 func (c *TransfersListCall) MaxResults(maxResults int64) *TransfersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // NewOwnerUserId sets the optional parameter "newOwnerUserId":
 // Destination user's profile ID.
 func (c *TransfersListCall) NewOwnerUserId(newOwnerUserId string) *TransfersListCall {
-	c.urlParams_.Set("newOwnerUserId", newOwnerUserId)
+	c.opt_["newOwnerUserId"] = newOwnerUserId
 	return c
 }
 
 // OldOwnerUserId sets the optional parameter "oldOwnerUserId": Source
 // user's profile ID.
 func (c *TransfersListCall) OldOwnerUserId(oldOwnerUserId string) *TransfersListCall {
-	c.urlParams_.Set("oldOwnerUserId", oldOwnerUserId)
+	c.opt_["oldOwnerUserId"] = oldOwnerUserId
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Token to specify
 // the next page in the list.
 func (c *TransfersListCall) PageToken(pageToken string) *TransfersListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // Status sets the optional parameter "status": Status of the transfer.
 func (c *TransfersListCall) Status(status string) *TransfersListCall {
-	c.urlParams_.Set("status", status)
+	c.opt_["status"] = status
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TransfersListCall) Fields(s ...googleapi.Field) *TransfersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -889,13 +910,13 @@ func (c *TransfersListCall) Fields(s ...googleapi.Field) *TransfersListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TransfersListCall) IfNoneMatch(entityTag string) *TransfersListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TransfersListCall) Context(ctx context.Context) *TransfersListCall {
 	c.ctx_ = ctx
 	return c
@@ -903,14 +924,36 @@ func (c *TransfersListCall) Context(ctx context.Context) *TransfersListCall {
 
 func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["customerId"]; ok {
+		params.Set("customerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["newOwnerUserId"]; ok {
+		params.Set("newOwnerUserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["oldOwnerUserId"]; ok {
+		params.Set("oldOwnerUserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "transfers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

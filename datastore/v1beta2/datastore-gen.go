@@ -1148,30 +1148,30 @@ type DatasetsAllocateIdsCall struct {
 	s                  *Service
 	datasetId          string
 	allocateidsrequest *AllocateIdsRequest
-	urlParams_         internal.URLParams
+	opt_               map[string]interface{}
 	ctx_               context.Context
 }
 
 // AllocateIds: Allocate IDs for incomplete keys (useful for referencing
 // an entity before it is inserted).
 func (r *DatasetsService) AllocateIds(datasetId string, allocateidsrequest *AllocateIdsRequest) *DatasetsAllocateIdsCall {
-	c := &DatasetsAllocateIdsCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsAllocateIdsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.datasetId = datasetId
 	c.allocateidsrequest = allocateidsrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsAllocateIdsCall) Fields(s ...googleapi.Field) *DatasetsAllocateIdsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsAllocateIdsCall) Context(ctx context.Context) *DatasetsAllocateIdsCall {
 	c.ctx_ = ctx
 	return c
@@ -1184,9 +1184,13 @@ func (c *DatasetsAllocateIdsCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/allocateIds")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"datasetId": c.datasetId,
@@ -1271,29 +1275,29 @@ type DatasetsBeginTransactionCall struct {
 	s                       *Service
 	datasetId               string
 	begintransactionrequest *BeginTransactionRequest
-	urlParams_              internal.URLParams
+	opt_                    map[string]interface{}
 	ctx_                    context.Context
 }
 
 // BeginTransaction: Begin a new transaction.
 func (r *DatasetsService) BeginTransaction(datasetId string, begintransactionrequest *BeginTransactionRequest) *DatasetsBeginTransactionCall {
-	c := &DatasetsBeginTransactionCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsBeginTransactionCall{s: r.s, opt_: make(map[string]interface{})}
 	c.datasetId = datasetId
 	c.begintransactionrequest = begintransactionrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsBeginTransactionCall) Fields(s ...googleapi.Field) *DatasetsBeginTransactionCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsBeginTransactionCall) Context(ctx context.Context) *DatasetsBeginTransactionCall {
 	c.ctx_ = ctx
 	return c
@@ -1306,9 +1310,13 @@ func (c *DatasetsBeginTransactionCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/beginTransaction")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"datasetId": c.datasetId,
@@ -1393,30 +1401,30 @@ type DatasetsCommitCall struct {
 	s             *Service
 	datasetId     string
 	commitrequest *CommitRequest
-	urlParams_    internal.URLParams
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
 // Commit: Commit a transaction, optionally creating, deleting or
 // modifying some entities.
 func (r *DatasetsService) Commit(datasetId string, commitrequest *CommitRequest) *DatasetsCommitCall {
-	c := &DatasetsCommitCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsCommitCall{s: r.s, opt_: make(map[string]interface{})}
 	c.datasetId = datasetId
 	c.commitrequest = commitrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsCommitCall) Fields(s ...googleapi.Field) *DatasetsCommitCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsCommitCall) Context(ctx context.Context) *DatasetsCommitCall {
 	c.ctx_ = ctx
 	return c
@@ -1429,9 +1437,13 @@ func (c *DatasetsCommitCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/commit")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"datasetId": c.datasetId,
@@ -1516,29 +1528,29 @@ type DatasetsLookupCall struct {
 	s             *Service
 	datasetId     string
 	lookuprequest *LookupRequest
-	urlParams_    internal.URLParams
+	opt_          map[string]interface{}
 	ctx_          context.Context
 }
 
 // Lookup: Look up some entities by key.
 func (r *DatasetsService) Lookup(datasetId string, lookuprequest *LookupRequest) *DatasetsLookupCall {
-	c := &DatasetsLookupCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsLookupCall{s: r.s, opt_: make(map[string]interface{})}
 	c.datasetId = datasetId
 	c.lookuprequest = lookuprequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsLookupCall) Fields(s ...googleapi.Field) *DatasetsLookupCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsLookupCall) Context(ctx context.Context) *DatasetsLookupCall {
 	c.ctx_ = ctx
 	return c
@@ -1551,9 +1563,13 @@ func (c *DatasetsLookupCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/lookup")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"datasetId": c.datasetId,
@@ -1638,29 +1654,29 @@ type DatasetsRollbackCall struct {
 	s               *Service
 	datasetId       string
 	rollbackrequest *RollbackRequest
-	urlParams_      internal.URLParams
+	opt_            map[string]interface{}
 	ctx_            context.Context
 }
 
 // Rollback: Roll back a transaction.
 func (r *DatasetsService) Rollback(datasetId string, rollbackrequest *RollbackRequest) *DatasetsRollbackCall {
-	c := &DatasetsRollbackCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsRollbackCall{s: r.s, opt_: make(map[string]interface{})}
 	c.datasetId = datasetId
 	c.rollbackrequest = rollbackrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsRollbackCall) Fields(s ...googleapi.Field) *DatasetsRollbackCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsRollbackCall) Context(ctx context.Context) *DatasetsRollbackCall {
 	c.ctx_ = ctx
 	return c
@@ -1673,9 +1689,13 @@ func (c *DatasetsRollbackCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/rollback")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"datasetId": c.datasetId,
@@ -1760,29 +1780,29 @@ type DatasetsRunQueryCall struct {
 	s               *Service
 	datasetId       string
 	runqueryrequest *RunQueryRequest
-	urlParams_      internal.URLParams
+	opt_            map[string]interface{}
 	ctx_            context.Context
 }
 
 // RunQuery: Query for entities.
 func (r *DatasetsService) RunQuery(datasetId string, runqueryrequest *RunQueryRequest) *DatasetsRunQueryCall {
-	c := &DatasetsRunQueryCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsRunQueryCall{s: r.s, opt_: make(map[string]interface{})}
 	c.datasetId = datasetId
 	c.runqueryrequest = runqueryrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsRunQueryCall) Fields(s ...googleapi.Field) *DatasetsRunQueryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsRunQueryCall) Context(ctx context.Context) *DatasetsRunQueryCall {
 	c.ctx_ = ctx
 	return c
@@ -1795,9 +1815,13 @@ func (c *DatasetsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{datasetId}/runQuery")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"datasetId": c.datasetId,

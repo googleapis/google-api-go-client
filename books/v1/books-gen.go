@@ -3007,18 +3007,17 @@ func (s *Volumes) MarshalJSON() ([]byte, error) {
 // method id "books.bookshelves.get":
 
 type BookshelvesGetCall struct {
-	s            *Service
-	userId       string
-	shelf        string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	shelf  string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves metadata for a specific bookshelf for the specified
 // user.
 func (r *BookshelvesService) Get(userId string, shelf string) *BookshelvesGetCall {
-	c := &BookshelvesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BookshelvesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.shelf = shelf
 	return c
@@ -3027,15 +3026,15 @@ func (r *BookshelvesService) Get(userId string, shelf string) *BookshelvesGetCal
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *BookshelvesGetCall) Source(source string) *BookshelvesGetCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BookshelvesGetCall) Fields(s ...googleapi.Field) *BookshelvesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3045,13 +3044,13 @@ func (c *BookshelvesGetCall) Fields(s ...googleapi.Field) *BookshelvesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BookshelvesGetCall) IfNoneMatch(entityTag string) *BookshelvesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BookshelvesGetCall) Context(ctx context.Context) *BookshelvesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3059,17 +3058,24 @@ func (c *BookshelvesGetCall) Context(ctx context.Context) *BookshelvesGetCall {
 
 func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"shelf":  c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3153,16 +3159,15 @@ func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
 // method id "books.bookshelves.list":
 
 type BookshelvesListCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of public bookshelves for the specified user.
 func (r *BookshelvesService) List(userId string) *BookshelvesListCall {
-	c := &BookshelvesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BookshelvesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
@@ -3170,15 +3175,15 @@ func (r *BookshelvesService) List(userId string) *BookshelvesListCall {
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *BookshelvesListCall) Source(source string) *BookshelvesListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BookshelvesListCall) Fields(s ...googleapi.Field) *BookshelvesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3188,13 +3193,13 @@ func (c *BookshelvesListCall) Fields(s ...googleapi.Field) *BookshelvesListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BookshelvesListCall) IfNoneMatch(entityTag string) *BookshelvesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BookshelvesListCall) Context(ctx context.Context) *BookshelvesListCall {
 	c.ctx_ = ctx
 	return c
@@ -3202,16 +3207,23 @@ func (c *BookshelvesListCall) Context(ctx context.Context) *BookshelvesListCall 
 
 func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3288,18 +3300,17 @@ func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
 // method id "books.bookshelves.volumes.list":
 
 type BookshelvesVolumesListCall struct {
-	s            *Service
-	userId       string
-	shelf        string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	shelf  string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves volumes in a specific bookshelf for the specified
 // user.
 func (r *BookshelvesVolumesService) List(userId string, shelf string) *BookshelvesVolumesListCall {
-	c := &BookshelvesVolumesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BookshelvesVolumesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.shelf = shelf
 	return c
@@ -3308,36 +3319,36 @@ func (r *BookshelvesVolumesService) List(userId string, shelf string) *Bookshelv
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *BookshelvesVolumesListCall) MaxResults(maxResults int64) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *BookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("showPreorders", fmt.Sprintf("%v", showPreorders))
+	c.opt_["showPreorders"] = showPreorders
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *BookshelvesVolumesListCall) Source(source string) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first element to return (starts at 0)
 func (c *BookshelvesVolumesListCall) StartIndex(startIndex int64) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BookshelvesVolumesListCall) Fields(s ...googleapi.Field) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3347,13 +3358,13 @@ func (c *BookshelvesVolumesListCall) Fields(s ...googleapi.Field) *BookshelvesVo
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BookshelvesVolumesListCall) IfNoneMatch(entityTag string) *BookshelvesVolumesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BookshelvesVolumesListCall) Context(ctx context.Context) *BookshelvesVolumesListCall {
 	c.ctx_ = ctx
 	return c
@@ -3361,17 +3372,33 @@ func (c *BookshelvesVolumesListCall) Context(ctx context.Context) *BookshelvesVo
 
 func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/bookshelves/{shelf}/volumes")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"shelf":  c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3474,55 +3501,55 @@ func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
 // method id "books.cloudloading.addBook":
 
 type CloudloadingAddBookCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // AddBook:
 func (r *CloudloadingService) AddBook() *CloudloadingAddBookCall {
-	c := &CloudloadingAddBookCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CloudloadingAddBookCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // DriveDocumentId sets the optional parameter "drive_document_id": A
 // drive document id. The upload_client_token must not be set.
 func (c *CloudloadingAddBookCall) DriveDocumentId(driveDocumentId string) *CloudloadingAddBookCall {
-	c.urlParams_.Set("driveDocumentId", driveDocumentId)
+	c.opt_["drive_document_id"] = driveDocumentId
 	return c
 }
 
 // MimeType sets the optional parameter "mime_type": The document MIME
 // type. It can be set only if the drive_document_id is set.
 func (c *CloudloadingAddBookCall) MimeType(mimeType string) *CloudloadingAddBookCall {
-	c.urlParams_.Set("mimeType", mimeType)
+	c.opt_["mime_type"] = mimeType
 	return c
 }
 
 // Name sets the optional parameter "name": The document name. It can be
 // set only if the drive_document_id is set.
 func (c *CloudloadingAddBookCall) Name(name string) *CloudloadingAddBookCall {
-	c.urlParams_.Set("name", name)
+	c.opt_["name"] = name
 	return c
 }
 
 // UploadClientToken sets the optional parameter "upload_client_token":
 func (c *CloudloadingAddBookCall) UploadClientToken(uploadClientToken string) *CloudloadingAddBookCall {
-	c.urlParams_.Set("uploadClientToken", uploadClientToken)
+	c.opt_["upload_client_token"] = uploadClientToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CloudloadingAddBookCall) Fields(s ...googleapi.Field) *CloudloadingAddBookCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CloudloadingAddBookCall) Context(ctx context.Context) *CloudloadingAddBookCall {
 	c.ctx_ = ctx
 	return c
@@ -3530,9 +3557,25 @@ func (c *CloudloadingAddBookCall) Context(ctx context.Context) *CloudloadingAddB
 
 func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["drive_document_id"]; ok {
+		params.Set("drive_document_id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mime_type"]; ok {
+		params.Set("mime_type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["name"]; ok {
+		params.Set("name", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["upload_client_token"]; ok {
+		params.Set("upload_client_token", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/addBook")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3616,29 +3659,30 @@ func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
 // method id "books.cloudloading.deleteBook":
 
 type CloudloadingDeleteBookCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // DeleteBook: Remove the book and its contents
 func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBookCall {
-	c := &CloudloadingDeleteBookCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("volumeId", volumeId)
+	c := &CloudloadingDeleteBookCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeId = volumeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CloudloadingDeleteBookCall) Fields(s ...googleapi.Field) *CloudloadingDeleteBookCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CloudloadingDeleteBookCall) Context(ctx context.Context) *CloudloadingDeleteBookCall {
 	c.ctx_ = ctx
 	return c
@@ -3646,9 +3690,14 @@ func (c *CloudloadingDeleteBookCall) Context(ctx context.Context) *CloudloadingD
 
 func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/deleteBook")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3697,28 +3746,28 @@ func (c *CloudloadingDeleteBookCall) Do() error {
 type CloudloadingUpdateBookCall struct {
 	s                         *Service
 	bookscloudloadingresource *BooksCloudloadingResource
-	urlParams_                internal.URLParams
+	opt_                      map[string]interface{}
 	ctx_                      context.Context
 }
 
 // UpdateBook:
 func (r *CloudloadingService) UpdateBook(bookscloudloadingresource *BooksCloudloadingResource) *CloudloadingUpdateBookCall {
-	c := &CloudloadingUpdateBookCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CloudloadingUpdateBookCall{s: r.s, opt_: make(map[string]interface{})}
 	c.bookscloudloadingresource = bookscloudloadingresource
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CloudloadingUpdateBookCall) Fields(s ...googleapi.Field) *CloudloadingUpdateBookCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CloudloadingUpdateBookCall) Context(ctx context.Context) *CloudloadingUpdateBookCall {
 	c.ctx_ = ctx
 	return c
@@ -3731,9 +3780,13 @@ func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "cloudloading/updateBook")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -3800,25 +3853,25 @@ func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
 // method id "books.dictionary.listOfflineMetadata":
 
 type DictionaryListOfflineMetadataCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	cpksver string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // ListOfflineMetadata: Returns a list of offline dictionary meatadata
 // available
 func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListOfflineMetadataCall {
-	c := &DictionaryListOfflineMetadataCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("cpksver", cpksver)
+	c := &DictionaryListOfflineMetadataCall{s: r.s, opt_: make(map[string]interface{})}
+	c.cpksver = cpksver
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DictionaryListOfflineMetadataCall) Fields(s ...googleapi.Field) *DictionaryListOfflineMetadataCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3828,13 +3881,13 @@ func (c *DictionaryListOfflineMetadataCall) Fields(s ...googleapi.Field) *Dictio
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DictionaryListOfflineMetadataCall) IfNoneMatch(entityTag string) *DictionaryListOfflineMetadataCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DictionaryListOfflineMetadataCall) Context(ctx context.Context) *DictionaryListOfflineMetadataCall {
 	c.ctx_ = ctx
 	return c
@@ -3842,14 +3895,19 @@ func (c *DictionaryListOfflineMetadataCall) Context(ctx context.Context) *Dictio
 
 func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "dictionary/listOfflineMetadata")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3921,17 +3979,16 @@ func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
 // method id "books.layers.get":
 
 type LayersGetCall struct {
-	s            *Service
-	volumeId     string
-	summaryId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	volumeId  string
+	summaryId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets the layer summary for a volume.
 func (r *LayersService) Get(volumeId string, summaryId string) *LayersGetCall {
-	c := &LayersGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LayersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	c.summaryId = summaryId
 	return c
@@ -3940,22 +3997,22 @@ func (r *LayersService) Get(volumeId string, summaryId string) *LayersGetCall {
 // ContentVersion sets the optional parameter "contentVersion": The
 // content version for the requested volume.
 func (c *LayersGetCall) ContentVersion(contentVersion string) *LayersGetCall {
-	c.urlParams_.Set("contentVersion", contentVersion)
+	c.opt_["contentVersion"] = contentVersion
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersGetCall) Source(source string) *LayersGetCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3965,13 +4022,13 @@ func (c *LayersGetCall) Fields(s ...googleapi.Field) *LayersGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersGetCall) IfNoneMatch(entityTag string) *LayersGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LayersGetCall) Context(ctx context.Context) *LayersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3979,17 +4036,27 @@ func (c *LayersGetCall) Context(ctx context.Context) *LayersGetCall {
 
 func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["contentVersion"]; ok {
+		params.Set("contentVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary/{summaryId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId":  c.volumeId,
 		"summaryId": c.summaryId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4078,16 +4145,15 @@ func (c *LayersGetCall) Do() (*Layersummary, error) {
 // method id "books.layers.list":
 
 type LayersListCall struct {
-	s            *Service
-	volumeId     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: List the layer summaries for a volume.
 func (r *LayersService) List(volumeId string) *LayersListCall {
-	c := &LayersListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LayersListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	return c
 }
@@ -4095,36 +4161,36 @@ func (r *LayersService) List(volumeId string) *LayersListCall {
 // ContentVersion sets the optional parameter "contentVersion": The
 // content version for the requested volume.
 func (c *LayersListCall) ContentVersion(contentVersion string) *LayersListCall {
-	c.urlParams_.Set("contentVersion", contentVersion)
+	c.opt_["contentVersion"] = contentVersion
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *LayersListCall) MaxResults(maxResults int64) *LayersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous page.
 func (c *LayersListCall) PageToken(pageToken string) *LayersListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersListCall) Source(source string) *LayersListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4134,13 +4200,13 @@ func (c *LayersListCall) Fields(s ...googleapi.Field) *LayersListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersListCall) IfNoneMatch(entityTag string) *LayersListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LayersListCall) Context(ctx context.Context) *LayersListCall {
 	c.ctx_ = ctx
 	return c
@@ -4148,16 +4214,32 @@ func (c *LayersListCall) Context(ctx context.Context) *LayersListCall {
 
 func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["contentVersion"]; ok {
+		params.Set("contentVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layersummary")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4256,18 +4338,18 @@ type LayersAnnotationDataGetCall struct {
 	volumeId         string
 	layerId          string
 	annotationDataId string
-	urlParams_       internal.URLParams
-	ifNoneMatch_     string
+	contentVersion   string
+	opt_             map[string]interface{}
 	ctx_             context.Context
 }
 
 // Get: Gets the annotation data.
 func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string, contentVersion string) *LayersAnnotationDataGetCall {
-	c := &LayersAnnotationDataGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LayersAnnotationDataGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	c.layerId = layerId
 	c.annotationDataId = annotationDataId
-	c.urlParams_.Set("contentVersion", contentVersion)
+	c.contentVersion = contentVersion
 	return c
 }
 
@@ -4275,14 +4357,14 @@ func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annot
 // "allowWebDefinitions": For the dictionary layer. Whether or not to
 // allow web definitions.
 func (c *LayersAnnotationDataGetCall) AllowWebDefinitions(allowWebDefinitions bool) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("allowWebDefinitions", fmt.Sprintf("%v", allowWebDefinitions))
+	c.opt_["allowWebDefinitions"] = allowWebDefinitions
 	return c
 }
 
 // H sets the optional parameter "h": The requested pixel height for any
 // images. If height is provided width must also be provided.
 func (c *LayersAnnotationDataGetCall) H(h int64) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("h", fmt.Sprintf("%v", h))
+	c.opt_["h"] = h
 	return c
 }
 
@@ -4290,36 +4372,36 @@ func (c *LayersAnnotationDataGetCall) H(h int64) *LayersAnnotationDataGetCall {
 // for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
 // 'en_US'.
 func (c *LayersAnnotationDataGetCall) Locale(locale string) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // Scale sets the optional parameter "scale": The requested scale for
 // the image.
 func (c *LayersAnnotationDataGetCall) Scale(scale int64) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("scale", fmt.Sprintf("%v", scale))
+	c.opt_["scale"] = scale
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersAnnotationDataGetCall) Source(source string) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
 // W sets the optional parameter "w": The requested pixel width for any
 // images. If width is provided height must also be provided.
 func (c *LayersAnnotationDataGetCall) W(w int64) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("w", fmt.Sprintf("%v", w))
+	c.opt_["w"] = w
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersAnnotationDataGetCall) Fields(s ...googleapi.Field) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4329,13 +4411,13 @@ func (c *LayersAnnotationDataGetCall) Fields(s ...googleapi.Field) *LayersAnnota
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersAnnotationDataGetCall) IfNoneMatch(entityTag string) *LayersAnnotationDataGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LayersAnnotationDataGetCall) Context(ctx context.Context) *LayersAnnotationDataGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4343,9 +4425,32 @@ func (c *LayersAnnotationDataGetCall) Context(ctx context.Context) *LayersAnnota
 
 func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
+	if v, ok := c.opt_["allowWebDefinitions"]; ok {
+		params.Set("allowWebDefinitions", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["h"]; ok {
+		params.Set("h", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["scale"]; ok {
+		params.Set("scale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["w"]; ok {
+		params.Set("w", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data/{annotationDataId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId":         c.volumeId,
@@ -4353,8 +4458,8 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 		"annotationDataId": c.annotationDataId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4481,35 +4586,35 @@ func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
 // method id "books.layers.annotationData.list":
 
 type LayersAnnotationDataListCall struct {
-	s            *Service
-	volumeId     string
-	layerId      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s              *Service
+	volumeId       string
+	layerId        string
+	contentVersion string
+	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // List: Gets the annotation data for a volume and layer.
 func (r *LayersAnnotationDataService) List(volumeId string, layerId string, contentVersion string) *LayersAnnotationDataListCall {
-	c := &LayersAnnotationDataListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LayersAnnotationDataListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	c.layerId = layerId
-	c.urlParams_.Set("contentVersion", contentVersion)
+	c.contentVersion = contentVersion
 	return c
 }
 
 // AnnotationDataId sets the optional parameter "annotationDataId": The
 // list of Annotation Data Ids to retrieve. Pagination is ignored if
 // this is set.
-func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId []string) *LayersAnnotationDataListCall {
-	c.urlParams_.SetMulti("annotationDataId", append([]string{}, annotationDataId...))
+func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId string) *LayersAnnotationDataListCall {
+	c.opt_["annotationDataId"] = annotationDataId
 	return c
 }
 
 // H sets the optional parameter "h": The requested pixel height for any
 // images. If height is provided width must also be provided.
 func (c *LayersAnnotationDataListCall) H(h int64) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("h", fmt.Sprintf("%v", h))
+	c.opt_["h"] = h
 	return c
 }
 
@@ -4517,35 +4622,35 @@ func (c *LayersAnnotationDataListCall) H(h int64) *LayersAnnotationDataListCall 
 // for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
 // 'en_US'.
 func (c *LayersAnnotationDataListCall) Locale(locale string) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *LayersAnnotationDataListCall) MaxResults(maxResults int64) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous page.
 func (c *LayersAnnotationDataListCall) PageToken(pageToken string) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // Scale sets the optional parameter "scale": The requested scale for
 // the image.
 func (c *LayersAnnotationDataListCall) Scale(scale int64) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("scale", fmt.Sprintf("%v", scale))
+	c.opt_["scale"] = scale
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersAnnotationDataListCall) Source(source string) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
@@ -4553,7 +4658,7 @@ func (c *LayersAnnotationDataListCall) Source(source string) *LayersAnnotationDa
 // timestamp to restrict to items updated prior to this timestamp
 // (exclusive).
 func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("updatedMax", updatedMax)
+	c.opt_["updatedMax"] = updatedMax
 	return c
 }
 
@@ -4561,22 +4666,22 @@ func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnno
 // timestamp to restrict to items updated since this timestamp
 // (inclusive).
 func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("updatedMin", updatedMin)
+	c.opt_["updatedMin"] = updatedMin
 	return c
 }
 
 // W sets the optional parameter "w": The requested pixel width for any
 // images. If width is provided height must also be provided.
 func (c *LayersAnnotationDataListCall) W(w int64) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("w", fmt.Sprintf("%v", w))
+	c.opt_["w"] = w
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersAnnotationDataListCall) Fields(s ...googleapi.Field) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4586,13 +4691,13 @@ func (c *LayersAnnotationDataListCall) Fields(s ...googleapi.Field) *LayersAnnot
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersAnnotationDataListCall) IfNoneMatch(entityTag string) *LayersAnnotationDataListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LayersAnnotationDataListCall) Context(ctx context.Context) *LayersAnnotationDataListCall {
 	c.ctx_ = ctx
 	return c
@@ -4600,17 +4705,52 @@ func (c *LayersAnnotationDataListCall) Context(ctx context.Context) *LayersAnnot
 
 func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
+	if v, ok := c.opt_["annotationDataId"]; ok {
+		params.Set("annotationDataId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["h"]; ok {
+		params.Set("h", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["scale"]; ok {
+		params.Set("scale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMax"]; ok {
+		params.Set("updatedMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["w"]; ok {
+		params.Set("w", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/data")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 		"layerId":  c.layerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4758,14 +4898,13 @@ type LayersVolumeAnnotationsGetCall struct {
 	volumeId     string
 	layerId      string
 	annotationId string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Get: Gets the volume annotation.
 func (r *LayersVolumeAnnotationsService) Get(volumeId string, layerId string, annotationId string) *LayersVolumeAnnotationsGetCall {
-	c := &LayersVolumeAnnotationsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LayersVolumeAnnotationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	c.layerId = layerId
 	c.annotationId = annotationId
@@ -4776,22 +4915,22 @@ func (r *LayersVolumeAnnotationsService) Get(volumeId string, layerId string, an
 // for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
 // 'en_US'.
 func (c *LayersVolumeAnnotationsGetCall) Locale(locale string) *LayersVolumeAnnotationsGetCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersVolumeAnnotationsGetCall) Source(source string) *LayersVolumeAnnotationsGetCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersVolumeAnnotationsGetCall) Fields(s ...googleapi.Field) *LayersVolumeAnnotationsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4801,13 +4940,13 @@ func (c *LayersVolumeAnnotationsGetCall) Fields(s ...googleapi.Field) *LayersVol
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersVolumeAnnotationsGetCall) IfNoneMatch(entityTag string) *LayersVolumeAnnotationsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LayersVolumeAnnotationsGetCall) Context(ctx context.Context) *LayersVolumeAnnotationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4815,9 +4954,19 @@ func (c *LayersVolumeAnnotationsGetCall) Context(ctx context.Context) *LayersVol
 
 func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}/annotations/{annotationId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId":     c.volumeId,
@@ -4825,8 +4974,8 @@ func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, 
 		"annotationId": c.annotationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4922,34 +5071,34 @@ func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
 // method id "books.layers.volumeAnnotations.list":
 
 type LayersVolumeAnnotationsListCall struct {
-	s            *Service
-	volumeId     string
-	layerId      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s              *Service
+	volumeId       string
+	layerId        string
+	contentVersion string
+	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // List: Gets the volume annotations for a volume and layer.
 func (r *LayersVolumeAnnotationsService) List(volumeId string, layerId string, contentVersion string) *LayersVolumeAnnotationsListCall {
-	c := &LayersVolumeAnnotationsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LayersVolumeAnnotationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	c.layerId = layerId
-	c.urlParams_.Set("contentVersion", contentVersion)
+	c.contentVersion = contentVersion
 	return c
 }
 
 // EndOffset sets the optional parameter "endOffset": The end offset to
 // end retrieving data from.
 func (c *LayersVolumeAnnotationsListCall) EndOffset(endOffset string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("endOffset", endOffset)
+	c.opt_["endOffset"] = endOffset
 	return c
 }
 
 // EndPosition sets the optional parameter "endPosition": The end
 // position to end retrieving data from.
 func (c *LayersVolumeAnnotationsListCall) EndPosition(endPosition string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("endPosition", endPosition)
+	c.opt_["endPosition"] = endPosition
 	return c
 }
 
@@ -4957,21 +5106,21 @@ func (c *LayersVolumeAnnotationsListCall) EndPosition(endPosition string) *Layer
 // for the data. ISO-639-1 language and ISO-3166-1 country code. Ex:
 // 'en_US'.
 func (c *LayersVolumeAnnotationsListCall) Locale(locale string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *LayersVolumeAnnotationsListCall) MaxResults(maxResults int64) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous page.
 func (c *LayersVolumeAnnotationsListCall) PageToken(pageToken string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -4979,28 +5128,28 @@ func (c *LayersVolumeAnnotationsListCall) PageToken(pageToken string) *LayersVol
 // return deleted annotations. updatedMin must be in the request to use
 // this. Defaults to false.
 func (c *LayersVolumeAnnotationsListCall) ShowDeleted(showDeleted bool) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.opt_["showDeleted"] = showDeleted
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersVolumeAnnotationsListCall) Source(source string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
 // StartOffset sets the optional parameter "startOffset": The start
 // offset to start retrieving data from.
 func (c *LayersVolumeAnnotationsListCall) StartOffset(startOffset string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("startOffset", startOffset)
+	c.opt_["startOffset"] = startOffset
 	return c
 }
 
 // StartPosition sets the optional parameter "startPosition": The start
 // position to start retrieving data from.
 func (c *LayersVolumeAnnotationsListCall) StartPosition(startPosition string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("startPosition", startPosition)
+	c.opt_["startPosition"] = startPosition
 	return c
 }
 
@@ -5008,7 +5157,7 @@ func (c *LayersVolumeAnnotationsListCall) StartPosition(startPosition string) *L
 // timestamp to restrict to items updated prior to this timestamp
 // (exclusive).
 func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("updatedMax", updatedMax)
+	c.opt_["updatedMax"] = updatedMax
 	return c
 }
 
@@ -5016,7 +5165,7 @@ func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersV
 // timestamp to restrict to items updated since this timestamp
 // (inclusive).
 func (c *LayersVolumeAnnotationsListCall) UpdatedMin(updatedMin string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("updatedMin", updatedMin)
+	c.opt_["updatedMin"] = updatedMin
 	return c
 }
 
@@ -5024,15 +5173,15 @@ func (c *LayersVolumeAnnotationsListCall) UpdatedMin(updatedMin string) *LayersV
 // "volumeAnnotationsVersion": The version of the volume annotations
 // that you are requesting.
 func (c *LayersVolumeAnnotationsListCall) VolumeAnnotationsVersion(volumeAnnotationsVersion string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("volumeAnnotationsVersion", volumeAnnotationsVersion)
+	c.opt_["volumeAnnotationsVersion"] = volumeAnnotationsVersion
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LayersVolumeAnnotationsListCall) Fields(s ...googleapi.Field) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5042,13 +5191,13 @@ func (c *LayersVolumeAnnotationsListCall) Fields(s ...googleapi.Field) *LayersVo
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LayersVolumeAnnotationsListCall) IfNoneMatch(entityTag string) *LayersVolumeAnnotationsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LayersVolumeAnnotationsListCall) Context(ctx context.Context) *LayersVolumeAnnotationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -5056,17 +5205,58 @@ func (c *LayersVolumeAnnotationsListCall) Context(ctx context.Context) *LayersVo
 
 func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("contentVersion", fmt.Sprintf("%v", c.contentVersion))
+	if v, ok := c.opt_["endOffset"]; ok {
+		params.Set("endOffset", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["endPosition"]; ok {
+		params.Set("endPosition", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startOffset"]; ok {
+		params.Set("startOffset", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startPosition"]; ok {
+		params.Set("startPosition", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMax"]; ok {
+		params.Set("updatedMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeAnnotationsVersion"]; ok {
+		params.Set("volumeAnnotationsVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/layers/{layerId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 		"layerId":  c.layerId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5215,23 +5405,22 @@ func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
 // method id "books.myconfig.getUserSettings":
 
 type MyconfigGetUserSettingsCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetUserSettings: Gets the current settings for the user.
 func (r *MyconfigService) GetUserSettings() *MyconfigGetUserSettingsCall {
-	c := &MyconfigGetUserSettingsCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MyconfigGetUserSettingsCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MyconfigGetUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigGetUserSettingsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5241,13 +5430,13 @@ func (c *MyconfigGetUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigGetU
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MyconfigGetUserSettingsCall) IfNoneMatch(entityTag string) *MyconfigGetUserSettingsCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MyconfigGetUserSettingsCall) Context(ctx context.Context) *MyconfigGetUserSettingsCall {
 	c.ctx_ = ctx
 	return c
@@ -5255,14 +5444,18 @@ func (c *MyconfigGetUserSettingsCall) Context(ctx context.Context) *MyconfigGetU
 
 func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/getUserSettings")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5323,44 +5516,46 @@ func (c *MyconfigGetUserSettingsCall) Do() (*Usersettings, error) {
 // method id "books.myconfig.releaseDownloadAccess":
 
 type MyconfigReleaseDownloadAccessCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	volumeIds []string
+	cpksver   string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // ReleaseDownloadAccess: Release downloaded content access restriction.
 func (r *MyconfigService) ReleaseDownloadAccess(volumeIds []string, cpksver string) *MyconfigReleaseDownloadAccessCall {
-	c := &MyconfigReleaseDownloadAccessCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
-	c.urlParams_.Set("cpksver", cpksver)
+	c := &MyconfigReleaseDownloadAccessCall{s: r.s, opt_: make(map[string]interface{})}
+	c.volumeIds = volumeIds
+	c.cpksver = cpksver
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
 // codes for message localization, i.e. en_US.
 func (c *MyconfigReleaseDownloadAccessCall) Locale(locale string) *MyconfigReleaseDownloadAccessCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigReleaseDownloadAccessCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MyconfigReleaseDownloadAccessCall) Fields(s ...googleapi.Field) *MyconfigReleaseDownloadAccessCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MyconfigReleaseDownloadAccessCall) Context(ctx context.Context) *MyconfigReleaseDownloadAccessCall {
 	c.ctx_ = ctx
 	return c
@@ -5368,9 +5563,23 @@ func (c *MyconfigReleaseDownloadAccessCall) Context(ctx context.Context) *Myconf
 
 func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
+	for _, v := range c.volumeIds {
+		params.Add("volumeIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/releaseDownloadAccess")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -5462,18 +5671,22 @@ func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
 // method id "books.myconfig.requestAccess":
 
 type MyconfigRequestAccessCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	source   string
+	volumeId string
+	nonce    string
+	cpksver  string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // RequestAccess: Request concurrent and download access restrictions.
 func (r *MyconfigService) RequestAccess(source string, volumeId string, nonce string, cpksver string) *MyconfigRequestAccessCall {
-	c := &MyconfigRequestAccessCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("source", source)
-	c.urlParams_.Set("volumeId", volumeId)
-	c.urlParams_.Set("nonce", nonce)
-	c.urlParams_.Set("cpksver", cpksver)
+	c := &MyconfigRequestAccessCall{s: r.s, opt_: make(map[string]interface{})}
+	c.source = source
+	c.volumeId = volumeId
+	c.nonce = nonce
+	c.cpksver = cpksver
 	return c
 }
 
@@ -5485,28 +5698,28 @@ func (r *MyconfigService) RequestAccess(source string, volumeId string, nonce st
 //   "CONCURRENT" - Concurrent access license.
 //   "DOWNLOAD" - Offline download access license.
 func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigRequestAccessCall {
-	c.urlParams_.Set("licenseTypes", licenseTypes)
+	c.opt_["licenseTypes"] = licenseTypes
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
 // codes for message localization, i.e. en_US.
 func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccessCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MyconfigRequestAccessCall) Fields(s ...googleapi.Field) *MyconfigRequestAccessCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MyconfigRequestAccessCall) Context(ctx context.Context) *MyconfigRequestAccessCall {
 	c.ctx_ = ctx
 	return c
@@ -5514,9 +5727,23 @@ func (c *MyconfigRequestAccessCall) Context(ctx context.Context) *MyconfigReques
 
 func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
+	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
+	params.Set("source", fmt.Sprintf("%v", c.source))
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["licenseTypes"]; ok {
+		params.Set("licenseTypes", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/requestAccess")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -5631,18 +5858,21 @@ func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
 // method id "books.myconfig.syncVolumeLicenses":
 
 type MyconfigSyncVolumeLicensesCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	source  string
+	nonce   string
+	cpksver string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // SyncVolumeLicenses: Request downloaded content access for specified
 // volumes on the My eBooks shelf.
 func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksver string) *MyconfigSyncVolumeLicensesCall {
-	c := &MyconfigSyncVolumeLicensesCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("source", source)
-	c.urlParams_.Set("nonce", nonce)
-	c.urlParams_.Set("cpksver", cpksver)
+	c := &MyconfigSyncVolumeLicensesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.source = source
+	c.nonce = nonce
+	c.cpksver = cpksver
 	return c
 }
 
@@ -5651,43 +5881,43 @@ func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksve
 //
 // Possible values:
 //   "RENTALS" - Client supports rentals.
-func (c *MyconfigSyncVolumeLicensesCall) Features(features []string) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.SetMulti("features", append([]string{}, features...))
+func (c *MyconfigSyncVolumeLicensesCall) Features(features string) *MyconfigSyncVolumeLicensesCall {
+	c.opt_["features"] = features
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1, ISO-3166-1
 // codes for message localization, i.e. en_US.
 func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.Set("showPreorders", fmt.Sprintf("%v", showPreorders))
+	c.opt_["showPreorders"] = showPreorders
 	return c
 }
 
 // VolumeIds sets the optional parameter "volumeIds": The volume(s) to
 // request download restrictions for.
-func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds []string) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
+func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds string) *MyconfigSyncVolumeLicensesCall {
+	c.opt_["volumeIds"] = volumeIds
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MyconfigSyncVolumeLicensesCall) Fields(s ...googleapi.Field) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MyconfigSyncVolumeLicensesCall) Context(ctx context.Context) *MyconfigSyncVolumeLicensesCall {
 	c.ctx_ = ctx
 	return c
@@ -5695,9 +5925,28 @@ func (c *MyconfigSyncVolumeLicensesCall) Context(ctx context.Context) *MyconfigS
 
 func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("cpksver", fmt.Sprintf("%v", c.cpksver))
+	params.Set("nonce", fmt.Sprintf("%v", c.nonce))
+	params.Set("source", fmt.Sprintf("%v", c.source))
+	if v, ok := c.opt_["features"]; ok {
+		params.Set("features", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeIds"]; ok {
+		params.Set("volumeIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/syncVolumeLicenses")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -5815,7 +6064,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
 type MyconfigUpdateUserSettingsCall struct {
 	s            *Service
 	usersettings *Usersettings
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
@@ -5823,22 +6072,22 @@ type MyconfigUpdateUserSettingsCall struct {
 // is specified, it will overwrite the existing sub-object stored in the
 // server. Unspecified sub-objects will retain the existing value.
 func (r *MyconfigService) UpdateUserSettings(usersettings *Usersettings) *MyconfigUpdateUserSettingsCall {
-	c := &MyconfigUpdateUserSettingsCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MyconfigUpdateUserSettingsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.usersettings = usersettings
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MyconfigUpdateUserSettingsCall) Fields(s ...googleapi.Field) *MyconfigUpdateUserSettingsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MyconfigUpdateUserSettingsCall) Context(ctx context.Context) *MyconfigUpdateUserSettingsCall {
 	c.ctx_ = ctx
 	return c
@@ -5851,9 +6100,13 @@ func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "myconfig/updateUserSettings")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -5922,13 +6175,13 @@ func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
 type MylibraryAnnotationsDeleteCall struct {
 	s            *Service
 	annotationId string
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Delete: Deletes an annotation.
 func (r *MylibraryAnnotationsService) Delete(annotationId string) *MylibraryAnnotationsDeleteCall {
-	c := &MylibraryAnnotationsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryAnnotationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.annotationId = annotationId
 	return c
 }
@@ -5936,21 +6189,21 @@ func (r *MylibraryAnnotationsService) Delete(annotationId string) *MylibraryAnno
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsDeleteCall) Source(source string) *MylibraryAnnotationsDeleteCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryAnnotationsDeleteCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryAnnotationsDeleteCall) Context(ctx context.Context) *MylibraryAnnotationsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -5958,9 +6211,16 @@ func (c *MylibraryAnnotationsDeleteCall) Context(ctx context.Context) *Mylibrary
 
 func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"annotationId": c.annotationId,
@@ -6016,13 +6276,13 @@ func (c *MylibraryAnnotationsDeleteCall) Do() error {
 type MylibraryAnnotationsInsertCall struct {
 	s          *Service
 	annotation *Annotation
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Insert: Inserts a new annotation.
 func (r *MylibraryAnnotationsService) Insert(annotation *Annotation) *MylibraryAnnotationsInsertCall {
-	c := &MylibraryAnnotationsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryAnnotationsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.annotation = annotation
 	return c
 }
@@ -6030,7 +6290,7 @@ func (r *MylibraryAnnotationsService) Insert(annotation *Annotation) *MylibraryA
 // Country sets the optional parameter "country": ISO-3166-1 code to
 // override the IP-based location.
 func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnotationsInsertCall {
-	c.urlParams_.Set("country", country)
+	c.opt_["country"] = country
 	return c
 }
 
@@ -6038,28 +6298,28 @@ func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnot
 // "showOnlySummaryInResponse": Requests that only the summary of the
 // specified layer be provided in the response.
 func (c *MylibraryAnnotationsInsertCall) ShowOnlySummaryInResponse(showOnlySummaryInResponse bool) *MylibraryAnnotationsInsertCall {
-	c.urlParams_.Set("showOnlySummaryInResponse", fmt.Sprintf("%v", showOnlySummaryInResponse))
+	c.opt_["showOnlySummaryInResponse"] = showOnlySummaryInResponse
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsInsertCall) Source(source string) *MylibraryAnnotationsInsertCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryAnnotationsInsertCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryAnnotationsInsertCall) Context(ctx context.Context) *MylibraryAnnotationsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -6072,9 +6332,22 @@ func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["country"]; ok {
+		params.Set("country", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showOnlySummaryInResponse"]; ok {
+		params.Set("showOnlySummaryInResponse", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -6158,50 +6431,49 @@ func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
 // method id "books.mylibrary.annotations.list":
 
 type MylibraryAnnotationsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieves a list of annotations, possibly filtered.
 func (r *MylibraryAnnotationsService) List() *MylibraryAnnotationsListCall {
-	c := &MylibraryAnnotationsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryAnnotationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // ContentVersion sets the optional parameter "contentVersion": The
 // content version for the requested volume.
 func (c *MylibraryAnnotationsListCall) ContentVersion(contentVersion string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("contentVersion", contentVersion)
+	c.opt_["contentVersion"] = contentVersion
 	return c
 }
 
 // LayerId sets the optional parameter "layerId": The layer ID to limit
 // annotation by.
 func (c *MylibraryAnnotationsListCall) LayerId(layerId string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("layerId", layerId)
+	c.opt_["layerId"] = layerId
 	return c
 }
 
 // LayerIds sets the optional parameter "layerIds": The layer ID(s) to
 // limit annotation by.
-func (c *MylibraryAnnotationsListCall) LayerIds(layerIds []string) *MylibraryAnnotationsListCall {
-	c.urlParams_.SetMulti("layerIds", append([]string{}, layerIds...))
+func (c *MylibraryAnnotationsListCall) LayerIds(layerIds string) *MylibraryAnnotationsListCall {
+	c.opt_["layerIds"] = layerIds
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *MylibraryAnnotationsListCall) MaxResults(maxResults int64) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous page.
 func (c *MylibraryAnnotationsListCall) PageToken(pageToken string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -6209,14 +6481,14 @@ func (c *MylibraryAnnotationsListCall) PageToken(pageToken string) *MylibraryAnn
 // return deleted annotations. updatedMin must be in the request to use
 // this. Defaults to false.
 func (c *MylibraryAnnotationsListCall) ShowDeleted(showDeleted bool) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.opt_["showDeleted"] = showDeleted
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsListCall) Source(source string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
@@ -6224,7 +6496,7 @@ func (c *MylibraryAnnotationsListCall) Source(source string) *MylibraryAnnotatio
 // timestamp to restrict to items updated prior to this timestamp
 // (exclusive).
 func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("updatedMax", updatedMax)
+	c.opt_["updatedMax"] = updatedMax
 	return c
 }
 
@@ -6232,22 +6504,22 @@ func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryA
 // timestamp to restrict to items updated since this timestamp
 // (inclusive).
 func (c *MylibraryAnnotationsListCall) UpdatedMin(updatedMin string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("updatedMin", updatedMin)
+	c.opt_["updatedMin"] = updatedMin
 	return c
 }
 
 // VolumeId sets the optional parameter "volumeId": The volume to
 // restrict annotations to.
 func (c *MylibraryAnnotationsListCall) VolumeId(volumeId string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("volumeId", volumeId)
+	c.opt_["volumeId"] = volumeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryAnnotationsListCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -6257,13 +6529,13 @@ func (c *MylibraryAnnotationsListCall) Fields(s ...googleapi.Field) *MylibraryAn
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MylibraryAnnotationsListCall) IfNoneMatch(entityTag string) *MylibraryAnnotationsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryAnnotationsListCall) Context(ctx context.Context) *MylibraryAnnotationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -6271,14 +6543,48 @@ func (c *MylibraryAnnotationsListCall) Context(ctx context.Context) *MylibraryAn
 
 func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["contentVersion"]; ok {
+		params.Set("contentVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["layerId"]; ok {
+		params.Set("layerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["layerIds"]; ok {
+		params.Set("layerIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMax"]; ok {
+		params.Set("updatedMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeId"]; ok {
+		params.Set("volumeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -6395,30 +6701,32 @@ func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
 // method id "books.mylibrary.annotations.summary":
 
 type MylibraryAnnotationsSummaryCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	layerIds []string
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Summary: Gets the summary of specified layers.
 func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string) *MylibraryAnnotationsSummaryCall {
-	c := &MylibraryAnnotationsSummaryCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.SetMulti("layerIds", append([]string{}, layerIds...))
-	c.urlParams_.Set("volumeId", volumeId)
+	c := &MylibraryAnnotationsSummaryCall{s: r.s, opt_: make(map[string]interface{})}
+	c.layerIds = layerIds
+	c.volumeId = volumeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryAnnotationsSummaryCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsSummaryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryAnnotationsSummaryCall) Context(ctx context.Context) *MylibraryAnnotationsSummaryCall {
 	c.ctx_ = ctx
 	return c
@@ -6426,9 +6734,17 @@ func (c *MylibraryAnnotationsSummaryCall) Context(ctx context.Context) *Mylibrar
 
 func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	for _, v := range c.layerIds {
+		params.Add("layerIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/summary")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -6513,13 +6829,13 @@ type MylibraryAnnotationsUpdateCall struct {
 	s            *Service
 	annotationId string
 	annotation   *Annotation
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Update: Updates an existing annotation.
 func (r *MylibraryAnnotationsService) Update(annotationId string, annotation *Annotation) *MylibraryAnnotationsUpdateCall {
-	c := &MylibraryAnnotationsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryAnnotationsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.annotationId = annotationId
 	c.annotation = annotation
 	return c
@@ -6528,21 +6844,21 @@ func (r *MylibraryAnnotationsService) Update(annotationId string, annotation *An
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsUpdateCall) Source(source string) *MylibraryAnnotationsUpdateCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryAnnotationsUpdateCall) Fields(s ...googleapi.Field) *MylibraryAnnotationsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryAnnotationsUpdateCall) Context(ctx context.Context) *MylibraryAnnotationsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -6555,9 +6871,16 @@ func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/annotations/{annotationId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"annotationId": c.annotationId,
@@ -6642,17 +6965,18 @@ func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
 // method id "books.mylibrary.bookshelves.addVolume":
 
 type MylibraryBookshelvesAddVolumeCall struct {
-	s          *Service
-	shelf      string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	shelf    string
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // AddVolume: Adds a volume to a bookshelf.
 func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *MylibraryBookshelvesAddVolumeCall {
-	c := &MylibraryBookshelvesAddVolumeCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryBookshelvesAddVolumeCall{s: r.s, opt_: make(map[string]interface{})}
 	c.shelf = shelf
-	c.urlParams_.Set("volumeId", volumeId)
+	c.volumeId = volumeId
 	return c
 }
 
@@ -6664,28 +6988,28 @@ func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *
 //   "IOS_SEARCH" - Volumes added from the Search flow on iOS.
 //   "ONBOARDING" - Volumes added from the Onboarding flow.
 func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBookshelvesAddVolumeCall {
-	c.urlParams_.Set("reason", reason)
+	c.opt_["reason"] = reason
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesAddVolumeCall) Source(source string) *MylibraryBookshelvesAddVolumeCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryBookshelvesAddVolumeCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesAddVolumeCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryBookshelvesAddVolumeCall) Context(ctx context.Context) *MylibraryBookshelvesAddVolumeCall {
 	c.ctx_ = ctx
 	return c
@@ -6693,9 +7017,20 @@ func (c *MylibraryBookshelvesAddVolumeCall) Context(ctx context.Context) *Mylibr
 
 func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["reason"]; ok {
+		params.Set("reason", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/addVolume")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
@@ -6771,15 +7106,15 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
 // method id "books.mylibrary.bookshelves.clearVolumes":
 
 type MylibraryBookshelvesClearVolumesCall struct {
-	s          *Service
-	shelf      string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s     *Service
+	shelf string
+	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // ClearVolumes: Clears all volumes from a bookshelf.
 func (r *MylibraryBookshelvesService) ClearVolumes(shelf string) *MylibraryBookshelvesClearVolumesCall {
-	c := &MylibraryBookshelvesClearVolumesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryBookshelvesClearVolumesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.shelf = shelf
 	return c
 }
@@ -6787,21 +7122,21 @@ func (r *MylibraryBookshelvesService) ClearVolumes(shelf string) *MylibraryBooks
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesClearVolumesCall) Source(source string) *MylibraryBookshelvesClearVolumesCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryBookshelvesClearVolumesCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesClearVolumesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryBookshelvesClearVolumesCall) Context(ctx context.Context) *MylibraryBookshelvesClearVolumesCall {
 	c.ctx_ = ctx
 	return c
@@ -6809,9 +7144,16 @@ func (c *MylibraryBookshelvesClearVolumesCall) Context(ctx context.Context) *Myl
 
 func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/clearVolumes")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
@@ -6865,17 +7207,16 @@ func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
 // method id "books.mylibrary.bookshelves.get":
 
 type MylibraryBookshelvesGetCall struct {
-	s            *Service
-	shelf        string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s     *Service
+	shelf string
+	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Get: Retrieves metadata for a specific bookshelf belonging to the
 // authenticated user.
 func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGetCall {
-	c := &MylibraryBookshelvesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryBookshelvesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.shelf = shelf
 	return c
 }
@@ -6883,15 +7224,15 @@ func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGet
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesGetCall) Source(source string) *MylibraryBookshelvesGetCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryBookshelvesGetCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -6901,13 +7242,13 @@ func (c *MylibraryBookshelvesGetCall) Fields(s ...googleapi.Field) *MylibraryBoo
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MylibraryBookshelvesGetCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryBookshelvesGetCall) Context(ctx context.Context) *MylibraryBookshelvesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -6915,16 +7256,23 @@ func (c *MylibraryBookshelvesGetCall) Context(ctx context.Context) *MylibraryBoo
 
 func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7001,31 +7349,30 @@ func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
 // method id "books.mylibrary.bookshelves.list":
 
 type MylibraryBookshelvesListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieves a list of bookshelves belonging to the authenticated
 // user.
 func (r *MylibraryBookshelvesService) List() *MylibraryBookshelvesListCall {
-	c := &MylibraryBookshelvesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryBookshelvesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesListCall) Source(source string) *MylibraryBookshelvesListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryBookshelvesListCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -7035,13 +7382,13 @@ func (c *MylibraryBookshelvesListCall) Fields(s ...googleapi.Field) *MylibraryBo
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MylibraryBookshelvesListCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryBookshelvesListCall) Context(ctx context.Context) *MylibraryBookshelvesListCall {
 	c.ctx_ = ctx
 	return c
@@ -7049,14 +7396,21 @@ func (c *MylibraryBookshelvesListCall) Context(ctx context.Context) *MylibraryBo
 
 func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7124,39 +7478,41 @@ func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
 // method id "books.mylibrary.bookshelves.moveVolume":
 
 type MylibraryBookshelvesMoveVolumeCall struct {
-	s          *Service
-	shelf      string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s              *Service
+	shelf          string
+	volumeId       string
+	volumePosition int64
+	opt_           map[string]interface{}
+	ctx_           context.Context
 }
 
 // MoveVolume: Moves a volume within a bookshelf.
 func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
-	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, opt_: make(map[string]interface{})}
 	c.shelf = shelf
-	c.urlParams_.Set("volumeId", volumeId)
-	c.urlParams_.Set("volumePosition", fmt.Sprintf("%v", volumePosition))
+	c.volumeId = volumeId
+	c.volumePosition = volumePosition
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesMoveVolumeCall) Source(source string) *MylibraryBookshelvesMoveVolumeCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryBookshelvesMoveVolumeCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesMoveVolumeCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryBookshelvesMoveVolumeCall) Context(ctx context.Context) *MylibraryBookshelvesMoveVolumeCall {
 	c.ctx_ = ctx
 	return c
@@ -7164,9 +7520,18 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Context(ctx context.Context) *Mylib
 
 func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	params.Set("volumePosition", fmt.Sprintf("%v", c.volumePosition))
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/moveVolume")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
@@ -7235,17 +7600,18 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
 // method id "books.mylibrary.bookshelves.removeVolume":
 
 type MylibraryBookshelvesRemoveVolumeCall struct {
-	s          *Service
-	shelf      string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	shelf    string
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // RemoveVolume: Removes a volume from a bookshelf.
 func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string) *MylibraryBookshelvesRemoveVolumeCall {
-	c := &MylibraryBookshelvesRemoveVolumeCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryBookshelvesRemoveVolumeCall{s: r.s, opt_: make(map[string]interface{})}
 	c.shelf = shelf
-	c.urlParams_.Set("volumeId", volumeId)
+	c.volumeId = volumeId
 	return c
 }
 
@@ -7255,28 +7621,28 @@ func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string
 // Possible values:
 //   "ONBOARDING" - Samples removed from the Onboarding flow.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryBookshelvesRemoveVolumeCall {
-	c.urlParams_.Set("reason", reason)
+	c.opt_["reason"] = reason
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryBookshelvesRemoveVolumeCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesRemoveVolumeCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Context(ctx context.Context) *MylibraryBookshelvesRemoveVolumeCall {
 	c.ctx_ = ctx
 	return c
@@ -7284,9 +7650,20 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Context(ctx context.Context) *Myl
 
 func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["reason"]; ok {
+		params.Set("reason", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/removeVolume")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
@@ -7358,16 +7735,15 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
 // method id "books.mylibrary.bookshelves.volumes.list":
 
 type MylibraryBookshelvesVolumesListCall struct {
-	s            *Service
-	shelf        string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s     *Service
+	shelf string
+	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // List: Gets volume information for volumes on a bookshelf.
 func (r *MylibraryBookshelvesVolumesService) List(shelf string) *MylibraryBookshelvesVolumesListCall {
-	c := &MylibraryBookshelvesVolumesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryBookshelvesVolumesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.shelf = shelf
 	return c
 }
@@ -7375,14 +7751,14 @@ func (r *MylibraryBookshelvesVolumesService) List(shelf string) *MylibraryBooksh
 // Country sets the optional parameter "country": ISO-3166-1 code to
 // override the IP-based location.
 func (c *MylibraryBookshelvesVolumesListCall) Country(country string) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("country", country)
+	c.opt_["country"] = country
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *MylibraryBookshelvesVolumesListCall) MaxResults(maxResults int64) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -7393,43 +7769,43 @@ func (c *MylibraryBookshelvesVolumesListCall) MaxResults(maxResults int64) *Myli
 //   "full" - Includes all volume data.
 //   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *MylibraryBookshelvesVolumesListCall) Projection(projection string) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("projection", projection)
+	c.opt_["projection"] = projection
 	return c
 }
 
 // Q sets the optional parameter "q": Full-text search query string in
 // this bookshelf.
 func (c *MylibraryBookshelvesVolumesListCall) Q(q string) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("q", q)
+	c.opt_["q"] = q
 	return c
 }
 
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MylibraryBookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("showPreorders", fmt.Sprintf("%v", showPreorders))
+	c.opt_["showPreorders"] = showPreorders
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesVolumesListCall) Source(source string) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first element to return (starts at 0)
 func (c *MylibraryBookshelvesVolumesListCall) StartIndex(startIndex int64) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryBookshelvesVolumesListCall) Fields(s ...googleapi.Field) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -7439,13 +7815,13 @@ func (c *MylibraryBookshelvesVolumesListCall) Fields(s ...googleapi.Field) *Myli
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MylibraryBookshelvesVolumesListCall) IfNoneMatch(entityTag string) *MylibraryBookshelvesVolumesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryBookshelvesVolumesListCall) Context(ctx context.Context) *MylibraryBookshelvesVolumesListCall {
 	c.ctx_ = ctx
 	return c
@@ -7453,16 +7829,41 @@ func (c *MylibraryBookshelvesVolumesListCall) Context(ctx context.Context) *Myli
 
 func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["country"]; ok {
+		params.Set("country", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["q"]; ok {
+		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/bookshelves/{shelf}/volumes")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"shelf": c.shelf,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7581,16 +7982,15 @@ func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
 // method id "books.mylibrary.readingpositions.get":
 
 type MylibraryReadingpositionsGetCall struct {
-	s            *Service
-	volumeId     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Retrieves my reading position information for a volume.
 func (r *MylibraryReadingpositionsService) Get(volumeId string) *MylibraryReadingpositionsGetCall {
-	c := &MylibraryReadingpositionsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryReadingpositionsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	return c
 }
@@ -7598,22 +7998,22 @@ func (r *MylibraryReadingpositionsService) Get(volumeId string) *MylibraryReadin
 // ContentVersion sets the optional parameter "contentVersion": Volume
 // content version for which this reading position is requested.
 func (c *MylibraryReadingpositionsGetCall) ContentVersion(contentVersion string) *MylibraryReadingpositionsGetCall {
-	c.urlParams_.Set("contentVersion", contentVersion)
+	c.opt_["contentVersion"] = contentVersion
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryReadingpositionsGetCall) Source(source string) *MylibraryReadingpositionsGetCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryReadingpositionsGetCall) Fields(s ...googleapi.Field) *MylibraryReadingpositionsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -7623,13 +8023,13 @@ func (c *MylibraryReadingpositionsGetCall) Fields(s ...googleapi.Field) *Mylibra
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MylibraryReadingpositionsGetCall) IfNoneMatch(entityTag string) *MylibraryReadingpositionsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryReadingpositionsGetCall) Context(ctx context.Context) *MylibraryReadingpositionsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -7637,16 +8037,26 @@ func (c *MylibraryReadingpositionsGetCall) Context(ctx context.Context) *Mylibra
 
 func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["contentVersion"]; ok {
+		params.Set("contentVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7728,18 +8138,20 @@ func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
 // method id "books.mylibrary.readingpositions.setPosition":
 
 type MylibraryReadingpositionsSetPositionCall struct {
-	s          *Service
-	volumeId   string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	volumeId  string
+	timestamp string
+	position  string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // SetPosition: Sets my reading position information for a volume.
 func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, timestamp string, position string) *MylibraryReadingpositionsSetPositionCall {
-	c := &MylibraryReadingpositionsSetPositionCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MylibraryReadingpositionsSetPositionCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
-	c.urlParams_.Set("timestamp", timestamp)
-	c.urlParams_.Set("position", position)
+	c.timestamp = timestamp
+	c.position = position
 	return c
 }
 
@@ -7754,42 +8166,42 @@ func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, timestam
 //   "scroll" - User navigated to page.
 //   "search" - User chose search results within volume.
 func (c *MylibraryReadingpositionsSetPositionCall) Action(action string) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("action", action)
+	c.opt_["action"] = action
 	return c
 }
 
 // ContentVersion sets the optional parameter "contentVersion": Volume
 // content version for which this reading position applies.
 func (c *MylibraryReadingpositionsSetPositionCall) ContentVersion(contentVersion string) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("contentVersion", contentVersion)
+	c.opt_["contentVersion"] = contentVersion
 	return c
 }
 
 // DeviceCookie sets the optional parameter "deviceCookie": Random
 // persistent device cookie optional on set position.
 func (c *MylibraryReadingpositionsSetPositionCall) DeviceCookie(deviceCookie string) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("deviceCookie", deviceCookie)
+	c.opt_["deviceCookie"] = deviceCookie
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryReadingpositionsSetPositionCall) Source(source string) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MylibraryReadingpositionsSetPositionCall) Fields(s ...googleapi.Field) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MylibraryReadingpositionsSetPositionCall) Context(ctx context.Context) *MylibraryReadingpositionsSetPositionCall {
 	c.ctx_ = ctx
 	return c
@@ -7797,9 +8209,27 @@ func (c *MylibraryReadingpositionsSetPositionCall) Context(ctx context.Context) 
 
 func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("position", fmt.Sprintf("%v", c.position))
+	params.Set("timestamp", fmt.Sprintf("%v", c.timestamp))
+	if v, ok := c.opt_["action"]; ok {
+		params.Set("action", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["contentVersion"]; ok {
+		params.Set("contentVersion", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["deviceCookie"]; ok {
+		params.Set("deviceCookie", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "mylibrary/readingpositions/{volumeId}/setPosition")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
@@ -7898,30 +8328,29 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 // method id "books.onboarding.listCategories":
 
 type OnboardingListCategoriesCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ListCategories: List categories for onboarding experience.
 func (r *OnboardingService) ListCategories() *OnboardingListCategoriesCall {
-	c := &OnboardingListCategoriesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &OnboardingListCategoriesCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
 // ISO-3166-1 country code. Default is en-US if unset.
 func (c *OnboardingListCategoriesCall) Locale(locale string) *OnboardingListCategoriesCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OnboardingListCategoriesCall) Fields(s ...googleapi.Field) *OnboardingListCategoriesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -7931,13 +8360,13 @@ func (c *OnboardingListCategoriesCall) Fields(s ...googleapi.Field) *OnboardingL
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *OnboardingListCategoriesCall) IfNoneMatch(entityTag string) *OnboardingListCategoriesCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *OnboardingListCategoriesCall) Context(ctx context.Context) *OnboardingListCategoriesCall {
 	c.ctx_ = ctx
 	return c
@@ -7945,14 +8374,21 @@ func (c *OnboardingListCategoriesCall) Context(ctx context.Context) *OnboardingL
 
 func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "onboarding/listCategories")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8020,30 +8456,29 @@ func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
 // method id "books.onboarding.listCategoryVolumes":
 
 type OnboardingListCategoryVolumesCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // ListCategoryVolumes: List available volumes under categories for
 // onboarding experience.
 func (r *OnboardingService) ListCategoryVolumes() *OnboardingListCategoryVolumesCall {
-	c := &OnboardingListCategoryVolumesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &OnboardingListCategoryVolumesCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // CategoryId sets the optional parameter "categoryId": List of category
 // ids requested.
-func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId []string) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.SetMulti("categoryId", append([]string{}, categoryId...))
+func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId string) *OnboardingListCategoryVolumesCall {
+	c.opt_["categoryId"] = categoryId
 	return c
 }
 
 // Locale sets the optional parameter "locale": ISO-639-1 language and
 // ISO-3166-1 country code. Default is en-US if unset.
 func (c *OnboardingListCategoryVolumesCall) Locale(locale string) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
@@ -8056,29 +8491,29 @@ func (c *OnboardingListCategoryVolumesCall) Locale(locale string) *OnboardingLis
 //   "mature" - Show books which are rated mature or lower.
 //   "not-mature" - Show books which are rated not mature.
 func (c *OnboardingListCategoryVolumesCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
+	c.opt_["maxAllowedMaturityRating"] = maxAllowedMaturityRating
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Number of maximum
 // results per page to be included in the response.
 func (c *OnboardingListCategoryVolumesCall) PageSize(pageSize int64) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.opt_["pageSize"] = pageSize
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of the
 // nextToken from the previous page.
 func (c *OnboardingListCategoryVolumesCall) PageToken(pageToken string) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *OnboardingListCategoryVolumesCall) Fields(s ...googleapi.Field) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -8088,13 +8523,13 @@ func (c *OnboardingListCategoryVolumesCall) Fields(s ...googleapi.Field) *Onboar
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *OnboardingListCategoryVolumesCall) IfNoneMatch(entityTag string) *OnboardingListCategoryVolumesCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *OnboardingListCategoryVolumesCall) Context(ctx context.Context) *OnboardingListCategoryVolumesCall {
 	c.ctx_ = ctx
 	return c
@@ -8102,14 +8537,33 @@ func (c *OnboardingListCategoryVolumesCall) Context(ctx context.Context) *Onboar
 
 func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["categoryId"]; ok {
+		params.Set("categoryId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAllowedMaturityRating"]; ok {
+		params.Set("maxAllowedMaturityRating", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageSize"]; ok {
+		params.Set("pageSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "onboarding/listCategoryVolumes")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8207,78 +8661,78 @@ func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
 // method id "books.promooffer.accept":
 
 type PromoofferAcceptCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Accept:
 func (r *PromoofferService) Accept() *PromoofferAcceptCall {
-	c := &PromoofferAcceptCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PromoofferAcceptCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // AndroidId sets the optional parameter "androidId": device android_id
 func (c *PromoofferAcceptCall) AndroidId(androidId string) *PromoofferAcceptCall {
-	c.urlParams_.Set("androidId", androidId)
+	c.opt_["androidId"] = androidId
 	return c
 }
 
 // Device sets the optional parameter "device": device device
 func (c *PromoofferAcceptCall) Device(device string) *PromoofferAcceptCall {
-	c.urlParams_.Set("device", device)
+	c.opt_["device"] = device
 	return c
 }
 
 // Manufacturer sets the optional parameter "manufacturer": device
 // manufacturer
 func (c *PromoofferAcceptCall) Manufacturer(manufacturer string) *PromoofferAcceptCall {
-	c.urlParams_.Set("manufacturer", manufacturer)
+	c.opt_["manufacturer"] = manufacturer
 	return c
 }
 
 // Model sets the optional parameter "model": device model
 func (c *PromoofferAcceptCall) Model(model string) *PromoofferAcceptCall {
-	c.urlParams_.Set("model", model)
+	c.opt_["model"] = model
 	return c
 }
 
 // OfferId sets the optional parameter "offerId":
 func (c *PromoofferAcceptCall) OfferId(offerId string) *PromoofferAcceptCall {
-	c.urlParams_.Set("offerId", offerId)
+	c.opt_["offerId"] = offerId
 	return c
 }
 
 // Product sets the optional parameter "product": device product
 func (c *PromoofferAcceptCall) Product(product string) *PromoofferAcceptCall {
-	c.urlParams_.Set("product", product)
+	c.opt_["product"] = product
 	return c
 }
 
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferAcceptCall) Serial(serial string) *PromoofferAcceptCall {
-	c.urlParams_.Set("serial", serial)
+	c.opt_["serial"] = serial
 	return c
 }
 
 // VolumeId sets the optional parameter "volumeId": Volume id to
 // exercise the offer
 func (c *PromoofferAcceptCall) VolumeId(volumeId string) *PromoofferAcceptCall {
-	c.urlParams_.Set("volumeId", volumeId)
+	c.opt_["volumeId"] = volumeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PromoofferAcceptCall) Fields(s ...googleapi.Field) *PromoofferAcceptCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PromoofferAcceptCall) Context(ctx context.Context) *PromoofferAcceptCall {
 	c.ctx_ = ctx
 	return c
@@ -8286,9 +8740,37 @@ func (c *PromoofferAcceptCall) Context(ctx context.Context) *PromoofferAcceptCal
 
 func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["androidId"]; ok {
+		params.Set("androidId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["device"]; ok {
+		params.Set("device", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["manufacturer"]; ok {
+		params.Set("manufacturer", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["model"]; ok {
+		params.Set("model", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["offerId"]; ok {
+		params.Set("offerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["product"]; ok {
+		params.Set("product", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["serial"]; ok {
+		params.Set("serial", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeId"]; ok {
+		params.Set("volumeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/accept")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -8365,71 +8847,71 @@ func (c *PromoofferAcceptCall) Do() error {
 // method id "books.promooffer.dismiss":
 
 type PromoofferDismissCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Dismiss:
 func (r *PromoofferService) Dismiss() *PromoofferDismissCall {
-	c := &PromoofferDismissCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PromoofferDismissCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // AndroidId sets the optional parameter "androidId": device android_id
 func (c *PromoofferDismissCall) AndroidId(androidId string) *PromoofferDismissCall {
-	c.urlParams_.Set("androidId", androidId)
+	c.opt_["androidId"] = androidId
 	return c
 }
 
 // Device sets the optional parameter "device": device device
 func (c *PromoofferDismissCall) Device(device string) *PromoofferDismissCall {
-	c.urlParams_.Set("device", device)
+	c.opt_["device"] = device
 	return c
 }
 
 // Manufacturer sets the optional parameter "manufacturer": device
 // manufacturer
 func (c *PromoofferDismissCall) Manufacturer(manufacturer string) *PromoofferDismissCall {
-	c.urlParams_.Set("manufacturer", manufacturer)
+	c.opt_["manufacturer"] = manufacturer
 	return c
 }
 
 // Model sets the optional parameter "model": device model
 func (c *PromoofferDismissCall) Model(model string) *PromoofferDismissCall {
-	c.urlParams_.Set("model", model)
+	c.opt_["model"] = model
 	return c
 }
 
 // OfferId sets the optional parameter "offerId": Offer to dimiss
 func (c *PromoofferDismissCall) OfferId(offerId string) *PromoofferDismissCall {
-	c.urlParams_.Set("offerId", offerId)
+	c.opt_["offerId"] = offerId
 	return c
 }
 
 // Product sets the optional parameter "product": device product
 func (c *PromoofferDismissCall) Product(product string) *PromoofferDismissCall {
-	c.urlParams_.Set("product", product)
+	c.opt_["product"] = product
 	return c
 }
 
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferDismissCall) Serial(serial string) *PromoofferDismissCall {
-	c.urlParams_.Set("serial", serial)
+	c.opt_["serial"] = serial
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PromoofferDismissCall) Fields(s ...googleapi.Field) *PromoofferDismissCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PromoofferDismissCall) Context(ctx context.Context) *PromoofferDismissCall {
 	c.ctx_ = ctx
 	return c
@@ -8437,9 +8919,34 @@ func (c *PromoofferDismissCall) Context(ctx context.Context) *PromoofferDismissC
 
 func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["androidId"]; ok {
+		params.Set("androidId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["device"]; ok {
+		params.Set("device", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["manufacturer"]; ok {
+		params.Set("manufacturer", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["model"]; ok {
+		params.Set("model", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["offerId"]; ok {
+		params.Set("offerId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["product"]; ok {
+		params.Set("product", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["serial"]; ok {
+		params.Set("serial", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/dismiss")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -8512,60 +9019,59 @@ func (c *PromoofferDismissCall) Do() error {
 // method id "books.promooffer.get":
 
 type PromoofferGetCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Returns a list of promo offers available to the user
 func (r *PromoofferService) Get() *PromoofferGetCall {
-	c := &PromoofferGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PromoofferGetCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // AndroidId sets the optional parameter "androidId": device android_id
 func (c *PromoofferGetCall) AndroidId(androidId string) *PromoofferGetCall {
-	c.urlParams_.Set("androidId", androidId)
+	c.opt_["androidId"] = androidId
 	return c
 }
 
 // Device sets the optional parameter "device": device device
 func (c *PromoofferGetCall) Device(device string) *PromoofferGetCall {
-	c.urlParams_.Set("device", device)
+	c.opt_["device"] = device
 	return c
 }
 
 // Manufacturer sets the optional parameter "manufacturer": device
 // manufacturer
 func (c *PromoofferGetCall) Manufacturer(manufacturer string) *PromoofferGetCall {
-	c.urlParams_.Set("manufacturer", manufacturer)
+	c.opt_["manufacturer"] = manufacturer
 	return c
 }
 
 // Model sets the optional parameter "model": device model
 func (c *PromoofferGetCall) Model(model string) *PromoofferGetCall {
-	c.urlParams_.Set("model", model)
+	c.opt_["model"] = model
 	return c
 }
 
 // Product sets the optional parameter "product": device product
 func (c *PromoofferGetCall) Product(product string) *PromoofferGetCall {
-	c.urlParams_.Set("product", product)
+	c.opt_["product"] = product
 	return c
 }
 
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferGetCall) Serial(serial string) *PromoofferGetCall {
-	c.urlParams_.Set("serial", serial)
+	c.opt_["serial"] = serial
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PromoofferGetCall) Fields(s ...googleapi.Field) *PromoofferGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -8575,13 +9081,13 @@ func (c *PromoofferGetCall) Fields(s ...googleapi.Field) *PromoofferGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PromoofferGetCall) IfNoneMatch(entityTag string) *PromoofferGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PromoofferGetCall) Context(ctx context.Context) *PromoofferGetCall {
 	c.ctx_ = ctx
 	return c
@@ -8589,14 +9095,36 @@ func (c *PromoofferGetCall) Context(ctx context.Context) *PromoofferGetCall {
 
 func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["androidId"]; ok {
+		params.Set("androidId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["device"]; ok {
+		params.Set("device", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["manufacturer"]; ok {
+		params.Set("manufacturer", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["model"]; ok {
+		params.Set("model", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["product"]; ok {
+		params.Set("product", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["serial"]; ok {
+		params.Set("serial", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "promooffer/get")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8689,16 +9217,15 @@ func (c *PromoofferGetCall) Do() (*Offers, error) {
 // method id "books.volumes.get":
 
 type VolumesGetCall struct {
-	s            *Service
-	volumeId     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Gets volume information for a single volume.
 func (r *VolumesService) Get(volumeId string) *VolumesGetCall {
-	c := &VolumesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &VolumesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	return c
 }
@@ -8706,14 +9233,14 @@ func (r *VolumesService) Get(volumeId string) *VolumesGetCall {
 // Country sets the optional parameter "country": ISO-3166-1 code to
 // override the IP-based location.
 func (c *VolumesGetCall) Country(country string) *VolumesGetCall {
-	c.urlParams_.Set("country", country)
+	c.opt_["country"] = country
 	return c
 }
 
 // Partner sets the optional parameter "partner": Brand results for
 // partner ID.
 func (c *VolumesGetCall) Partner(partner string) *VolumesGetCall {
-	c.urlParams_.Set("partner", partner)
+	c.opt_["partner"] = partner
 	return c
 }
 
@@ -8724,29 +9251,29 @@ func (c *VolumesGetCall) Partner(partner string) *VolumesGetCall {
 //   "full" - Includes all volume data.
 //   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
-	c.urlParams_.Set("projection", projection)
+	c.opt_["projection"] = projection
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
 // UserLibraryConsistentRead sets the optional parameter
 // "user_library_consistent_read":
 func (c *VolumesGetCall) UserLibraryConsistentRead(userLibraryConsistentRead bool) *VolumesGetCall {
-	c.urlParams_.Set("userLibraryConsistentRead", fmt.Sprintf("%v", userLibraryConsistentRead))
+	c.opt_["user_library_consistent_read"] = userLibraryConsistentRead
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *VolumesGetCall) Fields(s ...googleapi.Field) *VolumesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -8756,13 +9283,13 @@ func (c *VolumesGetCall) Fields(s ...googleapi.Field) *VolumesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *VolumesGetCall) IfNoneMatch(entityTag string) *VolumesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *VolumesGetCall) Context(ctx context.Context) *VolumesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -8770,16 +9297,35 @@ func (c *VolumesGetCall) Context(ctx context.Context) *VolumesGetCall {
 
 func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["country"]; ok {
+		params.Set("country", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["partner"]; ok {
+		params.Set("partner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["user_library_consistent_read"]; ok {
+		params.Set("user_library_consistent_read", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8883,16 +9429,16 @@ func (c *VolumesGetCall) Do() (*Volume, error) {
 // method id "books.volumes.list":
 
 type VolumesListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	q    string
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Performs a book search.
 func (r *VolumesService) List(q string) *VolumesListCall {
-	c := &VolumesListCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("q", q)
+	c := &VolumesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.q = q
 	return c
 }
 
@@ -8902,7 +9448,7 @@ func (r *VolumesService) List(q string) *VolumesListCall {
 // Possible values:
 //   "epub" - All volumes with epub.
 func (c *VolumesListCall) Download(download string) *VolumesListCall {
-	c.urlParams_.Set("download", download)
+	c.opt_["download"] = download
 	return c
 }
 
@@ -8915,14 +9461,14 @@ func (c *VolumesListCall) Download(download string) *VolumesListCall {
 //   "paid-ebooks" - Google eBook with a price.
 //   "partial" - Public able to see parts of text.
 func (c *VolumesListCall) Filter(filter string) *VolumesListCall {
-	c.urlParams_.Set("filter", filter)
+	c.opt_["filter"] = filter
 	return c
 }
 
 // LangRestrict sets the optional parameter "langRestrict": Restrict
 // results to books with this language code.
 func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
-	c.urlParams_.Set("langRestrict", langRestrict)
+	c.opt_["langRestrict"] = langRestrict
 	return c
 }
 
@@ -8933,14 +9479,14 @@ func (c *VolumesListCall) LangRestrict(langRestrict string) *VolumesListCall {
 //   "my-library" - Restrict to the user's library, any shelf.
 //   "no-restrict" - Do not restrict based on user's library.
 func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCall {
-	c.urlParams_.Set("libraryRestrict", libraryRestrict)
+	c.opt_["libraryRestrict"] = libraryRestrict
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *VolumesListCall) MaxResults(maxResults int64) *VolumesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -8950,14 +9496,14 @@ func (c *VolumesListCall) MaxResults(maxResults int64) *VolumesListCall {
 //   "newest" - Most recently published.
 //   "relevance" - Relevance to search terms.
 func (c *VolumesListCall) OrderBy(orderBy string) *VolumesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
+	c.opt_["orderBy"] = orderBy
 	return c
 }
 
 // Partner sets the optional parameter "partner": Restrict and brand
 // results for partner ID.
 func (c *VolumesListCall) Partner(partner string) *VolumesListCall {
-	c.urlParams_.Set("partner", partner)
+	c.opt_["partner"] = partner
 	return c
 }
 
@@ -8969,7 +9515,7 @@ func (c *VolumesListCall) Partner(partner string) *VolumesListCall {
 //   "books" - Just books.
 //   "magazines" - Just magazines.
 func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
-	c.urlParams_.Set("printType", printType)
+	c.opt_["printType"] = printType
 	return c
 }
 
@@ -8980,36 +9526,36 @@ func (c *VolumesListCall) PrintType(printType string) *VolumesListCall {
 //   "full" - Includes all volume data.
 //   "lite" - Includes a subset of fields in volumeInfo and accessInfo.
 func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
-	c.urlParams_.Set("projection", projection)
+	c.opt_["projection"] = projection
 	return c
 }
 
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show books available for preorder. Defaults to false.
 func (c *VolumesListCall) ShowPreorders(showPreorders bool) *VolumesListCall {
-	c.urlParams_.Set("showPreorders", fmt.Sprintf("%v", showPreorders))
+	c.opt_["showPreorders"] = showPreorders
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesListCall) Source(source string) *VolumesListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first result to return (starts at 0)
 func (c *VolumesListCall) StartIndex(startIndex int64) *VolumesListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *VolumesListCall) Fields(s ...googleapi.Field) *VolumesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -9019,13 +9565,13 @@ func (c *VolumesListCall) Fields(s ...googleapi.Field) *VolumesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *VolumesListCall) IfNoneMatch(entityTag string) *VolumesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *VolumesListCall) Context(ctx context.Context) *VolumesListCall {
 	c.ctx_ = ctx
 	return c
@@ -9033,14 +9579,55 @@ func (c *VolumesListCall) Context(ctx context.Context) *VolumesListCall {
 
 func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("q", fmt.Sprintf("%v", c.q))
+	if v, ok := c.opt_["download"]; ok {
+		params.Set("download", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["langRestrict"]; ok {
+		params.Set("langRestrict", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["libraryRestrict"]; ok {
+		params.Set("libraryRestrict", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["partner"]; ok {
+		params.Set("partner", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["printType"]; ok {
+		params.Set("printType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showPreorders"]; ok {
+		params.Set("showPreorders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9231,16 +9818,15 @@ func (c *VolumesListCall) Do() (*Volumes, error) {
 // method id "books.volumes.associated.list":
 
 type VolumesAssociatedListCall struct {
-	s            *Service
-	volumeId     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Return a list of associated books.
 func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListCall {
-	c := &VolumesAssociatedListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &VolumesAssociatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.volumeId = volumeId
 	return c
 }
@@ -9253,7 +9839,7 @@ func (r *VolumesAssociatedService) List(volumeId string) *VolumesAssociatedListC
 //   "end-of-volume" - Recommendations for display end-of-volume.
 //   "related-for-play" - Related volumes for Play Store.
 func (c *VolumesAssociatedListCall) Association(association string) *VolumesAssociatedListCall {
-	c.urlParams_.Set("association", association)
+	c.opt_["association"] = association
 	return c
 }
 
@@ -9261,7 +9847,7 @@ func (c *VolumesAssociatedListCall) Association(association string) *VolumesAsso
 // ISO-3166-1 country code. Ex: 'en_US'. Used for generating
 // recommendations.
 func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedListCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
@@ -9274,22 +9860,22 @@ func (c *VolumesAssociatedListCall) Locale(locale string) *VolumesAssociatedList
 //   "mature" - Show books which are rated mature or lower.
 //   "not-mature" - Show books which are rated not mature.
 func (c *VolumesAssociatedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesAssociatedListCall {
-	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
+	c.opt_["maxAllowedMaturityRating"] = maxAllowedMaturityRating
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesAssociatedListCall) Source(source string) *VolumesAssociatedListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *VolumesAssociatedListCall) Fields(s ...googleapi.Field) *VolumesAssociatedListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -9299,13 +9885,13 @@ func (c *VolumesAssociatedListCall) Fields(s ...googleapi.Field) *VolumesAssocia
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *VolumesAssociatedListCall) IfNoneMatch(entityTag string) *VolumesAssociatedListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *VolumesAssociatedListCall) Context(ctx context.Context) *VolumesAssociatedListCall {
 	c.ctx_ = ctx
 	return c
@@ -9313,16 +9899,32 @@ func (c *VolumesAssociatedListCall) Context(ctx context.Context) *VolumesAssocia
 
 func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["association"]; ok {
+		params.Set("association", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAllowedMaturityRating"]; ok {
+		params.Set("maxAllowedMaturityRating", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/{volumeId}/associated")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeId": c.volumeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9432,15 +10034,14 @@ func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
 // method id "books.volumes.mybooks.list":
 
 type VolumesMybooksListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return a list of books in My Library.
 func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
-	c := &VolumesMybooksListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &VolumesMybooksListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
@@ -9455,8 +10056,8 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 //   "RENTED" - User-rented books
 //   "SAMPLE" - Sample books
 //   "UPLOADED" - User uploaded books
-func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod []string) *VolumesMybooksListCall {
-	c.urlParams_.SetMulti("acquireMethod", append([]string{}, acquireMethod...))
+func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod string) *VolumesMybooksListCall {
+	c.opt_["acquireMethod"] = acquireMethod
 	return c
 }
 
@@ -9464,14 +10065,14 @@ func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod []string) *VolumesM
 // ISO-3166-1 country code. Ex:'en_US'. Used for generating
 // recommendations.
 func (c *VolumesMybooksListCall) Locale(locale string) *VolumesMybooksListCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -9483,30 +10084,30 @@ func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksLis
 //   "COMPLETED_FAILED" - The volume processing hase failed.
 //   "COMPLETED_SUCCESS" - The volume processing was completed.
 //   "RUNNING" - The volume processing is not completed.
-func (c *VolumesMybooksListCall) ProcessingState(processingState []string) *VolumesMybooksListCall {
-	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
+func (c *VolumesMybooksListCall) ProcessingState(processingState string) *VolumesMybooksListCall {
+	c.opt_["processingState"] = processingState
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesMybooksListCall) Source(source string) *VolumesMybooksListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first result to return (starts at 0)
 func (c *VolumesMybooksListCall) StartIndex(startIndex int64) *VolumesMybooksListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *VolumesMybooksListCall) Fields(s ...googleapi.Field) *VolumesMybooksListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -9516,13 +10117,13 @@ func (c *VolumesMybooksListCall) Fields(s ...googleapi.Field) *VolumesMybooksLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *VolumesMybooksListCall) IfNoneMatch(entityTag string) *VolumesMybooksListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *VolumesMybooksListCall) Context(ctx context.Context) *VolumesMybooksListCall {
 	c.ctx_ = ctx
 	return c
@@ -9530,14 +10131,36 @@ func (c *VolumesMybooksListCall) Context(ctx context.Context) *VolumesMybooksLis
 
 func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["acquireMethod"]; ok {
+		params.Set("acquireMethod", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["processingState"]; ok {
+		params.Set("processingState", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/mybooks")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9665,15 +10288,14 @@ func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
 // method id "books.volumes.recommended.list":
 
 type VolumesRecommendedListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return a list of recommended books for the current user.
 func (r *VolumesRecommendedService) List() *VolumesRecommendedListCall {
-	c := &VolumesRecommendedListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &VolumesRecommendedListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
@@ -9681,7 +10303,7 @@ func (r *VolumesRecommendedService) List() *VolumesRecommendedListCall {
 // ISO-3166-1 country code. Ex: 'en_US'. Used for generating
 // recommendations.
 func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedListCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
@@ -9694,22 +10316,22 @@ func (c *VolumesRecommendedListCall) Locale(locale string) *VolumesRecommendedLi
 //   "mature" - Show books which are rated mature or lower.
 //   "not-mature" - Show books which are rated not mature.
 func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *VolumesRecommendedListCall {
-	c.urlParams_.Set("maxAllowedMaturityRating", maxAllowedMaturityRating)
+	c.opt_["maxAllowedMaturityRating"] = maxAllowedMaturityRating
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesRecommendedListCall) Source(source string) *VolumesRecommendedListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *VolumesRecommendedListCall) Fields(s ...googleapi.Field) *VolumesRecommendedListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -9719,13 +10341,13 @@ func (c *VolumesRecommendedListCall) Fields(s ...googleapi.Field) *VolumesRecomm
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *VolumesRecommendedListCall) IfNoneMatch(entityTag string) *VolumesRecommendedListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *VolumesRecommendedListCall) Context(ctx context.Context) *VolumesRecommendedListCall {
 	c.ctx_ = ctx
 	return c
@@ -9733,14 +10355,27 @@ func (c *VolumesRecommendedListCall) Context(ctx context.Context) *VolumesRecomm
 
 func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAllowedMaturityRating"]; ok {
+		params.Set("maxAllowedMaturityRating", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9826,16 +10461,18 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 // method id "books.volumes.recommended.rate":
 
 type VolumesRecommendedRateCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	rating   string
+	volumeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Rate: Rate a recommended book for the current user.
 func (r *VolumesRecommendedService) Rate(rating string, volumeId string) *VolumesRecommendedRateCall {
-	c := &VolumesRecommendedRateCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("rating", rating)
-	c.urlParams_.Set("volumeId", volumeId)
+	c := &VolumesRecommendedRateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.rating = rating
+	c.volumeId = volumeId
 	return c
 }
 
@@ -9843,28 +10480,28 @@ func (r *VolumesRecommendedService) Rate(rating string, volumeId string) *Volume
 // ISO-3166-1 country code. Ex: 'en_US'. Used for generating
 // recommendations.
 func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRateCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesRecommendedRateCall) Source(source string) *VolumesRecommendedRateCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *VolumesRecommendedRateCall) Fields(s ...googleapi.Field) *VolumesRecommendedRateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *VolumesRecommendedRateCall) Context(ctx context.Context) *VolumesRecommendedRateCall {
 	c.ctx_ = ctx
 	return c
@@ -9872,9 +10509,21 @@ func (c *VolumesRecommendedRateCall) Context(ctx context.Context) *VolumesRecomm
 
 func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("rating", fmt.Sprintf("%v", c.rating))
+	params.Set("volumeId", fmt.Sprintf("%v", c.volumeId))
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/recommended/rate")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -9974,15 +10623,14 @@ func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse,
 // method id "books.volumes.useruploaded.list":
 
 type VolumesUseruploadedListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Return a list of books uploaded by the current user.
 func (r *VolumesUseruploadedService) List() *VolumesUseruploadedListCall {
-	c := &VolumesUseruploadedListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &VolumesUseruploadedListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
@@ -9990,14 +10638,14 @@ func (r *VolumesUseruploadedService) List() *VolumesUseruploadedListCall {
 // ISO-3166-1 country code. Ex: 'en_US'. Used for generating
 // recommendations.
 func (c *VolumesUseruploadedListCall) Locale(locale string) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("locale", locale)
+	c.opt_["locale"] = locale
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -10008,38 +10656,38 @@ func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseru
 //   "COMPLETED_FAILED" - The volume processing hase failed.
 //   "COMPLETED_SUCCESS" - The volume processing was completed.
 //   "RUNNING" - The volume processing is not completed.
-func (c *VolumesUseruploadedListCall) ProcessingState(processingState []string) *VolumesUseruploadedListCall {
-	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
+func (c *VolumesUseruploadedListCall) ProcessingState(processingState string) *VolumesUseruploadedListCall {
+	c.opt_["processingState"] = processingState
 	return c
 }
 
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesUseruploadedListCall) Source(source string) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first result to return (starts at 0)
 func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
 // VolumeId sets the optional parameter "volumeId": The ids of the
 // volumes to be returned. If not specified all that match the
 // processingState are returned.
-func (c *VolumesUseruploadedListCall) VolumeId(volumeId []string) *VolumesUseruploadedListCall {
-	c.urlParams_.SetMulti("volumeId", append([]string{}, volumeId...))
+func (c *VolumesUseruploadedListCall) VolumeId(volumeId string) *VolumesUseruploadedListCall {
+	c.opt_["volumeId"] = volumeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *VolumesUseruploadedListCall) Fields(s ...googleapi.Field) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -10049,13 +10697,13 @@ func (c *VolumesUseruploadedListCall) Fields(s ...googleapi.Field) *VolumesUseru
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *VolumesUseruploadedListCall) IfNoneMatch(entityTag string) *VolumesUseruploadedListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *VolumesUseruploadedListCall) Context(ctx context.Context) *VolumesUseruploadedListCall {
 	c.ctx_ = ctx
 	return c
@@ -10063,14 +10711,36 @@ func (c *VolumesUseruploadedListCall) Context(ctx context.Context) *VolumesUseru
 
 func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["processingState"]; ok {
+		params.Set("processingState", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["volumeId"]; ok {
+		params.Set("volumeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "volumes/useruploaded")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

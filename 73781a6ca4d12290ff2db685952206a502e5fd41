@@ -1,0 +1,8 @@
+Code-Review+1: David Symonds <dsymonds@golang.org>
+Code-Review+1: Glenn Lewis <gmlewis@google.com>
+Code-Review+2: Brad Fitzpatrick <bradfitz@golang.org>
+Submitted-by: Michael McGreevy <mcgreevy@golang.org>
+Submitted-at: Fri, 16 Oct 2015 00:49:54 +0000
+Reviewed-on: https://code-review.googlesource.com/3576
+Project: google-api-go-client
+Branch: refs/heads/master

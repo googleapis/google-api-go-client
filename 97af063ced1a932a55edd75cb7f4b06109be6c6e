@@ -16,6 +16,24 @@
       "revId": "97af063ced1a932a55edd75cb7f4b06109be6c6e",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9550e3b_8ba8fdfb",
+        "filename": "google-api-go-generator/testdata/param-rename.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-16T05:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b53ada_dabe65e9",
+      "revId": "97af063ced1a932a55edd75cb7f4b06109be6c6e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

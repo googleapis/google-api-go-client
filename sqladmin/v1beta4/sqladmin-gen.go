@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "sqladmin:v1beta4"
 const apiName = "sqladmin"
@@ -657,7 +659,7 @@ func (s *ExportContextCsvExportOptions) MarshalJSON() ([]byte, error) {
 // ExportContextSqlExportOptions: Options for exporting data as SQL
 // statements.
 type ExportContextSqlExportOptions struct {
-	// SchemaOnly: Export only schema.
+	// SchemaOnly: Export only schemas.
 	SchemaOnly bool `json:"schemaOnly,omitempty"`
 
 	// Tables: Tables to export, or that were exported, from the specified
@@ -679,14 +681,39 @@ func (s *ExportContextSqlExportOptions) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// FailoverContext: Database instance failover context.
+type FailoverContext struct {
+	// Kind: This is always sql#failoverContext.
+	Kind string `json:"kind,omitempty"`
+
+	// SettingsVersion: The current settings version of this instance.
+	// Request will be rejected if this version doesn't match the current
+	// settings version.
+	SettingsVersion int64 `json:"settingsVersion,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FailoverContext) MarshalJSON() ([]byte, error) {
+	type noMethod FailoverContext
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Flag: A Google Cloud SQL service flag resource.
 type Flag struct {
 	// AllowedStringValues: For STRING flags, a list of strings that the
 	// value can be set to.
 	AllowedStringValues []string `json:"allowedStringValues,omitempty"`
 
-	// AppliesTo: The database version this flag applies to. Currently this
-	// can only be [MYSQL_5_5].
+	// AppliesTo: The database version this flag applies to. Can be
+	// MYSQL_5_5, MYSQL_5_6, or both.
 	AppliesTo []string `json:"appliesTo,omitempty"`
 
 	// Kind: This is always sql#flag.
@@ -848,6 +875,26 @@ type InstancesExportRequest struct {
 
 func (s *InstancesExportRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesExportRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// InstancesFailoverRequest: Instance failover request.
+type InstancesFailoverRequest struct {
+	// FailoverContext: Failover Context.
+	FailoverContext *FailoverContext `json:"failoverContext,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FailoverContext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *InstancesFailoverRequest) MarshalJSON() ([]byte, error) {
+	type noMethod InstancesFailoverRequest
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1267,6 +1314,14 @@ func (s *OperationsListResponse) MarshalJSON() ([]byte, error) {
 // ReplicaConfiguration: Read-replica configuration for connecting to
 // the master.
 type ReplicaConfiguration struct {
+	// FailoverTarget: Specifies if the replica is the failover target. If
+	// the field is set to true the replica will be designated as a failover
+	// replica. In case the master instance fails, the replica instance will
+	// be promoted as the new master instance.
+	// Only one replica can be specified as failover target, and the replica
+	// has to be in different zone with the master instance.
+	FailoverTarget bool `json:"failoverTarget,omitempty"`
+
 	// Kind: This is always sql#replicaConfiguration.
 	Kind string `json:"kind,omitempty"`
 
@@ -1279,7 +1334,7 @@ type ReplicaConfiguration struct {
 	// data directory.
 	MysqlReplicaConfiguration *MySqlReplicaConfiguration `json:"mysqlReplicaConfiguration,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "FailoverTarget") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1342,6 +1397,11 @@ type Settings struct {
 	// instances. Indicates whether database flags for crash-safe
 	// replication are enabled.
 	CrashSafeReplicationEnabled bool `json:"crashSafeReplicationEnabled,omitempty"`
+
+	// DataDiskSizeGb: The size of data disk for the performance instance,
+	// specified in GB. Setting this value for non-performance instances
+	// will result in an error.
+	DataDiskSizeGb int64 `json:"dataDiskSizeGb,omitempty,string"`
 
 	// DatabaseFlags: The database flags passed to the instance at startup.
 	DatabaseFlags []*DatabaseFlags `json:"databaseFlags,omitempty"`
@@ -1817,7 +1877,7 @@ func (c *BackupRunsDeleteCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "The ID of the Backup Run to delete.",
+	//       "description": "The ID of the Backup Run to delete. To find a Backup Run ID, use the list method.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -3518,6 +3578,141 @@ func (c *InstancesExportCall) Do() (*Operation, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "sql.instances.failover":
+
+type InstancesFailoverCall struct {
+	s                        *Service
+	project                  string
+	instance                 string
+	instancesfailoverrequest *InstancesFailoverRequest
+	opt_                     map[string]interface{}
+	ctx_                     context.Context
+}
+
+// Failover: Failover the instance to its failover replica instance.
+func (r *InstancesService) Failover(project string, instance string, instancesfailoverrequest *InstancesFailoverRequest) *InstancesFailoverCall {
+	c := &InstancesFailoverCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.instance = instance
+	c.instancesfailoverrequest = instancesfailoverrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesFailoverCall) Fields(s ...googleapi.Field) *InstancesFailoverCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *InstancesFailoverCall) Context(ctx context.Context) *InstancesFailoverCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *InstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesfailoverrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/instances/{instance}/failover")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "sql.instances.failover" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesFailoverCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Failover the instance to its failover replica instance.",
+	//   "httpMethod": "POST",
+	//   "id": "sql.instances.failover",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "ID of the project that contains the read replica.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{project}/instances/{instance}/failover",
+	//   "request": {
+	//     "$ref": "InstancesFailoverRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
 	//   ]
 	// }
 

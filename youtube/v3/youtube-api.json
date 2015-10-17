@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/OiQFuZaPHLebnRB1awkIEBAme6Q\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/4-0NBGYpnIwmGOtwWyiB-28Ef00\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20150910",
+ "revision": "20151012",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -5188,7 +5188,7 @@
    "properties": {
     "ageGating": {
      "$ref": "VideoAgeGating",
-     "description": "Age restriction details related to a video."
+     "description": "Age restriction details related to a video. This data can only be retrieved by the video owner."
     },
     "contentDetails": {
      "$ref": "VideoContentDetails",

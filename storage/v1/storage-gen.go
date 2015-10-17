@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "storage:v1"
 const apiName = "storage"
@@ -214,8 +216,11 @@ type Bucket struct {
 	// Defaults to STANDARD. For more information, see storage classes.
 	StorageClass string `json:"storageClass,omitempty"`
 
-	// TimeCreated: Creation time of the bucket in RFC 3339 format.
+	// TimeCreated: The creation time of the bucket in RFC 3339 format.
 	TimeCreated string `json:"timeCreated,omitempty"`
+
+	// Updated: The modification time of the bucket in RFC 3339 format.
+	Updated string `json:"updated,omitempty"`
 
 	// Versioning: The bucket's versioning configuration.
 	Versioning *BucketVersioning `json:"versioning,omitempty"`
@@ -846,14 +851,16 @@ type Object struct {
 	// StorageClass: Storage class of the object.
 	StorageClass string `json:"storageClass,omitempty"`
 
+	// TimeCreated: The creation time of the object in RFC 3339 format.
+	TimeCreated string `json:"timeCreated,omitempty"`
+
 	// TimeDeleted: The deletion time of the object in RFC 3339 format. Will
 	// be returned if and only if this version of the object has been
 	// deleted.
 	TimeDeleted string `json:"timeDeleted,omitempty"`
 
-	// Updated: The creation or modification time of the object in RFC 3339
-	// format. For buckets with versioning enabled, changing an object's
-	// metadata does not change this property.
+	// Updated: The modification time of the object metadata in RFC 3339
+	// format.
 	Updated string `json:"updated,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/SNgmHHGH7wj9KiccwNhS4DpDB0M\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/VJrCHXHaMQfXi6fEi9qa_MKwS3Y\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20150908",
+ "revision": "20151008",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -768,6 +768,10 @@
     "needConfirmation": {
      "type": "boolean",
      "description": "Whether the assertion is from a non-trusted IDP and need account linking confirmation."
+    },
+    "needEmail": {
+     "type": "boolean",
+     "description": "Whether need client to supply email to complete the federated login flow."
     },
     "nickName": {
      "type": "string",

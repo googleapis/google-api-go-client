@@ -1238,6 +1238,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudtrace:v1",
+   "name": "cloudtrace",
+   "version": "v1",
+   "title": "Google Cloud Trace API",
+   "description": "The Google Cloud Trace API provides services for reading and writing runtime trace data for Cloud applications.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudtrace/v1/rest",
+   "discoveryLink": "./apis/cloudtrace/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/tools/cloud-trace",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "container:v1",
    "name": "container",
    "version": "v1",
@@ -1293,6 +1309,22 @@
    "description": "Google Cloud Logging API lets you create logs, ingest log entries, and manage log sinks.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/logging/v1beta3/rest",
    "discoveryLink": "./apis/logging/v1beta3/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/logging/docs/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "logging:v2beta1",
+   "name": "logging",
+   "version": "v2beta1",
+   "title": "Google Cloud Logging API",
+   "description": "Google Cloud Logging API lets you create logs, ingest log entries, and manage log sinks.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/logging/v2beta1/rest",
+   "discoveryLink": "./apis/logging/v2beta1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -1426,6 +1458,22 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "https://cloud.google.com/storage/transfer",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "youtubereporting:v1",
+   "name": "youtubereporting",
+   "version": "v1",
+   "title": "YouTube Reporting API",
+   "description": "An API to schedule reporting jobs and download the resulting bulk data reports about YouTube channels, videos etc. in the form of CSV files.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/youtubereporting/v1/rest",
+   "discoveryLink": "./apis/youtubereporting/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/youtube/reporting/v1/reports/",
    "preferred": true
   },
   {
@@ -1962,7 +2010,7 @@
    "id": "storage:v1beta1",
    "name": "storage",
    "version": "v1beta1",
-   "title": "Cloud Storage API",
+   "title": "Cloud Storage JSON API",
    "description": "Lets you store and retrieve potentially-large, immutable data objects.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/storage/v1beta1/rest",
    "discoveryLink": "./apis/storage/v1beta1/rest",
@@ -1981,7 +2029,7 @@
    "id": "storage:v1beta2",
    "name": "storage",
    "version": "v1beta2",
-   "title": "Cloud Storage API",
+   "title": "Cloud Storage JSON API",
    "description": "Lets you store and retrieve potentially-large, immutable data objects.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/storage/v1beta2/rest",
    "discoveryLink": "./apis/storage/v1beta2/rest",

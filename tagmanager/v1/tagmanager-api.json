@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/N2n1iYnDyuh2rPS2JpjnBtCuGt0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-5hQwJsgwNQCq1DK1Ud7--ggMIg\"",
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",
  "canonicalName": "Tag Manager",
  "version": "v1",
- "revision": "20150831",
+ "revision": "20151008",
  "title": "Tag Manager API",
  "description": "API for accessing Tag Manager accounts and containers.",
  "ownerDomain": "google.com",
@@ -158,14 +158,14 @@
    "properties": {
     "parameter": {
      "type": "array",
-     "description": "A list of named parameters (key/value), depending on the condition's type. Notes: \n- For binary operators, include parameters named arg0 and arg1 for specifying the left and right operands, respectively. \n- At this time, the left operand (arg0) must be a reference to a macro. \n- For case-insensitive Regex matching, include a boolean parameter named ignore_case that is set to true. If not specified or set to any other value, the matching will be case sensitive. \n- To negate an operator, include a boolean parameter named negate boolean parameter that is set to true.",
+     "description": "A list of named parameters (key/value), depending on the condition's type. Notes: \n- For binary operators, include parameters named arg0 and arg1 for specifying the left and right operands, respectively. \n- At this time, the left operand (arg0) must be a reference to a variable. \n- For case-insensitive Regex matching, include a boolean parameter named ignore_case that is set to true. If not specified or set to any other value, the matching will be case sensitive. \n- To negate an operator, include a boolean parameter named negate boolean parameter that is set to true.",
      "items": {
       "$ref": "Parameter"
      },
      "annotations": {
       "required": [
-       "tagmanager.accounts.containers.rules.create",
-       "tagmanager.accounts.containers.rules.update"
+       "tagmanager.accounts.containers.triggers.create",
+       "tagmanager.accounts.containers.triggers.update"
       ]
      }
     },
@@ -200,8 +200,8 @@
      ],
      "annotations": {
       "required": [
-       "tagmanager.accounts.containers.rules.create",
-       "tagmanager.accounts.containers.rules.update"
+       "tagmanager.accounts.containers.triggers.create",
+       "tagmanager.accounts.containers.triggers.update"
       ]
      }
     }
@@ -368,10 +368,14 @@
       "type": "string",
       "enum": [
        "android",
+       "androidSdk5",
        "ios",
+       "iosSdk5",
        "web"
       ],
       "enumDescriptions": [
+       "",
+       "",
        "",
        "",
        ""
@@ -716,34 +720,6 @@
     }
    }
   },
-  "ListMacrosResponse": {
-   "id": "ListMacrosResponse",
-   "type": "object",
-   "description": "List Macros Response.",
-   "properties": {
-    "macros": {
-     "type": "array",
-     "description": "All GTM Macros of a GTM Container.",
-     "items": {
-      "$ref": "Macro"
-     }
-    }
-   }
-  },
-  "ListRulesResponse": {
-   "id": "ListRulesResponse",
-   "type": "object",
-   "description": "List Rules Response.",
-   "properties": {
-    "rules": {
-     "type": "array",
-     "description": "All GTM Rules of a GTM Container.",
-     "items": {
-      "$ref": "Rule"
-     }
-    }
-   }
-  },
   "ListTagsResponse": {
    "id": "ListTagsResponse",
    "type": "object",
@@ -823,12 +799,7 @@
     },
     "name": {
      "type": "string",
-     "description": "Macro display name.",
-     "annotations": {
-      "required": [
-       "tagmanager.accounts.containers.macros.create"
-      ]
-     }
+     "description": "Macro display name."
     },
     "notes": {
      "type": "string",
@@ -857,13 +828,7 @@
     },
     "type": {
      "type": "string",
-     "description": "GTM Macro Type.",
-     "annotations": {
-      "required": [
-       "tagmanager.accounts.containers.macros.create",
-       "tagmanager.accounts.containers.macros.update"
-      ]
-     }
+     "description": "GTM Macro Type."
     }
    }
   },
@@ -892,7 +857,7 @@
     },
     "type": {
      "type": "string",
-     "description": "The parameter type. Valid values are: \n- boolean: The value represents a boolean, represented as 'true' or 'false' \n- integer: The value represents a 64-bit signed integer value, in base 10 \n- list: A list of parameters should be specified \n- map: A map of parameters should be specified \n- template: The value represents any text; this can include macro references (even macro references that might return non-string types)",
+     "description": "The parameter type. Valid values are: \n- boolean: The value represents a boolean, represented as 'true' or 'false' \n- integer: The value represents a 64-bit signed integer value, in base 10 \n- list: A list of parameters should be specified \n- map: A map of parameters should be specified \n- template: The value represents any text; this can include variable references (even variable references that might return non-string types)",
      "enum": [
       "boolean",
       "integer",
@@ -909,18 +874,18 @@
      ],
      "annotations": {
       "required": [
-       "tagmanager.accounts.containers.macros.create",
-       "tagmanager.accounts.containers.macros.update",
-       "tagmanager.accounts.containers.rules.create",
-       "tagmanager.accounts.containers.rules.update",
        "tagmanager.accounts.containers.tags.create",
-       "tagmanager.accounts.containers.tags.update"
+       "tagmanager.accounts.containers.tags.update",
+       "tagmanager.accounts.containers.triggers.create",
+       "tagmanager.accounts.containers.triggers.update",
+       "tagmanager.accounts.containers.variables.create",
+       "tagmanager.accounts.containers.variables.update"
       ]
      }
     },
     "value": {
      "type": "string",
-     "description": "A parameter's value (may contain macro references such as \"{{myMacro}}\") as appropriate to the specified type."
+     "description": "A parameter's value (may contain variable references such as \"{{myVariable}}\") as appropriate to the specified type."
     }
    }
   },
@@ -965,12 +930,7 @@
     },
     "name": {
      "type": "string",
-     "description": "Rule display name.",
-     "annotations": {
-      "required": [
-       "tagmanager.accounts.containers.rules.create"
-      ]
-     }
+     "description": "Rule display name."
     },
     "notes": {
      "type": "string",
@@ -1848,191 +1808,6 @@
         }
        }
       },
-      "macros": {
-       "methods": {
-        "create": {
-         "id": "tagmanager.accounts.containers.macros.create",
-         "path": "accounts/{accountId}/containers/{containerId}/macros",
-         "httpMethod": "POST",
-         "description": "Creates a GTM Macro.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId"
-         ],
-         "request": {
-          "$ref": "Macro"
-         },
-         "response": {
-          "$ref": "Macro"
-         },
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers"
-         ]
-        },
-        "delete": {
-         "id": "tagmanager.accounts.containers.macros.delete",
-         "path": "accounts/{accountId}/containers/{containerId}/macros/{macroId}",
-         "httpMethod": "DELETE",
-         "description": "Deletes a GTM Macro.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          },
-          "macroId": {
-           "type": "string",
-           "description": "The GTM Macro ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId",
-          "macroId"
-         ],
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers"
-         ]
-        },
-        "get": {
-         "id": "tagmanager.accounts.containers.macros.get",
-         "path": "accounts/{accountId}/containers/{containerId}/macros/{macroId}",
-         "httpMethod": "GET",
-         "description": "Gets a GTM Macro.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          },
-          "macroId": {
-           "type": "string",
-           "description": "The GTM Macro ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId",
-          "macroId"
-         ],
-         "response": {
-          "$ref": "Macro"
-         },
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers",
-          "https://www.googleapis.com/auth/tagmanager.readonly"
-         ]
-        },
-        "list": {
-         "id": "tagmanager.accounts.containers.macros.list",
-         "path": "accounts/{accountId}/containers/{containerId}/macros",
-         "httpMethod": "GET",
-         "description": "Lists all GTM Macros of a Container.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId"
-         ],
-         "response": {
-          "$ref": "ListMacrosResponse"
-         },
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers",
-          "https://www.googleapis.com/auth/tagmanager.readonly"
-         ]
-        },
-        "update": {
-         "id": "tagmanager.accounts.containers.macros.update",
-         "path": "accounts/{accountId}/containers/{containerId}/macros/{macroId}",
-         "httpMethod": "PUT",
-         "description": "Updates a GTM Macro.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          },
-          "fingerprint": {
-           "type": "string",
-           "description": "When provided, this fingerprint must match the fingerprint of the macro in storage.",
-           "location": "query"
-          },
-          "macroId": {
-           "type": "string",
-           "description": "The GTM Macro ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId",
-          "macroId"
-         ],
-         "request": {
-          "$ref": "Macro"
-         },
-         "response": {
-          "$ref": "Macro"
-         },
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers"
-         ]
-        }
-       }
-      },
       "move_folders": {
        "methods": {
         "update": {
@@ -2082,191 +1857,6 @@
           "accountId",
           "containerId",
           "folderId"
-         ]
-        }
-       }
-      },
-      "rules": {
-       "methods": {
-        "create": {
-         "id": "tagmanager.accounts.containers.rules.create",
-         "path": "accounts/{accountId}/containers/{containerId}/rules",
-         "httpMethod": "POST",
-         "description": "Creates a GTM Rule.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId"
-         ],
-         "request": {
-          "$ref": "Rule"
-         },
-         "response": {
-          "$ref": "Rule"
-         },
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers"
-         ]
-        },
-        "delete": {
-         "id": "tagmanager.accounts.containers.rules.delete",
-         "path": "accounts/{accountId}/containers/{containerId}/rules/{ruleId}",
-         "httpMethod": "DELETE",
-         "description": "Deletes a GTM Rule.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          },
-          "ruleId": {
-           "type": "string",
-           "description": "The GTM Rule ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId",
-          "ruleId"
-         ],
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers"
-         ]
-        },
-        "get": {
-         "id": "tagmanager.accounts.containers.rules.get",
-         "path": "accounts/{accountId}/containers/{containerId}/rules/{ruleId}",
-         "httpMethod": "GET",
-         "description": "Gets a GTM Rule.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          },
-          "ruleId": {
-           "type": "string",
-           "description": "The GTM Rule ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId",
-          "ruleId"
-         ],
-         "response": {
-          "$ref": "Rule"
-         },
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers",
-          "https://www.googleapis.com/auth/tagmanager.readonly"
-         ]
-        },
-        "list": {
-         "id": "tagmanager.accounts.containers.rules.list",
-         "path": "accounts/{accountId}/containers/{containerId}/rules",
-         "httpMethod": "GET",
-         "description": "Lists all GTM Rules of a Container.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId"
-         ],
-         "response": {
-          "$ref": "ListRulesResponse"
-         },
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers",
-          "https://www.googleapis.com/auth/tagmanager.readonly"
-         ]
-        },
-        "update": {
-         "id": "tagmanager.accounts.containers.rules.update",
-         "path": "accounts/{accountId}/containers/{containerId}/rules/{ruleId}",
-         "httpMethod": "PUT",
-         "description": "Updates a GTM Rule.",
-         "parameters": {
-          "accountId": {
-           "type": "string",
-           "description": "The GTM Account ID.",
-           "required": true,
-           "location": "path"
-          },
-          "containerId": {
-           "type": "string",
-           "description": "The GTM Container ID.",
-           "required": true,
-           "location": "path"
-          },
-          "fingerprint": {
-           "type": "string",
-           "description": "When provided, this fingerprint must match the fingerprint of the rule in storage.",
-           "location": "query"
-          },
-          "ruleId": {
-           "type": "string",
-           "description": "The GTM Rule ID.",
-           "required": true,
-           "location": "path"
-          }
-         },
-         "parameterOrder": [
-          "accountId",
-          "containerId",
-          "ruleId"
-         ],
-         "request": {
-          "$ref": "Rule"
-         },
-         "response": {
-          "$ref": "Rule"
-         },
-         "scopes": [
-          "https://www.googleapis.com/auth/tagmanager.edit.containers"
          ]
         }
        }
@@ -3018,7 +2608,7 @@
          "id": "tagmanager.accounts.containers.versions.restore",
          "path": "accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore",
          "httpMethod": "POST",
-         "description": "Restores a Container Version. This will overwrite the container's current configuration (including its macros, rules and tags). The operation will not have any effect on the version that is being served (i.e. the published version).",
+         "description": "Restores a Container Version. This will overwrite the container's current configuration (including its variables, triggers and tags). The operation will not have any effect on the version that is being served (i.e. the published version).",
          "parameters": {
           "accountId": {
            "type": "string",

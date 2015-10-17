@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/a7glJKXV_1EpKBuLLJ6YFVdOXN0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/VbFh0P5gIX42P6rhPLVK-GI_3-Y\"",
  "discoveryVersion": "v1",
  "id": "classroom:v1",
  "name": "classroom",
  "version": "v1",
- "revision": "20150913",
+ "revision": "20151013",
  "title": "Google Classroom API",
  "description": "Google Classroom API",
  "ownerDomain": "google.com",
@@ -132,7 +132,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "Identifier for this course assigned by Classroom. When [creating a course][google.classroom.v1.Courses.CreateCourse], you may optionally set this identifier to an [alias string][google.classroom.v1.CourseAlias] in the request to create a corresponding alias. The `id` is still assigned by Classroom and cannot be updated after the course is created. Specifying this field in a course update mask will result in an error."
+     "description": "Identifier for this course assigned by Classroom. When creating a course, you may optionally set this identifier to an alias string in the request to create a corresponding alias. The `id` is still assigned by Classroom and cannot be updated after the course is created. Specifying this field in a course update mask will result in an error."
     },
     "name": {
      "type": "string",
@@ -156,7 +156,7 @@
     },
     "ownerId": {
      "type": "string",
-     "description": "The identifier of the owner of a course. When specified as a parameter of a [create course request][google.classroom.v1.Courses.CreateCourse], this field is required. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user This must be set in a create request. Specifying this field in a course update mask will result in an `INVALID_ARGUMENT` error."
+     "description": "The identifier of the owner of a course. When specified as a parameter of a create course request, this field is required. The identifier can be one of the following: * the numeric identifier for the user * the email address of the user * the string literal `\"me\"`, indicating the requesting user This must be set in a create request. Specifying this field in a course update mask will result in an `INVALID_ARGUMENT` error."
     },
     "creationTime": {
      "type": "string",
@@ -431,7 +431,7 @@
      "id": "classroom.courses.create",
      "path": "v1/courses",
      "httpMethod": "POST",
-     "description": "Creates a course. The user specified in `ownerId` is the owner of the created course and added as a teacher. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create courses or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course owner's account is disabled. * `ALREADY_EXISTS` if an alias was specified in the `id` and already exists.",
+     "description": "Creates a course. The user specified in `ownerId` is the owner of the created course and added as a teacher. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create courses or for access errors. * `NOT_FOUND` if the primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course owner's account is disabled or for the following request errors: * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if an alias was specified in the `id` and already exists.",
      "request": {
       "$ref": "Course"
      },
@@ -446,11 +446,11 @@
      "id": "classroom.courses.get",
      "path": "v1/courses/{id}",
      "httpMethod": "GET",
-     "description": "Returns a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no course exists with the requested ID.",
+     "description": "Returns a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID.",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "Identifier of the course to return. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+       "description": "Identifier of the course to return. This identifier can be either the Classroom-assigned identifier or an alias.",
        "required": true,
        "location": "path"
       }
@@ -470,11 +470,11 @@
      "id": "classroom.courses.update",
      "path": "v1/courses/{id}",
      "httpMethod": "PUT",
-     "description": "Updates a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no course exists with the requested ID.",
+     "description": "Updates a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an alias.",
        "required": true,
        "location": "path"
       }
@@ -496,11 +496,11 @@
      "id": "classroom.courses.patch",
      "path": "v1/courses/{id}",
      "httpMethod": "PATCH",
-     "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied.",
+     "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an alias.",
        "required": true,
        "location": "path"
       },
@@ -527,11 +527,11 @@
      "id": "classroom.courses.delete",
      "path": "v1/courses/{id}",
      "httpMethod": "DELETE",
-     "description": "Deletes a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no course exists with the requested ID.",
+     "description": "Deletes a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID.",
      "parameters": {
       "id": {
        "type": "string",
-       "description": "Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+       "description": "Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier or an alias.",
        "required": true,
        "location": "path"
       }
@@ -550,7 +550,7 @@
      "id": "classroom.courses.list",
      "path": "v1/courses",
      "httpMethod": "GET",
-     "description": "Returns a list of courses that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `PERMISSION_DENIED` for [general user permission errors][User Permission Errors]. * `INVALID_ARGUMENT` if the query argument is malformed. * `NOT_FOUND` if any users specified in the query arguments do not exist.",
+     "description": "Returns a list of courses that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the query argument is malformed. * `NOT_FOUND` if any users specified in the query arguments do not exist.",
      "parameters": {
       "studentId": {
        "type": "string",
@@ -570,7 +570,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "[nextPageToken][google.classroom.v1.ListCoursesResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Courses.ListCourses] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Courses.ListCourses] request must be otherwise identical to the one that resulted in this token.",
+       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
        "location": "query"
       }
      },
@@ -590,11 +590,11 @@
        "id": "classroom.courses.aliases.create",
        "path": "v1/courses/{courseId}/aliases",
        "httpMethod": "POST",
-       "description": "Creates an alias for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create the alias or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the alias already exists.",
+       "description": "Creates an alias for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create the alias or for access errors. * `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the alias already exists.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course to alias. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course to alias. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         }
@@ -616,11 +616,11 @@
        "id": "classroom.courses.aliases.delete",
        "path": "v1/courses/{courseId}/aliases/{alias}",
        "httpMethod": "DELETE",
-       "description": "Deletes an alias of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to remove the alias or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the alias does not exist.",
+       "description": "Deletes an alias of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to remove the alias or for access errors. * `NOT_FOUND` if the alias does not exist.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course whose alias should be deleted. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course whose alias should be deleted. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
@@ -646,11 +646,11 @@
        "id": "classroom.courses.aliases.list",
        "path": "v1/courses/{courseId}/aliases",
        "httpMethod": "GET",
-       "description": "Returns a list of aliases for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the course does not exist.",
+       "description": "Returns a list of aliases for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the course or for access errors. * `NOT_FOUND` if the course does not exist.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "The identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "The identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
@@ -662,7 +662,7 @@
         },
         "pageToken": {
          "type": "string",
-         "description": "[nextPageToken][google.classroom.v1.ListCourseAliasesResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Courses.ListCourseAliases] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Courses.ListCourseAliases] request must be otherwise identical to the one that resulted in this token.",
+         "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
          "location": "query"
         }
        },
@@ -685,11 +685,11 @@
        "id": "classroom.courses.teachers.create",
        "path": "v1/courses/{courseId}/teachers",
        "httpMethod": "POST",
-       "description": "Creates a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled. * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
+       "description": "Creates a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         }
@@ -713,11 +713,11 @@
        "id": "classroom.courses.teachers.get",
        "path": "v1/courses/{courseId}/teachers/{userId}",
        "httpMethod": "GET",
-       "description": "Returns a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view teachers of this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist.",
+       "description": "Returns a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view teachers of this course or for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
@@ -746,11 +746,11 @@
        "id": "classroom.courses.teachers.delete",
        "path": "v1/courses/{courseId}/teachers/{userId}",
        "httpMethod": "DELETE",
-       "description": "Deletes a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of this course.",
+       "description": "Deletes a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of this course.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
@@ -776,11 +776,11 @@
        "id": "classroom.courses.teachers.list",
        "path": "v1/courses/{courseId}/teachers",
        "httpMethod": "GET",
-       "description": "Returns a list of teachers of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for [general user permission errors][User Permission Errors].",
+       "description": "Returns a list of teachers of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for access errors.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
@@ -792,7 +792,7 @@
         },
         "pageToken": {
          "type": "string",
-         "description": "[nextPageToken][google.classroom.v1.ListTeachersResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Users.ListTeachers] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Users.ListTeachers] request must be otherwise identical to the one that resulted in this token.",
+         "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
          "location": "query"
         }
        },
@@ -817,17 +817,17 @@
        "id": "classroom.courses.students.create",
        "path": "v1/courses/{courseId}/students",
        "httpMethod": "POST",
-       "description": "Adds a user as a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled. * `ALREADY_EXISTS` if the user is already a student or teacher in the course.",
+       "description": "Adds a user as a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a student or teacher in the course.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course to create the student in. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course to create the student in. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
         "enrollmentCode": {
          "type": "string",
-         "description": "Enrollment code of the course to create the student in. This code is required if [userId][google.classroom.v1.Student.user_id] corresponds to the requesting user; it may be omitted if the requesting user has administrative permissions to create students for any user.",
+         "description": "Enrollment code of the course to create the student in. This code is required if userId corresponds to the requesting user; it may be omitted if the requesting user has administrative permissions to create students for any user.",
          "location": "query"
         }
        },
@@ -850,11 +850,11 @@
        "id": "classroom.courses.students.get",
        "path": "v1/courses/{courseId}/students/{userId}",
        "httpMethod": "GET",
-       "description": "Returns a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view students of this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
+       "description": "Returns a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view students of this course or for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
@@ -883,11 +883,11 @@
        "id": "classroom.courses.students.delete",
        "path": "v1/courses/{courseId}/students/{userId}",
        "httpMethod": "DELETE",
-       "description": "Deletes a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete students of this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
+       "description": "Deletes a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete students of this course or for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
@@ -913,11 +913,11 @@
        "id": "classroom.courses.students.list",
        "path": "v1/courses/{courseId}/students",
        "httpMethod": "GET",
-       "description": "Returns a list of students of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for [general user permission errors][User Permission Errors].",
+       "description": "Returns a list of students of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for access errors.",
        "parameters": {
         "courseId": {
          "type": "string",
-         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+         "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
          "required": true,
          "location": "path"
         },
@@ -929,7 +929,7 @@
         },
         "pageToken": {
          "type": "string",
-         "description": "[nextPageToken][google.classroom.v1.ListStudentsResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Users.ListStudents] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Users.ListStudents] request must be otherwise identical to the one that resulted in this token.",
+         "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
          "location": "query"
         }
        },
@@ -956,7 +956,7 @@
      "id": "classroom.invitations.create",
      "path": "v1/invitations",
      "httpMethod": "POST",
-     "description": "Creates an invitation. Only one invitation for a user and course may exist at a time. Delete and re-create an invitation to make changes. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create invitations for this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the course or the user does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled or if the user already has this role or a role with greater permissions. * `ALREADY_EXISTS` if an invitation for the specified user and course already exists.",
+     "description": "Creates an invitation. Only one invitation for a user and course may exist at a time. Delete and re-create an invitation to make changes. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create invitations for this course or for access errors. * `NOT_FOUND` if the course or the user does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled or if the user already has this role or a role with greater permissions. * `ALREADY_EXISTS` if an invitation for the specified user and course already exists.",
      "request": {
       "$ref": "Invitation"
      },
@@ -971,7 +971,7 @@
      "id": "classroom.invitations.get",
      "path": "v1/invitations/{id}",
      "httpMethod": "GET",
-     "description": "Returns an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view the requested invitation or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no invitation exists with the requested ID.",
+     "description": "Returns an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view the requested invitation or for access errors. * `NOT_FOUND` if no invitation exists with the requested ID.",
      "parameters": {
       "id": {
        "type": "string",
@@ -995,7 +995,7 @@
      "id": "classroom.invitations.delete",
      "path": "v1/invitations/{id}",
      "httpMethod": "DELETE",
-     "description": "Deletes an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested invitation or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no invitation exists with the requested ID.",
+     "description": "Deletes an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested invitation or for access errors. * `NOT_FOUND` if no invitation exists with the requested ID.",
      "parameters": {
       "id": {
        "type": "string",
@@ -1018,7 +1018,7 @@
      "id": "classroom.invitations.list",
      "path": "v1/invitations",
      "httpMethod": "GET",
-     "description": "Returns a list of invitations that the requesting user is permitted to view, restricted to those that match the list request. *Note:* At least one of `user_id` or `course_id` must be supplied. Both fields can be supplied. This method returns the following error codes: * `PERMISSION_DENIED` for [general user permission errors][User Permission Errors].",
+     "description": "Returns a list of invitations that the requesting user is permitted to view, restricted to those that match the list request. *Note:* At least one of `user_id` or `course_id` must be supplied. Both fields can be supplied. This method returns the following error codes: * `PERMISSION_DENIED` for access errors.",
      "parameters": {
       "userId": {
        "type": "string",
@@ -1038,7 +1038,7 @@
       },
       "pageToken": {
        "type": "string",
-       "description": "[nextPageToken][google.classroom.v1.ListInvitationsResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Invitations.ListInvitations] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Invitations.ListInvitations] request must be otherwise identical to the one that resulted in this token.",
+       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
        "location": "query"
       }
      },
@@ -1054,7 +1054,7 @@
      "id": "classroom.invitations.accept",
      "path": "v1/invitations/{id}:accept",
      "httpMethod": "POST",
-     "description": "Accepts an invitation, removing it and adding the invited user to the teachers or students (as appropriate) of the specified course. Only the invited user may accept an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to accept the requested invitation or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no invitation exists with the requested ID.",
+     "description": "Accepts an invitation, removing it and adding the invited user to the teachers or students (as appropriate) of the specified course. Only the invited user may accept an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to accept the requested invitation or for access errors. * `FAILED_PRECONDITION` for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * `NOT_FOUND` if no invitation exists with the requested ID.",
      "parameters": {
       "id": {
        "type": "string",
@@ -1081,7 +1081,7 @@
      "id": "classroom.userProfiles.get",
      "path": "v1/userProfiles/{userId}",
      "httpMethod": "GET",
-     "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile or if no profile exists with the requested ID or for [general user permission errors][User Permission Errors].",
+     "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile or if no profile exists with the requested ID or for access errors.",
      "parameters": {
       "userId": {
        "type": "string",

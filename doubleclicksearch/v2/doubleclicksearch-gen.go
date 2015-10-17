@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "doubleclicksearch:v2"
 const apiName = "doubleclicksearch"
@@ -486,8 +488,12 @@ type ReportApiColumnSpec struct {
 	HeaderText string `json:"headerText,omitempty"`
 
 	// PlatformSource: The platform that is used to provide data for the
-	// custom dimension. Acceptable values are "Floodlight".
+	// custom dimension. Acceptable values are "floodlight".
 	PlatformSource string `json:"platformSource,omitempty"`
+
+	// ProductReportPerspective: Provide different source for product items.
+	// Acceptable values are "advertised" and "sold".
+	ProductReportPerspective string `json:"productReportPerspective,omitempty"`
 
 	// SavedColumnName: Name of a saved column to include in the report. The
 	// report must be scoped at advertiser or lower, and this saved column

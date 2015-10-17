@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zePdcB9UZrt3TRiL6gFnZKOSeZ0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/P7g-a3C968F6LpsV-dK3V_5H2MQ\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20150707",
+ "revision": "20151012",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -3539,10 +3539,12 @@
        "description": "Collection of players being retrieved",
        "required": true,
        "enum": [
+        "connected",
         "playedWith",
         "played_with"
        ],
        "enumDescriptions": [
+        "Retrieve a list of players that are also playing this game in reverse chronological order.",
         "(DEPRECATED: please use played_with!) Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently.",
         "Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently."
        ],

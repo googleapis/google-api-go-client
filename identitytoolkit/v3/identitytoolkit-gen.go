@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "identitytoolkit:v3"
 const apiName = "identitytoolkit"
@@ -913,6 +915,10 @@ type VerifyAssertionResponse struct {
 	// NeedConfirmation: Whether the assertion is from a non-trusted IDP and
 	// need account linking confirmation.
 	NeedConfirmation bool `json:"needConfirmation,omitempty"`
+
+	// NeedEmail: Whether need client to supply email to complete the
+	// federated login flow.
+	NeedEmail bool `json:"needEmail,omitempty"`
 
 	// NickName: The nick name of the user.
 	NickName string `json:"nickName,omitempty"`

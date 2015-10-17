@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fYkZdznRstWgwJ0BIA_7B934-2Y\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/JiNeLDZwZ4CDisO5kxxp-UNdJ28\"",
  "discoveryVersion": "v1",
  "id": "plusDomains:v1",
  "name": "plusDomains",
  "version": "v1",
- "revision": "20150805",
+ "revision": "20151014",
  "title": "Google+ Domains API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "ownerDomain": "google.com",
@@ -141,6 +141,22 @@
      "type": "object",
      "description": "The person who performed this activity.",
      "properties": {
+      "clientSpecificActorInfo": {
+       "type": "object",
+       "description": "Actor info specific to particular clients.",
+       "properties": {
+        "youtubeActorInfo": {
+         "type": "object",
+         "description": "Actor info specific to YouTube clients.",
+         "properties": {
+          "channelId": {
+           "type": "string",
+           "description": "ID of the YouTube channel owned by the Actor."
+          }
+         }
+        }
+       }
+      },
       "displayName": {
        "type": "string",
        "description": "The name of the actor, suitable for display."
@@ -230,6 +246,22 @@
        "type": "object",
        "description": "If this activity's object is itself another activity, such as when a person reshares an activity, this property specifies the original activity's actor.",
        "properties": {
+        "clientSpecificActorInfo": {
+         "type": "object",
+         "description": "Actor info specific to particular clients.",
+         "properties": {
+          "youtubeActorInfo": {
+           "type": "object",
+           "description": "Actor info specific to YouTube clients.",
+           "properties": {
+            "channelId": {
+             "type": "string",
+             "description": "ID of the YouTube channel owned by the Actor."
+            }
+           }
+          }
+         }
+        },
         "displayName": {
          "type": "string",
          "description": "The original actor's name, which is suitable for display."
@@ -747,6 +779,22 @@
      "type": "object",
      "description": "The person who posted this comment.",
      "properties": {
+      "clientSpecificActorInfo": {
+       "type": "object",
+       "description": "Actor info specific to particular clients.",
+       "properties": {
+        "youtubeActorInfo": {
+         "type": "object",
+         "description": "Actor info specific to YouTube clients.",
+         "properties": {
+          "channelId": {
+           "type": "string",
+           "description": "ID of the YouTube channel owned by the Actor."
+          }
+         }
+        }
+       }
+      },
       "displayName": {
        "type": "string",
        "description": "The name of this actor, suitable for display."

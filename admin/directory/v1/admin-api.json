@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/uQEY1lxUpBjGfWxd7mioMh_V8P8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/pRlNMQbyfGTi-02uw0zCmogMSuU\"",
  "discoveryVersion": "v1",
  "id": "admin:directory_v1",
  "name": "admin",
  "canonicalName": "directory",
  "version": "directory_v1",
- "revision": "20150720",
+ "revision": "20151005",
  "title": "Admin Directory API",
  "description": "The Admin SDK Directory API lets you view and manage enterprise resources such as users and groups, administrative notifications, security features, and more.",
  "ownerDomain": "google.com",
@@ -71,6 +71,12 @@
  "auth": {
   "oauth2": {
    "scopes": {
+    "https://www.googleapis.com/auth/admin.directory.customer": {
+     "description": "View and manage customer related information"
+    },
+    "https://www.googleapis.com/auth/admin.directory.customer.readonly": {
+     "description": "View customer related information"
+    },
     "https://www.googleapis.com/auth/admin.directory.device.chromeos": {
      "description": "View and manage your Chrome OS devices' metadata"
     },
@@ -85,6 +91,12 @@
     },
     "https://www.googleapis.com/auth/admin.directory.device.mobile.readonly": {
      "description": "View your mobile devices' metadata"
+    },
+    "https://www.googleapis.com/auth/admin.directory.domain": {
+     "description": "View and manage the provisioning of domains for your customers"
+    },
+    "https://www.googleapis.com/auth/admin.directory.domain.readonly": {
+     "description": "View domains related to your customers"
     },
     "https://www.googleapis.com/auth/admin.directory.group": {
      "description": "View and manage the provisioning of groups on your domain"
@@ -106,6 +118,12 @@
     },
     "https://www.googleapis.com/auth/admin.directory.orgunit.readonly": {
      "description": "View organization units on your domain"
+    },
+    "https://www.googleapis.com/auth/admin.directory.rolemanagement": {
+     "description": "Manage delegated admin roles for your domain"
+    },
+    "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly": {
+     "description": "View delegated admin roles for your domain"
     },
     "https://www.googleapis.com/auth/admin.directory.user": {
      "description": "View and manage the provisioning of users on your domain"
@@ -460,6 +478,223 @@
     "nextPageToken": {
      "type": "string",
      "description": "Token used to access next page of this result."
+    }
+   }
+  },
+  "Customer": {
+   "id": "Customer",
+   "type": "object",
+   "description": "JSON template for Customer Resource object in Directory API.",
+   "properties": {
+    "alternateEmail": {
+     "type": "string",
+     "description": "The customer's secondary contact email address. This email address cannot be on the same domain as the customerDomain"
+    },
+    "customerCreationTime": {
+     "type": "string",
+     "description": "The customer's creation time (Readonly)",
+     "format": "date-time"
+    },
+    "customerDomain": {
+     "type": "string",
+     "description": "The customer's primary domain name string. Do not include the www prefix when creating a new customer."
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The unique ID for the customer's Google account. (Readonly)"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies the resource as a customer. Value: admin#directory#customer",
+     "default": "admin#directory#customer"
+    },
+    "language": {
+     "type": "string",
+     "description": "The customer's ISO 639-2 language code. The default value is en-US"
+    },
+    "phoneNumber": {
+     "type": "string",
+     "description": "The customer's contact phone number in E.164 format."
+    },
+    "postalAddress": {
+     "$ref": "CustomerPostalAddress",
+     "description": "The customer's postal address information."
+    }
+   }
+  },
+  "CustomerPostalAddress": {
+   "id": "CustomerPostalAddress",
+   "type": "object",
+   "description": "JSON template for postal address of a customer.",
+   "properties": {
+    "addressLine1": {
+     "type": "string",
+     "description": "A customer's physical address. The address can be composed of one to three lines."
+    },
+    "addressLine2": {
+     "type": "string",
+     "description": "Address line 2 of the address."
+    },
+    "addressLine3": {
+     "type": "string",
+     "description": "Address line 3 of the address."
+    },
+    "contactName": {
+     "type": "string",
+     "description": "The customer contact's name."
+    },
+    "countryCode": {
+     "type": "string",
+     "description": "This is a required property. For countryCode information see the ISO 3166 country code elements."
+    },
+    "locality": {
+     "type": "string",
+     "description": "Name of the locality. An example of a locality value is the city of San Francisco."
+    },
+    "organizationName": {
+     "type": "string",
+     "description": "The company or company division name."
+    },
+    "postalCode": {
+     "type": "string",
+     "description": "The postal code. A postalCode example is a postal zip code such as 10009. This is in accordance with - http://portablecontacts.net/draft-spec.html#address_element."
+    },
+    "region": {
+     "type": "string",
+     "description": "Name of the region. An example of a region value is NY for the state of New York."
+    }
+   }
+  },
+  "DomainAlias": {
+   "id": "DomainAlias",
+   "type": "object",
+   "description": "JSON template for Domain Alias object in Directory API.",
+   "properties": {
+    "creationTime": {
+     "type": "string",
+     "description": "The creation time of the domain alias. (Read-only).",
+     "format": "int64"
+    },
+    "domainAliasName": {
+     "type": "string",
+     "description": "The domain alias name."
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is.",
+     "default": "admin#directory#domainAlias"
+    },
+    "parentDomainName": {
+     "type": "string",
+     "description": "The parent domain name that the domain alias is associated with. This can either be a primary or secondary domain name within a customer.",
+     "annotations": {
+      "required": [
+       "directory.domains.insert"
+      ]
+     }
+    },
+    "verified": {
+     "type": "boolean",
+     "description": "Indicates the verification state of a domain alias. (Read-only)"
+    }
+   }
+  },
+  "DomainAliases": {
+   "id": "DomainAliases",
+   "type": "object",
+   "description": "JSON response template to list domain aliases in Directory API.",
+   "properties": {
+    "domainAliases": {
+     "type": "array",
+     "description": "List of domain alias objects.",
+     "items": {
+      "$ref": "DomainAlias"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is.",
+     "default": "admin#directory#domainAliases"
+    }
+   }
+  },
+  "Domains": {
+   "id": "Domains",
+   "type": "object",
+   "description": "JSON template for Domain object in Directory API.",
+   "properties": {
+    "creationTime": {
+     "type": "string",
+     "description": "Creation time of the domain. (Read-only).",
+     "format": "int64"
+    },
+    "domainAliases": {
+     "type": "array",
+     "description": "List of domain alias objects. (Read-only)",
+     "items": {
+      "$ref": "DomainAlias"
+     }
+    },
+    "domainName": {
+     "type": "string",
+     "description": "The domain name of the customer.",
+     "annotations": {
+      "required": [
+       "directory.domains.insert"
+      ]
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "isPrimary": {
+     "type": "boolean",
+     "description": "Indicates if the domain is a primary domain (Read-only)."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is.",
+     "default": "admin#directory#domain"
+    },
+    "verified": {
+     "type": "boolean",
+     "description": "Indicates the verification state of a domain. (Read-only)."
+    }
+   }
+  },
+  "Domains2": {
+   "id": "Domains2",
+   "type": "object",
+   "description": "JSON response template to list Domains in Directory API.",
+   "properties": {
+    "domains": {
+     "type": "array",
+     "description": "List of domain objects.",
+     "items": {
+      "$ref": "Domains"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of resource this is.",
+     "default": "admin#directory#domains"
     }
    }
   },
@@ -974,6 +1209,222 @@
     }
    }
   },
+  "Privilege": {
+   "id": "Privilege",
+   "type": "object",
+   "description": "JSON template for privilege resource in Directory API.",
+   "properties": {
+    "childPrivileges": {
+     "type": "array",
+     "description": "A list of child privileges. Privileges for a service form a tree. Each privilege can have a list of child privileges; this list is empty for a leaf privilege.",
+     "items": {
+      "$ref": "Privilege"
+     }
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "isOuScopable": {
+     "type": "boolean",
+     "description": "If the privilege can be restricted to an organization unit."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API resource. This is always admin#directory#privilege.",
+     "default": "admin#directory#privilege"
+    },
+    "privilegeName": {
+     "type": "string",
+     "description": "The name of the privilege."
+    },
+    "serviceId": {
+     "type": "string",
+     "description": "The obfuscated ID of the service this privilege is for."
+    },
+    "serviceName": {
+     "type": "string",
+     "description": "The name of the service this privilege is for."
+    }
+   }
+  },
+  "Privileges": {
+   "id": "Privileges",
+   "type": "object",
+   "description": "JSON response template for List privileges operation in Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of Privilege resources.",
+     "items": {
+      "$ref": "Privilege"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API resource. This is always admin#directory#privileges.",
+     "default": "admin#directory#privileges"
+    }
+   }
+  },
+  "Role": {
+   "id": "Role",
+   "type": "object",
+   "description": "JSON template for role resource in Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "isSuperAdminRole": {
+     "type": "boolean",
+     "description": "Returns true if the role is a super admin role."
+    },
+    "isSystemRole": {
+     "type": "boolean",
+     "description": "Returns true if this is a pre-defined system role."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API resource. This is always admin#directory#role.",
+     "default": "admin#directory#role"
+    },
+    "roleDescription": {
+     "type": "string",
+     "description": "A short description of the role."
+    },
+    "roleId": {
+     "type": "string",
+     "description": "ID of the role.",
+     "format": "int64"
+    },
+    "roleName": {
+     "type": "string",
+     "description": "Name of the role.",
+     "annotations": {
+      "required": [
+       "directory.roles.insert"
+      ]
+     }
+    },
+    "rolePrivileges": {
+     "type": "array",
+     "description": "The set of privileges that are granted to this role.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "privilegeName": {
+        "type": "string",
+        "description": "The name of the privilege."
+       },
+       "serviceId": {
+        "type": "string",
+        "description": "The obfuscated ID of the service this privilege is for."
+       }
+      }
+     },
+     "annotations": {
+      "required": [
+       "directory.roles.insert"
+      ]
+     }
+    }
+   }
+  },
+  "RoleAssignment": {
+   "id": "RoleAssignment",
+   "type": "object",
+   "description": "JSON template for roleAssignment resource in Directory API.",
+   "properties": {
+    "assignedTo": {
+     "type": "string",
+     "description": "The unique ID of the user this role is assigned to."
+    },
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API resource. This is always admin#directory#roleAssignment.",
+     "default": "admin#directory#roleAssignment"
+    },
+    "orgUnitId": {
+     "type": "string",
+     "description": "If the role is restricted to an organization unit, this contains the ID for the organization unit the exercise of this role is restricted to."
+    },
+    "roleAssignmentId": {
+     "type": "string",
+     "description": "ID of this roleAssignment.",
+     "format": "int64"
+    },
+    "roleId": {
+     "type": "string",
+     "description": "The ID of the role that is assigned.",
+     "format": "int64"
+    },
+    "scopeType": {
+     "type": "string",
+     "description": "The scope in which this role is assigned. Possible values are: \n- CUSTOMER\n- ORG_UNIT"
+    }
+   }
+  },
+  "RoleAssignments": {
+   "id": "RoleAssignments",
+   "type": "object",
+   "description": "JSON response template for List roleAssignments operation in Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of RoleAssignment resources.",
+     "items": {
+      "$ref": "RoleAssignment"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API resource. This is always admin#directory#roleAssignments.",
+     "default": "admin#directory#roleAssignments"
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "Roles": {
+   "id": "Roles",
+   "type": "object",
+   "description": "JSON response template for List roles operation in Directory API.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "ETag of the resource."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of Role resources.",
+     "items": {
+      "$ref": "Role"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "The type of the API resource. This is always admin#directory#roles.",
+     "default": "admin#directory#roles"
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
   "Schema": {
    "id": "Schema",
    "type": "object",
@@ -1185,11 +1636,13 @@
     },
     "agreedToTerms": {
      "type": "boolean",
-     "description": "Indicates if user has agreed to terms (Read-only)"
+     "description": "Indicates if user has agreed to terms (Read-only)",
+     "readOnly": true
     },
     "aliases": {
      "type": "array",
      "description": "List of aliases (Read-only)",
+     "readOnly": true,
      "items": {
       "type": "string"
      }
@@ -1201,7 +1654,8 @@
     "creationTime": {
      "type": "string",
      "description": "User's Google account creation time. (Read-only)",
-     "format": "date-time"
+     "format": "date-time",
+     "readOnly": true
     },
     "customSchemas": {
      "type": "object",
@@ -1212,18 +1666,21 @@
     },
     "customerId": {
      "type": "string",
-     "description": "CustomerId of User (Read-only)"
+     "description": "CustomerId of User (Read-only)",
+     "readOnly": true
     },
     "deletionTime": {
      "type": "string",
-     "format": "date-time"
+     "format": "date-time",
+     "readOnly": true
     },
     "emails": {
      "type": "any"
     },
     "etag": {
      "type": "string",
-     "description": "ETag of the resource."
+     "description": "ETag of the resource.",
+     "readOnly": true
     },
     "externalIds": {
      "type": "any"
@@ -1249,25 +1706,30 @@
     },
     "isAdmin": {
      "type": "boolean",
-     "description": "Boolean indicating if the user is admin (Read-only)"
+     "description": "Boolean indicating if the user is admin (Read-only)",
+     "readOnly": true
     },
     "isDelegatedAdmin": {
      "type": "boolean",
-     "description": "Boolean indicating if the user is delegated admin (Read-only)"
+     "description": "Boolean indicating if the user is delegated admin (Read-only)",
+     "readOnly": true
     },
     "isMailboxSetup": {
      "type": "boolean",
-     "description": "Is mailbox setup (Read-only)"
+     "description": "Is mailbox setup (Read-only)",
+     "readOnly": true
     },
     "kind": {
      "type": "string",
      "description": "Kind of resource this is.",
-     "default": "admin#directory#user"
+     "default": "admin#directory#user",
+     "readOnly": true
     },
     "lastLoginTime": {
      "type": "string",
      "description": "User's last login time. (Read-only)",
-     "format": "date-time"
+     "format": "date-time",
+     "readOnly": true
     },
     "name": {
      "$ref": "UserName",
@@ -1281,6 +1743,7 @@
     "nonEditableAliases": {
      "type": "array",
      "description": "List of non editable aliases (Read-only)",
+     "readOnly": true,
      "items": {
       "type": "string"
      }
@@ -1325,15 +1788,18 @@
     },
     "suspensionReason": {
      "type": "string",
-     "description": "Suspension reason if user is suspended (Read-only)"
+     "description": "Suspension reason if user is suspended (Read-only)",
+     "readOnly": true
     },
     "thumbnailPhotoEtag": {
      "type": "string",
-     "description": "ETag of the user's photo (Read-only)"
+     "description": "ETag of the user's photo (Read-only)",
+     "readOnly": true
     },
     "thumbnailPhotoUrl": {
      "type": "string",
-     "description": "Photo Url of the user (Read-only)"
+     "description": "Photo Url of the user (Read-only)",
+     "readOnly": true
     },
     "websites": {
      "type": "any"
@@ -2127,6 +2593,315 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/admin.directory.device.chromeos"
+     ]
+    }
+   }
+  },
+  "customers": {
+   "methods": {
+    "get": {
+     "id": "directory.customers.get",
+     "path": "customers/{customerKey}",
+     "httpMethod": "GET",
+     "description": "Retrives a customer.",
+     "parameters": {
+      "customerKey": {
+       "type": "string",
+       "description": "Id of the customer to be retrieved",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerKey"
+     ],
+     "response": {
+      "$ref": "Customer"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.customer",
+      "https://www.googleapis.com/auth/admin.directory.customer.readonly"
+     ]
+    },
+    "patch": {
+     "id": "directory.customers.patch",
+     "path": "customers/{customerKey}",
+     "httpMethod": "PATCH",
+     "description": "Updates a customer. This method supports patch semantics.",
+     "parameters": {
+      "customerKey": {
+       "type": "string",
+       "description": "Id of the customer to be updated",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerKey"
+     ],
+     "request": {
+      "$ref": "Customer"
+     },
+     "response": {
+      "$ref": "Customer"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.customer"
+     ]
+    },
+    "update": {
+     "id": "directory.customers.update",
+     "path": "customers/{customerKey}",
+     "httpMethod": "PUT",
+     "description": "Updates a customer.",
+     "parameters": {
+      "customerKey": {
+       "type": "string",
+       "description": "Id of the customer to be updated",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customerKey"
+     ],
+     "request": {
+      "$ref": "Customer"
+     },
+     "response": {
+      "$ref": "Customer"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.customer"
+     ]
+    }
+   }
+  },
+  "domainAliases": {
+   "methods": {
+    "delete": {
+     "id": "directory.domainAliases.delete",
+     "path": "customer/{customer}/domainaliases/{domainAliasName}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a Domain Alias of the customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "domainAliasName": {
+       "type": "string",
+       "description": "Name of domain alias to be retrieved.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "domainAliasName"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.domain"
+     ]
+    },
+    "get": {
+     "id": "directory.domainAliases.get",
+     "path": "customer/{customer}/domainaliases/{domainAliasName}",
+     "httpMethod": "GET",
+     "description": "Retrieves a domain alias of the customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "domainAliasName": {
+       "type": "string",
+       "description": "Name of domain alias to be retrieved.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "domainAliasName"
+     ],
+     "response": {
+      "$ref": "DomainAlias"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.domain",
+      "https://www.googleapis.com/auth/admin.directory.domain.readonly"
+     ]
+    },
+    "insert": {
+     "id": "directory.domainAliases.insert",
+     "path": "customer/{customer}/domainaliases",
+     "httpMethod": "POST",
+     "description": "Inserts a Domain alias of the customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "request": {
+      "$ref": "DomainAlias"
+     },
+     "response": {
+      "$ref": "DomainAlias"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.domain"
+     ]
+    },
+    "list": {
+     "id": "directory.domainAliases.list",
+     "path": "customer/{customer}/domainaliases",
+     "httpMethod": "GET",
+     "description": "Lists the domain aliases of the customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "parentDomainName": {
+       "type": "string",
+       "description": "Name of the parent domain for which domain aliases are to be fetched.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "response": {
+      "$ref": "DomainAliases"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.domain",
+      "https://www.googleapis.com/auth/admin.directory.domain.readonly"
+     ]
+    }
+   }
+  },
+  "domains": {
+   "methods": {
+    "delete": {
+     "id": "directory.domains.delete",
+     "path": "customer/{customer}/domains/{domainName}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a domain of the customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "domainName": {
+       "type": "string",
+       "description": "Name of domain to be deleted",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "domainName"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.domain"
+     ]
+    },
+    "get": {
+     "id": "directory.domains.get",
+     "path": "customer/{customer}/domains/{domainName}",
+     "httpMethod": "GET",
+     "description": "Retrives a domain of the customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "domainName": {
+       "type": "string",
+       "description": "Name of domain to be retrieved",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "domainName"
+     ],
+     "response": {
+      "$ref": "Domains"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.domain",
+      "https://www.googleapis.com/auth/admin.directory.domain.readonly"
+     ]
+    },
+    "insert": {
+     "id": "directory.domains.insert",
+     "path": "customer/{customer}/domains",
+     "httpMethod": "POST",
+     "description": "Inserts a domain of the customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "request": {
+      "$ref": "Domains"
+     },
+     "response": {
+      "$ref": "Domains"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.domain"
+     ]
+    },
+    "list": {
+     "id": "directory.domains.list",
+     "path": "customer/{customer}/domains",
+     "httpMethod": "GET",
+     "description": "Lists the domains of the customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "response": {
+      "$ref": "Domains2"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.domain",
+      "https://www.googleapis.com/auth/admin.directory.domain.readonly"
      ]
     }
    }
@@ -3138,6 +3913,360 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/admin.directory.orgunit"
+     ]
+    }
+   }
+  },
+  "privileges": {
+   "methods": {
+    "list": {
+     "id": "directory.privileges.list",
+     "path": "customer/{customer}/roles/ALL/privileges",
+     "httpMethod": "GET",
+     "description": "Retrieves a paginated list of all privileges for a customer.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "response": {
+      "$ref": "Privileges"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+     ]
+    }
+   }
+  },
+  "roleAssignments": {
+   "methods": {
+    "delete": {
+     "id": "directory.roleAssignments.delete",
+     "path": "customer/{customer}/roleassignments/{roleAssignmentId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a role assignment.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "roleAssignmentId": {
+       "type": "string",
+       "description": "Immutable ID of the role assignment.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "roleAssignmentId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+     ]
+    },
+    "get": {
+     "id": "directory.roleAssignments.get",
+     "path": "customer/{customer}/roleassignments/{roleAssignmentId}",
+     "httpMethod": "GET",
+     "description": "Retrieve a role assignment.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "roleAssignmentId": {
+       "type": "string",
+       "description": "Immutable ID of the role assignment.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "roleAssignmentId"
+     ],
+     "response": {
+      "$ref": "RoleAssignment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+     ]
+    },
+    "insert": {
+     "id": "directory.roleAssignments.insert",
+     "path": "customer/{customer}/roleassignments",
+     "httpMethod": "POST",
+     "description": "Creates a role assignment.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "request": {
+      "$ref": "RoleAssignment"
+     },
+     "response": {
+      "$ref": "RoleAssignment"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+     ]
+    },
+    "list": {
+     "id": "directory.roleAssignments.list",
+     "path": "customer/{customer}/roleassignments",
+     "httpMethod": "GET",
+     "description": "Retrieves a paginated list of all roleAssignments.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return.",
+       "format": "int32",
+       "minimum": "1",
+       "maximum": "200",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token to specify the next page in the list.",
+       "location": "query"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "Immutable ID of a role. If included in the request, returns only role assignments containing this role ID.",
+       "location": "query"
+      },
+      "userKey": {
+       "type": "string",
+       "description": "The user's primary email address, alias email address, or unique user ID. If included in the request, returns role assignments only for this user.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "response": {
+      "$ref": "RoleAssignments"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+     ]
+    }
+   }
+  },
+  "roles": {
+   "methods": {
+    "delete": {
+     "id": "directory.roles.delete",
+     "path": "customer/{customer}/roles/{roleId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a role.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "Immutable ID of the role.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "roleId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+     ]
+    },
+    "get": {
+     "id": "directory.roles.get",
+     "path": "customer/{customer}/roles/{roleId}",
+     "httpMethod": "GET",
+     "description": "Retrieves a role.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "Immutable ID of the role.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "roleId"
+     ],
+     "response": {
+      "$ref": "Role"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+     ]
+    },
+    "insert": {
+     "id": "directory.roles.insert",
+     "path": "customer/{customer}/roles",
+     "httpMethod": "POST",
+     "description": "Creates a role.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "request": {
+      "$ref": "Role"
+     },
+     "response": {
+      "$ref": "Role"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+     ]
+    },
+    "list": {
+     "id": "directory.roles.list",
+     "path": "customer/{customer}/roles",
+     "httpMethod": "GET",
+     "description": "Retrieves a paginated list of all the roles in a domain.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable id of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum number of results to return.",
+       "format": "int32",
+       "minimum": "1",
+       "maximum": "100",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Token to specify the next page in the list.",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "customer"
+     ],
+     "response": {
+      "$ref": "Roles"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+     ]
+    },
+    "patch": {
+     "id": "directory.roles.patch",
+     "path": "customer/{customer}/roles/{roleId}",
+     "httpMethod": "PATCH",
+     "description": "Updates a role. This method supports patch semantics.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "Immutable ID of the role.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "roleId"
+     ],
+     "request": {
+      "$ref": "Role"
+     },
+     "response": {
+      "$ref": "Role"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+     ]
+    },
+    "update": {
+     "id": "directory.roles.update",
+     "path": "customer/{customer}/roles/{roleId}",
+     "httpMethod": "PUT",
+     "description": "Updates a role.",
+     "parameters": {
+      "customer": {
+       "type": "string",
+       "description": "Immutable ID of the Google Apps account.",
+       "required": true,
+       "location": "path"
+      },
+      "roleId": {
+       "type": "string",
+       "description": "Immutable ID of the role.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "customer",
+      "roleId"
+     ],
+     "request": {
+      "$ref": "Role"
+     },
+     "response": {
+      "$ref": "Role"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/admin.directory.rolemanagement"
      ]
     }
    }

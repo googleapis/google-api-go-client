@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "admin:directory_v1"
 const apiName = "admin"
@@ -45,6 +47,12 @@ const basePath = "https://www.googleapis.com/admin/directory/v1/"
 
 // OAuth2 scopes used by this API.
 const (
+	// View and manage customer related information
+	AdminDirectoryCustomerScope = "https://www.googleapis.com/auth/admin.directory.customer"
+
+	// View customer related information
+	AdminDirectoryCustomerReadonlyScope = "https://www.googleapis.com/auth/admin.directory.customer.readonly"
+
 	// View and manage your Chrome OS devices' metadata
 	AdminDirectoryDeviceChromeosScope = "https://www.googleapis.com/auth/admin.directory.device.chromeos"
 
@@ -59,6 +67,12 @@ const (
 
 	// View your mobile devices' metadata
 	AdminDirectoryDeviceMobileReadonlyScope = "https://www.googleapis.com/auth/admin.directory.device.mobile.readonly"
+
+	// View and manage the provisioning of domains for your customers
+	AdminDirectoryDomainScope = "https://www.googleapis.com/auth/admin.directory.domain"
+
+	// View domains related to your customers
+	AdminDirectoryDomainReadonlyScope = "https://www.googleapis.com/auth/admin.directory.domain.readonly"
 
 	// View and manage the provisioning of groups on your domain
 	AdminDirectoryGroupScope = "https://www.googleapis.com/auth/admin.directory.group"
@@ -80,6 +94,12 @@ const (
 
 	// View organization units on your domain
 	AdminDirectoryOrgunitReadonlyScope = "https://www.googleapis.com/auth/admin.directory.orgunit.readonly"
+
+	// Manage delegated admin roles for your domain
+	AdminDirectoryRolemanagementScope = "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+
+	// View delegated admin roles for your domain
+	AdminDirectoryRolemanagementReadonlyScope = "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
 
 	// View and manage the provisioning of users on your domain
 	AdminDirectoryUserScope = "https://www.googleapis.com/auth/admin.directory.user"
@@ -111,11 +131,17 @@ func New(client *http.Client) (*Service, error) {
 	s.Asps = NewAspsService(s)
 	s.Channels = NewChannelsService(s)
 	s.Chromeosdevices = NewChromeosdevicesService(s)
+	s.Customers = NewCustomersService(s)
+	s.DomainAliases = NewDomainAliasesService(s)
+	s.Domains = NewDomainsService(s)
 	s.Groups = NewGroupsService(s)
 	s.Members = NewMembersService(s)
 	s.Mobiledevices = NewMobiledevicesService(s)
 	s.Notifications = NewNotificationsService(s)
 	s.Orgunits = NewOrgunitsService(s)
+	s.Privileges = NewPrivilegesService(s)
+	s.RoleAssignments = NewRoleAssignmentsService(s)
+	s.Roles = NewRolesService(s)
 	s.Schemas = NewSchemasService(s)
 	s.Tokens = NewTokensService(s)
 	s.Users = NewUsersService(s)
@@ -134,6 +160,12 @@ type Service struct {
 
 	Chromeosdevices *ChromeosdevicesService
 
+	Customers *CustomersService
+
+	DomainAliases *DomainAliasesService
+
+	Domains *DomainsService
+
 	Groups *GroupsService
 
 	Members *MembersService
@@ -143,6 +175,12 @@ type Service struct {
 	Notifications *NotificationsService
 
 	Orgunits *OrgunitsService
+
+	Privileges *PrivilegesService
+
+	RoleAssignments *RoleAssignmentsService
+
+	Roles *RolesService
 
 	Schemas *SchemasService
 
@@ -184,6 +222,33 @@ func NewChromeosdevicesService(s *Service) *ChromeosdevicesService {
 }
 
 type ChromeosdevicesService struct {
+	s *Service
+}
+
+func NewCustomersService(s *Service) *CustomersService {
+	rs := &CustomersService{s: s}
+	return rs
+}
+
+type CustomersService struct {
+	s *Service
+}
+
+func NewDomainAliasesService(s *Service) *DomainAliasesService {
+	rs := &DomainAliasesService{s: s}
+	return rs
+}
+
+type DomainAliasesService struct {
+	s *Service
+}
+
+func NewDomainsService(s *Service) *DomainsService {
+	rs := &DomainsService{s: s}
+	return rs
+}
+
+type DomainsService struct {
 	s *Service
 }
 
@@ -241,6 +306,33 @@ func NewOrgunitsService(s *Service) *OrgunitsService {
 }
 
 type OrgunitsService struct {
+	s *Service
+}
+
+func NewPrivilegesService(s *Service) *PrivilegesService {
+	rs := &PrivilegesService{s: s}
+	return rs
+}
+
+type PrivilegesService struct {
+	s *Service
+}
+
+func NewRoleAssignmentsService(s *Service) *RoleAssignmentsService {
+	rs := &RoleAssignmentsService{s: s}
+	return rs
+}
+
+type RoleAssignmentsService struct {
+	s *Service
+}
+
+func NewRolesService(s *Service) *RolesService {
+	rs := &RolesService{s: s}
+	return rs
+}
+
+type RolesService struct {
 	s *Service
 }
 
@@ -688,6 +780,255 @@ type ChromeOsDevices struct {
 
 func (s *ChromeOsDevices) MarshalJSON() ([]byte, error) {
 	type noMethod ChromeOsDevices
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Customer: JSON template for Customer Resource object in Directory
+// API.
+type Customer struct {
+	// AlternateEmail: The customer's secondary contact email address. This
+	// email address cannot be on the same domain as the customerDomain
+	AlternateEmail string `json:"alternateEmail,omitempty"`
+
+	// CustomerCreationTime: The customer's creation time (Readonly)
+	CustomerCreationTime string `json:"customerCreationTime,omitempty"`
+
+	// CustomerDomain: The customer's primary domain name string. Do not
+	// include the www prefix when creating a new customer.
+	CustomerDomain string `json:"customerDomain,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The unique ID for the customer's Google account. (Readonly)
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies the resource as a customer. Value:
+	// admin#directory#customer
+	Kind string `json:"kind,omitempty"`
+
+	// Language: The customer's ISO 639-2 language code. The default value
+	// is en-US
+	Language string `json:"language,omitempty"`
+
+	// PhoneNumber: The customer's contact phone number in E.164 format.
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+
+	// PostalAddress: The customer's postal address information.
+	PostalAddress *CustomerPostalAddress `json:"postalAddress,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AlternateEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Customer) MarshalJSON() ([]byte, error) {
+	type noMethod Customer
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CustomerPostalAddress: JSON template for postal address of a
+// customer.
+type CustomerPostalAddress struct {
+	// AddressLine1: A customer's physical address. The address can be
+	// composed of one to three lines.
+	AddressLine1 string `json:"addressLine1,omitempty"`
+
+	// AddressLine2: Address line 2 of the address.
+	AddressLine2 string `json:"addressLine2,omitempty"`
+
+	// AddressLine3: Address line 3 of the address.
+	AddressLine3 string `json:"addressLine3,omitempty"`
+
+	// ContactName: The customer contact's name.
+	ContactName string `json:"contactName,omitempty"`
+
+	// CountryCode: This is a required property. For countryCode information
+	// see the ISO 3166 country code elements.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// Locality: Name of the locality. An example of a locality value is the
+	// city of San Francisco.
+	Locality string `json:"locality,omitempty"`
+
+	// OrganizationName: The company or company division name.
+	OrganizationName string `json:"organizationName,omitempty"`
+
+	// PostalCode: The postal code. A postalCode example is a postal zip
+	// code such as 10009. This is in accordance with -
+	// http://portablecontacts.net/draft-spec.html#address_element.
+	PostalCode string `json:"postalCode,omitempty"`
+
+	// Region: Name of the region. An example of a region value is NY for
+	// the state of New York.
+	Region string `json:"region,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddressLine1") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CustomerPostalAddress) MarshalJSON() ([]byte, error) {
+	type noMethod CustomerPostalAddress
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DomainAlias: JSON template for Domain Alias object in Directory API.
+type DomainAlias struct {
+	// CreationTime: The creation time of the domain alias. (Read-only).
+	CreationTime int64 `json:"creationTime,omitempty,string"`
+
+	// DomainAliasName: The domain alias name.
+	DomainAliasName string `json:"domainAliasName,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// ParentDomainName: The parent domain name that the domain alias is
+	// associated with. This can either be a primary or secondary domain
+	// name within a customer.
+	ParentDomainName string `json:"parentDomainName,omitempty"`
+
+	// Verified: Indicates the verification state of a domain alias.
+	// (Read-only)
+	Verified bool `json:"verified,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DomainAlias) MarshalJSON() ([]byte, error) {
+	type noMethod DomainAlias
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DomainAliases: JSON response template to list domain aliases in
+// Directory API.
+type DomainAliases struct {
+	// DomainAliases: List of domain alias objects.
+	DomainAliases []*DomainAlias `json:"domainAliases,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DomainAliases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DomainAliases) MarshalJSON() ([]byte, error) {
+	type noMethod DomainAliases
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Domains: JSON template for Domain object in Directory API.
+type Domains struct {
+	// CreationTime: Creation time of the domain. (Read-only).
+	CreationTime int64 `json:"creationTime,omitempty,string"`
+
+	// DomainAliases: List of domain alias objects. (Read-only)
+	DomainAliases []*DomainAlias `json:"domainAliases,omitempty"`
+
+	// DomainName: The domain name of the customer.
+	DomainName string `json:"domainName,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// IsPrimary: Indicates if the domain is a primary domain (Read-only).
+	IsPrimary bool `json:"isPrimary,omitempty"`
+
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// Verified: Indicates the verification state of a domain. (Read-only).
+	Verified bool `json:"verified,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Domains) MarshalJSON() ([]byte, error) {
+	type noMethod Domains
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Domains2: JSON response template to list Domains in Directory API.
+type Domains2 struct {
+	// Domains: List of domain objects.
+	Domains []*Domains `json:"domains,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Domains") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Domains2) MarshalJSON() ([]byte, error) {
+	type noMethod Domains2
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1221,6 +1562,265 @@ type OrgUnits struct {
 
 func (s *OrgUnits) MarshalJSON() ([]byte, error) {
 	type noMethod OrgUnits
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Privilege: JSON template for privilege resource in Directory API.
+type Privilege struct {
+	// ChildPrivileges: A list of child privileges. Privileges for a service
+	// form a tree. Each privilege can have a list of child privileges; this
+	// list is empty for a leaf privilege.
+	ChildPrivileges []*Privilege `json:"childPrivileges,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// IsOuScopable: If the privilege can be restricted to an organization
+	// unit.
+	IsOuScopable bool `json:"isOuScopable,omitempty"`
+
+	// Kind: The type of the API resource. This is always
+	// admin#directory#privilege.
+	Kind string `json:"kind,omitempty"`
+
+	// PrivilegeName: The name of the privilege.
+	PrivilegeName string `json:"privilegeName,omitempty"`
+
+	// ServiceId: The obfuscated ID of the service this privilege is for.
+	ServiceId string `json:"serviceId,omitempty"`
+
+	// ServiceName: The name of the service this privilege is for.
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChildPrivileges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Privilege) MarshalJSON() ([]byte, error) {
+	type noMethod Privilege
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Privileges: JSON response template for List privileges operation in
+// Directory API.
+type Privileges struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: A list of Privilege resources.
+	Items []*Privilege `json:"items,omitempty"`
+
+	// Kind: The type of the API resource. This is always
+	// admin#directory#privileges.
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Privileges) MarshalJSON() ([]byte, error) {
+	type noMethod Privileges
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Role: JSON template for role resource in Directory API.
+type Role struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// IsSuperAdminRole: Returns true if the role is a super admin role.
+	IsSuperAdminRole bool `json:"isSuperAdminRole,omitempty"`
+
+	// IsSystemRole: Returns true if this is a pre-defined system role.
+	IsSystemRole bool `json:"isSystemRole,omitempty"`
+
+	// Kind: The type of the API resource. This is always
+	// admin#directory#role.
+	Kind string `json:"kind,omitempty"`
+
+	// RoleDescription: A short description of the role.
+	RoleDescription string `json:"roleDescription,omitempty"`
+
+	// RoleId: ID of the role.
+	RoleId int64 `json:"roleId,omitempty,string"`
+
+	// RoleName: Name of the role.
+	RoleName string `json:"roleName,omitempty"`
+
+	// RolePrivileges: The set of privileges that are granted to this role.
+	RolePrivileges []*RoleRolePrivileges `json:"rolePrivileges,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Role) MarshalJSON() ([]byte, error) {
+	type noMethod Role
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type RoleRolePrivileges struct {
+	// PrivilegeName: The name of the privilege.
+	PrivilegeName string `json:"privilegeName,omitempty"`
+
+	// ServiceId: The obfuscated ID of the service this privilege is for.
+	ServiceId string `json:"serviceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrivilegeName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RoleRolePrivileges) MarshalJSON() ([]byte, error) {
+	type noMethod RoleRolePrivileges
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RoleAssignment: JSON template for roleAssignment resource in
+// Directory API.
+type RoleAssignment struct {
+	// AssignedTo: The unique ID of the user this role is assigned to.
+	AssignedTo string `json:"assignedTo,omitempty"`
+
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Kind: The type of the API resource. This is always
+	// admin#directory#roleAssignment.
+	Kind string `json:"kind,omitempty"`
+
+	// OrgUnitId: If the role is restricted to an organization unit, this
+	// contains the ID for the organization unit the exercise of this role
+	// is restricted to.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+
+	// RoleAssignmentId: ID of this roleAssignment.
+	RoleAssignmentId int64 `json:"roleAssignmentId,omitempty,string"`
+
+	// RoleId: The ID of the role that is assigned.
+	RoleId int64 `json:"roleId,omitempty,string"`
+
+	// ScopeType: The scope in which this role is assigned. Possible values
+	// are:
+	// - CUSTOMER
+	// - ORG_UNIT
+	ScopeType string `json:"scopeType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AssignedTo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RoleAssignment) MarshalJSON() ([]byte, error) {
+	type noMethod RoleAssignment
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RoleAssignments: JSON response template for List roleAssignments
+// operation in Directory API.
+type RoleAssignments struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: A list of RoleAssignment resources.
+	Items []*RoleAssignment `json:"items,omitempty"`
+
+	// Kind: The type of the API resource. This is always
+	// admin#directory#roleAssignments.
+	Kind string `json:"kind,omitempty"`
+
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RoleAssignments) MarshalJSON() ([]byte, error) {
+	type noMethod RoleAssignments
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Roles: JSON response template for List roles operation in Directory
+// API.
+type Roles struct {
+	// Etag: ETag of the resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Items: A list of Role resources.
+	Items []*Role `json:"items,omitempty"`
+
+	// Kind: The type of the API resource. This is always
+	// admin#directory#roles.
+	Kind string `json:"kind,omitempty"`
+
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Roles) MarshalJSON() ([]byte, error) {
+	type noMethod Roles
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -3337,6 +3937,1364 @@ func (c *ChromeosdevicesUpdateCall) Do() (*ChromeOsDevice, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.device.chromeos"
+	//   ]
+	// }
+
+}
+
+// method id "directory.customers.get":
+
+type CustomersGetCall struct {
+	s           *Service
+	customerKey string
+	opt_        map[string]interface{}
+	ctx_        context.Context
+}
+
+// Get: Retrives a customer.
+func (r *CustomersService) Get(customerKey string) *CustomersGetCall {
+	c := &CustomersGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerKey = customerKey
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersGetCall) Fields(s ...googleapi.Field) *CustomersGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersGetCall) IfNoneMatch(entityTag string) *CustomersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CustomersGetCall) Context(ctx context.Context) *CustomersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerKey}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerKey": c.customerKey,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.customers.get" call.
+// Exactly one of *Customer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Customer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersGetCall) Do() (*Customer, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Customer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrives a customer.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.customers.get",
+	//   "parameterOrder": [
+	//     "customerKey"
+	//   ],
+	//   "parameters": {
+	//     "customerKey": {
+	//       "description": "Id of the customer to be retrieved",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customers/{customerKey}",
+	//   "response": {
+	//     "$ref": "Customer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.customer",
+	//     "https://www.googleapis.com/auth/admin.directory.customer.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.customers.patch":
+
+type CustomersPatchCall struct {
+	s           *Service
+	customerKey string
+	customer    *Customer
+	opt_        map[string]interface{}
+	ctx_        context.Context
+}
+
+// Patch: Updates a customer. This method supports patch semantics.
+func (r *CustomersService) Patch(customerKey string, customer *Customer) *CustomersPatchCall {
+	c := &CustomersPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerKey = customerKey
+	c.customer = customer
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersPatchCall) Fields(s ...googleapi.Field) *CustomersPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CustomersPatchCall) Context(ctx context.Context) *CustomersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerKey}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerKey": c.customerKey,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.customers.patch" call.
+// Exactly one of *Customer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Customer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersPatchCall) Do() (*Customer, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Customer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a customer. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "directory.customers.patch",
+	//   "parameterOrder": [
+	//     "customerKey"
+	//   ],
+	//   "parameters": {
+	//     "customerKey": {
+	//       "description": "Id of the customer to be updated",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customers/{customerKey}",
+	//   "request": {
+	//     "$ref": "Customer"
+	//   },
+	//   "response": {
+	//     "$ref": "Customer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.customer"
+	//   ]
+	// }
+
+}
+
+// method id "directory.customers.update":
+
+type CustomersUpdateCall struct {
+	s           *Service
+	customerKey string
+	customer    *Customer
+	opt_        map[string]interface{}
+	ctx_        context.Context
+}
+
+// Update: Updates a customer.
+func (r *CustomersService) Update(customerKey string, customer *Customer) *CustomersUpdateCall {
+	c := &CustomersUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customerKey = customerKey
+	c.customer = customer
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersUpdateCall) Fields(s ...googleapi.Field) *CustomersUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *CustomersUpdateCall) Context(ctx context.Context) *CustomersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerKey}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customerKey": c.customerKey,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.customers.update" call.
+// Exactly one of *Customer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Customer.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersUpdateCall) Do() (*Customer, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Customer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a customer.",
+	//   "httpMethod": "PUT",
+	//   "id": "directory.customers.update",
+	//   "parameterOrder": [
+	//     "customerKey"
+	//   ],
+	//   "parameters": {
+	//     "customerKey": {
+	//       "description": "Id of the customer to be updated",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customers/{customerKey}",
+	//   "request": {
+	//     "$ref": "Customer"
+	//   },
+	//   "response": {
+	//     "$ref": "Customer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.customer"
+	//   ]
+	// }
+
+}
+
+// method id "directory.domainAliases.delete":
+
+type DomainAliasesDeleteCall struct {
+	s               *Service
+	customer        string
+	domainAliasName string
+	opt_            map[string]interface{}
+	ctx_            context.Context
+}
+
+// Delete: Deletes a Domain Alias of the customer.
+func (r *DomainAliasesService) Delete(customer string, domainAliasName string) *DomainAliasesDeleteCall {
+	c := &DomainAliasesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.domainAliasName = domainAliasName
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DomainAliasesDeleteCall) Fields(s ...googleapi.Field) *DomainAliasesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DomainAliasesDeleteCall) Context(ctx context.Context) *DomainAliasesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DomainAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/domainaliases/{domainAliasName}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer":        c.customer,
+		"domainAliasName": c.domainAliasName,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.domainAliases.delete" call.
+func (c *DomainAliasesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a Domain Alias of the customer.",
+	//   "httpMethod": "DELETE",
+	//   "id": "directory.domainAliases.delete",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "domainAliasName"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "domainAliasName": {
+	//       "description": "Name of domain alias to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/domainaliases/{domainAliasName}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.domain"
+	//   ]
+	// }
+
+}
+
+// method id "directory.domainAliases.get":
+
+type DomainAliasesGetCall struct {
+	s               *Service
+	customer        string
+	domainAliasName string
+	opt_            map[string]interface{}
+	ctx_            context.Context
+}
+
+// Get: Retrieves a domain alias of the customer.
+func (r *DomainAliasesService) Get(customer string, domainAliasName string) *DomainAliasesGetCall {
+	c := &DomainAliasesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.domainAliasName = domainAliasName
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DomainAliasesGetCall) Fields(s ...googleapi.Field) *DomainAliasesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DomainAliasesGetCall) IfNoneMatch(entityTag string) *DomainAliasesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DomainAliasesGetCall) Context(ctx context.Context) *DomainAliasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DomainAliasesGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/domainaliases/{domainAliasName}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer":        c.customer,
+		"domainAliasName": c.domainAliasName,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.domainAliases.get" call.
+// Exactly one of *DomainAlias or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DomainAlias.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DomainAliasesGetCall) Do() (*DomainAlias, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DomainAlias{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a domain alias of the customer.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.domainAliases.get",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "domainAliasName"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "domainAliasName": {
+	//       "description": "Name of domain alias to be retrieved.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/domainaliases/{domainAliasName}",
+	//   "response": {
+	//     "$ref": "DomainAlias"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.domain",
+	//     "https://www.googleapis.com/auth/admin.directory.domain.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.domainAliases.insert":
+
+type DomainAliasesInsertCall struct {
+	s           *Service
+	customer    string
+	domainalias *DomainAlias
+	opt_        map[string]interface{}
+	ctx_        context.Context
+}
+
+// Insert: Inserts a Domain alias of the customer.
+func (r *DomainAliasesService) Insert(customer string, domainalias *DomainAlias) *DomainAliasesInsertCall {
+	c := &DomainAliasesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.domainalias = domainalias
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DomainAliasesInsertCall) Fields(s ...googleapi.Field) *DomainAliasesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DomainAliasesInsertCall) Context(ctx context.Context) *DomainAliasesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DomainAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.domainalias)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/domainaliases")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.domainAliases.insert" call.
+// Exactly one of *DomainAlias or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DomainAlias.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DomainAliasesInsertCall) Do() (*DomainAlias, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DomainAlias{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a Domain alias of the customer.",
+	//   "httpMethod": "POST",
+	//   "id": "directory.domainAliases.insert",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/domainaliases",
+	//   "request": {
+	//     "$ref": "DomainAlias"
+	//   },
+	//   "response": {
+	//     "$ref": "DomainAlias"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.domain"
+	//   ]
+	// }
+
+}
+
+// method id "directory.domainAliases.list":
+
+type DomainAliasesListCall struct {
+	s        *Service
+	customer string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// List: Lists the domain aliases of the customer.
+func (r *DomainAliasesService) List(customer string) *DomainAliasesListCall {
+	c := &DomainAliasesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	return c
+}
+
+// ParentDomainName sets the optional parameter "parentDomainName": Name
+// of the parent domain for which domain aliases are to be fetched.
+func (c *DomainAliasesListCall) ParentDomainName(parentDomainName string) *DomainAliasesListCall {
+	c.opt_["parentDomainName"] = parentDomainName
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DomainAliasesListCall) Fields(s ...googleapi.Field) *DomainAliasesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DomainAliasesListCall) IfNoneMatch(entityTag string) *DomainAliasesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DomainAliasesListCall) Context(ctx context.Context) *DomainAliasesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DomainAliasesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["parentDomainName"]; ok {
+		params.Set("parentDomainName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/domainaliases")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.domainAliases.list" call.
+// Exactly one of *DomainAliases or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DomainAliases.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *DomainAliasesListCall) Do() (*DomainAliases, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DomainAliases{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the domain aliases of the customer.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.domainAliases.list",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "parentDomainName": {
+	//       "description": "Name of the parent domain for which domain aliases are to be fetched.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/domainaliases",
+	//   "response": {
+	//     "$ref": "DomainAliases"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.domain",
+	//     "https://www.googleapis.com/auth/admin.directory.domain.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.domains.delete":
+
+type DomainsDeleteCall struct {
+	s          *Service
+	customer   string
+	domainName string
+	opt_       map[string]interface{}
+	ctx_       context.Context
+}
+
+// Delete: Deletes a domain of the customer.
+func (r *DomainsService) Delete(customer string, domainName string) *DomainsDeleteCall {
+	c := &DomainsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.domainName = domainName
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DomainsDeleteCall) Fields(s ...googleapi.Field) *DomainsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DomainsDeleteCall) Context(ctx context.Context) *DomainsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/domains/{domainName}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer":   c.customer,
+		"domainName": c.domainName,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.domains.delete" call.
+func (c *DomainsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a domain of the customer.",
+	//   "httpMethod": "DELETE",
+	//   "id": "directory.domains.delete",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "domainName"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "domainName": {
+	//       "description": "Name of domain to be deleted",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/domains/{domainName}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.domain"
+	//   ]
+	// }
+
+}
+
+// method id "directory.domains.get":
+
+type DomainsGetCall struct {
+	s          *Service
+	customer   string
+	domainName string
+	opt_       map[string]interface{}
+	ctx_       context.Context
+}
+
+// Get: Retrives a domain of the customer.
+func (r *DomainsService) Get(customer string, domainName string) *DomainsGetCall {
+	c := &DomainsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.domainName = domainName
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DomainsGetCall) Fields(s ...googleapi.Field) *DomainsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DomainsGetCall) IfNoneMatch(entityTag string) *DomainsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DomainsGetCall) Context(ctx context.Context) *DomainsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/domains/{domainName}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer":   c.customer,
+		"domainName": c.domainName,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.domains.get" call.
+// Exactly one of *Domains or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Domains.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DomainsGetCall) Do() (*Domains, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Domains{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrives a domain of the customer.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.domains.get",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "domainName"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "domainName": {
+	//       "description": "Name of domain to be retrieved",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/domains/{domainName}",
+	//   "response": {
+	//     "$ref": "Domains"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.domain",
+	//     "https://www.googleapis.com/auth/admin.directory.domain.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.domains.insert":
+
+type DomainsInsertCall struct {
+	s        *Service
+	customer string
+	domains  *Domains
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// Insert: Inserts a domain of the customer.
+func (r *DomainsService) Insert(customer string, domains *Domains) *DomainsInsertCall {
+	c := &DomainsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.domains = domains
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DomainsInsertCall) Fields(s ...googleapi.Field) *DomainsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DomainsInsertCall) Context(ctx context.Context) *DomainsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DomainsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.domains)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/domains")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.domains.insert" call.
+// Exactly one of *Domains or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Domains.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DomainsInsertCall) Do() (*Domains, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Domains{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a domain of the customer.",
+	//   "httpMethod": "POST",
+	//   "id": "directory.domains.insert",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/domains",
+	//   "request": {
+	//     "$ref": "Domains"
+	//   },
+	//   "response": {
+	//     "$ref": "Domains"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.domain"
+	//   ]
+	// }
+
+}
+
+// method id "directory.domains.list":
+
+type DomainsListCall struct {
+	s        *Service
+	customer string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// List: Lists the domains of the customer.
+func (r *DomainsService) List(customer string) *DomainsListCall {
+	c := &DomainsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DomainsListCall) Fields(s ...googleapi.Field) *DomainsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DomainsListCall) IfNoneMatch(entityTag string) *DomainsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *DomainsListCall) Context(ctx context.Context) *DomainsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/domains")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.domains.list" call.
+// Exactly one of *Domains2 or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Domains2.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DomainsListCall) Do() (*Domains2, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Domains2{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the domains of the customer.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.domains.list",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/domains",
+	//   "response": {
+	//     "$ref": "Domains2"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.domain",
+	//     "https://www.googleapis.com/auth/admin.directory.domain.readonly"
 	//   ]
 	// }
 
@@ -7377,6 +9335,1467 @@ func (c *OrgunitsUpdateCall) Do() (*OrgUnit, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/admin.directory.orgunit"
+	//   ]
+	// }
+
+}
+
+// method id "directory.privileges.list":
+
+type PrivilegesListCall struct {
+	s        *Service
+	customer string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// List: Retrieves a paginated list of all privileges for a customer.
+func (r *PrivilegesService) List(customer string) *PrivilegesListCall {
+	c := &PrivilegesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PrivilegesListCall) Fields(s ...googleapi.Field) *PrivilegesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PrivilegesListCall) IfNoneMatch(entityTag string) *PrivilegesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *PrivilegesListCall) Context(ctx context.Context) *PrivilegesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *PrivilegesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roles/ALL/privileges")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.privileges.list" call.
+// Exactly one of *Privileges or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Privileges.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PrivilegesListCall) Do() (*Privileges, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Privileges{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a paginated list of all privileges for a customer.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.privileges.list",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roles/ALL/privileges",
+	//   "response": {
+	//     "$ref": "Privileges"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roleAssignments.delete":
+
+type RoleAssignmentsDeleteCall struct {
+	s                *Service
+	customer         string
+	roleAssignmentId string
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Delete: Deletes a role assignment.
+func (r *RoleAssignmentsService) Delete(customer string, roleAssignmentId string) *RoleAssignmentsDeleteCall {
+	c := &RoleAssignmentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.roleAssignmentId = roleAssignmentId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoleAssignmentsDeleteCall) Fields(s ...googleapi.Field) *RoleAssignmentsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoleAssignmentsDeleteCall) Context(ctx context.Context) *RoleAssignmentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RoleAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roleassignments/{roleAssignmentId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer":         c.customer,
+		"roleAssignmentId": c.roleAssignmentId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roleAssignments.delete" call.
+func (c *RoleAssignmentsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a role assignment.",
+	//   "httpMethod": "DELETE",
+	//   "id": "directory.roleAssignments.delete",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "roleAssignmentId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleAssignmentId": {
+	//       "description": "Immutable ID of the role assignment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roleassignments/{roleAssignmentId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roleAssignments.get":
+
+type RoleAssignmentsGetCall struct {
+	s                *Service
+	customer         string
+	roleAssignmentId string
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Get: Retrieve a role assignment.
+func (r *RoleAssignmentsService) Get(customer string, roleAssignmentId string) *RoleAssignmentsGetCall {
+	c := &RoleAssignmentsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.roleAssignmentId = roleAssignmentId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoleAssignmentsGetCall) Fields(s ...googleapi.Field) *RoleAssignmentsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RoleAssignmentsGetCall) IfNoneMatch(entityTag string) *RoleAssignmentsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoleAssignmentsGetCall) Context(ctx context.Context) *RoleAssignmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RoleAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roleassignments/{roleAssignmentId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer":         c.customer,
+		"roleAssignmentId": c.roleAssignmentId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roleAssignments.get" call.
+// Exactly one of *RoleAssignment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *RoleAssignment.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RoleAssignmentsGetCall) Do() (*RoleAssignment, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RoleAssignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve a role assignment.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.roleAssignments.get",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "roleAssignmentId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleAssignmentId": {
+	//       "description": "Immutable ID of the role assignment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roleassignments/{roleAssignmentId}",
+	//   "response": {
+	//     "$ref": "RoleAssignment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roleAssignments.insert":
+
+type RoleAssignmentsInsertCall struct {
+	s              *Service
+	customer       string
+	roleassignment *RoleAssignment
+	opt_           map[string]interface{}
+	ctx_           context.Context
+}
+
+// Insert: Creates a role assignment.
+func (r *RoleAssignmentsService) Insert(customer string, roleassignment *RoleAssignment) *RoleAssignmentsInsertCall {
+	c := &RoleAssignmentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.roleassignment = roleassignment
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoleAssignmentsInsertCall) Fields(s ...googleapi.Field) *RoleAssignmentsInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoleAssignmentsInsertCall) Context(ctx context.Context) *RoleAssignmentsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RoleAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.roleassignment)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roleassignments")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roleAssignments.insert" call.
+// Exactly one of *RoleAssignment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *RoleAssignment.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RoleAssignmentsInsertCall) Do() (*RoleAssignment, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RoleAssignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a role assignment.",
+	//   "httpMethod": "POST",
+	//   "id": "directory.roleAssignments.insert",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roleassignments",
+	//   "request": {
+	//     "$ref": "RoleAssignment"
+	//   },
+	//   "response": {
+	//     "$ref": "RoleAssignment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roleAssignments.list":
+
+type RoleAssignmentsListCall struct {
+	s        *Service
+	customer string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// List: Retrieves a paginated list of all roleAssignments.
+func (r *RoleAssignmentsService) List(customer string) *RoleAssignmentsListCall {
+	c := &RoleAssignmentsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *RoleAssignmentsListCall) MaxResults(maxResults int64) *RoleAssignmentsListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// the next page in the list.
+func (c *RoleAssignmentsListCall) PageToken(pageToken string) *RoleAssignmentsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// RoleId sets the optional parameter "roleId": Immutable ID of a role.
+// If included in the request, returns only role assignments containing
+// this role ID.
+func (c *RoleAssignmentsListCall) RoleId(roleId string) *RoleAssignmentsListCall {
+	c.opt_["roleId"] = roleId
+	return c
+}
+
+// UserKey sets the optional parameter "userKey": The user's primary
+// email address, alias email address, or unique user ID. If included in
+// the request, returns role assignments only for this user.
+func (c *RoleAssignmentsListCall) UserKey(userKey string) *RoleAssignmentsListCall {
+	c.opt_["userKey"] = userKey
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoleAssignmentsListCall) Fields(s ...googleapi.Field) *RoleAssignmentsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RoleAssignmentsListCall) IfNoneMatch(entityTag string) *RoleAssignmentsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RoleAssignmentsListCall) Context(ctx context.Context) *RoleAssignmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RoleAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["roleId"]; ok {
+		params.Set("roleId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["userKey"]; ok {
+		params.Set("userKey", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roleassignments")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roleAssignments.list" call.
+// Exactly one of *RoleAssignments or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *RoleAssignments.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RoleAssignmentsListCall) Do() (*RoleAssignments, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RoleAssignments{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a paginated list of all roleAssignments.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.roleAssignments.list",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "200",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token to specify the next page in the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "Immutable ID of a role. If included in the request, returns only role assignments containing this role ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userKey": {
+	//       "description": "The user's primary email address, alias email address, or unique user ID. If included in the request, returns role assignments only for this user.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roleassignments",
+	//   "response": {
+	//     "$ref": "RoleAssignments"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roles.delete":
+
+type RolesDeleteCall struct {
+	s        *Service
+	customer string
+	roleId   string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// Delete: Deletes a role.
+func (r *RolesService) Delete(customer string, roleId string) *RolesDeleteCall {
+	c := &RolesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.roleId = roleId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RolesDeleteCall) Fields(s ...googleapi.Field) *RolesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RolesDeleteCall) Context(ctx context.Context) *RolesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RolesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roles/{roleId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+		"roleId":   c.roleId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roles.delete" call.
+func (c *RolesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a role.",
+	//   "httpMethod": "DELETE",
+	//   "id": "directory.roles.delete",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "roleId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "Immutable ID of the role.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roles/{roleId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roles.get":
+
+type RolesGetCall struct {
+	s        *Service
+	customer string
+	roleId   string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// Get: Retrieves a role.
+func (r *RolesService) Get(customer string, roleId string) *RolesGetCall {
+	c := &RolesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.roleId = roleId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RolesGetCall) Fields(s ...googleapi.Field) *RolesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RolesGetCall) IfNoneMatch(entityTag string) *RolesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RolesGetCall) Context(ctx context.Context) *RolesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RolesGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roles/{roleId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+		"roleId":   c.roleId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roles.get" call.
+// Exactly one of *Role or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Role.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RolesGetCall) Do() (*Role, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Role{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a role.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.roles.get",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "roleId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "Immutable ID of the role.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roles/{roleId}",
+	//   "response": {
+	//     "$ref": "Role"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roles.insert":
+
+type RolesInsertCall struct {
+	s        *Service
+	customer string
+	role     *Role
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// Insert: Creates a role.
+func (r *RolesService) Insert(customer string, role *Role) *RolesInsertCall {
+	c := &RolesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.role = role
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RolesInsertCall) Fields(s ...googleapi.Field) *RolesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RolesInsertCall) Context(ctx context.Context) *RolesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RolesInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.role)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roles")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roles.insert" call.
+// Exactly one of *Role or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Role.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RolesInsertCall) Do() (*Role, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Role{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a role.",
+	//   "httpMethod": "POST",
+	//   "id": "directory.roles.insert",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roles",
+	//   "request": {
+	//     "$ref": "Role"
+	//   },
+	//   "response": {
+	//     "$ref": "Role"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roles.list":
+
+type RolesListCall struct {
+	s        *Service
+	customer string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// List: Retrieves a paginated list of all the roles in a domain.
+func (r *RolesService) List(customer string) *RolesListCall {
+	c := &RolesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *RolesListCall) MaxResults(maxResults int64) *RolesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// the next page in the list.
+func (c *RolesListCall) PageToken(pageToken string) *RolesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RolesListCall) Fields(s ...googleapi.Field) *RolesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RolesListCall) IfNoneMatch(entityTag string) *RolesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RolesListCall) Context(ctx context.Context) *RolesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RolesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roles")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roles.list" call.
+// Exactly one of *Roles or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Roles.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *RolesListCall) Do() (*Roles, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Roles{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a paginated list of all the roles in a domain.",
+	//   "httpMethod": "GET",
+	//   "id": "directory.roles.list",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable id of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token to specify the next page in the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roles",
+	//   "response": {
+	//     "$ref": "Roles"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement",
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roles.patch":
+
+type RolesPatchCall struct {
+	s        *Service
+	customer string
+	roleId   string
+	role     *Role
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// Patch: Updates a role. This method supports patch semantics.
+func (r *RolesService) Patch(customer string, roleId string, role *Role) *RolesPatchCall {
+	c := &RolesPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.roleId = roleId
+	c.role = role
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RolesPatchCall) Fields(s ...googleapi.Field) *RolesPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RolesPatchCall) Context(ctx context.Context) *RolesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RolesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.role)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roles/{roleId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+		"roleId":   c.roleId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roles.patch" call.
+// Exactly one of *Role or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Role.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RolesPatchCall) Do() (*Role, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Role{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a role. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "directory.roles.patch",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "roleId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "Immutable ID of the role.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roles/{roleId}",
+	//   "request": {
+	//     "$ref": "Role"
+	//   },
+	//   "response": {
+	//     "$ref": "Role"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+	//   ]
+	// }
+
+}
+
+// method id "directory.roles.update":
+
+type RolesUpdateCall struct {
+	s        *Service
+	customer string
+	roleId   string
+	role     *Role
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// Update: Updates a role.
+func (r *RolesService) Update(customer string, roleId string, role *Role) *RolesUpdateCall {
+	c := &RolesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.customer = customer
+	c.roleId = roleId
+	c.role = role
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RolesUpdateCall) Fields(s ...googleapi.Field) *RolesUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RolesUpdateCall) Context(ctx context.Context) *RolesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RolesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.role)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "customer/{customer}/roles/{roleId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+		"roleId":   c.roleId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "directory.roles.update" call.
+// Exactly one of *Role or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Role.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RolesUpdateCall) Do() (*Role, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Role{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a role.",
+	//   "httpMethod": "PUT",
+	//   "id": "directory.roles.update",
+	//   "parameterOrder": [
+	//     "customer",
+	//     "roleId"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Immutable ID of the Google Apps account.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "roleId": {
+	//       "description": "Immutable ID of the role.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "customer/{customer}/roles/{roleId}",
+	//   "request": {
+	//     "$ref": "Role"
+	//   },
+	//   "response": {
+	//     "$ref": "Role"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admin.directory.rolemanagement"
 	//   ]
 	// }
 

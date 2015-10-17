@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/DxnE4TNUGn7fmGw0kTlvolIQtuA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/K2YWeNBEH2yOCjdgDssBGJY_KU4\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20150831",
+ "revision": "20151015",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -354,6 +354,7 @@
     },
     "interface": {
      "type": "string",
+     "description": "Specifies the disk interface to use for attaching this disk, either SCSI or NVME. The default is SCSI. For performance characteristics of SCSI over NVMe, see Local SSD performance.",
      "enum": [
       "NVME",
       "SCSI"
@@ -819,9 +820,11 @@
     "protocol": {
      "type": "string",
      "enum": [
-      "HTTP"
+      "HTTP",
+      "HTTPS"
      ],
      "enumDescriptions": [
+      "",
       ""
      ]
     },
@@ -1530,7 +1533,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#forwardingRule.",
      "default": "compute#forwardingRule"
     },
     "name": {
@@ -1540,7 +1543,7 @@
     },
     "portRange": {
      "type": "string",
-     "description": "Applicable only when `IPProtocol` is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. If portRange is left empty (default value), all ports are forwarded. Forwarding rules with the same `[IPAddress, IPProtocol]` pair must have disjoint port ranges."
+     "description": "Applicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same `[IPAddress, IPProtocol]` pair must have disjoint port ranges."
     },
     "region": {
      "type": "string",
@@ -1745,14 +1748,14 @@
     },
     "hosts": {
      "type": "array",
-     "description": "The list of host patterns to match. They must be valid hostnames except that they may start with *. or *-. The * acts like a glob and will match any string of atoms (separated by .s and -s) to the left.",
+     "description": "The list of host patterns to match. They must be valid hostnames, except * will match any string of ([a-z0-9-.]*). In that case, * must be the first character and must be followed in the pattern by either - or ..",
      "items": {
       "type": "string"
      }
     },
     "pathMatcher": {
      "type": "string",
-     "description": "The name of the PathMatcher to match the path portion of the URL, if the this hostRule matches the URL's host portion."
+     "description": "The name of the PathMatcher to use to match the path portion of the URL if the hostRule matches the URL's host portion."
     }
    }
   },
@@ -1843,6 +1846,104 @@
      "type": "string",
      "description": "Type of resource.",
      "default": "compute#httpHealthCheckList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "HttpsHealthCheck": {
+   "id": "HttpsHealthCheck",
+   "type": "object",
+   "description": "An HttpsHealthCheck resource. This resource defines a template for how individual instances should be checked for health, via HTTPS.",
+   "properties": {
+    "checkIntervalSec": {
+     "type": "integer",
+     "description": "How often (in seconds) to send a health check. The default value is 5 seconds.",
+     "format": "int32"
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "healthyThreshold": {
+     "type": "integer",
+     "description": "A so-far unhealthy instance will be marked healthy after this many consecutive successes. The default value is 2.",
+     "format": "int32"
+    },
+    "host": {
+     "type": "string",
+     "description": "The value of the host header in the HTTPS health check request. If left empty (default value), the public IP on behalf of which this health check is performed will be used."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#httpsHealthCheck"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "port": {
+     "type": "integer",
+     "description": "The TCP port number for the HTTPS health check request. The default value is 443.",
+     "format": "int32"
+    },
+    "requestPath": {
+     "type": "string",
+     "description": "The request path of the HTTPS health check request. The default value is \"/\"."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "timeoutSec": {
+     "type": "integer",
+     "description": "How long (in seconds) to wait before claiming failure. The default value is 5 seconds. It is invalid for timeoutSec to have a greater value than checkIntervalSec.",
+     "format": "int32"
+    },
+    "unhealthyThreshold": {
+     "type": "integer",
+     "description": "A so-far healthy instance will be marked unhealthy after this many consecutive failures. The default value is 2.",
+     "format": "int32"
+    }
+   }
+  },
+  "HttpsHealthCheckList": {
+   "id": "HttpsHealthCheckList",
+   "type": "object",
+   "description": "Contains a list of HttpsHealthCheck resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of HttpsHealthCheck resources.",
+     "items": {
+      "$ref": "HttpsHealthCheck"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#httpsHealthCheckList"
     },
     "nextPageToken": {
      "type": "string",
@@ -1988,7 +2089,7 @@
     },
     "items": {
      "type": "array",
-     "description": "A list of Image resources.",
+     "description": "[Output Only] A list of Image resources.",
      "items": {
       "$ref": "Image"
      }
@@ -2168,12 +2269,12 @@
     },
     "fingerprint": {
      "type": "string",
-     "description": "[Output Only] The fingerprint of the named ports information. The system uses this fingerprint to detect conflicts when multiple users change the named ports information concurrently.",
+     "description": "[Output Only] The fingerprint of the named ports. The system uses this fingerprint to detect conflicts when multiple users change the named ports concurrently.",
      "format": "byte"
     },
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this instance group. The server defines this identifier.",
+     "description": "[Output Only] A unique identifier for this resource type. The server generates this identifier.",
      "format": "uint64"
     },
     "kind": {
@@ -2193,18 +2294,18 @@
     },
     "namedPorts": {
      "type": "array",
-     "description": "Assigns a name to a port number. For example: {name: ?http?, port: 80} This allows the system to reference ports by the assigned name instead of a port number. Named ports can also contain multiple ports. For example: [{name: ?http?, port: 80},{name: \"http\", port: 8080}] Named ports apply to all instances in this instance group.",
+     "description": "Assigns a name to a port number. For example: {name: \"http\", port: 80}\n\nThis allows the system to reference ports by the assigned name instead of a port number. Named ports can also contain multiple ports. For example: [{name: \"http\", port: 80},{name: \"http\", port: 8080}] \n\nNamed ports apply to all instances in this instance group.",
      "items": {
       "$ref": "NamedPort"
      }
     },
     "network": {
      "type": "string",
-     "description": "The URL of the network to which all instances in the instance group belong."
+     "description": "[Output Only] The URL of the network to which all instances in the instance group belong."
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this instance group. The server defines this URL."
+     "description": "[Output Only] The URL for this instance group. The server generates this URL."
     },
     "size": {
      "type": "integer",
@@ -2213,7 +2314,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "The URL of the zone where the instance group is located."
+     "description": "[Output Only] The URL of the zone where the instance group is located."
     }
    }
   },
@@ -2223,7 +2324,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this aggregated list of instance groups. The server defines this identifier."
+     "description": "[Output Only] A unique identifier for this aggregated list of instance groups. The server generates this identifier."
     },
     "items": {
      "type": "object",
@@ -2244,7 +2345,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this aggregated list of instance groups. The server defines this identifier."
+     "description": "[Output Only] The URL for this resource type. The server generates this URL."
     }
    }
   },
@@ -2255,11 +2356,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this list of instance groups. The server defines this identifier."
+     "description": "[Output Only] A unique identifier for this list of instance groups. The server generates this identifier."
     },
     "items": {
      "type": "array",
-     "description": "A list of InstanceGroup resources.",
+     "description": "A list of instance groups.",
      "items": {
       "$ref": "InstanceGroup"
      }
@@ -2275,7 +2376,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this instance group. The server defines this URL."
+     "description": "[Output Only] The URL for this resource type. The server generates this URL."
     }
    }
   },
@@ -2300,7 +2401,7 @@
     },
     "currentActions": {
      "$ref": "InstanceGroupManagerActionsSummary",
-     "description": "[Output Only] The list of instance actions and the number of instances in this managed instance group that are scheduled for those actions."
+     "description": "[Output Only] The list of instance actions and the number of instances in this managed instance group that are scheduled for each of those actions."
     },
     "description": {
      "type": "string",
@@ -2308,17 +2409,17 @@
     },
     "fingerprint": {
      "type": "string",
-     "description": "[Output Only] The fingerprint of the target pools information, which is a hash of the contents. This field is used for optimistic locking when updating the target pool entries.",
+     "description": "[Output Only] The fingerprint of the target pools information. You can use this optional field for optimistic locking when you update the target pool entries.",
      "format": "byte"
     },
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this managed instance group. The server defines this identifier.",
+     "description": "[Output Only] A unique identifier for this resource type. The server generates this identifier.",
      "format": "uint64"
     },
     "instanceGroup": {
      "type": "string",
-     "description": "[Output Only] The URL of the InstanceGroup resource."
+     "description": "[Output Only] The URL of the Instance Group resource."
     },
     "instanceTemplate": {
      "type": "string",
@@ -2346,11 +2447,11 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for this managed instance group."
+     "description": "[Output Only] The URL for this managed instance group. The server defines this URL."
     },
     "targetPools": {
      "type": "array",
-     "description": "The URLs of all TargetPool resources to which new instances in the instanceGroup field are added. Updating the target pool values does not affect existing instances.",
+     "description": "The URLs for all TargetPool resources to which instances in the instanceGroup field are added. The target pools automatically apply to all of the instances in the managed instance group.",
      "items": {
       "type": "string"
      }
@@ -2367,7 +2468,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "The URL of the zone where the managed instance group is located."
+     "description": "The name of the zone where the managed instance group is located."
     }
    }
   },
@@ -2377,7 +2478,7 @@
    "properties": {
     "abandoning": {
      "type": "integer",
-     "description": "[Output Only] Total number of instances in the managed instance group that are scheduled to be abandoned. Abandoning an instance removes it from the managed instance group without deleting it.",
+     "description": "[Output Only] The total number of instances in the managed instance group that are scheduled to be abandoned. Abandoning an instance removes it from the managed instance group without deleting it.",
      "format": "int32"
     },
     "creating": {
@@ -2392,7 +2493,7 @@
     },
     "none": {
      "type": "integer",
-     "description": "[Output Only] The number of instances in the managed instance group that currently have no scheduled actions.",
+     "description": "[Output Only] The number of instances in the managed instance group that are running and have no scheduled actions.",
      "format": "int32"
     },
     "recreating": {
@@ -2418,19 +2519,19 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this aggregated list of managed instance groups. The server defines this identifier."
+     "description": "[Output Only] A unique identifier for this aggregated list of managed instance groups. The server generates this identifier."
     },
     "items": {
      "type": "object",
-     "description": "A map of filtered managed instance group lists.",
+     "description": "[Output Only] A map of filtered managed instance group lists.",
      "additionalProperties": {
       "$ref": "InstanceGroupManagersScopedList",
-      "description": "The name of the scope that contains this set of managed instance groups."
+      "description": "[Output Only] The name of the scope that contains this set of managed instance groups."
      }
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of the resource. Always compute#instanceGroupManagerAggregatedList for an aggregated list of managed instance groups.",
+     "description": "[Output Only] The resource type, which is always compute#instanceGroupManagerAggregatedList for an aggregated list of managed instance groups.",
      "default": "compute#instanceGroupManagerAggregatedList"
     },
     "nextPageToken": {
@@ -2439,29 +2540,29 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this aggregated list of managed instance groups. The server defines this URL."
+     "description": "[Output Only] The URL for this resource type. The server generates this URL."
     }
    }
   },
   "InstanceGroupManagerList": {
    "id": "InstanceGroupManagerList",
    "type": "object",
-   "description": "[Output Only] A list of InstanceGroupManager resources.",
+   "description": "[Output Only] A list of managed instance groups.",
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this managed instance group. The server defines this identifier."
+     "description": "[Output Only] A unique identifier for this resource type. The server generates this identifier."
     },
     "items": {
      "type": "array",
-     "description": "[Output Only] A list of managed instance group resources.",
+     "description": "[Output Only] A list of managed instance groups.",
      "items": {
       "$ref": "InstanceGroupManager"
      }
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of the resource. Always compute#instanceGroupManagerList for a list of managed instance group resources.",
+     "description": "[Output Only] The resource type, which is always compute#instanceGroupManagerList for a list of managed instance groups.",
      "default": "compute#instanceGroupManagerList"
     },
     "nextPageToken": {
@@ -2470,7 +2571,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this managed instance group. The server defines this URL."
+     "description": "[Output Only] The URL for this resource type. The server generates this URL."
     }
    }
   },
@@ -2480,7 +2581,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The names of instances to abandon from the managed instance group.",
+     "description": "The URL for one or more instances to abandon from the managed instance group.",
      "items": {
       "type": "string"
      }
@@ -2493,7 +2594,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The names of one or more instances to delete.",
+     "description": "The list of instances to delete from this managed instance group. Specify one or more instance URLs.",
      "items": {
       "type": "string"
      }
@@ -2506,7 +2607,7 @@
    "properties": {
     "managedInstances": {
      "type": "array",
-     "description": "List of managed instances. If empty - all instances are listed.",
+     "description": "[Output Only] The list of instances in the managed instance group.",
      "items": {
       "$ref": "ManagedInstance"
      }
@@ -2519,7 +2620,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The names of one or more instances to recreate.",
+     "description": "The URL for one or more instances to recreate.",
      "items": {
       "type": "string"
      }
@@ -2618,12 +2719,12 @@
    "properties": {
     "fingerprint": {
      "type": "string",
-     "description": "The fingerprint of the target pools information, which is a hash of the contents. This field is used for optimistic locking when updating the target pool entries.",
+     "description": "The fingerprint of the target pools information. Use this optional property to prevent conflicts when multiple users change the target pools settings concurrently. Obtain the fingerprint with the instanceGroupManagers.get method. Then, include the fingerprint in your request to ensure that you do not overwrite changes that were applied from another concurrent request.",
      "format": "byte"
     },
     "targetPools": {
      "type": "array",
-     "description": "The list of target pool URLs that instances in this managed instance group belong to. When the managed instance group creates new instances, the group automatically adds those instances to the target pools that are specified in this parameter. Changing the value of this parameter does not change the target pools of existing instances in this managed instance group.",
+     "description": "The list of target pool URLs that instances in this managed instance group belong to. The managed instance group applies these target pools to all of the instances in the group. Existing instances and new instances in the group all receive these target pool settings.",
      "items": {
       "type": "string"
      }
@@ -2636,7 +2737,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The instances to add to the instance group.",
+     "description": "The list of instances to add to the instance group.",
      "items": {
       "$ref": "InstanceReference"
      }
@@ -2649,11 +2750,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] A unique identifier for this list of instance groups. The server defines this identifier."
+     "description": "[Output Only] A unique identifier for this list of instance groups. The server generates this identifier."
     },
     "items": {
      "type": "array",
-     "description": "A list of InstanceWithNamedPorts resources, which contains all named ports for the given instance.",
+     "description": "[Output Only] A list of instances and any named ports that are assigned to those instances.",
      "items": {
       "$ref": "InstanceWithNamedPorts"
      }
@@ -2669,7 +2770,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] The URL for this list of instance groups. The server defines this URL."
+     "description": "[Output Only] The URL for this list of instance groups. The server generates this URL."
     }
    }
   },
@@ -2697,7 +2798,7 @@
    "properties": {
     "instances": {
      "type": "array",
-     "description": "The instances to remove from the instance group.",
+     "description": "The list of instances to remove from the instance group.",
      "items": {
       "$ref": "InstanceReference"
      }
@@ -2786,7 +2887,7 @@
    "properties": {
     "fingerprint": {
      "type": "string",
-     "description": "The fingerprint of the named ports information, which is a hash of the contents. Use this field for optimistic locking when you update the named ports entries.",
+     "description": "The fingerprint of the named ports information for this instance group. Use this optional property to prevent conflicts when multiple users change the named ports settings concurrently. Obtain the fingerprint with the instanceGroups.get method. Then, include the fingerprint in your request to ensure that you do not overwrite changes that were applied from another concurrent request.",
      "format": "byte"
     },
     "namedPorts": {
@@ -2850,7 +2951,7 @@
    "properties": {
     "canIpForward": {
      "type": "boolean",
-     "description": "A boolean that specifies if instances created from this template can send packets with source IP addresses other than their own or receive packets with destination IP addresses other than their own. If you use these instances as an IP gateway or as the next-hop in a Route resource, specify true. Otherwise, specify false."
+     "description": "Enables instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the canIpForward documentation for more information."
     },
     "description": {
      "type": "string",
@@ -2878,14 +2979,14 @@
     },
     "networkInterfaces": {
      "type": "array",
-     "description": "An array of network access configurations for this interface. This specifies how this interface is configured to interact with other network services, such as connecting to the internet. Currently, ONE_TO_ONE_NAT is the only supported access configuration. If you do not specify any access configurations, the instances that are created from this template will have no external internet access.",
+     "description": "An array of network access configurations for this interface.",
      "items": {
       "$ref": "NetworkInterface"
      }
     },
     "scheduling": {
      "$ref": "Scheduling",
-     "description": "A list of scheduling options for the instances that are created from this template."
+     "description": "Specifies the scheduling options for the instances that are created from this template."
     },
     "serviceAccounts": {
      "type": "array",
@@ -2905,7 +3006,8 @@
    "type": "object",
    "properties": {
     "instance": {
-     "type": "string"
+     "type": "string",
+     "description": "The URL for a specific instance."
     }
    }
   },
@@ -2934,7 +3036,7 @@
     },
     "name": {
      "type": "string",
-     "description": "The name of the instance template. The name must be 1-63 characters long, and comply with RFC1035.",
+     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
      "annotations": {
       "required": [
@@ -2944,7 +3046,7 @@
     },
     "properties": {
      "$ref": "InstanceProperties",
-     "description": "The instance properties for the instance template resource."
+     "description": "The instance properties for this instance template."
     },
     "selfLink": {
      "type": "string",
@@ -2963,7 +3065,7 @@
     },
     "items": {
      "type": "array",
-     "description": "A list of InstanceTemplate resources.",
+     "description": "[Output Only] list of InstanceTemplate resources.",
      "items": {
       "$ref": "InstanceTemplate"
      }
@@ -2989,18 +3091,18 @@
    "properties": {
     "instance": {
      "type": "string",
-     "description": "The URL of the instance."
+     "description": "[Output Only] The URL of the instance."
     },
     "namedPorts": {
      "type": "array",
-     "description": "The named ports that belong to this instance group.",
+     "description": "[Output Only] The named ports that belong to this instance group.",
      "items": {
       "$ref": "NamedPort"
      }
     },
     "status": {
      "type": "string",
-     "description": "The status of the instance.",
+     "description": "[Output Only] The status of the instance.",
      "enum": [
       "PROVISIONING",
       "RUNNING",
@@ -3355,7 +3457,7 @@
    "properties": {
     "currentAction": {
      "type": "string",
-     "description": "The current action that the managed instance group has scheduled for the instance.",
+     "description": "[Output Only] The current action that the managed instance group has scheduled for the instance. Possible values: \n- NONE The instance is running, and the managed instance group does not have any scheduled actions for this instance. \n- CREATING The managed instance group is creating this instance. \n- RECREATING The managed instance group is recreating this instance. \n- DELETING The managed instance group is permanently deleting this instance. \n- ABANDONING The managed instance group is abandoning this instance. The instance will be removed from the instance group and from any target pools that are associated with this group. \n- RESTARTING The managed instance group is restarting the instance. \n- REFRESHING The managed instance group is applying configuration changes to the instance without stopping it. For example, the group can update the target pool list for an instance without stopping that instance.",
      "enum": [
       "ABANDONING",
       "CREATING",
@@ -3377,16 +3479,16 @@
     },
     "id": {
      "type": "string",
-     "description": "The unique identifier for this resource (empty when instance does not exist).",
+     "description": "[Output only] The unique identifier for this resource. This field is empty when instance does not exist.",
      "format": "uint64"
     },
     "instance": {
      "type": "string",
-     "description": "The URL of the instance (set even though instance does not exist yet)."
+     "description": "[Output Only] The URL of the instance. The URL can exist even if the instance has not yet been created."
     },
     "instanceStatus": {
      "type": "string",
-     "description": "The status of the instance (empty when instance does not exist).",
+     "description": "[Output Only] The status of the instance. This field is empty when the instance does not exist.",
      "enum": [
       "PROVISIONING",
       "RUNNING",
@@ -3410,7 +3512,7 @@
     },
     "lastAttempt": {
      "$ref": "ManagedInstanceLastAttempt",
-     "description": "Information about the last attempt to create or delete the instance."
+     "description": "[Output Only] Information about the last attempt to create or delete the instance."
     }
    }
   },
@@ -3420,7 +3522,7 @@
    "properties": {
     "errors": {
      "type": "object",
-     "description": "Encountered errors during the last attempt to create or delete the instance.",
+     "description": "[Output Only] Encountered errors during the last attempt to create or delete the instance.",
      "properties": {
       "errors": {
        "type": "array",
@@ -3497,12 +3599,11 @@
   "NamedPort": {
    "id": "NamedPort",
    "type": "object",
-   "description": "The named port information. For example: .",
+   "description": "The named port. For example: .",
    "properties": {
     "name": {
      "type": "string",
-     "description": "The name for this NamedPort.",
-     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+     "description": "The name for this named port. The name must be 1-63 characters long, and comply with RFC1035."
     },
     "port": {
      "type": "integer",
@@ -3519,12 +3620,7 @@
     "IPv4Range": {
      "type": "string",
      "description": "The range of internal addresses that are legal on this network. This range is a CIDR specification, for example: 192.168.0.0/16. Provided by the client when the network is created.",
-     "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}/[0-9]{1,2}",
-     "annotations": {
-      "required": [
-       "compute.networks.insert"
-      ]
-     }
+     "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}/[0-9]{1,2}"
     },
     "creationTimestamp": {
      "type": "string",
@@ -3691,7 +3787,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of the resource. Always compute#Operation for Operation resources.",
+     "description": "[Output Only] Type of the resource. Always compute#operation for Operation resources.",
      "default": "compute#operation"
     },
     "name": {
@@ -3700,7 +3796,7 @@
     },
     "operationType": {
      "type": "string",
-     "description": "[Output Only] Type of the operation, such as insert, update, and delete."
+     "description": "[Output Only] Type of the operation, such as insert, compute.instanceGroups.update, or compute.instanceGroups.delete."
     },
     "progress": {
      "type": "integer",
@@ -3963,7 +4059,7 @@
   "PathMatcher": {
    "id": "PathMatcher",
    "type": "object",
-   "description": "A matcher for the path portion of the URL. The BackendService from the longest-matched rule will serve the URL. If no rule was matched, the default_service will be used.",
+   "description": "A matcher for the path portion of the URL. The BackendService from the longest-matched rule will serve the URL. If no rule was matched, the default service will be used.",
    "properties": {
     "defaultService": {
      "type": "string",
@@ -4617,6 +4713,79 @@
     }
    }
   },
+  "SslCertificate": {
+   "id": "SslCertificate",
+   "type": "object",
+   "description": "An SslCertificate resource. This resource provides a mechanism to upload an SSL key and certificate to global HTTPS loadbalancer to serve secure connections.",
+   "properties": {
+    "certificate": {
+     "type": "string",
+     "description": "A local certificate file. The certificate must be in PEM format. The certificate chain must be no greater than 5 certs long. The chain must include at least one intermediate cert."
+    },
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource. Provided by the client when the resource is created."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource. Defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "[Output Only] Type of the resource. Always compute#sslCertificate for SSL certificates.",
+     "default": "compute#sslCertificate"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "privateKey": {
+     "type": "string",
+     "description": "A write-only private key in PEM format. Only insert RPCs will include this field."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "SslCertificateList": {
+   "id": "SslCertificateList",
+   "type": "object",
+   "description": "Contains a list of SslCertificate resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of SslCertificate resources.",
+     "items": {
+      "$ref": "SslCertificate"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#sslCertificateList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
   "Tags": {
    "id": "Tags",
    "type": "object",
@@ -4656,7 +4825,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of resource. Always compute#Operation for Operation resources.",
+     "description": "[Output Only] Type of resource. Always compute#operation for Operation resources.",
      "default": "compute#targetHttpProxy"
     },
     "name": {
@@ -4694,6 +4863,95 @@
      "type": "string",
      "description": "Type of resource. Always compute#targetHttpProxyList for lists of Target HTTP proxies.",
      "default": "compute#targetHttpProxyList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "TargetHttpsProxiesSetSslCertificatesRequest": {
+   "id": "TargetHttpsProxiesSetSslCertificatesRequest",
+   "type": "object",
+   "properties": {
+    "sslCertificates": {
+     "type": "array",
+     "description": "New set of URLs to SslCertificate resources to associate with this TargetHttpProxy. Currently exactly one ssl certificate must be specified.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "TargetHttpsProxy": {
+   "id": "TargetHttpsProxy",
+   "type": "object",
+   "description": "A TargetHttpsProxy resource. This resource defines an HTTPS proxy.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource. Provided by the client when the resource is created."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+     "format": "uint64"
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#targetHttpsProxy"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "sslCertificates": {
+     "type": "array",
+     "description": "URLs to SslCertificate resources that are used to authenticate connections to Backends. Currently exactly one SSL certificate must be specified.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "urlMap": {
+     "type": "string",
+     "description": "URL to the UrlMap resource that defines the mapping from URL to the BackendService."
+    }
+   }
+  },
+  "TargetHttpsProxyList": {
+   "id": "TargetHttpsProxyList",
+   "type": "object",
+   "description": "Contains a list of TargetHttpsProxy resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of TargetHttpsProxy resources.",
+     "items": {
+      "$ref": "TargetHttpsProxy"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#targetHttpsProxyList"
     },
     "nextPageToken": {
      "type": "string",
@@ -4956,7 +5214,7 @@
     },
     "sessionAffinity": {
      "type": "string",
-     "description": "Sesssion affinity option, must be one of the following values: NONE: Connections from the same client IP may go to any instance in the pool; CLIENT_IP: Connections from the same client IP will go to the same instance in the pool while that instance remains healthy. CLIENT_IP_PROTO: Connections from the same client IP with the same IP protocol will go to the same instance in the pool while that instance remains healthy.",
+     "description": "Sesssion affinity option, must be one of the following values:\nNONE: Connections from the same client IP may go to any instance in the pool.\nCLIENT_IP: Connections from the same client IP will go to the same instance in the pool while that instance remains healthy.\nCLIENT_IP_PROTO: Connections from the same client IP with the same IP protocol will go to the same instance in the pool while that instance remains healthy.",
      "enum": [
       "CLIENT_IP",
       "CLIENT_IP_PROTO",
@@ -8335,6 +8593,222 @@
     }
    }
   },
+  "httpsHealthChecks": {
+   "methods": {
+    "delete": {
+     "id": "compute.httpsHealthChecks.delete",
+     "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified HttpsHealthCheck resource.",
+     "parameters": {
+      "httpsHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpsHealthCheck resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpsHealthCheck"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.httpsHealthChecks.get",
+     "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+     "httpMethod": "GET",
+     "description": "Returns the specified HttpsHealthCheck resource.",
+     "parameters": {
+      "httpsHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpsHealthCheck resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpsHealthCheck"
+     ],
+     "response": {
+      "$ref": "HttpsHealthCheck"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.httpsHealthChecks.insert",
+     "path": "{project}/global/httpsHealthChecks",
+     "httpMethod": "POST",
+     "description": "Creates a HttpsHealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "HttpsHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.httpsHealthChecks.list",
+     "path": "{project}/global/httpsHealthChecks",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of HttpsHealthCheck resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum count of results to be returned.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "HttpsHealthCheckList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "patch": {
+     "id": "compute.httpsHealthChecks.patch",
+     "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+     "httpMethod": "PATCH",
+     "description": "Updates a HttpsHealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+     "parameters": {
+      "httpsHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpsHealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpsHealthCheck"
+     ],
+     "request": {
+      "$ref": "HttpsHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "update": {
+     "id": "compute.httpsHealthChecks.update",
+     "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+     "httpMethod": "PUT",
+     "description": "Updates a HttpsHealthCheck resource in the specified project using the data included in the request.",
+     "parameters": {
+      "httpsHealthCheck": {
+       "type": "string",
+       "description": "Name of the HttpsHealthCheck resource to update.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "httpsHealthCheck"
+     ],
+     "request": {
+      "$ref": "HttpsHealthCheck"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
   "images": {
    "methods": {
     "delete": {
@@ -8475,7 +8949,7 @@
      "id": "compute.images.list",
      "path": "{project}/global/images",
      "httpMethod": "GET",
-     "description": "Retrieves the list of image resources available to the specified project.",
+     "description": "Retrieves the list of private images available to the specified project. Private images are images you create that belong to your project. This method does not get any images that belong to other projects, including publicly-available images, like Debian 7. If you want to get a list of publicly-available images, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.\n\nSee Accessing images for more information.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -8524,11 +8998,11 @@
      "id": "compute.instanceGroupManagers.abandonInstances",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/abandonInstances",
      "httpMethod": "POST",
-     "description": "Removes the specified instances from the managed instance group, and from any target pools where they are a member. The instances are not deleted. The managed instance group automatically reduces its targetSize value by the number of instances that you abandon from the group.",
+     "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
-       "description": "The name of the instance group manager.",
+       "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
       },
@@ -8541,7 +9015,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8566,7 +9040,7 @@
      "id": "compute.instanceGroupManagers.aggregatedList",
      "path": "{project}/aggregated/instanceGroupManagers",
      "httpMethod": "GET",
-     "description": "Retrieves the list of managed instance groups, and groups them by project and zone.",
+     "description": "Retrieves the list of managed instance groups and groups them by zone.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -8611,11 +9085,11 @@
      "id": "compute.instanceGroupManagers.delete",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified managed instance group resource.",
+     "description": "Deletes the specified managed instance group and all of the instances in that group.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
-       "description": "The name of the instance group manager to delete.",
+       "description": "The name of the managed instance group to delete.",
        "required": true,
        "location": "path"
       },
@@ -8628,7 +9102,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8650,11 +9124,11 @@
      "id": "compute.instanceGroupManagers.deleteInstances",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/deleteInstances",
      "httpMethod": "POST",
-     "description": "Deletes the specified instances. The instances are deleted and removed from the instance group and any target pools where they are a member. The managed instance group automatically reduces its targetSize value by the number of instances that you delete.",
+     "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
-       "description": "The name of the instance group manager.",
+       "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
       },
@@ -8667,7 +9141,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8692,11 +9166,11 @@
      "id": "compute.instanceGroupManagers.get",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
      "httpMethod": "GET",
-     "description": "Returns the specified managed instance group resource.",
+     "description": "Returns all of the details about the specified managed instance group.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
-       "description": "The name of the instance group manager resource.",
+       "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
       },
@@ -8709,7 +9183,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8732,7 +9206,7 @@
      "id": "compute.instanceGroupManagers.insert",
      "path": "{project}/zones/{zone}/instanceGroupManagers",
      "httpMethod": "POST",
-     "description": "Creates a managed instance group resource in the specified project using the data that is included in the request.",
+     "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.",
      "parameters": {
       "project": {
        "type": "string",
@@ -8743,7 +9217,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where you want to create the managed instance group.",
        "required": true,
        "location": "path"
       }
@@ -8797,7 +9271,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8819,7 +9293,7 @@
      "id": "compute.instanceGroupManagers.listManagedInstances",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/listManagedInstances",
      "httpMethod": "POST",
-     "description": "Lists managed instances.",
+     "description": "Lists all of the instances in the managed instance group. Each instance in the list has a currentAction, which indicates the action that the managed instance group is performing on the instance. For example, if the group is still creating an instance, the currentAction is CREATING. If a previous action failed, the list displays the errors for that failed action.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -8836,7 +9310,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8859,11 +9333,11 @@
      "id": "compute.instanceGroupManagers.recreateInstances",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/recreateInstances",
      "httpMethod": "POST",
-     "description": "Recreates the specified instances. The instances are deleted, then recreated using the managed instance group's current instance template.",
+     "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
-       "description": "The name of the instance group manager.",
+       "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
       },
@@ -8876,7 +9350,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8901,11 +9375,11 @@
      "id": "compute.instanceGroupManagers.resize",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/resize",
      "httpMethod": "POST",
-     "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group removes instances in the order that is outlined in Resizing a managed instance group.",
+     "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
-       "description": "The name of the instance group manager.",
+       "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
       },
@@ -8925,7 +9399,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8952,7 +9426,7 @@
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
-       "description": "The name of the instance group manager.",
+       "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
       },
@@ -8965,7 +9439,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -8990,11 +9464,11 @@
      "id": "compute.instanceGroupManagers.setTargetPools",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}/setTargetPools",
      "httpMethod": "POST",
-     "description": "Modifies the target pools to which all new instances in this group are assigned. The target pools for existing instances in the group do not change unless you recreate them.",
+     "description": "Modifies the target pools to which all instances in this managed instance group are assigned. The target pools automatically apply to all of the instances in the managed instance group. This operation is marked DONE when you make the request even if the instances have not yet been added to their target pools. The change might take some time to apply to all of the instances in the group depending on the size of the group.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
-       "description": "The name of the instance group manager.",
+       "description": "The name of the managed instance group.",
        "required": true,
        "location": "path"
       },
@@ -9007,7 +9481,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the managed instance group is located.",
+       "description": "The name of the zone where the managed instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -9036,7 +9510,7 @@
      "id": "compute.instanceGroups.addInstances",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/addInstances",
      "httpMethod": "POST",
-     "description": "Adds a list of instances to an instance group. All of the instances in the instance group must be in the same network.",
+     "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork. TODO: Change to comment to state \"if IG is load balanced.\"",
      "parameters": {
       "instanceGroup": {
        "type": "string",
@@ -9053,7 +9527,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the instance group is located.",
+       "description": "The name of the zone where the instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -9078,7 +9552,7 @@
      "id": "compute.instanceGroups.aggregatedList",
      "path": "{project}/aggregated/instanceGroups",
      "httpMethod": "GET",
-     "description": "Retrieves the list of instance groups, and sorts them by zone.",
+     "description": "Retrieves the list of instance groups and sorts them by zone.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -9123,7 +9597,7 @@
      "id": "compute.instanceGroups.delete",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified instance group.",
+     "description": "Deletes the specified instance group. The instances in the group are not deleted.",
      "parameters": {
       "instanceGroup": {
        "type": "string",
@@ -9140,7 +9614,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the instance group is located.",
+       "description": "The name of the zone where the instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -9179,7 +9653,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the instance group is located.",
+       "description": "The name of the zone where the instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -9213,7 +9687,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the instance group is located.",
+       "description": "The name of the zone where you want to create the instance group.",
        "required": true,
        "location": "path"
       }
@@ -9267,7 +9741,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the instance group is located.",
+       "description": "The name of the zone where the instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -9289,7 +9763,7 @@
      "id": "compute.instanceGroups.listInstances",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/listInstances",
      "httpMethod": "POST",
-     "description": "Lists instances in an instance group. The parameters for this method specify whether the list filters instances by state and named ports information.",
+     "description": "Lists the instances in the specified instance group.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -9325,7 +9799,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the instance group is located.",
+       "description": "The name of the zone where the instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -9351,7 +9825,7 @@
      "id": "compute.instanceGroups.removeInstances",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/removeInstances",
      "httpMethod": "POST",
-     "description": "Removes a list of instances from an instance group.",
+     "description": "Removes one or more instances from the specified instance group, but does not delete those instances.",
      "parameters": {
       "instanceGroup": {
        "type": "string",
@@ -9368,7 +9842,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the instance group is located.",
+       "description": "The name of the zone where the instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -9393,7 +9867,7 @@
      "id": "compute.instanceGroups.setNamedPorts",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/setNamedPorts",
      "httpMethod": "POST",
-     "description": "Sets the named ports in an instance group.",
+     "description": "Sets the named ports for the specified instance group.",
      "parameters": {
       "instanceGroup": {
        "type": "string",
@@ -9410,7 +9884,7 @@
       },
       "zone": {
        "type": "string",
-       "description": "The URL of the zone where the instance group is located.",
+       "description": "The name of the zone where the instance group is located.",
        "required": true,
        "location": "path"
       }
@@ -9634,6 +10108,7 @@
      "id": "compute.instances.aggregatedList",
      "path": "{project}/aggregated/instances",
      "httpMethod": "GET",
+     "description": "Retrieves aggregated list of instance resources.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -11309,6 +11784,150 @@
     }
    }
   },
+  "sslCertificates": {
+   "methods": {
+    "delete": {
+     "id": "compute.sslCertificates.delete",
+     "path": "{project}/global/sslCertificates/{sslCertificate}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified SslCertificate resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "sslCertificate": {
+       "type": "string",
+       "description": "Name of the SslCertificate resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "sslCertificate"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.sslCertificates.get",
+     "path": "{project}/global/sslCertificates/{sslCertificate}",
+     "httpMethod": "GET",
+     "description": "Returns the specified SslCertificate resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "sslCertificate": {
+       "type": "string",
+       "description": "Name of the SslCertificate resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "sslCertificate"
+     ],
+     "response": {
+      "$ref": "SslCertificate"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.sslCertificates.insert",
+     "path": "{project}/global/sslCertificates",
+     "httpMethod": "POST",
+     "description": "Creates a SslCertificate resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "SslCertificate"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.sslCertificates.list",
+     "path": "{project}/global/sslCertificates",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of SslCertificate resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum count of results to be returned.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "SslCertificateList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "targetHttpProxies": {
    "methods": {
     "delete": {
@@ -11475,6 +12094,222 @@
      "parameterOrder": [
       "project",
       "targetHttpProxy"
+     ],
+     "request": {
+      "$ref": "UrlMapReference"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    }
+   }
+  },
+  "targetHttpsProxies": {
+   "methods": {
+    "delete": {
+     "id": "compute.targetHttpsProxies.delete",
+     "path": "{project}/global/targetHttpsProxies/{targetHttpsProxy}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified TargetHttpsProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpsProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpsProxy resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpsProxy"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.targetHttpsProxies.get",
+     "path": "{project}/global/targetHttpsProxies/{targetHttpsProxy}",
+     "httpMethod": "GET",
+     "description": "Returns the specified TargetHttpsProxy resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpsProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpsProxy resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpsProxy"
+     ],
+     "response": {
+      "$ref": "TargetHttpsProxy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.targetHttpsProxies.insert",
+     "path": "{project}/global/targetHttpsProxies",
+     "httpMethod": "POST",
+     "description": "Creates a TargetHttpsProxy resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "request": {
+      "$ref": "TargetHttpsProxy"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.targetHttpsProxies.list",
+     "path": "{project}/global/targetHttpsProxies",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of TargetHttpsProxy resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum count of results to be returned.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "TargetHttpsProxyList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setSslCertificates": {
+     "id": "compute.targetHttpsProxies.setSslCertificates",
+     "path": "{project}/targetHttpsProxies/{targetHttpsProxy}/setSslCertificates",
+     "httpMethod": "POST",
+     "description": "Replaces SslCertificates for TargetHttpsProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpsProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpsProxy resource whose URL map is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpsProxy"
+     ],
+     "request": {
+      "$ref": "TargetHttpsProxiesSetSslCertificatesRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setUrlMap": {
+     "id": "compute.targetHttpsProxies.setUrlMap",
+     "path": "{project}/targetHttpsProxies/{targetHttpsProxy}/setUrlMap",
+     "httpMethod": "POST",
+     "description": "Changes the URL map for TargetHttpsProxy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "targetHttpsProxy": {
+       "type": "string",
+       "description": "Name of the TargetHttpsProxy resource whose URL map is to be set.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "targetHttpsProxy"
      ],
      "request": {
       "$ref": "UrlMapReference"

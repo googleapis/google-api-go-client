@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "admin:reports_v1"
 const apiName = "admin"

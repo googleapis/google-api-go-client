@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "youtube:v3"
 const apiName = "youtube"
@@ -5660,7 +5662,8 @@ type TokenPagination struct {
 
 // Video: A video resource represents a YouTube video.
 type Video struct {
-	// AgeGating: Age restriction details related to a video.
+	// AgeGating: Age restriction details related to a video. This data can
+	// only be retrieved by the video owner.
 	AgeGating *VideoAgeGating `json:"ageGating,omitempty"`
 
 	// ContentDetails: The contentDetails object contains information about

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ve8tEpbsG_IxtYaZBLsdJxUCrVI\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/TYEElx_gLlz3G4Z0qoDLbuCjb8k\"",
  "discoveryVersion": "v1",
  "id": "doubleclicksearch:v2",
  "name": "doubleclicksearch",
  "version": "v2",
- "revision": "20150526",
+ "revision": "20151006",
  "title": "DoubleClick Search API",
  "description": "Report and modify your advertising data in DoubleClick Search (for example, campaigns, ad groups, keywords, and conversions).",
  "ownerDomain": "google.com",
@@ -451,7 +451,11 @@
     },
     "platformSource": {
      "type": "string",
-     "description": "The platform that is used to provide data for the custom dimension. Acceptable values are \"Floodlight\"."
+     "description": "The platform that is used to provide data for the custom dimension. Acceptable values are \"floodlight\"."
+    },
+    "productReportPerspective": {
+     "type": "string",
+     "description": "Provide different source for product items. Acceptable values are \"advertised\" and \"sold\"."
     },
     "savedColumnName": {
      "type": "string",

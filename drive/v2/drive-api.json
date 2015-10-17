@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/vDvRzc2SjVzG9hrGn8HU-kRVxfE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/j3Wwh3EWBgWZwRehTCtXuS9oPH4\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20150910",
+ "revision": "20151008",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -1144,7 +1144,7 @@
     },
     "markedViewedByMeDate": {
      "type": "string",
-     "description": "Time this file was explicitly marked viewed by the user (formatted RFC 3339 timestamp).",
+     "description": "Deprecated.",
      "format": "date-time"
     },
     "md5Checksum": {

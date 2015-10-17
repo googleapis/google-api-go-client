@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "games:v1"
 const apiName = "games"
@@ -6720,10 +6722,12 @@ func (c *PlayersListCall) Do() (*PlayerListResponse, error) {
 	//     "collection": {
 	//       "description": "Collection of players being retrieved",
 	//       "enum": [
+	//         "connected",
 	//         "playedWith",
 	//         "played_with"
 	//       ],
 	//       "enumDescriptions": [
+	//         "Retrieve a list of players that are also playing this game in reverse chronological order.",
 	//         "(DEPRECATED: please use played_with!) Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently.",
 	//         "Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently."
 	//       ],

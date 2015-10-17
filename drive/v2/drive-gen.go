@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "drive:v2"
 const apiName = "drive"
@@ -1246,8 +1248,7 @@ type File struct {
 	// (formatted RFC 3339 timestamp).
 	LastViewedByMeDate string `json:"lastViewedByMeDate,omitempty"`
 
-	// MarkedViewedByMeDate: Time this file was explicitly marked viewed by
-	// the user (formatted RFC 3339 timestamp).
+	// MarkedViewedByMeDate: Deprecated.
 	MarkedViewedByMeDate string `json:"markedViewedByMeDate,omitempty"`
 
 	// Md5Checksum: An MD5 checksum for the content of this file. This field

@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "pubsub:v1beta2"
 const apiName = "pubsub"
@@ -124,7 +126,7 @@ type ProjectsTopicsSubscriptionsService struct {
 // AcknowledgeRequest: Request for the Acknowledge method.
 type AcknowledgeRequest struct {
 	// AckIds: The acknowledgment ID for the messages being acknowledged
-	// that was returned by the Pub/Sub system in the Pull response. Must
+	// that was returned by the Pub/Sub system in the `Pull` response. Must
 	// not be empty.
 	AckIds []string `json:"ackIds,omitempty"`
 
@@ -143,22 +145,27 @@ func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Binding: Associates members with roles. See below for allowed formats
-// of members.
+// Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Members: Format of member entries: 1. allUsers Matches any requesting
-	// principal (users, service accounts or anonymous). 2.
-	// allAuthenticatedUsers Matches any requesting authenticated principal
-	// (users or service accounts). 3. user:{emailid} A google user account
-	// using an email address. For example alice@gmail.com, joe@example.com
-	// 4. serviceAccount:{emailid} An service account email. 5.
-	// group:{emailid} A google group with an email address. For example
-	// auth-ti-cloud@google.com 6. domain:{domain} A Google Apps domain
-	// name. For example google.com, example.com
+	// Members: Specifies the identities requesting access for a Cloud
+	// Platform resource. `members` can have the following formats: *
+	// `allUsers`: A special identifier that represents anyone who is on the
+	// internet; with or without a Google account. *
+	// `allAuthenticatedUsers`: A special identifier that represents anyone
+	// who is authenticated with a Google account or a service account. *
+	// `user:{emailid}`: An email address that represents a specific Google
+	// account. For example, `alice@gmail.com` or `joe@example.com`. *
+	// `serviceAccount:{emailid}`: An email address that represents a
+	// service account. For example,
+	// `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An
+	// email address that represents a Google group. For example,
+	// `admins@example.com`. * `domain:{domain}`: A Google Apps domain name
+	// that represents all the users of that domain. For example,
+	// `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: The name of the role to which the members should be bound.
-	// Examples: "roles/viewer", "roles/editor", "roles/owner". Required
+	// Role: Role that is assigned to `members`. For example,
+	// `roles/viewer`, `roles/editor`, or `roles/owner`. Required
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Members") to
@@ -188,11 +195,12 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ListSubscriptionsResponse: Response for the ListSubscriptions method.
+// ListSubscriptionsResponse: Response for the `ListSubscriptions`
+// method.
 type ListSubscriptionsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
 	// subscriptions that match the request; this value should be passed in
-	// a new ListSubscriptionsRequest to get more subscriptions.
+	// a new `ListSubscriptionsRequest` to get more subscriptions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Subscriptions: The subscriptions that match the request.
@@ -218,11 +226,11 @@ func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListTopicSubscriptionsResponse: Response for the
-// ListTopicSubscriptions method.
+// `ListTopicSubscriptions` method.
 type ListTopicSubscriptionsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
 	// subscriptions that match the request; this value should be passed in
-	// a new ListTopicSubscriptionsRequest to get more subscriptions.
+	// a new `ListTopicSubscriptionsRequest` to get more subscriptions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Subscriptions: The names of the subscriptions that match the request.
@@ -247,11 +255,11 @@ func (s *ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListTopicsResponse: Response for the ListTopics method.
+// ListTopicsResponse: Response for the `ListTopics` method.
 type ListTopicsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more topics
 	// that match the request; this value should be passed in a new
-	// ListTopicsRequest.
+	// `ListTopicsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Topics: The resulting topics.
@@ -281,7 +289,7 @@ type ModifyAckDeadlineRequest struct {
 	// AckDeadlineSeconds: The new ack deadline with respect to the time
 	// this request was sent to the Pub/Sub system. Must be >= 0. For
 	// example, if the value is 10, the new ack deadline will expire 10
-	// seconds after the ModifyAckDeadline call was made. Specifying zero
+	// seconds after the `ModifyAckDeadline` call was made. Specifying zero
 	// may immediately make the message available for another pull request.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
@@ -310,9 +318,9 @@ func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
 type ModifyPushConfigRequest struct {
 	// PushConfig: The push configuration for future deliveries. An empty
-	// pushConfig indicates that the Pub/Sub system should stop pushing
+	// `pushConfig` indicates that the Pub/Sub system should stop pushing
 	// messages from the given subscription and allow messages to be pulled
-	// and acknowledged - effectively pausing the subscription if Pull is
+	// and acknowledged - effectively pausing the subscription if `Pull` is
 	// not called.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
@@ -331,33 +339,28 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Policy: # Overview The `Policy` defines an access control policy
-// language. It is used to define policies that are attached to
-// resources like files, folders, VMs, etc. # Policy structure A
-// `Policy` consists of a list of bindings. A `Binding` binds a set of
-// members to a role, where the members include user accounts, user
-// groups, user domains, and service accounts. A 'role' is a named set
-// of permissions, defined by IAM. The definition of a role is outside
-// the policy. A permission check first determines the roles that
-// include the specified permission, and then determines if the
-// principal specified is a member of a binding to at least one of these
-// roles. The membership check is recursive when a group is bound to a
-// role. Policy examples: ``` { "bindings": [ { "role": "roles/owner",
-// "members": [ "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
-// "serviceAccount:frontend@example.iam.gserviceaccounts.com"] }, {
+// Policy: Defines an Identity and Access Management (IAM) policy. It is
+// used to specify access control policies for Cloud Platform resources.
+// A `Policy` consists of a list of `bindings`. A `Binding` binds a list
+// of `members` to a `role`, where the members can be user accounts,
+// Google groups, Google domains, and service accounts. A `role` is a
+// named list of permissions defined by IAM. **Example** { "bindings": [
+// { "role": "roles/owner", "members": [ "user:mike@example.com",
+// "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com"] }, {
 // "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
-// ```
+// For a description of IAM and its features, see the [IAM developer's
+// guide](https://cloud.google.com/iam).
 type Policy struct {
-	// Bindings: It is an error to specify multiple bindings for the same
-	// role. It is an error to specify a binding with no members.
+	// Bindings: Associates a list of `members` to a `role`. Multiple
+	// `bindings` must not be specified for the same `role`. `bindings` with
+	// no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: Can be used to perform a read-modify-write.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: The policy language version. The version of the policy is
-	// represented by the etag. The default version is 0.
+	// Version: Version of the `Policy`. The default version is 0.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -399,7 +402,7 @@ func (s *PublishRequest) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// PublishResponse: Response for the Publish method.
+// PublishResponse: Response for the `Publish` method.
 type PublishResponse struct {
 	// MessageIds: The server-assigned ID of each published message, in the
 	// same order as the messages in the request. IDs are guaranteed to be
@@ -438,9 +441,9 @@ type PubsubMessage struct {
 
 	// MessageId: ID of this message assigned by the server at publication
 	// time. Guaranteed to be unique within the topic. This value may be
-	// read by a subscriber that receives a PubsubMessage via a Pull call or
-	// a push delivery. It must not be populated by a publisher in a Publish
-	// call.
+	// read by a subscriber that receives a `PubsubMessage` via a `Pull`
+	// call or a push delivery. It must not be populated by a publisher in a
+	// `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -458,7 +461,7 @@ func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// PullRequest: Request for the Pull method.
+// PullRequest: Request for the `Pull` method.
 type PullRequest struct {
 	// MaxMessages: The maximum number of messages returned for this
 	// request. The Pub/Sub system may return fewer than the number
@@ -467,8 +470,8 @@ type PullRequest struct {
 
 	// ReturnImmediately: If this is specified as true the system will
 	// respond immediately even if it is not able to return a message in the
-	// Pull response. Otherwise the system is allowed to wait until at least
-	// one message is available rather than returning no messages. The
+	// `Pull` response. Otherwise the system is allowed to wait until at
+	// least one message is available rather than returning no messages. The
 	// client may cancel the request if it does not wish to wait any longer
 	// for the response.
 	ReturnImmediately bool `json:"returnImmediately,omitempty"`
@@ -488,11 +491,11 @@ func (s *PullRequest) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// PullResponse: Response for the Pull method.
+// PullResponse: Response for the `Pull` method.
 type PullResponse struct {
 	// ReceivedMessages: Received Pub/Sub messages. The Pub/Sub system will
 	// return zero messages if there are no more available in the backlog.
-	// The Pub/Sub system may return fewer than the maxMessages requested
+	// The Pub/Sub system may return fewer than the `maxMessages` requested
 	// even if there are more messages available in the backlog.
 	ReceivedMessages []*ReceivedMessage `json:"receivedMessages,omitempty"`
 
@@ -524,10 +527,10 @@ type PushConfig struct {
 	// message. This attribute indicates the version of the data expected by
 	// the endpoint. This controls the shape of the envelope (i.e. its
 	// fields and metadata). The endpoint version is based on the version of
-	// the Pub/Sub API. If not present during the CreateSubscription call,
+	// the Pub/Sub API. If not present during the `CreateSubscription` call,
 	// it will default to the version of the API used to make such call. If
-	// not present during a ModifyPushConfig call, its value will not be
-	// changed. GetSubscription calls will always return a valid version,
+	// not present during a `ModifyPushConfig` call, its value will not be
+	// changed. `GetSubscription` calls will always return a valid version,
 	// even if the subscription was created without this attribute. The
 	// possible values for this attribute are: * `v1beta1`: uses the push
 	// format defined in the v1beta1 Pub/Sub API. * `v1` or `v1beta2`: uses
@@ -580,9 +583,9 @@ func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
-	// 'resource'. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is in general a valid policy but certain services (like
-	// Projects) might reject them.
+	// `resource`. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is a valid policy but certain Cloud Platform services
+	// (such as Projects) might reject them.
 	Policy *Policy `json:"policy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
@@ -609,11 +612,11 @@ type Subscription struct {
 	// and will not be delivered again during that time (on a best-effort
 	// basis). For pull delivery this value is used as the initial value for
 	// the ack deadline. To override this value for a given message, call
-	// ModifyAckDeadline with the corresponding ack_id. For push delivery,
-	// this value is also used to set the request timeout for the call to
-	// the push endpoint. If the subscriber never acknowledges the message,
-	// the Pub/Sub system will eventually redeliver the message. If this
-	// parameter is not set, the default value of 10 seconds is used.
+	// `ModifyAckDeadline` with the corresponding `ack_id`. For push
+	// delivery, this value is also used to set the request timeout for the
+	// call to the push endpoint. If the subscriber never acknowledges the
+	// message, the Pub/Sub system will eventually redeliver the message. If
+	// this parameter is not set, the default value of 10 seconds is used.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
 	// Name: The name of the subscription. It must have the format
@@ -625,8 +628,8 @@ type Subscription struct {
 	Name string `json:"name,omitempty"`
 
 	// PushConfig: If push delivery is used with this subscription, this
-	// field is used to configure it. An empty pushConfig signifies that the
-	// subscriber will pull and ack messages using API methods.
+	// field is used to configure it. An empty `pushConfig` signifies that
+	// the subscriber will pull and ack messages using API methods.
 	PushConfig *PushConfig `json:"pushConfig,omitempty"`
 
 	// Topic: The name of the topic from which this subscription is
@@ -656,7 +659,7 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
 // method.
 type TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the 'resource'.
+	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
 	// allowed.
 	Permissions []string `json:"permissions,omitempty"`
@@ -741,10 +744,10 @@ type ProjectsSubscriptionsAcknowledgeCall struct {
 	ctx_               context.Context
 }
 
-// Acknowledge: Acknowledges the messages associated with the ack tokens
-// in the AcknowledgeRequest. The Pub/Sub system can remove the relevant
-// messages from the subscription. Acknowledging a message whose ack
-// deadline has expired may succeed, but such a message may be
+// Acknowledge: Acknowledges the messages associated with the `ack_ids`
+// in the `AcknowledgeRequest`. The Pub/Sub system can remove the
+// relevant messages from the subscription. Acknowledging a message
+// whose ack deadline has expired may succeed, but such a message may be
 // redelivered later. Acknowledging a message more than once will not
 // result in an error.
 func (r *ProjectsSubscriptionsService) Acknowledge(subscription string, acknowledgerequest *AcknowledgeRequest) *ProjectsSubscriptionsAcknowledgeCall {
@@ -832,7 +835,7 @@ func (c *ProjectsSubscriptionsAcknowledgeCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Acknowledges the messages associated with the ack tokens in the AcknowledgeRequest. The Pub/Sub system can remove the relevant messages from the subscription. Acknowledging a message whose ack deadline has expired may succeed, but such a message may be redelivered later. Acknowledging a message more than once will not result in an error.",
+	//   "description": "Acknowledges the messages associated with the `ack_ids` in the `AcknowledgeRequest`. The Pub/Sub system can remove the relevant messages from the subscription. Acknowledging a message whose ack deadline has expired may succeed, but such a message may be redelivered later. Acknowledging a message more than once will not result in an error.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.acknowledge",
 	//   "parameterOrder": [
@@ -874,8 +877,8 @@ type ProjectsSubscriptionsCreateCall struct {
 
 // Create: Creates a subscription to a given topic for a given
 // subscriber. If the subscription already exists, returns
-// ALREADY_EXISTS. If the corresponding topic doesn't exist, returns
-// NOT_FOUND. If the name is not provided in the request, the server
+// `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns
+// `NOT_FOUND`. If the name is not provided in the request, the server
 // will assign a random name for this subscription on the same project
 // as the topic.
 func (r *ProjectsSubscriptionsService) Create(name string, subscription *Subscription) *ProjectsSubscriptionsCreateCall {
@@ -963,7 +966,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do() (*Subscription, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription to a given topic for a given subscriber. If the subscription already exists, returns ALREADY_EXISTS. If the corresponding topic doesn't exist, returns NOT_FOUND. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
+	//   "description": "Creates a subscription to a given topic for a given subscriber. If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic.",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.subscriptions.create",
 	//   "parameterOrder": [
@@ -1003,9 +1006,9 @@ type ProjectsSubscriptionsDeleteCall struct {
 }
 
 // Delete: Deletes an existing subscription. All pending messages in the
-// subscription are immediately dropped. Calls to Pull after deletion
-// will return NOT_FOUND. After a subscription is deleted, a new one may
-// be created with the same name, but the new one has no association
+// subscription are immediately dropped. Calls to `Pull` after deletion
+// will return `NOT_FOUND`. After a subscription is deleted, a new one
+// may be created with the same name, but the new one has no association
 // with the old subscription, or its topic unless the same topic is
 // specified.
 func (r *ProjectsSubscriptionsService) Delete(subscription string) *ProjectsSubscriptionsDeleteCall {
@@ -1086,7 +1089,7 @@ func (c *ProjectsSubscriptionsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an existing subscription. All pending messages in the subscription are immediately dropped. Calls to Pull after deletion will return NOT_FOUND. After a subscription is deleted, a new one may be created with the same name, but the new one has no association with the old subscription, or its topic unless the same topic is specified.",
+	//   "description": "Deletes an existing subscription. All pending messages in the subscription are immediately dropped. Calls to `Pull` after deletion will return `NOT_FOUND`. After a subscription is deleted, a new one may be created with the same name, but the new one has no association with the old subscription, or its topic unless the same topic is specified.",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.subscriptions.delete",
 	//   "parameterOrder": [
@@ -1250,8 +1253,8 @@ type ProjectsSubscriptionsGetIamPolicyCall struct {
 	ctx_     context.Context
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Is empty
-// if the policy or the resource does not exist.
+// GetIamPolicy: Gets the access control policy for a `resource`. Is
+// empty if the policy or the resource does not exist.
 func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSubscriptionsGetIamPolicyCall {
 	c := &ProjectsSubscriptionsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
 	c.resource = resource
@@ -1343,7 +1346,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource. Is empty if the policy or the resource does not exist.",
+	//   "description": "Gets the access control policy for a `resource`. Is empty if the policy or the resource does not exist.",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.subscriptions.getIamPolicy",
 	//   "parameterOrder": [
@@ -1351,7 +1354,7 @@ func (c *ProjectsSubscriptionsGetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, projects/{project}.",
+	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
 	//       "required": true,
@@ -1394,8 +1397,8 @@ func (c *ProjectsSubscriptionsListCall) PageSize(pageSize int64) *ProjectsSubscr
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last ListSubscriptionsResponse; indicates that this is a
-// continuation of a prior ListSubscriptions call, and that the system
+// by the last `ListSubscriptionsResponse`; indicates that this is a
+// continuation of a prior `ListSubscriptions` call, and that the system
 // should return the next page of data.
 func (c *ProjectsSubscriptionsListCall) PageToken(pageToken string) *ProjectsSubscriptionsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -1507,7 +1510,7 @@ func (c *ProjectsSubscriptionsListCall) Do() (*ListSubscriptionsResponse, error)
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last ListSubscriptionsResponse; indicates that this is a continuation of a prior ListSubscriptions call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListSubscriptionsResponse`; indicates that this is a continuation of a prior `ListSubscriptions` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1670,12 +1673,12 @@ type ProjectsSubscriptionsModifyPushConfigCall struct {
 	ctx_                    context.Context
 }
 
-// ModifyPushConfig: Modifies the PushConfig for a specified
+// ModifyPushConfig: Modifies the `PushConfig` for a specified
 // subscription. This may be used to change a push subscription to a
-// pull one (signified by an empty PushConfig) or vice versa, or change
-// the endpoint URL and other attributes of a push subscription.
+// pull one (signified by an empty `PushConfig`) or vice versa, or
+// change the endpoint URL and other attributes of a push subscription.
 // Messages will accumulate for delivery continuously through the call
-// regardless of changes to the PushConfig.
+// regardless of changes to the `PushConfig`.
 func (r *ProjectsSubscriptionsService) ModifyPushConfig(subscription string, modifypushconfigrequest *ModifyPushConfigRequest) *ProjectsSubscriptionsModifyPushConfigCall {
 	c := &ProjectsSubscriptionsModifyPushConfigCall{s: r.s, opt_: make(map[string]interface{})}
 	c.subscription = subscription
@@ -1761,7 +1764,7 @@ func (c *ProjectsSubscriptionsModifyPushConfigCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the PushConfig for a specified subscription. This may be used to change a push subscription to a pull one (signified by an empty PushConfig) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the PushConfig.",
+	//   "description": "Modifies the `PushConfig` for a specified subscription. This may be used to change a push subscription to a pull one (signified by an empty `PushConfig`) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the `PushConfig`.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.modifyPushConfig",
 	//   "parameterOrder": [
@@ -1803,7 +1806,7 @@ type ProjectsSubscriptionsPullCall struct {
 
 // Pull: Pulls messages from the server. Returns an empty list if there
 // are no messages available in the backlog. The server may return
-// UNAVAILABLE if there are too many concurrent pull requests pending
+// `UNAVAILABLE` if there are too many concurrent pull requests pending
 // for the given subscription.
 func (r *ProjectsSubscriptionsService) Pull(subscription string, pullrequest *PullRequest) *ProjectsSubscriptionsPullCall {
 	c := &ProjectsSubscriptionsPullCall{s: r.s, opt_: make(map[string]interface{})}
@@ -1890,7 +1893,7 @@ func (c *ProjectsSubscriptionsPullCall) Do() (*PullResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The server may return UNAVAILABLE if there are too many concurrent pull requests pending for the given subscription.",
+	//   "description": "Pulls messages from the server. Returns an empty list if there are no messages available in the backlog. The server may return `UNAVAILABLE` if there are too many concurrent pull requests pending for the given subscription.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.pull",
 	//   "parameterOrder": [
@@ -2025,7 +2028,7 @@ func (c *ProjectsSubscriptionsSetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. Resource is usually specified as a path, such as, projects/{project}/zones/{zone}/disks/{disk}.",
+	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
 	//       "required": true,
@@ -2152,7 +2155,7 @@ func (c *ProjectsSubscriptionsTestIamPermissionsCall) Do() (*TestIamPermissionsR
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy detail is being requested. Resource is usually specified as a path, such as, projects/{project}.",
+	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
 	//       "required": true,
@@ -2309,7 +2312,7 @@ type ProjectsTopicsDeleteCall struct {
 	ctx_  context.Context
 }
 
-// Delete: Deletes the topic with the given name. Returns NOT_FOUND if
+// Delete: Deletes the topic with the given name. Returns `NOT_FOUND` if
 // the topic does not exist. After a topic is deleted, a new topic may
 // be created with the same name; this is an entirely new topic with
 // none of the old configuration or subscriptions. Existing
@@ -2393,7 +2396,7 @@ func (c *ProjectsTopicsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions. Existing subscriptions to this topic are not deleted, but their `topic` field is set to `_deleted-topic_`.",
+	//   "description": "Deletes the topic with the given name. Returns `NOT_FOUND` if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions. Existing subscriptions to this topic are not deleted, but their `topic` field is set to `_deleted-topic_`.",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.topics.delete",
 	//   "parameterOrder": [
@@ -2557,8 +2560,8 @@ type ProjectsTopicsGetIamPolicyCall struct {
 	ctx_     context.Context
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Is empty
-// if the policy or the resource does not exist.
+// GetIamPolicy: Gets the access control policy for a `resource`. Is
+// empty if the policy or the resource does not exist.
 func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGetIamPolicyCall {
 	c := &ProjectsTopicsGetIamPolicyCall{s: r.s, opt_: make(map[string]interface{})}
 	c.resource = resource
@@ -2650,7 +2653,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a resource. Is empty if the policy or the resource does not exist.",
+	//   "description": "Gets the access control policy for a `resource`. Is empty if the policy or the resource does not exist.",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.topics.getIamPolicy",
 	//   "parameterOrder": [
@@ -2658,7 +2661,7 @@ func (c *ProjectsTopicsGetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, projects/{project}.",
+	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/topics/[^/]*$",
 	//       "required": true,
@@ -2701,9 +2704,9 @@ func (c *ProjectsTopicsListCall) PageSize(pageSize int64) *ProjectsTopicsListCal
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last ListTopicsResponse; indicates that this is a continuation
-// of a prior ListTopics call, and that the system should return the
-// next page of data.
+// by the last `ListTopicsResponse`; indicates that this is a
+// continuation of a prior `ListTopics` call, and that the system should
+// return the next page of data.
 func (c *ProjectsTopicsListCall) PageToken(pageToken string) *ProjectsTopicsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -2814,7 +2817,7 @@ func (c *ProjectsTopicsListCall) Do() (*ListTopicsResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last ListTopicsResponse; indicates that this is a continuation of a prior ListTopics call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListTopicsResponse`; indicates that this is a continuation of a prior `ListTopics` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2848,9 +2851,9 @@ type ProjectsTopicsPublishCall struct {
 	ctx_           context.Context
 }
 
-// Publish: Adds one or more messages to the topic. Returns NOT_FOUND if
-// the topic does not exist. The message payload must not be empty; it
-// must contain either a non-empty data field, or at least one
+// Publish: Adds one or more messages to the topic. Returns `NOT_FOUND`
+// if the topic does not exist. The message payload must not be empty;
+// it must contain either a non-empty data field, or at least one
 // attribute.
 func (r *ProjectsTopicsService) Publish(topic string, publishrequest *PublishRequest) *ProjectsTopicsPublishCall {
 	c := &ProjectsTopicsPublishCall{s: r.s, opt_: make(map[string]interface{})}
@@ -2937,7 +2940,7 @@ func (c *ProjectsTopicsPublishCall) Do() (*PublishResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does not exist. The message payload must not be empty; it must contain either a non-empty data field, or at least one attribute.",
+	//   "description": "Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does not exist. The message payload must not be empty; it must contain either a non-empty data field, or at least one attribute.",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.topics.publish",
 	//   "parameterOrder": [
@@ -3072,7 +3075,7 @@ func (c *ProjectsTopicsSetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. Resource is usually specified as a path, such as, projects/{project}/zones/{zone}/disks/{disk}.",
+	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/topics/[^/]*$",
 	//       "required": true,
@@ -3199,7 +3202,7 @@ func (c *ProjectsTopicsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy detail is being requested. Resource is usually specified as a path, such as, projects/{project}.",
+	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*/topics/[^/]*$",
 	//       "required": true,
@@ -3245,8 +3248,8 @@ func (c *ProjectsTopicsSubscriptionsListCall) PageSize(pageSize int64) *Projects
 }
 
 // PageToken sets the optional parameter "pageToken": The value returned
-// by the last ListTopicSubscriptionsResponse; indicates that this is a
-// continuation of a prior ListTopicSubscriptions call, and that the
+// by the last `ListTopicSubscriptionsResponse`; indicates that this is
+// a continuation of a prior `ListTopicSubscriptions` call, and that the
 // system should return the next page of data.
 func (c *ProjectsTopicsSubscriptionsListCall) PageToken(pageToken string) *ProjectsTopicsSubscriptionsListCall {
 	c.opt_["pageToken"] = pageToken
@@ -3358,7 +3361,7 @@ func (c *ProjectsTopicsSubscriptionsListCall) Do() (*ListTopicSubscriptionsRespo
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last ListTopicSubscriptionsResponse; indicates that this is a continuation of a prior ListTopicSubscriptions call, and that the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListTopicSubscriptionsResponse`; indicates that this is a continuation of a prior `ListTopicSubscriptions` call, and that the system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

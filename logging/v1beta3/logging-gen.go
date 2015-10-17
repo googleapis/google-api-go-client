@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "logging:v1beta3"
 const apiName = "logging"
@@ -89,6 +91,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.LogServices = NewProjectsLogServicesService(s)
 	rs.Logs = NewProjectsLogsService(s)
+	rs.Metrics = NewProjectsMetricsService(s)
 	rs.Sinks = NewProjectsSinksService(s)
 	return rs
 }
@@ -99,6 +102,8 @@ type ProjectsService struct {
 	LogServices *ProjectsLogServicesService
 
 	Logs *ProjectsLogsService
+
+	Metrics *ProjectsMetricsService
 
 	Sinks *ProjectsSinksService
 }
@@ -169,6 +174,15 @@ type ProjectsLogsSinksService struct {
 	s *Service
 }
 
+func NewProjectsMetricsService(s *Service) *ProjectsMetricsService {
+	rs := &ProjectsMetricsService{s: s}
+	return rs
+}
+
+type ProjectsMetricsService struct {
+	s *Service
+}
+
 func NewProjectsSinksService(s *Service) *ProjectsSinksService {
 	rs := &ProjectsSinksService{s: s}
 	return rs
@@ -192,6 +206,10 @@ type Empty struct {
 
 // HttpRequest: A common proto for logging HTTP requests.
 type HttpRequest struct {
+	// CacheHit: Whether or not an entity was served from cache (with or
+	// without validation).
+	CacheHit bool `json:"cacheHit,omitempty"`
+
 	// Referer: Referer (a.k.a. referrer) URL of request, as defined in
 	// http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html.
 	Referer string `json:"referer,omitempty"`
@@ -223,7 +241,12 @@ type HttpRequest struct {
 	// (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)".
 	UserAgent string `json:"userAgent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Referer") to
+	// ValidatedWithOriginServer: Whether or not the response was validated
+	// with the origin server before being served from cache. This field is
+	// only meaningful if cache_hit is True.
+	ValidatedWithOriginServer bool `json:"validatedWithOriginServer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CacheHit") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -234,6 +257,37 @@ type HttpRequest struct {
 
 func (s *HttpRequest) MarshalJSON() ([]byte, error) {
 	type noMethod HttpRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ListLogMetricsResponse: Result returned from ListLogMetrics.
+type ListLogMetricsResponse struct {
+	// Metrics: The list of metrics that was requested.
+	Metrics []*LogMetric `json:"metrics,omitempty"`
+
+	// NextPageToken: If there are more results, then `nextPageToken` is
+	// returned in the response. To get the next batch of entries, use the
+	// value of `nextPageToken` as `pageToken` in the next call of
+	// `ListLogMetrics`. If `nextPageToken` is empty, then there are no more
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Metrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ListLogMetricsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod ListLogMetricsResponse
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -641,6 +695,44 @@ func (s *LogLine) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// LogMetric: Describes a collected, logs-based metric. The value of the
+// metric is the number of log entries in the project that match the
+// advanced logs filter in the `filter` field.
+type LogMetric struct {
+	// Description: A description of this metric.
+	Description string `json:"description,omitempty"`
+
+	// Filter: An [advanced logs
+	// filter](/logging/docs/view/advanced_filters). Example: "log:syslog
+	// AND metadata.severity>=ERROR".
+	Filter string `json:"filter,omitempty"`
+
+	// Name: The client-assigned name for this metric, such as
+	// "severe_errors". Metric names are limited to 1000 characters and
+	// can include only the following characters: `-A-Za-z0-9_.,+!*',()%/\`.
+	// The slash character `/` implies a hierarchy of name pieces, and
+	// cannot be the first character of the name.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LogMetric) MarshalJSON() ([]byte, error) {
+	type noMethod LogMetric
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // LogService: _Output only._ Describes a service that writes log
 // entries.
 type LogService struct {
@@ -919,39 +1011,38 @@ func (s *SourceReference) MarshalJSON() ([]byte, error) {
 // most users - Flexible enough to meet unexpected needs # Overview The
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. The error code should be an enum value of
-// [google.rpc.Code][], but it may accept additional error codes if
-// needed. The error message should be a developer-facing English
-// message that helps developers *understand* and *resolve* the error.
-// If a localized user-facing error message is needed, put the localized
-// message in the error details or localize it in the client. The
-// optional error details may contain arbitrary information about the
-// error. There is a predefined set of error detail types in the package
-// `google.rpc` which can be used for common error conditions. #
-// Language mapping The `Status` message is the logical representation
-// of the error model, but it is not necessarily the actual wire format.
-// When the `Status` message is exposed in different client libraries
-// and different wire protocols, it can be mapped differently. For
-// example, it will likely be mapped to some exceptions in Java, but
-// more likely mapped to some error codes in C. # Other uses The error
-// model and the `Status` message can be used in a variety of
-// environments, either with or without APIs, to provide a consistent
-// developer experience across different environments. Example uses of
-// this error model include: - Partial errors. If a service needs to
-// return partial errors to the client, it may embed the `Status` in the
-// normal response to indicate the partial errors. - Workflow errors. A
-// typical workflow has multiple steps. Each step may have a `Status`
-// message for error reporting purpose. - Batch operations. If a client
-// uses batch request and batch response, the `Status` message should be
-// used directly inside batch response, one for each error sub-response.
-// - Asynchronous operations. If an API call embeds asynchronous
-// operation results in its response, the status of those operations
-// should be represented directly using the `Status` message. - Logging.
-// If some API errors are stored in logs, the message `Status` could be
-// used directly after any stripping needed for security/privacy
-// reasons.
+// google.rpc.Code, but it may accept additional error codes if needed.
+// The error message should be a developer-facing English message that
+// helps developers *understand* and *resolve* the error. If a localized
+// user-facing error message is needed, put the localized message in the
+// error details or localize it in the client. The optional error
+// details may contain arbitrary information about the error. There is a
+// predefined set of error detail types in the package `google.rpc`
+// which can be used for common error conditions. # Language mapping The
+// `Status` message is the logical representation of the error model,
+// but it is not necessarily the actual wire format. When the `Status`
+// message is exposed in different client libraries and different wire
+// protocols, it can be mapped differently. For example, it will likely
+// be mapped to some exceptions in Java, but more likely mapped to some
+// error codes in C. # Other uses The error model and the `Status`
+// message can be used in a variety of environments, either with or
+// without APIs, to provide a consistent developer experience across
+// different environments. Example uses of this error model include: -
+// Partial errors. If a service needs to return partial errors to the
+// client, it may embed the `Status` in the normal response to indicate
+// the partial errors. - Workflow errors. A typical workflow has
+// multiple steps. Each step may have a `Status` message for error
+// reporting purpose. - Batch operations. If a client uses batch request
+// and batch response, the `Status` message should be used directly
+// inside batch response, one for each error sub-response. -
+// Asynchronous operations. If an API call embeds asynchronous operation
+// results in its response, the status of those operations should be
+// represented directly using the `Status` message. - Logging. If some
+// API errors are stored in logs, the message `Status` could be used
+// directly after any stripping needed for security/privacy reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
-	// [google.rpc.Code][].
+	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
 	// Details: A list of messages that carry the error details. There will
@@ -960,8 +1051,7 @@ type Status struct {
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
-	// in the [google.rpc.Status.details][google.rpc.Status.details] field,
-	// or localized by the client.
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1031,18 +1121,6 @@ func (r *ProjectsLogServicesService) List(projectsId string) *ProjectsLogService
 	return c
 }
 
-// Log sets the optional parameter "log": If empty, all log services
-// contributing log entries to the project are listed. Otherwise, this
-// field must be the resource name of a log, such as
-// "projects/my-project/appengine.googleapis.com%2Frequest_log", and
-// then the only services listed are those associated with entries in
-// the log. A service is associated with an entry if its name is in the
-// entry's `LogEntryMetadata.serviceName` field.
-func (c *ProjectsLogServicesListCall) Log(log string) *ProjectsLogServicesListCall {
-	c.opt_["log"] = log
-	return c
-}
-
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of `LogService` objects to return in one operation.
 func (c *ProjectsLogServicesListCall) PageSize(pageSize int64) *ProjectsLogServicesListCall {
@@ -1090,9 +1168,6 @@ func (c *ProjectsLogServicesListCall) doRequest(alt string) (*http.Response, err
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", alt)
-	if v, ok := c.opt_["log"]; ok {
-		params.Set("log", fmt.Sprintf("%v", v))
-	}
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
 	}
@@ -1161,11 +1236,6 @@ func (c *ProjectsLogServicesListCall) Do() (*ListLogServicesResponse, error) {
 	//     "projectsId"
 	//   ],
 	//   "parameters": {
-	//     "log": {
-	//       "description": "If empty, all log services contributing log entries to the project are listed. Otherwise, this field must be the resource name of a log, such as `\"projects/my-project/appengine.googleapis.com%2Frequest_log\"`, and then the only services listed are those associated with entries in the log. A service is associated with an entry if its name is in the entry's `LogEntryMetadata.serviceName` field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of `LogService` objects to return in one operation.",
 	//       "format": "int32",
@@ -1234,26 +1304,16 @@ func (c *ProjectsLogServicesIndexesListCall) Depth(depth int64) *ProjectsLogServ
 // IndexPrefix sets the optional parameter "indexPrefix": Restricts the
 // index values returned to be those with a specified prefix for each
 // index key. This field has the form "/prefix1/prefix2/...", in order
-// corresponding to the [`LogService
-// indexKeys`][google.logging.v1.LogService.index_keys]. Non-empty
-// prefixes must begin with `/`. For example, App Engine's two keys are
-// the module ID and the version ID. Following is the effect of using
-// various values for `indexPrefix`: + "/Mod/" retrieves `/Mod/10` and
-// `/Mod/11` but not `/ModA/10`. + "/Mod` retrieves `/Mod/10`,
-// `/Mod/11` and `/ModA/10` but not `/XXX/33`. + "/Mod/1" retrieves
-// `/Mod/10` and `/Mod/11` but not `/ModA/10`. + "/Mod/10/" retrieves
-// `/Mod/10` only. + An empty prefix or "/" retrieves all values.
+// corresponding to the `LogService indexKeys`. Non-empty prefixes must
+// begin with `/`. For example, App Engine's two keys are the module ID
+// and the version ID. Following is the effect of using various values
+// for `indexPrefix`: + "/Mod/" retrieves `/Mod/10` and `/Mod/11` but
+// not `/ModA/10`. + "/Mod` retrieves `/Mod/10`, `/Mod/11` and
+// `/ModA/10` but not `/XXX/33`. + "/Mod/1" retrieves `/Mod/10` and
+// `/Mod/11` but not `/ModA/10`. + "/Mod/10/" retrieves `/Mod/10`
+// only. + An empty prefix or "/" retrieves all values.
 func (c *ProjectsLogServicesIndexesListCall) IndexPrefix(indexPrefix string) *ProjectsLogServicesIndexesListCall {
 	c.opt_["indexPrefix"] = indexPrefix
-	return c
-}
-
-// Log sets the optional parameter "log": _Optional_. The resource name
-// of a log, such as "projects/project_id/logs/log_name". If present,
-// indexes are returned for any service associated with entries in the
-// log.
-func (c *ProjectsLogServicesIndexesListCall) Log(log string) *ProjectsLogServicesIndexesListCall {
-	c.opt_["log"] = log
 	return c
 }
 
@@ -1309,9 +1369,6 @@ func (c *ProjectsLogServicesIndexesListCall) doRequest(alt string) (*http.Respon
 	}
 	if v, ok := c.opt_["indexPrefix"]; ok {
 		params.Set("indexPrefix", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["log"]; ok {
-		params.Set("log", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["pageSize"]; ok {
 		params.Set("pageSize", fmt.Sprintf("%v", v))
@@ -1390,12 +1447,7 @@ func (c *ProjectsLogServicesIndexesListCall) Do() (*ListLogServiceIndexesRespons
 	//       "type": "integer"
 	//     },
 	//     "indexPrefix": {
-	//       "description": "Restricts the index values returned to be those with a specified prefix for each index key. This field has the form `\"/prefix1/prefix2/...\"`, in order corresponding to the [`LogService indexKeys`][google.logging.v1.LogService.index_keys]. Non-empty prefixes must begin with `/`. For example, App Engine's two keys are the module ID and the version ID. Following is the effect of using various values for `indexPrefix`: + `\"/Mod/\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod` retrieves `/Mod/10`, `/Mod/11` and `/ModA/10` but not `/XXX/33`. + `\"/Mod/1\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod/10/\"` retrieves `/Mod/10` only. + An empty prefix or `\"/\"` retrieves all values.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "log": {
-	//       "description": "_Optional_. The resource name of a log, such as `\"projects/project_id/logs/log_name\"`. If present, indexes are returned for any service associated with entries in the log.",
+	//       "description": "Restricts the index values returned to be those with a specified prefix for each index key. This field has the form `\"/prefix1/prefix2/...\"`, in order corresponding to the `LogService indexKeys`. Non-empty prefixes must begin with `/`. For example, App Engine's two keys are the module ID and the version ID. Following is the effect of using various values for `indexPrefix`: + `\"/Mod/\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod` retrieves `/Mod/10`, `/Mod/11` and `/ModA/10` but not `/XXX/33`. + `\"/Mod/1\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod/10/\"` retrieves `/Mod/10` only. + An empty prefix or `\"/\"` retrieves all values.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3306,6 +3358,692 @@ func (c *ProjectsLogsSinksUpdateCall) Do() (*LogSink, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "LogSink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.metrics.create":
+
+type ProjectsMetricsCreateCall struct {
+	s          *Service
+	projectsId string
+	logmetric  *LogMetric
+	opt_       map[string]interface{}
+	ctx_       context.Context
+}
+
+// Create: Create the specified log metric resource.
+func (r *ProjectsMetricsService) Create(projectsId string, logmetric *LogMetric) *ProjectsMetricsCreateCall {
+	c := &ProjectsMetricsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectsId = projectsId
+	c.logmetric = logmetric
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsMetricsCreateCall) Fields(s ...googleapi.Field) *ProjectsMetricsCreateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsMetricsCreateCall) Context(ctx context.Context) *ProjectsMetricsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsMetricsCreateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logmetric)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/metrics")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId": c.projectsId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "logging.projects.metrics.create" call.
+// Exactly one of *LogMetric or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LogMetric.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsMetricsCreateCall) Do() (*LogMetric, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogMetric{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create the specified log metric resource.",
+	//   "httpMethod": "POST",
+	//   "id": "logging.projects.metrics.create",
+	//   "parameterOrder": [
+	//     "projectsId"
+	//   ],
+	//   "parameters": {
+	//     "projectsId": {
+	//       "description": "Part of `projectName`. The resource name of the project in which to create the metric.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/projects/{projectsId}/metrics",
+	//   "request": {
+	//     "$ref": "LogMetric"
+	//   },
+	//   "response": {
+	//     "$ref": "LogMetric"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.metrics.delete":
+
+type ProjectsMetricsDeleteCall struct {
+	s          *Service
+	projectsId string
+	metricsId  string
+	opt_       map[string]interface{}
+	ctx_       context.Context
+}
+
+// Delete: Deletes the specified log metric.
+func (r *ProjectsMetricsService) Delete(projectsId string, metricsId string) *ProjectsMetricsDeleteCall {
+	c := &ProjectsMetricsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectsId = projectsId
+	c.metricsId = metricsId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsMetricsDeleteCall) Fields(s ...googleapi.Field) *ProjectsMetricsDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsMetricsDeleteCall) Context(ctx context.Context) *ProjectsMetricsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsMetricsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/metrics/{metricsId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId": c.projectsId,
+		"metricsId":  c.metricsId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "logging.projects.metrics.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsMetricsDeleteCall) Do() (*Empty, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified log metric.",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.projects.metrics.delete",
+	//   "parameterOrder": [
+	//     "projectsId",
+	//     "metricsId"
+	//   ],
+	//   "parameters": {
+	//     "metricsId": {
+	//       "description": "Part of `metricName`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectsId": {
+	//       "description": "Part of `metricName`. The resource name of the metric to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/projects/{projectsId}/metrics/{metricsId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.metrics.get":
+
+type ProjectsMetricsGetCall struct {
+	s          *Service
+	projectsId string
+	metricsId  string
+	opt_       map[string]interface{}
+	ctx_       context.Context
+}
+
+// Get: Get the specified log metric resource.
+func (r *ProjectsMetricsService) Get(projectsId string, metricsId string) *ProjectsMetricsGetCall {
+	c := &ProjectsMetricsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectsId = projectsId
+	c.metricsId = metricsId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsMetricsGetCall) Fields(s ...googleapi.Field) *ProjectsMetricsGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsMetricsGetCall) IfNoneMatch(entityTag string) *ProjectsMetricsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsMetricsGetCall) Context(ctx context.Context) *ProjectsMetricsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsMetricsGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/metrics/{metricsId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId": c.projectsId,
+		"metricsId":  c.metricsId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "logging.projects.metrics.get" call.
+// Exactly one of *LogMetric or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LogMetric.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsMetricsGetCall) Do() (*LogMetric, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogMetric{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the specified log metric resource.",
+	//   "httpMethod": "GET",
+	//   "id": "logging.projects.metrics.get",
+	//   "parameterOrder": [
+	//     "projectsId",
+	//     "metricsId"
+	//   ],
+	//   "parameters": {
+	//     "metricsId": {
+	//       "description": "Part of `metricName`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectsId": {
+	//       "description": "Part of `metricName`. The resource name of the desired metric.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/projects/{projectsId}/metrics/{metricsId}",
+	//   "response": {
+	//     "$ref": "LogMetric"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.metrics.list":
+
+type ProjectsMetricsListCall struct {
+	s          *Service
+	projectsId string
+	opt_       map[string]interface{}
+	ctx_       context.Context
+}
+
+// List: List log metrics associated with the specified project.
+func (r *ProjectsMetricsService) List(projectsId string) *ProjectsMetricsListCall {
+	c := &ProjectsMetricsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectsId = projectsId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of `LogMetric` objects to return in one operation.
+func (c *ProjectsMetricsListCall) PageSize(pageSize int64) *ProjectsMetricsListCall {
+	c.opt_["pageSize"] = pageSize
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": An opaque token,
+// returned as `nextPageToken` by a prior `ListLogMetrics` operation. If
+// `pageToken` is supplied, then the other fields of this request are
+// ignored, and instead the previous `ListLogMetrics` operation is
+// continued.
+func (c *ProjectsMetricsListCall) PageToken(pageToken string) *ProjectsMetricsListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsMetricsListCall) Fields(s ...googleapi.Field) *ProjectsMetricsListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsMetricsListCall) IfNoneMatch(entityTag string) *ProjectsMetricsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsMetricsListCall) Context(ctx context.Context) *ProjectsMetricsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsMetricsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["pageSize"]; ok {
+		params.Set("pageSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/metrics")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId": c.projectsId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "logging.projects.metrics.list" call.
+// Exactly one of *ListLogMetricsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLogMetricsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsMetricsListCall) Do() (*ListLogMetricsResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLogMetricsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List log metrics associated with the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "logging.projects.metrics.list",
+	//   "parameterOrder": [
+	//     "projectsId"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of `LogMetric` objects to return in one operation.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "An opaque token, returned as `nextPageToken` by a prior `ListLogMetrics` operation. If `pageToken` is supplied, then the other fields of this request are ignored, and instead the previous `ListLogMetrics` operation is continued.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectsId": {
+	//       "description": "Part of `projectName`. The resource name for the project whose metrics are wanted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/projects/{projectsId}/metrics",
+	//   "response": {
+	//     "$ref": "ListLogMetricsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.metrics.update":
+
+type ProjectsMetricsUpdateCall struct {
+	s          *Service
+	projectsId string
+	metricsId  string
+	logmetric  *LogMetric
+	opt_       map[string]interface{}
+	ctx_       context.Context
+}
+
+// Update: Create or update the specified log metric resource.
+func (r *ProjectsMetricsService) Update(projectsId string, metricsId string, logmetric *LogMetric) *ProjectsMetricsUpdateCall {
+	c := &ProjectsMetricsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.projectsId = projectsId
+	c.metricsId = metricsId
+	c.logmetric = logmetric
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsMetricsUpdateCall) Fields(s ...googleapi.Field) *ProjectsMetricsUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *ProjectsMetricsUpdateCall) Context(ctx context.Context) *ProjectsMetricsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsMetricsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logmetric)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/projects/{projectsId}/metrics/{metricsId}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId": c.projectsId,
+		"metricsId":  c.metricsId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "logging.projects.metrics.update" call.
+// Exactly one of *LogMetric or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LogMetric.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsMetricsUpdateCall) Do() (*LogMetric, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogMetric{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create or update the specified log metric resource.",
+	//   "httpMethod": "PUT",
+	//   "id": "logging.projects.metrics.update",
+	//   "parameterOrder": [
+	//     "projectsId",
+	//     "metricsId"
+	//   ],
+	//   "parameters": {
+	//     "metricsId": {
+	//       "description": "Part of `metricName`. See documentation of `projectsId`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectsId": {
+	//       "description": "Part of `metricName`. The resource name of the metric to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/projects/{projectsId}/metrics/{metricsId}",
+	//   "request": {
+	//     "$ref": "LogMetric"
+	//   },
+	//   "response": {
+	//     "$ref": "LogMetric"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

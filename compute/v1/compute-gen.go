@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "compute:v1"
 const apiName = "compute"
@@ -80,6 +82,7 @@ func New(client *http.Client) (*Service, error) {
 	s.GlobalForwardingRules = NewGlobalForwardingRulesService(s)
 	s.GlobalOperations = NewGlobalOperationsService(s)
 	s.HttpHealthChecks = NewHttpHealthChecksService(s)
+	s.HttpsHealthChecks = NewHttpsHealthChecksService(s)
 	s.Images = NewImagesService(s)
 	s.InstanceGroupManagers = NewInstanceGroupManagersService(s)
 	s.InstanceGroups = NewInstanceGroupsService(s)
@@ -93,7 +96,9 @@ func New(client *http.Client) (*Service, error) {
 	s.Regions = NewRegionsService(s)
 	s.Routes = NewRoutesService(s)
 	s.Snapshots = NewSnapshotsService(s)
+	s.SslCertificates = NewSslCertificatesService(s)
 	s.TargetHttpProxies = NewTargetHttpProxiesService(s)
+	s.TargetHttpsProxies = NewTargetHttpsProxiesService(s)
 	s.TargetInstances = NewTargetInstancesService(s)
 	s.TargetPools = NewTargetPoolsService(s)
 	s.TargetVpnGateways = NewTargetVpnGatewaysService(s)
@@ -131,6 +136,8 @@ type Service struct {
 
 	HttpHealthChecks *HttpHealthChecksService
 
+	HttpsHealthChecks *HttpsHealthChecksService
+
 	Images *ImagesService
 
 	InstanceGroupManagers *InstanceGroupManagersService
@@ -157,7 +164,11 @@ type Service struct {
 
 	Snapshots *SnapshotsService
 
+	SslCertificates *SslCertificatesService
+
 	TargetHttpProxies *TargetHttpProxiesService
+
+	TargetHttpsProxies *TargetHttpsProxiesService
 
 	TargetInstances *TargetInstancesService
 
@@ -280,6 +291,15 @@ type HttpHealthChecksService struct {
 	s *Service
 }
 
+func NewHttpsHealthChecksService(s *Service) *HttpsHealthChecksService {
+	rs := &HttpsHealthChecksService{s: s}
+	return rs
+}
+
+type HttpsHealthChecksService struct {
+	s *Service
+}
+
 func NewImagesService(s *Service) *ImagesService {
 	rs := &ImagesService{s: s}
 	return rs
@@ -397,12 +417,30 @@ type SnapshotsService struct {
 	s *Service
 }
 
+func NewSslCertificatesService(s *Service) *SslCertificatesService {
+	rs := &SslCertificatesService{s: s}
+	return rs
+}
+
+type SslCertificatesService struct {
+	s *Service
+}
+
 func NewTargetHttpProxiesService(s *Service) *TargetHttpProxiesService {
 	rs := &TargetHttpProxiesService{s: s}
 	return rs
 }
 
 type TargetHttpProxiesService struct {
+	s *Service
+}
+
+func NewTargetHttpsProxiesService(s *Service) *TargetHttpsProxiesService {
+	rs := &TargetHttpsProxiesService{s: s}
+	return rs
+}
+
+type TargetHttpsProxiesService struct {
 	s *Service
 }
 
@@ -782,6 +820,10 @@ type AttachedDisk struct {
 	// only define one or the other, but not both.
 	InitializeParams *AttachedDiskInitializeParams `json:"initializeParams,omitempty"`
 
+	// Interface: Specifies the disk interface to use for attaching this
+	// disk, either SCSI or NVME. The default is SCSI. For performance
+	// characteristics of SCSI over NVMe, see Local SSD performance.
+	//
 	// Possible values:
 	//   "NVME"
 	//   "SCSI"
@@ -1374,6 +1416,7 @@ type BackendService struct {
 
 	// Possible values:
 	//   "HTTP"
+	//   "HTTPS"
 	Protocol string `json:"protocol,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -2276,7 +2319,8 @@ type ForwardingRule struct {
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: Type of the resource.
+	// Kind: [Output Only] Type of the resource. Always
+	// compute#forwardingRule.
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of the resource; provided by the client when the resource
@@ -2288,11 +2332,10 @@ type ForwardingRule struct {
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// PortRange: Applicable only when `IPProtocol` is TCP, UDP, or SCTP,
-	// only packets addressed to ports in the specified range will be
-	// forwarded to target. If portRange is left empty (default value), all
-	// ports are forwarded. Forwarding rules with the same `[IPAddress,
-	// IPProtocol]` pair must have disjoint port ranges.
+	// PortRange: Applicable only when IPProtocol is TCP, UDP, or SCTP, only
+	// packets addressed to ports in the specified range will be forwarded
+	// to target. Forwarding rules with the same `[IPAddress, IPProtocol]`
+	// pair must have disjoint port ranges.
 	PortRange string `json:"portRange,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional forwarding
@@ -2549,13 +2592,13 @@ type HostRule struct {
 	Description string `json:"description,omitempty"`
 
 	// Hosts: The list of host patterns to match. They must be valid
-	// hostnames except that they may start with *. or *-. The * acts like a
-	// glob and will match any string of atoms (separated by .s and -s) to
-	// the left.
+	// hostnames, except * will match any string of ([a-z0-9-.]*). In that
+	// case, * must be the first character and must be followed in the
+	// pattern by either - or ..
 	Hosts []string `json:"hosts,omitempty"`
 
-	// PathMatcher: The name of the PathMatcher to match the path portion of
-	// the URL, if the this hostRule matches the URL's host portion.
+	// PathMatcher: The name of the PathMatcher to use to match the path
+	// portion of the URL if the hostRule matches the URL's host portion.
 	PathMatcher string `json:"pathMatcher,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2688,6 +2731,125 @@ type HttpHealthCheckList struct {
 
 func (s *HttpHealthCheckList) MarshalJSON() ([]byte, error) {
 	type noMethod HttpHealthCheckList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// HttpsHealthCheck: An HttpsHealthCheck resource. This resource defines
+// a template for how individual instances should be checked for health,
+// via HTTPS.
+type HttpsHealthCheck struct {
+	// CheckIntervalSec: How often (in seconds) to send a health check. The
+	// default value is 5 seconds.
+	CheckIntervalSec int64 `json:"checkIntervalSec,omitempty"`
+
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// HealthyThreshold: A so-far unhealthy instance will be marked healthy
+	// after this many consecutive successes. The default value is 2.
+	HealthyThreshold int64 `json:"healthyThreshold,omitempty"`
+
+	// Host: The value of the host header in the HTTPS health check request.
+	// If left empty (default value), the public IP on behalf of which this
+	// health check is performed will be used.
+	Host string `json:"host,omitempty"`
+
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource. Provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
+	Name string `json:"name,omitempty"`
+
+	// Port: The TCP port number for the HTTPS health check request. The
+	// default value is 443.
+	Port int64 `json:"port,omitempty"`
+
+	// RequestPath: The request path of the HTTPS health check request. The
+	// default value is "/".
+	RequestPath string `json:"requestPath,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// TimeoutSec: How long (in seconds) to wait before claiming failure.
+	// The default value is 5 seconds. It is invalid for timeoutSec to have
+	// a greater value than checkIntervalSec.
+	TimeoutSec int64 `json:"timeoutSec,omitempty"`
+
+	// UnhealthyThreshold: A so-far healthy instance will be marked
+	// unhealthy after this many consecutive failures. The default value is
+	// 2.
+	UnhealthyThreshold int64 `json:"unhealthyThreshold,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckIntervalSec") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *HttpsHealthCheck) MarshalJSON() ([]byte, error) {
+	type noMethod HttpsHealthCheck
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// HttpsHealthCheckList: Contains a list of HttpsHealthCheck resources.
+type HttpsHealthCheckList struct {
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of HttpsHealthCheck resources.
+	Items []*HttpsHealthCheck `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *HttpsHealthCheckList) MarshalJSON() ([]byte, error) {
+	type noMethod HttpsHealthCheckList
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2832,7 +2994,7 @@ type ImageList struct {
 	// server.
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of Image resources.
+	// Items: [Output Only] A list of Image resources.
 	Items []*Image `json:"items,omitempty"`
 
 	// Kind: Type of resource.
@@ -3029,13 +3191,13 @@ type InstanceGroup struct {
 	// Description: An optional text description for the instance group.
 	Description string `json:"description,omitempty"`
 
-	// Fingerprint: [Output Only] The fingerprint of the named ports
-	// information. The system uses this fingerprint to detect conflicts
-	// when multiple users change the named ports information concurrently.
+	// Fingerprint: [Output Only] The fingerprint of the named ports. The
+	// system uses this fingerprint to detect conflicts when multiple users
+	// change the named ports concurrently.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Id: [Output Only] A unique identifier for this instance group. The
-	// server defines this identifier.
+	// Id: [Output Only] A unique identifier for this resource type. The
+	// server generates this identifier.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -3047,26 +3209,30 @@ type InstanceGroup struct {
 	Name string `json:"name,omitempty"`
 
 	// NamedPorts: Assigns a name to a port number. For example: {name:
-	// ?http?, port: 80} This allows the system to reference ports by the
-	// assigned name instead of a port number. Named ports can also contain
-	// multiple ports. For example: [{name: ?http?, port: 80},{name: "http",
-	// port: 8080}] Named ports apply to all instances in this instance
-	// group.
+	// "http", port: 80}
+	//
+	// This allows the system to reference ports by the assigned name
+	// instead of a port number. Named ports can also contain multiple
+	// ports. For example: [{name: "http", port: 80},{name: "http", port:
+	// 8080}]
+	//
+	// Named ports apply to all instances in this instance group.
 	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
 
-	// Network: The URL of the network to which all instances in the
-	// instance group belong.
+	// Network: [Output Only] The URL of the network to which all instances
+	// in the instance group belong.
 	Network string `json:"network,omitempty"`
 
 	// SelfLink: [Output Only] The URL for this instance group. The server
-	// defines this URL.
+	// generates this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Size: [Output Only] The total number of instances in the instance
 	// group.
 	Size int64 `json:"size,omitempty"`
 
-	// Zone: The URL of the zone where the instance group is located.
+	// Zone: [Output Only] The URL of the zone where the instance group is
+	// located.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3090,7 +3256,7 @@ func (s *InstanceGroup) MarshalJSON() ([]byte, error) {
 
 type InstanceGroupAggregatedList struct {
 	// Id: [Output Only] A unique identifier for this aggregated list of
-	// instance groups. The server defines this identifier.
+	// instance groups. The server generates this identifier.
 	Id string `json:"id,omitempty"`
 
 	// Items: A map of scoped instance group lists.
@@ -3105,8 +3271,8 @@ type InstanceGroupAggregatedList struct {
 	// truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] A unique identifier for this aggregated list
-	// of instance groups. The server defines this identifier.
+	// SelfLink: [Output Only] The URL for this resource type. The server
+	// generates this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3131,10 +3297,10 @@ func (s *InstanceGroupAggregatedList) MarshalJSON() ([]byte, error) {
 // InstanceGroupList: A list of InstanceGroup resources.
 type InstanceGroupList struct {
 	// Id: [Output Only] A unique identifier for this list of instance
-	// groups. The server defines this identifier.
+	// groups. The server generates this identifier.
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of InstanceGroup resources.
+	// Items: A list of instance groups.
 	Items []*InstanceGroup `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -3145,8 +3311,8 @@ type InstanceGroupList struct {
 	// truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this instance group. The server
-	// defines this URL.
+	// SelfLink: [Output Only] The URL for this resource type. The server
+	// generates this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3184,7 +3350,7 @@ type InstanceGroupManager struct {
 
 	// CurrentActions: [Output Only] The list of instance actions and the
 	// number of instances in this managed instance group that are scheduled
-	// for those actions.
+	// for each of those actions.
 	CurrentActions *InstanceGroupManagerActionsSummary `json:"currentActions,omitempty"`
 
 	// Description: An optional text description for the managed instance
@@ -3192,15 +3358,15 @@ type InstanceGroupManager struct {
 	Description string `json:"description,omitempty"`
 
 	// Fingerprint: [Output Only] The fingerprint of the target pools
-	// information, which is a hash of the contents. This field is used for
-	// optimistic locking when updating the target pool entries.
+	// information. You can use this optional field for optimistic locking
+	// when you update the target pool entries.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Id: [Output Only] A unique identifier for this managed instance
-	// group. The server defines this identifier.
+	// Id: [Output Only] A unique identifier for this resource type. The
+	// server generates this identifier.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// InstanceGroup: [Output Only] The URL of the InstanceGroup resource.
+	// InstanceGroup: [Output Only] The URL of the Instance Group resource.
 	InstanceGroup string `json:"instanceGroup,omitempty"`
 
 	// InstanceTemplate: The URL of the instance template that is specified
@@ -3216,13 +3382,13 @@ type InstanceGroupManager struct {
 	// characters long, and comply with RFC1035.
 	Name string `json:"name,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this managed instance
-	// group.
+	// SelfLink: [Output Only] The URL for this managed instance group. The
+	// server defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// TargetPools: The URLs of all TargetPool resources to which new
-	// instances in the instanceGroup field are added. Updating the target
-	// pool values does not affect existing instances.
+	// TargetPools: The URLs for all TargetPool resources to which instances
+	// in the instanceGroup field are added. The target pools automatically
+	// apply to all of the instances in the managed instance group.
 	TargetPools []string `json:"targetPools,omitempty"`
 
 	// TargetSize: The target number of running instances for this managed
@@ -3230,7 +3396,7 @@ type InstanceGroupManager struct {
 	// Resizing the group changes this number.
 	TargetSize int64 `json:"targetSize,omitempty"`
 
-	// Zone: The URL of the zone where the managed instance group is
+	// Zone: The name of the zone where the managed instance group is
 	// located.
 	Zone string `json:"zone,omitempty"`
 
@@ -3254,10 +3420,10 @@ func (s *InstanceGroupManager) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagerActionsSummary struct {
-	// Abandoning: [Output Only] Total number of instances in the managed
-	// instance group that are scheduled to be abandoned. Abandoning an
-	// instance removes it from the managed instance group without deleting
-	// it.
+	// Abandoning: [Output Only] The total number of instances in the
+	// managed instance group that are scheduled to be abandoned. Abandoning
+	// an instance removes it from the managed instance group without
+	// deleting it.
 	Abandoning int64 `json:"abandoning,omitempty"`
 
 	// Creating: [Output Only] The number of instances in the managed
@@ -3271,7 +3437,7 @@ type InstanceGroupManagerActionsSummary struct {
 	Deleting int64 `json:"deleting,omitempty"`
 
 	// None: [Output Only] The number of instances in the managed instance
-	// group that currently have no scheduled actions.
+	// group that are running and have no scheduled actions.
 	None int64 `json:"none,omitempty"`
 
 	// Recreating: [Output Only] The number of instances in the managed
@@ -3309,13 +3475,13 @@ func (s *InstanceGroupManagerActionsSummary) MarshalJSON() ([]byte, error) {
 
 type InstanceGroupManagerAggregatedList struct {
 	// Id: [Output Only] A unique identifier for this aggregated list of
-	// managed instance groups. The server defines this identifier.
+	// managed instance groups. The server generates this identifier.
 	Id string `json:"id,omitempty"`
 
-	// Items: A map of filtered managed instance group lists.
+	// Items: [Output Only] A map of filtered managed instance group lists.
 	Items map[string]InstanceGroupManagersScopedList `json:"items,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always
+	// Kind: [Output Only] The resource type, which is always
 	// compute#instanceGroupManagerAggregatedList for an aggregated list of
 	// managed instance groups.
 	Kind string `json:"kind,omitempty"`
@@ -3324,8 +3490,8 @@ type InstanceGroupManagerAggregatedList struct {
 	// truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this aggregated list of managed
-	// instance groups. The server defines this URL.
+	// SelfLink: [Output Only] The URL for this resource type. The server
+	// generates this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3347,27 +3513,27 @@ func (s *InstanceGroupManagerAggregatedList) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// InstanceGroupManagerList: [Output Only] A list of
-// InstanceGroupManager resources.
+// InstanceGroupManagerList: [Output Only] A list of managed instance
+// groups.
 type InstanceGroupManagerList struct {
-	// Id: [Output Only] A unique identifier for this managed instance
-	// group. The server defines this identifier.
+	// Id: [Output Only] A unique identifier for this resource type. The
+	// server generates this identifier.
 	Id string `json:"id,omitempty"`
 
-	// Items: [Output Only] A list of managed instance group resources.
+	// Items: [Output Only] A list of managed instance groups.
 	Items []*InstanceGroupManager `json:"items,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always
-	// compute#instanceGroupManagerList for a list of managed instance group
-	// resources.
+	// Kind: [Output Only] The resource type, which is always
+	// compute#instanceGroupManagerList for a list of managed instance
+	// groups.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: [Output Only] A token that is used to continue a
 	// truncated list request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] The URL for this managed instance group. The
-	// server defines this URL.
+	// SelfLink: [Output Only] The URL for this resource type. The server
+	// generates this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3390,8 +3556,8 @@ func (s *InstanceGroupManagerList) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagersAbandonInstancesRequest struct {
-	// Instances: The names of instances to abandon from the managed
-	// instance group.
+	// Instances: The URL for one or more instances to abandon from the
+	// managed instance group.
 	Instances []string `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -3410,7 +3576,8 @@ func (s *InstanceGroupManagersAbandonInstancesRequest) MarshalJSON() ([]byte, er
 }
 
 type InstanceGroupManagersDeleteInstancesRequest struct {
-	// Instances: The names of one or more instances to delete.
+	// Instances: The list of instances to delete from this managed instance
+	// group. Specify one or more instance URLs.
 	Instances []string `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -3429,8 +3596,8 @@ func (s *InstanceGroupManagersDeleteInstancesRequest) MarshalJSON() ([]byte, err
 }
 
 type InstanceGroupManagersListManagedInstancesResponse struct {
-	// ManagedInstances: List of managed instances. If empty - all instances
-	// are listed.
+	// ManagedInstances: [Output Only] The list of instances in the managed
+	// instance group.
 	ManagedInstances []*ManagedInstance `json:"managedInstances,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3453,7 +3620,7 @@ func (s *InstanceGroupManagersListManagedInstancesResponse) MarshalJSON() ([]byt
 }
 
 type InstanceGroupManagersRecreateInstancesRequest struct {
-	// Instances: The names of one or more instances to recreate.
+	// Instances: The URL for one or more instances to recreate.
 	Instances []string `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -3585,17 +3752,19 @@ func (s *InstanceGroupManagersSetInstanceTemplateRequest) MarshalJSON() ([]byte,
 }
 
 type InstanceGroupManagersSetTargetPoolsRequest struct {
-	// Fingerprint: The fingerprint of the target pools information, which
-	// is a hash of the contents. This field is used for optimistic locking
-	// when updating the target pool entries.
+	// Fingerprint: The fingerprint of the target pools information. Use
+	// this optional property to prevent conflicts when multiple users
+	// change the target pools settings concurrently. Obtain the fingerprint
+	// with the instanceGroupManagers.get method. Then, include the
+	// fingerprint in your request to ensure that you do not overwrite
+	// changes that were applied from another concurrent request.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// TargetPools: The list of target pool URLs that instances in this
-	// managed instance group belong to. When the managed instance group
-	// creates new instances, the group automatically adds those instances
-	// to the target pools that are specified in this parameter. Changing
-	// the value of this parameter does not change the target pools of
-	// existing instances in this managed instance group.
+	// managed instance group belong to. The managed instance group applies
+	// these target pools to all of the instances in the group. Existing
+	// instances and new instances in the group all receive these target
+	// pool settings.
 	TargetPools []string `json:"targetPools,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fingerprint") to
@@ -3614,7 +3783,7 @@ func (s *InstanceGroupManagersSetTargetPoolsRequest) MarshalJSON() ([]byte, erro
 }
 
 type InstanceGroupsAddInstancesRequest struct {
-	// Instances: The instances to add to the instance group.
+	// Instances: The list of instances to add to the instance group.
 	Instances []*InstanceReference `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -3634,11 +3803,11 @@ func (s *InstanceGroupsAddInstancesRequest) MarshalJSON() ([]byte, error) {
 
 type InstanceGroupsListInstances struct {
 	// Id: [Output Only] A unique identifier for this list of instance
-	// groups. The server defines this identifier.
+	// groups. The server generates this identifier.
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of InstanceWithNamedPorts resources, which contains all
-	// named ports for the given instance.
+	// Items: [Output Only] A list of instances and any named ports that are
+	// assigned to those instances.
 	Items []*InstanceWithNamedPorts `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -3650,7 +3819,7 @@ type InstanceGroupsListInstances struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// SelfLink: [Output Only] The URL for this list of instance groups. The
-	// server defines this URL.
+	// server generates this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3699,7 +3868,7 @@ func (s *InstanceGroupsListInstancesRequest) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupsRemoveInstancesRequest struct {
-	// Instances: The instances to remove from the instance group.
+	// Instances: The list of instances to remove from the instance group.
 	Instances []*InstanceReference `json:"instances,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -3809,9 +3978,12 @@ func (s *InstanceGroupsScopedListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupsSetNamedPortsRequest struct {
-	// Fingerprint: The fingerprint of the named ports information, which is
-	// a hash of the contents. Use this field for optimistic locking when
-	// you update the named ports entries.
+	// Fingerprint: The fingerprint of the named ports information for this
+	// instance group. Use this optional property to prevent conflicts when
+	// multiple users change the named ports settings concurrently. Obtain
+	// the fingerprint with the instanceGroups.get method. Then, include the
+	// fingerprint in your request to ensure that you do not overwrite
+	// changes that were applied from another concurrent request.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// NamedPorts: The list of named ports to set for this instance group.
@@ -3906,11 +4078,13 @@ func (s *InstanceMoveRequest) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceProperties struct {
-	// CanIpForward: A boolean that specifies if instances created from this
-	// template can send packets with source IP addresses other than their
-	// own or receive packets with destination IP addresses other than their
-	// own. If you use these instances as an IP gateway or as the next-hop
-	// in a Route resource, specify true. Otherwise, specify false.
+	// CanIpForward: Enables instances created based on this template to
+	// send packets with source IP addresses other than their own and
+	// receive packets with destination IP addresses other than their own.
+	// If these instances will be used as an IP gateway or it will be set as
+	// the next-hop in a Route resource, specify true. If unsure, leave this
+	// set to false. See the canIpForward documentation for more
+	// information.
 	CanIpForward bool `json:"canIpForward,omitempty"`
 
 	// Description: An optional text description for the instances that are
@@ -3932,16 +4106,11 @@ type InstanceProperties struct {
 	Metadata *Metadata `json:"metadata,omitempty"`
 
 	// NetworkInterfaces: An array of network access configurations for this
-	// interface. This specifies how this interface is configured to
-	// interact with other network services, such as connecting to the
-	// internet. Currently, ONE_TO_ONE_NAT is the only supported access
-	// configuration. If you do not specify any access configurations, the
-	// instances that are created from this template will have no external
-	// internet access.
+	// interface.
 	NetworkInterfaces []*NetworkInterface `json:"networkInterfaces,omitempty"`
 
-	// Scheduling: A list of scheduling options for the instances that are
-	// created from this template.
+	// Scheduling: Specifies the scheduling options for the instances that
+	// are created from this template.
 	Scheduling *Scheduling `json:"scheduling,omitempty"`
 
 	// ServiceAccounts: A list of service accounts with specified scopes.
@@ -3972,6 +4141,7 @@ func (s *InstanceProperties) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceReference struct {
+	// Instance: The URL for a specific instance.
 	Instance string `json:"instance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instance") to
@@ -4006,12 +4176,16 @@ type InstanceTemplate struct {
 	// compute#instanceTemplate for instance templates.
 	Kind string `json:"kind,omitempty"`
 
-	// Name: The name of the instance template. The name must be 1-63
-	// characters long, and comply with RFC1035.
+	// Name: Name of the resource; provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// Properties: The instance properties for the instance template
-	// resource.
+	// Properties: The instance properties for this instance template.
 	Properties *InstanceProperties `json:"properties,omitempty"`
 
 	// SelfLink: [Output Only] The URL for this instance template. The
@@ -4043,7 +4217,7 @@ type InstanceTemplateList struct {
 	// server defines this identifier.
 	Id string `json:"id,omitempty"`
 
-	// Items: A list of InstanceTemplate resources.
+	// Items: [Output Only] list of InstanceTemplate resources.
 	Items []*InstanceTemplate `json:"items,omitempty"`
 
 	// Kind: [Output Only] The resource type, which is always
@@ -4078,13 +4252,14 @@ func (s *InstanceTemplateList) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceWithNamedPorts struct {
-	// Instance: The URL of the instance.
+	// Instance: [Output Only] The URL of the instance.
 	Instance string `json:"instance,omitempty"`
 
-	// NamedPorts: The named ports that belong to this instance group.
+	// NamedPorts: [Output Only] The named ports that belong to this
+	// instance group.
 	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
 
-	// Status: The status of the instance.
+	// Status: [Output Only] The status of the instance.
 	//
 	// Possible values:
 	//   "PROVISIONING"
@@ -4498,8 +4673,24 @@ func (s *MachineTypesScopedListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type ManagedInstance struct {
-	// CurrentAction: The current action that the managed instance group has
-	// scheduled for the instance.
+	// CurrentAction: [Output Only] The current action that the managed
+	// instance group has scheduled for the instance. Possible values:
+	// - NONE The instance is running, and the managed instance group does
+	// not have any scheduled actions for this instance.
+	// - CREATING The managed instance group is creating this instance.
+	// - RECREATING The managed instance group is recreating this instance.
+	//
+	// - DELETING The managed instance group is permanently deleting this
+	// instance.
+	// - ABANDONING The managed instance group is abandoning this instance.
+	// The instance will be removed from the instance group and from any
+	// target pools that are associated with this group.
+	// - RESTARTING The managed instance group is restarting the instance.
+	//
+	// - REFRESHING The managed instance group is applying configuration
+	// changes to the instance without stopping it. For example, the group
+	// can update the target pool list for an instance without stopping that
+	// instance.
 	//
 	// Possible values:
 	//   "ABANDONING"
@@ -4511,16 +4702,16 @@ type ManagedInstance struct {
 	//   "RESTARTING"
 	CurrentAction string `json:"currentAction,omitempty"`
 
-	// Id: The unique identifier for this resource (empty when instance does
-	// not exist).
+	// Id: [Output only] The unique identifier for this resource. This field
+	// is empty when instance does not exist.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Instance: The URL of the instance (set even though instance does not
-	// exist yet).
+	// Instance: [Output Only] The URL of the instance. The URL can exist
+	// even if the instance has not yet been created.
 	Instance string `json:"instance,omitempty"`
 
-	// InstanceStatus: The status of the instance (empty when instance does
-	// not exist).
+	// InstanceStatus: [Output Only] The status of the instance. This field
+	// is empty when the instance does not exist.
 	//
 	// Possible values:
 	//   "PROVISIONING"
@@ -4533,8 +4724,8 @@ type ManagedInstance struct {
 	//   "TERMINATED"
 	InstanceStatus string `json:"instanceStatus,omitempty"`
 
-	// LastAttempt: Information about the last attempt to create or delete
-	// the instance.
+	// LastAttempt: [Output Only] Information about the last attempt to
+	// create or delete the instance.
 	LastAttempt *ManagedInstanceLastAttempt `json:"lastAttempt,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentAction") to
@@ -4553,8 +4744,8 @@ func (s *ManagedInstance) MarshalJSON() ([]byte, error) {
 }
 
 type ManagedInstanceLastAttempt struct {
-	// Errors: Encountered errors during the last attempt to create or
-	// delete the instance.
+	// Errors: [Output Only] Encountered errors during the last attempt to
+	// create or delete the instance.
 	Errors *ManagedInstanceLastAttemptErrors `json:"errors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Errors") to
@@ -4572,8 +4763,8 @@ func (s *ManagedInstanceLastAttempt) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ManagedInstanceLastAttemptErrors: Encountered errors during the last
-// attempt to create or delete the instance.
+// ManagedInstanceLastAttemptErrors: [Output Only] Encountered errors
+// during the last attempt to create or delete the instance.
 type ManagedInstanceLastAttemptErrors struct {
 	// Errors: [Output Only] The array of errors encountered while
 	// processing this operation.
@@ -4682,9 +4873,10 @@ func (s *MetadataItems) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// NamedPort: The named port information. For example: .
+// NamedPort: The named port. For example: .
 type NamedPort struct {
-	// Name: The name for this NamedPort.
+	// Name: The name for this named port. The name must be 1-63 characters
+	// long, and comply with RFC1035.
 	Name string `json:"name,omitempty"`
 
 	// Port: The port number, which can be a value between 1 and 65535.
@@ -4886,7 +5078,7 @@ type Operation struct {
 	// This is in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always compute#Operation
+	// Kind: [Output Only] Type of the resource. Always compute#operation
 	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
@@ -4894,7 +5086,7 @@ type Operation struct {
 	Name string `json:"name,omitempty"`
 
 	// OperationType: [Output Only] Type of the operation, such as insert,
-	// update, and delete.
+	// compute.instanceGroups.update, or compute.instanceGroups.delete.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Progress: [Output Only] An optional progress indicator that ranges
@@ -5245,7 +5437,7 @@ func (s *OperationsScopedListWarningData) MarshalJSON() ([]byte, error) {
 
 // PathMatcher: A matcher for the path portion of the URL. The
 // BackendService from the longest-matched rule will serve the URL. If
-// no rule was matched, the default_service will be used.
+// no rule was matched, the default service will be used.
 type PathMatcher struct {
 	// DefaultService: The URL to the BackendService resource. This will be
 	// used if none of the 'pathRules' defined by this PathMatcher is met by
@@ -5963,6 +6155,104 @@ func (s *SnapshotList) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// SslCertificate: An SslCertificate resource. This resource provides a
+// mechanism to upload an SSL key and certificate to global HTTPS
+// loadbalancer to serve secure connections.
+type SslCertificate struct {
+	// Certificate: A local certificate file. The certificate must be in PEM
+	// format. The certificate chain must be no greater than 5 certs long.
+	// The chain must include at least one intermediate cert.
+	Certificate string `json:"certificate,omitempty"`
+
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource.
+	// Provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] Type of the resource. Always
+	// compute#sslCertificate for SSL certificates.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource. Provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
+	Name string `json:"name,omitempty"`
+
+	// PrivateKey: A write-only private key in PEM format. Only insert RPCs
+	// will include this field.
+	PrivateKey string `json:"privateKey,omitempty"`
+
+	// SelfLink: [Output only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Certificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SslCertificate) MarshalJSON() ([]byte, error) {
+	type noMethod SslCertificate
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// SslCertificateList: Contains a list of SslCertificate resources.
+type SslCertificateList struct {
+	// Id: [Output Only] Unique identifier for the resource. Defined by the
+	// server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of SslCertificate resources.
+	Items []*SslCertificate `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SslCertificateList) MarshalJSON() ([]byte, error) {
+	type noMethod SslCertificateList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Tags: A set of instance tags.
 type Tags struct {
 	// Fingerprint: Specifies a fingerprint for this request, which is
@@ -6009,7 +6299,7 @@ type TargetHttpProxy struct {
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// Kind: [Output Only] Type of resource. Always compute#Operation for
+	// Kind: [Output Only] Type of resource. Always compute#operation for
 	// Operation resources.
 	Kind string `json:"kind,omitempty"`
 
@@ -6083,6 +6373,123 @@ type TargetHttpProxyList struct {
 
 func (s *TargetHttpProxyList) MarshalJSON() ([]byte, error) {
 	type noMethod TargetHttpProxyList
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type TargetHttpsProxiesSetSslCertificatesRequest struct {
+	// SslCertificates: New set of URLs to SslCertificate resources to
+	// associate with this TargetHttpProxy. Currently exactly one ssl
+	// certificate must be specified.
+	SslCertificates []string `json:"sslCertificates,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SslCertificates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetHttpsProxiesSetSslCertificatesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod TargetHttpsProxiesSetSslCertificatesRequest
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TargetHttpsProxy: A TargetHttpsProxy resource. This resource defines
+// an HTTPS proxy.
+type TargetHttpsProxy struct {
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource.
+	// Provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: Type of the resource.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Name of the resource. Provided by the client when the resource
+	// is created. The name must be 1-63 characters long, and comply with
+	// RFC1035. Specifically, the name must be 1-63 characters long and
+	// match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+	// the first character must be a lowercase letter, and all following
+	// characters must be a dash, lowercase letter, or digit, except the
+	// last character, which cannot be a dash.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// SslCertificates: URLs to SslCertificate resources that are used to
+	// authenticate connections to Backends. Currently exactly one SSL
+	// certificate must be specified.
+	SslCertificates []string `json:"sslCertificates,omitempty"`
+
+	// UrlMap: URL to the UrlMap resource that defines the mapping from URL
+	// to the BackendService.
+	UrlMap string `json:"urlMap,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetHttpsProxy) MarshalJSON() ([]byte, error) {
+	type noMethod TargetHttpsProxy
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// TargetHttpsProxyList: Contains a list of TargetHttpsProxy resources.
+type TargetHttpsProxyList struct {
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of TargetHttpsProxy resources.
+	Items []*TargetHttpsProxy `json:"items,omitempty"`
+
+	// Kind: Type of resource.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] A token used to continue a truncated
+	// list request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *TargetHttpsProxyList) MarshalJSON() ([]byte, error) {
+	type noMethod TargetHttpsProxyList
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -6397,12 +6804,15 @@ type TargetPool struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// SessionAffinity: Sesssion affinity option, must be one of the
-	// following values: NONE: Connections from the same client IP may go to
-	// any instance in the pool; CLIENT_IP: Connections from the same client
-	// IP will go to the same instance in the pool while that instance
-	// remains healthy. CLIENT_IP_PROTO: Connections from the same client IP
-	// with the same IP protocol will go to the same instance in the pool
-	// while that instance remains healthy.
+	// following values:
+	// NONE: Connections from the same client IP may go to any instance in
+	// the pool.
+	// CLIENT_IP: Connections from the same client IP will go to the same
+	// instance in the pool while that instance remains
+	// healthy.
+	// CLIENT_IP_PROTO: Connections from the same client IP with the same IP
+	// protocol will go to the same instance in the pool while that instance
+	// remains healthy.
 	//
 	// Possible values:
 	//   "CLIENT_IP"
@@ -16807,6 +17217,870 @@ func (c *HttpHealthChecksUpdateCall) Do() (*Operation, error) {
 
 }
 
+// method id "compute.httpsHealthChecks.delete":
+
+type HttpsHealthChecksDeleteCall struct {
+	s                *Service
+	project          string
+	httpsHealthCheck string
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Delete: Deletes the specified HttpsHealthCheck resource.
+func (r *HttpsHealthChecksService) Delete(project string, httpsHealthCheck string) *HttpsHealthChecksDeleteCall {
+	c := &HttpsHealthChecksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpsHealthCheck = httpsHealthCheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksDeleteCall) Fields(s ...googleapi.Field) *HttpsHealthChecksDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *HttpsHealthChecksDeleteCall) Context(ctx context.Context) *HttpsHealthChecksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HttpsHealthChecksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks/{httpsHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"httpsHealthCheck": c.httpsHealthCheck,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.httpsHealthChecks.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HttpsHealthChecksDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified HttpsHealthCheck resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.httpsHealthChecks.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpsHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpsHealthCheck": {
+	//       "description": "Name of the HttpsHealthCheck resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.get":
+
+type HttpsHealthChecksGetCall struct {
+	s                *Service
+	project          string
+	httpsHealthCheck string
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Get: Returns the specified HttpsHealthCheck resource.
+func (r *HttpsHealthChecksService) Get(project string, httpsHealthCheck string) *HttpsHealthChecksGetCall {
+	c := &HttpsHealthChecksGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpsHealthCheck = httpsHealthCheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksGetCall) Fields(s ...googleapi.Field) *HttpsHealthChecksGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *HttpsHealthChecksGetCall) IfNoneMatch(entityTag string) *HttpsHealthChecksGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *HttpsHealthChecksGetCall) Context(ctx context.Context) *HttpsHealthChecksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HttpsHealthChecksGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks/{httpsHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"httpsHealthCheck": c.httpsHealthCheck,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.httpsHealthChecks.get" call.
+// Exactly one of *HttpsHealthCheck or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *HttpsHealthCheck.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *HttpsHealthChecksGetCall) Do() (*HttpsHealthCheck, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HttpsHealthCheck{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified HttpsHealthCheck resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.httpsHealthChecks.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpsHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpsHealthCheck": {
+	//       "description": "Name of the HttpsHealthCheck resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+	//   "response": {
+	//     "$ref": "HttpsHealthCheck"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.insert":
+
+type HttpsHealthChecksInsertCall struct {
+	s                *Service
+	project          string
+	httpshealthcheck *HttpsHealthCheck
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Insert: Creates a HttpsHealthCheck resource in the specified project
+// using the data included in the request.
+func (r *HttpsHealthChecksService) Insert(project string, httpshealthcheck *HttpsHealthCheck) *HttpsHealthChecksInsertCall {
+	c := &HttpsHealthChecksInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpshealthcheck = httpshealthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksInsertCall) Fields(s ...googleapi.Field) *HttpsHealthChecksInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *HttpsHealthChecksInsertCall) Context(ctx context.Context) *HttpsHealthChecksInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HttpsHealthChecksInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httpshealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.httpsHealthChecks.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HttpsHealthChecksInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a HttpsHealthCheck resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.httpsHealthChecks.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks",
+	//   "request": {
+	//     "$ref": "HttpsHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.list":
+
+type HttpsHealthChecksListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+	ctx_    context.Context
+}
+
+// List: Retrieves the list of HttpsHealthCheck resources available to
+// the specified project.
+func (r *HttpsHealthChecksService) List(project string) *HttpsHealthChecksListCall {
+	c := &HttpsHealthChecksListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
+//
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.
+//
+// For example, filter=name ne example-instance.
+func (c *HttpsHealthChecksListCall) Filter(filter string) *HttpsHealthChecksListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *HttpsHealthChecksListCall) MaxResults(maxResults int64) *HttpsHealthChecksListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *HttpsHealthChecksListCall) PageToken(pageToken string) *HttpsHealthChecksListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksListCall) Fields(s ...googleapi.Field) *HttpsHealthChecksListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *HttpsHealthChecksListCall) IfNoneMatch(entityTag string) *HttpsHealthChecksListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *HttpsHealthChecksListCall) Context(ctx context.Context) *HttpsHealthChecksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HttpsHealthChecksListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.httpsHealthChecks.list" call.
+// Exactly one of *HttpsHealthCheckList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *HttpsHealthCheckList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *HttpsHealthChecksListCall) Do() (*HttpsHealthCheckList, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &HttpsHealthCheckList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of HttpsHealthCheck resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.httpsHealthChecks.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks",
+	//   "response": {
+	//     "$ref": "HttpsHealthCheckList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.patch":
+
+type HttpsHealthChecksPatchCall struct {
+	s                *Service
+	project          string
+	httpsHealthCheck string
+	httpshealthcheck *HttpsHealthCheck
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Patch: Updates a HttpsHealthCheck resource in the specified project
+// using the data included in the request. This method supports patch
+// semantics.
+func (r *HttpsHealthChecksService) Patch(project string, httpsHealthCheck string, httpshealthcheck *HttpsHealthCheck) *HttpsHealthChecksPatchCall {
+	c := &HttpsHealthChecksPatchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpsHealthCheck = httpsHealthCheck
+	c.httpshealthcheck = httpshealthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksPatchCall) Fields(s ...googleapi.Field) *HttpsHealthChecksPatchCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *HttpsHealthChecksPatchCall) Context(ctx context.Context) *HttpsHealthChecksPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HttpsHealthChecksPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httpshealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks/{httpsHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"httpsHealthCheck": c.httpsHealthCheck,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.httpsHealthChecks.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HttpsHealthChecksPatchCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a HttpsHealthCheck resource in the specified project using the data included in the request. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "compute.httpsHealthChecks.patch",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpsHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpsHealthCheck": {
+	//       "description": "Name of the HttpsHealthCheck resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+	//   "request": {
+	//     "$ref": "HttpsHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.httpsHealthChecks.update":
+
+type HttpsHealthChecksUpdateCall struct {
+	s                *Service
+	project          string
+	httpsHealthCheck string
+	httpshealthcheck *HttpsHealthCheck
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Update: Updates a HttpsHealthCheck resource in the specified project
+// using the data included in the request.
+func (r *HttpsHealthChecksService) Update(project string, httpsHealthCheck string, httpshealthcheck *HttpsHealthCheck) *HttpsHealthChecksUpdateCall {
+	c := &HttpsHealthChecksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.httpsHealthCheck = httpsHealthCheck
+	c.httpshealthcheck = httpshealthcheck
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *HttpsHealthChecksUpdateCall) Fields(s ...googleapi.Field) *HttpsHealthChecksUpdateCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *HttpsHealthChecksUpdateCall) Context(ctx context.Context) *HttpsHealthChecksUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *HttpsHealthChecksUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.httpshealthcheck)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/httpsHealthChecks/{httpsHealthCheck}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"httpsHealthCheck": c.httpsHealthCheck,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.httpsHealthChecks.update" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *HttpsHealthChecksUpdateCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a HttpsHealthCheck resource in the specified project using the data included in the request.",
+	//   "httpMethod": "PUT",
+	//   "id": "compute.httpsHealthChecks.update",
+	//   "parameterOrder": [
+	//     "project",
+	//     "httpsHealthCheck"
+	//   ],
+	//   "parameters": {
+	//     "httpsHealthCheck": {
+	//       "description": "Name of the HttpsHealthCheck resource to update.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/httpsHealthChecks/{httpsHealthCheck}",
+	//   "request": {
+	//     "$ref": "HttpsHealthCheck"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.images.delete":
 
 type ImagesDeleteCall struct {
@@ -17356,8 +18630,15 @@ type ImagesListCall struct {
 	ctx_    context.Context
 }
 
-// List: Retrieves the list of image resources available to the
-// specified project.
+// List: Retrieves the list of private images available to the specified
+// project. Private images are images you create that belong to your
+// project. This method does not get any images that belong to other
+// projects, including publicly-available images, like Debian 7. If you
+// want to get a list of publicly-available images, use this method to
+// make a request to the respective image project, such as debian-cloud
+// or windows-cloud.
+//
+// See Accessing images for more information.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/images/list
 func (r *ImagesService) List(project string) *ImagesListCall {
 	c := &ImagesListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -17495,7 +18776,7 @@ func (c *ImagesListCall) Do() (*ImageList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of image resources available to the specified project.",
+	//   "description": "Retrieves the list of private images available to the specified project. Private images are images you create that belong to your project. This method does not get any images that belong to other projects, including publicly-available images, like Debian 7. If you want to get a list of publicly-available images, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.\n\nSee Accessing images for more information.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.images.list",
 	//   "parameterOrder": [
@@ -17554,11 +18835,15 @@ type InstanceGroupManagersAbandonInstancesCall struct {
 	ctx_                                         context.Context
 }
 
-// AbandonInstances: Removes the specified instances from the managed
-// instance group, and from any target pools where they are a member.
-// The instances are not deleted. The managed instance group
-// automatically reduces its targetSize value by the number of instances
-// that you abandon from the group.
+// AbandonInstances: Schedules a group action to remove the specified
+// instances from the managed instance group. Abandoning an instance
+// does not delete the instance, but it does remove the instance from
+// any target pools that are applied by the managed instance group. This
+// method reduces the targetSize of the managed instance group by the
+// number of instances that you abandon. This operation is marked as
+// DONE when the action is scheduled even if the instances have not yet
+// been removed from the group. You must separately verify the status of
+// the abandoning action with the listmanagedinstances method.
 func (r *InstanceGroupManagersService) AbandonInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersabandoninstancesrequest *InstanceGroupManagersAbandonInstancesRequest) *InstanceGroupManagersAbandonInstancesCall {
 	c := &InstanceGroupManagersAbandonInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -17648,7 +18933,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes the specified instances from the managed instance group, and from any target pools where they are a member. The instances are not deleted. The managed instance group automatically reduces its targetSize value by the number of instances that you abandon from the group.",
+	//   "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.abandonInstances",
 	//   "parameterOrder": [
@@ -17658,7 +18943,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager.",
+	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -17671,7 +18956,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -17701,8 +18986,8 @@ type InstanceGroupManagersAggregatedListCall struct {
 	ctx_    context.Context
 }
 
-// AggregatedList: Retrieves the list of managed instance groups, and
-// groups them by project and zone.
+// AggregatedList: Retrieves the list of managed instance groups and
+// groups them by zone.
 func (r *InstanceGroupManagersService) AggregatedList(project string) *InstanceGroupManagersAggregatedListCall {
 	c := &InstanceGroupManagersAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -17840,7 +19125,7 @@ func (c *InstanceGroupManagersAggregatedListCall) Do() (*InstanceGroupManagerAgg
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of managed instance groups, and groups them by project and zone.",
+	//   "description": "Retrieves the list of managed instance groups and groups them by zone.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instanceGroupManagers.aggregatedList",
 	//   "parameterOrder": [
@@ -17898,7 +19183,8 @@ type InstanceGroupManagersDeleteCall struct {
 	ctx_                 context.Context
 }
 
-// Delete: Deletes the specified managed instance group resource.
+// Delete: Deletes the specified managed instance group and all of the
+// instances in that group.
 func (r *InstanceGroupManagersService) Delete(project string, zone string, instanceGroupManager string) *InstanceGroupManagersDeleteCall {
 	c := &InstanceGroupManagersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -17981,7 +19267,7 @@ func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified managed instance group resource.",
+	//   "description": "Deletes the specified managed instance group and all of the instances in that group.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.instanceGroupManagers.delete",
 	//   "parameterOrder": [
@@ -17991,7 +19277,7 @@ func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager to delete.",
+	//       "description": "The name of the managed instance group to delete.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18004,7 +19290,7 @@ func (c *InstanceGroupManagersDeleteCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18034,11 +19320,14 @@ type InstanceGroupManagersDeleteInstancesCall struct {
 	ctx_                                        context.Context
 }
 
-// DeleteInstances: Deletes the specified instances. The instances are
-// deleted and removed from the instance group and any target pools
-// where they are a member. The managed instance group automatically
-// reduces its targetSize value by the number of instances that you
-// delete.
+// DeleteInstances: Schedules a group action to delete the specified
+// instances in the managed instance group. The instances are also
+// removed from any target pools of which they were a member. This
+// method reduces the targetSize of the managed instance group by the
+// number of instances that you delete. This operation is marked as DONE
+// when the action is scheduled even if the instances are still being
+// deleted. You must separately verify the status of the deleting action
+// with the listmanagedinstances method.
 func (r *InstanceGroupManagersService) DeleteInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersdeleteinstancesrequest *InstanceGroupManagersDeleteInstancesRequest) *InstanceGroupManagersDeleteInstancesCall {
 	c := &InstanceGroupManagersDeleteInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -18128,7 +19417,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified instances. The instances are deleted and removed from the instance group and any target pools where they are a member. The managed instance group automatically reduces its targetSize value by the number of instances that you delete.",
+	//   "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.deleteInstances",
 	//   "parameterOrder": [
@@ -18138,7 +19427,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager.",
+	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18151,7 +19440,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18183,7 +19472,8 @@ type InstanceGroupManagersGetCall struct {
 	ctx_                 context.Context
 }
 
-// Get: Returns the specified managed instance group resource.
+// Get: Returns all of the details about the specified managed instance
+// group.
 func (r *InstanceGroupManagersService) Get(project string, zone string, instanceGroupManager string) *InstanceGroupManagersGetCall {
 	c := &InstanceGroupManagersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -18279,7 +19569,7 @@ func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the specified managed instance group resource.",
+	//   "description": "Returns all of the details about the specified managed instance group.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instanceGroupManagers.get",
 	//   "parameterOrder": [
@@ -18289,7 +19579,7 @@ func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager resource.",
+	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18302,7 +19592,7 @@ func (c *InstanceGroupManagersGetCall) Do() (*InstanceGroupManager, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18332,8 +19622,13 @@ type InstanceGroupManagersInsertCall struct {
 	ctx_                 context.Context
 }
 
-// Insert: Creates a managed instance group resource in the specified
-// project using the data that is included in the request.
+// Insert: Creates a managed instance group using the information that
+// you specify in the request. After the group is created, it schedules
+// an action to create instances in the group using the specified
+// instance template. This operation is marked as DONE when the group is
+// created even if the instances in the group have not yet been created.
+// You must separately verify the status of the individual instances
+// with the listmanagedinstances method.
 func (r *InstanceGroupManagersService) Insert(project string, zone string, instancegroupmanager *InstanceGroupManager) *InstanceGroupManagersInsertCall {
 	c := &InstanceGroupManagersInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -18421,7 +19716,7 @@ func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a managed instance group resource in the specified project using the data that is included in the request.",
+	//   "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.insert",
 	//   "parameterOrder": [
@@ -18437,7 +19732,7 @@ func (c *InstanceGroupManagersInsertCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where you want to create the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18643,7 +19938,7 @@ func (c *InstanceGroupManagersListCall) Do() (*InstanceGroupManagerList, error) 
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18673,7 +19968,12 @@ type InstanceGroupManagersListManagedInstancesCall struct {
 	ctx_                 context.Context
 }
 
-// ListManagedInstances: Lists managed instances.
+// ListManagedInstances: Lists all of the instances in the managed
+// instance group. Each instance in the list has a currentAction, which
+// indicates the action that the managed instance group is performing on
+// the instance. For example, if the group is still creating an
+// instance, the currentAction is CREATING. If a previous action failed,
+// the list displays the errors for that failed action.
 func (r *InstanceGroupManagersService) ListManagedInstances(project string, zone string, instanceGroupManager string) *InstanceGroupManagersListManagedInstancesCall {
 	c := &InstanceGroupManagersListManagedInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -18758,7 +20058,7 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do() (*InstanceGroupMana
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists managed instances.",
+	//   "description": "Lists all of the instances in the managed instance group. Each instance in the list has a currentAction, which indicates the action that the managed instance group is performing on the instance. For example, if the group is still creating an instance, the currentAction is CREATING. If a previous action failed, the list displays the errors for that failed action.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.listManagedInstances",
 	//   "parameterOrder": [
@@ -18781,7 +20081,7 @@ func (c *InstanceGroupManagersListManagedInstancesCall) Do() (*InstanceGroupMana
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18812,9 +20112,13 @@ type InstanceGroupManagersRecreateInstancesCall struct {
 	ctx_                                          context.Context
 }
 
-// RecreateInstances: Recreates the specified instances. The instances
-// are deleted, then recreated using the managed instance group's
-// current instance template.
+// RecreateInstances: Schedules a group action to recreate the specified
+// instances in the managed instance group. The instances are deleted
+// and recreated using the current instance template for the managed
+// instance group. This operation is marked as DONE when the action is
+// scheduled even if the instances have not yet been recreated. You must
+// separately verify the status of the recreating action with the
+// listmanagedinstances method.
 func (r *InstanceGroupManagersService) RecreateInstances(project string, zone string, instanceGroupManager string, instancegroupmanagersrecreateinstancesrequest *InstanceGroupManagersRecreateInstancesRequest) *InstanceGroupManagersRecreateInstancesCall {
 	c := &InstanceGroupManagersRecreateInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -18904,7 +20208,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Recreates the specified instances. The instances are deleted, then recreated using the managed instance group's current instance template.",
+	//   "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.recreateInstances",
 	//   "parameterOrder": [
@@ -18914,7 +20218,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager.",
+	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18927,7 +20231,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -18962,8 +20266,11 @@ type InstanceGroupManagersResizeCall struct {
 
 // Resize: Resizes the managed instance group. If you increase the size,
 // the group creates new instances using the current instance template.
-// If you decrease the size, the group removes instances in the order
-// that is outlined in Resizing a managed instance group.
+// If you decrease the size, the group deletes instances. The resize
+// operation is marked DONE when the resize actions are scheduled even
+// if the group has not yet added or deleted any instances. You must
+// separately verify the status of the creating or deleting actions with
+// the listmanagedinstances method.
 func (r *InstanceGroupManagersService) Resize(project string, zone string, instanceGroupManager string, size int64) *InstanceGroupManagersResizeCall {
 	c := &InstanceGroupManagersResizeCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -19048,7 +20355,7 @@ func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group removes instances in the order that is outlined in Resizing a managed instance group.",
+	//   "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.resize",
 	//   "parameterOrder": [
@@ -19059,7 +20366,7 @@ func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager.",
+	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19079,7 +20386,7 @@ func (c *InstanceGroupManagersResizeCall) Do() (*Operation, error) {
 	//       "type": "integer"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19211,7 +20518,7 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) 
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager.",
+	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19224,7 +20531,7 @@ func (c *InstanceGroupManagersSetInstanceTemplateCall) Do() (*Operation, error) 
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19257,9 +20564,13 @@ type InstanceGroupManagersSetTargetPoolsCall struct {
 	ctx_                                       context.Context
 }
 
-// SetTargetPools: Modifies the target pools to which all new instances
-// in this group are assigned. The target pools for existing instances
-// in the group do not change unless you recreate them.
+// SetTargetPools: Modifies the target pools to which all instances in
+// this managed instance group are assigned. The target pools
+// automatically apply to all of the instances in the managed instance
+// group. This operation is marked DONE when you make the request even
+// if the instances have not yet been added to their target pools. The
+// change might take some time to apply to all of the instances in the
+// group depending on the size of the group.
 func (r *InstanceGroupManagersService) SetTargetPools(project string, zone string, instanceGroupManager string, instancegroupmanagerssettargetpoolsrequest *InstanceGroupManagersSetTargetPoolsRequest) *InstanceGroupManagersSetTargetPoolsCall {
 	c := &InstanceGroupManagersSetTargetPoolsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -19349,7 +20660,7 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Modifies the target pools to which all new instances in this group are assigned. The target pools for existing instances in the group do not change unless you recreate them.",
+	//   "description": "Modifies the target pools to which all instances in this managed instance group are assigned. The target pools automatically apply to all of the instances in the managed instance group. This operation is marked DONE when you make the request even if the instances have not yet been added to their target pools. The change might take some time to apply to all of the instances in the group depending on the size of the group.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.setTargetPools",
 	//   "parameterOrder": [
@@ -19359,7 +20670,7 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "instanceGroupManager": {
-	//       "description": "The name of the instance group manager.",
+	//       "description": "The name of the managed instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19372,7 +20683,7 @@ func (c *InstanceGroupManagersSetTargetPoolsCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the managed instance group is located.",
+	//       "description": "The name of the zone where the managed instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19405,8 +20716,10 @@ type InstanceGroupsAddInstancesCall struct {
 	ctx_                              context.Context
 }
 
-// AddInstances: Adds a list of instances to an instance group. All of
-// the instances in the instance group must be in the same network.
+// AddInstances: Adds a list of instances to the specified instance
+// group. All of the instances in the instance group must be in the same
+// network/subnetwork. TODO: Change to comment to state "if IG is load
+// balanced."
 func (r *InstanceGroupsService) AddInstances(project string, zone string, instanceGroup string, instancegroupsaddinstancesrequest *InstanceGroupsAddInstancesRequest) *InstanceGroupsAddInstancesCall {
 	c := &InstanceGroupsAddInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -19496,7 +20809,7 @@ func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a list of instances to an instance group. All of the instances in the instance group must be in the same network.",
+	//   "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork. TODO: Change to comment to state \"if IG is load balanced.\"",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroups.addInstances",
 	//   "parameterOrder": [
@@ -19519,7 +20832,7 @@ func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the instance group is located.",
+	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19549,7 +20862,7 @@ type InstanceGroupsAggregatedListCall struct {
 	ctx_    context.Context
 }
 
-// AggregatedList: Retrieves the list of instance groups, and sorts them
+// AggregatedList: Retrieves the list of instance groups and sorts them
 // by zone.
 func (r *InstanceGroupsService) AggregatedList(project string) *InstanceGroupsAggregatedListCall {
 	c := &InstanceGroupsAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -19687,7 +21000,7 @@ func (c *InstanceGroupsAggregatedListCall) Do() (*InstanceGroupAggregatedList, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of instance groups, and sorts them by zone.",
+	//   "description": "Retrieves the list of instance groups and sorts them by zone.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instanceGroups.aggregatedList",
 	//   "parameterOrder": [
@@ -19745,7 +21058,8 @@ type InstanceGroupsDeleteCall struct {
 	ctx_          context.Context
 }
 
-// Delete: Deletes the specified instance group.
+// Delete: Deletes the specified instance group. The instances in the
+// group are not deleted.
 func (r *InstanceGroupsService) Delete(project string, zone string, instanceGroup string) *InstanceGroupsDeleteCall {
 	c := &InstanceGroupsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -19828,7 +21142,7 @@ func (c *InstanceGroupsDeleteCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified instance group.",
+	//   "description": "Deletes the specified instance group. The instances in the group are not deleted.",
 	//   "httpMethod": "DELETE",
 	//   "id": "compute.instanceGroups.delete",
 	//   "parameterOrder": [
@@ -19851,7 +21165,7 @@ func (c *InstanceGroupsDeleteCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the instance group is located.",
+	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -19999,7 +21313,7 @@ func (c *InstanceGroupsGetCall) Do() (*InstanceGroup, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the instance group is located.",
+	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20134,7 +21448,7 @@ func (c *InstanceGroupsInsertCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the instance group is located.",
+	//       "description": "The name of the zone where you want to create the instance group.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20340,7 +21654,7 @@ func (c *InstanceGroupsListCall) Do() (*InstanceGroupList, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the instance group is located.",
+	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20371,9 +21685,7 @@ type InstanceGroupsListInstancesCall struct {
 	ctx_                               context.Context
 }
 
-// ListInstances: Lists instances in an instance group. The parameters
-// for this method specify whether the list filters instances by state
-// and named ports information.
+// ListInstances: Lists the instances in the specified instance group.
 func (r *InstanceGroupsService) ListInstances(project string, zone string, instanceGroup string, instancegroupslistinstancesrequest *InstanceGroupsListInstancesRequest) *InstanceGroupsListInstancesCall {
 	c := &InstanceGroupsListInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -20508,7 +21820,7 @@ func (c *InstanceGroupsListInstancesCall) Do() (*InstanceGroupsListInstances, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists instances in an instance group. The parameters for this method specify whether the list filters instances by state and named ports information.",
+	//   "description": "Lists the instances in the specified instance group.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroups.listInstances",
 	//   "parameterOrder": [
@@ -20550,7 +21862,7 @@ func (c *InstanceGroupsListInstancesCall) Do() (*InstanceGroupsListInstances, er
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the instance group is located.",
+	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20584,7 +21896,8 @@ type InstanceGroupsRemoveInstancesCall struct {
 	ctx_                                 context.Context
 }
 
-// RemoveInstances: Removes a list of instances from an instance group.
+// RemoveInstances: Removes one or more instances from the specified
+// instance group, but does not delete those instances.
 func (r *InstanceGroupsService) RemoveInstances(project string, zone string, instanceGroup string, instancegroupsremoveinstancesrequest *InstanceGroupsRemoveInstancesRequest) *InstanceGroupsRemoveInstancesCall {
 	c := &InstanceGroupsRemoveInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -20674,7 +21987,7 @@ func (c *InstanceGroupsRemoveInstancesCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes a list of instances from an instance group.",
+	//   "description": "Removes one or more instances from the specified instance group, but does not delete those instances.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroups.removeInstances",
 	//   "parameterOrder": [
@@ -20697,7 +22010,7 @@ func (c *InstanceGroupsRemoveInstancesCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the instance group is located.",
+	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20730,7 +22043,7 @@ type InstanceGroupsSetNamedPortsCall struct {
 	ctx_                               context.Context
 }
 
-// SetNamedPorts: Sets the named ports in an instance group.
+// SetNamedPorts: Sets the named ports for the specified instance group.
 func (r *InstanceGroupsService) SetNamedPorts(project string, zone string, instanceGroup string, instancegroupssetnamedportsrequest *InstanceGroupsSetNamedPortsRequest) *InstanceGroupsSetNamedPortsCall {
 	c := &InstanceGroupsSetNamedPortsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -20820,7 +22133,7 @@ func (c *InstanceGroupsSetNamedPortsCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the named ports in an instance group.",
+	//   "description": "Sets the named ports for the specified instance group.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroups.setNamedPorts",
 	//   "parameterOrder": [
@@ -20843,7 +22156,7 @@ func (c *InstanceGroupsSetNamedPortsCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "The URL of the zone where the instance group is located.",
+	//       "description": "The name of the zone where the instance group is located.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -21624,7 +22937,7 @@ type InstancesAggregatedListCall struct {
 	ctx_    context.Context
 }
 
-// AggregatedList:
+// AggregatedList: Retrieves aggregated list of instance resources.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instances/aggregatedList
 func (r *InstancesService) AggregatedList(project string) *InstancesAggregatedListCall {
 	c := &InstancesAggregatedListCall{s: r.s, opt_: make(map[string]interface{})}
@@ -21762,6 +23075,7 @@ func (c *InstancesAggregatedListCall) Do() (*InstanceAggregatedList, error) {
 	}
 	return ret, nil
 	// {
+	//   "description": "Retrieves aggregated list of instance resources.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instances.aggregatedList",
 	//   "parameterOrder": [
@@ -27898,6 +29212,593 @@ func (c *SnapshotsListCall) Do() (*SnapshotList, error) {
 
 }
 
+// method id "compute.sslCertificates.delete":
+
+type SslCertificatesDeleteCall struct {
+	s              *Service
+	project        string
+	sslCertificate string
+	opt_           map[string]interface{}
+	ctx_           context.Context
+}
+
+// Delete: Deletes the specified SslCertificate resource.
+func (r *SslCertificatesService) Delete(project string, sslCertificate string) *SslCertificatesDeleteCall {
+	c := &SslCertificatesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.sslCertificate = sslCertificate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertificatesDeleteCall) Fields(s ...googleapi.Field) *SslCertificatesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SslCertificatesDeleteCall) Context(ctx context.Context) *SslCertificatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SslCertificatesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/sslCertificates/{sslCertificate}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"sslCertificate": c.sslCertificate,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.sslCertificates.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SslCertificatesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SslCertificate resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.sslCertificates.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "sslCertificate"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sslCertificate": {
+	//       "description": "Name of the SslCertificate resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/sslCertificates/{sslCertificate}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.sslCertificates.get":
+
+type SslCertificatesGetCall struct {
+	s              *Service
+	project        string
+	sslCertificate string
+	opt_           map[string]interface{}
+	ctx_           context.Context
+}
+
+// Get: Returns the specified SslCertificate resource.
+func (r *SslCertificatesService) Get(project string, sslCertificate string) *SslCertificatesGetCall {
+	c := &SslCertificatesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.sslCertificate = sslCertificate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertificatesGetCall) Fields(s ...googleapi.Field) *SslCertificatesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SslCertificatesGetCall) IfNoneMatch(entityTag string) *SslCertificatesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SslCertificatesGetCall) Context(ctx context.Context) *SslCertificatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SslCertificatesGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/sslCertificates/{sslCertificate}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":        c.project,
+		"sslCertificate": c.sslCertificate,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.sslCertificates.get" call.
+// Exactly one of *SslCertificate or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SslCertificate.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SslCertificatesGetCall) Do() (*SslCertificate, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SslCertificate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified SslCertificate resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.sslCertificates.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "sslCertificate"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sslCertificate": {
+	//       "description": "Name of the SslCertificate resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/sslCertificates/{sslCertificate}",
+	//   "response": {
+	//     "$ref": "SslCertificate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.sslCertificates.insert":
+
+type SslCertificatesInsertCall struct {
+	s              *Service
+	project        string
+	sslcertificate *SslCertificate
+	opt_           map[string]interface{}
+	ctx_           context.Context
+}
+
+// Insert: Creates a SslCertificate resource in the specified project
+// using the data included in the request.
+func (r *SslCertificatesService) Insert(project string, sslcertificate *SslCertificate) *SslCertificatesInsertCall {
+	c := &SslCertificatesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.sslcertificate = sslcertificate
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertificatesInsertCall) Fields(s ...googleapi.Field) *SslCertificatesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SslCertificatesInsertCall) Context(ctx context.Context) *SslCertificatesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SslCertificatesInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sslcertificate)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/sslCertificates")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.sslCertificates.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SslCertificatesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a SslCertificate resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.sslCertificates.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/sslCertificates",
+	//   "request": {
+	//     "$ref": "SslCertificate"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.sslCertificates.list":
+
+type SslCertificatesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+	ctx_    context.Context
+}
+
+// List: Retrieves the list of SslCertificate resources available to the
+// specified project.
+func (r *SslCertificatesService) List(project string) *SslCertificatesListCall {
+	c := &SslCertificatesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
+//
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.
+//
+// For example, filter=name ne example-instance.
+func (c *SslCertificatesListCall) Filter(filter string) *SslCertificatesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *SslCertificatesListCall) MaxResults(maxResults int64) *SslCertificatesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *SslCertificatesListCall) PageToken(pageToken string) *SslCertificatesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SslCertificatesListCall) Fields(s ...googleapi.Field) *SslCertificatesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SslCertificatesListCall) IfNoneMatch(entityTag string) *SslCertificatesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SslCertificatesListCall) Context(ctx context.Context) *SslCertificatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SslCertificatesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/sslCertificates")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.sslCertificates.list" call.
+// Exactly one of *SslCertificateList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SslCertificateList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SslCertificatesListCall) Do() (*SslCertificateList, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SslCertificateList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of SslCertificate resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.sslCertificates.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/sslCertificates",
+	//   "response": {
+	//     "$ref": "SslCertificateList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "compute.targetHttpProxies.delete":
 
 type TargetHttpProxiesDeleteCall struct {
@@ -28613,6 +30514,867 @@ func (c *TargetHttpProxiesSetUrlMapCall) Do() (*Operation, error) {
 	//     }
 	//   },
 	//   "path": "{project}/targetHttpProxies/{targetHttpProxy}/setUrlMap",
+	//   "request": {
+	//     "$ref": "UrlMapReference"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.delete":
+
+type TargetHttpsProxiesDeleteCall struct {
+	s                *Service
+	project          string
+	targetHttpsProxy string
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Delete: Deletes the specified TargetHttpsProxy resource.
+func (r *TargetHttpsProxiesService) Delete(project string, targetHttpsProxy string) *TargetHttpsProxiesDeleteCall {
+	c := &TargetHttpsProxiesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpsProxy = targetHttpsProxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesDeleteCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesDeleteCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TargetHttpsProxiesDeleteCall) Context(ctx context.Context) *TargetHttpsProxiesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetHttpsProxiesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpsProxies/{targetHttpsProxy}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"targetHttpsProxy": c.targetHttpsProxy,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetHttpsProxies.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetHttpsProxiesDeleteCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified TargetHttpsProxy resource.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.targetHttpsProxies.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpsProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpsProxy": {
+	//       "description": "Name of the TargetHttpsProxy resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpsProxies/{targetHttpsProxy}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.get":
+
+type TargetHttpsProxiesGetCall struct {
+	s                *Service
+	project          string
+	targetHttpsProxy string
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Get: Returns the specified TargetHttpsProxy resource.
+func (r *TargetHttpsProxiesService) Get(project string, targetHttpsProxy string) *TargetHttpsProxiesGetCall {
+	c := &TargetHttpsProxiesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpsProxy = targetHttpsProxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesGetCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetHttpsProxiesGetCall) IfNoneMatch(entityTag string) *TargetHttpsProxiesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TargetHttpsProxiesGetCall) Context(ctx context.Context) *TargetHttpsProxiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetHttpsProxiesGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpsProxies/{targetHttpsProxy}")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"targetHttpsProxy": c.targetHttpsProxy,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetHttpsProxies.get" call.
+// Exactly one of *TargetHttpsProxy or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TargetHttpsProxy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetHttpsProxiesGetCall) Do() (*TargetHttpsProxy, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetHttpsProxy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the specified TargetHttpsProxy resource.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetHttpsProxies.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpsProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpsProxy": {
+	//       "description": "Name of the TargetHttpsProxy resource to return.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpsProxies/{targetHttpsProxy}",
+	//   "response": {
+	//     "$ref": "TargetHttpsProxy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.insert":
+
+type TargetHttpsProxiesInsertCall struct {
+	s                *Service
+	project          string
+	targethttpsproxy *TargetHttpsProxy
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// Insert: Creates a TargetHttpsProxy resource in the specified project
+// using the data included in the request.
+func (r *TargetHttpsProxiesService) Insert(project string, targethttpsproxy *TargetHttpsProxy) *TargetHttpsProxiesInsertCall {
+	c := &TargetHttpsProxiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targethttpsproxy = targethttpsproxy
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesInsertCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesInsertCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TargetHttpsProxiesInsertCall) Context(ctx context.Context) *TargetHttpsProxiesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetHttpsProxiesInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targethttpsproxy)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpsProxies")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetHttpsProxies.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetHttpsProxiesInsertCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a TargetHttpsProxy resource in the specified project using the data included in the request.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetHttpsProxies.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpsProxies",
+	//   "request": {
+	//     "$ref": "TargetHttpsProxy"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.list":
+
+type TargetHttpsProxiesListCall struct {
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+	ctx_    context.Context
+}
+
+// List: Retrieves the list of TargetHttpsProxy resources available to
+// the specified project.
+func (r *TargetHttpsProxiesService) List(project string) *TargetHttpsProxiesListCall {
+	c := &TargetHttpsProxiesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter expression
+// for filtering listed resources, in the form filter={expression}. Your
+// {expression} must be in the format: FIELD_NAME COMPARISON_STRING
+// LITERAL_STRING.
+//
+// The FIELD_NAME is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// COMPARISON_STRING must be either eq (equals) or ne (not equals). The
+// LITERAL_STRING is the string value to filter to. The literal value
+// must be valid for the type of field (string, number, boolean). For
+// string fields, the literal value is interpreted as a regular
+// expression using RE2 syntax. The literal value must match the entire
+// field.
+//
+// For example, filter=name ne example-instance.
+func (c *TargetHttpsProxiesListCall) Filter(filter string) *TargetHttpsProxiesListCall {
+	c.opt_["filter"] = filter
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum count of
+// results to be returned.
+func (c *TargetHttpsProxiesListCall) MaxResults(maxResults int64) *TargetHttpsProxiesListCall {
+	c.opt_["maxResults"] = maxResults
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Use this parameter if you want to list the next page of
+// results. Set pageToken to the nextPageToken returned by a previous
+// list request.
+func (c *TargetHttpsProxiesListCall) PageToken(pageToken string) *TargetHttpsProxiesListCall {
+	c.opt_["pageToken"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesListCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesListCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *TargetHttpsProxiesListCall) IfNoneMatch(entityTag string) *TargetHttpsProxiesListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TargetHttpsProxiesListCall) Context(ctx context.Context) *TargetHttpsProxiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetHttpsProxiesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/targetHttpsProxies")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetHttpsProxies.list" call.
+// Exactly one of *TargetHttpsProxyList or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TargetHttpsProxyList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TargetHttpsProxiesListCall) Do() (*TargetHttpsProxyList, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TargetHttpsProxyList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of TargetHttpsProxy resources available to the specified project.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.targetHttpsProxies.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "Maximum count of results to be returned.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "500",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/targetHttpsProxies",
+	//   "response": {
+	//     "$ref": "TargetHttpsProxyList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.setSslCertificates":
+
+type TargetHttpsProxiesSetSslCertificatesCall struct {
+	s                                           *Service
+	project                                     string
+	targetHttpsProxy                            string
+	targethttpsproxiessetsslcertificatesrequest *TargetHttpsProxiesSetSslCertificatesRequest
+	opt_                                        map[string]interface{}
+	ctx_                                        context.Context
+}
+
+// SetSslCertificates: Replaces SslCertificates for TargetHttpsProxy.
+func (r *TargetHttpsProxiesService) SetSslCertificates(project string, targetHttpsProxy string, targethttpsproxiessetsslcertificatesrequest *TargetHttpsProxiesSetSslCertificatesRequest) *TargetHttpsProxiesSetSslCertificatesCall {
+	c := &TargetHttpsProxiesSetSslCertificatesCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpsProxy = targetHttpsProxy
+	c.targethttpsproxiessetsslcertificatesrequest = targethttpsproxiessetsslcertificatesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesSetSslCertificatesCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesSetSslCertificatesCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TargetHttpsProxiesSetSslCertificatesCall) Context(ctx context.Context) *TargetHttpsProxiesSetSslCertificatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetHttpsProxiesSetSslCertificatesCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.targethttpsproxiessetsslcertificatesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/targetHttpsProxies/{targetHttpsProxy}/setSslCertificates")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"targetHttpsProxy": c.targetHttpsProxy,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetHttpsProxies.setSslCertificates" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetHttpsProxiesSetSslCertificatesCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces SslCertificates for TargetHttpsProxy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetHttpsProxies.setSslCertificates",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpsProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpsProxy": {
+	//       "description": "Name of the TargetHttpsProxy resource whose URL map is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/targetHttpsProxies/{targetHttpsProxy}/setSslCertificates",
+	//   "request": {
+	//     "$ref": "TargetHttpsProxiesSetSslCertificatesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.targetHttpsProxies.setUrlMap":
+
+type TargetHttpsProxiesSetUrlMapCall struct {
+	s                *Service
+	project          string
+	targetHttpsProxy string
+	urlmapreference  *UrlMapReference
+	opt_             map[string]interface{}
+	ctx_             context.Context
+}
+
+// SetUrlMap: Changes the URL map for TargetHttpsProxy.
+func (r *TargetHttpsProxiesService) SetUrlMap(project string, targetHttpsProxy string, urlmapreference *UrlMapReference) *TargetHttpsProxiesSetUrlMapCall {
+	c := &TargetHttpsProxiesSetUrlMapCall{s: r.s, opt_: make(map[string]interface{})}
+	c.project = project
+	c.targetHttpsProxy = targetHttpsProxy
+	c.urlmapreference = urlmapreference
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TargetHttpsProxiesSetUrlMapCall) Fields(s ...googleapi.Field) *TargetHttpsProxiesSetUrlMapCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *TargetHttpsProxiesSetUrlMapCall) Context(ctx context.Context) *TargetHttpsProxiesSetUrlMapCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *TargetHttpsProxiesSetUrlMapCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlmapreference)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/targetHttpsProxies/{targetHttpsProxy}/setUrlMap")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"project":          c.project,
+		"targetHttpsProxy": c.targetHttpsProxy,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "compute.targetHttpsProxies.setUrlMap" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TargetHttpsProxiesSetUrlMapCall) Do() (*Operation, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the URL map for TargetHttpsProxy.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.targetHttpsProxies.setUrlMap",
+	//   "parameterOrder": [
+	//     "project",
+	//     "targetHttpsProxy"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Name of the project scoping this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetHttpsProxy": {
+	//       "description": "Name of the TargetHttpsProxy resource whose URL map is to be set.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/targetHttpsProxies/{targetHttpsProxy}/setUrlMap",
 	//   "request": {
 	//     "$ref": "UrlMapReference"
 	//   },

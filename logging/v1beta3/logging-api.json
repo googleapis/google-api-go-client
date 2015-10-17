@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Fi_zVio1slK88cI-ko5TXAVA3jo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/l7KAWGWj5NIeNmaEXus4dk2p56U\"",
  "discoveryVersion": "v1",
  "id": "logging:v1beta3",
  "name": "logging",
  "version": "v1beta3",
- "revision": "20150610",
+ "revision": "20151007",
  "title": "Google Cloud Logging API",
  "description": "Google Cloud Logging API lets you create logs, ingest log entries, and manage log sinks.",
  "ownerDomain": "google.com",
@@ -320,6 +320,14 @@
     "referer": {
      "type": "string",
      "description": "Referer (a.k.a. referrer) URL of request, as defined in http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html."
+    },
+    "cacheHit": {
+     "type": "boolean",
+     "description": "Whether or not an entity was served from cache (with or without validation)."
+    },
+    "validatedWithOriginServer": {
+     "type": "boolean",
+     "description": "Whether or not the response was validated with the origin server before being served from cache. This field is only meaningful if cache_hit is True."
     }
    }
   },
@@ -445,16 +453,16 @@
   "Status": {
    "id": "Status",
    "type": "object",
-   "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). The error model is designed to be: - Simple to use and understand for most users - Flexible enough to meet unexpected needs # Overview The `Status` message contains three pieces of data: error code, error message, and error details. The error code should be an enum value of [google.rpc.Code][], but it may accept additional error codes if needed. The error message should be a developer-facing English message that helps developers *understand* and *resolve* the error. If a localized user-facing error message is needed, put the localized message in the error details or localize it in the client. The optional error details may contain arbitrary information about the error. There is a predefined set of error detail types in the package `google.rpc` which can be used for common error conditions. # Language mapping The `Status` message is the logical representation of the error model, but it is not necessarily the actual wire format. When the `Status` message is exposed in different client libraries and different wire protocols, it can be mapped differently. For example, it will likely be mapped to some exceptions in Java, but more likely mapped to some error codes in C. # Other uses The error model and the `Status` message can be used in a variety of environments, either with or without APIs, to provide a consistent developer experience across different environments. Example uses of this error model include: - Partial errors. If a service needs to return partial errors to the client, it may embed the `Status` in the normal response to indicate the partial errors. - Workflow errors. A typical workflow has multiple steps. Each step may have a `Status` message for error reporting purpose. - Batch operations. If a client uses batch request and batch response, the `Status` message should be used directly inside batch response, one for each error sub-response. - Asynchronous operations. If an API call embeds asynchronous operation results in its response, the status of those operations should be represented directly using the `Status` message. - Logging. If some API errors are stored in logs, the message `Status` could be used directly after any stripping needed for security/privacy reasons.",
+   "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). The error model is designed to be: - Simple to use and understand for most users - Flexible enough to meet unexpected needs # Overview The `Status` message contains three pieces of data: error code, error message, and error details. The error code should be an enum value of google.rpc.Code, but it may accept additional error codes if needed. The error message should be a developer-facing English message that helps developers *understand* and *resolve* the error. If a localized user-facing error message is needed, put the localized message in the error details or localize it in the client. The optional error details may contain arbitrary information about the error. There is a predefined set of error detail types in the package `google.rpc` which can be used for common error conditions. # Language mapping The `Status` message is the logical representation of the error model, but it is not necessarily the actual wire format. When the `Status` message is exposed in different client libraries and different wire protocols, it can be mapped differently. For example, it will likely be mapped to some exceptions in Java, but more likely mapped to some error codes in C. # Other uses The error model and the `Status` message can be used in a variety of environments, either with or without APIs, to provide a consistent developer experience across different environments. Example uses of this error model include: - Partial errors. If a service needs to return partial errors to the client, it may embed the `Status` in the normal response to indicate the partial errors. - Workflow errors. A typical workflow has multiple steps. Each step may have a `Status` message for error reporting purpose. - Batch operations. If a client uses batch request and batch response, the `Status` message should be used directly inside batch response, one for each error sub-response. - Asynchronous operations. If an API call embeds asynchronous operation results in its response, the status of those operations should be represented directly using the `Status` message. - Logging. If some API errors are stored in logs, the message `Status` could be used directly after any stripping needed for security/privacy reasons.",
    "properties": {
     "code": {
      "type": "integer",
-     "description": "The status code, which should be an enum value of [google.rpc.Code][].",
+     "description": "The status code, which should be an enum value of google.rpc.Code.",
      "format": "int32"
     },
     "message": {
      "type": "string",
-     "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client."
+     "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client."
     },
     "details": {
      "type": "array",
@@ -494,6 +502,43 @@
      "items": {
       "$ref": "LogSink"
      }
+    }
+   }
+  },
+  "ListLogMetricsResponse": {
+   "id": "ListLogMetricsResponse",
+   "type": "object",
+   "description": "Result returned from ListLogMetrics.",
+   "properties": {
+    "metrics": {
+     "type": "array",
+     "description": "The list of metrics that was requested.",
+     "items": {
+      "$ref": "LogMetric"
+     }
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "If there are more results, then `nextPageToken` is returned in the response. To get the next batch of entries, use the value of `nextPageToken` as `pageToken` in the next call of `ListLogMetrics`. If `nextPageToken` is empty, then there are no more results."
+    }
+   }
+  },
+  "LogMetric": {
+   "id": "LogMetric",
+   "type": "object",
+   "description": "Describes a collected, logs-based metric. The value of the metric is the number of log entries in the project that match the advanced logs filter in the `filter` field.",
+   "properties": {
+    "name": {
+     "type": "string",
+     "description": "The client-assigned name for this metric, such as `\"severe_errors\"`. Metric names are limited to 1000 characters and can include only the following characters: `-A-Za-z0-9_.,+!*',()%/\\`. The slash character `/` implies a hierarchy of name pieces, and cannot be the first character of the name."
+    },
+    "description": {
+     "type": "string",
+     "description": "A description of this metric."
+    },
+    "filter": {
+     "type": "string",
+     "description": "An [advanced logs filter](/logging/docs/view/advanced_filters). Example: `\"log:syslog AND metadata.severity\u003e=ERROR\"`."
     }
    }
   },
@@ -1041,11 +1086,6 @@
          "required": true,
          "location": "path"
         },
-        "log": {
-         "type": "string",
-         "description": "If empty, all log services contributing log entries to the project are listed. Otherwise, this field must be the resource name of a log, such as `\"projects/my-project/appengine.googleapis.com%2Frequest_log\"`, and then the only services listed are those associated with entries in the log. A service is associated with an entry if its name is in the entry's `LogEntryMetadata.serviceName` field.",
-         "location": "query"
-        },
         "pageSize": {
          "type": "integer",
          "description": "The maximum number of `LogService` objects to return in one operation.",
@@ -1095,18 +1135,13 @@
           },
           "indexPrefix": {
            "type": "string",
-           "description": "Restricts the index values returned to be those with a specified prefix for each index key. This field has the form `\"/prefix1/prefix2/...\"`, in order corresponding to the [`LogService indexKeys`][google.logging.v1.LogService.index_keys]. Non-empty prefixes must begin with `/`. For example, App Engine's two keys are the module ID and the version ID. Following is the effect of using various values for `indexPrefix`: + `\"/Mod/\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod` retrieves `/Mod/10`, `/Mod/11` and `/ModA/10` but not `/XXX/33`. + `\"/Mod/1\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod/10/\"` retrieves `/Mod/10` only. + An empty prefix or `\"/\"` retrieves all values.",
+           "description": "Restricts the index values returned to be those with a specified prefix for each index key. This field has the form `\"/prefix1/prefix2/...\"`, in order corresponding to the `LogService indexKeys`. Non-empty prefixes must begin with `/`. For example, App Engine's two keys are the module ID and the version ID. Following is the effect of using various values for `indexPrefix`: + `\"/Mod/\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod` retrieves `/Mod/10`, `/Mod/11` and `/ModA/10` but not `/XXX/33`. + `\"/Mod/1\"` retrieves `/Mod/10` and `/Mod/11` but not `/ModA/10`. + `\"/Mod/10/\"` retrieves `/Mod/10` only. + An empty prefix or `\"/\"` retrieves all values.",
            "location": "query"
           },
           "depth": {
            "type": "integer",
            "description": "A non-negative integer that limits the number of levels of the index hierarchy that are returned. If `depth` is 1 (default), only the first index key value is returned. If `depth` is 2, both primary and secondary key values are returned. If `depth` is 0, the depth is the number of slash-separators in the `indexPrefix` field, not counting a slash appearing as the last character of the prefix. If the `indexPrefix` field is empty, the default depth is 1. It is an error for `depth` to be any positive value less than the number of components in `indexPrefix`.",
            "format": "int32",
-           "location": "query"
-          },
-          "log": {
-           "type": "string",
-           "description": "_Optional_. The resource name of a log, such as `\"projects/project_id/logs/log_name\"`. If present, indexes are returned for any service associated with entries in the log.",
            "location": "query"
           },
           "pageSize": {
@@ -1473,6 +1508,172 @@
        "parameterOrder": [
         "projectsId",
         "sinksId"
+       ],
+       "response": {
+        "$ref": "Empty"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/logging.admin"
+       ]
+      }
+     }
+    },
+    "metrics": {
+     "methods": {
+      "list": {
+       "id": "logging.projects.metrics.list",
+       "path": "v1beta3/projects/{projectsId}/metrics",
+       "httpMethod": "GET",
+       "description": "List log metrics associated with the specified project.",
+       "parameters": {
+        "projectsId": {
+         "type": "string",
+         "description": "Part of `projectName`. The resource name for the project whose metrics are wanted.",
+         "required": true,
+         "location": "path"
+        },
+        "pageToken": {
+         "type": "string",
+         "description": "An opaque token, returned as `nextPageToken` by a prior `ListLogMetrics` operation. If `pageToken` is supplied, then the other fields of this request are ignored, and instead the previous `ListLogMetrics` operation is continued.",
+         "location": "query"
+        },
+        "pageSize": {
+         "type": "integer",
+         "description": "The maximum number of `LogMetric` objects to return in one operation.",
+         "format": "int32",
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "projectsId"
+       ],
+       "response": {
+        "$ref": "ListLogMetricsResponse"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/cloud-platform.read-only",
+        "https://www.googleapis.com/auth/logging.admin",
+        "https://www.googleapis.com/auth/logging.read"
+       ]
+      },
+      "get": {
+       "id": "logging.projects.metrics.get",
+       "path": "v1beta3/projects/{projectsId}/metrics/{metricsId}",
+       "httpMethod": "GET",
+       "description": "Get the specified log metric resource.",
+       "parameters": {
+        "projectsId": {
+         "type": "string",
+         "description": "Part of `metricName`. The resource name of the desired metric.",
+         "required": true,
+         "location": "path"
+        },
+        "metricsId": {
+         "type": "string",
+         "description": "Part of `metricName`. See documentation of `projectsId`.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "projectsId",
+        "metricsId"
+       ],
+       "response": {
+        "$ref": "LogMetric"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/cloud-platform.read-only",
+        "https://www.googleapis.com/auth/logging.admin",
+        "https://www.googleapis.com/auth/logging.read"
+       ]
+      },
+      "create": {
+       "id": "logging.projects.metrics.create",
+       "path": "v1beta3/projects/{projectsId}/metrics",
+       "httpMethod": "POST",
+       "description": "Create the specified log metric resource.",
+       "parameters": {
+        "projectsId": {
+         "type": "string",
+         "description": "Part of `projectName`. The resource name of the project in which to create the metric.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "projectsId"
+       ],
+       "request": {
+        "$ref": "LogMetric"
+       },
+       "response": {
+        "$ref": "LogMetric"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/logging.admin"
+       ]
+      },
+      "update": {
+       "id": "logging.projects.metrics.update",
+       "path": "v1beta3/projects/{projectsId}/metrics/{metricsId}",
+       "httpMethod": "PUT",
+       "description": "Create or update the specified log metric resource.",
+       "parameters": {
+        "projectsId": {
+         "type": "string",
+         "description": "Part of `metricName`. The resource name of the metric to update.",
+         "required": true,
+         "location": "path"
+        },
+        "metricsId": {
+         "type": "string",
+         "description": "Part of `metricName`. See documentation of `projectsId`.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "projectsId",
+        "metricsId"
+       ],
+       "request": {
+        "$ref": "LogMetric"
+       },
+       "response": {
+        "$ref": "LogMetric"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform",
+        "https://www.googleapis.com/auth/logging.admin"
+       ]
+      },
+      "delete": {
+       "id": "logging.projects.metrics.delete",
+       "path": "v1beta3/projects/{projectsId}/metrics/{metricsId}",
+       "httpMethod": "DELETE",
+       "description": "Deletes the specified log metric.",
+       "parameters": {
+        "projectsId": {
+         "type": "string",
+         "description": "Part of `metricName`. The resource name of the metric to delete.",
+         "required": true,
+         "location": "path"
+        },
+        "metricsId": {
+         "type": "string",
+         "description": "Part of `metricName`. See documentation of `projectsId`.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "projectsId",
+        "metricsId"
        ],
        "response": {
         "$ref": "Empty"

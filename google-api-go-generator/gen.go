@@ -515,6 +515,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = errors.New")
 	pn("var _ = strings.Replace")
 	pn("var _ = internal.MarshalJSON")
+	pn("var _ = context.Canceled")
+	pn("var _ = ctxhttp.Do")
 	pn("")
 	pn("const apiId = %q", jstr(m, "id"))
 	pn("const apiName = %q", jstr(m, "name"))

@@ -1,4 +1,4 @@
-// Package storage provides access to the Cloud Storage API.
+// Package storage provides access to the Cloud Storage JSON API.
 //
 // See https://developers.google.com/storage/docs/json_api/
 //
@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "storage:v1beta1"
 const apiName = "storage"

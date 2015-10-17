@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "classroom:v1"
 const apiName = "classroom"
@@ -195,13 +197,12 @@ type Course struct {
 	// error. Read-only.
 	EnrollmentCode string `json:"enrollmentCode,omitempty"`
 
-	// Id: Identifier for this course assigned by Classroom. When [creating
-	// a course][google.classroom.v1.Courses.CreateCourse], you may
-	// optionally set this identifier to an [alias
-	// string][google.classroom.v1.CourseAlias] in the request to create a
-	// corresponding alias. The `id` is still assigned by Classroom and
-	// cannot be updated after the course is created. Specifying this field
-	// in a course update mask will result in an error.
+	// Id: Identifier for this course assigned by Classroom. When creating a
+	// course, you may optionally set this identifier to an alias string in
+	// the request to create a corresponding alias. The `id` is still
+	// assigned by Classroom and cannot be updated after the course is
+	// created. Specifying this field in a course update mask will result in
+	// an error.
 	Id string `json:"id,omitempty"`
 
 	// Name: Name of the course. For example, "10th Grade Biology". The name
@@ -210,13 +211,12 @@ type Course struct {
 	Name string `json:"name,omitempty"`
 
 	// OwnerId: The identifier of the owner of a course. When specified as a
-	// parameter of a [create course
-	// request][google.classroom.v1.Courses.CreateCourse], this field is
-	// required. The identifier can be one of the following: * the numeric
-	// identifier for the user * the email address of the user * the string
-	// literal "me", indicating the requesting user This must be set in a
-	// create request. Specifying this field in a course update mask will
-	// result in an `INVALID_ARGUMENT` error.
+	// parameter of a create course request, this field is required. The
+	// identifier can be one of the following: * the numeric identifier for
+	// the user * the email address of the user * the string literal "me",
+	// indicating the requesting user This must be set in a create request.
+	// Specifying this field in a course update mask will result in an
+	// `INVALID_ARGUMENT` error.
 	OwnerId string `json:"ownerId,omitempty"`
 
 	// Room: Optional room location. For example, "301". If set, this field
@@ -650,11 +650,12 @@ type CoursesCreateCall struct {
 // Create: Creates a course. The user specified in `ownerId` is the
 // owner of the created course and added as a teacher. This method
 // returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting user is not permitted to create courses or for [general
-// user permission errors][User Permission Errors]. * `NOT_FOUND` if the
-// primary teacher is not a valid user. * `FAILED_PRECONDITION` if the
-// course owner's account is disabled. * `ALREADY_EXISTS` if an alias
-// was specified in the `id` and already exists.
+// requesting user is not permitted to create courses or for access
+// errors. * `NOT_FOUND` if the primary teacher is not a valid user. *
+// `FAILED_PRECONDITION` if the course owner's account is disabled or
+// for the following request errors: * UserGroupsMembershipLimitReached
+// * `ALREADY_EXISTS` if an alias was specified in the `id` and already
+// exists.
 func (r *CoursesService) Create(course *Course) *CoursesCreateCall {
 	c := &CoursesCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.course = course
@@ -737,7 +738,7 @@ func (c *CoursesCreateCall) Do() (*Course, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a course. The user specified in `ownerId` is the owner of the created course and added as a teacher. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create courses or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course owner's account is disabled. * `ALREADY_EXISTS` if an alias was specified in the `id` and already exists.",
+	//   "description": "Creates a course. The user specified in `ownerId` is the owner of the created course and added as a teacher. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create courses or for access errors. * `NOT_FOUND` if the primary teacher is not a valid user. * `FAILED_PRECONDITION` if the course owner's account is disabled or for the following request errors: * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if an alias was specified in the `id` and already exists.",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.create",
 	//   "path": "v1/courses",
@@ -765,9 +766,8 @@ type CoursesDeleteCall struct {
 
 // Delete: Deletes a course. This method returns the following error
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to delete the requested course or for [general user permission
-// errors][User Permission Errors]. * `NOT_FOUND` if no course exists
-// with the requested ID.
+// to delete the requested course or for access errors. * `NOT_FOUND` if
+// no course exists with the requested ID.
 func (r *CoursesService) Delete(id string) *CoursesDeleteCall {
 	c := &CoursesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -846,7 +846,7 @@ func (c *CoursesDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no course exists with the requested ID.",
+	//   "description": "Deletes a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID.",
 	//   "httpMethod": "DELETE",
 	//   "id": "classroom.courses.delete",
 	//   "parameterOrder": [
@@ -854,7 +854,7 @@ func (c *CoursesDeleteCall) Do() (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course to delete. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -882,9 +882,8 @@ type CoursesGetCall struct {
 
 // Get: Returns a course. This method returns the following error codes:
 // * `PERMISSION_DENIED` if the requesting user is not permitted to
-// access the requested course or for [general user permission
-// errors][User Permission Errors]. * `NOT_FOUND` if no course exists
-// with the requested ID.
+// access the requested course or for access errors. * `NOT_FOUND` if no
+// course exists with the requested ID.
 func (r *CoursesService) Get(id string) *CoursesGetCall {
 	c := &CoursesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -976,7 +975,7 @@ func (c *CoursesGetCall) Do() (*Course, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no course exists with the requested ID.",
+	//   "description": "Returns a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.get",
 	//   "parameterOrder": [
@@ -984,7 +983,7 @@ func (c *CoursesGetCall) Do() (*Course, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Identifier of the course to return. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course to return. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1012,10 +1011,10 @@ type CoursesListCall struct {
 
 // List: Returns a list of courses that the requesting user is permitted
 // to view, restricted to those that match the request. This method
-// returns the following error codes: * `PERMISSION_DENIED` for [general
-// user permission errors][User Permission Errors]. * `INVALID_ARGUMENT`
-// if the query argument is malformed. * `NOT_FOUND` if any users
-// specified in the query arguments do not exist.
+// returns the following error codes: * `PERMISSION_DENIED` for access
+// errors. * `INVALID_ARGUMENT` if the query argument is malformed. *
+// `NOT_FOUND` if any users specified in the query arguments do not
+// exist.
 func (r *CoursesService) List() *CoursesListCall {
 	c := &CoursesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -1030,13 +1029,10 @@ func (c *CoursesListCall) PageSize(pageSize int64) *CoursesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken":
-// [nextPageToken][google.classroom.v1.ListCoursesResponse.next_page_toke
-// n] value returned from a previous
-// [list][google.classroom.v1.Courses.ListCourses] call, indicating that
-// the subsequent page of results should be returned. The
-// [list][google.classroom.v1.Courses.ListCourses] request must be
-// otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
 func (c *CoursesListCall) PageToken(pageToken string) *CoursesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1157,7 +1153,7 @@ func (c *CoursesListCall) Do() (*ListCoursesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of courses that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `PERMISSION_DENIED` for [general user permission errors][User Permission Errors]. * `INVALID_ARGUMENT` if the query argument is malformed. * `NOT_FOUND` if any users specified in the query arguments do not exist.",
+	//   "description": "Returns a list of courses that the requesting user is permitted to view, restricted to those that match the request. This method returns the following error codes: * `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the query argument is malformed. * `NOT_FOUND` if any users specified in the query arguments do not exist.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.list",
 	//   "parameters": {
@@ -1168,7 +1164,7 @@ func (c *CoursesListCall) Do() (*ListCoursesResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "[nextPageToken][google.classroom.v1.ListCoursesResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Courses.ListCourses] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Courses.ListCourses] request must be otherwise identical to the one that resulted in this token.",
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1207,11 +1203,11 @@ type CoursesPatchCall struct {
 
 // Patch: Updates one or more fields in a course. This method returns
 // the following error codes: * `PERMISSION_DENIED` if the requesting
-// user is not permitted to modify the requested course or for [general
-// user permission errors][User Permission Errors]. * `NOT_FOUND` if no
-// course exists with the requested ID. * `INVALID_ARGUMENT` if invalid
-// fields are specified in the update mask or if no update mask is
-// supplied.
+// user is not permitted to modify the requested course or for access
+// errors. * `NOT_FOUND` if no course exists with the requested ID. *
+// `INVALID_ARGUMENT` if invalid fields are specified in the update mask
+// or if no update mask is supplied. * `FAILED_PRECONDITION` for the
+// following request errors: * CourseNotModifiable
 func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 	c := &CoursesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -1312,7 +1308,7 @@ func (c *CoursesPatchCall) Do() (*Course, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied.",
+	//   "description": "Updates one or more fields in a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are specified in the update mask or if no update mask is supplied. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable",
 	//   "httpMethod": "PATCH",
 	//   "id": "classroom.courses.patch",
 	//   "parameterOrder": [
@@ -1320,7 +1316,7 @@ func (c *CoursesPatchCall) Do() (*Course, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1357,9 +1353,9 @@ type CoursesUpdateCall struct {
 
 // Update: Updates a course. This method returns the following error
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to modify the requested course or for [general user permission
-// errors][User Permission Errors]. * `NOT_FOUND` if no course exists
-// with the requested ID.
+// to modify the requested course or for access errors. * `NOT_FOUND` if
+// no course exists with the requested ID. * `FAILED_PRECONDITION` for
+// the following request errors: * CourseNotModifiable
 func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
 	c := &CoursesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -1445,7 +1441,7 @@ func (c *CoursesUpdateCall) Do() (*Course, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no course exists with the requested ID.",
+	//   "description": "Updates a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to modify the requested course or for access errors. * `NOT_FOUND` if no course exists with the requested ID. * `FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable",
 	//   "httpMethod": "PUT",
 	//   "id": "classroom.courses.update",
 	//   "parameterOrder": [
@@ -1453,7 +1449,7 @@ func (c *CoursesUpdateCall) Do() (*Course, error) {
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course to update. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1485,9 +1481,9 @@ type CoursesAliasesCreateCall struct {
 
 // Create: Creates an alias for a course. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to create the alias or for [general user permission
-// errors][User Permission Errors]. * `NOT_FOUND` if the course does not
-// exist. * `ALREADY_EXISTS` if the alias already exists.
+// is not permitted to create the alias or for access errors. *
+// `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the
+// alias already exists.
 func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias) *CoursesAliasesCreateCall {
 	c := &CoursesAliasesCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -1573,7 +1569,7 @@ func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an alias for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create the alias or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the alias already exists.",
+	//   "description": "Creates an alias for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create the alias or for access errors. * `NOT_FOUND` if the course does not exist. * `ALREADY_EXISTS` if the alias already exists.",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.aliases.create",
 	//   "parameterOrder": [
@@ -1581,7 +1577,7 @@ func (c *CoursesAliasesCreateCall) Do() (*CourseAlias, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course to alias. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course to alias. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1613,9 +1609,8 @@ type CoursesAliasesDeleteCall struct {
 
 // Delete: Deletes an alias of a course. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to remove the alias or for [general user permission
-// errors][User Permission Errors]. * `NOT_FOUND` if the alias does not
-// exist.
+// is not permitted to remove the alias or for access errors. *
+// `NOT_FOUND` if the alias does not exist.
 func (r *CoursesAliasesService) Delete(courseId string, aliasid string) *CoursesAliasesDeleteCall {
 	c := &CoursesAliasesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -1696,7 +1691,7 @@ func (c *CoursesAliasesDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an alias of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to remove the alias or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the alias does not exist.",
+	//   "description": "Deletes an alias of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to remove the alias or for access errors. * `NOT_FOUND` if the alias does not exist.",
 	//   "httpMethod": "DELETE",
 	//   "id": "classroom.courses.aliases.delete",
 	//   "parameterOrder": [
@@ -1711,7 +1706,7 @@ func (c *CoursesAliasesDeleteCall) Do() (*Empty, error) {
 	//       "type": "string"
 	//     },
 	//     "courseId": {
-	//       "description": "Identifier of the course whose alias should be deleted. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course whose alias should be deleted. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1739,9 +1734,8 @@ type CoursesAliasesListCall struct {
 
 // List: Returns a list of aliases for a course. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to access the course or for [general user permission
-// errors][User Permission Errors]. * `NOT_FOUND` if the course does not
-// exist.
+// is not permitted to access the course or for access errors. *
+// `NOT_FOUND` if the course does not exist.
 func (r *CoursesAliasesService) List(courseId string) *CoursesAliasesListCall {
 	c := &CoursesAliasesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -1757,13 +1751,10 @@ func (c *CoursesAliasesListCall) PageSize(pageSize int64) *CoursesAliasesListCal
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken":
-// [nextPageToken][google.classroom.v1.ListCourseAliasesResponse.next_pag
-// e_token] value returned from a previous
-// [list][google.classroom.v1.Courses.ListCourseAliases] call,
-// indicating that the subsequent page of results should be returned.
-// The [list][google.classroom.v1.Courses.ListCourseAliases] request
-// must be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
 func (c *CoursesAliasesListCall) PageToken(pageToken string) *CoursesAliasesListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -1860,7 +1851,7 @@ func (c *CoursesAliasesListCall) Do() (*ListCourseAliasesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of aliases for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the course does not exist.",
+	//   "description": "Returns a list of aliases for a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access the course or for access errors. * `NOT_FOUND` if the course does not exist.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.aliases.list",
 	//   "parameterOrder": [
@@ -1868,7 +1859,7 @@ func (c *CoursesAliasesListCall) Do() (*ListCourseAliasesResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "The identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "The identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1880,7 +1871,7 @@ func (c *CoursesAliasesListCall) Do() (*ListCourseAliasesResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "[nextPageToken][google.classroom.v1.ListCourseAliasesResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Courses.ListCourseAliases] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Courses.ListCourseAliases] request must be otherwise identical to the one that resulted in this token.",
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1909,11 +1900,13 @@ type CoursesStudentsCreateCall struct {
 
 // Create: Adds a user as a student of a course. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to create students in this course or for [general
-// user permission errors][User Permission Errors]. * `NOT_FOUND` if the
-// requested course ID does not exist. * `FAILED_PRECONDITION` if the
-// requested user's account is disabled. * `ALREADY_EXISTS` if the user
-// is already a student or teacher in the course.
+// is not permitted to create students in this course or for access
+// errors. * `NOT_FOUND` if the requested course ID does not exist. *
+// `FAILED_PRECONDITION` if the requested user's account is disabled,
+// for the following request errors: * CourseMemberLimitReached *
+// CourseNotModifiable * UserGroupsMembershipLimitReached *
+// `ALREADY_EXISTS` if the user is already a student or teacher in the
+// course.
 func (r *CoursesStudentsService) Create(courseId string, student *Student) *CoursesStudentsCreateCall {
 	c := &CoursesStudentsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -1923,9 +1916,9 @@ func (r *CoursesStudentsService) Create(courseId string, student *Student) *Cour
 
 // EnrollmentCode sets the optional parameter "enrollmentCode":
 // Enrollment code of the course to create the student in. This code is
-// required if [userId][google.classroom.v1.Student.user_id] corresponds
-// to the requesting user; it may be omitted if the requesting user has
-// administrative permissions to create students for any user.
+// required if userId corresponds to the requesting user; it may be
+// omitted if the requesting user has administrative permissions to
+// create students for any user.
 func (c *CoursesStudentsCreateCall) EnrollmentCode(enrollmentCode string) *CoursesStudentsCreateCall {
 	c.opt_["enrollmentCode"] = enrollmentCode
 	return c
@@ -2012,7 +2005,7 @@ func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a user as a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled. * `ALREADY_EXISTS` if the user is already a student or teacher in the course.",
+	//   "description": "Adds a user as a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create students in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a student or teacher in the course.",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.students.create",
 	//   "parameterOrder": [
@@ -2020,13 +2013,13 @@ func (c *CoursesStudentsCreateCall) Do() (*Student, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course to create the student in. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course to create the student in. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "enrollmentCode": {
-	//       "description": "Enrollment code of the course to create the student in. This code is required if [userId][google.classroom.v1.Student.user_id] corresponds to the requesting user; it may be omitted if the requesting user has administrative permissions to create students for any user.",
+	//       "description": "Enrollment code of the course to create the student in. This code is required if userId corresponds to the requesting user; it may be omitted if the requesting user has administrative permissions to create students for any user.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2059,10 +2052,9 @@ type CoursesStudentsDeleteCall struct {
 
 // Delete: Deletes a student of a course. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to delete students of this course or for [general
-// user permission errors][User Permission Errors]. * `NOT_FOUND` if no
-// student of this course has the requested ID or if the course does not
-// exist.
+// is not permitted to delete students of this course or for access
+// errors. * `NOT_FOUND` if no student of this course has the requested
+// ID or if the course does not exist.
 func (r *CoursesStudentsService) Delete(courseId string, userId string) *CoursesStudentsDeleteCall {
 	c := &CoursesStudentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -2143,7 +2135,7 @@ func (c *CoursesStudentsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete students of this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
+	//   "description": "Deletes a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete students of this course or for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
 	//   "httpMethod": "DELETE",
 	//   "id": "classroom.courses.students.delete",
 	//   "parameterOrder": [
@@ -2152,7 +2144,7 @@ func (c *CoursesStudentsDeleteCall) Do() (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2187,10 +2179,9 @@ type CoursesStudentsGetCall struct {
 
 // Get: Returns a student of a course. This method returns the following
 // error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to view students of this course or for [general user
-// permission errors][User Permission Errors]. * `NOT_FOUND` if no
-// student of this course has the requested ID or if the course does not
-// exist.
+// permitted to view students of this course or for access errors. *
+// `NOT_FOUND` if no student of this course has the requested ID or if
+// the course does not exist.
 func (r *CoursesStudentsService) Get(courseId string, userId string) *CoursesStudentsGetCall {
 	c := &CoursesStudentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -2284,7 +2275,7 @@ func (c *CoursesStudentsGetCall) Do() (*Student, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view students of this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
+	//   "description": "Returns a student of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view students of this course or for access errors. * `NOT_FOUND` if no student of this course has the requested ID or if the course does not exist.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.students.get",
 	//   "parameterOrder": [
@@ -2293,7 +2284,7 @@ func (c *CoursesStudentsGetCall) Do() (*Student, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2331,7 +2322,7 @@ type CoursesStudentsListCall struct {
 // List: Returns a list of students of this course that the requester is
 // permitted to view. This method returns the following error codes: *
 // `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
-// [general user permission errors][User Permission Errors].
+// access errors.
 func (r *CoursesStudentsService) List(courseId string) *CoursesStudentsListCall {
 	c := &CoursesStudentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -2346,13 +2337,10 @@ func (c *CoursesStudentsListCall) PageSize(pageSize int64) *CoursesStudentsListC
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken":
-// [nextPageToken][google.classroom.v1.ListStudentsResponse.next_page_tok
-// en] value returned from a previous
-// [list][google.classroom.v1.Users.ListStudents] call, indicating that
-// the subsequent page of results should be returned. The
-// [list][google.classroom.v1.Users.ListStudents] request must be
-// otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
 func (c *CoursesStudentsListCall) PageToken(pageToken string) *CoursesStudentsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -2449,7 +2437,7 @@ func (c *CoursesStudentsListCall) Do() (*ListStudentsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of students of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for [general user permission errors][User Permission Errors].",
+	//   "description": "Returns a list of students of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for access errors.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.students.list",
 	//   "parameterOrder": [
@@ -2457,7 +2445,7 @@ func (c *CoursesStudentsListCall) Do() (*ListStudentsResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2469,7 +2457,7 @@ func (c *CoursesStudentsListCall) Do() (*ListStudentsResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "[nextPageToken][google.classroom.v1.ListStudentsResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Users.ListStudents] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Users.ListStudents] request must be otherwise identical to the one that resulted in this token.",
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2500,11 +2488,13 @@ type CoursesTeachersCreateCall struct {
 
 // Create: Creates a teacher of a course. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to create teachers in this course or for [general
-// user permission errors][User Permission Errors]. * `NOT_FOUND` if the
-// requested course ID does not exist. * `FAILED_PRECONDITION` if the
-// requested user's account is disabled. * `ALREADY_EXISTS` if the user
-// is already a teacher or student in the course.
+// is not permitted to create teachers in this course or for access
+// errors. * `NOT_FOUND` if the requested course ID does not exist. *
+// `FAILED_PRECONDITION` if the requested user's account is disabled,
+// for the following request errors: * CourseMemberLimitReached *
+// CourseNotModifiable * CourseTeacherLimitReached *
+// UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is
+// already a teacher or student in the course.
 func (r *CoursesTeachersService) Create(courseId string, teacher *Teacher) *CoursesTeachersCreateCall {
 	c := &CoursesTeachersCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -2590,7 +2580,7 @@ func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled. * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
+	//   "description": "Creates a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create teachers in this course or for access errors. * `NOT_FOUND` if the requested course ID does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled, for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a teacher or student in the course.",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.teachers.create",
 	//   "parameterOrder": [
@@ -2598,7 +2588,7 @@ func (c *CoursesTeachersCreateCall) Do() (*Teacher, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2632,11 +2622,10 @@ type CoursesTeachersDeleteCall struct {
 
 // Delete: Deletes a teacher of a course. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to delete teachers of this course or for [general
-// user permission errors][User Permission Errors]. * `NOT_FOUND` if no
-// teacher of this course has the requested ID or if the course does not
-// exist. * `FAILED_PRECONDITION` if the requested ID belongs to the
-// primary teacher of this course.
+// is not permitted to delete teachers of this course or for access
+// errors. * `NOT_FOUND` if no teacher of this course has the requested
+// ID or if the course does not exist. * `FAILED_PRECONDITION` if the
+// requested ID belongs to the primary teacher of this course.
 func (r *CoursesTeachersService) Delete(courseId string, userId string) *CoursesTeachersDeleteCall {
 	c := &CoursesTeachersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -2717,7 +2706,7 @@ func (c *CoursesTeachersDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of this course.",
+	//   "description": "Deletes a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of this course.",
 	//   "httpMethod": "DELETE",
 	//   "id": "classroom.courses.teachers.delete",
 	//   "parameterOrder": [
@@ -2726,7 +2715,7 @@ func (c *CoursesTeachersDeleteCall) Do() (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2761,10 +2750,9 @@ type CoursesTeachersGetCall struct {
 
 // Get: Returns a teacher of a course. This method returns the following
 // error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to view teachers of this course or for [general user
-// permission errors][User Permission Errors]. * `NOT_FOUND` if no
-// teacher of this course has the requested ID or if the course does not
-// exist.
+// permitted to view teachers of this course or for access errors. *
+// `NOT_FOUND` if no teacher of this course has the requested ID or if
+// the course does not exist.
 func (r *CoursesTeachersService) Get(courseId string, userId string) *CoursesTeachersGetCall {
 	c := &CoursesTeachersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -2858,7 +2846,7 @@ func (c *CoursesTeachersGetCall) Do() (*Teacher, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view teachers of this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist.",
+	//   "description": "Returns a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view teachers of this course or for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.teachers.get",
 	//   "parameterOrder": [
@@ -2867,7 +2855,7 @@ func (c *CoursesTeachersGetCall) Do() (*Teacher, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2905,7 +2893,7 @@ type CoursesTeachersListCall struct {
 // List: Returns a list of teachers of this course that the requester is
 // permitted to view. This method returns the following error codes: *
 // `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
-// [general user permission errors][User Permission Errors].
+// access errors.
 func (r *CoursesTeachersService) List(courseId string) *CoursesTeachersListCall {
 	c := &CoursesTeachersListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.courseId = courseId
@@ -2920,13 +2908,10 @@ func (c *CoursesTeachersListCall) PageSize(pageSize int64) *CoursesTeachersListC
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken":
-// [nextPageToken][google.classroom.v1.ListTeachersResponse.next_page_tok
-// en] value returned from a previous
-// [list][google.classroom.v1.Users.ListTeachers] call, indicating that
-// the subsequent page of results should be returned. The
-// [list][google.classroom.v1.Users.ListTeachers] request must be
-// otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
 func (c *CoursesTeachersListCall) PageToken(pageToken string) *CoursesTeachersListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -3023,7 +3008,7 @@ func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of teachers of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for [general user permission errors][User Permission Errors].",
+	//   "description": "Returns a list of teachers of this course that the requester is permitted to view. This method returns the following error codes: * `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for access errors.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.courses.teachers.list",
 	//   "parameterOrder": [
@@ -3031,7 +3016,7 @@ func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "courseId": {
-	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an [alias][google.classroom.v1.CourseAlias].",
+	//       "description": "Identifier of the course. This identifier can be either the Classroom-assigned identifier or an alias.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3043,7 +3028,7 @@ func (c *CoursesTeachersListCall) Do() (*ListTeachersResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "[nextPageToken][google.classroom.v1.ListTeachersResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Users.ListTeachers] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Users.ListTeachers] request must be otherwise identical to the one that resulted in this token.",
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3076,7 +3061,9 @@ type InvitationsAcceptCall struct {
 // course. Only the invited user may accept an invitation. This method
 // returns the following error codes: * `PERMISSION_DENIED` if the
 // requesting user is not permitted to accept the requested invitation
-// or for [general user permission errors][User Permission Errors]. *
+// or for access errors. * `FAILED_PRECONDITION` for the following
+// request errors: * CourseMemberLimitReached * CourseNotModifiable *
+// CourseTeacherLimitReached * UserGroupsMembershipLimitReached *
 // `NOT_FOUND` if no invitation exists with the requested ID.
 func (r *InvitationsService) Accept(id string) *InvitationsAcceptCall {
 	c := &InvitationsAcceptCall{s: r.s, opt_: make(map[string]interface{})}
@@ -3156,7 +3143,7 @@ func (c *InvitationsAcceptCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Accepts an invitation, removing it and adding the invited user to the teachers or students (as appropriate) of the specified course. Only the invited user may accept an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to accept the requested invitation or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no invitation exists with the requested ID.",
+	//   "description": "Accepts an invitation, removing it and adding the invited user to the teachers or students (as appropriate) of the specified course. Only the invited user may accept an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to accept the requested invitation or for access errors. * `FAILED_PRECONDITION` for the following request errors: * CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached * UserGroupsMembershipLimitReached * `NOT_FOUND` if no invitation exists with the requested ID.",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.invitations.accept",
 	//   "parameterOrder": [
@@ -3194,12 +3181,11 @@ type InvitationsCreateCall struct {
 // course may exist at a time. Delete and re-create an invitation to
 // make changes. This method returns the following error codes: *
 // `PERMISSION_DENIED` if the requesting user is not permitted to create
-// invitations for this course or for [general user permission
-// errors][User Permission Errors]. * `NOT_FOUND` if the course or the
-// user does not exist. * `FAILED_PRECONDITION` if the requested user's
-// account is disabled or if the user already has this role or a role
-// with greater permissions. * `ALREADY_EXISTS` if an invitation for the
-// specified user and course already exists.
+// invitations for this course or for access errors. * `NOT_FOUND` if
+// the course or the user does not exist. * `FAILED_PRECONDITION` if the
+// requested user's account is disabled or if the user already has this
+// role or a role with greater permissions. * `ALREADY_EXISTS` if an
+// invitation for the specified user and course already exists.
 func (r *InvitationsService) Create(invitation *Invitation) *InvitationsCreateCall {
 	c := &InvitationsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.invitation = invitation
@@ -3282,7 +3268,7 @@ func (c *InvitationsCreateCall) Do() (*Invitation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an invitation. Only one invitation for a user and course may exist at a time. Delete and re-create an invitation to make changes. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create invitations for this course or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if the course or the user does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled or if the user already has this role or a role with greater permissions. * `ALREADY_EXISTS` if an invitation for the specified user and course already exists.",
+	//   "description": "Creates an invitation. Only one invitation for a user and course may exist at a time. Delete and re-create an invitation to make changes. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create invitations for this course or for access errors. * `NOT_FOUND` if the course or the user does not exist. * `FAILED_PRECONDITION` if the requested user's account is disabled or if the user already has this role or a role with greater permissions. * `ALREADY_EXISTS` if an invitation for the specified user and course already exists.",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.invitations.create",
 	//   "path": "v1/invitations",
@@ -3310,9 +3296,8 @@ type InvitationsDeleteCall struct {
 
 // Delete: Deletes an invitation. This method returns the following
 // error codes: * `PERMISSION_DENIED` if the requesting user is not
-// permitted to delete the requested invitation or for [general user
-// permission errors][User Permission Errors]. * `NOT_FOUND` if no
-// invitation exists with the requested ID.
+// permitted to delete the requested invitation or for access errors. *
+// `NOT_FOUND` if no invitation exists with the requested ID.
 func (r *InvitationsService) Delete(id string) *InvitationsDeleteCall {
 	c := &InvitationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -3391,7 +3376,7 @@ func (c *InvitationsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested invitation or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no invitation exists with the requested ID.",
+	//   "description": "Deletes an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete the requested invitation or for access errors. * `NOT_FOUND` if no invitation exists with the requested ID.",
 	//   "httpMethod": "DELETE",
 	//   "id": "classroom.invitations.delete",
 	//   "parameterOrder": [
@@ -3427,9 +3412,8 @@ type InvitationsGetCall struct {
 
 // Get: Returns an invitation. This method returns the following error
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
-// to view the requested invitation or for [general user permission
-// errors][User Permission Errors]. * `NOT_FOUND` if no invitation
-// exists with the requested ID.
+// to view the requested invitation or for access errors. * `NOT_FOUND`
+// if no invitation exists with the requested ID.
 func (r *InvitationsService) Get(id string) *InvitationsGetCall {
 	c := &InvitationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.id = id
@@ -3521,7 +3505,7 @@ func (c *InvitationsGetCall) Do() (*Invitation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view the requested invitation or for [general user permission errors][User Permission Errors]. * `NOT_FOUND` if no invitation exists with the requested ID.",
+	//   "description": "Returns an invitation. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to view the requested invitation or for access errors. * `NOT_FOUND` if no invitation exists with the requested ID.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.invitations.get",
 	//   "parameterOrder": [
@@ -3559,8 +3543,7 @@ type InvitationsListCall struct {
 // permitted to view, restricted to those that match the list request.
 // *Note:* At least one of `user_id` or `course_id` must be supplied.
 // Both fields can be supplied. This method returns the following error
-// codes: * `PERMISSION_DENIED` for [general user permission
-// errors][User Permission Errors].
+// codes: * `PERMISSION_DENIED` for access errors.
 func (r *InvitationsService) List() *InvitationsListCall {
 	c := &InvitationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -3581,13 +3564,10 @@ func (c *InvitationsListCall) PageSize(pageSize int64) *InvitationsListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken":
-// [nextPageToken][google.classroom.v1.ListInvitationsResponse.next_page_
-// token] value returned from a previous
-// [list][google.classroom.v1.Invitations.ListInvitations] call,
-// indicating that the subsequent page of results should be returned.
-// The [list][google.classroom.v1.Invitations.ListInvitations] request
-// must be otherwise identical to the one that resulted in this token.
+// PageToken sets the optional parameter "pageToken": nextPageToken
+// value returned from a previous list call, indicating that the
+// subsequent page of results should be returned. The list request must
+// be otherwise identical to the one that resulted in this token.
 func (c *InvitationsListCall) PageToken(pageToken string) *InvitationsListCall {
 	c.opt_["pageToken"] = pageToken
 	return c
@@ -3698,7 +3678,7 @@ func (c *InvitationsListCall) Do() (*ListInvitationsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of invitations that the requesting user is permitted to view, restricted to those that match the list request. *Note:* At least one of `user_id` or `course_id` must be supplied. Both fields can be supplied. This method returns the following error codes: * `PERMISSION_DENIED` for [general user permission errors][User Permission Errors].",
+	//   "description": "Returns a list of invitations that the requesting user is permitted to view, restricted to those that match the list request. *Note:* At least one of `user_id` or `course_id` must be supplied. Both fields can be supplied. This method returns the following error codes: * `PERMISSION_DENIED` for access errors.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.invitations.list",
 	//   "parameters": {
@@ -3714,7 +3694,7 @@ func (c *InvitationsListCall) Do() (*ListInvitationsResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "[nextPageToken][google.classroom.v1.ListInvitationsResponse.next_page_token] value returned from a previous [list][google.classroom.v1.Invitations.ListInvitations] call, indicating that the subsequent page of results should be returned. The [list][google.classroom.v1.Invitations.ListInvitations] request must be otherwise identical to the one that resulted in this token.",
+	//       "description": "nextPageToken value returned from a previous list call, indicating that the subsequent page of results should be returned. The list request must be otherwise identical to the one that resulted in this token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3748,8 +3728,7 @@ type UserProfilesGetCall struct {
 // Get: Returns a user profile. This method returns the following error
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
 // to access this user profile or if no profile exists with the
-// requested ID or for [general user permission errors][User Permission
-// Errors].
+// requested ID or for access errors.
 func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
 	c := &UserProfilesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
@@ -3841,7 +3820,7 @@ func (c *UserProfilesGetCall) Do() (*UserProfile, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile or if no profile exists with the requested ID or for [general user permission errors][User Permission Errors].",
+	//   "description": "Returns a user profile. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to access this user profile or if no profile exists with the requested ID or for access errors.",
 	//   "httpMethod": "GET",
 	//   "id": "classroom.userProfiles.get",
 	//   "parameterOrder": [

@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "adsense:v1.4"
 const apiName = "adsense"
@@ -386,6 +388,8 @@ type UrlchannelsService struct {
 }
 
 type Account struct {
+	CreationTime int64 `json:"creation_time,omitempty,string"`
+
 	// Id: Unique identifier of this account.
 	Id string `json:"id,omitempty"`
 
@@ -408,7 +412,7 @@ type Account struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the

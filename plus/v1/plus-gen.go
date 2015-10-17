@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "plus:v1"
 const apiName = "plus"
@@ -248,6 +250,9 @@ func (s *Activity) MarshalJSON() ([]byte, error) {
 
 // ActivityActor: The person who performed this activity.
 type ActivityActor struct {
+	// ClientSpecificActorInfo: Actor info specific to particular clients.
+	ClientSpecificActorInfo *ActivityActorClientSpecificActorInfo `json:"clientSpecificActorInfo,omitempty"`
+
 	// DisplayName: The name of the actor, suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -266,7 +271,29 @@ type ActivityActor struct {
 	// Verification: Verification status of actor.
 	Verification *ActivityActorVerification `json:"verification,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g.
+	// "ClientSpecificActorInfo") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ActivityActor) MarshalJSON() ([]byte, error) {
+	type noMethod ActivityActor
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ActivityActorClientSpecificActorInfo: Actor info specific to
+// particular clients.
+type ActivityActorClientSpecificActorInfo struct {
+	// YoutubeActorInfo: Actor info specific to YouTube clients.
+	YoutubeActorInfo *ActivityActorClientSpecificActorInfoYoutubeActorInfo `json:"youtubeActorInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "YoutubeActorInfo") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -275,8 +302,29 @@ type ActivityActor struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *ActivityActor) MarshalJSON() ([]byte, error) {
-	type noMethod ActivityActor
+func (s *ActivityActorClientSpecificActorInfo) MarshalJSON() ([]byte, error) {
+	type noMethod ActivityActorClientSpecificActorInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ActivityActorClientSpecificActorInfoYoutubeActorInfo: Actor info
+// specific to YouTube clients.
+type ActivityActorClientSpecificActorInfoYoutubeActorInfo struct {
+	// ChannelId: ID of the YouTube channel owned by the Actor.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ActivityActorClientSpecificActorInfoYoutubeActorInfo) MarshalJSON() ([]byte, error) {
+	type noMethod ActivityActorClientSpecificActorInfoYoutubeActorInfo
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -406,6 +454,9 @@ func (s *ActivityObject) MarshalJSON() ([]byte, error) {
 // activity, such as when a person reshares an activity, this property
 // specifies the original activity's actor.
 type ActivityObjectActor struct {
+	// ClientSpecificActorInfo: Actor info specific to particular clients.
+	ClientSpecificActorInfo *ActivityObjectActorClientSpecificActorInfo `json:"clientSpecificActorInfo,omitempty"`
+
 	// DisplayName: The original actor's name, which is suitable for
 	// display.
 	DisplayName string `json:"displayName,omitempty"`
@@ -422,7 +473,29 @@ type ActivityObjectActor struct {
 	// Verification: Verification status of actor.
 	Verification *ActivityObjectActorVerification `json:"verification,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g.
+	// "ClientSpecificActorInfo") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ActivityObjectActor) MarshalJSON() ([]byte, error) {
+	type noMethod ActivityObjectActor
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ActivityObjectActorClientSpecificActorInfo: Actor info specific to
+// particular clients.
+type ActivityObjectActorClientSpecificActorInfo struct {
+	// YoutubeActorInfo: Actor info specific to YouTube clients.
+	YoutubeActorInfo *ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo `json:"youtubeActorInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "YoutubeActorInfo") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -431,8 +504,29 @@ type ActivityObjectActor struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *ActivityObjectActor) MarshalJSON() ([]byte, error) {
-	type noMethod ActivityObjectActor
+func (s *ActivityObjectActorClientSpecificActorInfo) MarshalJSON() ([]byte, error) {
+	type noMethod ActivityObjectActorClientSpecificActorInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo: Actor
+// info specific to YouTube clients.
+type ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo struct {
+	// ChannelId: ID of the YouTube channel owned by the Actor.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo) MarshalJSON() ([]byte, error) {
+	type noMethod ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -871,6 +965,9 @@ func (s *Comment) MarshalJSON() ([]byte, error) {
 
 // CommentActor: The person who posted this comment.
 type CommentActor struct {
+	// ClientSpecificActorInfo: Actor info specific to particular clients.
+	ClientSpecificActorInfo *CommentActorClientSpecificActorInfo `json:"clientSpecificActorInfo,omitempty"`
+
 	// DisplayName: The name of this actor, suitable for display.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -886,7 +983,29 @@ type CommentActor struct {
 	// Verification: Verification status of actor.
 	Verification *CommentActorVerification `json:"verification,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g.
+	// "ClientSpecificActorInfo") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CommentActor) MarshalJSON() ([]byte, error) {
+	type noMethod CommentActor
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CommentActorClientSpecificActorInfo: Actor info specific to
+// particular clients.
+type CommentActorClientSpecificActorInfo struct {
+	// YoutubeActorInfo: Actor info specific to YouTube clients.
+	YoutubeActorInfo *CommentActorClientSpecificActorInfoYoutubeActorInfo `json:"youtubeActorInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "YoutubeActorInfo") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -895,8 +1014,29 @@ type CommentActor struct {
 	ForceSendFields []string `json:"-"`
 }
 
-func (s *CommentActor) MarshalJSON() ([]byte, error) {
-	type noMethod CommentActor
+func (s *CommentActorClientSpecificActorInfo) MarshalJSON() ([]byte, error) {
+	type noMethod CommentActorClientSpecificActorInfo
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// CommentActorClientSpecificActorInfoYoutubeActorInfo: Actor info
+// specific to YouTube clients.
+type CommentActorClientSpecificActorInfoYoutubeActorInfo struct {
+	// ChannelId: ID of the YouTube channel owned by the Actor.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *CommentActorClientSpecificActorInfoYoutubeActorInfo) MarshalJSON() ([]byte, error) {
+	type noMethod CommentActorClientSpecificActorInfoYoutubeActorInfo
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }

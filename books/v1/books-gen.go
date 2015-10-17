@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "books:v1"
 const apiName = "books"
@@ -60,7 +62,9 @@ func New(client *http.Client) (*Service, error) {
 	s.Layers = NewLayersService(s)
 	s.Myconfig = NewMyconfigService(s)
 	s.Mylibrary = NewMylibraryService(s)
+	s.Notification = NewNotificationService(s)
 	s.Onboarding = NewOnboardingService(s)
+	s.Personalizedstream = NewPersonalizedstreamService(s)
 	s.Promooffer = NewPromoofferService(s)
 	s.Volumes = NewVolumesService(s)
 	return s, nil
@@ -83,7 +87,11 @@ type Service struct {
 
 	Mylibrary *MylibraryService
 
+	Notification *NotificationService
+
 	Onboarding *OnboardingService
+
+	Personalizedstream *PersonalizedstreamService
 
 	Promooffer *PromoofferService
 
@@ -235,12 +243,30 @@ type MylibraryReadingpositionsService struct {
 	s *Service
 }
 
+func NewNotificationService(s *Service) *NotificationService {
+	rs := &NotificationService{s: s}
+	return rs
+}
+
+type NotificationService struct {
+	s *Service
+}
+
 func NewOnboardingService(s *Service) *OnboardingService {
 	rs := &OnboardingService{s: s}
 	return rs
 }
 
 type OnboardingService struct {
+	s *Service
+}
+
+func NewPersonalizedstreamService(s *Service) *PersonalizedstreamService {
+	rs := &PersonalizedstreamService{s: s}
+	return rs
+}
+
+type PersonalizedstreamService struct {
 	s *Service
 }
 
@@ -1295,6 +1321,90 @@ func (s *DictlayerdataDictWordsSource) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type Discoveryclusters struct {
+	Clusters []*DiscoveryclustersClusters `json:"clusters,omitempty"`
+
+	// Kind: Resorce type.
+	Kind string `json:"kind,omitempty"`
+
+	TotalClusters int64 `json:"totalClusters,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Clusters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Discoveryclusters) MarshalJSON() ([]byte, error) {
+	type noMethod Discoveryclusters
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type DiscoveryclustersClusters struct {
+	BannerWithContentContainer *DiscoveryclustersClustersBannerWithContentContainer `json:"banner_with_content_container,omitempty"`
+
+	SubTitle string `json:"subTitle,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	TotalVolumes int64 `json:"totalVolumes,omitempty"`
+
+	Uid string `json:"uid,omitempty"`
+
+	Volumes []*Volume `json:"volumes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BannerWithContentContainer") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DiscoveryclustersClusters) MarshalJSON() ([]byte, error) {
+	type noMethod DiscoveryclustersClusters
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type DiscoveryclustersClustersBannerWithContentContainer struct {
+	FillColorArgb string `json:"fillColorArgb,omitempty"`
+
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	MaskColorArgb string `json:"maskColorArgb,omitempty"`
+
+	MoreButtonText string `json:"moreButtonText,omitempty"`
+
+	MoreButtonUrl string `json:"moreButtonUrl,omitempty"`
+
+	TextColorArgb string `json:"textColorArgb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FillColorArgb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DiscoveryclustersClustersBannerWithContentContainer) MarshalJSON() ([]byte, error) {
+	type noMethod DiscoveryclustersClustersBannerWithContentContainer
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type DownloadAccessRestriction struct {
 	// DeviceAllowed: If restricted, whether access is granted for this
 	// (user, device, volume).
@@ -1711,6 +1821,37 @@ func (s *MetadataItems) MarshalJSON() ([]byte, error) {
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type Notification struct {
+	Body string `json:"body,omitempty"`
+
+	IconUrl string `json:"iconUrl,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	LinkUrl string `json:"linkUrl,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Body") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Notification) MarshalJSON() ([]byte, error) {
+	type noMethod Notification
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type Offers struct {
 	// Items: A list of offers.
 	Items []*OffersItems `json:"items,omitempty"`
@@ -1965,6 +2106,8 @@ type Usersettings struct {
 	// purposes.
 	NotesExport *UsersettingsNotesExport `json:"notesExport,omitempty"`
 
+	Notification *UsersettingsNotification `json:"notification,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2002,6 +2145,42 @@ type UsersettingsNotesExport struct {
 
 func (s *UsersettingsNotesExport) MarshalJSON() ([]byte, error) {
 	type noMethod UsersettingsNotesExport
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type UsersettingsNotification struct {
+	MoreFromAuthors *UsersettingsNotificationMoreFromAuthors `json:"moreFromAuthors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MoreFromAuthors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UsersettingsNotification) MarshalJSON() ([]byte, error) {
+	type noMethod UsersettingsNotification
+	raw := noMethod(*s)
+	return internal.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type UsersettingsNotificationMoreFromAuthors struct {
+	OptedState string `json:"opted_state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OptedState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *UsersettingsNotificationMoreFromAuthors) MarshalJSON() ([]byte, error) {
+	type noMethod UsersettingsNotificationMoreFromAuthors
 	raw := noMethod(*s)
 	return internal.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2496,8 +2675,15 @@ func (s *VolumeSearchInfo) MarshalJSON() ([]byte, error) {
 // VolumeUserInfo: User specific information related to this volume.
 // (e.g. page this user last read or whether they purchased this book)
 type VolumeUserInfo struct {
+	// AcquisitionType: How this volume was acquired.
+	AcquisitionType int64 `json:"acquisitionType,omitempty"`
+
 	// Copy: Copy/Paste accounting information.
 	Copy *VolumeUserInfoCopy `json:"copy,omitempty"`
+
+	// EntitlementType: Whether this volume is purchased, sample, pd
+	// download etc.
+	EntitlementType int64 `json:"entitlementType,omitempty"`
 
 	// IsInMyBooks: Whether or not this volume is currently in "my books."
 	IsInMyBooks bool `json:"isInMyBooks,omitempty"`
@@ -2533,7 +2719,7 @@ type VolumeUserInfo struct {
 
 	UserUploadedVolumeInfo *VolumeUserInfoUserUploadedVolumeInfo `json:"userUploadedVolumeInfo,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Copy") to
+	// ForceSendFields is a list of field names (e.g. "AcquisitionType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3859,7 +4045,7 @@ type DictionaryListOfflineMetadataCall struct {
 	ctx_    context.Context
 }
 
-// ListOfflineMetadata: Returns a list of offline dictionary meatadata
+// ListOfflineMetadata: Returns a list of offline dictionary metadata
 // available
 func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListOfflineMetadataCall {
 	c := &DictionaryListOfflineMetadataCall{s: r.s, opt_: make(map[string]interface{})}
@@ -3951,7 +4137,7 @@ func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of offline dictionary meatadata available",
+	//   "description": "Returns a list of offline dictionary metadata available",
 	//   "httpMethod": "GET",
 	//   "id": "books.dictionary.listOfflineMetadata",
 	//   "parameterOrder": [
@@ -8325,6 +8511,162 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
 
 }
 
+// method id "books.notification.get":
+
+type NotificationGetCall struct {
+	s              *Service
+	notificationId string
+	opt_           map[string]interface{}
+	ctx_           context.Context
+}
+
+// Get: Returns notification details for a given notification id.
+func (r *NotificationService) Get(notificationId string) *NotificationGetCall {
+	c := &NotificationGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.notificationId = notificationId
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// notification title and body.
+func (c *NotificationGetCall) Locale(locale string) *NotificationGetCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *NotificationGetCall) Source(source string) *NotificationGetCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *NotificationGetCall) Fields(s ...googleapi.Field) *NotificationGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *NotificationGetCall) IfNoneMatch(entityTag string) *NotificationGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *NotificationGetCall) Context(ctx context.Context) *NotificationGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("notification_id", fmt.Sprintf("%v", c.notificationId))
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "notification/get")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "books.notification.get" call.
+// Exactly one of *Notification or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Notification.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *NotificationGetCall) Do() (*Notification, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Notification{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns notification details for a given notification id.",
+	//   "httpMethod": "GET",
+	//   "id": "books.notification.get",
+	//   "parameterOrder": [
+	//     "notification_id"
+	//   ],
+	//   "parameters": {
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating notification title and body.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "notification_id": {
+	//       "description": "String to identify the notification.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "notification/get",
+	//   "response": {
+	//     "$ref": "Notification"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
 // method id "books.onboarding.listCategories":
 
 type OnboardingListCategoriesCall struct {
@@ -8650,6 +8992,179 @@ func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
 	//   "path": "onboarding/listCategoryVolumes",
 	//   "response": {
 	//     "$ref": "Volume2"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.personalizedstream.get":
+
+type PersonalizedstreamGetCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
+}
+
+// Get: Returns a stream of personalized book clusters
+func (r *PersonalizedstreamService) Get() *PersonalizedstreamGetCall {
+	c := &PersonalizedstreamGetCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Locale sets the optional parameter "locale": ISO-639-1 language and
+// ISO-3166-1 country code. Ex: 'en_US'. Used for generating
+// recommendations.
+func (c *PersonalizedstreamGetCall) Locale(locale string) *PersonalizedstreamGetCall {
+	c.opt_["locale"] = locale
+	return c
+}
+
+// MaxAllowedMaturityRating sets the optional parameter
+// "maxAllowedMaturityRating": The maximum allowed maturity rating of
+// returned recommendations. Books with a higher maturity rating are
+// filtered out.
+//
+// Possible values:
+//   "mature" - Show books which are rated mature or lower.
+//   "not-mature" - Show books which are rated not mature.
+func (c *PersonalizedstreamGetCall) MaxAllowedMaturityRating(maxAllowedMaturityRating string) *PersonalizedstreamGetCall {
+	c.opt_["maxAllowedMaturityRating"] = maxAllowedMaturityRating
+	return c
+}
+
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *PersonalizedstreamGetCall) Source(source string) *PersonalizedstreamGetCall {
+	c.opt_["source"] = source
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PersonalizedstreamGetCall) Fields(s ...googleapi.Field) *PersonalizedstreamGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PersonalizedstreamGetCall) IfNoneMatch(entityTag string) *PersonalizedstreamGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *PersonalizedstreamGetCall) Context(ctx context.Context) *PersonalizedstreamGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["locale"]; ok {
+		params.Set("locale", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxAllowedMaturityRating"]; ok {
+		params.Set("maxAllowedMaturityRating", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "personalizedstream/get")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "books.personalizedstream.get" call.
+// Exactly one of *Discoveryclusters or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *Discoveryclusters.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PersonalizedstreamGetCall) Do() (*Discoveryclusters, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Discoveryclusters{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a stream of personalized book clusters",
+	//   "httpMethod": "GET",
+	//   "id": "books.personalizedstream.get",
+	//   "parameters": {
+	//     "locale": {
+	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxAllowedMaturityRating": {
+	//       "description": "The maximum allowed maturity rating of returned recommendations. Books with a higher maturity rating are filtered out.",
+	//       "enum": [
+	//         "mature",
+	//         "not-mature"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Show books which are rated mature or lower.",
+	//         "Show books which are rated not mature."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "String to identify the originator of this request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "personalizedstream/get",
+	//   "response": {
+	//     "$ref": "Discoveryclusters"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"

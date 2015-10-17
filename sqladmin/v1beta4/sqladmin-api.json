@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/CdVfU5tbn5VgAny3uzYYuohH1xY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dmM5e1LsyAJYfrXQoy2C4h3tVuA\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20150825",
+ "revision": "20151013",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -479,7 +479,7 @@
      "properties": {
       "schemaOnly": {
        "type": "boolean",
-       "description": "Export only schema."
+       "description": "Export only schemas."
       },
       "tables": {
        "type": "array",
@@ -493,6 +493,23 @@
     "uri": {
      "type": "string",
      "description": "The path to the file in Google Cloud Storage where the export will be stored. The URI is in the form gs://bucketName/fileName. If the file already exists, the operation fails. If fileType is SQL and the filename ends with .gz, the contents are compressed."
+    }
+   }
+  },
+  "FailoverContext": {
+   "id": "FailoverContext",
+   "type": "object",
+   "description": "Database instance failover context.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#failoverContext.",
+     "default": "sql#failoverContext"
+    },
+    "settingsVersion": {
+     "type": "string",
+     "description": "The current settings version of this instance. Request will be rejected if this version doesn't match the current settings version.",
+     "format": "int64"
     }
    }
   },
@@ -510,7 +527,7 @@
     },
     "appliesTo": {
      "type": "array",
-     "description": "The database version this flag applies to. Currently this can only be [MYSQL_5_5].",
+     "description": "The database version this flag applies to. Can be MYSQL_5_5, MYSQL_5_6, or both.",
      "items": {
       "type": "string"
      }
@@ -619,6 +636,17 @@
     "exportContext": {
      "$ref": "ExportContext",
      "description": "Contains details about the export operation."
+    }
+   }
+  },
+  "InstancesFailoverRequest": {
+   "id": "InstancesFailoverRequest",
+   "type": "object",
+   "description": "Instance failover request.",
+   "properties": {
+    "failoverContext": {
+     "$ref": "FailoverContext",
+     "description": "Failover Context."
     }
    }
   },
@@ -933,6 +961,10 @@
    "type": "object",
    "description": "Read-replica configuration for connecting to the master.",
    "properties": {
+    "failoverTarget": {
+     "type": "boolean",
+     "description": "Specifies if the replica is the failover target. If the field is set to true the replica will be designated as a failover replica. In case the master instance fails, the replica instance will be promoted as the new master instance.\nOnly one replica can be specified as failover target, and the replica has to be in different zone with the master instance."
+    },
     "kind": {
      "type": "string",
      "description": "This is always sql#replicaConfiguration.",
@@ -993,6 +1025,11 @@
     "crashSafeReplicationEnabled": {
      "type": "boolean",
      "description": "Configuration specific to read replica instances. Indicates whether database flags for crash-safe replication are enabled."
+    },
+    "dataDiskSizeGb": {
+     "type": "string",
+     "description": "The size of data disk for the performance instance, specified in GB. Setting this value for non-performance instances will result in an error.",
+     "format": "int64"
     },
     "databaseFlags": {
      "type": "array",
@@ -1293,7 +1330,7 @@
      "parameters": {
       "id": {
        "type": "string",
-       "description": "The ID of the Backup Run to delete.",
+       "description": "The ID of the Backup Run to delete. To find a Backup Run ID, use the list method.",
        "required": true,
        "format": "int64",
        "location": "path"
@@ -1749,6 +1786,40 @@
      },
      "scopes": [
       "https://www.googleapis.com/auth/cloud-platform"
+     ]
+    },
+    "failover": {
+     "id": "sql.instances.failover",
+     "path": "projects/{project}/instances/{instance}/failover",
+     "httpMethod": "POST",
+     "description": "Failover the instance to its failover replica instance.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Cloud SQL instance ID. This does not include the project ID.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "ID of the project that contains the read replica.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "instance"
+     ],
+     "request": {
+      "$ref": "InstancesFailoverRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/sqlservice.admin"
      ]
     },
     "get": {

@@ -37,6 +37,8 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = internal.MarshalJSON
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "doubleclickbidmanager:v1"
 const apiName = "doubleclickbidmanager"
@@ -102,6 +104,14 @@ type ReportsService struct {
 
 // DownloadLineItemsRequest: Request to fetch stored line items.
 type DownloadLineItemsRequest struct {
+	// FileSpec: File specification (column names, types, order) in which
+	// the line items will be returned. Default to EWF.
+	//
+	// Possible values:
+	//   "EWF"
+	//   "SDF"
+	FileSpec string `json:"fileSpec,omitempty"`
+
 	// FilterIds: Ids of the specified filter type used to filter line items
 	// to fetch. If omitted, all the line items will be returned.
 	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
@@ -121,7 +131,7 @@ type DownloadLineItemsRequest struct {
 	//   "CSV"
 	Format string `json:"format,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FilterIds") to
+	// ForceSendFields is a list of field names (e.g. "FileSpec") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -139,7 +149,8 @@ func (s *DownloadLineItemsRequest) MarshalJSON() ([]byte, error) {
 // DownloadLineItemsResponse: Download line items response.
 type DownloadLineItemsResponse struct {
 	// LineItems: Retrieved line items in CSV format. Refer to  Entity Write
-	// File Format for more information on file format.
+	// File Format or  Structured Data File Format for more information on
+	// file formats.
 	LineItems string `json:"lineItems,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -181,9 +192,11 @@ type FilterPair struct {
 	//   "FILTER_CITY"
 	//   "FILTER_CONVERSION_DELAY"
 	//   "FILTER_COUNTRY"
+	//   "FILTER_CREATIVE_HEIGHT"
 	//   "FILTER_CREATIVE_ID"
 	//   "FILTER_CREATIVE_SIZE"
 	//   "FILTER_CREATIVE_TYPE"
+	//   "FILTER_CREATIVE_WIDTH"
 	//   "FILTER_DATA_PROVIDER"
 	//   "FILTER_DATE"
 	//   "FILTER_DAY_OF_WEEK"
@@ -344,9 +357,11 @@ type Parameters struct {
 	//   "FILTER_CITY"
 	//   "FILTER_CONVERSION_DELAY"
 	//   "FILTER_COUNTRY"
+	//   "FILTER_CREATIVE_HEIGHT"
 	//   "FILTER_CREATIVE_ID"
 	//   "FILTER_CREATIVE_SIZE"
 	//   "FILTER_CREATIVE_TYPE"
+	//   "FILTER_CREATIVE_WIDTH"
 	//   "FILTER_DATA_PROVIDER"
 	//   "FILTER_DATE"
 	//   "FILTER_DAY_OF_WEEK"
@@ -483,6 +498,12 @@ type Parameters struct {
 	//   "METRIC_FEE20_ADVERTISER"
 	//   "METRIC_FEE20_PARTNER"
 	//   "METRIC_FEE20_USD"
+	//   "METRIC_FEE21_ADVERTISER"
+	//   "METRIC_FEE21_PARTNER"
+	//   "METRIC_FEE21_USD"
+	//   "METRIC_FEE22_ADVERTISER"
+	//   "METRIC_FEE22_PARTNER"
+	//   "METRIC_FEE22_USD"
 	//   "METRIC_FEE2_ADVERTISER"
 	//   "METRIC_FEE2_PARTNER"
 	//   "METRIC_FEE2_USD"
@@ -532,6 +553,9 @@ type Parameters struct {
 	//   "METRIC_MEDIA_COST_ECPM_USD"
 	//   "METRIC_MEDIA_COST_PARTNER"
 	//   "METRIC_MEDIA_COST_USD"
+	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_ADVERTISER"
+	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_PARTNER"
+	//   "METRIC_MEDIA_COST_VIEWABLE_ECPM_USD"
 	//   "METRIC_MEDIA_FEE1_ADVERTISER"
 	//   "METRIC_MEDIA_FEE1_PARTNER"
 	//   "METRIC_MEDIA_FEE1_USD"
@@ -572,6 +596,9 @@ type Parameters struct {
 	//   "METRIC_PROFIT_MARGIN"
 	//   "METRIC_PROFIT_PARTNER"
 	//   "METRIC_PROFIT_USD"
+	//   "METRIC_PROFIT_VIEWABLE_ECPM_ADVERTISER"
+	//   "METRIC_PROFIT_VIEWABLE_ECPM_PARTNER"
+	//   "METRIC_PROFIT_VIEWABLE_ECPM_USD"
 	//   "METRIC_REVENUE_ADVERTISER"
 	//   "METRIC_REVENUE_ECPAPC_ADVERTISER"
 	//   "METRIC_REVENUE_ECPAPC_PARTNER"
@@ -593,6 +620,9 @@ type Parameters struct {
 	//   "METRIC_REVENUE_ECPM_USD"
 	//   "METRIC_REVENUE_PARTNER"
 	//   "METRIC_REVENUE_USD"
+	//   "METRIC_REVENUE_VIEWABLE_ECPM_ADVERTISER"
+	//   "METRIC_REVENUE_VIEWABLE_ECPM_PARTNER"
+	//   "METRIC_REVENUE_VIEWABLE_ECPM_USD"
 	//   "METRIC_RICH_MEDIA_VIDEO_COMPLETIONS"
 	//   "METRIC_RICH_MEDIA_VIDEO_FIRST_QUARTILE_COMPLETES"
 	//   "METRIC_RICH_MEDIA_VIDEO_FULL_SCREENS"
@@ -627,9 +657,24 @@ type Parameters struct {
 	//   "METRIC_TOTAL_MEDIA_COST_ECPM_USD"
 	//   "METRIC_TOTAL_MEDIA_COST_PARTNER"
 	//   "METRIC_TOTAL_MEDIA_COST_USD"
+	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_ADVERTISER"
+	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_PARTNER"
+	//   "METRIC_TOTAL_MEDIA_COST_VIEWABLE_ECPM_USD"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_ADVERTISER"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_PARTNER"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_MANY_PER_VIEW_USD"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_ONE_PER_VIEW_ADVERTISER"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_ONE_PER_VIEW_PARTNER"
+	//   "METRIC_TRUEVIEW_CONVERSION_COST_ONE_PER_VIEW_USD"
 	//   "METRIC_TRUEVIEW_CONVERSION_MANY_PER_VIEW"
 	//   "METRIC_TRUEVIEW_CONVERSION_ONE_PER_VIEW"
 	//   "METRIC_TRUEVIEW_CONVERSION_RATE_ONE_PER_VIEW"
+	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_MANY_PER_VIEW_ADVERTISER"
+	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_MANY_PER_VIEW_PARTNER"
+	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_MANY_PER_VIEW_USD"
+	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_ONE_PER_VIEW_ADVERTISER"
+	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_ONE_PER_VIEW_PARTNER"
+	//   "METRIC_TRUEVIEW_CONVERSION_VALUE_ONE_PER_VIEW_USD"
 	//   "METRIC_TRUEVIEW_COST_CONVERSION_MANY_PER_VIEW_RATIO"
 	//   "METRIC_TRUEVIEW_COST_CONVERSION_ONE_PER_VIEW_RATIO"
 	//   "METRIC_TRUEVIEW_CPV_ADVERTISER"
@@ -644,6 +689,9 @@ type Parameters struct {
 	//   "METRIC_TRUEVIEW_LOST_IS_BUDGET"
 	//   "METRIC_TRUEVIEW_LOST_IS_RANK"
 	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUE"
+	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_ADVERTISER"
+	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_PARTNER"
+	//   "METRIC_TRUEVIEW_TOTAL_CONVERSION_VALUES_USD"
 	//   "METRIC_TRUEVIEW_UNIQUE_VIEWERS"
 	//   "METRIC_TRUEVIEW_VALUE_CONVERSION_MANY_PER_VIEW_RATIO"
 	//   "METRIC_TRUEVIEW_VALUE_CONVERSION_ONE_PER_VIEW_RATIO"
@@ -675,6 +723,7 @@ type Parameters struct {
 	//   "TYPE_KEYWORD"
 	//   "TYPE_NIELSEN_AUDIENCE_PROFILE"
 	//   "TYPE_NIELSEN_DAILY_REACH_BUILD"
+	//   "TYPE_NIELSEN_ONLINE_GLOBAL_MARKET"
 	//   "TYPE_NIELSEN_SITE"
 	//   "TYPE_ORDER_ID"
 	//   "TYPE_PAGE_CATEGORY"

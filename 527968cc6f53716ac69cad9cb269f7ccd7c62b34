@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "993daaa1_b163face",
+        "filename": "google-api-go-generator/testdata/param-rename.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-21T18:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1909badd_5a3115ce",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "527968cc6f53716ac69cad9cb269f7ccd7c62b34",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1909badd_9ad56da7",
         "filename": "google-api-go-generator/testdata/repeated.want",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2015-10-21T03:43:38Z",
       "side": 1,
       "message": "the accountId parameter being ignored (i.e. it\u0027s not in the call object, and is not used to expand this path) because there is no parameterOrder in the JSON file.  You might want to add that.",
+      "range": {
+        "startLine": 163,
+        "startChar": 59,
+        "endLine": 163,
+        "endChar": 70
+      },
+      "revId": "527968cc6f53716ac69cad9cb269f7ccd7c62b34",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "993daaa1_717fd264",
+        "filename": "google-api-go-generator/testdata/repeated.want",
+        "patchSetId": 7
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-21T18:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1909badd_9ad56da7",
       "range": {
         "startLine": 163,
         "startChar": 59,

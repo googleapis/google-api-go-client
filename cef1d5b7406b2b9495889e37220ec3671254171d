@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "993daaa1_282dd730",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 8
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-22T16:10:46Z",
+      "side": 1,
+      "message": "I changed meth.OptParams to meth.OptQueryParams and forced it to only return \"query\" locations.\nDo you think this is OK, or should it explicitly abort if it finds something else?",
+      "parentUuid": "564ce18a_c4b0de17",
+      "revId": "cef1d5b7406b2b9495889e37220ec3671254171d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "564ce18a_a4bde2ed",
         "filename": "google-api-go-generator/testdata/param-rename.json",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2015-10-22T00:00:34Z",
       "side": 1,
       "message": "require:false with location:path seems to be an unused combination.  I\u0027ve suggested elsewhere that you reject such configs, which means you\u0027ll need to remove \"left-string\".",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "cef1d5b7406b2b9495889e37220ec3671254171d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "993daaa1_08281b21",
+        "filename": "google-api-go-generator/testdata/param-rename.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-10-22T16:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564ce18a_a4bde2ed",
       "range": {
         "startLine": 39,
         "startChar": 7,

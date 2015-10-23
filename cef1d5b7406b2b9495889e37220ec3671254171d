@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5666a137_94d94457",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 8
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-10-23T02:18:47Z",
+      "side": 1,
+      "message": "I think it should abort.  If there is an optional path param, \nthen we will not be generating correct code, so we should just give up rather than generating something which is slightly broken.",
+      "parentUuid": "993daaa1_282dd730",
+      "revId": "cef1d5b7406b2b9495889e37220ec3671254171d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "564ce18a_a4bde2ed",
         "filename": "google-api-go-generator/testdata/param-rename.json",
         "patchSetId": 8

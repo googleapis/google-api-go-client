@@ -226,11 +226,12 @@ func (c *MailInsertCall) doRequest(alt string) (*http.Response, error) {
 		"userKey": c.userKey,
 	})
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}

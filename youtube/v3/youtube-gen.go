@@ -8033,11 +8033,12 @@ func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -8517,11 +8518,12 @@ func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -8782,11 +8784,12 @@ func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error)
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -17263,11 +17266,12 @@ func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -18168,11 +18172,12 @@ func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -19153,11 +19158,12 @@ func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}

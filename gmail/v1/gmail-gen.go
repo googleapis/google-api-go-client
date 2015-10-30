@@ -1328,11 +1328,12 @@ func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -1987,11 +1988,12 @@ func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -2212,11 +2214,12 @@ func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -3753,11 +3756,12 @@ func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) 
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -4035,11 +4039,12 @@ func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) 
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}
@@ -4623,11 +4628,12 @@ func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
+		req.ContentLength = 0
 		if c.mediaType_ == "" {
 			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
-		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		req.Body = nil
 	} else {
 		req.Header.Set("Content-Type", ctype)
 	}

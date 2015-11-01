@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -158,7 +158,7 @@ type AdvertisedId struct {
 func (s *AdvertisedId) MarshalJSON() ([]byte, error) {
 	type noMethod AdvertisedId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AttachmentInfo: A subset of attachment information served via the
@@ -185,7 +185,7 @@ type AttachmentInfo struct {
 func (s *AttachmentInfo) MarshalJSON() ([]byte, error) {
 	type noMethod AttachmentInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Beacon: Details of a beacon device.
@@ -264,7 +264,7 @@ type Beacon struct {
 func (s *Beacon) MarshalJSON() ([]byte, error) {
 	type noMethod Beacon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BeaconAttachment: Project-specific data associated with a beacon.
@@ -303,7 +303,7 @@ type BeaconAttachment struct {
 func (s *BeaconAttachment) MarshalJSON() ([]byte, error) {
 	type noMethod BeaconAttachment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BeaconInfo: A subset of beacon information served via the
@@ -337,7 +337,7 @@ type BeaconInfo struct {
 func (s *BeaconInfo) MarshalJSON() ([]byte, error) {
 	type noMethod BeaconInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Date: Represents a whole calendar date, e.g. date of birth. The time
@@ -373,7 +373,7 @@ type Date struct {
 func (s *Date) MarshalJSON() ([]byte, error) {
 	type noMethod Date
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeleteAttachmentsResponse: Response for a request to delete
@@ -398,7 +398,7 @@ type DeleteAttachmentsResponse struct {
 func (s *DeleteAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DeleteAttachmentsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Diagnostics: Diagnostics for a single beacon.
@@ -438,7 +438,7 @@ type Diagnostics struct {
 func (s *Diagnostics) MarshalJSON() ([]byte, error) {
 	type noMethod Diagnostics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -480,7 +480,7 @@ type GetInfoForObservedBeaconsRequest struct {
 func (s *GetInfoForObservedBeaconsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod GetInfoForObservedBeaconsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetInfoForObservedBeaconsResponse: Information about the requested
@@ -506,7 +506,7 @@ type GetInfoForObservedBeaconsResponse struct {
 func (s *GetInfoForObservedBeaconsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetInfoForObservedBeaconsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IndoorLevel: Indoor level, a human-readable string as returned by
@@ -528,7 +528,7 @@ type IndoorLevel struct {
 func (s *IndoorLevel) MarshalJSON() ([]byte, error) {
 	type noMethod IndoorLevel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LatLng: An object representing a latitude/longitude pair. This is
@@ -576,7 +576,7 @@ type LatLng struct {
 func (s *LatLng) MarshalJSON() ([]byte, error) {
 	type noMethod LatLng
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListBeaconAttachmentsResponse: Response to ListBeaconAttachments that
@@ -601,7 +601,7 @@ type ListBeaconAttachmentsResponse struct {
 func (s *ListBeaconAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListBeaconAttachmentsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListBeaconsResponse: Response that contains list beacon results and
@@ -634,7 +634,7 @@ type ListBeaconsResponse struct {
 func (s *ListBeaconsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListBeaconsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListDiagnosticsResponse: Response that contains the requested
@@ -664,7 +664,7 @@ type ListDiagnosticsResponse struct {
 func (s *ListDiagnosticsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListDiagnosticsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListNamespacesResponse: Response to ListNamespacesRequest that
@@ -689,7 +689,7 @@ type ListNamespacesResponse struct {
 func (s *ListNamespacesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListNamespacesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Namespace: An attachment namespace defines read and write access for
@@ -722,7 +722,7 @@ type Namespace struct {
 func (s *Namespace) MarshalJSON() ([]byte, error) {
 	type noMethod Namespace
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Observation: Represents one beacon observed once.
@@ -752,7 +752,7 @@ type Observation struct {
 func (s *Observation) MarshalJSON() ([]byte, error) {
 	type noMethod Observation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "proximitybeacon.beaconinfo.getforobserved":

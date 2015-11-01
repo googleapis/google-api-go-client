@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -109,7 +109,7 @@ type AntennaCharacteristics struct {
 func (s *AntennaCharacteristics) MarshalJSON() ([]byte, error) {
 	type noMethod AntennaCharacteristics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatabaseSpec: This message contains the name and URI of a database.
@@ -132,7 +132,7 @@ type DatabaseSpec struct {
 func (s *DatabaseSpec) MarshalJSON() ([]byte, error) {
 	type noMethod DatabaseSpec
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DbUpdateSpec: This message is provided by the database to notify
@@ -155,7 +155,7 @@ type DbUpdateSpec struct {
 func (s *DbUpdateSpec) MarshalJSON() ([]byte, error) {
 	type noMethod DbUpdateSpec
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeviceCapabilities: Device capabilities provide additional
@@ -183,7 +183,7 @@ type DeviceCapabilities struct {
 func (s *DeviceCapabilities) MarshalJSON() ([]byte, error) {
 	type noMethod DeviceCapabilities
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeviceDescriptor: The device descriptor contains parameters that
@@ -265,7 +265,7 @@ type DeviceDescriptor struct {
 func (s *DeviceDescriptor) MarshalJSON() ([]byte, error) {
 	type noMethod DeviceDescriptor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeviceOwner: This parameter contains device-owner information
@@ -304,7 +304,7 @@ type DeviceOwner struct {
 func (s *DeviceOwner) MarshalJSON() ([]byte, error) {
 	type noMethod DeviceOwner
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeviceValidity: The device validity element describes whether a
@@ -335,7 +335,7 @@ type DeviceValidity struct {
 func (s *DeviceValidity) MarshalJSON() ([]byte, error) {
 	type noMethod DeviceValidity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventTime: The start and stop times of an event. This is used to
@@ -362,7 +362,7 @@ type EventTime struct {
 func (s *EventTime) MarshalJSON() ([]byte, error) {
 	type noMethod EventTime
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FrequencyRange: A specific range of frequencies together with the
@@ -403,7 +403,7 @@ type FrequencyRange struct {
 func (s *FrequencyRange) MarshalJSON() ([]byte, error) {
 	type noMethod FrequencyRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoLocation: This parameter is used to specify the geolocation of the
@@ -440,7 +440,7 @@ type GeoLocation struct {
 func (s *GeoLocation) MarshalJSON() ([]byte, error) {
 	type noMethod GeoLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoLocationEllipse: A "point" with uncertainty is represented using
@@ -483,7 +483,7 @@ type GeoLocationEllipse struct {
 func (s *GeoLocationEllipse) MarshalJSON() ([]byte, error) {
 	type noMethod GeoLocationEllipse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoLocationPoint: A single geolocation on the globe.
@@ -512,7 +512,7 @@ type GeoLocationPoint struct {
 func (s *GeoLocationPoint) MarshalJSON() ([]byte, error) {
 	type noMethod GeoLocationPoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoLocationPolygon: A region is represented using the polygonal
@@ -547,7 +547,7 @@ type GeoLocationPolygon struct {
 func (s *GeoLocationPolygon) MarshalJSON() ([]byte, error) {
 	type noMethod GeoLocationPolygon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoSpectrumSchedule: The schedule of spectrum profiles available at a
@@ -576,7 +576,7 @@ type GeoSpectrumSchedule struct {
 func (s *GeoSpectrumSchedule) MarshalJSON() ([]byte, error) {
 	type noMethod GeoSpectrumSchedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsGetSpectrumBatchRequest: The request message for a batch
@@ -666,7 +666,7 @@ type PawsGetSpectrumBatchRequest struct {
 func (s *PawsGetSpectrumBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PawsGetSpectrumBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsGetSpectrumBatchResponse: The response message for the batch
@@ -772,7 +772,7 @@ type PawsGetSpectrumBatchResponse struct {
 func (s *PawsGetSpectrumBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PawsGetSpectrumBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsGetSpectrumRequest: The request message for the available
@@ -856,7 +856,7 @@ type PawsGetSpectrumRequest struct {
 func (s *PawsGetSpectrumRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PawsGetSpectrumRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsGetSpectrumResponse: The response message for the available
@@ -957,7 +957,7 @@ type PawsGetSpectrumResponse struct {
 func (s *PawsGetSpectrumResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PawsGetSpectrumResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsInitRequest: The initialization request message allows the master
@@ -995,7 +995,7 @@ type PawsInitRequest struct {
 func (s *PawsInitRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PawsInitRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsInitResponse: The initialization response message communicates
@@ -1047,7 +1047,7 @@ type PawsInitResponse struct {
 func (s *PawsInitResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PawsInitResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsNotifySpectrumUseRequest: The spectrum-use notification message
@@ -1103,7 +1103,7 @@ type PawsNotifySpectrumUseRequest struct {
 func (s *PawsNotifySpectrumUseRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PawsNotifySpectrumUseRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsNotifySpectrumUseResponse: An empty response to the notification.
@@ -1139,7 +1139,7 @@ type PawsNotifySpectrumUseResponse struct {
 func (s *PawsNotifySpectrumUseResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PawsNotifySpectrumUseResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsRegisterRequest: The registration request message contains the
@@ -1181,7 +1181,7 @@ type PawsRegisterRequest struct {
 func (s *PawsRegisterRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PawsRegisterRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsRegisterResponse: The registration response message simply
@@ -1226,7 +1226,7 @@ type PawsRegisterResponse struct {
 func (s *PawsRegisterResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PawsRegisterResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsVerifyDeviceRequest: The device validation request message.
@@ -1258,7 +1258,7 @@ type PawsVerifyDeviceRequest struct {
 func (s *PawsVerifyDeviceRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PawsVerifyDeviceRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PawsVerifyDeviceResponse: The device validation response message.
@@ -1309,7 +1309,7 @@ type PawsVerifyDeviceResponse struct {
 func (s *PawsVerifyDeviceResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PawsVerifyDeviceResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RulesetInfo: This contains parameters for the ruleset of a regulatory
@@ -1369,7 +1369,7 @@ type RulesetInfo struct {
 func (s *RulesetInfo) MarshalJSON() ([]byte, error) {
 	type noMethod RulesetInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SpectrumMessage: Available spectrum can be logically characterized by
@@ -1401,7 +1401,7 @@ type SpectrumMessage struct {
 func (s *SpectrumMessage) MarshalJSON() ([]byte, error) {
 	type noMethod SpectrumMessage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SpectrumSchedule: The spectrum schedule element combines an event
@@ -1429,7 +1429,7 @@ type SpectrumSchedule struct {
 func (s *SpectrumSchedule) MarshalJSON() ([]byte, error) {
 	type noMethod SpectrumSchedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Vcard: A vCard-in-JSON message that contains only the fields needed
@@ -1467,7 +1467,7 @@ type Vcard struct {
 func (s *Vcard) MarshalJSON() ([]byte, error) {
 	type noMethod Vcard
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VcardAddress: The structure used to represent a street address.
@@ -1505,7 +1505,7 @@ type VcardAddress struct {
 func (s *VcardAddress) MarshalJSON() ([]byte, error) {
 	type noMethod VcardAddress
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VcardTelephone: The structure used to represent a telephone number.
@@ -1525,7 +1525,7 @@ type VcardTelephone struct {
 func (s *VcardTelephone) MarshalJSON() ([]byte, error) {
 	type noMethod VcardTelephone
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VcardTypedText: The structure used to represent an organization and
@@ -1547,7 +1547,7 @@ type VcardTypedText struct {
 func (s *VcardTypedText) MarshalJSON() ([]byte, error) {
 	type noMethod VcardTypedText
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "spectrum.paws.getSpectrum":

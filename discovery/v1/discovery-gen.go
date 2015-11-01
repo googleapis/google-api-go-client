@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -106,7 +106,7 @@ type DirectoryList struct {
 func (s *DirectoryList) MarshalJSON() ([]byte, error) {
 	type noMethod DirectoryList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DirectoryListItems struct {
@@ -160,7 +160,7 @@ type DirectoryListItems struct {
 func (s *DirectoryListItems) MarshalJSON() ([]byte, error) {
 	type noMethod DirectoryListItems
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectoryListItemsIcons: Links to 16x16 and 32x32 icons representing
@@ -184,7 +184,7 @@ type DirectoryListItemsIcons struct {
 func (s *DirectoryListItemsIcons) MarshalJSON() ([]byte, error) {
 	type noMethod DirectoryListItemsIcons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JsonSchema struct {
@@ -276,7 +276,7 @@ type JsonSchema struct {
 func (s *JsonSchema) MarshalJSON() ([]byte, error) {
 	type noMethod JsonSchema
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JsonSchemaAnnotations: Additional information about this property.
@@ -297,7 +297,7 @@ type JsonSchemaAnnotations struct {
 func (s *JsonSchemaAnnotations) MarshalJSON() ([]byte, error) {
 	type noMethod JsonSchemaAnnotations
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JsonSchemaVariant: In a variant data type, the value of one property
@@ -322,7 +322,7 @@ type JsonSchemaVariant struct {
 func (s *JsonSchemaVariant) MarshalJSON() ([]byte, error) {
 	type noMethod JsonSchemaVariant
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JsonSchemaVariantMap struct {
@@ -342,7 +342,7 @@ type JsonSchemaVariantMap struct {
 func (s *JsonSchemaVariantMap) MarshalJSON() ([]byte, error) {
 	type noMethod JsonSchemaVariantMap
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RestDescription struct {
@@ -456,7 +456,7 @@ type RestDescription struct {
 func (s *RestDescription) MarshalJSON() ([]byte, error) {
 	type noMethod RestDescription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestDescriptionAuth: Authentication information.
@@ -476,7 +476,7 @@ type RestDescriptionAuth struct {
 func (s *RestDescriptionAuth) MarshalJSON() ([]byte, error) {
 	type noMethod RestDescriptionAuth
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestDescriptionAuthOauth2: OAuth 2.0 authentication information.
@@ -496,7 +496,7 @@ type RestDescriptionAuthOauth2 struct {
 func (s *RestDescriptionAuthOauth2) MarshalJSON() ([]byte, error) {
 	type noMethod RestDescriptionAuthOauth2
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestDescriptionAuthOauth2Scopes: Available OAuth 2.0 scopes.
@@ -524,7 +524,7 @@ type RestDescriptionIcons struct {
 func (s *RestDescriptionIcons) MarshalJSON() ([]byte, error) {
 	type noMethod RestDescriptionIcons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RestMethod struct {
@@ -592,7 +592,7 @@ type RestMethod struct {
 func (s *RestMethod) MarshalJSON() ([]byte, error) {
 	type noMethod RestMethod
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodMediaUpload: Media upload parameters.
@@ -620,7 +620,7 @@ type RestMethodMediaUpload struct {
 func (s *RestMethodMediaUpload) MarshalJSON() ([]byte, error) {
 	type noMethod RestMethodMediaUpload
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodMediaUploadProtocols: Supported upload protocols.
@@ -643,7 +643,7 @@ type RestMethodMediaUploadProtocols struct {
 func (s *RestMethodMediaUploadProtocols) MarshalJSON() ([]byte, error) {
 	type noMethod RestMethodMediaUploadProtocols
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodMediaUploadProtocolsResumable: Supports the Resumable Media
@@ -670,7 +670,7 @@ type RestMethodMediaUploadProtocolsResumable struct {
 func (s *RestMethodMediaUploadProtocolsResumable) MarshalJSON() ([]byte, error) {
 	type noMethod RestMethodMediaUploadProtocolsResumable
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodMediaUploadProtocolsSimple: Supports uploading as a single
@@ -697,7 +697,7 @@ type RestMethodMediaUploadProtocolsSimple struct {
 func (s *RestMethodMediaUploadProtocolsSimple) MarshalJSON() ([]byte, error) {
 	type noMethod RestMethodMediaUploadProtocolsSimple
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodRequest: The schema for the request.
@@ -720,7 +720,7 @@ type RestMethodRequest struct {
 func (s *RestMethodRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RestMethodRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RestMethodResponse: The schema for the response.
@@ -740,7 +740,7 @@ type RestMethodResponse struct {
 func (s *RestMethodResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RestMethodResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RestResource struct {
@@ -762,7 +762,7 @@ type RestResource struct {
 func (s *RestResource) MarshalJSON() ([]byte, error) {
 	type noMethod RestResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "discovery.apis.getRest":

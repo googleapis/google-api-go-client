@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -146,7 +146,7 @@ type Account struct {
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type noMethod Account
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountBidderLocation struct {
@@ -177,7 +177,7 @@ type AccountBidderLocation struct {
 func (s *AccountBidderLocation) MarshalJSON() ([]byte, error) {
 	type noMethod AccountBidderLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountsList: An account feed lists Ad Exchange buyer accounts that
@@ -206,7 +206,7 @@ type AccountsList struct {
 func (s *AccountsList) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Creative: A creative and its classification data.
@@ -319,7 +319,7 @@ type Creative struct {
 func (s *Creative) MarshalJSON() ([]byte, error) {
 	type noMethod Creative
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeCorrections struct {
@@ -341,7 +341,7 @@ type CreativeCorrections struct {
 func (s *CreativeCorrections) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeCorrections
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeDisapprovalReasons struct {
@@ -363,7 +363,7 @@ type CreativeDisapprovalReasons struct {
 func (s *CreativeDisapprovalReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeDisapprovalReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeFilteringReasons: The filtering reasons for the creative.
@@ -388,7 +388,7 @@ type CreativeFilteringReasons struct {
 func (s *CreativeFilteringReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFilteringReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeFilteringReasonsReasons struct {
@@ -413,7 +413,7 @@ type CreativeFilteringReasonsReasons struct {
 func (s *CreativeFilteringReasonsReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFilteringReasonsReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativesList: The creatives feed lists the active creatives for the
@@ -447,7 +447,7 @@ type CreativesList struct {
 func (s *CreativesList) MarshalJSON() ([]byte, error) {
 	type noMethod CreativesList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "adexchangebuyer.accounts.get":

@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -95,7 +95,7 @@ type Context struct {
 func (s *Context) MarshalJSON() ([]byte, error) {
 	type noMethod Context
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ContextFacetsItem struct {
@@ -117,7 +117,7 @@ type ContextFacetsItem struct {
 func (s *ContextFacetsItem) MarshalJSON() ([]byte, error) {
 	type noMethod ContextFacetsItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Promotion struct {
@@ -145,7 +145,7 @@ type Promotion struct {
 func (s *Promotion) MarshalJSON() ([]byte, error) {
 	type noMethod Promotion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PromotionBodyLines struct {
@@ -169,7 +169,7 @@ type PromotionBodyLines struct {
 func (s *PromotionBodyLines) MarshalJSON() ([]byte, error) {
 	type noMethod PromotionBodyLines
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PromotionImage struct {
@@ -191,7 +191,7 @@ type PromotionImage struct {
 func (s *PromotionImage) MarshalJSON() ([]byte, error) {
 	type noMethod PromotionImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Query struct {
@@ -281,7 +281,7 @@ type Query struct {
 func (s *Query) MarshalJSON() ([]byte, error) {
 	type noMethod Query
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Result struct {
@@ -327,7 +327,7 @@ type Result struct {
 func (s *Result) MarshalJSON() ([]byte, error) {
 	type noMethod Result
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ResultImage struct {
@@ -357,7 +357,7 @@ type ResultImage struct {
 func (s *ResultImage) MarshalJSON() ([]byte, error) {
 	type noMethod ResultImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ResultLabels struct {
@@ -379,7 +379,7 @@ type ResultLabels struct {
 func (s *ResultLabels) MarshalJSON() ([]byte, error) {
 	type noMethod ResultLabels
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ResultPagemap struct {
@@ -418,7 +418,7 @@ type Search struct {
 func (s *Search) MarshalJSON() ([]byte, error) {
 	type noMethod Search
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchSearchInformation struct {
@@ -442,7 +442,7 @@ type SearchSearchInformation struct {
 func (s *SearchSearchInformation) MarshalJSON() ([]byte, error) {
 	type noMethod SearchSearchInformation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchSpelling struct {
@@ -462,7 +462,7 @@ type SearchSpelling struct {
 func (s *SearchSpelling) MarshalJSON() ([]byte, error) {
 	type noMethod SearchSpelling
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchUrl struct {
@@ -482,7 +482,7 @@ type SearchUrl struct {
 func (s *SearchUrl) MarshalJSON() ([]byte, error) {
 	type noMethod SearchUrl
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "search.cse.list":

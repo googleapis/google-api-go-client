@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -181,7 +181,7 @@ type BatchReport struct {
 func (s *BatchReport) MarshalJSON() ([]byte, error) {
 	type noMethod BatchReport
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BatchReportOutputs struct {
@@ -207,7 +207,7 @@ type BatchReportOutputs struct {
 func (s *BatchReportOutputs) MarshalJSON() ([]byte, error) {
 	type noMethod BatchReportOutputs
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BatchReportTimeSpan: Period included in the report. For reports
@@ -233,7 +233,7 @@ type BatchReportTimeSpan struct {
 func (s *BatchReportTimeSpan) MarshalJSON() ([]byte, error) {
 	type noMethod BatchReportTimeSpan
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BatchReportDefinition: Contains single batchReportDefinition
@@ -269,7 +269,7 @@ type BatchReportDefinition struct {
 func (s *BatchReportDefinition) MarshalJSON() ([]byte, error) {
 	type noMethod BatchReportDefinition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BatchReportDefinitionList: A paginated list of batchReportDefinition
@@ -301,7 +301,7 @@ type BatchReportDefinitionList struct {
 func (s *BatchReportDefinitionList) MarshalJSON() ([]byte, error) {
 	type noMethod BatchReportDefinitionList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BatchReportList: A paginated list of batchReport resources returned
@@ -332,7 +332,7 @@ type BatchReportList struct {
 func (s *BatchReportList) MarshalJSON() ([]byte, error) {
 	type noMethod BatchReportList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Group struct {
@@ -362,7 +362,7 @@ type Group struct {
 func (s *Group) MarshalJSON() ([]byte, error) {
 	type noMethod Group
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GroupContentDetails struct {
@@ -382,7 +382,7 @@ type GroupContentDetails struct {
 func (s *GroupContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod GroupContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GroupSnippet struct {
@@ -402,7 +402,7 @@ type GroupSnippet struct {
 func (s *GroupSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod GroupSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GroupItem struct {
@@ -432,7 +432,7 @@ type GroupItem struct {
 func (s *GroupItem) MarshalJSON() ([]byte, error) {
 	type noMethod GroupItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GroupItemResource struct {
@@ -452,7 +452,7 @@ type GroupItemResource struct {
 func (s *GroupItemResource) MarshalJSON() ([]byte, error) {
 	type noMethod GroupItemResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GroupItemListResponse: A paginated list of grouList resources
@@ -480,7 +480,7 @@ type GroupItemListResponse struct {
 func (s *GroupItemListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GroupItemListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GroupListResponse: A paginated list of grouList resources returned in
@@ -508,7 +508,7 @@ type GroupListResponse struct {
 func (s *GroupListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GroupListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResultTable: Contains a single result table. The table is returned as
@@ -559,7 +559,7 @@ type ResultTable struct {
 func (s *ResultTable) MarshalJSON() ([]byte, error) {
 	type noMethod ResultTable
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ResultTableColumnHeaders struct {
@@ -585,7 +585,7 @@ type ResultTableColumnHeaders struct {
 func (s *ResultTableColumnHeaders) MarshalJSON() ([]byte, error) {
 	type noMethod ResultTableColumnHeaders
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "youtubeAnalytics.batchReportDefinitions.list":

@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -251,7 +251,7 @@ type Cluster struct {
 func (s *Cluster) MarshalJSON() ([]byte, error) {
 	type noMethod Cluster
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ClusterUpdate: ClusterUpdate describes an update to the cluster.
@@ -273,7 +273,7 @@ type ClusterUpdate struct {
 func (s *ClusterUpdate) MarshalJSON() ([]byte, error) {
 	type noMethod ClusterUpdate
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreateClusterRequest: CreateClusterRequest creates a cluster.
@@ -294,7 +294,7 @@ type CreateClusterRequest struct {
 func (s *CreateClusterRequest) MarshalJSON() ([]byte, error) {
 	type noMethod CreateClusterRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListClustersResponse: ListClustersResponse is the result of
@@ -320,7 +320,7 @@ type ListClustersResponse struct {
 func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListClustersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListOperationsResponse: ListOperationsResponse is the result of
@@ -346,7 +346,7 @@ type ListOperationsResponse struct {
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOperationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MasterAuth: The authentication information for accessing the master
@@ -386,7 +386,7 @@ type MasterAuth struct {
 func (s *MasterAuth) MarshalJSON() ([]byte, error) {
 	type noMethod MasterAuth
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NodeConfig: Per-node parameters.
@@ -422,7 +422,7 @@ type NodeConfig struct {
 func (s *NodeConfig) MarshalJSON() ([]byte, error) {
 	type noMethod NodeConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: Defines the operation resource. All fields are output
@@ -482,7 +482,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ServerConfig: Container Engine Server configuration.
@@ -510,7 +510,7 @@ type ServerConfig struct {
 func (s *ServerConfig) MarshalJSON() ([]byte, error) {
 	type noMethod ServerConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateClusterRequest: UpdateClusterRequest updates a cluster.
@@ -530,7 +530,7 @@ type UpdateClusterRequest struct {
 func (s *UpdateClusterRequest) MarshalJSON() ([]byte, error) {
 	type noMethod UpdateClusterRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "container.projects.zones.getServerconfig":

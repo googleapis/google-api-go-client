@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,6 +35,8 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
+var _ = context.Canceled
+var _ = ctxhttp.Do
 
 const apiId = "container:v1beta1"
 const apiName = "container"
@@ -251,7 +252,7 @@ type Cluster struct {
 func (s *Cluster) MarshalJSON() ([]byte, error) {
 	type noMethod Cluster
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreateClusterRequest struct {
@@ -270,7 +271,7 @@ type CreateClusterRequest struct {
 func (s *CreateClusterRequest) MarshalJSON() ([]byte, error) {
 	type noMethod CreateClusterRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListAggregatedClustersResponse struct {
@@ -289,7 +290,7 @@ type ListAggregatedClustersResponse struct {
 func (s *ListAggregatedClustersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListAggregatedClustersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListAggregatedOperationsResponse struct {
@@ -308,7 +309,7 @@ type ListAggregatedOperationsResponse struct {
 func (s *ListAggregatedOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListAggregatedOperationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListClustersResponse struct {
@@ -327,7 +328,7 @@ type ListClustersResponse struct {
 func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListClustersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListOperationsResponse struct {
@@ -347,7 +348,7 @@ type ListOperationsResponse struct {
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOperationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MasterAuth: The authentication information for accessing the master.
@@ -393,7 +394,7 @@ type MasterAuth struct {
 func (s *MasterAuth) MarshalJSON() ([]byte, error) {
 	type noMethod MasterAuth
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type NodeConfig struct {
@@ -434,7 +435,7 @@ type NodeConfig struct {
 func (s *NodeConfig) MarshalJSON() ([]byte, error) {
 	type noMethod NodeConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: Defines the operation resource. All fields are output
@@ -488,7 +489,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ServiceAccount: A Compute Engine service account.
@@ -512,7 +513,7 @@ type ServiceAccount struct {
 func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 	type noMethod ServiceAccount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "container.projects.clusters.list":

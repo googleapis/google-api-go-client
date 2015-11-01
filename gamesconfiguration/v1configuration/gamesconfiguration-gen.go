@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -160,7 +160,7 @@ type AchievementConfiguration struct {
 func (s *AchievementConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementConfigurationDetail: This is a JSON template for an
@@ -199,7 +199,7 @@ type AchievementConfigurationDetail struct {
 func (s *AchievementConfigurationDetail) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementConfigurationDetail
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementConfigurationListResponse: This is a JSON template for a
@@ -231,7 +231,7 @@ type AchievementConfigurationListResponse struct {
 func (s *AchievementConfigurationListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementConfigurationListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesNumberAffixConfiguration: This is a JSON template for a number
@@ -276,7 +276,7 @@ type GamesNumberAffixConfiguration struct {
 func (s *GamesNumberAffixConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod GamesNumberAffixConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesNumberFormatConfiguration: This is a JSON template for a number
@@ -316,7 +316,7 @@ type GamesNumberFormatConfiguration struct {
 func (s *GamesNumberFormatConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod GamesNumberFormatConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImageConfiguration: This is a JSON template for an image
@@ -351,7 +351,7 @@ type ImageConfiguration struct {
 func (s *ImageConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod ImageConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardConfiguration: This is a JSON template for an leaderboard
@@ -401,7 +401,7 @@ type LeaderboardConfiguration struct {
 func (s *LeaderboardConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod LeaderboardConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardConfigurationDetail: This is a JSON template for a
@@ -437,7 +437,7 @@ type LeaderboardConfigurationDetail struct {
 func (s *LeaderboardConfigurationDetail) MarshalJSON() ([]byte, error) {
 	type noMethod LeaderboardConfigurationDetail
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardConfigurationListResponse: This is a JSON template for a
@@ -469,7 +469,7 @@ type LeaderboardConfigurationListResponse struct {
 func (s *LeaderboardConfigurationListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LeaderboardConfigurationListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LocalizedString: This is a JSON template for a localized string
@@ -497,7 +497,7 @@ type LocalizedString struct {
 func (s *LocalizedString) MarshalJSON() ([]byte, error) {
 	type noMethod LocalizedString
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LocalizedStringBundle: This is a JSON template for a localized string
@@ -522,7 +522,7 @@ type LocalizedStringBundle struct {
 func (s *LocalizedStringBundle) MarshalJSON() ([]byte, error) {
 	type noMethod LocalizedStringBundle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "gamesConfiguration.achievementConfigurations.delete":

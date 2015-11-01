@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -119,7 +119,7 @@ type Activity struct {
 func (s *Activity) MarshalJSON() ([]byte, error) {
 	type noMethod Activity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Event: Represents the changes associated with an action taken by a
@@ -200,7 +200,7 @@ type Event struct {
 func (s *Event) MarshalJSON() ([]byte, error) {
 	type noMethod Event
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListActivitiesResponse: The response from the list request. Contains
@@ -229,7 +229,7 @@ type ListActivitiesResponse struct {
 func (s *ListActivitiesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListActivitiesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Move: Contains information about changes in an object's parents as a
@@ -253,7 +253,7 @@ type Move struct {
 func (s *Move) MarshalJSON() ([]byte, error) {
 	type noMethod Move
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Parent: Contains information about a parent object. For example, a
@@ -280,7 +280,7 @@ type Parent struct {
 func (s *Parent) MarshalJSON() ([]byte, error) {
 	type noMethod Parent
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Permission: Contains information about the permissions and type of
@@ -333,7 +333,7 @@ type Permission struct {
 func (s *Permission) MarshalJSON() ([]byte, error) {
 	type noMethod Permission
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PermissionChange: Contains information about a Drive object's
@@ -358,7 +358,7 @@ type PermissionChange struct {
 func (s *PermissionChange) MarshalJSON() ([]byte, error) {
 	type noMethod PermissionChange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Photo: Photo information for a user.
@@ -378,7 +378,7 @@ type Photo struct {
 func (s *Photo) MarshalJSON() ([]byte, error) {
 	type noMethod Photo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Rename: Contains information about a renametype event.
@@ -401,7 +401,7 @@ type Rename struct {
 func (s *Rename) MarshalJSON() ([]byte, error) {
 	type noMethod Rename
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Target: Information about the object modified by the event.
@@ -429,7 +429,7 @@ type Target struct {
 func (s *Target) MarshalJSON() ([]byte, error) {
 	type noMethod Target
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // User: A representation of a user.
@@ -452,7 +452,7 @@ type User struct {
 func (s *User) MarshalJSON() ([]byte, error) {
 	type noMethod User
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "appsactivity.activities.list":

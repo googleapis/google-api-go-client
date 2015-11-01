@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -100,7 +100,7 @@ type PagespeedApiFormatStringV2 struct {
 func (s *PagespeedApiFormatStringV2) MarshalJSON() ([]byte, error) {
 	type noMethod PagespeedApiFormatStringV2
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PagespeedApiFormatStringV2Args struct {
@@ -138,7 +138,7 @@ type PagespeedApiFormatStringV2Args struct {
 func (s *PagespeedApiFormatStringV2Args) MarshalJSON() ([]byte, error) {
 	type noMethod PagespeedApiFormatStringV2Args
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PagespeedApiFormatStringV2ArgsRects struct {
@@ -166,7 +166,7 @@ type PagespeedApiFormatStringV2ArgsRects struct {
 func (s *PagespeedApiFormatStringV2ArgsRects) MarshalJSON() ([]byte, error) {
 	type noMethod PagespeedApiFormatStringV2ArgsRects
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PagespeedApiFormatStringV2ArgsSecondaryRects struct {
@@ -194,7 +194,7 @@ type PagespeedApiFormatStringV2ArgsSecondaryRects struct {
 func (s *PagespeedApiFormatStringV2ArgsSecondaryRects) MarshalJSON() ([]byte, error) {
 	type noMethod PagespeedApiFormatStringV2ArgsSecondaryRects
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PagespeedApiImageV2 struct {
@@ -229,7 +229,7 @@ type PagespeedApiImageV2 struct {
 func (s *PagespeedApiImageV2) MarshalJSON() ([]byte, error) {
 	type noMethod PagespeedApiImageV2
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PagespeedApiImageV2PageRect: The region of the page that is captured
@@ -259,7 +259,7 @@ type PagespeedApiImageV2PageRect struct {
 func (s *PagespeedApiImageV2PageRect) MarshalJSON() ([]byte, error) {
 	type noMethod PagespeedApiImageV2PageRect
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Result struct {
@@ -315,7 +315,7 @@ type Result struct {
 func (s *Result) MarshalJSON() ([]byte, error) {
 	type noMethod Result
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResultFormattedResults: Localized PageSpeed results. Contains a
@@ -341,7 +341,7 @@ type ResultFormattedResults struct {
 func (s *ResultFormattedResults) MarshalJSON() ([]byte, error) {
 	type noMethod ResultFormattedResults
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResultFormattedResultsRuleResults: Dictionary of formatted rule
@@ -414,7 +414,7 @@ type ResultPageStats struct {
 func (s *ResultPageStats) MarshalJSON() ([]byte, error) {
 	type noMethod ResultPageStats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResultRuleGroups: A map with one entry for each rule group in these
@@ -445,7 +445,7 @@ type ResultVersion struct {
 func (s *ResultVersion) MarshalJSON() ([]byte, error) {
 	type noMethod ResultVersion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "pagespeedonline.pagespeedapi.runpagespeed":

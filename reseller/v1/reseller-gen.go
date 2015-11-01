@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -146,7 +146,7 @@ type Address struct {
 func (s *Address) MarshalJSON() ([]byte, error) {
 	type noMethod Address
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChangePlanRequest: JSON template for the ChangePlan rpc request.
@@ -175,7 +175,7 @@ type ChangePlanRequest struct {
 func (s *ChangePlanRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ChangePlanRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Customer: JSON template for a customer.
@@ -217,7 +217,7 @@ type Customer struct {
 func (s *Customer) MarshalJSON() ([]byte, error) {
 	type noMethod Customer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RenewalSettings: JSON template for a subscription renewal settings.
@@ -240,7 +240,7 @@ type RenewalSettings struct {
 func (s *RenewalSettings) MarshalJSON() ([]byte, error) {
 	type noMethod RenewalSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Seats: JSON template for subscription seats.
@@ -274,7 +274,7 @@ type Seats struct {
 func (s *Seats) MarshalJSON() ([]byte, error) {
 	type noMethod Seats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subscription: JSON template for a subscription.
@@ -341,7 +341,7 @@ type Subscription struct {
 func (s *Subscription) MarshalJSON() ([]byte, error) {
 	type noMethod Subscription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionPlan: Plan details of the subscription
@@ -368,7 +368,7 @@ type SubscriptionPlan struct {
 func (s *SubscriptionPlan) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionPlan
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionPlanCommitmentInterval: Interval of the commitment if it
@@ -394,7 +394,7 @@ type SubscriptionPlanCommitmentInterval struct {
 func (s *SubscriptionPlanCommitmentInterval) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionPlanCommitmentInterval
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionTransferInfo: Transfer related information for the
@@ -419,7 +419,7 @@ type SubscriptionTransferInfo struct {
 func (s *SubscriptionTransferInfo) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionTransferInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionTrialSettings: Trial Settings of the subscription.
@@ -442,7 +442,7 @@ type SubscriptionTrialSettings struct {
 func (s *SubscriptionTrialSettings) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionTrialSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subscriptions: JSON template for a subscription list.
@@ -474,7 +474,7 @@ type Subscriptions struct {
 func (s *Subscriptions) MarshalJSON() ([]byte, error) {
 	type noMethod Subscriptions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "reseller.customers.get":

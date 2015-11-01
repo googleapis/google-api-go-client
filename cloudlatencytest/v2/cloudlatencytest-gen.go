@@ -12,10 +12,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -31,10 +31,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -97,7 +97,7 @@ type AggregatedStats struct {
 func (s *AggregatedStats) MarshalJSON() ([]byte, error) {
 	type noMethod AggregatedStats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AggregatedStatsReply struct {
@@ -119,7 +119,7 @@ type AggregatedStatsReply struct {
 func (s *AggregatedStatsReply) MarshalJSON() ([]byte, error) {
 	type noMethod AggregatedStatsReply
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DoubleValue struct {
@@ -139,7 +139,7 @@ type DoubleValue struct {
 func (s *DoubleValue) MarshalJSON() ([]byte, error) {
 	type noMethod DoubleValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type IntValue struct {
@@ -159,7 +159,7 @@ type IntValue struct {
 func (s *IntValue) MarshalJSON() ([]byte, error) {
 	type noMethod IntValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Stats struct {
@@ -183,7 +183,7 @@ type Stats struct {
 func (s *Stats) MarshalJSON() ([]byte, error) {
 	type noMethod Stats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatsReply struct {
@@ -205,7 +205,7 @@ type StatsReply struct {
 func (s *StatsReply) MarshalJSON() ([]byte, error) {
 	type noMethod StatsReply
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StringValue struct {
@@ -225,7 +225,7 @@ type StringValue struct {
 func (s *StringValue) MarshalJSON() ([]byte, error) {
 	type noMethod StringValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "cloudlatencytest.statscollection.updateaggregatedstats":

@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -395,7 +395,7 @@ type Account struct {
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type noMethod Account
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Accounts struct {
@@ -429,7 +429,7 @@ type Accounts struct {
 func (s *Accounts) MarshalJSON() ([]byte, error) {
 	type noMethod Accounts
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdClient struct {
@@ -461,7 +461,7 @@ type AdClient struct {
 func (s *AdClient) MarshalJSON() ([]byte, error) {
 	type noMethod AdClient
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdClients struct {
@@ -495,7 +495,7 @@ type AdClients struct {
 func (s *AdClients) MarshalJSON() ([]byte, error) {
 	type noMethod AdClients
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdCode struct {
@@ -521,7 +521,7 @@ type AdCode struct {
 func (s *AdCode) MarshalJSON() ([]byte, error) {
 	type noMethod AdCode
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdStyle struct {
@@ -551,7 +551,7 @@ type AdStyle struct {
 func (s *AdStyle) MarshalJSON() ([]byte, error) {
 	type noMethod AdStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdStyleColors: The colors which are included in the style. These are
@@ -585,7 +585,7 @@ type AdStyleColors struct {
 func (s *AdStyleColors) MarshalJSON() ([]byte, error) {
 	type noMethod AdStyleColors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdStyleFont: The font which is included in the style.
@@ -608,7 +608,7 @@ type AdStyleFont struct {
 func (s *AdStyleFont) MarshalJSON() ([]byte, error) {
 	type noMethod AdStyleFont
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdUnit struct {
@@ -672,7 +672,7 @@ type AdUnit struct {
 func (s *AdUnit) MarshalJSON() ([]byte, error) {
 	type noMethod AdUnit
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdUnitContentAdsSettings: Settings specific to content ads (AFC) and
@@ -700,7 +700,7 @@ type AdUnitContentAdsSettings struct {
 func (s *AdUnitContentAdsSettings) MarshalJSON() ([]byte, error) {
 	type noMethod AdUnitContentAdsSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdUnitContentAdsSettingsBackupOption: The backup option to be used in
@@ -728,7 +728,7 @@ type AdUnitContentAdsSettingsBackupOption struct {
 func (s *AdUnitContentAdsSettingsBackupOption) MarshalJSON() ([]byte, error) {
 	type noMethod AdUnitContentAdsSettingsBackupOption
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdUnitFeedAdsSettings: Settings specific to feed ads (AFF).
@@ -759,7 +759,7 @@ type AdUnitFeedAdsSettings struct {
 func (s *AdUnitFeedAdsSettings) MarshalJSON() ([]byte, error) {
 	type noMethod AdUnitFeedAdsSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdUnitMobileContentAdsSettings: Settings specific to WAP mobile
@@ -789,7 +789,7 @@ type AdUnitMobileContentAdsSettings struct {
 func (s *AdUnitMobileContentAdsSettings) MarshalJSON() ([]byte, error) {
 	type noMethod AdUnitMobileContentAdsSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdUnits struct {
@@ -823,7 +823,7 @@ type AdUnits struct {
 func (s *AdUnits) MarshalJSON() ([]byte, error) {
 	type noMethod AdUnits
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdsenseReportsGenerateResponse struct {
@@ -875,7 +875,7 @@ type AdsenseReportsGenerateResponse struct {
 func (s *AdsenseReportsGenerateResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AdsenseReportsGenerateResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdsenseReportsGenerateResponseHeaders struct {
@@ -902,7 +902,7 @@ type AdsenseReportsGenerateResponseHeaders struct {
 func (s *AdsenseReportsGenerateResponseHeaders) MarshalJSON() ([]byte, error) {
 	type noMethod AdsenseReportsGenerateResponseHeaders
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Alert struct {
@@ -939,7 +939,7 @@ type Alert struct {
 func (s *Alert) MarshalJSON() ([]byte, error) {
 	type noMethod Alert
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Alerts struct {
@@ -965,7 +965,7 @@ type Alerts struct {
 func (s *Alerts) MarshalJSON() ([]byte, error) {
 	type noMethod Alerts
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CustomChannel struct {
@@ -1004,7 +1004,7 @@ type CustomChannel struct {
 func (s *CustomChannel) MarshalJSON() ([]byte, error) {
 	type noMethod CustomChannel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomChannelTargetingInfo: The targeting information of this custom
@@ -1039,7 +1039,7 @@ type CustomChannelTargetingInfo struct {
 func (s *CustomChannelTargetingInfo) MarshalJSON() ([]byte, error) {
 	type noMethod CustomChannelTargetingInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CustomChannels struct {
@@ -1073,7 +1073,7 @@ type CustomChannels struct {
 func (s *CustomChannels) MarshalJSON() ([]byte, error) {
 	type noMethod CustomChannels
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Metadata struct {
@@ -1098,7 +1098,7 @@ type Metadata struct {
 func (s *Metadata) MarshalJSON() ([]byte, error) {
 	type noMethod Metadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReportingMetadataEntry struct {
@@ -1150,7 +1150,7 @@ type ReportingMetadataEntry struct {
 func (s *ReportingMetadataEntry) MarshalJSON() ([]byte, error) {
 	type noMethod ReportingMetadataEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SavedAdStyle struct {
@@ -1184,7 +1184,7 @@ type SavedAdStyle struct {
 func (s *SavedAdStyle) MarshalJSON() ([]byte, error) {
 	type noMethod SavedAdStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SavedAdStyles struct {
@@ -1218,7 +1218,7 @@ type SavedAdStyles struct {
 func (s *SavedAdStyles) MarshalJSON() ([]byte, error) {
 	type noMethod SavedAdStyles
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SavedReport struct {
@@ -1243,7 +1243,7 @@ type SavedReport struct {
 func (s *SavedReport) MarshalJSON() ([]byte, error) {
 	type noMethod SavedReport
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SavedReports struct {
@@ -1277,7 +1277,7 @@ type SavedReports struct {
 func (s *SavedReports) MarshalJSON() ([]byte, error) {
 	type noMethod SavedReports
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UrlChannel struct {
@@ -1305,7 +1305,7 @@ type UrlChannel struct {
 func (s *UrlChannel) MarshalJSON() ([]byte, error) {
 	type noMethod UrlChannel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UrlChannels struct {
@@ -1339,7 +1339,7 @@ type UrlChannels struct {
 func (s *UrlChannels) MarshalJSON() ([]byte, error) {
 	type noMethod UrlChannels
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "adsense.accounts.get":

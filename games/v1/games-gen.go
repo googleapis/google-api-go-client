@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -325,7 +325,7 @@ type AchievementDefinition struct {
 func (s *AchievementDefinition) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementDefinition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementDefinitionsListResponse: This is a JSON template for a
@@ -357,7 +357,7 @@ type AchievementDefinitionsListResponse struct {
 func (s *AchievementDefinitionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementDefinitionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementIncrementResponse: This is a JSON template for an
@@ -391,7 +391,7 @@ type AchievementIncrementResponse struct {
 func (s *AchievementIncrementResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementIncrementResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementRevealResponse: This is a JSON template for an achievement
@@ -425,7 +425,7 @@ type AchievementRevealResponse struct {
 func (s *AchievementRevealResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementRevealResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementSetStepsAtLeastResponse: This is a JSON template for an
@@ -459,7 +459,7 @@ type AchievementSetStepsAtLeastResponse struct {
 func (s *AchievementSetStepsAtLeastResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementSetStepsAtLeastResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUnlockResponse: This is a JSON template for an achievement
@@ -490,7 +490,7 @@ type AchievementUnlockResponse struct {
 func (s *AchievementUnlockResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementUnlockResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUpdateMultipleRequest: This is a JSON template for a list
@@ -515,7 +515,7 @@ type AchievementUpdateMultipleRequest struct {
 func (s *AchievementUpdateMultipleRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementUpdateMultipleRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUpdateMultipleResponse: This is a JSON template for an
@@ -544,7 +544,7 @@ type AchievementUpdateMultipleResponse struct {
 func (s *AchievementUpdateMultipleResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementUpdateMultipleResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUpdateRequest: This is a JSON template for a request to
@@ -586,7 +586,7 @@ type AchievementUpdateRequest struct {
 func (s *AchievementUpdateRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementUpdateRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementUpdateResponse: This is a JSON template for an achievement
@@ -631,7 +631,7 @@ type AchievementUpdateResponse struct {
 func (s *AchievementUpdateResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementUpdateResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AggregateStats: This is a JSON template for aggregate stats.
@@ -665,7 +665,7 @@ type AggregateStats struct {
 func (s *AggregateStats) MarshalJSON() ([]byte, error) {
 	type noMethod AggregateStats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnonymousPlayer: This is a JSON template for an anonymous player
@@ -693,7 +693,7 @@ type AnonymousPlayer struct {
 func (s *AnonymousPlayer) MarshalJSON() ([]byte, error) {
 	type noMethod AnonymousPlayer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Application: This is a JSON template for the Application resource.
@@ -761,7 +761,7 @@ type Application struct {
 func (s *Application) MarshalJSON() ([]byte, error) {
 	type noMethod Application
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApplicationCategory: This is a JSON template for an application
@@ -789,7 +789,7 @@ type ApplicationCategory struct {
 func (s *ApplicationCategory) MarshalJSON() ([]byte, error) {
 	type noMethod ApplicationCategory
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Category: This is a JSON template for data related to individual game
@@ -817,7 +817,7 @@ type Category struct {
 func (s *Category) MarshalJSON() ([]byte, error) {
 	type noMethod Category
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CategoryListResponse: This is a JSON template for a list of category
@@ -849,7 +849,7 @@ type CategoryListResponse struct {
 func (s *CategoryListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CategoryListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventBatchRecordFailure: This is a JSON template for a batch update
@@ -891,7 +891,7 @@ type EventBatchRecordFailure struct {
 func (s *EventBatchRecordFailure) MarshalJSON() ([]byte, error) {
 	type noMethod EventBatchRecordFailure
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventChild: This is a JSON template for an event child relationship
@@ -916,7 +916,7 @@ type EventChild struct {
 func (s *EventChild) MarshalJSON() ([]byte, error) {
 	type noMethod EventChild
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventDefinition: This is a JSON template for an event definition
@@ -965,7 +965,7 @@ type EventDefinition struct {
 func (s *EventDefinition) MarshalJSON() ([]byte, error) {
 	type noMethod EventDefinition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventDefinitionListResponse: This is a JSON template for a
@@ -997,7 +997,7 @@ type EventDefinitionListResponse struct {
 func (s *EventDefinitionListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod EventDefinitionListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventPeriodRange: This is a JSON template for an event period time
@@ -1027,7 +1027,7 @@ type EventPeriodRange struct {
 func (s *EventPeriodRange) MarshalJSON() ([]byte, error) {
 	type noMethod EventPeriodRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventPeriodUpdate: This is a JSON template for an event period update
@@ -1055,7 +1055,7 @@ type EventPeriodUpdate struct {
 func (s *EventPeriodUpdate) MarshalJSON() ([]byte, error) {
 	type noMethod EventPeriodUpdate
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventRecordFailure: This is a JSON template for an event update
@@ -1088,7 +1088,7 @@ type EventRecordFailure struct {
 func (s *EventRecordFailure) MarshalJSON() ([]byte, error) {
 	type noMethod EventRecordFailure
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventRecordRequest: This is a JSON template for an event period
@@ -1122,7 +1122,7 @@ type EventRecordRequest struct {
 func (s *EventRecordRequest) MarshalJSON() ([]byte, error) {
 	type noMethod EventRecordRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventUpdateRequest: This is a JSON template for an event period
@@ -1151,7 +1151,7 @@ type EventUpdateRequest struct {
 func (s *EventUpdateRequest) MarshalJSON() ([]byte, error) {
 	type noMethod EventUpdateRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventUpdateResponse: This is a JSON template for an event period
@@ -1187,7 +1187,7 @@ type EventUpdateResponse struct {
 func (s *EventUpdateResponse) MarshalJSON() ([]byte, error) {
 	type noMethod EventUpdateResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesAchievementIncrement: This is a JSON template for the payload to
@@ -1216,7 +1216,7 @@ type GamesAchievementIncrement struct {
 func (s *GamesAchievementIncrement) MarshalJSON() ([]byte, error) {
 	type noMethod GamesAchievementIncrement
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesAchievementSetStepsAtLeast: This is a JSON template for the
@@ -1241,7 +1241,7 @@ type GamesAchievementSetStepsAtLeast struct {
 func (s *GamesAchievementSetStepsAtLeast) MarshalJSON() ([]byte, error) {
 	type noMethod GamesAchievementSetStepsAtLeast
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImageAsset: This is a JSON template for an image asset object.
@@ -1274,7 +1274,7 @@ type ImageAsset struct {
 func (s *ImageAsset) MarshalJSON() ([]byte, error) {
 	type noMethod ImageAsset
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Instance: This is a JSON template for the Instance resource.
@@ -1326,7 +1326,7 @@ type Instance struct {
 func (s *Instance) MarshalJSON() ([]byte, error) {
 	type noMethod Instance
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceAndroidDetails: This is a JSON template for the Android
@@ -1359,7 +1359,7 @@ type InstanceAndroidDetails struct {
 func (s *InstanceAndroidDetails) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceAndroidDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceIosDetails: This is a JSON template for the iOS details
@@ -1401,7 +1401,7 @@ type InstanceIosDetails struct {
 func (s *InstanceIosDetails) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceIosDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceWebDetails: This is a JSON template for the Web details
@@ -1430,7 +1430,7 @@ type InstanceWebDetails struct {
 func (s *InstanceWebDetails) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceWebDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Leaderboard: This is a JSON template for the Leaderboard resource.
@@ -1476,7 +1476,7 @@ type Leaderboard struct {
 func (s *Leaderboard) MarshalJSON() ([]byte, error) {
 	type noMethod Leaderboard
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardEntry: This is a JSON template for the Leaderboard Entry
@@ -1531,7 +1531,7 @@ type LeaderboardEntry struct {
 func (s *LeaderboardEntry) MarshalJSON() ([]byte, error) {
 	type noMethod LeaderboardEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardListResponse: This is a JSON template for a list of
@@ -1563,7 +1563,7 @@ type LeaderboardListResponse struct {
 func (s *LeaderboardListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LeaderboardListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardScoreRank: This is a JSON template for a score rank in a
@@ -1598,7 +1598,7 @@ type LeaderboardScoreRank struct {
 func (s *LeaderboardScoreRank) MarshalJSON() ([]byte, error) {
 	type noMethod LeaderboardScoreRank
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaderboardScores: This is a JSON template for a ListScores response.
@@ -1642,7 +1642,7 @@ type LeaderboardScores struct {
 func (s *LeaderboardScores) MarshalJSON() ([]byte, error) {
 	type noMethod LeaderboardScores
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetagameConfig: This is a JSON template for the metagame config
@@ -1676,7 +1676,7 @@ type MetagameConfig struct {
 func (s *MetagameConfig) MarshalJSON() ([]byte, error) {
 	type noMethod MetagameConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NetworkDiagnostics: This is a JSON template for network diagnostics
@@ -1724,7 +1724,7 @@ type NetworkDiagnostics struct {
 func (s *NetworkDiagnostics) MarshalJSON() ([]byte, error) {
 	type noMethod NetworkDiagnostics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ParticipantResult: This is a JSON template for a result for a match
@@ -1768,7 +1768,7 @@ type ParticipantResult struct {
 func (s *ParticipantResult) MarshalJSON() ([]byte, error) {
 	type noMethod ParticipantResult
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PeerChannelDiagnostics: This is a JSON template for peer channel
@@ -1811,7 +1811,7 @@ type PeerChannelDiagnostics struct {
 func (s *PeerChannelDiagnostics) MarshalJSON() ([]byte, error) {
 	type noMethod PeerChannelDiagnostics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PeerSessionDiagnostics: This is a JSON template for peer session
@@ -1846,7 +1846,7 @@ type PeerSessionDiagnostics struct {
 func (s *PeerSessionDiagnostics) MarshalJSON() ([]byte, error) {
 	type noMethod PeerSessionDiagnostics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Played: This is a JSON template for metadata about a player playing a
@@ -1876,7 +1876,7 @@ type Played struct {
 func (s *Played) MarshalJSON() ([]byte, error) {
 	type noMethod Played
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Player: This is a JSON template for a Player resource.
@@ -1927,7 +1927,7 @@ type Player struct {
 func (s *Player) MarshalJSON() ([]byte, error) {
 	type noMethod Player
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerName: An object representation of the individual components of
@@ -1953,7 +1953,7 @@ type PlayerName struct {
 func (s *PlayerName) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerName
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerAchievement: This is a JSON template for an achievement object.
@@ -2001,7 +2001,7 @@ type PlayerAchievement struct {
 func (s *PlayerAchievement) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerAchievement
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerAchievementListResponse: This is a JSON template for a list of
@@ -2033,7 +2033,7 @@ type PlayerAchievementListResponse struct {
 func (s *PlayerAchievementListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerAchievementListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerEvent: This is a JSON template for an event status resource.
@@ -2068,7 +2068,7 @@ type PlayerEvent struct {
 func (s *PlayerEvent) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerEvent
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerEventListResponse: This is a JSON template for a ListByPlayer
@@ -2100,7 +2100,7 @@ type PlayerEventListResponse struct {
 func (s *PlayerEventListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerEventListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerExperienceInfo: This is a JSON template for 1P/3P metadata
@@ -2138,7 +2138,7 @@ type PlayerExperienceInfo struct {
 func (s *PlayerExperienceInfo) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerExperienceInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerLeaderboardScore: This is a JSON template for a player
@@ -2193,7 +2193,7 @@ type PlayerLeaderboardScore struct {
 func (s *PlayerLeaderboardScore) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerLeaderboardScore
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerLeaderboardScoreListResponse: This is a JSON template for a
@@ -2228,7 +2228,7 @@ type PlayerLeaderboardScoreListResponse struct {
 func (s *PlayerLeaderboardScoreListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerLeaderboardScoreListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerLevel: This is a JSON template for 1P/3P metadata about a
@@ -2259,7 +2259,7 @@ type PlayerLevel struct {
 func (s *PlayerLevel) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerLevel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerListResponse: This is a JSON template for a third party player
@@ -2291,7 +2291,7 @@ type PlayerListResponse struct {
 func (s *PlayerListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScore: This is a JSON template for a player score.
@@ -2330,7 +2330,7 @@ type PlayerScore struct {
 func (s *PlayerScore) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerScore
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScoreListResponse: This is a JSON template for a list of score
@@ -2359,7 +2359,7 @@ type PlayerScoreListResponse struct {
 func (s *PlayerScoreListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerScoreListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScoreResponse: This is a JSON template for a list of
@@ -2411,7 +2411,7 @@ type PlayerScoreResponse struct {
 func (s *PlayerScoreResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerScoreResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScoreSubmissionList: This is a JSON template for a list of
@@ -2436,7 +2436,7 @@ type PlayerScoreSubmissionList struct {
 func (s *PlayerScoreSubmissionList) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerScoreSubmissionList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PushToken: This is a JSON template for a push token resource.
@@ -2472,7 +2472,7 @@ type PushToken struct {
 func (s *PushToken) MarshalJSON() ([]byte, error) {
 	type noMethod PushToken
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PushTokenId: This is a JSON template for a push token ID resource.
@@ -2496,7 +2496,7 @@ type PushTokenId struct {
 func (s *PushTokenId) MarshalJSON() ([]byte, error) {
 	type noMethod PushTokenId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PushTokenIdIos: A push token ID for iOS devices.
@@ -2522,7 +2522,7 @@ type PushTokenIdIos struct {
 func (s *PushTokenIdIos) MarshalJSON() ([]byte, error) {
 	type noMethod PushTokenIdIos
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Quest: This is a JSON template for a Quest resource.
@@ -2614,7 +2614,7 @@ type Quest struct {
 func (s *Quest) MarshalJSON() ([]byte, error) {
 	type noMethod Quest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestContribution: This is a JSON template for a Quest Criterion
@@ -2644,7 +2644,7 @@ type QuestContribution struct {
 func (s *QuestContribution) MarshalJSON() ([]byte, error) {
 	type noMethod QuestContribution
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestCriterion: This is a JSON template for a Quest Criterion
@@ -2689,7 +2689,7 @@ type QuestCriterion struct {
 func (s *QuestCriterion) MarshalJSON() ([]byte, error) {
 	type noMethod QuestCriterion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestListResponse: This is a JSON template for a list of quest
@@ -2721,7 +2721,7 @@ type QuestListResponse struct {
 func (s *QuestListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod QuestListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestMilestone: This is a JSON template for a Quest Milestone
@@ -2765,7 +2765,7 @@ type QuestMilestone struct {
 func (s *QuestMilestone) MarshalJSON() ([]byte, error) {
 	type noMethod QuestMilestone
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RevisionCheckResponse: This is a JSON template for the result of
@@ -2804,7 +2804,7 @@ type RevisionCheckResponse struct {
 func (s *RevisionCheckResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RevisionCheckResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Room: This is a JSON template for a room resource object.
@@ -2888,7 +2888,7 @@ type Room struct {
 func (s *Room) MarshalJSON() ([]byte, error) {
 	type noMethod Room
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomAutoMatchStatus: This is a JSON template for status of room
@@ -2914,7 +2914,7 @@ type RoomAutoMatchStatus struct {
 func (s *RoomAutoMatchStatus) MarshalJSON() ([]byte, error) {
 	type noMethod RoomAutoMatchStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomAutoMatchingCriteria: This is a JSON template for a room
@@ -2949,7 +2949,7 @@ type RoomAutoMatchingCriteria struct {
 func (s *RoomAutoMatchingCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod RoomAutoMatchingCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomClientAddress: This is a JSON template for the client address
@@ -2975,7 +2975,7 @@ type RoomClientAddress struct {
 func (s *RoomClientAddress) MarshalJSON() ([]byte, error) {
 	type noMethod RoomClientAddress
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomCreateRequest: This is a JSON template for a room creation
@@ -3026,7 +3026,7 @@ type RoomCreateRequest struct {
 func (s *RoomCreateRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RoomCreateRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomJoinRequest: This is a JSON template for a join room request.
@@ -3058,7 +3058,7 @@ type RoomJoinRequest struct {
 func (s *RoomJoinRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RoomJoinRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomLeaveDiagnostics: This is a JSON template for room leave
@@ -3110,7 +3110,7 @@ type RoomLeaveDiagnostics struct {
 func (s *RoomLeaveDiagnostics) MarshalJSON() ([]byte, error) {
 	type noMethod RoomLeaveDiagnostics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomLeaveRequest: This is a JSON template for a leave room request.
@@ -3160,7 +3160,7 @@ type RoomLeaveRequest struct {
 func (s *RoomLeaveRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RoomLeaveRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomList: This is a JSON template for a list of rooms.
@@ -3191,7 +3191,7 @@ type RoomList struct {
 func (s *RoomList) MarshalJSON() ([]byte, error) {
 	type noMethod RoomList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomModification: This is a JSON template for room modification
@@ -3220,7 +3220,7 @@ type RoomModification struct {
 func (s *RoomModification) MarshalJSON() ([]byte, error) {
 	type noMethod RoomModification
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomP2PStatus: This is a JSON template for an update on the status of
@@ -3277,7 +3277,7 @@ type RoomP2PStatus struct {
 func (s *RoomP2PStatus) MarshalJSON() ([]byte, error) {
 	type noMethod RoomP2PStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomP2PStatuses: This is a JSON template for an update on the status
@@ -3302,7 +3302,7 @@ type RoomP2PStatuses struct {
 func (s *RoomP2PStatuses) MarshalJSON() ([]byte, error) {
 	type noMethod RoomP2PStatuses
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomParticipant: This is a JSON template for a participant in a room.
@@ -3382,7 +3382,7 @@ type RoomParticipant struct {
 func (s *RoomParticipant) MarshalJSON() ([]byte, error) {
 	type noMethod RoomParticipant
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoomStatus: This is a JSON template for the status of a room that the
@@ -3438,7 +3438,7 @@ type RoomStatus struct {
 func (s *RoomStatus) MarshalJSON() ([]byte, error) {
 	type noMethod RoomStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ScoreSubmission: This is a JSON template for a request to submit a
@@ -3475,7 +3475,7 @@ type ScoreSubmission struct {
 func (s *ScoreSubmission) MarshalJSON() ([]byte, error) {
 	type noMethod ScoreSubmission
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Snapshot: This is a JSON template for an snapshot object.
@@ -3538,7 +3538,7 @@ type Snapshot struct {
 func (s *Snapshot) MarshalJSON() ([]byte, error) {
 	type noMethod Snapshot
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SnapshotImage: This is a JSON template for an image of a snapshot.
@@ -3572,7 +3572,7 @@ type SnapshotImage struct {
 func (s *SnapshotImage) MarshalJSON() ([]byte, error) {
 	type noMethod SnapshotImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SnapshotListResponse: This is a JSON template for a list of snapshot
@@ -3605,7 +3605,7 @@ type SnapshotListResponse struct {
 func (s *SnapshotListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SnapshotListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedAutoMatchingCriteria: This is a JSON template for an
@@ -3640,7 +3640,7 @@ type TurnBasedAutoMatchingCriteria struct {
 func (s *TurnBasedAutoMatchingCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedAutoMatchingCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatch: This is a JSON template for a turn-based match
@@ -3757,7 +3757,7 @@ type TurnBasedMatch struct {
 func (s *TurnBasedMatch) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatch
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchCreateRequest: This is a JSON template for a turn-based
@@ -3797,7 +3797,7 @@ type TurnBasedMatchCreateRequest struct {
 func (s *TurnBasedMatchCreateRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchCreateRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchData: This is a JSON template for a turn-based match
@@ -3828,7 +3828,7 @@ type TurnBasedMatchData struct {
 func (s *TurnBasedMatchData) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchDataRequest: This is a JSON template for sending a
@@ -3854,7 +3854,7 @@ type TurnBasedMatchDataRequest struct {
 func (s *TurnBasedMatchDataRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchDataRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchList: This is a JSON template for a list of turn-based
@@ -3886,7 +3886,7 @@ type TurnBasedMatchList struct {
 func (s *TurnBasedMatchList) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchModification: This is a JSON template for turn-based
@@ -3915,7 +3915,7 @@ type TurnBasedMatchModification struct {
 func (s *TurnBasedMatchModification) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchModification
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchParticipant: This is a JSON template for a participant
@@ -3976,7 +3976,7 @@ type TurnBasedMatchParticipant struct {
 func (s *TurnBasedMatchParticipant) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchParticipant
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchRematch: This is a JSON template for a rematch
@@ -4010,7 +4010,7 @@ type TurnBasedMatchRematch struct {
 func (s *TurnBasedMatchRematch) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchRematch
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchResults: This is a JSON template for a turn-based match
@@ -4041,7 +4041,7 @@ type TurnBasedMatchResults struct {
 func (s *TurnBasedMatchResults) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchResults
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchSync: This is a JSON template for a list of turn-based
@@ -4078,7 +4078,7 @@ type TurnBasedMatchSync struct {
 func (s *TurnBasedMatchSync) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchSync
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TurnBasedMatchTurn: This is a JSON template for the object
@@ -4118,7 +4118,7 @@ type TurnBasedMatchTurn struct {
 func (s *TurnBasedMatchTurn) MarshalJSON() ([]byte, error) {
 	type noMethod TurnBasedMatchTurn
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "games.achievementDefinitions.list":

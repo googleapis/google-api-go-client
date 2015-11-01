@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -310,7 +310,7 @@ type AlignReadGroupSetsRequest struct {
 func (s *AlignReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AlignReadGroupSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AlignReadGroupSetsResponse: The read group set align response.
@@ -334,7 +334,7 @@ type AlignReadGroupSetsResponse struct {
 func (s *AlignReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AlignReadGroupSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Annotation: An annotation describes a region of reference genome. The
@@ -399,7 +399,7 @@ type Annotation struct {
 func (s *Annotation) MarshalJSON() ([]byte, error) {
 	type noMethod Annotation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnnotationSet: An annotation set is a logical grouping of annotations
@@ -452,7 +452,7 @@ type AnnotationSet struct {
 func (s *AnnotationSet) MarshalJSON() ([]byte, error) {
 	type noMethod AnnotationSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BatchAnnotationsResponse struct {
@@ -476,7 +476,7 @@ type BatchAnnotationsResponse struct {
 func (s *BatchAnnotationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod BatchAnnotationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BatchAnnotationsResponseEntry struct {
@@ -498,7 +498,7 @@ type BatchAnnotationsResponseEntry struct {
 func (s *BatchAnnotationsResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod BatchAnnotationsResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BatchAnnotationsResponseEntryStatus struct {
@@ -520,7 +520,7 @@ type BatchAnnotationsResponseEntryStatus struct {
 func (s *BatchAnnotationsResponseEntryStatus) MarshalJSON() ([]byte, error) {
 	type noMethod BatchAnnotationsResponseEntryStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BatchCreateAnnotationsRequest struct {
@@ -540,7 +540,7 @@ type BatchCreateAnnotationsRequest struct {
 func (s *BatchCreateAnnotationsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod BatchCreateAnnotationsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Call: A call represents the determination of genotype with respect to
@@ -598,7 +598,7 @@ type Call struct {
 func (s *Call) MarshalJSON() ([]byte, error) {
 	type noMethod Call
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CallReadGroupSetsRequest: The read group set call request.
@@ -630,7 +630,7 @@ type CallReadGroupSetsRequest struct {
 func (s *CallReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod CallReadGroupSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CallReadGroupSetsResponse: The read group set call response.
@@ -654,7 +654,7 @@ type CallReadGroupSetsResponse struct {
 func (s *CallReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CallReadGroupSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CallSet: A call set is a collection of variant calls, typically for
@@ -695,7 +695,7 @@ type CallSet struct {
 func (s *CallSet) MarshalJSON() ([]byte, error) {
 	type noMethod CallSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CigarUnit: A single CIGAR operation.
@@ -735,7 +735,7 @@ type CigarUnit struct {
 func (s *CigarUnit) MarshalJSON() ([]byte, error) {
 	type noMethod CigarUnit
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CoverageBucket: A bucket over which read coverage has been
@@ -761,7 +761,7 @@ type CoverageBucket struct {
 func (s *CoverageBucket) MarshalJSON() ([]byte, error) {
 	type noMethod CoverageBucket
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Dataset: A Dataset is a collection of genomic data.
@@ -801,7 +801,7 @@ type Dataset struct {
 func (s *Dataset) MarshalJSON() ([]byte, error) {
 	type noMethod Dataset
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExperimentalCreateJobRequest: The job creation request.
@@ -847,7 +847,7 @@ type ExperimentalCreateJobRequest struct {
 func (s *ExperimentalCreateJobRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ExperimentalCreateJobRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExperimentalCreateJobResponse: The job creation response.
@@ -871,7 +871,7 @@ type ExperimentalCreateJobResponse struct {
 func (s *ExperimentalCreateJobResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ExperimentalCreateJobResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExportReadGroupSetsRequest: The read group set export request.
@@ -905,7 +905,7 @@ type ExportReadGroupSetsRequest struct {
 func (s *ExportReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ExportReadGroupSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExportReadGroupSetsResponse: The read group set export response.
@@ -929,7 +929,7 @@ type ExportReadGroupSetsResponse struct {
 func (s *ExportReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ExportReadGroupSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExportVariantSetRequest: The variant data export request.
@@ -972,7 +972,7 @@ type ExportVariantSetRequest struct {
 func (s *ExportVariantSetRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ExportVariantSetRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExportVariantSetResponse: The variant data export response.
@@ -996,7 +996,7 @@ type ExportVariantSetResponse struct {
 func (s *ExportVariantSetResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ExportVariantSetResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ExternalId struct {
@@ -1018,7 +1018,7 @@ type ExternalId struct {
 func (s *ExternalId) MarshalJSON() ([]byte, error) {
 	type noMethod ExternalId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type FastqMetadata struct {
@@ -1056,7 +1056,7 @@ type FastqMetadata struct {
 func (s *FastqMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod FastqMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImportReadGroupSetsRequest: The read group set import request.
@@ -1096,7 +1096,7 @@ type ImportReadGroupSetsRequest struct {
 func (s *ImportReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ImportReadGroupSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImportReadGroupSetsResponse: The read group set import response.
@@ -1120,7 +1120,7 @@ type ImportReadGroupSetsResponse struct {
 func (s *ImportReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ImportReadGroupSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImportVariantsRequest: The variant data import request.
@@ -1159,7 +1159,7 @@ type ImportVariantsRequest struct {
 func (s *ImportVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ImportVariantsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImportVariantsResponse: The variant data import response.
@@ -1183,7 +1183,7 @@ type ImportVariantsResponse struct {
 func (s *ImportVariantsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ImportVariantsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Int32Value: Wrapper message for `int32`.
@@ -1205,7 +1205,7 @@ type Int32Value struct {
 func (s *Int32Value) MarshalJSON() ([]byte, error) {
 	type noMethod Int32Value
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InterleavedFastqSource: Describes an interleaved FASTQ file source
@@ -1232,7 +1232,7 @@ type InterleavedFastqSource struct {
 func (s *InterleavedFastqSource) MarshalJSON() ([]byte, error) {
 	type noMethod InterleavedFastqSource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Job: A Job represents an ongoing process that can be monitored for
@@ -1294,7 +1294,7 @@ type Job struct {
 func (s *Job) MarshalJSON() ([]byte, error) {
 	type noMethod Job
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JobRequest: A summary representation of the service request that
@@ -1333,7 +1333,7 @@ type JobRequest struct {
 func (s *JobRequest) MarshalJSON() ([]byte, error) {
 	type noMethod JobRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // KeyValue: Used to hold basic key value information.
@@ -1356,7 +1356,7 @@ type KeyValue struct {
 func (s *KeyValue) MarshalJSON() ([]byte, error) {
 	type noMethod KeyValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LinearAlignment: A linear alignment can be represented by one CIGAR
@@ -1386,7 +1386,7 @@ type LinearAlignment struct {
 func (s *LinearAlignment) MarshalJSON() ([]byte, error) {
 	type noMethod LinearAlignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListBasesResponse struct {
@@ -1420,7 +1420,7 @@ type ListBasesResponse struct {
 func (s *ListBasesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListBasesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListCoverageBucketsResponse struct {
@@ -1458,7 +1458,7 @@ type ListCoverageBucketsResponse struct {
 func (s *ListCoverageBucketsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListCoverageBucketsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListDatasetsResponse: The dataset list response.
@@ -1488,7 +1488,7 @@ type ListDatasetsResponse struct {
 func (s *ListDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListDatasetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MergeVariantsRequest struct {
@@ -1507,7 +1507,7 @@ type MergeVariantsRequest struct {
 func (s *MergeVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod MergeVariantsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Metadata: Metadata describes a single piece of variant call metadata.
@@ -1560,7 +1560,7 @@ type Metadata struct {
 func (s *Metadata) MarshalJSON() ([]byte, error) {
 	type noMethod Metadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PairedFastqSource: Describes a paired-end FASTQ file source for
@@ -1600,7 +1600,7 @@ type PairedFastqSource struct {
 func (s *PairedFastqSource) MarshalJSON() ([]byte, error) {
 	type noMethod PairedFastqSource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Position: An abstraction for referring to a genomic position, in
@@ -1632,7 +1632,7 @@ type Position struct {
 func (s *Position) MarshalJSON() ([]byte, error) {
 	type noMethod Position
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QueryRange: A 0-based half-open genomic coordinate range for search
@@ -1669,7 +1669,7 @@ type QueryRange struct {
 func (s *QueryRange) MarshalJSON() ([]byte, error) {
 	type noMethod QueryRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Range: A 0-based half-open genomic coordinate range over a reference
@@ -1699,7 +1699,7 @@ type Range struct {
 func (s *Range) MarshalJSON() ([]byte, error) {
 	type noMethod Range
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RangePosition: A 0-based half-open genomic coordinate range over a
@@ -1740,7 +1740,7 @@ type RangePosition struct {
 func (s *RangePosition) MarshalJSON() ([]byte, error) {
 	type noMethod RangePosition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Read: A read alignment describes a linear alignment of a string of
@@ -1875,7 +1875,7 @@ type Read struct {
 func (s *Read) MarshalJSON() ([]byte, error) {
 	type noMethod Read
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReadGroup: A read group is all the data that's processed the same way
@@ -1934,7 +1934,7 @@ type ReadGroup struct {
 func (s *ReadGroup) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReadGroupExperiment struct {
@@ -1968,7 +1968,7 @@ type ReadGroupExperiment struct {
 func (s *ReadGroupExperiment) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroupExperiment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReadGroupProgram struct {
@@ -2000,7 +2000,7 @@ type ReadGroupProgram struct {
 func (s *ReadGroupProgram) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroupProgram
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReadGroupSet: A read group set is a logical collection of read
@@ -2052,7 +2052,7 @@ type ReadGroupSet struct {
 func (s *ReadGroupSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroupSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Reference: A reference is a canonical assembled DNA sequence,
@@ -2104,7 +2104,7 @@ type Reference struct {
 func (s *Reference) MarshalJSON() ([]byte, error) {
 	type noMethod Reference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReferenceBound: ReferenceBound records an upper bound for the
@@ -2129,7 +2129,7 @@ type ReferenceBound struct {
 func (s *ReferenceBound) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceBound
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReferenceSet: A reference set is a set of references which typically
@@ -2191,7 +2191,7 @@ type ReferenceSet struct {
 func (s *ReferenceSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchAnnotationSetsRequest struct {
@@ -2238,7 +2238,7 @@ type SearchAnnotationSetsRequest struct {
 func (s *SearchAnnotationSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnnotationSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchAnnotationSetsResponse struct {
@@ -2267,7 +2267,7 @@ type SearchAnnotationSetsResponse struct {
 func (s *SearchAnnotationSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnnotationSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchAnnotationsRequest struct {
@@ -2301,7 +2301,7 @@ type SearchAnnotationsRequest struct {
 func (s *SearchAnnotationsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnnotationsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchAnnotationsResponse struct {
@@ -2330,7 +2330,7 @@ type SearchAnnotationsResponse struct {
 func (s *SearchAnnotationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnnotationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchCallSetsRequest: The call set search request.
@@ -2364,7 +2364,7 @@ type SearchCallSetsRequest struct {
 func (s *SearchCallSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchCallSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchCallSetsResponse: The call set search response.
@@ -2394,7 +2394,7 @@ type SearchCallSetsResponse struct {
 func (s *SearchCallSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchCallSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchJobsRequest: The jobs search request.
@@ -2444,7 +2444,7 @@ type SearchJobsRequest struct {
 func (s *SearchJobsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchJobsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchJobsResponse: The job search response.
@@ -2474,7 +2474,7 @@ type SearchJobsResponse struct {
 func (s *SearchJobsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchJobsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchReadGroupSetsRequest: The read group set search request.
@@ -2508,7 +2508,7 @@ type SearchReadGroupSetsRequest struct {
 func (s *SearchReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadGroupSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchReadGroupSetsResponse: The read group set search response.
@@ -2538,7 +2538,7 @@ type SearchReadGroupSetsResponse struct {
 func (s *SearchReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadGroupSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchReadsRequest: The read search request.
@@ -2588,7 +2588,7 @@ type SearchReadsRequest struct {
 func (s *SearchReadsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchReadsResponse: The read search response.
@@ -2621,7 +2621,7 @@ type SearchReadsResponse struct {
 func (s *SearchReadsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchReferenceSetsRequest struct {
@@ -2661,7 +2661,7 @@ type SearchReferenceSetsRequest struct {
 func (s *SearchReferenceSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferenceSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchReferenceSetsResponse struct {
@@ -2690,7 +2690,7 @@ type SearchReferenceSetsResponse struct {
 func (s *SearchReferenceSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferenceSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchReferencesRequest struct {
@@ -2730,7 +2730,7 @@ type SearchReferencesRequest struct {
 func (s *SearchReferencesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferencesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchReferencesResponse struct {
@@ -2759,7 +2759,7 @@ type SearchReferencesResponse struct {
 func (s *SearchReferencesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferencesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchVariantSetsRequest: The search variant sets request.
@@ -2788,7 +2788,7 @@ type SearchVariantSetsRequest struct {
 func (s *SearchVariantSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchVariantSetsResponse: The search variant sets response.
@@ -2818,7 +2818,7 @@ type SearchVariantSetsResponse struct {
 func (s *SearchVariantSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchVariantsRequest: The variant search request.
@@ -2877,7 +2877,7 @@ type SearchVariantsRequest struct {
 func (s *SearchVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchVariantsResponse: The variant search response.
@@ -2907,7 +2907,7 @@ type SearchVariantsResponse struct {
 func (s *SearchVariantsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Transcript: A transcript represents the assertion that a particular
@@ -2961,7 +2961,7 @@ type Transcript struct {
 func (s *Transcript) MarshalJSON() ([]byte, error) {
 	type noMethod Transcript
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TranscriptCodingSequence struct {
@@ -2988,7 +2988,7 @@ type TranscriptCodingSequence struct {
 func (s *TranscriptCodingSequence) MarshalJSON() ([]byte, error) {
 	type noMethod TranscriptCodingSequence
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TranscriptExon struct {
@@ -3027,7 +3027,7 @@ type TranscriptExon struct {
 func (s *TranscriptExon) MarshalJSON() ([]byte, error) {
 	type noMethod TranscriptExon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Variant: A variant represents a change in DNA sequence relative to a
@@ -3106,7 +3106,7 @@ type Variant struct {
 func (s *Variant) MarshalJSON() ([]byte, error) {
 	type noMethod Variant
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VariantAnnotation: A Variant annotation.
@@ -3189,7 +3189,7 @@ type VariantAnnotation struct {
 func (s *VariantAnnotation) MarshalJSON() ([]byte, error) {
 	type noMethod VariantAnnotation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VariantAnnotationCondition struct {
@@ -3219,7 +3219,7 @@ type VariantAnnotationCondition struct {
 func (s *VariantAnnotationCondition) MarshalJSON() ([]byte, error) {
 	type noMethod VariantAnnotationCondition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VariantSet: A variant set is a collection of call sets and variants.
@@ -3255,7 +3255,7 @@ type VariantSet struct {
 func (s *VariantSet) MarshalJSON() ([]byte, error) {
 	type noMethod VariantSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "genomics.annotationSets.create":

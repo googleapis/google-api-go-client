@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -362,7 +362,7 @@ type AccessPolicy struct {
 func (s *AccessPolicy) MarshalJSON() ([]byte, error) {
 	type noMethod AccessPolicy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Activity: An activity resource contains information about an action
@@ -410,7 +410,7 @@ type Activity struct {
 func (s *Activity) MarshalJSON() ([]byte, error) {
 	type noMethod Activity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetails: Details about the content of an activity: the
@@ -481,7 +481,7 @@ type ActivityContentDetails struct {
 func (s *ActivityContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsBulletin: Details about a channel bulletin
@@ -503,7 +503,7 @@ type ActivityContentDetailsBulletin struct {
 func (s *ActivityContentDetailsBulletin) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsBulletin
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsChannelItem: Details about a resource which was
@@ -525,7 +525,7 @@ type ActivityContentDetailsChannelItem struct {
 func (s *ActivityContentDetailsChannelItem) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsChannelItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsComment: Information about a resource that
@@ -547,7 +547,7 @@ type ActivityContentDetailsComment struct {
 func (s *ActivityContentDetailsComment) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsComment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsFavorite: Information about a video that was
@@ -569,7 +569,7 @@ type ActivityContentDetailsFavorite struct {
 func (s *ActivityContentDetailsFavorite) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsFavorite
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsLike: Information about a resource that
@@ -591,7 +591,7 @@ type ActivityContentDetailsLike struct {
 func (s *ActivityContentDetailsLike) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsLike
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsPlaylistItem: Information about a new playlist
@@ -620,7 +620,7 @@ type ActivityContentDetailsPlaylistItem struct {
 func (s *ActivityContentDetailsPlaylistItem) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsPlaylistItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsPromotedItem: Details about a resource which is
@@ -682,7 +682,7 @@ type ActivityContentDetailsPromotedItem struct {
 func (s *ActivityContentDetailsPromotedItem) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsPromotedItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsRecommendation: Information that identifies the
@@ -717,7 +717,7 @@ type ActivityContentDetailsRecommendation struct {
 func (s *ActivityContentDetailsRecommendation) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsRecommendation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsSocial: Details about a social network post.
@@ -756,7 +756,7 @@ type ActivityContentDetailsSocial struct {
 func (s *ActivityContentDetailsSocial) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsSocial
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsSubscription: Information about a channel that
@@ -778,7 +778,7 @@ type ActivityContentDetailsSubscription struct {
 func (s *ActivityContentDetailsSubscription) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsSubscription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityContentDetailsUpload: Information about the uploaded video.
@@ -799,7 +799,7 @@ type ActivityContentDetailsUpload struct {
 func (s *ActivityContentDetailsUpload) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityContentDetailsUpload
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ActivityListResponse struct {
@@ -849,7 +849,7 @@ type ActivityListResponse struct {
 func (s *ActivityListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivitySnippet: Basic details about an activity, including title,
@@ -917,7 +917,7 @@ type ActivitySnippet struct {
 func (s *ActivitySnippet) MarshalJSON() ([]byte, error) {
 	type noMethod ActivitySnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Caption: A caption resource represents a YouTube caption track. A
@@ -952,7 +952,7 @@ type Caption struct {
 func (s *Caption) MarshalJSON() ([]byte, error) {
 	type noMethod Caption
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CaptionListResponse struct {
@@ -989,7 +989,7 @@ type CaptionListResponse struct {
 func (s *CaptionListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CaptionListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CaptionSnippet: Basic details about a caption track, such as its
@@ -1088,7 +1088,7 @@ type CaptionSnippet struct {
 func (s *CaptionSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod CaptionSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CdnSettings: Brief description of the live stream cdn settings.
@@ -1122,7 +1122,7 @@ type CdnSettings struct {
 func (s *CdnSettings) MarshalJSON() ([]byte, error) {
 	type noMethod CdnSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Channel: A channel resource contains information about a YouTube
@@ -1198,7 +1198,7 @@ type Channel struct {
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type noMethod Channel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelAuditDetails: The auditDetails object encapsulates channel
@@ -1237,7 +1237,7 @@ type ChannelAuditDetails struct {
 func (s *ChannelAuditDetails) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelAuditDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelBannerResource: A channel banner returned as the response to a
@@ -1269,7 +1269,7 @@ type ChannelBannerResource struct {
 func (s *ChannelBannerResource) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelBannerResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelBrandingSettings: Branding properties of a YouTube channel.
@@ -1298,7 +1298,7 @@ type ChannelBrandingSettings struct {
 func (s *ChannelBrandingSettings) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelBrandingSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelContentDetails: Details about the content of a channel.
@@ -1321,7 +1321,7 @@ type ChannelContentDetails struct {
 func (s *ChannelContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ChannelContentDetailsRelatedPlaylists struct {
@@ -1362,7 +1362,7 @@ type ChannelContentDetailsRelatedPlaylists struct {
 func (s *ChannelContentDetailsRelatedPlaylists) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelContentDetailsRelatedPlaylists
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelContentOwnerDetails: The contentOwnerDetails object
@@ -1389,7 +1389,7 @@ type ChannelContentOwnerDetails struct {
 func (s *ChannelContentOwnerDetails) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelContentOwnerDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelConversionPing: Pings that the app shall fire (authenticated
@@ -1426,7 +1426,7 @@ type ChannelConversionPing struct {
 func (s *ChannelConversionPing) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelConversionPing
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelConversionPings: The conversionPings object encapsulates
@@ -1450,7 +1450,7 @@ type ChannelConversionPings struct {
 func (s *ChannelConversionPings) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelConversionPings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ChannelId struct {
@@ -1468,7 +1468,7 @@ type ChannelId struct {
 func (s *ChannelId) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ChannelListResponse struct {
@@ -1517,7 +1517,7 @@ type ChannelListResponse struct {
 func (s *ChannelListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelLocalization: Channel localization setting
@@ -1540,7 +1540,7 @@ type ChannelLocalization struct {
 func (s *ChannelLocalization) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelLocalization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ChannelSection struct {
@@ -1587,7 +1587,7 @@ type ChannelSection struct {
 func (s *ChannelSection) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelSection
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelSectionContentDetails: Details about a channelsection,
@@ -1613,7 +1613,7 @@ type ChannelSectionContentDetails struct {
 func (s *ChannelSectionContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelSectionContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ChannelSectionListResponse struct {
@@ -1650,7 +1650,7 @@ type ChannelSectionListResponse struct {
 func (s *ChannelSectionListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelSectionListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelSectionLocalization: ChannelSection localization setting
@@ -1670,7 +1670,7 @@ type ChannelSectionLocalization struct {
 func (s *ChannelSectionLocalization) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelSectionLocalization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelSectionSnippet: Basic details about a channel section,
@@ -1736,7 +1736,7 @@ type ChannelSectionSnippet struct {
 func (s *ChannelSectionSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelSectionSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelSectionTargeting: ChannelSection targeting setting.
@@ -1762,7 +1762,7 @@ type ChannelSectionTargeting struct {
 func (s *ChannelSectionTargeting) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelSectionTargeting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelSettings: Branding properties for the channel view.
@@ -1827,7 +1827,7 @@ type ChannelSettings struct {
 func (s *ChannelSettings) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelSnippet: Basic details about a channel, including title,
@@ -1871,7 +1871,7 @@ type ChannelSnippet struct {
 func (s *ChannelSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelStatistics: Statistics about a channel: number of subscribers,
@@ -1905,7 +1905,7 @@ type ChannelStatistics struct {
 func (s *ChannelStatistics) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelStatistics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelStatus: JSON template for the status part of a channel.
@@ -1944,7 +1944,7 @@ type ChannelStatus struct {
 func (s *ChannelStatus) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChannelTopicDetails: Freebase topic information related to the
@@ -1967,7 +1967,7 @@ type ChannelTopicDetails struct {
 func (s *ChannelTopicDetails) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelTopicDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Comment: A comment represents a single YouTube comment.
@@ -2001,7 +2001,7 @@ type Comment struct {
 func (s *Comment) MarshalJSON() ([]byte, error) {
 	type noMethod Comment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CommentListResponse struct {
@@ -2046,7 +2046,7 @@ type CommentListResponse struct {
 func (s *CommentListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CommentListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentSnippet: Basic details about a comment, such as its author and
@@ -2140,7 +2140,7 @@ type CommentSnippet struct {
 func (s *CommentSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod CommentSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentThread: A comment thread represents information that applies
@@ -2181,7 +2181,7 @@ type CommentThread struct {
 func (s *CommentThread) MarshalJSON() ([]byte, error) {
 	type noMethod CommentThread
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CommentThreadListResponse struct {
@@ -2226,7 +2226,7 @@ type CommentThreadListResponse struct {
 func (s *CommentThreadListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CommentThreadListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentThreadReplies: Comments written in (direct or indirect) reply
@@ -2249,7 +2249,7 @@ type CommentThreadReplies struct {
 func (s *CommentThreadReplies) MarshalJSON() ([]byte, error) {
 	type noMethod CommentThreadReplies
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentThreadSnippet: Basic details about a comment thread.
@@ -2291,7 +2291,7 @@ type CommentThreadSnippet struct {
 func (s *CommentThreadSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod CommentThreadSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ContentRating: Ratings schemes. The country-specific ratings are
@@ -3126,7 +3126,7 @@ type ContentRating struct {
 func (s *ContentRating) MarshalJSON() ([]byte, error) {
 	type noMethod ContentRating
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoPoint: Geographical coordinates of a point, in WGS84.
@@ -3152,7 +3152,7 @@ type GeoPoint struct {
 func (s *GeoPoint) MarshalJSON() ([]byte, error) {
 	type noMethod GeoPoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GuideCategory: A guideCategory resource identifies a category that
@@ -3188,7 +3188,7 @@ type GuideCategory struct {
 func (s *GuideCategory) MarshalJSON() ([]byte, error) {
 	type noMethod GuideCategory
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GuideCategoryListResponse struct {
@@ -3239,7 +3239,7 @@ type GuideCategoryListResponse struct {
 func (s *GuideCategoryListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GuideCategoryListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GuideCategorySnippet: Basic details about a guide category.
@@ -3261,7 +3261,7 @@ type GuideCategorySnippet struct {
 func (s *GuideCategorySnippet) MarshalJSON() ([]byte, error) {
 	type noMethod GuideCategorySnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // I18nLanguage: An i18nLanguage resource identifies a UI language
@@ -3293,7 +3293,7 @@ type I18nLanguage struct {
 func (s *I18nLanguage) MarshalJSON() ([]byte, error) {
 	type noMethod I18nLanguage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type I18nLanguageListResponse struct {
@@ -3332,7 +3332,7 @@ type I18nLanguageListResponse struct {
 func (s *I18nLanguageListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod I18nLanguageListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // I18nLanguageSnippet: Basic details about an i18n language, such as
@@ -3356,7 +3356,7 @@ type I18nLanguageSnippet struct {
 func (s *I18nLanguageSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod I18nLanguageSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // I18nRegion: A i18nRegion resource identifies a region where YouTube
@@ -3388,7 +3388,7 @@ type I18nRegion struct {
 func (s *I18nRegion) MarshalJSON() ([]byte, error) {
 	type noMethod I18nRegion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type I18nRegionListResponse struct {
@@ -3427,7 +3427,7 @@ type I18nRegionListResponse struct {
 func (s *I18nRegionListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod I18nRegionListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // I18nRegionSnippet: Basic details about an i18n region, such as region
@@ -3451,7 +3451,7 @@ type I18nRegionSnippet struct {
 func (s *I18nRegionSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod I18nRegionSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImageSettings: Branding properties for images associated with the
@@ -3557,7 +3557,7 @@ type ImageSettings struct {
 func (s *ImageSettings) MarshalJSON() ([]byte, error) {
 	type noMethod ImageSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IngestionInfo: Describes information necessary for ingesting an RTMP
@@ -3598,7 +3598,7 @@ type IngestionInfo struct {
 func (s *IngestionInfo) MarshalJSON() ([]byte, error) {
 	type noMethod IngestionInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InvideoBranding struct {
@@ -3624,7 +3624,7 @@ type InvideoBranding struct {
 func (s *InvideoBranding) MarshalJSON() ([]byte, error) {
 	type noMethod InvideoBranding
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InvideoPosition: Describes the spatial position of a visual widget
@@ -3659,7 +3659,7 @@ type InvideoPosition struct {
 func (s *InvideoPosition) MarshalJSON() ([]byte, error) {
 	type noMethod InvideoPosition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InvideoPromotion: Describes an invideo promotion campaign consisting
@@ -3697,7 +3697,7 @@ type InvideoPromotion struct {
 func (s *InvideoPromotion) MarshalJSON() ([]byte, error) {
 	type noMethod InvideoPromotion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InvideoTiming: Describes a temporal position of a visual widget
@@ -3736,7 +3736,7 @@ type InvideoTiming struct {
 func (s *InvideoTiming) MarshalJSON() ([]byte, error) {
 	type noMethod InvideoTiming
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LanguageTag struct {
@@ -3754,7 +3754,7 @@ type LanguageTag struct {
 func (s *LanguageTag) MarshalJSON() ([]byte, error) {
 	type noMethod LanguageTag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LiveBroadcast: A liveBroadcast resource represents an event that will
@@ -3808,7 +3808,7 @@ type LiveBroadcast struct {
 func (s *LiveBroadcast) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcast
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LiveBroadcastContentDetails: Detailed settings of a broadcast.
@@ -3885,7 +3885,7 @@ type LiveBroadcastContentDetails struct {
 func (s *LiveBroadcastContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveBroadcastListResponse struct {
@@ -3934,7 +3934,7 @@ type LiveBroadcastListResponse struct {
 func (s *LiveBroadcastListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveBroadcastSnippet struct {
@@ -4003,7 +4003,7 @@ type LiveBroadcastSnippet struct {
 func (s *LiveBroadcastSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LiveBroadcastStatistics: Statistics about the live broadcast. These
@@ -4039,7 +4039,7 @@ type LiveBroadcastStatistics struct {
 func (s *LiveBroadcastStatistics) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastStatistics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveBroadcastStatus struct {
@@ -4101,7 +4101,7 @@ type LiveBroadcastStatus struct {
 func (s *LiveBroadcastStatus) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveBroadcastTopic struct {
@@ -4130,7 +4130,7 @@ type LiveBroadcastTopic struct {
 func (s *LiveBroadcastTopic) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastTopic
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveBroadcastTopicDetails struct {
@@ -4148,7 +4148,7 @@ type LiveBroadcastTopicDetails struct {
 func (s *LiveBroadcastTopicDetails) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastTopicDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveBroadcastTopicSnippet struct {
@@ -4171,7 +4171,7 @@ type LiveBroadcastTopicSnippet struct {
 func (s *LiveBroadcastTopicSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastTopicSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LiveStream: A live stream describes a live ingestion point.
@@ -4219,7 +4219,7 @@ type LiveStream struct {
 func (s *LiveStream) MarshalJSON() ([]byte, error) {
 	type noMethod LiveStream
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveStreamConfigurationIssue struct {
@@ -4288,7 +4288,7 @@ type LiveStreamConfigurationIssue struct {
 func (s *LiveStreamConfigurationIssue) MarshalJSON() ([]byte, error) {
 	type noMethod LiveStreamConfigurationIssue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LiveStreamContentDetails: Detailed settings of a stream.
@@ -4327,7 +4327,7 @@ type LiveStreamContentDetails struct {
 func (s *LiveStreamContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod LiveStreamContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveStreamHealthStatus struct {
@@ -4360,7 +4360,7 @@ type LiveStreamHealthStatus struct {
 func (s *LiveStreamHealthStatus) MarshalJSON() ([]byte, error) {
 	type noMethod LiveStreamHealthStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveStreamListResponse struct {
@@ -4409,7 +4409,7 @@ type LiveStreamListResponse struct {
 func (s *LiveStreamListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LiveStreamListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LiveStreamSnippet struct {
@@ -4443,7 +4443,7 @@ type LiveStreamSnippet struct {
 func (s *LiveStreamSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod LiveStreamSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LiveStreamStatus: Brief description of the live stream status.
@@ -4471,7 +4471,7 @@ type LiveStreamStatus struct {
 func (s *LiveStreamStatus) MarshalJSON() ([]byte, error) {
 	type noMethod LiveStreamStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LocalizedProperty struct {
@@ -4494,7 +4494,7 @@ type LocalizedProperty struct {
 func (s *LocalizedProperty) MarshalJSON() ([]byte, error) {
 	type noMethod LocalizedProperty
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LocalizedString struct {
@@ -4514,7 +4514,7 @@ type LocalizedString struct {
 func (s *LocalizedString) MarshalJSON() ([]byte, error) {
 	type noMethod LocalizedString
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MonitorStreamInfo: Settings and Info of the monitor stream
@@ -4555,7 +4555,7 @@ type MonitorStreamInfo struct {
 func (s *MonitorStreamInfo) MarshalJSON() ([]byte, error) {
 	type noMethod MonitorStreamInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PageInfo: Paging details for lists of resources, including total
@@ -4580,7 +4580,7 @@ type PageInfo struct {
 func (s *PageInfo) MarshalJSON() ([]byte, error) {
 	type noMethod PageInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Playlist: A playlist resource represents a YouTube playlist. A
@@ -4652,7 +4652,7 @@ type Playlist struct {
 func (s *Playlist) MarshalJSON() ([]byte, error) {
 	type noMethod Playlist
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PlaylistContentDetails struct {
@@ -4671,7 +4671,7 @@ type PlaylistContentDetails struct {
 func (s *PlaylistContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlaylistItem: A playlistItem resource identifies another resource,
@@ -4737,7 +4737,7 @@ type PlaylistItem struct {
 func (s *PlaylistItem) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PlaylistItemContentDetails struct {
@@ -4774,7 +4774,7 @@ type PlaylistItemContentDetails struct {
 func (s *PlaylistItemContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistItemContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PlaylistItemListResponse struct {
@@ -4823,7 +4823,7 @@ type PlaylistItemListResponse struct {
 func (s *PlaylistItemListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistItemListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlaylistItemSnippet: Basic details about a playlist, including title,
@@ -4880,7 +4880,7 @@ type PlaylistItemSnippet struct {
 func (s *PlaylistItemSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistItemSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlaylistItemStatus: Information about the playlist item's privacy
@@ -4906,7 +4906,7 @@ type PlaylistItemStatus struct {
 func (s *PlaylistItemStatus) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistItemStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PlaylistListResponse struct {
@@ -4955,7 +4955,7 @@ type PlaylistListResponse struct {
 func (s *PlaylistListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlaylistLocalization: Playlist localization setting
@@ -4978,7 +4978,7 @@ type PlaylistLocalization struct {
 func (s *PlaylistLocalization) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistLocalization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PlaylistPlayer struct {
@@ -4998,7 +4998,7 @@ type PlaylistPlayer struct {
 func (s *PlaylistPlayer) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistPlayer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlaylistSnippet: Basic details about a playlist, including title,
@@ -5050,7 +5050,7 @@ type PlaylistSnippet struct {
 func (s *PlaylistSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PlaylistStatus struct {
@@ -5074,7 +5074,7 @@ type PlaylistStatus struct {
 func (s *PlaylistStatus) MarshalJSON() ([]byte, error) {
 	type noMethod PlaylistStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PromotedItem: Describes a single promoted item.
@@ -5107,7 +5107,7 @@ type PromotedItem struct {
 func (s *PromotedItem) MarshalJSON() ([]byte, error) {
 	type noMethod PromotedItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PromotedItemId: Describes a single promoted item id. It is a union of
@@ -5149,7 +5149,7 @@ type PromotedItemId struct {
 func (s *PromotedItemId) MarshalJSON() ([]byte, error) {
 	type noMethod PromotedItemId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PropertyValue: A pair Property / Value.
@@ -5172,7 +5172,7 @@ type PropertyValue struct {
 func (s *PropertyValue) MarshalJSON() ([]byte, error) {
 	type noMethod PropertyValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResourceId: A resource id is a generic reference that points to
@@ -5208,7 +5208,7 @@ type ResourceId struct {
 func (s *ResourceId) MarshalJSON() ([]byte, error) {
 	type noMethod ResourceId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchListResponse struct {
@@ -5257,7 +5257,7 @@ type SearchListResponse struct {
 func (s *SearchListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchResult: A search result contains information about a YouTube
@@ -5295,7 +5295,7 @@ type SearchResult struct {
 func (s *SearchResult) MarshalJSON() ([]byte, error) {
 	type noMethod SearchResult
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchResultSnippet: Basic details about a search result, including
@@ -5350,7 +5350,7 @@ type SearchResultSnippet struct {
 func (s *SearchResultSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod SearchResultSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subscription: A subscription resource contains information about a
@@ -5398,7 +5398,7 @@ type Subscription struct {
 func (s *Subscription) MarshalJSON() ([]byte, error) {
 	type noMethod Subscription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionContentDetails: Details about the content to witch a
@@ -5432,7 +5432,7 @@ type SubscriptionContentDetails struct {
 func (s *SubscriptionContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SubscriptionListResponse struct {
@@ -5481,7 +5481,7 @@ type SubscriptionListResponse struct {
 func (s *SubscriptionListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionSnippet: Basic details about a subscription, including
@@ -5527,7 +5527,7 @@ type SubscriptionSnippet struct {
 func (s *SubscriptionSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionSubscriberSnippet: Basic details about a subscription's
@@ -5557,7 +5557,7 @@ type SubscriptionSubscriberSnippet struct {
 func (s *SubscriptionSubscriberSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionSubscriberSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Thumbnail: A thumbnail is an image representing a YouTube resource.
@@ -5583,7 +5583,7 @@ type Thumbnail struct {
 func (s *Thumbnail) MarshalJSON() ([]byte, error) {
 	type noMethod Thumbnail
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ThumbnailDetails: Internal representation of thumbnails for a YouTube
@@ -5616,7 +5616,7 @@ type ThumbnailDetails struct {
 func (s *ThumbnailDetails) MarshalJSON() ([]byte, error) {
 	type noMethod ThumbnailDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ThumbnailSetResponse struct {
@@ -5653,7 +5653,7 @@ type ThumbnailSetResponse struct {
 func (s *ThumbnailSetResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ThumbnailSetResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TokenPagination: Stub token pagination template to suppress results.
@@ -5770,7 +5770,7 @@ type Video struct {
 func (s *Video) MarshalJSON() ([]byte, error) {
 	type noMethod Video
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoAbuseReport struct {
@@ -5804,7 +5804,7 @@ type VideoAbuseReport struct {
 func (s *VideoAbuseReport) MarshalJSON() ([]byte, error) {
 	type noMethod VideoAbuseReport
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoAbuseReportReason: A videoAbuseReportReason resource identifies
@@ -5837,7 +5837,7 @@ type VideoAbuseReportReason struct {
 func (s *VideoAbuseReportReason) MarshalJSON() ([]byte, error) {
 	type noMethod VideoAbuseReportReason
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoAbuseReportReasonListResponse struct {
@@ -5875,7 +5875,7 @@ type VideoAbuseReportReasonListResponse struct {
 func (s *VideoAbuseReportReasonListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod VideoAbuseReportReasonListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoAbuseReportReasonSnippet: Basic details about a video category,
@@ -5900,7 +5900,7 @@ type VideoAbuseReportReasonSnippet struct {
 func (s *VideoAbuseReportReasonSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod VideoAbuseReportReasonSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoAbuseReportSecondaryReason struct {
@@ -5922,7 +5922,7 @@ type VideoAbuseReportSecondaryReason struct {
 func (s *VideoAbuseReportSecondaryReason) MarshalJSON() ([]byte, error) {
 	type noMethod VideoAbuseReportSecondaryReason
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoAgeGating struct {
@@ -5958,7 +5958,7 @@ type VideoAgeGating struct {
 func (s *VideoAgeGating) MarshalJSON() ([]byte, error) {
 	type noMethod VideoAgeGating
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoCategory: A videoCategory resource identifies a category that
@@ -5990,7 +5990,7 @@ type VideoCategory struct {
 func (s *VideoCategory) MarshalJSON() ([]byte, error) {
 	type noMethod VideoCategory
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoCategoryListResponse struct {
@@ -6041,7 +6041,7 @@ type VideoCategoryListResponse struct {
 func (s *VideoCategoryListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod VideoCategoryListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoCategorySnippet: Basic details about a video category, such as
@@ -6067,7 +6067,7 @@ type VideoCategorySnippet struct {
 func (s *VideoCategorySnippet) MarshalJSON() ([]byte, error) {
 	type noMethod VideoCategorySnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoContentDetails: Details about the content of a YouTube Video.
@@ -6132,7 +6132,7 @@ type VideoContentDetails struct {
 func (s *VideoContentDetails) MarshalJSON() ([]byte, error) {
 	type noMethod VideoContentDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoContentDetailsRegionRestriction: DEPRECATED Region restriction
@@ -6164,7 +6164,7 @@ type VideoContentDetailsRegionRestriction struct {
 func (s *VideoContentDetailsRegionRestriction) MarshalJSON() ([]byte, error) {
 	type noMethod VideoContentDetailsRegionRestriction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoConversionPing struct {
@@ -6199,7 +6199,7 @@ type VideoConversionPing struct {
 func (s *VideoConversionPing) MarshalJSON() ([]byte, error) {
 	type noMethod VideoConversionPing
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoConversionPings struct {
@@ -6220,7 +6220,7 @@ type VideoConversionPings struct {
 func (s *VideoConversionPings) MarshalJSON() ([]byte, error) {
 	type noMethod VideoConversionPings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoFileDetails: Describes original video file properties, including
@@ -6296,7 +6296,7 @@ type VideoFileDetails struct {
 func (s *VideoFileDetails) MarshalJSON() ([]byte, error) {
 	type noMethod VideoFileDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoFileDetailsAudioStream: Information about an audio stream.
@@ -6326,7 +6326,7 @@ type VideoFileDetailsAudioStream struct {
 func (s *VideoFileDetailsAudioStream) MarshalJSON() ([]byte, error) {
 	type noMethod VideoFileDetailsAudioStream
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoFileDetailsVideoStream: Information about a video stream.
@@ -6379,7 +6379,7 @@ type VideoFileDetailsVideoStream struct {
 func (s *VideoFileDetailsVideoStream) MarshalJSON() ([]byte, error) {
 	type noMethod VideoFileDetailsVideoStream
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoGetRatingResponse struct {
@@ -6416,7 +6416,7 @@ type VideoGetRatingResponse struct {
 func (s *VideoGetRatingResponse) MarshalJSON() ([]byte, error) {
 	type noMethod VideoGetRatingResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoListResponse struct {
@@ -6465,7 +6465,7 @@ type VideoListResponse struct {
 func (s *VideoListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod VideoListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoLiveStreamingDetails: Details about the live streaming metadata.
@@ -6512,7 +6512,7 @@ type VideoLiveStreamingDetails struct {
 func (s *VideoLiveStreamingDetails) MarshalJSON() ([]byte, error) {
 	type noMethod VideoLiveStreamingDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoLocalization: Localized versions of certain video properties
@@ -6536,7 +6536,7 @@ type VideoLocalization struct {
 func (s *VideoLocalization) MarshalJSON() ([]byte, error) {
 	type noMethod VideoLocalization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoMonetizationDetails: Details about monetization of a YouTube
@@ -6558,7 +6558,7 @@ type VideoMonetizationDetails struct {
 func (s *VideoMonetizationDetails) MarshalJSON() ([]byte, error) {
 	type noMethod VideoMonetizationDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoPlayer: Player to be used for a video playback.
@@ -6579,7 +6579,7 @@ type VideoPlayer struct {
 func (s *VideoPlayer) MarshalJSON() ([]byte, error) {
 	type noMethod VideoPlayer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoProcessingDetails: Describes processing status and progress and
@@ -6658,7 +6658,7 @@ type VideoProcessingDetails struct {
 func (s *VideoProcessingDetails) MarshalJSON() ([]byte, error) {
 	type noMethod VideoProcessingDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoProcessingDetailsProcessingProgress: Video processing progress
@@ -6696,7 +6696,7 @@ type VideoProcessingDetailsProcessingProgress struct {
 func (s *VideoProcessingDetailsProcessingProgress) MarshalJSON() ([]byte, error) {
 	type noMethod VideoProcessingDetailsProcessingProgress
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoProjectDetails: Project specific details about the content of a
@@ -6718,7 +6718,7 @@ type VideoProjectDetails struct {
 func (s *VideoProjectDetails) MarshalJSON() ([]byte, error) {
 	type noMethod VideoProjectDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type VideoRating struct {
@@ -6743,7 +6743,7 @@ type VideoRating struct {
 func (s *VideoRating) MarshalJSON() ([]byte, error) {
 	type noMethod VideoRating
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoRecordingDetails: Recording information associated with the
@@ -6772,7 +6772,7 @@ type VideoRecordingDetails struct {
 func (s *VideoRecordingDetails) MarshalJSON() ([]byte, error) {
 	type noMethod VideoRecordingDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoSnippet: Basic details about a video, including title,
@@ -6843,7 +6843,7 @@ type VideoSnippet struct {
 func (s *VideoSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod VideoSnippet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoStatistics: Statistics about the video, such as the number of
@@ -6879,7 +6879,7 @@ type VideoStatistics struct {
 func (s *VideoStatistics) MarshalJSON() ([]byte, error) {
 	type noMethod VideoStatistics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoStatus: Basic details about a video category, such as its
@@ -6965,7 +6965,7 @@ type VideoStatus struct {
 func (s *VideoStatus) MarshalJSON() ([]byte, error) {
 	type noMethod VideoStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoSuggestions: Specifies suggestions on how to improve video
@@ -7040,7 +7040,7 @@ type VideoSuggestions struct {
 func (s *VideoSuggestions) MarshalJSON() ([]byte, error) {
 	type noMethod VideoSuggestions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoSuggestionsTagSuggestion: A single tag suggestion with it's
@@ -7068,7 +7068,7 @@ type VideoSuggestionsTagSuggestion struct {
 func (s *VideoSuggestionsTagSuggestion) MarshalJSON() ([]byte, error) {
 	type noMethod VideoSuggestionsTagSuggestion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VideoTopicDetails: Freebase topic information related to the video.
@@ -7098,7 +7098,7 @@ type VideoTopicDetails struct {
 func (s *VideoTopicDetails) MarshalJSON() ([]byte, error) {
 	type noMethod VideoTopicDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WatchSettings: Branding properties for the watch.
@@ -7127,7 +7127,7 @@ type WatchSettings struct {
 func (s *WatchSettings) MarshalJSON() ([]byte, error) {
 	type noMethod WatchSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "youtube.activities.insert":

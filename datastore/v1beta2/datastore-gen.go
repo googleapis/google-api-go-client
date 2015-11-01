@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -107,7 +107,7 @@ type AllocateIdsRequest struct {
 func (s *AllocateIdsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AllocateIdsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AllocateIdsResponse struct {
@@ -133,7 +133,7 @@ type AllocateIdsResponse struct {
 func (s *AllocateIdsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AllocateIdsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BeginTransactionRequest struct {
@@ -162,7 +162,7 @@ type BeginTransactionRequest struct {
 func (s *BeginTransactionRequest) MarshalJSON() ([]byte, error) {
 	type noMethod BeginTransactionRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BeginTransactionResponse struct {
@@ -187,7 +187,7 @@ type BeginTransactionResponse struct {
 func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 	type noMethod BeginTransactionResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CommitRequest struct {
@@ -220,7 +220,7 @@ type CommitRequest struct {
 func (s *CommitRequest) MarshalJSON() ([]byte, error) {
 	type noMethod CommitRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CommitResponse struct {
@@ -245,7 +245,7 @@ type CommitResponse struct {
 func (s *CommitResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CommitResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CompositeFilter: A filter that merges the multiple other filters
@@ -274,7 +274,7 @@ type CompositeFilter struct {
 func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
 	type noMethod CompositeFilter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Entity: An entity.
@@ -301,7 +301,7 @@ type Entity struct {
 func (s *Entity) MarshalJSON() ([]byte, error) {
 	type noMethod Entity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EntityResult: The result of fetching an entity from the datastore.
@@ -321,7 +321,7 @@ type EntityResult struct {
 func (s *EntityResult) MarshalJSON() ([]byte, error) {
 	type noMethod EntityResult
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Filter: A holder for any type of filter. Exactly one field should be
@@ -345,7 +345,7 @@ type Filter struct {
 func (s *Filter) MarshalJSON() ([]byte, error) {
 	type noMethod Filter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GqlQuery: A GQL query.
@@ -382,7 +382,7 @@ type GqlQuery struct {
 func (s *GqlQuery) MarshalJSON() ([]byte, error) {
 	type noMethod GqlQuery
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GqlQueryArg: A binding argument for a GQL query.
@@ -407,7 +407,7 @@ type GqlQueryArg struct {
 func (s *GqlQueryArg) MarshalJSON() ([]byte, error) {
 	type noMethod GqlQueryArg
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Key: A unique identifier for an entity.
@@ -443,7 +443,7 @@ type Key struct {
 func (s *Key) MarshalJSON() ([]byte, error) {
 	type noMethod Key
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // KeyPathElement: A (kind, ID/name) pair used to construct a key
@@ -478,7 +478,7 @@ type KeyPathElement struct {
 func (s *KeyPathElement) MarshalJSON() ([]byte, error) {
 	type noMethod KeyPathElement
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // KindExpression: A representation of a kind.
@@ -498,7 +498,7 @@ type KindExpression struct {
 func (s *KindExpression) MarshalJSON() ([]byte, error) {
 	type noMethod KindExpression
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LookupRequest struct {
@@ -520,7 +520,7 @@ type LookupRequest struct {
 func (s *LookupRequest) MarshalJSON() ([]byte, error) {
 	type noMethod LookupRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LookupResponse struct {
@@ -552,7 +552,7 @@ type LookupResponse struct {
 func (s *LookupResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LookupResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Mutation: A set of changes to apply.
@@ -593,7 +593,7 @@ type Mutation struct {
 func (s *Mutation) MarshalJSON() ([]byte, error) {
 	type noMethod Mutation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MutationResult struct {
@@ -616,7 +616,7 @@ type MutationResult struct {
 func (s *MutationResult) MarshalJSON() ([]byte, error) {
 	type noMethod MutationResult
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PartitionId: An identifier for a particular subset of
@@ -643,7 +643,7 @@ type PartitionId struct {
 func (s *PartitionId) MarshalJSON() ([]byte, error) {
 	type noMethod PartitionId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Property: An entity property.
@@ -708,7 +708,7 @@ type Property struct {
 func (s *Property) MarshalJSON() ([]byte, error) {
 	type noMethod Property
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PropertyExpression: A representation of a property in a projection.
@@ -738,7 +738,7 @@ type PropertyExpression struct {
 func (s *PropertyExpression) MarshalJSON() ([]byte, error) {
 	type noMethod PropertyExpression
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PropertyFilter: A filter on a specific property.
@@ -774,7 +774,7 @@ type PropertyFilter struct {
 func (s *PropertyFilter) MarshalJSON() ([]byte, error) {
 	type noMethod PropertyFilter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PropertyOrder: The desired order for a specific property.
@@ -802,7 +802,7 @@ type PropertyOrder struct {
 func (s *PropertyOrder) MarshalJSON() ([]byte, error) {
 	type noMethod PropertyOrder
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PropertyReference: A reference to a property relative to the kind
@@ -823,7 +823,7 @@ type PropertyReference struct {
 func (s *PropertyReference) MarshalJSON() ([]byte, error) {
 	type noMethod PropertyReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Query: A query.
@@ -875,7 +875,7 @@ type Query struct {
 func (s *Query) MarshalJSON() ([]byte, error) {
 	type noMethod Query
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QueryResultBatch: A batch of results produced by a query.
@@ -923,7 +923,7 @@ type QueryResultBatch struct {
 func (s *QueryResultBatch) MarshalJSON() ([]byte, error) {
 	type noMethod QueryResultBatch
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReadOptions struct {
@@ -953,7 +953,7 @@ type ReadOptions struct {
 func (s *ReadOptions) MarshalJSON() ([]byte, error) {
 	type noMethod ReadOptions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ResponseHeader struct {
@@ -973,7 +973,7 @@ type ResponseHeader struct {
 func (s *ResponseHeader) MarshalJSON() ([]byte, error) {
 	type noMethod ResponseHeader
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RollbackRequest struct {
@@ -993,7 +993,7 @@ type RollbackRequest struct {
 func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RollbackRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RollbackResponse struct {
@@ -1015,7 +1015,7 @@ type RollbackResponse struct {
 func (s *RollbackResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RollbackResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RunQueryRequest struct {
@@ -1050,7 +1050,7 @@ type RunQueryRequest struct {
 func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RunQueryRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RunQueryResponse struct {
@@ -1075,7 +1075,7 @@ type RunQueryResponse struct {
 func (s *RunQueryResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RunQueryResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Value: A message that can hold any of the supported value types and
@@ -1141,7 +1141,7 @@ type Value struct {
 func (s *Value) MarshalJSON() ([]byte, error) {
 	type noMethod Value
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "datastore.datasets.allocateIds":

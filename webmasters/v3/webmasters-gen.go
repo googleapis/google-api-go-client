@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -158,7 +158,7 @@ type ApiDataRow struct {
 func (s *ApiDataRow) MarshalJSON() ([]byte, error) {
 	type noMethod ApiDataRow
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ApiDimensionFilter struct {
@@ -180,7 +180,7 @@ type ApiDimensionFilter struct {
 func (s *ApiDimensionFilter) MarshalJSON() ([]byte, error) {
 	type noMethod ApiDimensionFilter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ApiDimensionFilterGroup struct {
@@ -200,7 +200,7 @@ type ApiDimensionFilterGroup struct {
 func (s *ApiDimensionFilterGroup) MarshalJSON() ([]byte, error) {
 	type noMethod ApiDimensionFilterGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchAnalyticsQueryRequest struct {
@@ -264,7 +264,7 @@ type SearchAnalyticsQueryRequest struct {
 func (s *SearchAnalyticsQueryRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnalyticsQueryRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchAnalyticsQueryResponse: A list of rows, one per result, grouped
@@ -296,7 +296,7 @@ type SearchAnalyticsQueryResponse struct {
 func (s *SearchAnalyticsQueryResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchAnalyticsQueryResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SitemapsListResponse: List of sitemaps.
@@ -321,7 +321,7 @@ type SitemapsListResponse struct {
 func (s *SitemapsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SitemapsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SitesListResponse: List of sites with access level information.
@@ -346,7 +346,7 @@ type SitesListResponse struct {
 func (s *SitesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SitesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UrlCrawlErrorCount: An entry in a URL crawl errors time series.
@@ -370,7 +370,7 @@ type UrlCrawlErrorCount struct {
 func (s *UrlCrawlErrorCount) MarshalJSON() ([]byte, error) {
 	type noMethod UrlCrawlErrorCount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UrlCrawlErrorCountsPerType: Number of errors per day for a specific
@@ -398,7 +398,7 @@ type UrlCrawlErrorCountsPerType struct {
 func (s *UrlCrawlErrorCountsPerType) MarshalJSON() ([]byte, error) {
 	type noMethod UrlCrawlErrorCountsPerType
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UrlCrawlErrorsCountsQueryResponse: A time series of the number of URL
@@ -424,7 +424,7 @@ type UrlCrawlErrorsCountsQueryResponse struct {
 func (s *UrlCrawlErrorsCountsQueryResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UrlCrawlErrorsCountsQueryResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UrlCrawlErrorsSample: Contains information about specific crawl
@@ -464,7 +464,7 @@ type UrlCrawlErrorsSample struct {
 func (s *UrlCrawlErrorsSample) MarshalJSON() ([]byte, error) {
 	type noMethod UrlCrawlErrorsSample
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UrlCrawlErrorsSamplesListResponse: List of crawl error samples.
@@ -489,7 +489,7 @@ type UrlCrawlErrorsSamplesListResponse struct {
 func (s *UrlCrawlErrorsSamplesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UrlCrawlErrorsSamplesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UrlSampleDetails: Additional details about the URL, set only when
@@ -513,7 +513,7 @@ type UrlSampleDetails struct {
 func (s *UrlSampleDetails) MarshalJSON() ([]byte, error) {
 	type noMethod UrlSampleDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WmxSite: Contains permission level information about a Webmaster
@@ -542,7 +542,7 @@ type WmxSite struct {
 func (s *WmxSite) MarshalJSON() ([]byte, error) {
 	type noMethod WmxSite
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WmxSitemap: Contains detailed information about a specific URL
@@ -596,7 +596,7 @@ type WmxSitemap struct {
 func (s *WmxSitemap) MarshalJSON() ([]byte, error) {
 	type noMethod WmxSitemap
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WmxSitemapContent: Information about the various content types in the
@@ -624,7 +624,7 @@ type WmxSitemapContent struct {
 func (s *WmxSitemapContent) MarshalJSON() ([]byte, error) {
 	type noMethod WmxSitemapContent
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "webmasters.searchanalytics.query":

@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -138,7 +138,7 @@ type InstanceUpdate struct {
 func (s *InstanceUpdate) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceUpdate
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceUpdateError: Errors that occurred during the instance update.
@@ -159,7 +159,7 @@ type InstanceUpdateError struct {
 func (s *InstanceUpdateError) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceUpdateError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InstanceUpdateErrorErrors struct {
@@ -185,7 +185,7 @@ type InstanceUpdateErrorErrors struct {
 func (s *InstanceUpdateErrorErrors) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceUpdateErrorErrors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceUpdateList: Response returned by ListInstanceUpdates method.
@@ -218,7 +218,7 @@ type InstanceUpdateList struct {
 func (s *InstanceUpdateList) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceUpdateList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: An operation resource, used to manage asynchronous API
@@ -308,7 +308,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationError: [Output Only] If errors occurred during processing of
@@ -330,7 +330,7 @@ type OperationError struct {
 func (s *OperationError) MarshalJSON() ([]byte, error) {
 	type noMethod OperationError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationErrorErrors struct {
@@ -356,7 +356,7 @@ type OperationErrorErrors struct {
 func (s *OperationErrorErrors) MarshalJSON() ([]byte, error) {
 	type noMethod OperationErrorErrors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarnings struct {
@@ -382,7 +382,7 @@ type OperationWarnings struct {
 func (s *OperationWarnings) MarshalJSON() ([]byte, error) {
 	type noMethod OperationWarnings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarningsData struct {
@@ -404,7 +404,7 @@ type OperationWarningsData struct {
 func (s *OperationWarningsData) MarshalJSON() ([]byte, error) {
 	type noMethod OperationWarningsData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationList: Contains a list of Operation resources.
@@ -442,7 +442,7 @@ type OperationList struct {
 func (s *OperationList) MarshalJSON() ([]byte, error) {
 	type noMethod OperationList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RollingUpdate: The following represents a resource describing a
@@ -541,7 +541,7 @@ type RollingUpdate struct {
 func (s *RollingUpdate) MarshalJSON() ([]byte, error) {
 	type noMethod RollingUpdate
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RollingUpdateError: [Output Only] Errors that occurred during the
@@ -563,7 +563,7 @@ type RollingUpdateError struct {
 func (s *RollingUpdateError) MarshalJSON() ([]byte, error) {
 	type noMethod RollingUpdateError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RollingUpdateErrorErrors struct {
@@ -589,7 +589,7 @@ type RollingUpdateErrorErrors struct {
 func (s *RollingUpdateErrorErrors) MarshalJSON() ([]byte, error) {
 	type noMethod RollingUpdateErrorErrors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RollingUpdatePolicy: Parameters of the update process.
@@ -638,7 +638,7 @@ type RollingUpdatePolicy struct {
 func (s *RollingUpdatePolicy) MarshalJSON() ([]byte, error) {
 	type noMethod RollingUpdatePolicy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RollingUpdateList: Response returned by List method.
@@ -671,7 +671,7 @@ type RollingUpdateList struct {
 func (s *RollingUpdateList) MarshalJSON() ([]byte, error) {
 	type noMethod RollingUpdateList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "replicapoolupdater.rollingUpdates.cancel":

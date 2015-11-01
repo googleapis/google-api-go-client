@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -198,7 +198,7 @@ type AchievementResetAllResponse struct {
 func (s *AchievementResetAllResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementResetAllResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementResetMultipleForAllRequest: This is a JSON template for
@@ -224,7 +224,7 @@ type AchievementResetMultipleForAllRequest struct {
 func (s *AchievementResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementResetMultipleForAllRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AchievementResetResponse: This is a JSON template for an achievement
@@ -266,7 +266,7 @@ type AchievementResetResponse struct {
 func (s *AchievementResetResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AchievementResetResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventsResetMultipleForAllRequest: This is a JSON template for
@@ -291,7 +291,7 @@ type EventsResetMultipleForAllRequest struct {
 func (s *EventsResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
 	type noMethod EventsResetMultipleForAllRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesPlayedResource: This is a JSON template for metadata about a
@@ -317,7 +317,7 @@ type GamesPlayedResource struct {
 func (s *GamesPlayedResource) MarshalJSON() ([]byte, error) {
 	type noMethod GamesPlayedResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesPlayerExperienceInfoResource: This is a JSON template for 1P/3P
@@ -351,7 +351,7 @@ type GamesPlayerExperienceInfoResource struct {
 func (s *GamesPlayerExperienceInfoResource) MarshalJSON() ([]byte, error) {
 	type noMethod GamesPlayerExperienceInfoResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GamesPlayerLevelResource: This is a JSON template for 1P/3P metadata
@@ -378,7 +378,7 @@ type GamesPlayerLevelResource struct {
 func (s *GamesPlayerLevelResource) MarshalJSON() ([]byte, error) {
 	type noMethod GamesPlayerLevelResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // HiddenPlayer: This is a JSON template for the HiddenPlayer resource.
@@ -405,7 +405,7 @@ type HiddenPlayer struct {
 func (s *HiddenPlayer) MarshalJSON() ([]byte, error) {
 	type noMethod HiddenPlayer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // HiddenPlayerList: This is a JSON template for a list of hidden
@@ -437,7 +437,7 @@ type HiddenPlayerList struct {
 func (s *HiddenPlayerList) MarshalJSON() ([]byte, error) {
 	type noMethod HiddenPlayerList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Player: This is a JSON template for a Player resource.
@@ -484,7 +484,7 @@ type Player struct {
 func (s *Player) MarshalJSON() ([]byte, error) {
 	type noMethod Player
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerName: An object representation of the individual components of
@@ -510,7 +510,7 @@ type PlayerName struct {
 func (s *PlayerName) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerName
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScoreResetAllResponse: This is a JSON template for a list of
@@ -539,7 +539,7 @@ type PlayerScoreResetAllResponse struct {
 func (s *PlayerScoreResetAllResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerScoreResetAllResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlayerScoreResetResponse: This is a JSON template for a list of reset
@@ -576,7 +576,7 @@ type PlayerScoreResetResponse struct {
 func (s *PlayerScoreResetResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlayerScoreResetResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuestsResetMultipleForAllRequest: This is a JSON template for
@@ -601,7 +601,7 @@ type QuestsResetMultipleForAllRequest struct {
 func (s *QuestsResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
 	type noMethod QuestsResetMultipleForAllRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ScoresResetMultipleForAllRequest: This is a JSON template for
@@ -626,7 +626,7 @@ type ScoresResetMultipleForAllRequest struct {
 func (s *ScoresResetMultipleForAllRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ScoresResetMultipleForAllRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "gamesManagement.achievements.reset":

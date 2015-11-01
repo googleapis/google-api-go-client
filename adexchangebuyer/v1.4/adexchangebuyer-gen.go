@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -302,7 +302,7 @@ type Account struct {
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type noMethod Account
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountBidderLocation struct {
@@ -333,7 +333,7 @@ type AccountBidderLocation struct {
 func (s *AccountBidderLocation) MarshalJSON() ([]byte, error) {
 	type noMethod AccountBidderLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountsList: An account feed lists Ad Exchange buyer accounts that
@@ -362,7 +362,7 @@ type AccountsList struct {
 func (s *AccountsList) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdSize struct {
@@ -382,7 +382,7 @@ type AdSize struct {
 func (s *AdSize) MarshalJSON() ([]byte, error) {
 	type noMethod AdSize
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdSlotDto struct {
@@ -410,7 +410,7 @@ type AdSlotDto struct {
 func (s *AdSlotDto) MarshalJSON() ([]byte, error) {
 	type noMethod AdSlotDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AddOrderDealsRequest struct {
@@ -435,7 +435,7 @@ type AddOrderDealsRequest struct {
 func (s *AddOrderDealsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AddOrderDealsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AddOrderDealsResponse struct {
@@ -462,7 +462,7 @@ type AddOrderDealsResponse struct {
 func (s *AddOrderDealsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AddOrderDealsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AddOrderNotesRequest struct {
@@ -481,7 +481,7 @@ type AddOrderNotesRequest struct {
 func (s *AddOrderNotesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AddOrderNotesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AddOrderNotesResponse struct {
@@ -503,7 +503,7 @@ type AddOrderNotesResponse struct {
 func (s *AddOrderNotesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AddOrderNotesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AdvertiserDto struct {
@@ -527,7 +527,7 @@ type AdvertiserDto struct {
 func (s *AdvertiserDto) MarshalJSON() ([]byte, error) {
 	type noMethod AdvertiserDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AudienceSegment struct {
@@ -551,7 +551,7 @@ type AudienceSegment struct {
 func (s *AudienceSegment) MarshalJSON() ([]byte, error) {
 	type noMethod AudienceSegment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BillingInfo: The configuration data for an Ad Exchange billing info.
@@ -586,7 +586,7 @@ type BillingInfo struct {
 func (s *BillingInfo) MarshalJSON() ([]byte, error) {
 	type noMethod BillingInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BillingInfoList: A billing info feed lists Billing Info the Ad
@@ -615,7 +615,7 @@ type BillingInfoList struct {
 func (s *BillingInfoList) MarshalJSON() ([]byte, error) {
 	type noMethod BillingInfoList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BrandDto struct {
@@ -637,7 +637,7 @@ type BrandDto struct {
 func (s *BrandDto) MarshalJSON() ([]byte, error) {
 	type noMethod BrandDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Budget: The configuration data for Ad Exchange RTB - Budget API.
@@ -680,7 +680,7 @@ type Budget struct {
 func (s *Budget) MarshalJSON() ([]byte, error) {
 	type noMethod Budget
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Buyer struct {
@@ -699,7 +699,7 @@ type Buyer struct {
 func (s *Buyer) MarshalJSON() ([]byte, error) {
 	type noMethod Buyer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BuyerDto struct {
@@ -729,7 +729,7 @@ type BuyerDto struct {
 func (s *BuyerDto) MarshalJSON() ([]byte, error) {
 	type noMethod BuyerDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ClientAccessCapabilities struct {
@@ -753,7 +753,7 @@ type ClientAccessCapabilities struct {
 func (s *ClientAccessCapabilities) MarshalJSON() ([]byte, error) {
 	type noMethod ClientAccessCapabilities
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ContactInformation struct {
@@ -775,7 +775,7 @@ type ContactInformation struct {
 func (s *ContactInformation) MarshalJSON() ([]byte, error) {
 	type noMethod ContactInformation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreateOrdersRequest struct {
@@ -796,7 +796,7 @@ type CreateOrdersRequest struct {
 func (s *CreateOrdersRequest) MarshalJSON() ([]byte, error) {
 	type noMethod CreateOrdersRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreateOrdersResponse struct {
@@ -819,7 +819,7 @@ type CreateOrdersResponse struct {
 func (s *CreateOrdersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreateOrdersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Creative: A creative and its classification data.
@@ -947,7 +947,7 @@ type Creative struct {
 func (s *Creative) MarshalJSON() ([]byte, error) {
 	type noMethod Creative
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeCorrections struct {
@@ -969,7 +969,7 @@ type CreativeCorrections struct {
 func (s *CreativeCorrections) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeCorrections
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeFilteringReasons: The filtering reasons for the creative.
@@ -994,7 +994,7 @@ type CreativeFilteringReasons struct {
 func (s *CreativeFilteringReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFilteringReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeFilteringReasonsReasons struct {
@@ -1019,7 +1019,7 @@ type CreativeFilteringReasonsReasons struct {
 func (s *CreativeFilteringReasonsReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFilteringReasonsReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeNativeAd: If nativeAd is set, HTMLSnippet and videoURL should
@@ -1076,7 +1076,7 @@ type CreativeNativeAd struct {
 func (s *CreativeNativeAd) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeNativeAd
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeNativeAdAppIcon: The app icon, for app download ads.
@@ -1099,7 +1099,7 @@ type CreativeNativeAdAppIcon struct {
 func (s *CreativeNativeAdAppIcon) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeNativeAdAppIcon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeNativeAdImage: A large image.
@@ -1122,7 +1122,7 @@ type CreativeNativeAdImage struct {
 func (s *CreativeNativeAdImage) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeNativeAdImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeNativeAdLogo: A smaller image, for the advertiser logo.
@@ -1145,7 +1145,7 @@ type CreativeNativeAdLogo struct {
 func (s *CreativeNativeAdLogo) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeNativeAdLogo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeServingRestrictions struct {
@@ -1176,7 +1176,7 @@ type CreativeServingRestrictions struct {
 func (s *CreativeServingRestrictions) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeServingRestrictions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeServingRestrictionsContexts struct {
@@ -1208,7 +1208,7 @@ type CreativeServingRestrictionsContexts struct {
 func (s *CreativeServingRestrictionsContexts) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeServingRestrictionsContexts
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeServingRestrictionsDisapprovalReasons struct {
@@ -1230,7 +1230,7 @@ type CreativeServingRestrictionsDisapprovalReasons struct {
 func (s *CreativeServingRestrictionsDisapprovalReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeServingRestrictionsDisapprovalReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativesList: The creatives feed lists the active creatives for the
@@ -1264,7 +1264,7 @@ type CreativesList struct {
 func (s *CreativesList) MarshalJSON() ([]byte, error) {
 	type noMethod CreativesList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DateTime struct {
@@ -1294,7 +1294,7 @@ type DateTime struct {
 func (s *DateTime) MarshalJSON() ([]byte, error) {
 	type noMethod DateTime
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DealPartyDto struct {
@@ -1320,7 +1320,7 @@ type DealPartyDto struct {
 func (s *DealPartyDto) MarshalJSON() ([]byte, error) {
 	type noMethod DealPartyDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DealTerms struct {
@@ -1351,7 +1351,7 @@ type DealTerms struct {
 func (s *DealTerms) MarshalJSON() ([]byte, error) {
 	type noMethod DealTerms
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DealTermsGuaranteedFixedPriceTerms struct {
@@ -1379,7 +1379,7 @@ type DealTermsGuaranteedFixedPriceTerms struct {
 func (s *DealTermsGuaranteedFixedPriceTerms) MarshalJSON() ([]byte, error) {
 	type noMethod DealTermsGuaranteedFixedPriceTerms
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DealTermsNonGuaranteedAuctionTerms struct {
@@ -1401,7 +1401,7 @@ type DealTermsNonGuaranteedAuctionTerms struct {
 func (s *DealTermsNonGuaranteedAuctionTerms) MarshalJSON() ([]byte, error) {
 	type noMethod DealTermsNonGuaranteedAuctionTerms
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DealTermsNonGuaranteedFixedPriceTerms struct {
@@ -1420,7 +1420,7 @@ type DealTermsNonGuaranteedFixedPriceTerms struct {
 func (s *DealTermsNonGuaranteedFixedPriceTerms) MarshalJSON() ([]byte, error) {
 	type noMethod DealTermsNonGuaranteedFixedPriceTerms
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DeleteOrderDealsRequest struct {
@@ -1444,7 +1444,7 @@ type DeleteOrderDealsRequest struct {
 func (s *DeleteOrderDealsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod DeleteOrderDealsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DeleteOrderDealsResponse struct {
@@ -1471,7 +1471,7 @@ type DeleteOrderDealsResponse struct {
 func (s *DeleteOrderDealsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DeleteOrderDealsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DeliveryControl struct {
@@ -1491,7 +1491,7 @@ type DeliveryControl struct {
 func (s *DeliveryControl) MarshalJSON() ([]byte, error) {
 	type noMethod DeliveryControl
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DeliveryControlFrequencyCap struct {
@@ -1513,7 +1513,7 @@ type DeliveryControlFrequencyCap struct {
 func (s *DeliveryControlFrequencyCap) MarshalJSON() ([]byte, error) {
 	type noMethod DeliveryControlFrequencyCap
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type EditAllOrderDealsRequest struct {
@@ -1554,7 +1554,7 @@ type EditAllOrderDealsRequest struct {
 func (s *EditAllOrderDealsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod EditAllOrderDealsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type EditAllOrderDealsResponse struct {
@@ -1577,7 +1577,7 @@ type EditAllOrderDealsResponse struct {
 func (s *EditAllOrderDealsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod EditAllOrderDealsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type EditHistoryDto struct {
@@ -1601,7 +1601,7 @@ type EditHistoryDto struct {
 func (s *EditHistoryDto) MarshalJSON() ([]byte, error) {
 	type noMethod EditHistoryDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetFinalizedNegotiationByExternalDealIdRequest struct {
@@ -1620,7 +1620,7 @@ type GetFinalizedNegotiationByExternalDealIdRequest struct {
 func (s *GetFinalizedNegotiationByExternalDealIdRequest) MarshalJSON() ([]byte, error) {
 	type noMethod GetFinalizedNegotiationByExternalDealIdRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetNegotiationByIdRequest struct {
@@ -1639,7 +1639,7 @@ type GetNegotiationByIdRequest struct {
 func (s *GetNegotiationByIdRequest) MarshalJSON() ([]byte, error) {
 	type noMethod GetNegotiationByIdRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetNegotiationsRequest struct {
@@ -1661,7 +1661,7 @@ type GetNegotiationsRequest struct {
 func (s *GetNegotiationsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod GetNegotiationsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetNegotiationsResponse struct {
@@ -1685,7 +1685,7 @@ type GetNegotiationsResponse struct {
 func (s *GetNegotiationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetNegotiationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetOffersResponse struct {
@@ -1708,7 +1708,7 @@ type GetOffersResponse struct {
 func (s *GetOffersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetOffersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetOrderDealsResponse struct {
@@ -1731,7 +1731,7 @@ type GetOrderDealsResponse struct {
 func (s *GetOrderDealsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetOrderDealsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetOrderNotesResponse struct {
@@ -1754,7 +1754,7 @@ type GetOrderNotesResponse struct {
 func (s *GetOrderNotesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetOrderNotesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetOrdersResponse struct {
@@ -1777,7 +1777,7 @@ type GetOrdersResponse struct {
 func (s *GetOrdersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetOrdersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventorySegmentTargeting struct {
@@ -1865,7 +1865,7 @@ type InventorySegmentTargeting struct {
 func (s *InventorySegmentTargeting) MarshalJSON() ([]byte, error) {
 	type noMethod InventorySegmentTargeting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListClientAccessCapabilitiesRequest struct {
@@ -1883,7 +1883,7 @@ type ListClientAccessCapabilitiesRequest struct {
 func (s *ListClientAccessCapabilitiesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ListClientAccessCapabilitiesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListClientAccessCapabilitiesResponse struct {
@@ -1906,7 +1906,7 @@ type ListClientAccessCapabilitiesResponse struct {
 func (s *ListClientAccessCapabilitiesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListClientAccessCapabilitiesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListOffersRequest struct {
@@ -1925,7 +1925,7 @@ type ListOffersRequest struct {
 func (s *ListOffersRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ListOffersRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListOffersResponse struct {
@@ -1949,7 +1949,7 @@ type ListOffersResponse struct {
 func (s *ListOffersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOffersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MarketplaceDeal: An order can contain multiple deals. A deal contains
@@ -2039,7 +2039,7 @@ type MarketplaceDeal struct {
 func (s *MarketplaceDeal) MarshalJSON() ([]byte, error) {
 	type noMethod MarketplaceDeal
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MarketplaceDealParty struct {
@@ -2063,7 +2063,7 @@ type MarketplaceDealParty struct {
 func (s *MarketplaceDealParty) MarshalJSON() ([]byte, error) {
 	type noMethod MarketplaceDealParty
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MarketplaceLabel struct {
@@ -2092,7 +2092,7 @@ type MarketplaceLabel struct {
 func (s *MarketplaceLabel) MarshalJSON() ([]byte, error) {
 	type noMethod MarketplaceLabel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MarketplaceNote: An order is associated with a bunch of notes which
@@ -2139,7 +2139,7 @@ type MarketplaceNote struct {
 func (s *MarketplaceNote) MarshalJSON() ([]byte, error) {
 	type noMethod MarketplaceNote
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MarketplaceOffer: An offer is segment of inventory that a seller
@@ -2232,7 +2232,7 @@ type MarketplaceOffer struct {
 func (s *MarketplaceOffer) MarshalJSON() ([]byte, error) {
 	type noMethod MarketplaceOffer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MarketplaceOrder: Represents an order in the marketplace. An order is
@@ -2334,7 +2334,7 @@ type MarketplaceOrder struct {
 func (s *MarketplaceOrder) MarshalJSON() ([]byte, error) {
 	type noMethod MarketplaceOrder
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MoneyDto struct {
@@ -2354,7 +2354,7 @@ type MoneyDto struct {
 func (s *MoneyDto) MarshalJSON() ([]byte, error) {
 	type noMethod MoneyDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type NegotiationDto struct {
@@ -2421,7 +2421,7 @@ type NegotiationDto struct {
 func (s *NegotiationDto) MarshalJSON() ([]byte, error) {
 	type noMethod NegotiationDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type NegotiationRoundDto struct {
@@ -2469,7 +2469,7 @@ type NegotiationRoundDto struct {
 func (s *NegotiationRoundDto) MarshalJSON() ([]byte, error) {
 	type noMethod NegotiationRoundDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OfferDto struct {
@@ -2533,7 +2533,7 @@ type OfferDto struct {
 func (s *OfferDto) MarshalJSON() ([]byte, error) {
 	type noMethod OfferDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PerformanceReport: The configuration data for an Ad Exchange
@@ -2634,7 +2634,7 @@ type PerformanceReport struct {
 func (s *PerformanceReport) MarshalJSON() ([]byte, error) {
 	type noMethod PerformanceReport
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PerformanceReportList: The configuration data for an Ad Exchange
@@ -2665,7 +2665,7 @@ type PerformanceReportList struct {
 func (s *PerformanceReportList) MarshalJSON() ([]byte, error) {
 	type noMethod PerformanceReportList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfig struct {
@@ -2782,7 +2782,7 @@ type PretargetingConfig struct {
 func (s *PretargetingConfig) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfigDimensions struct {
@@ -2804,7 +2804,7 @@ type PretargetingConfigDimensions struct {
 func (s *PretargetingConfigDimensions) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigDimensions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfigExcludedPlacements struct {
@@ -2828,7 +2828,7 @@ type PretargetingConfigExcludedPlacements struct {
 func (s *PretargetingConfigExcludedPlacements) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigExcludedPlacements
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfigPlacements struct {
@@ -2852,7 +2852,7 @@ type PretargetingConfigPlacements struct {
 func (s *PretargetingConfigPlacements) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigPlacements
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfigList struct {
@@ -2878,7 +2878,7 @@ type PretargetingConfigList struct {
 func (s *PretargetingConfigList) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Price struct {
@@ -2900,7 +2900,7 @@ type Price struct {
 func (s *Price) MarshalJSON() ([]byte, error) {
 	type noMethod Price
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PricePerBuyer: Used to specify pricing rules for buyers/advertisers.
@@ -2931,7 +2931,7 @@ type PricePerBuyer struct {
 func (s *PricePerBuyer) MarshalJSON() ([]byte, error) {
 	type noMethod PricePerBuyer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PrivateData struct {
@@ -2951,7 +2951,7 @@ type PrivateData struct {
 func (s *PrivateData) MarshalJSON() ([]byte, error) {
 	type noMethod PrivateData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RuleKeyValuePair struct {
@@ -2971,7 +2971,7 @@ type RuleKeyValuePair struct {
 func (s *RuleKeyValuePair) MarshalJSON() ([]byte, error) {
 	type noMethod RuleKeyValuePair
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Seller struct {
@@ -2994,7 +2994,7 @@ type Seller struct {
 func (s *Seller) MarshalJSON() ([]byte, error) {
 	type noMethod Seller
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SharedTargeting struct {
@@ -3019,7 +3019,7 @@ type SharedTargeting struct {
 func (s *SharedTargeting) MarshalJSON() ([]byte, error) {
 	type noMethod SharedTargeting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatsDto struct {
@@ -3047,7 +3047,7 @@ type StatsDto struct {
 func (s *StatsDto) MarshalJSON() ([]byte, error) {
 	type noMethod StatsDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TargetingValue struct {
@@ -3076,7 +3076,7 @@ type TargetingValue struct {
 func (s *TargetingValue) MarshalJSON() ([]byte, error) {
 	type noMethod TargetingValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TargetingValueCreativeSize struct {
@@ -3102,7 +3102,7 @@ type TargetingValueCreativeSize struct {
 func (s *TargetingValueCreativeSize) MarshalJSON() ([]byte, error) {
 	type noMethod TargetingValueCreativeSize
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TargetingValueDayPartTargeting struct {
@@ -3122,7 +3122,7 @@ type TargetingValueDayPartTargeting struct {
 func (s *TargetingValueDayPartTargeting) MarshalJSON() ([]byte, error) {
 	type noMethod TargetingValueDayPartTargeting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TargetingValueDayPartTargetingDayPart struct {
@@ -3148,7 +3148,7 @@ type TargetingValueDayPartTargetingDayPart struct {
 func (s *TargetingValueDayPartTargetingDayPart) MarshalJSON() ([]byte, error) {
 	type noMethod TargetingValueDayPartTargetingDayPart
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TargetingValueSize struct {
@@ -3170,7 +3170,7 @@ type TargetingValueSize struct {
 func (s *TargetingValueSize) MarshalJSON() ([]byte, error) {
 	type noMethod TargetingValueSize
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TermsDto struct {
@@ -3273,7 +3273,7 @@ type TermsDto struct {
 func (s *TermsDto) MarshalJSON() ([]byte, error) {
 	type noMethod TermsDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type WebPropertyDto struct {
@@ -3304,7 +3304,7 @@ type WebPropertyDto struct {
 func (s *WebPropertyDto) MarshalJSON() ([]byte, error) {
 	type noMethod WebPropertyDto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "adexchangebuyer.accounts.get":

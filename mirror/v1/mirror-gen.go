@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -186,7 +186,7 @@ type Account struct {
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type noMethod Account
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Attachment: Represents media content, such as a photo, that can be
@@ -222,7 +222,7 @@ type Attachment struct {
 func (s *Attachment) MarshalJSON() ([]byte, error) {
 	type noMethod Attachment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AttachmentsListResponse: A list of Attachments. This is the response
@@ -250,7 +250,7 @@ type AttachmentsListResponse struct {
 func (s *AttachmentsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AttachmentsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AuthToken struct {
@@ -270,7 +270,7 @@ type AuthToken struct {
 func (s *AuthToken) MarshalJSON() ([]byte, error) {
 	type noMethod AuthToken
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Command: A single menu command that is part of a Contact.
@@ -295,7 +295,7 @@ type Command struct {
 func (s *Command) MarshalJSON() ([]byte, error) {
 	type noMethod Command
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Contact: A person or group that can be used as a creator or a
@@ -377,7 +377,7 @@ type Contact struct {
 func (s *Contact) MarshalJSON() ([]byte, error) {
 	type noMethod Contact
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ContactsListResponse: A list of Contacts representing contacts. This
@@ -406,7 +406,7 @@ type ContactsListResponse struct {
 func (s *ContactsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ContactsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Location: A geographic location that can be associated with a
@@ -454,7 +454,7 @@ type Location struct {
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type noMethod Location
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LocationsListResponse: A list of Locations. This is the response from
@@ -482,7 +482,7 @@ type LocationsListResponse struct {
 func (s *LocationsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LocationsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MenuItem: A custom menu item that can be presented to the user by a
@@ -568,7 +568,7 @@ type MenuItem struct {
 func (s *MenuItem) MarshalJSON() ([]byte, error) {
 	type noMethod MenuItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MenuValue: A single value that is part of a MenuItem.
@@ -602,7 +602,7 @@ type MenuValue struct {
 func (s *MenuValue) MarshalJSON() ([]byte, error) {
 	type noMethod MenuValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Notification: A notification delivered by the API.
@@ -640,7 +640,7 @@ type Notification struct {
 func (s *Notification) MarshalJSON() ([]byte, error) {
 	type noMethod Notification
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NotificationConfig: Controls how notifications for a timeline item
@@ -667,7 +667,7 @@ type NotificationConfig struct {
 func (s *NotificationConfig) MarshalJSON() ([]byte, error) {
 	type noMethod NotificationConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Setting: A setting for Glass.
@@ -702,7 +702,7 @@ type Setting struct {
 func (s *Setting) MarshalJSON() ([]byte, error) {
 	type noMethod Setting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subscription: A subscription to events on a collection.
@@ -765,7 +765,7 @@ type Subscription struct {
 func (s *Subscription) MarshalJSON() ([]byte, error) {
 	type noMethod Subscription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubscriptionsListResponse: A list of Subscriptions. This is the
@@ -794,7 +794,7 @@ type SubscriptionsListResponse struct {
 func (s *SubscriptionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SubscriptionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TimelineItem: Each item in the user's timeline is represented as a
@@ -979,7 +979,7 @@ type TimelineItem struct {
 func (s *TimelineItem) MarshalJSON() ([]byte, error) {
 	type noMethod TimelineItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TimelineListResponse: A list of timeline items. This is the response
@@ -1011,7 +1011,7 @@ type TimelineListResponse struct {
 func (s *TimelineListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TimelineListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserAction: Represents an action taken by the user that triggered a
@@ -1049,7 +1049,7 @@ type UserAction struct {
 func (s *UserAction) MarshalJSON() ([]byte, error) {
 	type noMethod UserAction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UserData struct {
@@ -1069,7 +1069,7 @@ type UserData struct {
 func (s *UserData) MarshalJSON() ([]byte, error) {
 	type noMethod UserData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "mirror.accounts.insert":

@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -120,7 +120,7 @@ type LicenseAssignment struct {
 func (s *LicenseAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod LicenseAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LicenseAssignmentInsert: Template for LicenseAssignment Insert
@@ -141,7 +141,7 @@ type LicenseAssignmentInsert struct {
 func (s *LicenseAssignmentInsert) MarshalJSON() ([]byte, error) {
 	type noMethod LicenseAssignmentInsert
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LicenseAssignmentList: LicesnseAssignment List for a given
@@ -177,7 +177,7 @@ type LicenseAssignmentList struct {
 func (s *LicenseAssignmentList) MarshalJSON() ([]byte, error) {
 	type noMethod LicenseAssignmentList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "licensing.licenseAssignments.delete":

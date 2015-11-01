@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -144,7 +144,7 @@ type ExecutionError struct {
 func (s *ExecutionError) MarshalJSON() ([]byte, error) {
 	type noMethod ExecutionError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExecutionRequest: A request to run the function in a script. The
@@ -185,7 +185,7 @@ type ExecutionRequest struct {
 func (s *ExecutionRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ExecutionRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExecutionResponse: An object that provides the return value of a
@@ -213,7 +213,7 @@ type ExecutionResponse struct {
 func (s *ExecutionResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ExecutionResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: The response will not arrive until the function finishes
@@ -274,7 +274,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationMetadata interface{}
@@ -302,7 +302,7 @@ type ScriptStackTraceElement struct {
 func (s *ScriptStackTraceElement) MarshalJSON() ([]byte, error) {
 	type noMethod ScriptStackTraceElement
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Status: If a `run` call succeeds but the script function (or Apps
@@ -334,7 +334,7 @@ type Status struct {
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type noMethod Status
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatusDetails interface{}

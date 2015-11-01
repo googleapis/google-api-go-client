@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -153,7 +153,7 @@ type Activities struct {
 func (s *Activities) MarshalJSON() ([]byte, error) {
 	type noMethod Activities
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Activity: JSON template for the activity resource.
@@ -191,7 +191,7 @@ type Activity struct {
 func (s *Activity) MarshalJSON() ([]byte, error) {
 	type noMethod Activity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityActor: User doing the action.
@@ -220,7 +220,7 @@ type ActivityActor struct {
 func (s *ActivityActor) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityActor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ActivityEvents struct {
@@ -245,7 +245,7 @@ type ActivityEvents struct {
 func (s *ActivityEvents) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityEvents
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ActivityEventsParameters struct {
@@ -279,7 +279,7 @@ type ActivityEventsParameters struct {
 func (s *ActivityEventsParameters) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityEventsParameters
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityId: Unique identifier for each activity record.
@@ -309,7 +309,7 @@ type ActivityId struct {
 func (s *ActivityId) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Channel: An notification channel used to watch for resource changes.
@@ -367,7 +367,7 @@ type Channel struct {
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type noMethod Channel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UsageReport: JSON template for a usage report.
@@ -399,7 +399,7 @@ type UsageReport struct {
 func (s *UsageReport) MarshalJSON() ([]byte, error) {
 	type noMethod UsageReport
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UsageReportEntity: Information about the type of the item.
@@ -428,7 +428,7 @@ type UsageReportEntity struct {
 func (s *UsageReportEntity) MarshalJSON() ([]byte, error) {
 	type noMethod UsageReportEntity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UsageReportParameters struct {
@@ -462,7 +462,7 @@ type UsageReportParameters struct {
 func (s *UsageReportParameters) MarshalJSON() ([]byte, error) {
 	type noMethod UsageReportParameters
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UsageReportParametersMsgValue interface{}
@@ -500,7 +500,7 @@ type UsageReports struct {
 func (s *UsageReports) MarshalJSON() ([]byte, error) {
 	type noMethod UsageReports
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UsageReportsWarnings struct {
@@ -525,7 +525,7 @@ type UsageReportsWarnings struct {
 func (s *UsageReportsWarnings) MarshalJSON() ([]byte, error) {
 	type noMethod UsageReportsWarnings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UsageReportsWarningsData struct {
@@ -549,7 +549,7 @@ type UsageReportsWarningsData struct {
 func (s *UsageReportsWarningsData) MarshalJSON() ([]byte, error) {
 	type noMethod UsageReportsWarningsData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "reports.activities.list":

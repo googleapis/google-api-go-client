@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -141,7 +141,7 @@ type AccessConfig struct {
 func (s *AccessConfig) MarshalJSON() ([]byte, error) {
 	type noMethod AccessConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Action: An Action encapsulates a set of commands as a single runnable
@@ -165,7 +165,7 @@ type Action struct {
 func (s *Action) MarshalJSON() ([]byte, error) {
 	type noMethod Action
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AllowedRule: An allowed port resource.
@@ -189,7 +189,7 @@ type AllowedRule struct {
 func (s *AllowedRule) MarshalJSON() ([]byte, error) {
 	type noMethod AllowedRule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AutoscalingModule struct {
@@ -220,7 +220,7 @@ type AutoscalingModule struct {
 func (s *AutoscalingModule) MarshalJSON() ([]byte, error) {
 	type noMethod AutoscalingModule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AutoscalingModuleStatus struct {
@@ -241,7 +241,7 @@ type AutoscalingModuleStatus struct {
 func (s *AutoscalingModuleStatus) MarshalJSON() ([]byte, error) {
 	type noMethod AutoscalingModuleStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeployState: [Output Only] The current state of a replica or module.
@@ -273,7 +273,7 @@ type DeployState struct {
 func (s *DeployState) MarshalJSON() ([]byte, error) {
 	type noMethod DeployState
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Deployment: A deployment represents a physical instantiation of a
@@ -321,7 +321,7 @@ type Deployment struct {
 func (s *Deployment) MarshalJSON() ([]byte, error) {
 	type noMethod Deployment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DeploymentsListResponse struct {
@@ -345,7 +345,7 @@ type DeploymentsListResponse struct {
 func (s *DeploymentsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DeploymentsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DiskAttachment: How to attach a disk to a Replica.
@@ -369,7 +369,7 @@ type DiskAttachment struct {
 func (s *DiskAttachment) MarshalJSON() ([]byte, error) {
 	type noMethod DiskAttachment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EnvVariable: An environment variable.
@@ -392,7 +392,7 @@ type EnvVariable struct {
 func (s *EnvVariable) MarshalJSON() ([]byte, error) {
 	type noMethod EnvVariable
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExistingDisk: A pre-existing persistent disk that will be attached to
@@ -417,7 +417,7 @@ type ExistingDisk struct {
 func (s *ExistingDisk) MarshalJSON() ([]byte, error) {
 	type noMethod ExistingDisk
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FirewallModule: A Firewall resource
@@ -457,7 +457,7 @@ type FirewallModule struct {
 func (s *FirewallModule) MarshalJSON() ([]byte, error) {
 	type noMethod FirewallModule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type FirewallModuleStatus struct {
@@ -477,7 +477,7 @@ type FirewallModuleStatus struct {
 func (s *FirewallModuleStatus) MarshalJSON() ([]byte, error) {
 	type noMethod FirewallModuleStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type HealthCheckModule struct {
@@ -509,7 +509,7 @@ type HealthCheckModule struct {
 func (s *HealthCheckModule) MarshalJSON() ([]byte, error) {
 	type noMethod HealthCheckModule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type HealthCheckModuleStatus struct {
@@ -528,7 +528,7 @@ type HealthCheckModuleStatus struct {
 func (s *HealthCheckModuleStatus) MarshalJSON() ([]byte, error) {
 	type noMethod HealthCheckModuleStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LbModule struct {
@@ -558,7 +558,7 @@ type LbModule struct {
 func (s *LbModule) MarshalJSON() ([]byte, error) {
 	type noMethod LbModule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LbModuleStatus struct {
@@ -582,7 +582,7 @@ type LbModuleStatus struct {
 func (s *LbModuleStatus) MarshalJSON() ([]byte, error) {
 	type noMethod LbModuleStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Metadata: A Compute Engine metadata entry. Identical to the metadata
@@ -606,7 +606,7 @@ type Metadata struct {
 func (s *Metadata) MarshalJSON() ([]byte, error) {
 	type noMethod Metadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetadataItem: A Compute Engine metadata item, defined as a key:value
@@ -631,7 +631,7 @@ type MetadataItem struct {
 func (s *MetadataItem) MarshalJSON() ([]byte, error) {
 	type noMethod MetadataItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Module: A module in a configuration. A module represents a single
@@ -666,7 +666,7 @@ type Module struct {
 func (s *Module) MarshalJSON() ([]byte, error) {
 	type noMethod Module
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ModuleStatus: [Output Only] Aggregate status for a module.
@@ -714,7 +714,7 @@ type ModuleStatus struct {
 func (s *ModuleStatus) MarshalJSON() ([]byte, error) {
 	type noMethod ModuleStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NetworkInterface: A Compute Engine NetworkInterface resource.
@@ -750,7 +750,7 @@ type NetworkInterface struct {
 func (s *NetworkInterface) MarshalJSON() ([]byte, error) {
 	type noMethod NetworkInterface
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type NetworkModule struct {
@@ -781,7 +781,7 @@ type NetworkModule struct {
 func (s *NetworkModule) MarshalJSON() ([]byte, error) {
 	type noMethod NetworkModule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type NetworkModuleStatus struct {
@@ -801,7 +801,7 @@ type NetworkModuleStatus struct {
 func (s *NetworkModuleStatus) MarshalJSON() ([]byte, error) {
 	type noMethod NetworkModuleStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NewDisk: A Persistent Disk resource that will be created and attached
@@ -834,7 +834,7 @@ type NewDisk struct {
 func (s *NewDisk) MarshalJSON() ([]byte, error) {
 	type noMethod NewDisk
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NewDiskInitializeParams: Initialization parameters for creating a new
@@ -864,7 +864,7 @@ type NewDiskInitializeParams struct {
 func (s *NewDiskInitializeParams) MarshalJSON() ([]byte, error) {
 	type noMethod NewDiskInitializeParams
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ParamOverride: A specification for overriding parameters in a
@@ -889,7 +889,7 @@ type ParamOverride struct {
 func (s *ParamOverride) MarshalJSON() ([]byte, error) {
 	type noMethod ParamOverride
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReplicaPoolModule struct {
@@ -923,7 +923,7 @@ type ReplicaPoolModule struct {
 func (s *ReplicaPoolModule) MarshalJSON() ([]byte, error) {
 	type noMethod ReplicaPoolModule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReplicaPoolModuleStatus struct {
@@ -947,7 +947,7 @@ type ReplicaPoolModuleStatus struct {
 func (s *ReplicaPoolModuleStatus) MarshalJSON() ([]byte, error) {
 	type noMethod ReplicaPoolModuleStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReplicaPoolParams: Configuration information for a ReplicaPools
@@ -970,7 +970,7 @@ type ReplicaPoolParams struct {
 func (s *ReplicaPoolParams) MarshalJSON() ([]byte, error) {
 	type noMethod ReplicaPoolParams
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReplicaPoolParamsV1Beta1: Configuration information for a
@@ -1042,7 +1042,7 @@ type ReplicaPoolParamsV1Beta1 struct {
 func (s *ReplicaPoolParamsV1Beta1) MarshalJSON() ([]byte, error) {
 	type noMethod ReplicaPoolParamsV1Beta1
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ServiceAccount: A Compute Engine service account, identical to the
@@ -1066,7 +1066,7 @@ type ServiceAccount struct {
 func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 	type noMethod ServiceAccount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Tag: A Compute Engine Instance tag, identical to the tags on the
@@ -1090,7 +1090,7 @@ type Tag struct {
 func (s *Tag) MarshalJSON() ([]byte, error) {
 	type noMethod Tag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Template: A Template represents a complete configuration for a
@@ -1126,7 +1126,7 @@ type Template struct {
 func (s *Template) MarshalJSON() ([]byte, error) {
 	type noMethod Template
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TemplatesListResponse struct {
@@ -1150,7 +1150,7 @@ type TemplatesListResponse struct {
 func (s *TemplatesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TemplatesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "manager.deployments.delete":

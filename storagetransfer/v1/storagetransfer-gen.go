@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -143,7 +143,7 @@ type AwsAccessKey struct {
 func (s *AwsAccessKey) MarshalJSON() ([]byte, error) {
 	type noMethod AwsAccessKey
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AwsS3Data: An AwsS3Data can be a data source, but not a data sink. In
@@ -171,7 +171,7 @@ type AwsS3Data struct {
 func (s *AwsS3Data) MarshalJSON() ([]byte, error) {
 	type noMethod AwsS3Data
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Date: Represents a whole calendar date, e.g. date of birth. The time
@@ -208,7 +208,7 @@ type Date struct {
 func (s *Date) MarshalJSON() ([]byte, error) {
 	type noMethod Date
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -244,7 +244,7 @@ type ErrorLogEntry struct {
 func (s *ErrorLogEntry) MarshalJSON() ([]byte, error) {
 	type noMethod ErrorLogEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ErrorSummary: A summary of errors by error code, plus a count and
@@ -290,7 +290,7 @@ type ErrorSummary struct {
 func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 	type noMethod ErrorSummary
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GcsData: In a GcsData, an object's name is the Google Cloud Storage
@@ -315,7 +315,7 @@ type GcsData struct {
 func (s *GcsData) MarshalJSON() ([]byte, error) {
 	type noMethod GcsData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GoogleServiceAccount: Google service account
@@ -339,7 +339,7 @@ type GoogleServiceAccount struct {
 func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 	type noMethod GoogleServiceAccount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // HttpData: An HttpData specifies a list of objects on the web to be
@@ -381,7 +381,7 @@ type HttpData struct {
 func (s *HttpData) MarshalJSON() ([]byte, error) {
 	type noMethod HttpData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListOperationsResponse: The response message for
@@ -411,7 +411,7 @@ type ListOperationsResponse struct {
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOperationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTransferJobsResponse: Response from ListTransferJobs.
@@ -438,7 +438,7 @@ type ListTransferJobsResponse struct {
 func (s *ListTransferJobsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTransferJobsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectConditions: Conditions that determine which objects will be
@@ -497,7 +497,7 @@ type ObjectConditions struct {
 func (s *ObjectConditions) MarshalJSON() ([]byte, error) {
 	type noMethod ObjectConditions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: This resource represents a long-running operation that is
@@ -546,7 +546,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationMetadata interface{}
@@ -592,7 +592,7 @@ type Schedule struct {
 func (s *Schedule) MarshalJSON() ([]byte, error) {
 	type noMethod Schedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -659,7 +659,7 @@ type Status struct {
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type noMethod Status
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatusDetails interface{}
@@ -697,7 +697,7 @@ type TimeOfDay struct {
 func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	type noMethod TimeOfDay
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TransferCounters: A collection of counters that report the progress
@@ -776,7 +776,7 @@ type TransferCounters struct {
 func (s *TransferCounters) MarshalJSON() ([]byte, error) {
 	type noMethod TransferCounters
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TransferJob: This resource represents the configuration of a transfer
@@ -841,7 +841,7 @@ type TransferJob struct {
 func (s *TransferJob) MarshalJSON() ([]byte, error) {
 	type noMethod TransferJob
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TransferOperation: A description of the execution of a transfer.
@@ -896,7 +896,7 @@ type TransferOperation struct {
 func (s *TransferOperation) MarshalJSON() ([]byte, error) {
 	type noMethod TransferOperation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TransferOptions: TransferOptions uses three boolean parameters to
@@ -927,7 +927,7 @@ type TransferOptions struct {
 func (s *TransferOptions) MarshalJSON() ([]byte, error) {
 	type noMethod TransferOptions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TransferSpec: Configuration for running a transfer.
@@ -967,7 +967,7 @@ type TransferSpec struct {
 func (s *TransferSpec) MarshalJSON() ([]byte, error) {
 	type noMethod TransferSpec
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateTransferJobRequest: Request passed to UpdateTransferJob.
@@ -1000,7 +1000,7 @@ type UpdateTransferJobRequest struct {
 func (s *UpdateTransferJobRequest) MarshalJSON() ([]byte, error) {
 	type noMethod UpdateTransferJobRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "storagetransfer.googleServiceAccounts.get":

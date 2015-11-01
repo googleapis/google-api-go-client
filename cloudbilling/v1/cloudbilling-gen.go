@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -145,7 +143,7 @@ type BillingAccount struct {
 func (s *BillingAccount) MarshalJSON() ([]byte, error) {
 	type noMethod BillingAccount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListBillingAccountsResponse: Response message for
@@ -176,7 +174,7 @@ type ListBillingAccountsResponse struct {
 func (s *ListBillingAccountsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListBillingAccountsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListProjectBillingInfoResponse: Request message for
@@ -208,7 +206,7 @@ type ListProjectBillingInfoResponse struct {
 func (s *ListProjectBillingInfoResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListProjectBillingInfoResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProjectBillingInfo: Encapsulation of billing information for a
@@ -256,7 +254,7 @@ type ProjectBillingInfo struct {
 func (s *ProjectBillingInfo) MarshalJSON() ([]byte, error) {
 	type noMethod ProjectBillingInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "cloudbilling.billingAccounts.get":

@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -245,7 +243,7 @@ type Account struct {
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type noMethod Account
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountAdwordsLink struct {
@@ -276,7 +274,7 @@ type AccountAdwordsLink struct {
 func (s *AccountAdwordsLink) MarshalJSON() ([]byte, error) {
 	type noMethod AccountAdwordsLink
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountIdentifier struct {
@@ -300,7 +298,7 @@ type AccountIdentifier struct {
 func (s *AccountIdentifier) MarshalJSON() ([]byte, error) {
 	type noMethod AccountIdentifier
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShipping: The shipping settings of a merchant account.
@@ -341,7 +339,7 @@ type AccountShipping struct {
 func (s *AccountShipping) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShipping
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingCarrierRate: A carrier-calculated shipping rate.
@@ -383,7 +381,7 @@ type AccountShippingCarrierRate struct {
 func (s *AccountShippingCarrierRate) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingCarrierRate
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountShippingCondition struct {
@@ -429,7 +427,7 @@ type AccountShippingCondition struct {
 func (s *AccountShippingCondition) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingCondition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingLocationGroup: A user-defined locations group in a
@@ -470,7 +468,7 @@ type AccountShippingLocationGroup struct {
 func (s *AccountShippingLocationGroup) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingLocationGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingPostalCodeRange: A postal code range, that can be
@@ -498,7 +496,7 @@ type AccountShippingPostalCodeRange struct {
 func (s *AccountShippingPostalCodeRange) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingPostalCodeRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingRateTable: A single or bi-dimensional table of
@@ -530,7 +528,7 @@ type AccountShippingRateTable struct {
 func (s *AccountShippingRateTable) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingRateTable
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountShippingRateTableCell struct {
@@ -556,7 +554,7 @@ type AccountShippingRateTableCell struct {
 func (s *AccountShippingRateTableCell) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingRateTableCell
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingShippingService: Shipping services provided in a
@@ -592,7 +590,7 @@ type AccountShippingShippingService struct {
 func (s *AccountShippingShippingService) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingShippingService
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingShippingServiceCalculationMethod: Shipping cost
@@ -627,7 +625,7 @@ type AccountShippingShippingServiceCalculationMethod struct {
 func (s *AccountShippingShippingServiceCalculationMethod) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingShippingServiceCalculationMethod
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountShippingShippingServiceCostRule: Building block of the cost
@@ -665,7 +663,7 @@ type AccountShippingShippingServiceCostRule struct {
 func (s *AccountShippingShippingServiceCostRule) MarshalJSON() ([]byte, error) {
 	type noMethod AccountShippingShippingServiceCostRule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountStatus: The status of an account, i.e., information about its
@@ -698,7 +696,7 @@ type AccountStatus struct {
 func (s *AccountStatus) MarshalJSON() ([]byte, error) {
 	type noMethod AccountStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountStatusDataQualityIssue struct {
@@ -739,7 +737,7 @@ type AccountStatusDataQualityIssue struct {
 func (s *AccountStatusDataQualityIssue) MarshalJSON() ([]byte, error) {
 	type noMethod AccountStatusDataQualityIssue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountStatusExampleItem: An example of an item that has poor data
@@ -773,7 +771,7 @@ type AccountStatusExampleItem struct {
 func (s *AccountStatusExampleItem) MarshalJSON() ([]byte, error) {
 	type noMethod AccountStatusExampleItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountTax: The tax settings of a merchant account.
@@ -807,7 +805,7 @@ type AccountTax struct {
 func (s *AccountTax) MarshalJSON() ([]byte, error) {
 	type noMethod AccountTax
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountTaxTaxRule: Tax calculation rule to apply in a state or
@@ -843,7 +841,7 @@ type AccountTaxTaxRule struct {
 func (s *AccountTaxTaxRule) MarshalJSON() ([]byte, error) {
 	type noMethod AccountTaxTaxRule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountUser struct {
@@ -865,7 +863,7 @@ type AccountUser struct {
 func (s *AccountUser) MarshalJSON() ([]byte, error) {
 	type noMethod AccountUser
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountsAuthInfoResponse struct {
@@ -897,7 +895,7 @@ type AccountsAuthInfoResponse struct {
 func (s *AccountsAuthInfoResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsAuthInfoResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountsCustomBatchRequest struct {
@@ -916,7 +914,7 @@ type AccountsCustomBatchRequest struct {
 func (s *AccountsCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountsCustomBatchRequestEntry: A batch entry encoding a single
@@ -950,7 +948,7 @@ type AccountsCustomBatchRequestEntry struct {
 func (s *AccountsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountsCustomBatchResponse struct {
@@ -977,7 +975,7 @@ type AccountsCustomBatchResponse struct {
 func (s *AccountsCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountsCustomBatchResponseEntry: A batch entry encoding a single
@@ -1009,7 +1007,7 @@ type AccountsCustomBatchResponseEntry struct {
 func (s *AccountsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountsListResponse struct {
@@ -1039,7 +1037,7 @@ type AccountsListResponse struct {
 func (s *AccountsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountshippingCustomBatchRequest struct {
@@ -1058,7 +1056,7 @@ type AccountshippingCustomBatchRequest struct {
 func (s *AccountshippingCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AccountshippingCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountshippingCustomBatchRequestEntry: A batch entry encoding a
@@ -1092,7 +1090,7 @@ type AccountshippingCustomBatchRequestEntry struct {
 func (s *AccountshippingCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod AccountshippingCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountshippingCustomBatchResponse struct {
@@ -1119,7 +1117,7 @@ type AccountshippingCustomBatchResponse struct {
 func (s *AccountshippingCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountshippingCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountshippingCustomBatchResponseEntry: A batch entry encoding a
@@ -1150,7 +1148,7 @@ type AccountshippingCustomBatchResponseEntry struct {
 func (s *AccountshippingCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod AccountshippingCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountshippingListResponse struct {
@@ -1180,7 +1178,7 @@ type AccountshippingListResponse struct {
 func (s *AccountshippingListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountshippingListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountstatusesCustomBatchRequest struct {
@@ -1199,7 +1197,7 @@ type AccountstatusesCustomBatchRequest struct {
 func (s *AccountstatusesCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AccountstatusesCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountstatusesCustomBatchRequestEntry: A batch entry encoding a
@@ -1229,7 +1227,7 @@ type AccountstatusesCustomBatchRequestEntry struct {
 func (s *AccountstatusesCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod AccountstatusesCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountstatusesCustomBatchResponse struct {
@@ -1256,7 +1254,7 @@ type AccountstatusesCustomBatchResponse struct {
 func (s *AccountstatusesCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountstatusesCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountstatusesCustomBatchResponseEntry: A batch entry encoding a
@@ -1284,7 +1282,7 @@ type AccountstatusesCustomBatchResponseEntry struct {
 func (s *AccountstatusesCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod AccountstatusesCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountstatusesListResponse struct {
@@ -1314,7 +1312,7 @@ type AccountstatusesListResponse struct {
 func (s *AccountstatusesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountstatusesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccounttaxCustomBatchRequest struct {
@@ -1333,7 +1331,7 @@ type AccounttaxCustomBatchRequest struct {
 func (s *AccounttaxCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AccounttaxCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccounttaxCustomBatchRequestEntry: A batch entry encoding a single
@@ -1367,7 +1365,7 @@ type AccounttaxCustomBatchRequestEntry struct {
 func (s *AccounttaxCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod AccounttaxCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccounttaxCustomBatchResponse struct {
@@ -1394,7 +1392,7 @@ type AccounttaxCustomBatchResponse struct {
 func (s *AccounttaxCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccounttaxCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccounttaxCustomBatchResponseEntry: A batch entry encoding a single
@@ -1425,7 +1423,7 @@ type AccounttaxCustomBatchResponseEntry struct {
 func (s *AccounttaxCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod AccounttaxCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccounttaxListResponse struct {
@@ -1455,7 +1453,7 @@ type AccounttaxListResponse struct {
 func (s *AccounttaxListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccounttaxListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Datafeed: Datafeed data.
@@ -1515,7 +1513,7 @@ type Datafeed struct {
 func (s *Datafeed) MarshalJSON() ([]byte, error) {
 	type noMethod Datafeed
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedFetchSchedule: The required fields vary based on the
@@ -1561,7 +1559,7 @@ type DatafeedFetchSchedule struct {
 func (s *DatafeedFetchSchedule) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedFetchSchedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedFormat struct {
@@ -1591,7 +1589,7 @@ type DatafeedFormat struct {
 func (s *DatafeedFormat) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedFormat
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedStatus: The status of a datafeed, i.e., the result of the
@@ -1639,7 +1637,7 @@ type DatafeedStatus struct {
 func (s *DatafeedStatus) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedStatusError: An error occurring in the feed, like "invalid
@@ -1670,7 +1668,7 @@ type DatafeedStatusError struct {
 func (s *DatafeedStatusError) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedStatusError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedStatusExample: An example occurrence for a particular error.
@@ -1696,7 +1694,7 @@ type DatafeedStatusExample struct {
 func (s *DatafeedStatusExample) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedStatusExample
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedsCustomBatchRequest struct {
@@ -1715,7 +1713,7 @@ type DatafeedsCustomBatchRequest struct {
 func (s *DatafeedsCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedsCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedsCustomBatchRequestEntry: A batch entry encoding a single
@@ -1747,7 +1745,7 @@ type DatafeedsCustomBatchRequestEntry struct {
 func (s *DatafeedsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedsCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedsCustomBatchResponse struct {
@@ -1774,7 +1772,7 @@ type DatafeedsCustomBatchResponse struct {
 func (s *DatafeedsCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedsCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedsCustomBatchResponseEntry: A batch entry encoding a single
@@ -1802,7 +1800,7 @@ type DatafeedsCustomBatchResponseEntry struct {
 func (s *DatafeedsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedsCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedsListResponse struct {
@@ -1832,7 +1830,7 @@ type DatafeedsListResponse struct {
 func (s *DatafeedsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedstatusesCustomBatchRequest struct {
@@ -1851,7 +1849,7 @@ type DatafeedstatusesCustomBatchRequest struct {
 func (s *DatafeedstatusesCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedstatusesCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedstatusesCustomBatchRequestEntry: A batch entry encoding a
@@ -1880,7 +1878,7 @@ type DatafeedstatusesCustomBatchRequestEntry struct {
 func (s *DatafeedstatusesCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedstatusesCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedstatusesCustomBatchResponse struct {
@@ -1907,7 +1905,7 @@ type DatafeedstatusesCustomBatchResponse struct {
 func (s *DatafeedstatusesCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedstatusesCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatafeedstatusesCustomBatchResponseEntry: A batch entry encoding a
@@ -1935,7 +1933,7 @@ type DatafeedstatusesCustomBatchResponseEntry struct {
 func (s *DatafeedstatusesCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedstatusesCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatafeedstatusesListResponse struct {
@@ -1965,7 +1963,7 @@ type DatafeedstatusesListResponse struct {
 func (s *DatafeedstatusesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DatafeedstatusesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Error: An error returned by the API.
@@ -1991,7 +1989,7 @@ type Error struct {
 func (s *Error) MarshalJSON() ([]byte, error) {
 	type noMethod Error
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Errors: A list of errors returned by a failed batch entry.
@@ -2017,7 +2015,7 @@ type Errors struct {
 func (s *Errors) MarshalJSON() ([]byte, error) {
 	type noMethod Errors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Inventory struct {
@@ -2060,7 +2058,7 @@ type Inventory struct {
 func (s *Inventory) MarshalJSON() ([]byte, error) {
 	type noMethod Inventory
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventoryCustomBatchRequest struct {
@@ -2079,7 +2077,7 @@ type InventoryCustomBatchRequest struct {
 func (s *InventoryCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InventoryCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InventoryCustomBatchRequestEntry: A batch entry encoding a single
@@ -2115,7 +2113,7 @@ type InventoryCustomBatchRequestEntry struct {
 func (s *InventoryCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod InventoryCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventoryCustomBatchResponse struct {
@@ -2142,7 +2140,7 @@ type InventoryCustomBatchResponse struct {
 func (s *InventoryCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InventoryCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InventoryCustomBatchResponseEntry: A batch entry encoding a single
@@ -2170,7 +2168,7 @@ type InventoryCustomBatchResponseEntry struct {
 func (s *InventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod InventoryCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventorySetRequest struct {
@@ -2209,7 +2207,7 @@ type InventorySetRequest struct {
 func (s *InventorySetRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InventorySetRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InventorySetResponse struct {
@@ -2233,7 +2231,7 @@ type InventorySetResponse struct {
 func (s *InventorySetResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InventorySetResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LoyaltyPoints struct {
@@ -2261,7 +2259,7 @@ type LoyaltyPoints struct {
 func (s *LoyaltyPoints) MarshalJSON() ([]byte, error) {
 	type noMethod LoyaltyPoints
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Order struct {
@@ -2337,7 +2335,7 @@ type Order struct {
 func (s *Order) MarshalJSON() ([]byte, error) {
 	type noMethod Order
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderAddress struct {
@@ -2384,7 +2382,7 @@ type OrderAddress struct {
 func (s *OrderAddress) MarshalJSON() ([]byte, error) {
 	type noMethod OrderAddress
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderCancellation struct {
@@ -2416,7 +2414,7 @@ type OrderCancellation struct {
 func (s *OrderCancellation) MarshalJSON() ([]byte, error) {
 	type noMethod OrderCancellation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderCustomer struct {
@@ -2446,7 +2444,7 @@ type OrderCustomer struct {
 func (s *OrderCustomer) MarshalJSON() ([]byte, error) {
 	type noMethod OrderCustomer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderDeliveryDetails struct {
@@ -2468,7 +2466,7 @@ type OrderDeliveryDetails struct {
 func (s *OrderDeliveryDetails) MarshalJSON() ([]byte, error) {
 	type noMethod OrderDeliveryDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderLineItem struct {
@@ -2529,7 +2527,7 @@ type OrderLineItem struct {
 func (s *OrderLineItem) MarshalJSON() ([]byte, error) {
 	type noMethod OrderLineItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderLineItemProduct struct {
@@ -2595,7 +2593,7 @@ type OrderLineItemProduct struct {
 func (s *OrderLineItemProduct) MarshalJSON() ([]byte, error) {
 	type noMethod OrderLineItemProduct
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderLineItemProductVariantAttribute struct {
@@ -2617,7 +2615,7 @@ type OrderLineItemProductVariantAttribute struct {
 func (s *OrderLineItemProductVariantAttribute) MarshalJSON() ([]byte, error) {
 	type noMethod OrderLineItemProductVariantAttribute
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderLineItemReturnInfo struct {
@@ -2642,7 +2640,7 @@ type OrderLineItemReturnInfo struct {
 func (s *OrderLineItemReturnInfo) MarshalJSON() ([]byte, error) {
 	type noMethod OrderLineItemReturnInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderLineItemShippingDetails struct {
@@ -2667,7 +2665,7 @@ type OrderLineItemShippingDetails struct {
 func (s *OrderLineItemShippingDetails) MarshalJSON() ([]byte, error) {
 	type noMethod OrderLineItemShippingDetails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderLineItemShippingDetailsMethod struct {
@@ -2695,7 +2693,7 @@ type OrderLineItemShippingDetailsMethod struct {
 func (s *OrderLineItemShippingDetailsMethod) MarshalJSON() ([]byte, error) {
 	type noMethod OrderLineItemShippingDetailsMethod
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderPaymentMethod struct {
@@ -2730,7 +2728,7 @@ type OrderPaymentMethod struct {
 func (s *OrderPaymentMethod) MarshalJSON() ([]byte, error) {
 	type noMethod OrderPaymentMethod
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderRefund struct {
@@ -2762,7 +2760,7 @@ type OrderRefund struct {
 func (s *OrderRefund) MarshalJSON() ([]byte, error) {
 	type noMethod OrderRefund
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderReturn struct {
@@ -2794,7 +2792,7 @@ type OrderReturn struct {
 func (s *OrderReturn) MarshalJSON() ([]byte, error) {
 	type noMethod OrderReturn
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderShipment struct {
@@ -2833,7 +2831,7 @@ type OrderShipment struct {
 func (s *OrderShipment) MarshalJSON() ([]byte, error) {
 	type noMethod OrderShipment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrderShipmentLineItemShipment struct {
@@ -2855,7 +2853,7 @@ type OrderShipmentLineItemShipment struct {
 func (s *OrderShipmentLineItemShipment) MarshalJSON() ([]byte, error) {
 	type noMethod OrderShipmentLineItemShipment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersAcknowledgeRequest struct {
@@ -2875,7 +2873,7 @@ type OrdersAcknowledgeRequest struct {
 func (s *OrdersAcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersAcknowledgeRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersAcknowledgeResponse struct {
@@ -2902,7 +2900,7 @@ type OrdersAcknowledgeResponse struct {
 func (s *OrdersAcknowledgeResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersAcknowledgeResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersAdvanceTestOrderResponse struct {
@@ -2926,7 +2924,7 @@ type OrdersAdvanceTestOrderResponse struct {
 func (s *OrdersAdvanceTestOrderResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersAdvanceTestOrderResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCancelLineItemRequest struct {
@@ -2958,7 +2956,7 @@ type OrdersCancelLineItemRequest struct {
 func (s *OrdersCancelLineItemRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCancelLineItemRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCancelLineItemResponse struct {
@@ -2985,7 +2983,7 @@ type OrdersCancelLineItemResponse struct {
 func (s *OrdersCancelLineItemResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCancelLineItemResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCancelRequest struct {
@@ -3011,7 +3009,7 @@ type OrdersCancelRequest struct {
 func (s *OrdersCancelRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCancelRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCancelResponse struct {
@@ -3038,7 +3036,7 @@ type OrdersCancelResponse struct {
 func (s *OrdersCancelResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCancelResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCreateTestOrderRequest struct {
@@ -3062,7 +3060,7 @@ type OrdersCreateTestOrderRequest struct {
 func (s *OrdersCreateTestOrderRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCreateTestOrderRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCreateTestOrderResponse struct {
@@ -3089,7 +3087,7 @@ type OrdersCreateTestOrderResponse struct {
 func (s *OrdersCreateTestOrderResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCreateTestOrderResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchRequest struct {
@@ -3108,7 +3106,7 @@ type OrdersCustomBatchRequest struct {
 func (s *OrdersCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchRequestEntry struct {
@@ -3164,7 +3162,7 @@ type OrdersCustomBatchRequestEntry struct {
 func (s *OrdersCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchRequestEntryCancel struct {
@@ -3186,7 +3184,7 @@ type OrdersCustomBatchRequestEntryCancel struct {
 func (s *OrdersCustomBatchRequestEntryCancel) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchRequestEntryCancel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchRequestEntryCancelLineItem struct {
@@ -3214,7 +3212,7 @@ type OrdersCustomBatchRequestEntryCancelLineItem struct {
 func (s *OrdersCustomBatchRequestEntryCancelLineItem) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchRequestEntryCancelLineItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchRequestEntryRefund struct {
@@ -3239,7 +3237,7 @@ type OrdersCustomBatchRequestEntryRefund struct {
 func (s *OrdersCustomBatchRequestEntryRefund) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchRequestEntryRefund
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchRequestEntryReturnLineItem struct {
@@ -3267,7 +3265,7 @@ type OrdersCustomBatchRequestEntryReturnLineItem struct {
 func (s *OrdersCustomBatchRequestEntryReturnLineItem) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchRequestEntryReturnLineItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchRequestEntryShipLineItems struct {
@@ -3295,7 +3293,7 @@ type OrdersCustomBatchRequestEntryShipLineItems struct {
 func (s *OrdersCustomBatchRequestEntryShipLineItems) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchRequestEntryShipLineItems
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchRequestEntryUpdateShipment struct {
@@ -3323,7 +3321,7 @@ type OrdersCustomBatchRequestEntryUpdateShipment struct {
 func (s *OrdersCustomBatchRequestEntryUpdateShipment) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchRequestEntryUpdateShipment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchResponse struct {
@@ -3350,7 +3348,7 @@ type OrdersCustomBatchResponse struct {
 func (s *OrdersCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersCustomBatchResponseEntry struct {
@@ -3385,7 +3383,7 @@ type OrdersCustomBatchResponseEntry struct {
 func (s *OrdersCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersGetByMerchantOrderIdResponse struct {
@@ -3412,7 +3410,7 @@ type OrdersGetByMerchantOrderIdResponse struct {
 func (s *OrdersGetByMerchantOrderIdResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersGetByMerchantOrderIdResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersGetTestOrderTemplateResponse struct {
@@ -3439,7 +3437,7 @@ type OrdersGetTestOrderTemplateResponse struct {
 func (s *OrdersGetTestOrderTemplateResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersGetTestOrderTemplateResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersListResponse struct {
@@ -3469,7 +3467,7 @@ type OrdersListResponse struct {
 func (s *OrdersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersRefundRequest struct {
@@ -3498,7 +3496,7 @@ type OrdersRefundRequest struct {
 func (s *OrdersRefundRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersRefundRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersRefundResponse struct {
@@ -3525,7 +3523,7 @@ type OrdersRefundResponse struct {
 func (s *OrdersRefundResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersRefundResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersReturnLineItemRequest struct {
@@ -3557,7 +3555,7 @@ type OrdersReturnLineItemRequest struct {
 func (s *OrdersReturnLineItemRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersReturnLineItemRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersReturnLineItemResponse struct {
@@ -3584,7 +3582,7 @@ type OrdersReturnLineItemResponse struct {
 func (s *OrdersReturnLineItemResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersReturnLineItemResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersShipLineItemsRequest struct {
@@ -3616,7 +3614,7 @@ type OrdersShipLineItemsRequest struct {
 func (s *OrdersShipLineItemsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersShipLineItemsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersShipLineItemsResponse struct {
@@ -3643,7 +3641,7 @@ type OrdersShipLineItemsResponse struct {
 func (s *OrdersShipLineItemsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersShipLineItemsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersUpdateMerchantOrderIdRequest struct {
@@ -3667,7 +3665,7 @@ type OrdersUpdateMerchantOrderIdRequest struct {
 func (s *OrdersUpdateMerchantOrderIdRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersUpdateMerchantOrderIdRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersUpdateMerchantOrderIdResponse struct {
@@ -3694,7 +3692,7 @@ type OrdersUpdateMerchantOrderIdResponse struct {
 func (s *OrdersUpdateMerchantOrderIdResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersUpdateMerchantOrderIdResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersUpdateShipmentRequest struct {
@@ -3726,7 +3724,7 @@ type OrdersUpdateShipmentRequest struct {
 func (s *OrdersUpdateShipmentRequest) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersUpdateShipmentRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OrdersUpdateShipmentResponse struct {
@@ -3753,7 +3751,7 @@ type OrdersUpdateShipmentResponse struct {
 func (s *OrdersUpdateShipmentResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersUpdateShipmentResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Price struct {
@@ -3775,7 +3773,7 @@ type Price struct {
 func (s *Price) MarshalJSON() ([]byte, error) {
 	type noMethod Price
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Product: Product data.
@@ -4043,7 +4041,7 @@ type Product struct {
 func (s *Product) MarshalJSON() ([]byte, error) {
 	type noMethod Product
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductAspect struct {
@@ -4070,7 +4068,7 @@ type ProductAspect struct {
 func (s *ProductAspect) MarshalJSON() ([]byte, error) {
 	type noMethod ProductAspect
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductCustomAttribute struct {
@@ -4100,7 +4098,7 @@ type ProductCustomAttribute struct {
 func (s *ProductCustomAttribute) MarshalJSON() ([]byte, error) {
 	type noMethod ProductCustomAttribute
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductCustomGroup struct {
@@ -4123,7 +4121,7 @@ type ProductCustomGroup struct {
 func (s *ProductCustomGroup) MarshalJSON() ([]byte, error) {
 	type noMethod ProductCustomGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductDestination struct {
@@ -4146,7 +4144,7 @@ type ProductDestination struct {
 func (s *ProductDestination) MarshalJSON() ([]byte, error) {
 	type noMethod ProductDestination
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductInstallment struct {
@@ -4168,7 +4166,7 @@ type ProductInstallment struct {
 func (s *ProductInstallment) MarshalJSON() ([]byte, error) {
 	type noMethod ProductInstallment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductShipping struct {
@@ -4213,7 +4211,7 @@ type ProductShipping struct {
 func (s *ProductShipping) MarshalJSON() ([]byte, error) {
 	type noMethod ProductShipping
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductShippingDimension struct {
@@ -4240,7 +4238,7 @@ type ProductShippingDimension struct {
 func (s *ProductShippingDimension) MarshalJSON() ([]byte, error) {
 	type noMethod ProductShippingDimension
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductShippingWeight struct {
@@ -4263,7 +4261,7 @@ type ProductShippingWeight struct {
 func (s *ProductShippingWeight) MarshalJSON() ([]byte, error) {
 	type noMethod ProductShippingWeight
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductStatus: The status of a product, i.e., information about a
@@ -4317,7 +4315,7 @@ type ProductStatus struct {
 func (s *ProductStatus) MarshalJSON() ([]byte, error) {
 	type noMethod ProductStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductStatusDataQualityIssue struct {
@@ -4358,7 +4356,7 @@ type ProductStatusDataQualityIssue struct {
 func (s *ProductStatusDataQualityIssue) MarshalJSON() ([]byte, error) {
 	type noMethod ProductStatusDataQualityIssue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductStatusDestinationStatus struct {
@@ -4384,7 +4382,7 @@ type ProductStatusDestinationStatus struct {
 func (s *ProductStatusDestinationStatus) MarshalJSON() ([]byte, error) {
 	type noMethod ProductStatusDestinationStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductTax struct {
@@ -4423,7 +4421,7 @@ type ProductTax struct {
 func (s *ProductTax) MarshalJSON() ([]byte, error) {
 	type noMethod ProductTax
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductUnitPricingBaseMeasure struct {
@@ -4445,7 +4443,7 @@ type ProductUnitPricingBaseMeasure struct {
 func (s *ProductUnitPricingBaseMeasure) MarshalJSON() ([]byte, error) {
 	type noMethod ProductUnitPricingBaseMeasure
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductUnitPricingMeasure struct {
@@ -4467,7 +4465,7 @@ type ProductUnitPricingMeasure struct {
 func (s *ProductUnitPricingMeasure) MarshalJSON() ([]byte, error) {
 	type noMethod ProductUnitPricingMeasure
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductsCustomBatchRequest struct {
@@ -4486,7 +4484,7 @@ type ProductsCustomBatchRequest struct {
 func (s *ProductsCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ProductsCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductsCustomBatchRequestEntry: A batch entry encoding a single
@@ -4520,7 +4518,7 @@ type ProductsCustomBatchRequestEntry struct {
 func (s *ProductsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod ProductsCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductsCustomBatchResponse struct {
@@ -4547,7 +4545,7 @@ type ProductsCustomBatchResponse struct {
 func (s *ProductsCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ProductsCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductsCustomBatchResponseEntry: A batch entry encoding a single
@@ -4579,7 +4577,7 @@ type ProductsCustomBatchResponseEntry struct {
 func (s *ProductsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod ProductsCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductsListResponse struct {
@@ -4609,7 +4607,7 @@ type ProductsListResponse struct {
 func (s *ProductsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ProductsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductstatusesCustomBatchRequest struct {
@@ -4628,7 +4626,7 @@ type ProductstatusesCustomBatchRequest struct {
 func (s *ProductstatusesCustomBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ProductstatusesCustomBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductstatusesCustomBatchRequestEntry: A batch entry encoding a
@@ -4657,7 +4655,7 @@ type ProductstatusesCustomBatchRequestEntry struct {
 func (s *ProductstatusesCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 	type noMethod ProductstatusesCustomBatchRequestEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductstatusesCustomBatchResponse struct {
@@ -4684,7 +4682,7 @@ type ProductstatusesCustomBatchResponse struct {
 func (s *ProductstatusesCustomBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ProductstatusesCustomBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductstatusesCustomBatchResponseEntry: A batch entry encoding a
@@ -4716,7 +4714,7 @@ type ProductstatusesCustomBatchResponseEntry struct {
 func (s *ProductstatusesCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type noMethod ProductstatusesCustomBatchResponseEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductstatusesListResponse struct {
@@ -4746,7 +4744,7 @@ type ProductstatusesListResponse struct {
 func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ProductstatusesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TestOrder struct {
@@ -4789,7 +4787,7 @@ type TestOrder struct {
 func (s *TestOrder) MarshalJSON() ([]byte, error) {
 	type noMethod TestOrder
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TestOrderCustomer struct {
@@ -4819,7 +4817,7 @@ type TestOrderCustomer struct {
 func (s *TestOrderCustomer) MarshalJSON() ([]byte, error) {
 	type noMethod TestOrderCustomer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TestOrderLineItem struct {
@@ -4850,7 +4848,7 @@ type TestOrderLineItem struct {
 func (s *TestOrderLineItem) MarshalJSON() ([]byte, error) {
 	type noMethod TestOrderLineItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TestOrderLineItemProduct struct {
@@ -4907,7 +4905,7 @@ type TestOrderLineItemProduct struct {
 func (s *TestOrderLineItemProduct) MarshalJSON() ([]byte, error) {
 	type noMethod TestOrderLineItemProduct
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TestOrderPaymentMethod struct {
@@ -4940,7 +4938,7 @@ type TestOrderPaymentMethod struct {
 func (s *TestOrderPaymentMethod) MarshalJSON() ([]byte, error) {
 	type noMethod TestOrderPaymentMethod
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Weight struct {
@@ -4962,7 +4960,7 @@ type Weight struct {
 func (s *Weight) MarshalJSON() ([]byte, error) {
 	type noMethod Weight
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "content.accounts.authinfo":

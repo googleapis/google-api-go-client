@@ -38,11 +38,12 @@ var (
 	jsonFile       = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
 	output         = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
 	apiPackageBase = flag.String("api_pkg_base", "google.golang.org/api", "Go package prefix to use for all generated APIs.")
+	baseURL        = flag.String("base_url", "", "If non-empty, the default service URL to use.")
+	headerPath     = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
 
 	contextHTTPPkg = flag.String("ctxhttp_pkg", "golang.org/x/net/context/ctxhttp", "Go package path of the 'ctxhttp' package.")
 	contextPkg     = flag.String("context_pkg", "golang.org/x/net/context", "Go package path of the 'context' package.")
 	googleapiPkg   = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
-	internalPkg    = flag.String("internal_pkg", "google.golang.org/api/internal", "Go package path of the 'api/internal' support package.")
 )
 
 // API represents an API to generate, as well as its state while it's
@@ -380,10 +381,14 @@ func (a *API) GetName(preferred string) string {
 }
 
 func (a *API) apiBaseURL() string {
-	if a.RootURL != "" {
-		return a.RootURL + a.ServicePath
+	baseURL := *baseURL
+	if baseURL == "" {
+		if a.RootURL != "" && baseURL == "" {
+			return a.RootURL + a.ServicePath
+		}
+		baseURL = *apisURL
 	}
-	return resolveRelative(*apisURL, jstr(a.m, "basePath"))
+	return resolveRelative(baseURL, jstr(a.m, "basePath"))
 }
 
 func (a *API) needsDataWrapper() bool {
@@ -470,6 +475,16 @@ func (a *API) GenerateCode() ([]byte, error) {
 	p, pn := a.p, a.pn
 	reslist := a.Resources(a.m, "")
 
+	if *headerPath != "" {
+		header, err := ioutil.ReadFile(*headerPath)
+		if err != nil {
+			return buf.Bytes(), err
+		}
+		if _, err := buf.Write(header); err != nil {
+			panic(err)
+		}
+	}
+
 	p("// Package %s provides access to the %s.\n", pkg, jstr(m, "title"))
 	docsLink = jstr(m, "documentationLink")
 	if docsLink != "" {
@@ -485,22 +500,28 @@ func (a *API) GenerateCode() ([]byte, error) {
 	p("package %s // import %q\n", pkg, a.Target())
 	p("\n")
 	p("import (\n")
-	for _, pkg := range []string{
-		"bytes",
-		"encoding/json",
-		"errors",
-		"fmt",
-		"io",
-		"net/http",
-		"net/url",
-		"strconv",
-		"strings",
-		*contextHTTPPkg,
-		*contextPkg,
-		*googleapiPkg,
-		*internalPkg,
+	for _, imp := range []struct {
+		pkg   string
+		lname string
+	}{
+		{"bytes", ""},
+		{"encoding/json", ""},
+		{"errors", ""},
+		{"fmt", ""},
+		{"io", ""},
+		{"net/http", ""},
+		{"net/url", ""},
+		{"strconv", ""},
+		{"strings", ""},
+		{*contextHTTPPkg, "ctxhttp"},
+		{*contextPkg, "context"},
+		{*googleapiPkg, "googleapi"},
 	} {
-		p("\t%q\n", pkg)
+		if imp.lname == "" {
+			p("\t%q\n", imp.pkg)
+		} else {
+			p("\t%s %q\n", imp.lname, imp.pkg)
+		}
 	}
 	p(")\n\n")
 	pn("// Always reference these packages, just in case the auto-generated code")
@@ -514,7 +535,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = googleapi.Version")
 	pn("var _ = errors.New")
 	pn("var _ = strings.Replace")
-	pn("var _ = internal.MarshalJSON")
 	pn("var _ = context.Canceled")
 	pn("var _ = ctxhttp.Do")
 	pn("")
@@ -1302,7 +1322,7 @@ func (s *Schema) writeSchemaMarshal(forceSendFieldName string) {
 	s.api.pn("\ttype noMethod %s", s.GoName())
 	// pass schema as methodless type to prevent subsequent calls to MarshalJSON from recursing indefinitely.
 	s.api.pn("\traw := noMethod(*s)")
-	s.api.pn("\treturn internal.MarshalJSON(raw, s.%s)", forceSendFieldName)
+	s.api.pn("\treturn googleapi.MarshalJSON(raw, s.%s)", forceSendFieldName)
 	s.api.pn("}")
 }
 

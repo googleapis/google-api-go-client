@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -237,7 +235,7 @@ type Advertiser struct {
 func (s *Advertiser) MarshalJSON() ([]byte, error) {
 	type noMethod Advertiser
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Advertisers struct {
@@ -267,7 +265,7 @@ type Advertisers struct {
 func (s *Advertisers) MarshalJSON() ([]byte, error) {
 	type noMethod Advertisers
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CcOffer: A credit card offer. There are many possible result fields.
@@ -530,7 +528,7 @@ type CcOffer struct {
 func (s *CcOffer) MarshalJSON() ([]byte, error) {
 	type noMethod CcOffer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CcOfferBonusRewards struct {
@@ -553,7 +551,7 @@ type CcOfferBonusRewards struct {
 func (s *CcOfferBonusRewards) MarshalJSON() ([]byte, error) {
 	type noMethod CcOfferBonusRewards
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CcOfferDefaultFees struct {
@@ -585,7 +583,7 @@ type CcOfferDefaultFees struct {
 func (s *CcOfferDefaultFees) MarshalJSON() ([]byte, error) {
 	type noMethod CcOfferDefaultFees
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CcOfferRewards struct {
@@ -622,7 +620,7 @@ type CcOfferRewards struct {
 func (s *CcOfferRewards) MarshalJSON() ([]byte, error) {
 	type noMethod CcOfferRewards
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CcOffers struct {
@@ -648,7 +646,7 @@ type CcOffers struct {
 func (s *CcOffers) MarshalJSON() ([]byte, error) {
 	type noMethod CcOffers
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Event: An EventResource.
@@ -729,7 +727,7 @@ type Event struct {
 func (s *Event) MarshalJSON() ([]byte, error) {
 	type noMethod Event
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type EventProducts struct {
@@ -774,7 +772,7 @@ type EventProducts struct {
 func (s *EventProducts) MarshalJSON() ([]byte, error) {
 	type noMethod EventProducts
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Events struct {
@@ -804,7 +802,7 @@ type Events struct {
 func (s *Events) MarshalJSON() ([]byte, error) {
 	type noMethod Events
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Link: A LinkResource.
@@ -893,7 +891,7 @@ type Link struct {
 func (s *Link) MarshalJSON() ([]byte, error) {
 	type noMethod Link
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LinkSpecialOffers: Special offers on the link.
@@ -934,7 +932,7 @@ type LinkSpecialOffers struct {
 func (s *LinkSpecialOffers) MarshalJSON() ([]byte, error) {
 	type noMethod LinkSpecialOffers
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Links struct {
@@ -963,7 +961,7 @@ type Links struct {
 func (s *Links) MarshalJSON() ([]byte, error) {
 	type noMethod Links
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Money: An ApiMoneyProto.
@@ -986,7 +984,7 @@ type Money struct {
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type noMethod Money
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Publisher: A PublisherResource.
@@ -1051,7 +1049,7 @@ type Publisher struct {
 func (s *Publisher) MarshalJSON() ([]byte, error) {
 	type noMethod Publisher
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Publishers struct {
@@ -1081,7 +1079,7 @@ type Publishers struct {
 func (s *Publishers) MarshalJSON() ([]byte, error) {
 	type noMethod Publishers
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Report: A ReportResource representing a report of a certain type
@@ -1128,7 +1126,7 @@ type Report struct {
 func (s *Report) MarshalJSON() ([]byte, error) {
 	type noMethod Report
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "gan.advertisers.get":

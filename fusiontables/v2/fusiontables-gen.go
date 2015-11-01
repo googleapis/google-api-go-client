@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -182,7 +180,7 @@ type Bucket struct {
 func (s *Bucket) MarshalJSON() ([]byte, error) {
 	type noMethod Bucket
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Column: Specifies the details of a column in a table.
@@ -271,7 +269,7 @@ type Column struct {
 func (s *Column) MarshalJSON() ([]byte, error) {
 	type noMethod Column
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ColumnBaseColumn: Identifier of the base column. If present, this
@@ -297,7 +295,7 @@ type ColumnBaseColumn struct {
 func (s *ColumnBaseColumn) MarshalJSON() ([]byte, error) {
 	type noMethod ColumnBaseColumn
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ColumnList: Represents a list of columns in a table.
@@ -332,7 +330,7 @@ type ColumnList struct {
 func (s *ColumnList) MarshalJSON() ([]byte, error) {
 	type noMethod ColumnList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Geometry: Represents a Geometry object.
@@ -357,7 +355,7 @@ type Geometry struct {
 func (s *Geometry) MarshalJSON() ([]byte, error) {
 	type noMethod Geometry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Import: Represents an import request.
@@ -385,7 +383,7 @@ type Import struct {
 func (s *Import) MarshalJSON() ([]byte, error) {
 	type noMethod Import
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Line: Represents a line geometry.
@@ -408,7 +406,7 @@ type Line struct {
 func (s *Line) MarshalJSON() ([]byte, error) {
 	type noMethod Line
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LineStyle: Represents a LineStyle within a StyleSetting
@@ -443,7 +441,7 @@ type LineStyle struct {
 func (s *LineStyle) MarshalJSON() ([]byte, error) {
 	type noMethod LineStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Point: Represents a point object.
@@ -466,7 +464,7 @@ type Point struct {
 func (s *Point) MarshalJSON() ([]byte, error) {
 	type noMethod Point
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PointStyle: Represents a PointStyle within a StyleSetting
@@ -491,7 +489,7 @@ type PointStyle struct {
 func (s *PointStyle) MarshalJSON() ([]byte, error) {
 	type noMethod PointStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Polygon: Represents a polygon object.
@@ -514,7 +512,7 @@ type Polygon struct {
 func (s *Polygon) MarshalJSON() ([]byte, error) {
 	type noMethod Polygon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PolygonStyle: Represents a PolygonStyle within a StyleSetting
@@ -560,7 +558,7 @@ type PolygonStyle struct {
 func (s *PolygonStyle) MarshalJSON() ([]byte, error) {
 	type noMethod PolygonStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Sqlresponse: Represents a response to a SQL statement.
@@ -593,7 +591,7 @@ type Sqlresponse struct {
 func (s *Sqlresponse) MarshalJSON() ([]byte, error) {
 	type noMethod Sqlresponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StyleFunction: Represents a StyleFunction within a StyleSetting
@@ -630,7 +628,7 @@ type StyleFunction struct {
 func (s *StyleFunction) MarshalJSON() ([]byte, error) {
 	type noMethod StyleFunction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StyleFunctionGradient: Gradient function that interpolates a range of
@@ -659,7 +657,7 @@ type StyleFunctionGradient struct {
 func (s *StyleFunctionGradient) MarshalJSON() ([]byte, error) {
 	type noMethod StyleFunctionGradient
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StyleFunctionGradientColors struct {
@@ -681,7 +679,7 @@ type StyleFunctionGradientColors struct {
 func (s *StyleFunctionGradientColors) MarshalJSON() ([]byte, error) {
 	type noMethod StyleFunctionGradientColors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StyleSetting: Represents a complete StyleSettings object. The primary
@@ -728,7 +726,7 @@ type StyleSetting struct {
 func (s *StyleSetting) MarshalJSON() ([]byte, error) {
 	type noMethod StyleSetting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StyleSettingList: Represents a list of styles for a given table.
@@ -763,7 +761,7 @@ type StyleSettingList struct {
 func (s *StyleSettingList) MarshalJSON() ([]byte, error) {
 	type noMethod StyleSettingList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Table: Represents a table.
@@ -827,7 +825,7 @@ type Table struct {
 func (s *Table) MarshalJSON() ([]byte, error) {
 	type noMethod Table
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TableList: Represents a list of tables.
@@ -859,7 +857,7 @@ type TableList struct {
 func (s *TableList) MarshalJSON() ([]byte, error) {
 	type noMethod TableList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Task: A background task on a table, initiated for time- or
@@ -898,7 +896,7 @@ type Task struct {
 func (s *Task) MarshalJSON() ([]byte, error) {
 	type noMethod Task
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TaskList: Represents a list of tasks for a table.
@@ -932,7 +930,7 @@ type TaskList struct {
 func (s *TaskList) MarshalJSON() ([]byte, error) {
 	type noMethod TaskList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Template: Represents the contents of InfoWindow templates.
@@ -979,7 +977,7 @@ type Template struct {
 func (s *Template) MarshalJSON() ([]byte, error) {
 	type noMethod Template
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TemplateList: Represents a list of templates for a given table.
@@ -1014,7 +1012,7 @@ type TemplateList struct {
 func (s *TemplateList) MarshalJSON() ([]byte, error) {
 	type noMethod TemplateList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "fusiontables.column.delete":

@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -152,7 +150,7 @@ type Acl struct {
 func (s *Acl) MarshalJSON() ([]byte, error) {
 	type noMethod Acl
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Activity struct {
@@ -245,7 +243,7 @@ type Activity struct {
 func (s *Activity) MarshalJSON() ([]byte, error) {
 	type noMethod Activity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityActor: The person who performed this activity.
@@ -284,7 +282,7 @@ type ActivityActor struct {
 func (s *ActivityActor) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityActor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityActorClientSpecificActorInfo: Actor info specific to
@@ -305,7 +303,7 @@ type ActivityActorClientSpecificActorInfo struct {
 func (s *ActivityActorClientSpecificActorInfo) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityActorClientSpecificActorInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityActorClientSpecificActorInfoYoutubeActorInfo: Actor info
@@ -326,7 +324,7 @@ type ActivityActorClientSpecificActorInfoYoutubeActorInfo struct {
 func (s *ActivityActorClientSpecificActorInfoYoutubeActorInfo) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityActorClientSpecificActorInfoYoutubeActorInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityActorImage: The image representation of the actor.
@@ -348,7 +346,7 @@ type ActivityActorImage struct {
 func (s *ActivityActorImage) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityActorImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityActorName: An object representation of the individual
@@ -372,7 +370,7 @@ type ActivityActorName struct {
 func (s *ActivityActorName) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityActorName
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityActorVerification: Verification status of actor.
@@ -392,7 +390,7 @@ type ActivityActorVerification struct {
 func (s *ActivityActorVerification) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityActorVerification
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObject: The object of this activity.
@@ -447,7 +445,7 @@ type ActivityObject struct {
 func (s *ActivityObject) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObject
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectActor: If this activity's object is itself another
@@ -486,7 +484,7 @@ type ActivityObjectActor struct {
 func (s *ActivityObjectActor) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectActor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectActorClientSpecificActorInfo: Actor info specific to
@@ -507,7 +505,7 @@ type ActivityObjectActorClientSpecificActorInfo struct {
 func (s *ActivityObjectActorClientSpecificActorInfo) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectActorClientSpecificActorInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo: Actor
@@ -528,7 +526,7 @@ type ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo struct {
 func (s *ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectActorClientSpecificActorInfoYoutubeActorInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectActorImage: The image representation of the original
@@ -549,7 +547,7 @@ type ActivityObjectActorImage struct {
 func (s *ActivityObjectActorImage) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectActorImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectActorVerification: Verification status of actor.
@@ -569,7 +567,7 @@ type ActivityObjectActorVerification struct {
 func (s *ActivityObjectActorVerification) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectActorVerification
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ActivityObjectAttachments struct {
@@ -621,7 +619,7 @@ type ActivityObjectAttachments struct {
 func (s *ActivityObjectAttachments) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectAttachments
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectAttachmentsEmbed: If the attachment is a video, the
@@ -645,7 +643,7 @@ type ActivityObjectAttachmentsEmbed struct {
 func (s *ActivityObjectAttachmentsEmbed) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectAttachmentsEmbed
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectAttachmentsFullImage: The full image URL for photo
@@ -675,7 +673,7 @@ type ActivityObjectAttachmentsFullImage struct {
 func (s *ActivityObjectAttachmentsFullImage) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectAttachmentsFullImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectAttachmentsImage: The preview image for photos or
@@ -705,7 +703,7 @@ type ActivityObjectAttachmentsImage struct {
 func (s *ActivityObjectAttachmentsImage) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectAttachmentsImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ActivityObjectAttachmentsThumbnails struct {
@@ -730,7 +728,7 @@ type ActivityObjectAttachmentsThumbnails struct {
 func (s *ActivityObjectAttachmentsThumbnails) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectAttachmentsThumbnails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectAttachmentsThumbnailsImage: Image resource.
@@ -759,7 +757,7 @@ type ActivityObjectAttachmentsThumbnailsImage struct {
 func (s *ActivityObjectAttachmentsThumbnailsImage) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectAttachmentsThumbnailsImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectPlusoners: People who +1'd this activity.
@@ -783,7 +781,7 @@ type ActivityObjectPlusoners struct {
 func (s *ActivityObjectPlusoners) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectPlusoners
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectReplies: Comments in reply to this activity.
@@ -807,7 +805,7 @@ type ActivityObjectReplies struct {
 func (s *ActivityObjectReplies) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectReplies
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityObjectResharers: People who reshared this activity.
@@ -830,7 +828,7 @@ type ActivityObjectResharers struct {
 func (s *ActivityObjectResharers) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityObjectResharers
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ActivityProvider: The service provider that initially published this
@@ -851,7 +849,7 @@ type ActivityProvider struct {
 func (s *ActivityProvider) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityProvider
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ActivityFeed struct {
@@ -903,7 +901,7 @@ type ActivityFeed struct {
 func (s *ActivityFeed) MarshalJSON() ([]byte, error) {
 	type noMethod ActivityFeed
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Comment struct {
@@ -960,7 +958,7 @@ type Comment struct {
 func (s *Comment) MarshalJSON() ([]byte, error) {
 	type noMethod Comment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentActor: The person who posted this comment.
@@ -996,7 +994,7 @@ type CommentActor struct {
 func (s *CommentActor) MarshalJSON() ([]byte, error) {
 	type noMethod CommentActor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentActorClientSpecificActorInfo: Actor info specific to
@@ -1017,7 +1015,7 @@ type CommentActorClientSpecificActorInfo struct {
 func (s *CommentActorClientSpecificActorInfo) MarshalJSON() ([]byte, error) {
 	type noMethod CommentActorClientSpecificActorInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentActorClientSpecificActorInfoYoutubeActorInfo: Actor info
@@ -1038,7 +1036,7 @@ type CommentActorClientSpecificActorInfoYoutubeActorInfo struct {
 func (s *CommentActorClientSpecificActorInfoYoutubeActorInfo) MarshalJSON() ([]byte, error) {
 	type noMethod CommentActorClientSpecificActorInfoYoutubeActorInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentActorImage: The image representation of this actor.
@@ -1060,7 +1058,7 @@ type CommentActorImage struct {
 func (s *CommentActorImage) MarshalJSON() ([]byte, error) {
 	type noMethod CommentActorImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentActorVerification: Verification status of actor.
@@ -1080,7 +1078,7 @@ type CommentActorVerification struct {
 func (s *CommentActorVerification) MarshalJSON() ([]byte, error) {
 	type noMethod CommentActorVerification
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CommentInReplyTo struct {
@@ -1102,7 +1100,7 @@ type CommentInReplyTo struct {
 func (s *CommentInReplyTo) MarshalJSON() ([]byte, error) {
 	type noMethod CommentInReplyTo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentObject: The object of this comment.
@@ -1131,7 +1129,7 @@ type CommentObject struct {
 func (s *CommentObject) MarshalJSON() ([]byte, error) {
 	type noMethod CommentObject
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentPlusoners: People who +1'd this comment.
@@ -1151,7 +1149,7 @@ type CommentPlusoners struct {
 func (s *CommentPlusoners) MarshalJSON() ([]byte, error) {
 	type noMethod CommentPlusoners
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CommentFeed struct {
@@ -1199,7 +1197,7 @@ type CommentFeed struct {
 func (s *CommentFeed) MarshalJSON() ([]byte, error) {
 	type noMethod CommentFeed
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ItemScope struct {
@@ -1420,7 +1418,7 @@ type ItemScope struct {
 func (s *ItemScope) MarshalJSON() ([]byte, error) {
 	type noMethod ItemScope
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Moment struct {
@@ -1470,7 +1468,7 @@ type Moment struct {
 func (s *Moment) MarshalJSON() ([]byte, error) {
 	type noMethod Moment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MomentsFeed struct {
@@ -1518,7 +1516,7 @@ type MomentsFeed struct {
 func (s *MomentsFeed) MarshalJSON() ([]byte, error) {
 	type noMethod MomentsFeed
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PeopleFeed struct {
@@ -1566,7 +1564,7 @@ type PeopleFeed struct {
 func (s *PeopleFeed) MarshalJSON() ([]byte, error) {
 	type noMethod PeopleFeed
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Person struct {
@@ -1705,7 +1703,7 @@ type Person struct {
 func (s *Person) MarshalJSON() ([]byte, error) {
 	type noMethod Person
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PersonAgeRange: The age range of the person. Valid ranges are 17 or
@@ -1736,7 +1734,7 @@ type PersonAgeRange struct {
 func (s *PersonAgeRange) MarshalJSON() ([]byte, error) {
 	type noMethod PersonAgeRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PersonCover: The cover photo content.
@@ -1764,7 +1762,7 @@ type PersonCover struct {
 func (s *PersonCover) MarshalJSON() ([]byte, error) {
 	type noMethod PersonCover
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PersonCoverCoverInfo: Extra information about the cover photo.
@@ -1791,7 +1789,7 @@ type PersonCoverCoverInfo struct {
 func (s *PersonCoverCoverInfo) MarshalJSON() ([]byte, error) {
 	type noMethod PersonCoverCoverInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PersonCoverCoverPhoto: The person's primary cover image.
@@ -1817,7 +1815,7 @@ type PersonCoverCoverPhoto struct {
 func (s *PersonCoverCoverPhoto) MarshalJSON() ([]byte, error) {
 	type noMethod PersonCoverCoverPhoto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PersonEmails struct {
@@ -1844,7 +1842,7 @@ type PersonEmails struct {
 func (s *PersonEmails) MarshalJSON() ([]byte, error) {
 	type noMethod PersonEmails
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PersonImage: The representation of the person's profile photo.
@@ -1869,7 +1867,7 @@ type PersonImage struct {
 func (s *PersonImage) MarshalJSON() ([]byte, error) {
 	type noMethod PersonImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PersonName: An object representation of the individual components of
@@ -1908,7 +1906,7 @@ type PersonName struct {
 func (s *PersonName) MarshalJSON() ([]byte, error) {
 	type noMethod PersonName
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PersonOrganizations struct {
@@ -1956,7 +1954,7 @@ type PersonOrganizations struct {
 func (s *PersonOrganizations) MarshalJSON() ([]byte, error) {
 	type noMethod PersonOrganizations
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PersonPlacesLived struct {
@@ -1980,7 +1978,7 @@ type PersonPlacesLived struct {
 func (s *PersonPlacesLived) MarshalJSON() ([]byte, error) {
 	type noMethod PersonPlacesLived
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PersonUrls struct {
@@ -2011,7 +2009,7 @@ type PersonUrls struct {
 func (s *PersonUrls) MarshalJSON() ([]byte, error) {
 	type noMethod PersonUrls
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Place struct {
@@ -2042,7 +2040,7 @@ type Place struct {
 func (s *Place) MarshalJSON() ([]byte, error) {
 	type noMethod Place
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlaceAddress: The physical address of the place.
@@ -2062,7 +2060,7 @@ type PlaceAddress struct {
 func (s *PlaceAddress) MarshalJSON() ([]byte, error) {
 	type noMethod PlaceAddress
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacePosition: The position of the place.
@@ -2085,7 +2083,7 @@ type PlacePosition struct {
 func (s *PlacePosition) MarshalJSON() ([]byte, error) {
 	type noMethod PlacePosition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PlusAclentryResource struct {
@@ -2120,7 +2118,7 @@ type PlusAclentryResource struct {
 func (s *PlusAclentryResource) MarshalJSON() ([]byte, error) {
 	type noMethod PlusAclentryResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "plus.activities.get":

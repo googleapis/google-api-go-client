@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -318,7 +316,7 @@ type Avail struct {
 func (s *Avail) MarshalJSON() ([]byte, error) {
 	type noMethod Avail
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExperienceLocale: An ExperienceLocale tracks the fulfillment of a
@@ -450,7 +448,7 @@ type ExperienceLocale struct {
 func (s *ExperienceLocale) MarshalJSON() ([]byte, error) {
 	type noMethod ExperienceLocale
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListAvailsResponse: Response to the 'ListAvails' method.
@@ -477,7 +475,7 @@ type ListAvailsResponse struct {
 func (s *ListAvailsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListAvailsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListExperienceLocalesResponse: Response to the
@@ -506,7 +504,7 @@ type ListExperienceLocalesResponse struct {
 func (s *ListExperienceLocalesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListExperienceLocalesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListOrdersResponse: Response to the 'ListOrders' method.
@@ -533,7 +531,7 @@ type ListOrdersResponse struct {
 func (s *ListOrdersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOrdersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListStoreInfosResponse: Response to the 'ListStoreInfos' method.
@@ -560,7 +558,7 @@ type ListStoreInfosResponse struct {
 func (s *ListStoreInfosResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListStoreInfosResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Order: An Order tracks the fulfillment of an Edit when delivered
@@ -701,7 +699,7 @@ type Order struct {
 func (s *Order) MarshalJSON() ([]byte, error) {
 	type noMethod Order
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StoreInfo: Information about a playable sequence (video) associated
@@ -824,7 +822,7 @@ type StoreInfo struct {
 func (s *StoreInfo) MarshalJSON() ([]byte, error) {
 	type noMethod StoreInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "playmoviespartner.accounts.avails.list":

@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -103,7 +101,7 @@ type AircraftData struct {
 func (s *AircraftData) MarshalJSON() ([]byte, error) {
 	type noMethod AircraftData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AirportData: An airport.
@@ -136,7 +134,7 @@ type AirportData struct {
 func (s *AirportData) MarshalJSON() ([]byte, error) {
 	type noMethod AirportData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BagDescriptor: Information about an item of baggage.
@@ -170,7 +168,7 @@ type BagDescriptor struct {
 func (s *BagDescriptor) MarshalJSON() ([]byte, error) {
 	type noMethod BagDescriptor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CarrierData: Information about a carrier (ie. an airline, bus line,
@@ -200,7 +198,7 @@ type CarrierData struct {
 func (s *CarrierData) MarshalJSON() ([]byte, error) {
 	type noMethod CarrierData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CityData: Information about a city that might be useful to an
@@ -233,7 +231,7 @@ type CityData struct {
 func (s *CityData) MarshalJSON() ([]byte, error) {
 	type noMethod CityData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Data: Detailed information about components found in the solutions of
@@ -275,7 +273,7 @@ type Data struct {
 func (s *Data) MarshalJSON() ([]byte, error) {
 	type noMethod Data
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FareInfo: Complete information about a fare used in the solution to a
@@ -320,7 +318,7 @@ type FareInfo struct {
 func (s *FareInfo) MarshalJSON() ([]byte, error) {
 	type noMethod FareInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FlightInfo: A flight is a sequence of legs with the same airline
@@ -349,7 +347,7 @@ type FlightInfo struct {
 func (s *FlightInfo) MarshalJSON() ([]byte, error) {
 	type noMethod FlightInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FreeBaggageAllowance: Information about free baggage allowed on one
@@ -389,7 +387,7 @@ type FreeBaggageAllowance struct {
 func (s *FreeBaggageAllowance) MarshalJSON() ([]byte, error) {
 	type noMethod FreeBaggageAllowance
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LegInfo: Information about a leg. (A leg is the smallest unit of
@@ -478,7 +476,7 @@ type LegInfo struct {
 func (s *LegInfo) MarshalJSON() ([]byte, error) {
 	type noMethod LegInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PassengerCounts: The number and type of passengers. Unfortunately the
@@ -519,7 +517,7 @@ type PassengerCounts struct {
 func (s *PassengerCounts) MarshalJSON() ([]byte, error) {
 	type noMethod PassengerCounts
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PricingInfo: The price of one or more travel segments. The currency
@@ -591,7 +589,7 @@ type PricingInfo struct {
 func (s *PricingInfo) MarshalJSON() ([]byte, error) {
 	type noMethod PricingInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SegmentInfo: Details of a segment of a flight; a segment is one or
@@ -661,7 +659,7 @@ type SegmentInfo struct {
 func (s *SegmentInfo) MarshalJSON() ([]byte, error) {
 	type noMethod SegmentInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SegmentPricing: The price of this segment.
@@ -694,7 +692,7 @@ type SegmentPricing struct {
 func (s *SegmentPricing) MarshalJSON() ([]byte, error) {
 	type noMethod SegmentPricing
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SliceInfo: Information about a slice. A slice represents a
@@ -732,7 +730,7 @@ type SliceInfo struct {
 func (s *SliceInfo) MarshalJSON() ([]byte, error) {
 	type noMethod SliceInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SliceInput: Criteria a desired slice must satisfy.
@@ -792,7 +790,7 @@ type SliceInput struct {
 func (s *SliceInput) MarshalJSON() ([]byte, error) {
 	type noMethod SliceInput
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TaxData: Tax data.
@@ -819,7 +817,7 @@ type TaxData struct {
 func (s *TaxData) MarshalJSON() ([]byte, error) {
 	type noMethod TaxData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TaxInfo: Tax information.
@@ -857,7 +855,7 @@ type TaxInfo struct {
 func (s *TaxInfo) MarshalJSON() ([]byte, error) {
 	type noMethod TaxInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TimeOfDayRange: Two times in a single day defining a time range.
@@ -885,7 +883,7 @@ type TimeOfDayRange struct {
 func (s *TimeOfDayRange) MarshalJSON() ([]byte, error) {
 	type noMethod TimeOfDayRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TripOption: Trip information.
@@ -919,7 +917,7 @@ type TripOption struct {
 func (s *TripOption) MarshalJSON() ([]byte, error) {
 	type noMethod TripOption
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TripOptionsRequest: A QPX Express search request, which will yield
@@ -964,7 +962,7 @@ type TripOptionsRequest struct {
 func (s *TripOptionsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TripOptionsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TripOptionsResponse: A QPX Express search response.
@@ -996,7 +994,7 @@ type TripOptionsResponse struct {
 func (s *TripOptionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TripOptionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TripsSearchRequest: A QPX Express search request.
@@ -1017,7 +1015,7 @@ type TripsSearchRequest struct {
 func (s *TripsSearchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TripsSearchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TripsSearchResponse: A QPX Express search response.
@@ -1045,7 +1043,7 @@ type TripsSearchResponse struct {
 func (s *TripsSearchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TripsSearchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "qpxExpress.trips.search":

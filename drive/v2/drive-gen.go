@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -361,7 +359,7 @@ type About struct {
 func (s *About) MarshalJSON() ([]byte, error) {
 	type noMethod About
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AboutAdditionalRoleInfo struct {
@@ -383,7 +381,7 @@ type AboutAdditionalRoleInfo struct {
 func (s *AboutAdditionalRoleInfo) MarshalJSON() ([]byte, error) {
 	type noMethod AboutAdditionalRoleInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AboutAdditionalRoleInfoRoleSets struct {
@@ -406,7 +404,7 @@ type AboutAdditionalRoleInfoRoleSets struct {
 func (s *AboutAdditionalRoleInfoRoleSets) MarshalJSON() ([]byte, error) {
 	type noMethod AboutAdditionalRoleInfoRoleSets
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AboutExportFormats struct {
@@ -428,7 +426,7 @@ type AboutExportFormats struct {
 func (s *AboutExportFormats) MarshalJSON() ([]byte, error) {
 	type noMethod AboutExportFormats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AboutFeatures struct {
@@ -451,7 +449,7 @@ type AboutFeatures struct {
 func (s *AboutFeatures) MarshalJSON() ([]byte, error) {
 	type noMethod AboutFeatures
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AboutImportFormats struct {
@@ -473,7 +471,7 @@ type AboutImportFormats struct {
 func (s *AboutImportFormats) MarshalJSON() ([]byte, error) {
 	type noMethod AboutImportFormats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AboutMaxUploadSizes struct {
@@ -495,7 +493,7 @@ type AboutMaxUploadSizes struct {
 func (s *AboutMaxUploadSizes) MarshalJSON() ([]byte, error) {
 	type noMethod AboutMaxUploadSizes
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AboutQuotaBytesByService struct {
@@ -517,7 +515,7 @@ type AboutQuotaBytesByService struct {
 func (s *AboutQuotaBytesByService) MarshalJSON() ([]byte, error) {
 	type noMethod AboutQuotaBytesByService
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // App: The apps resource provides a list of the apps that a user has
@@ -622,7 +620,7 @@ type App struct {
 func (s *App) MarshalJSON() ([]byte, error) {
 	type noMethod App
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AppIcons struct {
@@ -651,7 +649,7 @@ type AppIcons struct {
 func (s *AppIcons) MarshalJSON() ([]byte, error) {
 	type noMethod AppIcons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AppList: A list of third-party applications which the user has
@@ -689,7 +687,7 @@ type AppList struct {
 func (s *AppList) MarshalJSON() ([]byte, error) {
 	type noMethod AppList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Change: Representation of a change to a file.
@@ -732,7 +730,7 @@ type Change struct {
 func (s *Change) MarshalJSON() ([]byte, error) {
 	type noMethod Change
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChangeList: A list of changes for a user.
@@ -774,7 +772,7 @@ type ChangeList struct {
 func (s *ChangeList) MarshalJSON() ([]byte, error) {
 	type noMethod ChangeList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Channel: An notification channel used to watch for resource changes.
@@ -832,7 +830,7 @@ type Channel struct {
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type noMethod Channel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChildList: A list of children of a file.
@@ -871,7 +869,7 @@ type ChildList struct {
 func (s *ChildList) MarshalJSON() ([]byte, error) {
 	type noMethod ChildList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChildReference: A reference to a folder's child.
@@ -904,7 +902,7 @@ type ChildReference struct {
 func (s *ChildReference) MarshalJSON() ([]byte, error) {
 	type noMethod ChildReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Comment: A JSON representation of a comment on a file in Google
@@ -981,7 +979,7 @@ type Comment struct {
 func (s *Comment) MarshalJSON() ([]byte, error) {
 	type noMethod Comment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentContext: The context of the file which is being commented on.
@@ -1006,7 +1004,7 @@ type CommentContext struct {
 func (s *CommentContext) MarshalJSON() ([]byte, error) {
 	type noMethod CommentContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentList: A JSON representation of a list of comments on a file in
@@ -1043,7 +1041,7 @@ type CommentList struct {
 func (s *CommentList) MarshalJSON() ([]byte, error) {
 	type noMethod CommentList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentReply: A JSON representation of a reply to a comment on a file
@@ -1101,7 +1099,7 @@ type CommentReply struct {
 func (s *CommentReply) MarshalJSON() ([]byte, error) {
 	type noMethod CommentReply
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentReplyList: A JSON representation of a list of replies to a
@@ -1138,7 +1136,7 @@ type CommentReplyList struct {
 func (s *CommentReplyList) MarshalJSON() ([]byte, error) {
 	type noMethod CommentReplyList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // File: The metadata for a file.
@@ -1386,7 +1384,7 @@ type File struct {
 func (s *File) MarshalJSON() ([]byte, error) {
 	type noMethod File
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileImageMediaMetadata: Metadata about image media. This will only be
@@ -1471,7 +1469,7 @@ type FileImageMediaMetadata struct {
 func (s *FileImageMediaMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod FileImageMediaMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileImageMediaMetadataLocation: Geographic location information
@@ -1498,7 +1496,7 @@ type FileImageMediaMetadataLocation struct {
 func (s *FileImageMediaMetadataLocation) MarshalJSON() ([]byte, error) {
 	type noMethod FileImageMediaMetadataLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileIndexableText: Indexable text attributes for the file (can only
@@ -1519,7 +1517,7 @@ type FileIndexableText struct {
 func (s *FileIndexableText) MarshalJSON() ([]byte, error) {
 	type noMethod FileIndexableText
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileLabels: A group of labels for the file.
@@ -1554,7 +1552,7 @@ type FileLabels struct {
 func (s *FileLabels) MarshalJSON() ([]byte, error) {
 	type noMethod FileLabels
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileThumbnail: Thumbnail for the file. Only accepted on upload and
@@ -1579,7 +1577,7 @@ type FileThumbnail struct {
 func (s *FileThumbnail) MarshalJSON() ([]byte, error) {
 	type noMethod FileThumbnail
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileVideoMediaMetadata: Metadata about video media. This will only be
@@ -1606,7 +1604,7 @@ type FileVideoMediaMetadata struct {
 func (s *FileVideoMediaMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod FileVideoMediaMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileList: A list of files.
@@ -1645,7 +1643,7 @@ type FileList struct {
 func (s *FileList) MarshalJSON() ([]byte, error) {
 	type noMethod FileList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeneratedIds: A list of generated IDs which can be provided in insert
@@ -1677,7 +1675,7 @@ type GeneratedIds struct {
 func (s *GeneratedIds) MarshalJSON() ([]byte, error) {
 	type noMethod GeneratedIds
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ParentList: A list of a file's parents.
@@ -1710,7 +1708,7 @@ type ParentList struct {
 func (s *ParentList) MarshalJSON() ([]byte, error) {
 	type noMethod ParentList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ParentReference: A reference to a file's parent.
@@ -1746,7 +1744,7 @@ type ParentReference struct {
 func (s *ParentReference) MarshalJSON() ([]byte, error) {
 	type noMethod ParentReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Permission: A permission for a file.
@@ -1827,7 +1825,7 @@ type Permission struct {
 func (s *Permission) MarshalJSON() ([]byte, error) {
 	type noMethod Permission
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PermissionId: An ID for a user or group as seen in Permission items.
@@ -1854,7 +1852,7 @@ type PermissionId struct {
 func (s *PermissionId) MarshalJSON() ([]byte, error) {
 	type noMethod PermissionId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PermissionList: A list of permissions associated with a file.
@@ -1887,7 +1885,7 @@ type PermissionList struct {
 func (s *PermissionList) MarshalJSON() ([]byte, error) {
 	type noMethod PermissionList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Property: A key-value pair attached to a file that is either public
@@ -1933,7 +1931,7 @@ type Property struct {
 func (s *Property) MarshalJSON() ([]byte, error) {
 	type noMethod Property
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PropertyList: A collection of properties, key-value pairs that are
@@ -1967,7 +1965,7 @@ type PropertyList struct {
 func (s *PropertyList) MarshalJSON() ([]byte, error) {
 	type noMethod PropertyList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Revision: A revision of a file.
@@ -2057,7 +2055,7 @@ type Revision struct {
 func (s *Revision) MarshalJSON() ([]byte, error) {
 	type noMethod Revision
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RevisionList: A list of revisions of a file.
@@ -2090,7 +2088,7 @@ type RevisionList struct {
 func (s *RevisionList) MarshalJSON() ([]byte, error) {
 	type noMethod RevisionList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // User: The JSON template for a user.
@@ -2126,7 +2124,7 @@ type User struct {
 func (s *User) MarshalJSON() ([]byte, error) {
 	type noMethod User
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserPicture: The user's profile picture.
@@ -2146,7 +2144,7 @@ type UserPicture struct {
 func (s *UserPicture) MarshalJSON() ([]byte, error) {
 	type noMethod UserPicture
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "drive.about.get":

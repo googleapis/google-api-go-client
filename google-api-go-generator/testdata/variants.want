@@ -12,10 +12,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -34,7 +33,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -151,7 +149,7 @@ type GeoJsonGeometryCollection struct {
 func (s *GeoJsonGeometryCollection) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonGeometryCollection
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonLineString struct {
@@ -176,7 +174,7 @@ type GeoJsonLineString struct {
 func (s *GeoJsonLineString) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonLineString
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoJsonMultiLineString: Multi Line String
@@ -203,7 +201,7 @@ type GeoJsonMultiLineString struct {
 func (s *GeoJsonMultiLineString) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonMultiLineString
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonMultiPoint struct {
@@ -228,7 +226,7 @@ type GeoJsonMultiPoint struct {
 func (s *GeoJsonMultiPoint) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonMultiPoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonMultiPolygon struct {
@@ -254,7 +252,7 @@ type GeoJsonMultiPolygon struct {
 func (s *GeoJsonMultiPolygon) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonMultiPolygon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonPoint struct {
@@ -280,7 +278,7 @@ type GeoJsonPoint struct {
 func (s *GeoJsonPoint) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonPoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonPolygon struct {
@@ -310,7 +308,7 @@ type GeoJsonPolygon struct {
 func (s *GeoJsonPolygon) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonPolygon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MapFolder struct {
@@ -353,7 +351,7 @@ type MapFolder struct {
 func (s *MapFolder) MarshalJSON() ([]byte, error) {
 	type noMethod MapFolder
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MapItem map[string]interface{}
@@ -420,7 +418,7 @@ type MapKmlLink struct {
 func (s *MapKmlLink) MarshalJSON() ([]byte, error) {
 	type noMethod MapKmlLink
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MapLayer struct {
@@ -461,5 +459,5 @@ type MapLayer struct {
 func (s *MapLayer) MarshalJSON() ([]byte, error) {
 	type noMethod MapLayer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }

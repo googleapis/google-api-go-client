@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -146,7 +144,7 @@ type ListTracesResponse struct {
 func (s *ListTracesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTracesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Trace: A Trace is a collection of spans describing the execution
@@ -180,7 +178,7 @@ type Trace struct {
 func (s *Trace) MarshalJSON() ([]byte, error) {
 	type noMethod Trace
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TraceSpan: A span is the data recorded with a single span.
@@ -232,7 +230,7 @@ type TraceSpan struct {
 func (s *TraceSpan) MarshalJSON() ([]byte, error) {
 	type noMethod TraceSpan
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Traces: A list of traces for the PatchTraces method.
@@ -252,7 +250,7 @@ type Traces struct {
 func (s *Traces) MarshalJSON() ([]byte, error) {
 	type noMethod Traces
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "cloudtrace.projects.patchTraces":

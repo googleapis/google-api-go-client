@@ -12,10 +12,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -34,7 +33,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -249,7 +247,7 @@ type Binding struct {
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type noMethod Binding
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CallSet: A call set is a collection of variant calls, typically for
@@ -296,7 +294,7 @@ type CallSet struct {
 func (s *CallSet) MarshalJSON() ([]byte, error) {
 	type noMethod CallSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CallSetInfo: A map of additional call set information. This must be
@@ -346,7 +344,7 @@ type CigarUnit struct {
 func (s *CigarUnit) MarshalJSON() ([]byte, error) {
 	type noMethod CigarUnit
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CoverageBucket: A bucket over which read coverage has been
@@ -372,7 +370,7 @@ type CoverageBucket struct {
 func (s *CoverageBucket) MarshalJSON() ([]byte, error) {
 	type noMethod CoverageBucket
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Dataset: A Dataset is a collection of genomic data.
@@ -407,7 +405,7 @@ type Dataset struct {
 func (s *Dataset) MarshalJSON() ([]byte, error) {
 	type noMethod Dataset
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -453,7 +451,7 @@ type Experiment struct {
 func (s *Experiment) MarshalJSON() ([]byte, error) {
 	type noMethod Experiment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExportReadGroupSetRequest: The read group set export request.
@@ -484,7 +482,7 @@ type ExportReadGroupSetRequest struct {
 func (s *ExportReadGroupSetRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ExportReadGroupSetRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExportVariantSetRequest: The variant data export request.
@@ -528,7 +526,7 @@ type ExportVariantSetRequest struct {
 func (s *ExportVariantSetRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ExportVariantSetRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -574,7 +572,7 @@ type ImportReadGroupSetsRequest struct {
 func (s *ImportReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ImportReadGroupSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImportReadGroupSetsResponse: The read group set import response.
@@ -594,7 +592,7 @@ type ImportReadGroupSetsResponse struct {
 func (s *ImportReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ImportReadGroupSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImportVariantsRequest: The variant data import request.
@@ -639,7 +637,7 @@ type ImportVariantsRequest struct {
 func (s *ImportVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ImportVariantsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImportVariantsResponse: The variant data import response.
@@ -659,7 +657,7 @@ type ImportVariantsResponse struct {
 func (s *ImportVariantsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ImportVariantsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LinearAlignment: A linear alignment can be represented by one CIGAR
@@ -689,7 +687,7 @@ type LinearAlignment struct {
 func (s *LinearAlignment) MarshalJSON() ([]byte, error) {
 	type noMethod LinearAlignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListBasesResponse struct {
@@ -723,7 +721,7 @@ type ListBasesResponse struct {
 func (s *ListBasesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListBasesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListCoverageBucketsResponse struct {
@@ -761,7 +759,7 @@ type ListCoverageBucketsResponse struct {
 func (s *ListCoverageBucketsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListCoverageBucketsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListDatasetsResponse: The dataset list response.
@@ -791,7 +789,7 @@ type ListDatasetsResponse struct {
 func (s *ListDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListDatasetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListOperationsResponse: The response message for
@@ -820,7 +818,7 @@ type ListOperationsResponse struct {
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOperationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: This resource represents a long-running operation that is
@@ -864,7 +862,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationMetadata interface{}
@@ -888,7 +886,7 @@ type OperationEvent struct {
 func (s *OperationEvent) MarshalJSON() ([]byte, error) {
 	type noMethod OperationEvent
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationMetadata1: Metadata describing an Operation.
@@ -923,7 +921,7 @@ type OperationMetadata1 struct {
 func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadata1
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationMetadataRequest interface{}
@@ -968,7 +966,7 @@ type Policy struct {
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type noMethod Policy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Position: An abstraction for referring to a genomic position, in
@@ -1000,7 +998,7 @@ type Position struct {
 func (s *Position) MarshalJSON() ([]byte, error) {
 	type noMethod Position
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Program struct {
@@ -1032,7 +1030,7 @@ type Program struct {
 func (s *Program) MarshalJSON() ([]byte, error) {
 	type noMethod Program
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Range: A 0-based half-open genomic coordinate range for search
@@ -1062,7 +1060,7 @@ type Range struct {
 func (s *Range) MarshalJSON() ([]byte, error) {
 	type noMethod Range
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Read: A read alignment describes a linear alignment of a string of
@@ -1196,7 +1194,7 @@ type Read struct {
 func (s *Read) MarshalJSON() ([]byte, error) {
 	type noMethod Read
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReadInfo: A map of additional read alignment information. This must
@@ -1262,7 +1260,7 @@ type ReadGroup struct {
 func (s *ReadGroup) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReadGroupInfo: A map of additional read group information. This must
@@ -1319,7 +1317,7 @@ type ReadGroupSet struct {
 func (s *ReadGroupSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReadGroupSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReadGroupSetInfo: A map of additional read group set information.
@@ -1375,7 +1373,7 @@ type Reference struct {
 func (s *Reference) MarshalJSON() ([]byte, error) {
 	type noMethod Reference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReferenceBound: ReferenceBound records an upper bound for the
@@ -1400,7 +1398,7 @@ type ReferenceBound struct {
 func (s *ReferenceBound) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceBound
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReferenceSet: A reference set is a set of references which typically
@@ -1463,7 +1461,7 @@ type ReferenceSet struct {
 func (s *ReferenceSet) MarshalJSON() ([]byte, error) {
 	type noMethod ReferenceSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchCallSetsRequest: The call set search request.
@@ -1497,7 +1495,7 @@ type SearchCallSetsRequest struct {
 func (s *SearchCallSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchCallSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchCallSetsResponse: The call set search response.
@@ -1527,7 +1525,7 @@ type SearchCallSetsResponse struct {
 func (s *SearchCallSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchCallSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchReadGroupSetsRequest: The read group set search request.
@@ -1561,7 +1559,7 @@ type SearchReadGroupSetsRequest struct {
 func (s *SearchReadGroupSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadGroupSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchReadGroupSetsResponse: The read group set search response.
@@ -1591,7 +1589,7 @@ type SearchReadGroupSetsResponse struct {
 func (s *SearchReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadGroupSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchReadsRequest: The read search request.
@@ -1641,7 +1639,7 @@ type SearchReadsRequest struct {
 func (s *SearchReadsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchReadsResponse: The read search response.
@@ -1674,7 +1672,7 @@ type SearchReadsResponse struct {
 func (s *SearchReadsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReadsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchReferenceSetsRequest struct {
@@ -1715,7 +1713,7 @@ type SearchReferenceSetsRequest struct {
 func (s *SearchReferenceSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferenceSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchReferenceSetsResponse struct {
@@ -1744,7 +1742,7 @@ type SearchReferenceSetsResponse struct {
 func (s *SearchReferenceSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferenceSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchReferencesRequest struct {
@@ -1785,7 +1783,7 @@ type SearchReferencesRequest struct {
 func (s *SearchReferencesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferencesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SearchReferencesResponse struct {
@@ -1814,7 +1812,7 @@ type SearchReferencesResponse struct {
 func (s *SearchReferencesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchReferencesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchVariantSetsRequest: The search variant sets request.
@@ -1843,7 +1841,7 @@ type SearchVariantSetsRequest struct {
 func (s *SearchVariantSetsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantSetsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchVariantSetsResponse: The search variant sets response.
@@ -1873,7 +1871,7 @@ type SearchVariantSetsResponse struct {
 func (s *SearchVariantSetsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantSetsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchVariantsRequest: The variant search request.
@@ -1932,7 +1930,7 @@ type SearchVariantsRequest struct {
 func (s *SearchVariantsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SearchVariantsResponse: The variant search response.
@@ -1962,7 +1960,7 @@ type SearchVariantsResponse struct {
 func (s *SearchVariantsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SearchVariantsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1985,7 +1983,7 @@ type SetIamPolicyRequest struct {
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SetIamPolicyRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -2050,7 +2048,7 @@ type Status struct {
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type noMethod Status
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatusDetails interface{}
@@ -2079,7 +2077,7 @@ type TestIamPermissionsRequest struct {
 func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -2105,7 +2103,7 @@ type TestIamPermissionsResponse struct {
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UndeleteDatasetRequest struct {
@@ -2188,7 +2186,7 @@ type Variant struct {
 func (s *Variant) MarshalJSON() ([]byte, error) {
 	type noMethod Variant
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VariantInfo: A map of additional variant information. This must be of
@@ -2252,7 +2250,7 @@ type VariantCall struct {
 func (s *VariantCall) MarshalJSON() ([]byte, error) {
 	type noMethod VariantCall
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VariantCallInfo: A map of additional variant call information. This
@@ -2295,7 +2293,7 @@ type VariantSet struct {
 func (s *VariantSet) MarshalJSON() ([]byte, error) {
 	type noMethod VariantSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VariantSetMetadata: Metadata describes a single piece of variant call
@@ -2349,7 +2347,7 @@ type VariantSetMetadata struct {
 func (s *VariantSetMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod VariantSetMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VariantSetMetadataInfo: Remaining structured metadata key-value

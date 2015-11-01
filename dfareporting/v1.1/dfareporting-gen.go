@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -157,7 +155,7 @@ type Activities struct {
 func (s *Activities) MarshalJSON() ([]byte, error) {
 	type noMethod Activities
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomRichMediaEvents: Represents a Custom Rich Media Events group.
@@ -182,7 +180,7 @@ type CustomRichMediaEvents struct {
 func (s *CustomRichMediaEvents) MarshalJSON() ([]byte, error) {
 	type noMethod CustomRichMediaEvents
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DateRange: Represents a date range.
@@ -230,7 +228,7 @@ type DateRange struct {
 func (s *DateRange) MarshalJSON() ([]byte, error) {
 	type noMethod DateRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionFilter: Represents a dimension filter.
@@ -257,7 +255,7 @@ type DimensionFilter struct {
 func (s *DimensionFilter) MarshalJSON() ([]byte, error) {
 	type noMethod DimensionFilter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValue: Represents a DimensionValue resource.
@@ -290,7 +288,7 @@ type DimensionValue struct {
 func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 	type noMethod DimensionValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValueList: Represents the list of DimensionValue resources.
@@ -327,7 +325,7 @@ type DimensionValueList struct {
 func (s *DimensionValueList) MarshalJSON() ([]byte, error) {
 	type noMethod DimensionValueList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValueRequest: Represents a DimensionValuesRequest.
@@ -364,7 +362,7 @@ type DimensionValueRequest struct {
 func (s *DimensionValueRequest) MarshalJSON() ([]byte, error) {
 	type noMethod DimensionValueRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // File: Represents a File resource. A File contains the meta-data for a
@@ -426,7 +424,7 @@ type File struct {
 func (s *File) MarshalJSON() ([]byte, error) {
 	type noMethod File
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileUrls: The urls where the completed report file can be downloaded.
@@ -450,7 +448,7 @@ type FileUrls struct {
 func (s *FileUrls) MarshalJSON() ([]byte, error) {
 	type noMethod FileUrls
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileList: Represents the list of File resources.
@@ -486,7 +484,7 @@ type FileList struct {
 func (s *FileList) MarshalJSON() ([]byte, error) {
 	type noMethod FileList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Recipient: Represents a recipient.
@@ -515,7 +513,7 @@ type Recipient struct {
 func (s *Recipient) MarshalJSON() ([]byte, error) {
 	type noMethod Recipient
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Report: Represents a Report resource.
@@ -613,7 +611,7 @@ type Report struct {
 func (s *Report) MarshalJSON() ([]byte, error) {
 	type noMethod Report
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportActiveGrpCriteria: The report criteria for a report of type
@@ -649,7 +647,7 @@ type ReportActiveGrpCriteria struct {
 func (s *ReportActiveGrpCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportActiveGrpCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCriteria: The report criteria for a report of type "STANDARD".
@@ -688,7 +686,7 @@ type ReportCriteria struct {
 func (s *ReportCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCrossDimensionReachCriteria: The report criteria for a report
@@ -733,7 +731,7 @@ type ReportCrossDimensionReachCriteria struct {
 func (s *ReportCrossDimensionReachCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportCrossDimensionReachCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportDelivery: The report's email delivery settings.
@@ -765,7 +763,7 @@ type ReportDelivery struct {
 func (s *ReportDelivery) MarshalJSON() ([]byte, error) {
 	type noMethod ReportDelivery
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportFloodlightCriteria: The report criteria for a report of type
@@ -807,7 +805,7 @@ type ReportFloodlightCriteria struct {
 func (s *ReportFloodlightCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportFloodlightCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportFloodlightCriteriaReportProperties: The properties of the
@@ -843,7 +841,7 @@ type ReportFloodlightCriteriaReportProperties struct {
 func (s *ReportFloodlightCriteriaReportProperties) MarshalJSON() ([]byte, error) {
 	type noMethod ReportFloodlightCriteriaReportProperties
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportPathToConversionCriteria: The report criteria for a report of
@@ -891,7 +889,7 @@ type ReportPathToConversionCriteria struct {
 func (s *ReportPathToConversionCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportPathToConversionCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportPathToConversionCriteriaReportProperties: The properties of the
@@ -961,7 +959,7 @@ type ReportPathToConversionCriteriaReportProperties struct {
 func (s *ReportPathToConversionCriteriaReportProperties) MarshalJSON() ([]byte, error) {
 	type noMethod ReportPathToConversionCriteriaReportProperties
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportReachCriteria: The report criteria for a report of type
@@ -1004,7 +1002,7 @@ type ReportReachCriteria struct {
 func (s *ReportReachCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportReachCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportSchedule: The report's schedule. Can only be set if the
@@ -1067,7 +1065,7 @@ type ReportSchedule struct {
 func (s *ReportSchedule) MarshalJSON() ([]byte, error) {
 	type noMethod ReportSchedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportList: Represents the list of reports.
@@ -1103,7 +1101,7 @@ type ReportList struct {
 func (s *ReportList) MarshalJSON() ([]byte, error) {
 	type noMethod ReportList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SortedDimension: Represents a sorted dimension.
@@ -1133,7 +1131,7 @@ type SortedDimension struct {
 func (s *SortedDimension) MarshalJSON() ([]byte, error) {
 	type noMethod SortedDimension
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserProfile: Represents a UserProfile resource.
@@ -1181,7 +1179,7 @@ type UserProfile struct {
 func (s *UserProfile) MarshalJSON() ([]byte, error) {
 	type noMethod UserProfile
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserProfileList: Represents the list of user profiles.
@@ -1212,7 +1210,7 @@ type UserProfileList struct {
 func (s *UserProfileList) MarshalJSON() ([]byte, error) {
 	type noMethod UserProfileList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "dfareporting.dimensionValues.query":

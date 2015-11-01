@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -179,7 +177,7 @@ type BackupConfiguration struct {
 func (s *BackupConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod BackupConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BackupRun: A database instance backup run resource.
@@ -232,7 +230,7 @@ type BackupRun struct {
 func (s *BackupRun) MarshalJSON() ([]byte, error) {
 	type noMethod BackupRun
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BackupRunsListResponse: Backup run list results.
@@ -265,7 +263,7 @@ type BackupRunsListResponse struct {
 func (s *BackupRunsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod BackupRunsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BinLogCoordinates: Binary log coordinates.
@@ -291,7 +289,7 @@ type BinLogCoordinates struct {
 func (s *BinLogCoordinates) MarshalJSON() ([]byte, error) {
 	type noMethod BinLogCoordinates
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CloneContext: Database instance clone context.
@@ -324,7 +322,7 @@ type CloneContext struct {
 func (s *CloneContext) MarshalJSON() ([]byte, error) {
 	type noMethod CloneContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatabaseFlags: MySQL flags for Cloud SQL instances.
@@ -354,7 +352,7 @@ type DatabaseFlags struct {
 func (s *DatabaseFlags) MarshalJSON() ([]byte, error) {
 	type noMethod DatabaseFlags
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DatabaseInstance: A Cloud SQL instance resource.
@@ -446,7 +444,7 @@ type DatabaseInstance struct {
 func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
 	type noMethod DatabaseInstance
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExportContext: Database instance export context.
@@ -481,7 +479,7 @@ type ExportContext struct {
 func (s *ExportContext) MarshalJSON() ([]byte, error) {
 	type noMethod ExportContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Flag: A Google Cloud SQL service flag resource.
@@ -524,7 +522,7 @@ type Flag struct {
 func (s *Flag) MarshalJSON() ([]byte, error) {
 	type noMethod Flag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FlagsListResponse: Flags list response.
@@ -551,7 +549,7 @@ type FlagsListResponse struct {
 func (s *FlagsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod FlagsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ImportContext: Database instance import context.
@@ -581,7 +579,7 @@ type ImportContext struct {
 func (s *ImportContext) MarshalJSON() ([]byte, error) {
 	type noMethod ImportContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceOperation: An Operations resource contains information about
@@ -651,7 +649,7 @@ type InstanceOperation struct {
 func (s *InstanceOperation) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceOperation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstanceSetRootPasswordRequest: Database instance set root password
@@ -673,7 +671,7 @@ type InstanceSetRootPasswordRequest struct {
 func (s *InstanceSetRootPasswordRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InstanceSetRootPasswordRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesCloneRequest: Database instance clone request.
@@ -693,7 +691,7 @@ type InstancesCloneRequest struct {
 func (s *InstancesCloneRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesCloneRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesCloneResponse: Database instance clone response.
@@ -722,7 +720,7 @@ type InstancesCloneResponse struct {
 func (s *InstancesCloneResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesCloneResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesDeleteResponse: Database instance delete response.
@@ -751,7 +749,7 @@ type InstancesDeleteResponse struct {
 func (s *InstancesDeleteResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesDeleteResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesExportRequest: Database instance export request.
@@ -771,7 +769,7 @@ type InstancesExportRequest struct {
 func (s *InstancesExportRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesExportRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesExportResponse: Database instance export response.
@@ -800,7 +798,7 @@ type InstancesExportResponse struct {
 func (s *InstancesExportResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesExportResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesImportRequest: Database instance import request.
@@ -820,7 +818,7 @@ type InstancesImportRequest struct {
 func (s *InstancesImportRequest) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesImportRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesImportResponse: Database instance import response.
@@ -849,7 +847,7 @@ type InstancesImportResponse struct {
 func (s *InstancesImportResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesImportResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesInsertResponse: Database instance insert response.
@@ -878,7 +876,7 @@ type InstancesInsertResponse struct {
 func (s *InstancesInsertResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesInsertResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesListResponse: Database instances list response.
@@ -910,7 +908,7 @@ type InstancesListResponse struct {
 func (s *InstancesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesPromoteReplicaResponse: Database promote read replica
@@ -940,7 +938,7 @@ type InstancesPromoteReplicaResponse struct {
 func (s *InstancesPromoteReplicaResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesPromoteReplicaResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesResetSslConfigResponse: Database instance resetSslConfig
@@ -972,7 +970,7 @@ type InstancesResetSslConfigResponse struct {
 func (s *InstancesResetSslConfigResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesResetSslConfigResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesRestartResponse: Database instance restart response.
@@ -1001,7 +999,7 @@ type InstancesRestartResponse struct {
 func (s *InstancesRestartResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesRestartResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesRestoreBackupResponse: Database instance restore backup
@@ -1031,7 +1029,7 @@ type InstancesRestoreBackupResponse struct {
 func (s *InstancesRestoreBackupResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesRestoreBackupResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesSetRootPasswordResponse: Database instance set root password
@@ -1061,7 +1059,7 @@ type InstancesSetRootPasswordResponse struct {
 func (s *InstancesSetRootPasswordResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesSetRootPasswordResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstancesUpdateResponse: Database instance update response.
@@ -1089,7 +1087,7 @@ type InstancesUpdateResponse struct {
 func (s *InstancesUpdateResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstancesUpdateResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IpConfiguration: IP Management configuration.
@@ -1122,7 +1120,7 @@ type IpConfiguration struct {
 func (s *IpConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod IpConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IpMapping: Database instance IP Mapping.
@@ -1147,7 +1145,7 @@ type IpMapping struct {
 func (s *IpMapping) MarshalJSON() ([]byte, error) {
 	type noMethod IpMapping
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LocationPreference: Preferred location. This specifies where a Cloud
@@ -1181,7 +1179,7 @@ type LocationPreference struct {
 func (s *LocationPreference) MarshalJSON() ([]byte, error) {
 	type noMethod LocationPreference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationError: Database instance operation error.
@@ -1204,7 +1202,7 @@ type OperationError struct {
 func (s *OperationError) MarshalJSON() ([]byte, error) {
 	type noMethod OperationError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationsListResponse: Database instance list operations response.
@@ -1236,7 +1234,7 @@ type OperationsListResponse struct {
 func (s *OperationsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OperationsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SetRootPasswordContext: Database instance set root password context.
@@ -1259,7 +1257,7 @@ type SetRootPasswordContext struct {
 func (s *SetRootPasswordContext) MarshalJSON() ([]byte, error) {
 	type noMethod SetRootPasswordContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Settings: Database instance settings.
@@ -1330,7 +1328,7 @@ type Settings struct {
 func (s *Settings) MarshalJSON() ([]byte, error) {
 	type noMethod Settings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SslCert: SslCerts Resource
@@ -1375,7 +1373,7 @@ type SslCert struct {
 func (s *SslCert) MarshalJSON() ([]byte, error) {
 	type noMethod SslCert
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SslCertDetail: SslCertDetail.
@@ -1399,7 +1397,7 @@ type SslCertDetail struct {
 func (s *SslCertDetail) MarshalJSON() ([]byte, error) {
 	type noMethod SslCertDetail
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SslCertsDeleteResponse: SslCert delete response.
@@ -1428,7 +1426,7 @@ type SslCertsDeleteResponse struct {
 func (s *SslCertsDeleteResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SslCertsDeleteResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SslCertsInsertRequest: SslCerts insert request.
@@ -1450,7 +1448,7 @@ type SslCertsInsertRequest struct {
 func (s *SslCertsInsertRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SslCertsInsertRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SslCertsInsertResponse: SslCert insert response.
@@ -1483,7 +1481,7 @@ type SslCertsInsertResponse struct {
 func (s *SslCertsInsertResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SslCertsInsertResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SslCertsListResponse: SslCerts list response.
@@ -1510,7 +1508,7 @@ type SslCertsListResponse struct {
 func (s *SslCertsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SslCertsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Tier: A Google Cloud SQL service tier resource.
@@ -1544,7 +1542,7 @@ type Tier struct {
 func (s *Tier) MarshalJSON() ([]byte, error) {
 	type noMethod Tier
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TiersListResponse: Tiers list response.
@@ -1571,7 +1569,7 @@ type TiersListResponse struct {
 func (s *TiersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TiersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "sql.backupRuns.get":

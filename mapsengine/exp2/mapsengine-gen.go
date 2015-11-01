@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -386,7 +386,7 @@ type AcquisitionTime struct {
 func (s *AcquisitionTime) MarshalJSON() ([]byte, error) {
 	type noMethod AcquisitionTime
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Asset: An asset is any Google Maps Engine resource that has a
@@ -475,7 +475,7 @@ type Asset struct {
 func (s *Asset) MarshalJSON() ([]byte, error) {
 	type noMethod Asset
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AssetsListResponse: The response returned by a call to
@@ -503,7 +503,7 @@ type AssetsListResponse struct {
 func (s *AssetsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AssetsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Border: Border in line style. Both color and width are required.
@@ -529,7 +529,7 @@ type Border struct {
 func (s *Border) MarshalJSON() ([]byte, error) {
 	type noMethod Border
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Color: Basic color used in styling.
@@ -553,7 +553,7 @@ type Color struct {
 func (s *Color) MarshalJSON() ([]byte, error) {
 	type noMethod Color
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Datasource struct {
@@ -572,7 +572,7 @@ type Datasource struct {
 func (s *Datasource) MarshalJSON() ([]byte, error) {
 	type noMethod Datasource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DisplayRule: A display rule of the vector style.
@@ -612,7 +612,7 @@ type DisplayRule struct {
 func (s *DisplayRule) MarshalJSON() ([]byte, error) {
 	type noMethod DisplayRule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Feature: A feature within a table.
@@ -642,7 +642,7 @@ type Feature struct {
 func (s *Feature) MarshalJSON() ([]byte, error) {
 	type noMethod Feature
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FeatureInfo: A feature info contains information about individual
@@ -664,7 +664,7 @@ type FeatureInfo struct {
 func (s *FeatureInfo) MarshalJSON() ([]byte, error) {
 	type noMethod FeatureInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FeaturesBatchDeleteRequest: The request sent to features.BatchDelete.
@@ -685,7 +685,7 @@ type FeaturesBatchDeleteRequest struct {
 func (s *FeaturesBatchDeleteRequest) MarshalJSON() ([]byte, error) {
 	type noMethod FeaturesBatchDeleteRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FeaturesBatchInsertRequest: The request sent to features.Insert.
@@ -714,7 +714,7 @@ type FeaturesBatchInsertRequest struct {
 func (s *FeaturesBatchInsertRequest) MarshalJSON() ([]byte, error) {
 	type noMethod FeaturesBatchInsertRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FeaturesBatchPatchRequest: The request sent to features.BatchPatch.
@@ -743,7 +743,7 @@ type FeaturesBatchPatchRequest struct {
 func (s *FeaturesBatchPatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod FeaturesBatchPatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FeaturesListResponse: The response returned by a call to
@@ -781,7 +781,7 @@ type FeaturesListResponse struct {
 func (s *FeaturesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod FeaturesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // File: A single File, which is a component of an Asset.
@@ -813,7 +813,7 @@ type File struct {
 func (s *File) MarshalJSON() ([]byte, error) {
 	type noMethod File
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Filter: Conditions for filtering features.
@@ -850,7 +850,7 @@ type Filter struct {
 func (s *Filter) MarshalJSON() ([]byte, error) {
 	type noMethod Filter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonGeometry map[string]interface{}
@@ -940,7 +940,7 @@ type GeoJsonGeometryCollection struct {
 func (s *GeoJsonGeometryCollection) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonGeometryCollection
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonLineString struct {
@@ -965,7 +965,7 @@ type GeoJsonLineString struct {
 func (s *GeoJsonLineString) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonLineString
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoJsonMultiLineString: Multi Line String
@@ -992,7 +992,7 @@ type GeoJsonMultiLineString struct {
 func (s *GeoJsonMultiLineString) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonMultiLineString
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonMultiPoint struct {
@@ -1017,7 +1017,7 @@ type GeoJsonMultiPoint struct {
 func (s *GeoJsonMultiPoint) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonMultiPoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonMultiPolygon struct {
@@ -1043,7 +1043,7 @@ type GeoJsonMultiPolygon struct {
 func (s *GeoJsonMultiPolygon) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonMultiPolygon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonPoint struct {
@@ -1069,7 +1069,7 @@ type GeoJsonPoint struct {
 func (s *GeoJsonPoint) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonPoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonPolygon struct {
@@ -1099,7 +1099,7 @@ type GeoJsonPolygon struct {
 func (s *GeoJsonPolygon) MarshalJSON() ([]byte, error) {
 	type noMethod GeoJsonPolygon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GeoJsonProperties interface{}
@@ -1132,7 +1132,7 @@ type Icon struct {
 func (s *Icon) MarshalJSON() ([]byte, error) {
 	type noMethod Icon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IconStyle: Style for icon, this is part of point style.
@@ -1164,7 +1164,7 @@ type IconStyle struct {
 func (s *IconStyle) MarshalJSON() ([]byte, error) {
 	type noMethod IconStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IconsListResponse: The response returned by a call to icons.List.
@@ -1191,7 +1191,7 @@ type IconsListResponse struct {
 func (s *IconsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod IconsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LabelStyle: Text label style.
@@ -1238,7 +1238,7 @@ type LabelStyle struct {
 func (s *LabelStyle) MarshalJSON() ([]byte, error) {
 	type noMethod LabelStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Layer: A Layer combines multiple datasources, with styling
@@ -1380,7 +1380,7 @@ type Layer struct {
 func (s *Layer) MarshalJSON() ([]byte, error) {
 	type noMethod Layer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LayersListResponse: The response returned by a call to layers.List.
@@ -1411,7 +1411,7 @@ type LayersListResponse struct {
 func (s *LayersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LayersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LineStyle: Style for lines.
@@ -1443,7 +1443,7 @@ type LineStyle struct {
 func (s *LineStyle) MarshalJSON() ([]byte, error) {
 	type noMethod LineStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LineStyleStroke: Stroke of the line.
@@ -1470,7 +1470,7 @@ type LineStyleStroke struct {
 func (s *LineStyleStroke) MarshalJSON() ([]byte, error) {
 	type noMethod LineStyleStroke
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Map: A Map is a collection of Layers, optionally contained within
@@ -1590,7 +1590,7 @@ type Map struct {
 func (s *Map) MarshalJSON() ([]byte, error) {
 	type noMethod Map
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MapFolder struct {
@@ -1633,7 +1633,7 @@ type MapFolder struct {
 func (s *MapFolder) MarshalJSON() ([]byte, error) {
 	type noMethod MapFolder
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MapItem map[string]interface{}
@@ -1700,7 +1700,7 @@ type MapKmlLink struct {
 func (s *MapKmlLink) MarshalJSON() ([]byte, error) {
 	type noMethod MapKmlLink
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MapLayer struct {
@@ -1741,7 +1741,7 @@ type MapLayer struct {
 func (s *MapLayer) MarshalJSON() ([]byte, error) {
 	type noMethod MapLayer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MapsListResponse: The response returned by a call to maps.List.
@@ -1768,7 +1768,7 @@ type MapsListResponse struct {
 func (s *MapsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod MapsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Parent: A list of the parents of an asset.
@@ -1788,7 +1788,7 @@ type Parent struct {
 func (s *Parent) MarshalJSON() ([]byte, error) {
 	type noMethod Parent
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ParentsListResponse: The response returned by a call to parents.List.
@@ -1815,7 +1815,7 @@ type ParentsListResponse struct {
 func (s *ParentsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ParentsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Permission: A permission defines the user or group that has access to
@@ -1860,7 +1860,7 @@ type Permission struct {
 func (s *Permission) MarshalJSON() ([]byte, error) {
 	type noMethod Permission
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PermissionsBatchDeleteRequest: The request sent to
@@ -1883,7 +1883,7 @@ type PermissionsBatchDeleteRequest struct {
 func (s *PermissionsBatchDeleteRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PermissionsBatchDeleteRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PermissionsBatchDeleteResponse: The response returned by a call to
@@ -1912,7 +1912,7 @@ type PermissionsBatchUpdateRequest struct {
 func (s *PermissionsBatchUpdateRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PermissionsBatchUpdateRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PermissionsBatchUpdateResponse: The response returned by a call to
@@ -1943,7 +1943,7 @@ type PermissionsListResponse struct {
 func (s *PermissionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PermissionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PointStyle: Style for points.
@@ -1967,7 +1967,7 @@ type PointStyle struct {
 func (s *PointStyle) MarshalJSON() ([]byte, error) {
 	type noMethod PointStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PolygonStyle: Style for polygons.
@@ -1994,7 +1994,7 @@ type PolygonStyle struct {
 func (s *PolygonStyle) MarshalJSON() ([]byte, error) {
 	type noMethod PolygonStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProcessResponse: The response returned by a call to any asset's
@@ -2025,7 +2025,7 @@ type Project struct {
 func (s *Project) MarshalJSON() ([]byte, error) {
 	type noMethod Project
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProjectsListResponse: The response returned by a call to
@@ -2050,7 +2050,7 @@ type ProjectsListResponse struct {
 func (s *ProjectsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ProjectsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishResponse: The response returned by a call to any asset's
@@ -2101,7 +2101,7 @@ type PublishedLayer struct {
 func (s *PublishedLayer) MarshalJSON() ([]byte, error) {
 	type noMethod PublishedLayer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishedLayersListResponse: The response returned by a call to
@@ -2129,7 +2129,7 @@ type PublishedLayersListResponse struct {
 func (s *PublishedLayersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PublishedLayersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishedMap: The published version of a map asset.
@@ -2170,7 +2170,7 @@ type PublishedMap struct {
 func (s *PublishedMap) MarshalJSON() ([]byte, error) {
 	type noMethod PublishedMap
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishedMapsListResponse: The response returned by a call to
@@ -2198,7 +2198,7 @@ type PublishedMapsListResponse struct {
 func (s *PublishedMapsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PublishedMapsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Raster: A geo-referenced raster.
@@ -2302,7 +2302,7 @@ type Raster struct {
 func (s *Raster) MarshalJSON() ([]byte, error) {
 	type noMethod Raster
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RasterCollection: A raster collection groups multiple Raster
@@ -2411,7 +2411,7 @@ type RasterCollection struct {
 func (s *RasterCollection) MarshalJSON() ([]byte, error) {
 	type noMethod RasterCollection
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RasterCollectionsListResponse: The response returned by a call to
@@ -2443,7 +2443,7 @@ type RasterCollectionsListResponse struct {
 func (s *RasterCollectionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RasterCollectionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RasterCollectionsRaster: A raster resource.
@@ -2491,7 +2491,7 @@ type RasterCollectionsRaster struct {
 func (s *RasterCollectionsRaster) MarshalJSON() ([]byte, error) {
 	type noMethod RasterCollectionsRaster
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RasterCollectionsRasterBatchDeleteRequest: The request sent to
@@ -2513,7 +2513,7 @@ type RasterCollectionsRasterBatchDeleteRequest struct {
 func (s *RasterCollectionsRasterBatchDeleteRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RasterCollectionsRasterBatchDeleteRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RasterCollectionsRastersBatchDeleteResponse: The response returned by
@@ -2543,7 +2543,7 @@ type RasterCollectionsRastersBatchInsertRequest struct {
 func (s *RasterCollectionsRastersBatchInsertRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RasterCollectionsRastersBatchInsertRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RasterCollectionsRastersBatchInsertResponse: The response returned by
@@ -2579,7 +2579,7 @@ type RasterCollectionsRastersListResponse struct {
 func (s *RasterCollectionsRastersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RasterCollectionsRastersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RastersListResponse: The response returned by a call to rasters.List.
@@ -2606,7 +2606,7 @@ type RastersListResponse struct {
 func (s *RastersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RastersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ScaledShape: Parameters for styling points as scaled shapes.
@@ -2637,7 +2637,7 @@ type ScaledShape struct {
 func (s *ScaledShape) MarshalJSON() ([]byte, error) {
 	type noMethod ScaledShape
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ScalingFunction: Parameters for scaling scaled shapes.
@@ -2672,7 +2672,7 @@ type ScalingFunction struct {
 func (s *ScalingFunction) MarshalJSON() ([]byte, error) {
 	type noMethod ScalingFunction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Schema: A schema indicating the properties which may be associated
@@ -2705,7 +2705,7 @@ type Schema struct {
 func (s *Schema) MarshalJSON() ([]byte, error) {
 	type noMethod Schema
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SizeRange: Scaled shape size range in pixels. For circles, size
@@ -2729,7 +2729,7 @@ type SizeRange struct {
 func (s *SizeRange) MarshalJSON() ([]byte, error) {
 	type noMethod SizeRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Table: A collection of geographic features, and associated metadata.
@@ -2842,7 +2842,7 @@ type Table struct {
 func (s *Table) MarshalJSON() ([]byte, error) {
 	type noMethod Table
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableColumn struct {
@@ -2874,7 +2874,7 @@ type TableColumn struct {
 func (s *TableColumn) MarshalJSON() ([]byte, error) {
 	type noMethod TableColumn
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TablesListResponse: The response returned by a call to tables.List.
@@ -2905,7 +2905,7 @@ type TablesListResponse struct {
 func (s *TablesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TablesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ValueRange: Range of values used for scaling shapes. The min/max
@@ -2929,7 +2929,7 @@ type ValueRange struct {
 func (s *ValueRange) MarshalJSON() ([]byte, error) {
 	type noMethod ValueRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VectorStyle: A vector style contains styling information for vector
@@ -2961,7 +2961,7 @@ type VectorStyle struct {
 func (s *VectorStyle) MarshalJSON() ([]byte, error) {
 	type noMethod VectorStyle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoomLevels: Zoom level range. Zoom levels are restricted between 0
@@ -2985,7 +2985,7 @@ type ZoomLevels struct {
 func (s *ZoomLevels) MarshalJSON() ([]byte, error) {
 	type noMethod ZoomLevels
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "mapsengine.assets.get":

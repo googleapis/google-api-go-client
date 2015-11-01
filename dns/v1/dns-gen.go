@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -173,7 +173,7 @@ type Change struct {
 func (s *Change) MarshalJSON() ([]byte, error) {
 	type noMethod Change
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChangesListResponse: The response to a request to enumerate Changes
@@ -214,7 +214,7 @@ type ChangesListResponse struct {
 func (s *ChangesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ChangesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ManagedZone: A zone is a subtree of the DNS namespace under one
@@ -273,7 +273,7 @@ type ManagedZone struct {
 func (s *ManagedZone) MarshalJSON() ([]byte, error) {
 	type noMethod ManagedZone
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ManagedZonesListResponse struct {
@@ -312,7 +312,7 @@ type ManagedZonesListResponse struct {
 func (s *ManagedZonesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ManagedZonesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Project: A project resource. The project is a top level container for
@@ -349,7 +349,7 @@ type Project struct {
 func (s *Project) MarshalJSON() ([]byte, error) {
 	type noMethod Project
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Quota: Limits associated with a Project.
@@ -393,7 +393,7 @@ type Quota struct {
 func (s *Quota) MarshalJSON() ([]byte, error) {
 	type noMethod Quota
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResourceRecordSet: A unit of data that will be returned by the DNS
@@ -430,7 +430,7 @@ type ResourceRecordSet struct {
 func (s *ResourceRecordSet) MarshalJSON() ([]byte, error) {
 	type noMethod ResourceRecordSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ResourceRecordSetsListResponse struct {
@@ -469,7 +469,7 @@ type ResourceRecordSetsListResponse struct {
 func (s *ResourceRecordSetsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ResourceRecordSetsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "dns.changes.create":

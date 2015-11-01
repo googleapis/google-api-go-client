@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -143,7 +143,7 @@ type DownloadLineItemsRequest struct {
 func (s *DownloadLineItemsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod DownloadLineItemsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DownloadLineItemsResponse: Download line items response.
@@ -169,7 +169,7 @@ type DownloadLineItemsResponse struct {
 func (s *DownloadLineItemsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DownloadLineItemsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FilterPair: Filter used to match traffic data in your report.
@@ -275,7 +275,7 @@ type FilterPair struct {
 func (s *FilterPair) MarshalJSON() ([]byte, error) {
 	type noMethod FilterPair
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListQueriesResponse: List queries response.
@@ -303,7 +303,7 @@ type ListQueriesResponse struct {
 func (s *ListQueriesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListQueriesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListReportsResponse: List reports response.
@@ -331,7 +331,7 @@ type ListReportsResponse struct {
 func (s *ListReportsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListReportsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Parameters: Parameters of a query or report.
@@ -748,7 +748,7 @@ type Parameters struct {
 func (s *Parameters) MarshalJSON() ([]byte, error) {
 	type noMethod Parameters
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Query: Represents a query.
@@ -799,7 +799,7 @@ type Query struct {
 func (s *Query) MarshalJSON() ([]byte, error) {
 	type noMethod Query
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QueryMetadata: Query metadata.
@@ -888,7 +888,7 @@ type QueryMetadata struct {
 func (s *QueryMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod QueryMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // QuerySchedule: Information on how frequently and when to run a query.
@@ -928,7 +928,7 @@ type QuerySchedule struct {
 func (s *QuerySchedule) MarshalJSON() ([]byte, error) {
 	type noMethod QuerySchedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Report: Represents a report.
@@ -954,7 +954,7 @@ type Report struct {
 func (s *Report) MarshalJSON() ([]byte, error) {
 	type noMethod Report
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportFailure: An explanation of a report failure.
@@ -994,7 +994,7 @@ type ReportFailure struct {
 func (s *ReportFailure) MarshalJSON() ([]byte, error) {
 	type noMethod ReportFailure
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportKey: Key used to identify a report.
@@ -1017,7 +1017,7 @@ type ReportKey struct {
 func (s *ReportKey) MarshalJSON() ([]byte, error) {
 	type noMethod ReportKey
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportMetadata: Report metadata.
@@ -1050,7 +1050,7 @@ type ReportMetadata struct {
 func (s *ReportMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod ReportMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportStatus: Report status.
@@ -1090,7 +1090,7 @@ type ReportStatus struct {
 func (s *ReportStatus) MarshalJSON() ([]byte, error) {
 	type noMethod ReportStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RowStatus: Represents the upload status of a row in the request.
@@ -1125,7 +1125,7 @@ type RowStatus struct {
 func (s *RowStatus) MarshalJSON() ([]byte, error) {
 	type noMethod RowStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RunQueryRequest: Request to run a stored query to generate a report.
@@ -1179,7 +1179,7 @@ type RunQueryRequest struct {
 func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RunQueryRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UploadLineItemsRequest: Request to upload line items.
@@ -1210,7 +1210,7 @@ type UploadLineItemsRequest struct {
 func (s *UploadLineItemsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod UploadLineItemsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UploadLineItemsResponse: Upload line items response.
@@ -1234,7 +1234,7 @@ type UploadLineItemsResponse struct {
 func (s *UploadLineItemsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UploadLineItemsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UploadStatus: Represents the status of upload.
@@ -1257,7 +1257,7 @@ type UploadStatus struct {
 func (s *UploadStatus) MarshalJSON() ([]byte, error) {
 	type noMethod UploadStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "doubleclickbidmanager.lineitems.downloadlineitems":

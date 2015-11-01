@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -115,7 +115,7 @@ type GetResponse struct {
 func (s *GetResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListResponse: This is a JSON template to convert a list-response for
@@ -147,7 +147,7 @@ type ListResponse struct {
 func (s *ListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateRequest: This is a JSON template for a requests which update
@@ -173,7 +173,7 @@ type UpdateRequest struct {
 func (s *UpdateRequest) MarshalJSON() ([]byte, error) {
 	type noMethod UpdateRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WriteResult: This is a JSON template for an app state write result.
@@ -205,7 +205,7 @@ type WriteResult struct {
 func (s *WriteResult) MarshalJSON() ([]byte, error) {
 	type noMethod WriteResult
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "appstate.states.clear":

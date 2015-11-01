@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -121,7 +121,7 @@ type AnalyticsSnapshot struct {
 func (s *AnalyticsSnapshot) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyticsSnapshot
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AnalyticsSummary struct {
@@ -152,7 +152,7 @@ type AnalyticsSummary struct {
 func (s *AnalyticsSummary) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyticsSummary
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StringCount struct {
@@ -175,7 +175,7 @@ type StringCount struct {
 func (s *StringCount) MarshalJSON() ([]byte, error) {
 	type noMethod StringCount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Url struct {
@@ -219,7 +219,7 @@ type Url struct {
 func (s *Url) MarshalJSON() ([]byte, error) {
 	type noMethod Url
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UrlHistory struct {
@@ -257,7 +257,7 @@ type UrlHistory struct {
 func (s *UrlHistory) MarshalJSON() ([]byte, error) {
 	type noMethod UrlHistory
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "urlshortener.url.get":

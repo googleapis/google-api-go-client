@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -230,7 +230,7 @@ type AppRestrictionsSchema struct {
 func (s *AppRestrictionsSchema) MarshalJSON() ([]byte, error) {
 	type noMethod AppRestrictionsSchema
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AppRestrictionsSchemaRestriction: A restriction in the App
@@ -274,7 +274,7 @@ type AppRestrictionsSchemaRestriction struct {
 func (s *AppRestrictionsSchemaRestriction) MarshalJSON() ([]byte, error) {
 	type noMethod AppRestrictionsSchemaRestriction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AppRestrictionsSchemaRestrictionRestrictionValue: A typed value for
@@ -311,7 +311,7 @@ type AppRestrictionsSchemaRestrictionRestrictionValue struct {
 func (s *AppRestrictionsSchemaRestrictionRestrictionValue) MarshalJSON() ([]byte, error) {
 	type noMethod AppRestrictionsSchemaRestrictionRestrictionValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AppVersion: This represents a single version of the app.
@@ -336,7 +336,7 @@ type AppVersion struct {
 func (s *AppVersion) MarshalJSON() ([]byte, error) {
 	type noMethod AppVersion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApprovalUrlInfo: Information on an approval URL.
@@ -361,7 +361,7 @@ type ApprovalUrlInfo struct {
 func (s *ApprovalUrlInfo) MarshalJSON() ([]byte, error) {
 	type noMethod ApprovalUrlInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Collection: A collection resource defines a named set of apps that is
@@ -419,7 +419,7 @@ type Collection struct {
 func (s *Collection) MarshalJSON() ([]byte, error) {
 	type noMethod Collection
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CollectionViewersListResponse: The user resources for the collection.
@@ -447,7 +447,7 @@ type CollectionViewersListResponse struct {
 func (s *CollectionViewersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CollectionViewersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CollectionsListResponse: The collection resources for the enterprise.
@@ -476,7 +476,7 @@ type CollectionsListResponse struct {
 func (s *CollectionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CollectionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Device: A device resource represents a mobile device managed by the
@@ -517,7 +517,7 @@ type Device struct {
 func (s *Device) MarshalJSON() ([]byte, error) {
 	type noMethod Device
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeviceState: The state of a user's device, as accessed by the
@@ -550,7 +550,7 @@ type DeviceState struct {
 func (s *DeviceState) MarshalJSON() ([]byte, error) {
 	type noMethod DeviceState
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DevicesListResponse: The device resources for the user.
@@ -578,7 +578,7 @@ type DevicesListResponse struct {
 func (s *DevicesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DevicesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Enterprise: An enterprise resource represents a binding between an
@@ -642,7 +642,7 @@ type Enterprise struct {
 func (s *Enterprise) MarshalJSON() ([]byte, error) {
 	type noMethod Enterprise
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EnterpriseAccount: A service account that can be used to authenticate
@@ -671,7 +671,7 @@ type EnterpriseAccount struct {
 func (s *EnterpriseAccount) MarshalJSON() ([]byte, error) {
 	type noMethod EnterpriseAccount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EnterprisesListResponse: The matching enterprise resources.
@@ -699,7 +699,7 @@ type EnterprisesListResponse struct {
 func (s *EnterprisesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod EnterprisesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type EnterprisesSendTestPushNotificationResponse struct {
@@ -727,7 +727,7 @@ type EnterprisesSendTestPushNotificationResponse struct {
 func (s *EnterprisesSendTestPushNotificationResponse) MarshalJSON() ([]byte, error) {
 	type noMethod EnterprisesSendTestPushNotificationResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Entitlement: The existence of an entitlement resource means that a
@@ -792,7 +792,7 @@ type Entitlement struct {
 func (s *Entitlement) MarshalJSON() ([]byte, error) {
 	type noMethod Entitlement
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EntitlementsListResponse: The entitlement resources for the user.
@@ -822,7 +822,7 @@ type EntitlementsListResponse struct {
 func (s *EntitlementsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod EntitlementsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GroupLicense: A group license object indicates a product that an
@@ -898,7 +898,7 @@ type GroupLicense struct {
 func (s *GroupLicense) MarshalJSON() ([]byte, error) {
 	type noMethod GroupLicense
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GroupLicenseUsersListResponse: The user resources for the group
@@ -927,7 +927,7 @@ type GroupLicenseUsersListResponse struct {
 func (s *GroupLicenseUsersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GroupLicenseUsersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GroupLicensesListResponse: The grouplicense resources for the
@@ -957,7 +957,7 @@ type GroupLicensesListResponse struct {
 func (s *GroupLicensesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GroupLicensesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Install: The existence of an install resource indicates that an app
@@ -1023,7 +1023,7 @@ type Install struct {
 func (s *Install) MarshalJSON() ([]byte, error) {
 	type noMethod Install
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstallsListResponse: The install resources for the device.
@@ -1053,7 +1053,7 @@ type InstallsListResponse struct {
 func (s *InstallsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InstallsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Permission: A permission represents some extra capability, to be
@@ -1096,7 +1096,7 @@ type Permission struct {
 func (s *Permission) MarshalJSON() ([]byte, error) {
 	type noMethod Permission
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Product: A product represents an app in the Google Play Store that is
@@ -1169,7 +1169,7 @@ type Product struct {
 func (s *Product) MarshalJSON() ([]byte, error) {
 	type noMethod Product
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductPermission: A product permissions resource represents the set
@@ -1197,7 +1197,7 @@ type ProductPermission struct {
 func (s *ProductPermission) MarshalJSON() ([]byte, error) {
 	type noMethod ProductPermission
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductPermissions: Information about the permissions required by a
@@ -1230,7 +1230,7 @@ type ProductPermissions struct {
 func (s *ProductPermissions) MarshalJSON() ([]byte, error) {
 	type noMethod ProductPermissions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProductSet: A set of products.
@@ -1258,7 +1258,7 @@ type ProductSet struct {
 func (s *ProductSet) MarshalJSON() ([]byte, error) {
 	type noMethod ProductSet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductsApproveRequest struct {
@@ -1282,7 +1282,7 @@ type ProductsApproveRequest struct {
 func (s *ProductsApproveRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ProductsApproveRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProductsGenerateApprovalUrlResponse struct {
@@ -1313,7 +1313,7 @@ type ProductsGenerateApprovalUrlResponse struct {
 func (s *ProductsGenerateApprovalUrlResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ProductsGenerateApprovalUrlResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // User: A user resource represents an individual user within the
@@ -1355,7 +1355,7 @@ type User struct {
 func (s *User) MarshalJSON() ([]byte, error) {
 	type noMethod User
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserToken: A UserToken is used by a user when setting up a managed
@@ -1391,7 +1391,7 @@ type UserToken struct {
 func (s *UserToken) MarshalJSON() ([]byte, error) {
 	type noMethod UserToken
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UsersListResponse: The matching user resources.
@@ -1419,7 +1419,7 @@ type UsersListResponse struct {
 func (s *UsersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UsersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "androidenterprise.collections.delete":

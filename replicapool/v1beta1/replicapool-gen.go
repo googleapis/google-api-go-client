@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -138,7 +138,7 @@ type AccessConfig struct {
 func (s *AccessConfig) MarshalJSON() ([]byte, error) {
 	type noMethod AccessConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Action: An action that gets executed during initialization of the
@@ -174,7 +174,7 @@ type Action struct {
 func (s *Action) MarshalJSON() ([]byte, error) {
 	type noMethod Action
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DiskAttachment: Specifies how to attach a disk to a Replica.
@@ -198,7 +198,7 @@ type DiskAttachment struct {
 func (s *DiskAttachment) MarshalJSON() ([]byte, error) {
 	type noMethod DiskAttachment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EnvVariable: An environment variable to set for an action.
@@ -224,7 +224,7 @@ type EnvVariable struct {
 func (s *EnvVariable) MarshalJSON() ([]byte, error) {
 	type noMethod EnvVariable
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ExistingDisk: A pre-existing persistent disk that will be attached to
@@ -249,7 +249,7 @@ type ExistingDisk struct {
 func (s *ExistingDisk) MarshalJSON() ([]byte, error) {
 	type noMethod ExistingDisk
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type HealthCheck struct {
@@ -301,7 +301,7 @@ type HealthCheck struct {
 func (s *HealthCheck) MarshalJSON() ([]byte, error) {
 	type noMethod HealthCheck
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Label: A label to apply to this replica pool.
@@ -324,7 +324,7 @@ type Label struct {
 func (s *Label) MarshalJSON() ([]byte, error) {
 	type noMethod Label
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Metadata: A Compute Engine metadata entry. Identical to the metadata
@@ -349,7 +349,7 @@ type Metadata struct {
 func (s *Metadata) MarshalJSON() ([]byte, error) {
 	type noMethod Metadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetadataItem: A Compute Engine metadata item, defined as a key:value
@@ -374,7 +374,7 @@ type MetadataItem struct {
 func (s *MetadataItem) MarshalJSON() ([]byte, error) {
 	type noMethod MetadataItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NetworkInterface: A Compute Engine NetworkInterface resource.
@@ -405,7 +405,7 @@ type NetworkInterface struct {
 func (s *NetworkInterface) MarshalJSON() ([]byte, error) {
 	type noMethod NetworkInterface
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NewDisk: A Persistent Disk resource that will be created and attached
@@ -439,7 +439,7 @@ type NewDisk struct {
 func (s *NewDisk) MarshalJSON() ([]byte, error) {
 	type noMethod NewDisk
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // NewDiskInitializeParams: Initialization parameters for creating a new
@@ -475,7 +475,7 @@ type NewDiskInitializeParams struct {
 func (s *NewDiskInitializeParams) MarshalJSON() ([]byte, error) {
 	type noMethod NewDiskInitializeParams
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Pool struct {
@@ -560,7 +560,7 @@ type Pool struct {
 func (s *Pool) MarshalJSON() ([]byte, error) {
 	type noMethod Pool
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PoolsDeleteRequest struct {
@@ -581,7 +581,7 @@ type PoolsDeleteRequest struct {
 func (s *PoolsDeleteRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PoolsDeleteRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PoolsListResponse struct {
@@ -605,7 +605,7 @@ type PoolsListResponse struct {
 func (s *PoolsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PoolsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Replica: An individual Replica within a Pool. Replicas are
@@ -637,7 +637,7 @@ type Replica struct {
 func (s *Replica) MarshalJSON() ([]byte, error) {
 	type noMethod Replica
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReplicaStatus: The current status of a Replica.
@@ -674,7 +674,7 @@ type ReplicaStatus struct {
 func (s *ReplicaStatus) MarshalJSON() ([]byte, error) {
 	type noMethod ReplicaStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReplicasDeleteRequest struct {
@@ -697,7 +697,7 @@ type ReplicasDeleteRequest struct {
 func (s *ReplicasDeleteRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ReplicasDeleteRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReplicasListResponse struct {
@@ -721,7 +721,7 @@ type ReplicasListResponse struct {
 func (s *ReplicasListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ReplicasListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ServiceAccount: A Compute Engine service account, identical to the
@@ -747,7 +747,7 @@ type ServiceAccount struct {
 func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 	type noMethod ServiceAccount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Tag: A Compute Engine Instance tag, identical to the tags on the
@@ -772,7 +772,7 @@ type Tag struct {
 func (s *Tag) MarshalJSON() ([]byte, error) {
 	type noMethod Tag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Template: The template used for creating replicas in the pool.
@@ -810,7 +810,7 @@ type Template struct {
 func (s *Template) MarshalJSON() ([]byte, error) {
 	type noMethod Template
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VmParams: Parameters for creating a Compute Engine Instance resource.
@@ -873,7 +873,7 @@ type VmParams struct {
 func (s *VmParams) MarshalJSON() ([]byte, error) {
 	type noMethod VmParams
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "replicapool.pools.delete":

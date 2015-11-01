@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -171,7 +171,7 @@ type ApiConfigHandler struct {
 func (s *ApiConfigHandler) MarshalJSON() ([]byte, error) {
 	type noMethod ApiConfigHandler
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApiEndpointHandler: Use Google Cloud Endpoints to handle requests.
@@ -192,7 +192,7 @@ type ApiEndpointHandler struct {
 func (s *ApiEndpointHandler) MarshalJSON() ([]byte, error) {
 	type noMethod ApiEndpointHandler
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Application: An Application contains the top-level configuration of
@@ -241,7 +241,7 @@ type Application struct {
 func (s *Application) MarshalJSON() ([]byte, error) {
 	type noMethod Application
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AutomaticScaling: Automatic scaling is the scaling policy that App
@@ -302,7 +302,7 @@ type AutomaticScaling struct {
 func (s *AutomaticScaling) MarshalJSON() ([]byte, error) {
 	type noMethod AutomaticScaling
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BasicScaling: A module with basic scaling will create an instance
@@ -330,7 +330,7 @@ type BasicScaling struct {
 func (s *BasicScaling) MarshalJSON() ([]byte, error) {
 	type noMethod BasicScaling
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ContainerInfo: A Docker (container) image which should be used to
@@ -354,7 +354,7 @@ type ContainerInfo struct {
 func (s *ContainerInfo) MarshalJSON() ([]byte, error) {
 	type noMethod ContainerInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CpuUtilization: Target scaling by CPU usage.
@@ -380,7 +380,7 @@ type CpuUtilization struct {
 func (s *CpuUtilization) MarshalJSON() ([]byte, error) {
 	type noMethod CpuUtilization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Deployment: Code and application artifacts used to deploy a version
@@ -412,7 +412,7 @@ type Deployment struct {
 func (s *Deployment) MarshalJSON() ([]byte, error) {
 	type noMethod Deployment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ErrorHandler: A custom static error page to be served when an error
@@ -446,7 +446,7 @@ type ErrorHandler struct {
 func (s *ErrorHandler) MarshalJSON() ([]byte, error) {
 	type noMethod ErrorHandler
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileInfo: A single source file which is part of the application to be
@@ -475,7 +475,7 @@ type FileInfo struct {
 func (s *FileInfo) MarshalJSON() ([]byte, error) {
 	type noMethod FileInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // HealthCheck: Configure health checking for the VM instances.
@@ -521,7 +521,7 @@ type HealthCheck struct {
 func (s *HealthCheck) MarshalJSON() ([]byte, error) {
 	type noMethod HealthCheck
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Library: A Python runtime third-party library required by the
@@ -545,7 +545,7 @@ type Library struct {
 func (s *Library) MarshalJSON() ([]byte, error) {
 	type noMethod Library
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListModulesResponse: Response message for `Modules.ListModules`.
@@ -573,7 +573,7 @@ type ListModulesResponse struct {
 func (s *ListModulesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListModulesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListOperationsResponse: The response message for
@@ -603,7 +603,7 @@ type ListOperationsResponse struct {
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOperationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListVersionsResponse: Response message for `Versions.ListVersions`.
@@ -631,7 +631,7 @@ type ListVersionsResponse struct {
 func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListVersionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ManualScaling: A module with manual scaling runs continuously,
@@ -656,7 +656,7 @@ type ManualScaling struct {
 func (s *ManualScaling) MarshalJSON() ([]byte, error) {
 	type noMethod ManualScaling
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Module: A module is a component of an application that provides a
@@ -692,7 +692,7 @@ type Module struct {
 func (s *Module) MarshalJSON() ([]byte, error) {
 	type noMethod Module
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Network: Used to specify extra network settings (for VM runtimes
@@ -722,7 +722,7 @@ type Network struct {
 func (s *Network) MarshalJSON() ([]byte, error) {
 	type noMethod Network
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: This resource represents a long-running operation that is
@@ -775,7 +775,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationMetadata interface{}
@@ -819,7 +819,7 @@ type OperationMetadata1 struct {
 func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadata1
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Resources: Used to specify how many machine resources an app version
@@ -846,7 +846,7 @@ type Resources struct {
 func (s *Resources) MarshalJSON() ([]byte, error) {
 	type noMethod Resources
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ScriptHandler: Executes a script to handle the request that matches
@@ -868,7 +868,7 @@ type ScriptHandler struct {
 func (s *ScriptHandler) MarshalJSON() ([]byte, error) {
 	type noMethod ScriptHandler
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceReference: A reference to a particular snapshot of the source
@@ -896,7 +896,7 @@ type SourceReference struct {
 func (s *SourceReference) MarshalJSON() ([]byte, error) {
 	type noMethod SourceReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StaticDirectoryHandler: Files served directly to the user for a given
@@ -948,7 +948,7 @@ type StaticDirectoryHandler struct {
 func (s *StaticDirectoryHandler) MarshalJSON() ([]byte, error) {
 	type noMethod StaticDirectoryHandler
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StaticFilesHandler: Files served directly to the user for a given
@@ -1005,7 +1005,7 @@ type StaticFilesHandler struct {
 func (s *StaticFilesHandler) MarshalJSON() ([]byte, error) {
 	type noMethod StaticFilesHandler
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -1072,7 +1072,7 @@ type Status struct {
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type noMethod Status
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatusDetails interface{}
@@ -1114,7 +1114,7 @@ type TrafficSplit struct {
 func (s *TrafficSplit) MarshalJSON() ([]byte, error) {
 	type noMethod TrafficSplit
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TrafficSplitAllocations: Mapping from module version IDs within the
@@ -1158,7 +1158,7 @@ type UrlDispatchRule struct {
 func (s *UrlDispatchRule) MarshalJSON() ([]byte, error) {
 	type noMethod UrlDispatchRule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UrlMap: A URL pattern and description of how it should be handled.
@@ -1241,7 +1241,7 @@ type UrlMap struct {
 func (s *UrlMap) MarshalJSON() ([]byte, error) {
 	type noMethod UrlMap
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Version: A Version is a specific set of source code and configuration
@@ -1413,7 +1413,7 @@ type Version struct {
 func (s *Version) MarshalJSON() ([]byte, error) {
 	type noMethod Version
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "appengine.apps.get":

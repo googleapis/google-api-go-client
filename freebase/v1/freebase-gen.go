@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -96,7 +96,7 @@ type ReconcileCandidate struct {
 func (s *ReconcileCandidate) MarshalJSON() ([]byte, error) {
 	type noMethod ReconcileCandidate
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReconcileCandidateNotable: Type or profession the candidate is
@@ -120,7 +120,7 @@ type ReconcileCandidateNotable struct {
 func (s *ReconcileCandidateNotable) MarshalJSON() ([]byte, error) {
 	type noMethod ReconcileCandidateNotable
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReconcileGet struct {
@@ -160,7 +160,7 @@ type ReconcileGet struct {
 func (s *ReconcileGet) MarshalJSON() ([]byte, error) {
 	type noMethod ReconcileGet
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReconcileGetCosts: Server costs for reconciling.
@@ -183,7 +183,7 @@ type ReconcileGetCosts struct {
 func (s *ReconcileGetCosts) MarshalJSON() ([]byte, error) {
 	type noMethod ReconcileGetCosts
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReconcileGetWarning struct {
@@ -208,7 +208,7 @@ type ReconcileGetWarning struct {
 func (s *ReconcileGetWarning) MarshalJSON() ([]byte, error) {
 	type noMethod ReconcileGetWarning
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "freebase.reconcile":

@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -912,7 +912,7 @@ type Account struct {
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type noMethod Account
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountActiveAdSummary: Gets a summary of active ads in an account.
@@ -957,7 +957,7 @@ type AccountActiveAdSummary struct {
 func (s *AccountActiveAdSummary) MarshalJSON() ([]byte, error) {
 	type noMethod AccountActiveAdSummary
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountPermission: AccountPermissions contains information about a
@@ -1013,7 +1013,7 @@ type AccountPermission struct {
 func (s *AccountPermission) MarshalJSON() ([]byte, error) {
 	type noMethod AccountPermission
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountPermissionGroup: AccountPermissionGroups contains a mapping of
@@ -1046,7 +1046,7 @@ type AccountPermissionGroup struct {
 func (s *AccountPermissionGroup) MarshalJSON() ([]byte, error) {
 	type noMethod AccountPermissionGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountPermissionGroupsListResponse: Account Permission Group List
@@ -1076,7 +1076,7 @@ type AccountPermissionGroupsListResponse struct {
 func (s *AccountPermissionGroupsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountPermissionGroupsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountPermissionsListResponse: Account Permission List Response
@@ -1104,7 +1104,7 @@ type AccountPermissionsListResponse struct {
 func (s *AccountPermissionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountPermissionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountUserProfile: AccountUserProfiles contains properties of a DCM
@@ -1218,7 +1218,7 @@ type AccountUserProfile struct {
 func (s *AccountUserProfile) MarshalJSON() ([]byte, error) {
 	type noMethod AccountUserProfile
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountUserProfilesListResponse: Account User Profile List Response
@@ -1250,7 +1250,7 @@ type AccountUserProfilesListResponse struct {
 func (s *AccountUserProfilesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountUserProfilesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountsListResponse: Account List Response
@@ -1282,7 +1282,7 @@ type AccountsListResponse struct {
 func (s *AccountsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Activities: Represents an activity group.
@@ -1310,7 +1310,7 @@ type Activities struct {
 func (s *Activities) MarshalJSON() ([]byte, error) {
 	type noMethod Activities
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Ad: Contains properties of a DCM ad.
@@ -1501,7 +1501,7 @@ type Ad struct {
 func (s *Ad) MarshalJSON() ([]byte, error) {
 	type noMethod Ad
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdSlot: Ad Slot
@@ -1558,7 +1558,7 @@ type AdSlot struct {
 func (s *AdSlot) MarshalJSON() ([]byte, error) {
 	type noMethod AdSlot
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdsListResponse: Ad List Response
@@ -1590,7 +1590,7 @@ type AdsListResponse struct {
 func (s *AdsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AdsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Advertiser: Contains properties of a DCM advertiser.
@@ -1689,7 +1689,7 @@ type Advertiser struct {
 func (s *Advertiser) MarshalJSON() ([]byte, error) {
 	type noMethod Advertiser
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdvertiserGroup: Groups advertisers together so that reports can be
@@ -1728,7 +1728,7 @@ type AdvertiserGroup struct {
 func (s *AdvertiserGroup) MarshalJSON() ([]byte, error) {
 	type noMethod AdvertiserGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdvertiserGroupsListResponse: Advertiser Group List Response
@@ -1760,7 +1760,7 @@ type AdvertiserGroupsListResponse struct {
 func (s *AdvertiserGroupsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AdvertiserGroupsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdvertisersListResponse: Advertiser List Response
@@ -1792,7 +1792,7 @@ type AdvertisersListResponse struct {
 func (s *AdvertisersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AdvertisersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AudienceSegment: Audience Segment.
@@ -1822,7 +1822,7 @@ type AudienceSegment struct {
 func (s *AudienceSegment) MarshalJSON() ([]byte, error) {
 	type noMethod AudienceSegment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AudienceSegmentGroup: Audience Segment Group.
@@ -1851,7 +1851,7 @@ type AudienceSegmentGroup struct {
 func (s *AudienceSegmentGroup) MarshalJSON() ([]byte, error) {
 	type noMethod AudienceSegmentGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Browser: Contains information about a browser that can be targeted by
@@ -1906,7 +1906,7 @@ type Browser struct {
 func (s *Browser) MarshalJSON() ([]byte, error) {
 	type noMethod Browser
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BrowsersListResponse: Browser List Response
@@ -1934,7 +1934,7 @@ type BrowsersListResponse struct {
 func (s *BrowsersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod BrowsersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Campaign: Contains properties of a DCM campaign.
@@ -2069,7 +2069,7 @@ type Campaign struct {
 func (s *Campaign) MarshalJSON() ([]byte, error) {
 	type noMethod Campaign
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CampaignCreativeAssociation: Identifies a creative which has been
@@ -2099,7 +2099,7 @@ type CampaignCreativeAssociation struct {
 func (s *CampaignCreativeAssociation) MarshalJSON() ([]byte, error) {
 	type noMethod CampaignCreativeAssociation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CampaignCreativeAssociationsListResponse: Campaign Creative
@@ -2134,7 +2134,7 @@ type CampaignCreativeAssociationsListResponse struct {
 func (s *CampaignCreativeAssociationsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CampaignCreativeAssociationsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CampaignsListResponse: Campaign List Response
@@ -2166,7 +2166,7 @@ type CampaignsListResponse struct {
 func (s *CampaignsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CampaignsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChangeLog: Describes a change that a user has made to a resource.
@@ -2234,7 +2234,7 @@ type ChangeLog struct {
 func (s *ChangeLog) MarshalJSON() ([]byte, error) {
 	type noMethod ChangeLog
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChangeLogsListResponse: Change Log List Response
@@ -2266,7 +2266,7 @@ type ChangeLogsListResponse struct {
 func (s *ChangeLogsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ChangeLogsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CitiesListResponse: City List Response
@@ -2294,7 +2294,7 @@ type CitiesListResponse struct {
 func (s *CitiesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CitiesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // City: Contains information about a city that can be targeted by ads.
@@ -2341,7 +2341,7 @@ type City struct {
 func (s *City) MarshalJSON() ([]byte, error) {
 	type noMethod City
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ClickTag: Creative Click Tag.
@@ -2372,7 +2372,7 @@ type ClickTag struct {
 func (s *ClickTag) MarshalJSON() ([]byte, error) {
 	type noMethod ClickTag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ClickThroughUrl: Click-through URL
@@ -2414,7 +2414,7 @@ type ClickThroughUrl struct {
 func (s *ClickThroughUrl) MarshalJSON() ([]byte, error) {
 	type noMethod ClickThroughUrl
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ClickThroughUrlSuffixProperties: Click Through URL Suffix settings.
@@ -2440,7 +2440,7 @@ type ClickThroughUrlSuffixProperties struct {
 func (s *ClickThroughUrlSuffixProperties) MarshalJSON() ([]byte, error) {
 	type noMethod ClickThroughUrlSuffixProperties
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CompanionClickThroughOverride: Companion Click-through override.
@@ -2465,7 +2465,7 @@ type CompanionClickThroughOverride struct {
 func (s *CompanionClickThroughOverride) MarshalJSON() ([]byte, error) {
 	type noMethod CompanionClickThroughOverride
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CompatibleFields: Represents a response to the queryCompatibleFields
@@ -2513,7 +2513,7 @@ type CompatibleFields struct {
 func (s *CompatibleFields) MarshalJSON() ([]byte, error) {
 	type noMethod CompatibleFields
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ConnectionType: Contains information about an internet connection
@@ -2546,7 +2546,7 @@ type ConnectionType struct {
 func (s *ConnectionType) MarshalJSON() ([]byte, error) {
 	type noMethod ConnectionType
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ConnectionTypesListResponse: Connection Type List Response
@@ -2575,7 +2575,7 @@ type ConnectionTypesListResponse struct {
 func (s *ConnectionTypesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ConnectionTypesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ContentCategoriesListResponse: Content Category List Response
@@ -2607,7 +2607,7 @@ type ContentCategoriesListResponse struct {
 func (s *ContentCategoriesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ContentCategoriesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ContentCategory: Organizes placements according to the contents of
@@ -2646,7 +2646,7 @@ type ContentCategory struct {
 func (s *ContentCategory) MarshalJSON() ([]byte, error) {
 	type noMethod ContentCategory
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CountriesListResponse: Country List Response
@@ -2674,7 +2674,7 @@ type CountriesListResponse struct {
 func (s *CountriesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CountriesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Country: Contains information about a country that can be targeted by
@@ -2714,7 +2714,7 @@ type Country struct {
 func (s *Country) MarshalJSON() ([]byte, error) {
 	type noMethod Country
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Creative: Contains properties of a Creative.
@@ -3170,7 +3170,7 @@ type Creative struct {
 func (s *Creative) MarshalJSON() ([]byte, error) {
 	type noMethod Creative
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeAsset: Creative Asset.
@@ -3555,7 +3555,7 @@ type CreativeAsset struct {
 func (s *CreativeAsset) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeAsset
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeAssetId: Creative Asset ID.
@@ -3590,7 +3590,7 @@ type CreativeAssetId struct {
 func (s *CreativeAssetId) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeAssetId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeAssetMetadata: CreativeAssets contains properties of a
@@ -3750,7 +3750,7 @@ type CreativeAssetMetadata struct {
 func (s *CreativeAssetMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeAssetMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeAssignment: Creative Assignment.
@@ -3835,7 +3835,7 @@ type CreativeAssignment struct {
 func (s *CreativeAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeCustomEvent: Creative Custom Event.
@@ -3905,7 +3905,7 @@ type CreativeCustomEvent struct {
 func (s *CreativeCustomEvent) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeCustomEvent
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeField: Contains properties of a creative field.
@@ -3955,7 +3955,7 @@ type CreativeField struct {
 func (s *CreativeField) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeField
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeFieldAssignment: Creative Field Assignment.
@@ -3978,7 +3978,7 @@ type CreativeFieldAssignment struct {
 func (s *CreativeFieldAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFieldAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeFieldValue: Contains properties of a creative field value.
@@ -4011,7 +4011,7 @@ type CreativeFieldValue struct {
 func (s *CreativeFieldValue) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFieldValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeFieldValuesListResponse: Creative Field Value List Response
@@ -4043,7 +4043,7 @@ type CreativeFieldValuesListResponse struct {
 func (s *CreativeFieldValuesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFieldValuesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeFieldsListResponse: Creative Field List Response
@@ -4075,7 +4075,7 @@ type CreativeFieldsListResponse struct {
 func (s *CreativeFieldsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFieldsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeGroup: Contains properties of a creative group.
@@ -4134,7 +4134,7 @@ type CreativeGroup struct {
 func (s *CreativeGroup) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeGroupAssignment: Creative Group Assignment.
@@ -4162,7 +4162,7 @@ type CreativeGroupAssignment struct {
 func (s *CreativeGroupAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeGroupAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeGroupsListResponse: Creative Group List Response
@@ -4194,7 +4194,7 @@ type CreativeGroupsListResponse struct {
 func (s *CreativeGroupsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeGroupsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeOptimizationConfiguration: Creative optimization settings.
@@ -4233,7 +4233,7 @@ type CreativeOptimizationConfiguration struct {
 func (s *CreativeOptimizationConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeOptimizationConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeRotation: Creative Rotation.
@@ -4278,7 +4278,7 @@ type CreativeRotation struct {
 func (s *CreativeRotation) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeRotation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeSettings: Creative Settings
@@ -4303,7 +4303,7 @@ type CreativeSettings struct {
 func (s *CreativeSettings) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativesListResponse: Creative List Response
@@ -4335,7 +4335,7 @@ type CreativesListResponse struct {
 func (s *CreativesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreativesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CrossDimensionReachReportCompatibleFields: Represents fields that are
@@ -4374,7 +4374,7 @@ type CrossDimensionReachReportCompatibleFields struct {
 func (s *CrossDimensionReachReportCompatibleFields) MarshalJSON() ([]byte, error) {
 	type noMethod CrossDimensionReachReportCompatibleFields
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomRichMediaEvents: Represents a Custom Rich Media Events group.
@@ -4399,7 +4399,7 @@ type CustomRichMediaEvents struct {
 func (s *CustomRichMediaEvents) MarshalJSON() ([]byte, error) {
 	type noMethod CustomRichMediaEvents
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DateRange: Represents a date range.
@@ -4449,7 +4449,7 @@ type DateRange struct {
 func (s *DateRange) MarshalJSON() ([]byte, error) {
 	type noMethod DateRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DayPartTargeting: Day Part Targeting.
@@ -4500,7 +4500,7 @@ type DayPartTargeting struct {
 func (s *DayPartTargeting) MarshalJSON() ([]byte, error) {
 	type noMethod DayPartTargeting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DefaultClickThroughEventTagProperties: Properties of inheriting and
@@ -4529,7 +4529,7 @@ type DefaultClickThroughEventTagProperties struct {
 func (s *DefaultClickThroughEventTagProperties) MarshalJSON() ([]byte, error) {
 	type noMethod DefaultClickThroughEventTagProperties
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeliverySchedule: Delivery Schedule.
@@ -4585,7 +4585,7 @@ type DeliverySchedule struct {
 func (s *DeliverySchedule) MarshalJSON() ([]byte, error) {
 	type noMethod DeliverySchedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DfpSettings: DFP Settings
@@ -4620,7 +4620,7 @@ type DfpSettings struct {
 func (s *DfpSettings) MarshalJSON() ([]byte, error) {
 	type noMethod DfpSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Dimension: Represents a dimension.
@@ -4644,7 +4644,7 @@ type Dimension struct {
 func (s *Dimension) MarshalJSON() ([]byte, error) {
 	type noMethod Dimension
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionFilter: Represents a dimension filter.
@@ -4671,7 +4671,7 @@ type DimensionFilter struct {
 func (s *DimensionFilter) MarshalJSON() ([]byte, error) {
 	type noMethod DimensionFilter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValue: Represents a DimensionValue resource.
@@ -4718,7 +4718,7 @@ type DimensionValue struct {
 func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 	type noMethod DimensionValue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValueList: Represents the list of DimensionValue resources.
@@ -4755,7 +4755,7 @@ type DimensionValueList struct {
 func (s *DimensionValueList) MarshalJSON() ([]byte, error) {
 	type noMethod DimensionValueList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DimensionValueRequest: Represents a DimensionValuesRequest.
@@ -4792,7 +4792,7 @@ type DimensionValueRequest struct {
 func (s *DimensionValueRequest) MarshalJSON() ([]byte, error) {
 	type noMethod DimensionValueRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectorySite: DirectorySites contains properties of a website from
@@ -4920,7 +4920,7 @@ type DirectorySite struct {
 func (s *DirectorySite) MarshalJSON() ([]byte, error) {
 	type noMethod DirectorySite
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectorySiteContact: Contains properties of a Site Directory
@@ -4985,7 +4985,7 @@ type DirectorySiteContact struct {
 func (s *DirectorySiteContact) MarshalJSON() ([]byte, error) {
 	type noMethod DirectorySiteContact
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectorySiteContactAssignment: Directory Site Contact Assignment
@@ -5015,7 +5015,7 @@ type DirectorySiteContactAssignment struct {
 func (s *DirectorySiteContactAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod DirectorySiteContactAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectorySiteContactsListResponse: Directory Site Contact List
@@ -5049,7 +5049,7 @@ type DirectorySiteContactsListResponse struct {
 func (s *DirectorySiteContactsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DirectorySiteContactsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectorySiteSettings: Directory Site Settings
@@ -5093,7 +5093,7 @@ type DirectorySiteSettings struct {
 func (s *DirectorySiteSettings) MarshalJSON() ([]byte, error) {
 	type noMethod DirectorySiteSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectorySitesListResponse: Directory Site List Response
@@ -5125,7 +5125,7 @@ type DirectorySitesListResponse struct {
 func (s *DirectorySitesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DirectorySitesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventTag: Contains properties of an event tag.
@@ -5239,7 +5239,7 @@ type EventTag struct {
 func (s *EventTag) MarshalJSON() ([]byte, error) {
 	type noMethod EventTag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventTagOverride: Event tag override information.
@@ -5263,7 +5263,7 @@ type EventTagOverride struct {
 func (s *EventTagOverride) MarshalJSON() ([]byte, error) {
 	type noMethod EventTagOverride
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventTagsListResponse: Event Tag List Response
@@ -5291,7 +5291,7 @@ type EventTagsListResponse struct {
 func (s *EventTagsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod EventTagsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // File: Represents a File resource. A file contains the metadata for a
@@ -5359,7 +5359,7 @@ type File struct {
 func (s *File) MarshalJSON() ([]byte, error) {
 	type noMethod File
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileUrls: The URLs where the completed report file can be downloaded.
@@ -5383,7 +5383,7 @@ type FileUrls struct {
 func (s *FileUrls) MarshalJSON() ([]byte, error) {
 	type noMethod FileUrls
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FileList: Represents the list of File resources.
@@ -5419,7 +5419,7 @@ type FileList struct {
 func (s *FileList) MarshalJSON() ([]byte, error) {
 	type noMethod FileList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Flight: Flight
@@ -5448,7 +5448,7 @@ type Flight struct {
 func (s *Flight) MarshalJSON() ([]byte, error) {
 	type noMethod Flight
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightActivitiesGenerateTagResponse: Floodlight Activity
@@ -5478,7 +5478,7 @@ type FloodlightActivitiesGenerateTagResponse struct {
 func (s *FloodlightActivitiesGenerateTagResponse) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightActivitiesGenerateTagResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightActivitiesListResponse: Floodlight Activity List Response
@@ -5511,7 +5511,7 @@ type FloodlightActivitiesListResponse struct {
 func (s *FloodlightActivitiesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightActivitiesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightActivity: Contains properties of a Floodlight activity.
@@ -5713,7 +5713,7 @@ type FloodlightActivity struct {
 func (s *FloodlightActivity) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightActivity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightActivityDynamicTag: Dynamic Tag
@@ -5740,7 +5740,7 @@ type FloodlightActivityDynamicTag struct {
 func (s *FloodlightActivityDynamicTag) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightActivityDynamicTag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightActivityGroup: Contains properties of a Floodlight activity
@@ -5823,7 +5823,7 @@ type FloodlightActivityGroup struct {
 func (s *FloodlightActivityGroup) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightActivityGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightActivityGroupsListResponse: Floodlight Activity Group List
@@ -5857,7 +5857,7 @@ type FloodlightActivityGroupsListResponse struct {
 func (s *FloodlightActivityGroupsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightActivityGroupsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightActivityPublisherDynamicTag: Publisher Dynamic Tag
@@ -5896,7 +5896,7 @@ type FloodlightActivityPublisherDynamicTag struct {
 func (s *FloodlightActivityPublisherDynamicTag) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightActivityPublisherDynamicTag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightConfiguration: Contains properties of a Floodlight
@@ -6014,7 +6014,7 @@ type FloodlightConfiguration struct {
 func (s *FloodlightConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightConfigurationsListResponse: Floodlight Configuration List
@@ -6044,7 +6044,7 @@ type FloodlightConfigurationsListResponse struct {
 func (s *FloodlightConfigurationsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightConfigurationsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FloodlightReportCompatibleFields: Represents fields that are
@@ -6078,7 +6078,7 @@ type FloodlightReportCompatibleFields struct {
 func (s *FloodlightReportCompatibleFields) MarshalJSON() ([]byte, error) {
 	type noMethod FloodlightReportCompatibleFields
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FrequencyCap: Frequency Cap.
@@ -6103,7 +6103,7 @@ type FrequencyCap struct {
 func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 	type noMethod FrequencyCap
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FsCommand: FsCommand.
@@ -6141,7 +6141,7 @@ type FsCommand struct {
 func (s *FsCommand) MarshalJSON() ([]byte, error) {
 	type noMethod FsCommand
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeoTargeting: Geographical Targeting.
@@ -6195,7 +6195,7 @@ type GeoTargeting struct {
 func (s *GeoTargeting) MarshalJSON() ([]byte, error) {
 	type noMethod GeoTargeting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InventoryItem: Represents a buy from the DoubleClick Planning
@@ -6285,7 +6285,7 @@ type InventoryItem struct {
 func (s *InventoryItem) MarshalJSON() ([]byte, error) {
 	type noMethod InventoryItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InventoryItemsListResponse: Inventory item List Response
@@ -6317,7 +6317,7 @@ type InventoryItemsListResponse struct {
 func (s *InventoryItemsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod InventoryItemsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // KeyValueTargetingExpression: Key Value Targeting Expression.
@@ -6337,7 +6337,7 @@ type KeyValueTargetingExpression struct {
 func (s *KeyValueTargetingExpression) MarshalJSON() ([]byte, error) {
 	type noMethod KeyValueTargetingExpression
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LandingPage: Contains information about where a user's browser is
@@ -6380,7 +6380,7 @@ type LandingPage struct {
 func (s *LandingPage) MarshalJSON() ([]byte, error) {
 	type noMethod LandingPage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LandingPagesListResponse: Landing Page List Response
@@ -6408,7 +6408,7 @@ type LandingPagesListResponse struct {
 func (s *LandingPagesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LandingPagesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LastModifiedInfo: Modification timestamp.
@@ -6428,7 +6428,7 @@ type LastModifiedInfo struct {
 func (s *LastModifiedInfo) MarshalJSON() ([]byte, error) {
 	type noMethod LastModifiedInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListPopulationClause: A group clause made up of list population terms
@@ -6451,7 +6451,7 @@ type ListPopulationClause struct {
 func (s *ListPopulationClause) MarshalJSON() ([]byte, error) {
 	type noMethod ListPopulationClause
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListPopulationRule: Remarketing List Population Rule.
@@ -6482,7 +6482,7 @@ type ListPopulationRule struct {
 func (s *ListPopulationRule) MarshalJSON() ([]byte, error) {
 	type noMethod ListPopulationRule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListPopulationTerm: Remarketing List Population Rule Term.
@@ -6556,7 +6556,7 @@ type ListPopulationTerm struct {
 func (s *ListPopulationTerm) MarshalJSON() ([]byte, error) {
 	type noMethod ListPopulationTerm
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTargetingExpression: Remarketing List Targeting Expression.
@@ -6577,7 +6577,7 @@ type ListTargetingExpression struct {
 func (s *ListTargetingExpression) MarshalJSON() ([]byte, error) {
 	type noMethod ListTargetingExpression
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LookbackConfiguration: Lookback configuration settings.
@@ -6607,7 +6607,7 @@ type LookbackConfiguration struct {
 func (s *LookbackConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod LookbackConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Metric: Represents a metric.
@@ -6630,7 +6630,7 @@ type Metric struct {
 func (s *Metric) MarshalJSON() ([]byte, error) {
 	type noMethod Metric
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Metro: Contains information about a metro region that can be targeted
@@ -6674,7 +6674,7 @@ type Metro struct {
 func (s *Metro) MarshalJSON() ([]byte, error) {
 	type noMethod Metro
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetrosListResponse: Metro List Response
@@ -6702,7 +6702,7 @@ type MetrosListResponse struct {
 func (s *MetrosListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod MetrosListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MobileCarrier: Contains information about a mobile carrier that can
@@ -6742,7 +6742,7 @@ type MobileCarrier struct {
 func (s *MobileCarrier) MarshalJSON() ([]byte, error) {
 	type noMethod MobileCarrier
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MobileCarriersListResponse: Mobile Carrier List Response
@@ -6770,7 +6770,7 @@ type MobileCarriersListResponse struct {
 func (s *MobileCarriersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod MobileCarriersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectFilter: Object Filter.
@@ -6806,7 +6806,7 @@ type ObjectFilter struct {
 func (s *ObjectFilter) MarshalJSON() ([]byte, error) {
 	type noMethod ObjectFilter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OffsetPosition: Offset Position.
@@ -6829,7 +6829,7 @@ type OffsetPosition struct {
 func (s *OffsetPosition) MarshalJSON() ([]byte, error) {
 	type noMethod OffsetPosition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OmnitureSettings: Omniture Integration Settings.
@@ -6857,7 +6857,7 @@ type OmnitureSettings struct {
 func (s *OmnitureSettings) MarshalJSON() ([]byte, error) {
 	type noMethod OmnitureSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperatingSystem: Contains information about an operating system that
@@ -6896,7 +6896,7 @@ type OperatingSystem struct {
 func (s *OperatingSystem) MarshalJSON() ([]byte, error) {
 	type noMethod OperatingSystem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperatingSystemVersion: Contains information about a particular
@@ -6939,7 +6939,7 @@ type OperatingSystemVersion struct {
 func (s *OperatingSystemVersion) MarshalJSON() ([]byte, error) {
 	type noMethod OperatingSystemVersion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperatingSystemVersionsListResponse: Operating System Version List
@@ -6968,7 +6968,7 @@ type OperatingSystemVersionsListResponse struct {
 func (s *OperatingSystemVersionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OperatingSystemVersionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperatingSystemsListResponse: Operating System List Response
@@ -6996,7 +6996,7 @@ type OperatingSystemsListResponse struct {
 func (s *OperatingSystemsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OperatingSystemsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OptimizationActivity: Creative optimization activity.
@@ -7027,7 +7027,7 @@ type OptimizationActivity struct {
 func (s *OptimizationActivity) MarshalJSON() ([]byte, error) {
 	type noMethod OptimizationActivity
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Order: Describes properties of a DoubleClick Planning order.
@@ -7112,7 +7112,7 @@ type Order struct {
 func (s *Order) MarshalJSON() ([]byte, error) {
 	type noMethod Order
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OrderContact: Contact of an order.
@@ -7152,7 +7152,7 @@ type OrderContact struct {
 func (s *OrderContact) MarshalJSON() ([]byte, error) {
 	type noMethod OrderContact
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OrderDocument: Contains properties of a DoubleClick Planning order
@@ -7235,7 +7235,7 @@ type OrderDocument struct {
 func (s *OrderDocument) MarshalJSON() ([]byte, error) {
 	type noMethod OrderDocument
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OrderDocumentsListResponse: Order document List Response
@@ -7267,7 +7267,7 @@ type OrderDocumentsListResponse struct {
 func (s *OrderDocumentsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrderDocumentsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OrdersListResponse: Order List Response
@@ -7299,7 +7299,7 @@ type OrdersListResponse struct {
 func (s *OrdersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod OrdersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PathToConversionReportCompatibleFields: Represents fields that are
@@ -7340,7 +7340,7 @@ type PathToConversionReportCompatibleFields struct {
 func (s *PathToConversionReportCompatibleFields) MarshalJSON() ([]byte, error) {
 	type noMethod PathToConversionReportCompatibleFields
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Placement: Contains properties of a placement.
@@ -7564,7 +7564,7 @@ type Placement struct {
 func (s *Placement) MarshalJSON() ([]byte, error) {
 	type noMethod Placement
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacementAssignment: Placement Assignment.
@@ -7598,7 +7598,7 @@ type PlacementAssignment struct {
 func (s *PlacementAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod PlacementAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacementGroup: Contains properties of a package or roadblock.
@@ -7735,7 +7735,7 @@ type PlacementGroup struct {
 func (s *PlacementGroup) MarshalJSON() ([]byte, error) {
 	type noMethod PlacementGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacementGroupsListResponse: Placement Group List Response
@@ -7767,7 +7767,7 @@ type PlacementGroupsListResponse struct {
 func (s *PlacementGroupsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlacementGroupsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacementStrategiesListResponse: Placement Strategy List Response
@@ -7799,7 +7799,7 @@ type PlacementStrategiesListResponse struct {
 func (s *PlacementStrategiesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlacementStrategiesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacementStrategy: Contains properties of a placement strategy.
@@ -7837,7 +7837,7 @@ type PlacementStrategy struct {
 func (s *PlacementStrategy) MarshalJSON() ([]byte, error) {
 	type noMethod PlacementStrategy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacementTag: Placement Tag
@@ -7860,7 +7860,7 @@ type PlacementTag struct {
 func (s *PlacementTag) MarshalJSON() ([]byte, error) {
 	type noMethod PlacementTag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacementsGenerateTagsResponse: Placement GenerateTags Response
@@ -7888,7 +7888,7 @@ type PlacementsGenerateTagsResponse struct {
 func (s *PlacementsGenerateTagsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlacementsGenerateTagsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlacementsListResponse: Placement List Response
@@ -7920,7 +7920,7 @@ type PlacementsListResponse struct {
 func (s *PlacementsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlacementsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlatformType: Contains information about a platform type that can be
@@ -7952,7 +7952,7 @@ type PlatformType struct {
 func (s *PlatformType) MarshalJSON() ([]byte, error) {
 	type noMethod PlatformType
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PlatformTypesListResponse: Platform Type List Response
@@ -7980,7 +7980,7 @@ type PlatformTypesListResponse struct {
 func (s *PlatformTypesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PlatformTypesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PopupWindowProperties: Popup Window Properties.
@@ -8032,7 +8032,7 @@ type PopupWindowProperties struct {
 func (s *PopupWindowProperties) MarshalJSON() ([]byte, error) {
 	type noMethod PopupWindowProperties
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PostalCode: Contains information about a postal code that can be
@@ -8072,7 +8072,7 @@ type PostalCode struct {
 func (s *PostalCode) MarshalJSON() ([]byte, error) {
 	type noMethod PostalCode
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PostalCodesListResponse: Postal Code List Response
@@ -8100,7 +8100,7 @@ type PostalCodesListResponse struct {
 func (s *PostalCodesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PostalCodesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Pricing: Pricing Information
@@ -8162,7 +8162,7 @@ type Pricing struct {
 func (s *Pricing) MarshalJSON() ([]byte, error) {
 	type noMethod Pricing
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PricingSchedule: Pricing Schedule
@@ -8233,7 +8233,7 @@ type PricingSchedule struct {
 func (s *PricingSchedule) MarshalJSON() ([]byte, error) {
 	type noMethod PricingSchedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PricingSchedulePricingPeriod: Pricing Period
@@ -8274,7 +8274,7 @@ type PricingSchedulePricingPeriod struct {
 func (s *PricingSchedulePricingPeriod) MarshalJSON() ([]byte, error) {
 	type noMethod PricingSchedulePricingPeriod
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Project: Contains properties of a DoubleClick Planning project.
@@ -8378,7 +8378,7 @@ type Project struct {
 func (s *Project) MarshalJSON() ([]byte, error) {
 	type noMethod Project
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProjectsListResponse: Project List Response
@@ -8410,7 +8410,7 @@ type ProjectsListResponse struct {
 func (s *ProjectsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ProjectsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReachReportCompatibleFields: Represents fields that are compatible to
@@ -8453,7 +8453,7 @@ type ReachReportCompatibleFields struct {
 func (s *ReachReportCompatibleFields) MarshalJSON() ([]byte, error) {
 	type noMethod ReachReportCompatibleFields
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Recipient: Represents a recipient.
@@ -8484,7 +8484,7 @@ type Recipient struct {
 func (s *Recipient) MarshalJSON() ([]byte, error) {
 	type noMethod Recipient
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Region: Contains information about a region that can be targeted by
@@ -8522,7 +8522,7 @@ type Region struct {
 func (s *Region) MarshalJSON() ([]byte, error) {
 	type noMethod Region
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegionsListResponse: Region List Response
@@ -8550,7 +8550,7 @@ type RegionsListResponse struct {
 func (s *RegionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RegionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RemarketingList: Contains properties of a remarketing list.
@@ -8633,7 +8633,7 @@ type RemarketingList struct {
 func (s *RemarketingList) MarshalJSON() ([]byte, error) {
 	type noMethod RemarketingList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RemarketingListShare: Contains properties of a remarketing list's
@@ -8672,7 +8672,7 @@ type RemarketingListShare struct {
 func (s *RemarketingListShare) MarshalJSON() ([]byte, error) {
 	type noMethod RemarketingListShare
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RemarketingListsListResponse: Remarketing list response
@@ -8704,7 +8704,7 @@ type RemarketingListsListResponse struct {
 func (s *RemarketingListsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RemarketingListsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Report: Represents a Report resource.
@@ -8801,7 +8801,7 @@ type Report struct {
 func (s *Report) MarshalJSON() ([]byte, error) {
 	type noMethod Report
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCriteria: The report criteria for a report of type "STANDARD".
@@ -8840,7 +8840,7 @@ type ReportCriteria struct {
 func (s *ReportCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCrossDimensionReachCriteria: The report criteria for a report
@@ -8887,7 +8887,7 @@ type ReportCrossDimensionReachCriteria struct {
 func (s *ReportCrossDimensionReachCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportCrossDimensionReachCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportDelivery: The report's email delivery settings.
@@ -8921,7 +8921,7 @@ type ReportDelivery struct {
 func (s *ReportDelivery) MarshalJSON() ([]byte, error) {
 	type noMethod ReportDelivery
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportFloodlightCriteria: The report criteria for a report of type
@@ -8968,7 +8968,7 @@ type ReportFloodlightCriteria struct {
 func (s *ReportFloodlightCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportFloodlightCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportFloodlightCriteriaReportProperties: The properties of the
@@ -9004,7 +9004,7 @@ type ReportFloodlightCriteriaReportProperties struct {
 func (s *ReportFloodlightCriteriaReportProperties) MarshalJSON() ([]byte, error) {
 	type noMethod ReportFloodlightCriteriaReportProperties
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportPathToConversionCriteria: The report criteria for a report of
@@ -9056,7 +9056,7 @@ type ReportPathToConversionCriteria struct {
 func (s *ReportPathToConversionCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportPathToConversionCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportPathToConversionCriteriaReportProperties: The properties of the
@@ -9125,7 +9125,7 @@ type ReportPathToConversionCriteriaReportProperties struct {
 func (s *ReportPathToConversionCriteriaReportProperties) MarshalJSON() ([]byte, error) {
 	type noMethod ReportPathToConversionCriteriaReportProperties
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportReachCriteria: The report criteria for a report of type
@@ -9173,7 +9173,7 @@ type ReportReachCriteria struct {
 func (s *ReportReachCriteria) MarshalJSON() ([]byte, error) {
 	type noMethod ReportReachCriteria
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportSchedule: The report's schedule. Can only be set if the
@@ -9243,7 +9243,7 @@ type ReportSchedule struct {
 func (s *ReportSchedule) MarshalJSON() ([]byte, error) {
 	type noMethod ReportSchedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportCompatibleFields: Represents fields that are compatible to be
@@ -9282,7 +9282,7 @@ type ReportCompatibleFields struct {
 func (s *ReportCompatibleFields) MarshalJSON() ([]byte, error) {
 	type noMethod ReportCompatibleFields
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportList: Represents the list of reports.
@@ -9318,7 +9318,7 @@ type ReportList struct {
 func (s *ReportList) MarshalJSON() ([]byte, error) {
 	type noMethod ReportList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportsConfiguration: Reporting Configuration
@@ -9366,7 +9366,7 @@ type ReportsConfiguration struct {
 func (s *ReportsConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod ReportsConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RichMediaExitOverride: Rich Media Exit Override.
@@ -9394,7 +9394,7 @@ type RichMediaExitOverride struct {
 func (s *RichMediaExitOverride) MarshalJSON() ([]byte, error) {
 	type noMethod RichMediaExitOverride
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Site: Contains properties of a site.
@@ -9462,7 +9462,7 @@ type Site struct {
 func (s *Site) MarshalJSON() ([]byte, error) {
 	type noMethod Site
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SiteContact: Site Contact
@@ -9508,7 +9508,7 @@ type SiteContact struct {
 func (s *SiteContact) MarshalJSON() ([]byte, error) {
 	type noMethod SiteContact
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SiteSettings: Site Settings
@@ -9546,7 +9546,7 @@ type SiteSettings struct {
 func (s *SiteSettings) MarshalJSON() ([]byte, error) {
 	type noMethod SiteSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SitesListResponse: Site List Response
@@ -9578,7 +9578,7 @@ type SitesListResponse struct {
 func (s *SitesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SitesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Size: Represents the dimensions of ads, placements, creatives, or
@@ -9616,7 +9616,7 @@ type Size struct {
 func (s *Size) MarshalJSON() ([]byte, error) {
 	type noMethod Size
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SizesListResponse: Size List Response
@@ -9644,7 +9644,7 @@ type SizesListResponse struct {
 func (s *SizesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SizesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SortedDimension: Represents a sorted dimension.
@@ -9675,7 +9675,7 @@ type SortedDimension struct {
 func (s *SortedDimension) MarshalJSON() ([]byte, error) {
 	type noMethod SortedDimension
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subaccount: Contains properties of a DCM subaccount.
@@ -9716,7 +9716,7 @@ type Subaccount struct {
 func (s *Subaccount) MarshalJSON() ([]byte, error) {
 	type noMethod Subaccount
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SubaccountsListResponse: Subaccount List Response
@@ -9748,7 +9748,7 @@ type SubaccountsListResponse struct {
 func (s *SubaccountsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SubaccountsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TagData: Placement Tag Data
@@ -9800,7 +9800,7 @@ type TagData struct {
 func (s *TagData) MarshalJSON() ([]byte, error) {
 	type noMethod TagData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TagSetting: Tag Settings
@@ -9842,7 +9842,7 @@ type TagSetting struct {
 func (s *TagSetting) MarshalJSON() ([]byte, error) {
 	type noMethod TagSetting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TagSettings: Dynamic and Image Tag Settings.
@@ -9865,7 +9865,7 @@ type TagSettings struct {
 func (s *TagSettings) MarshalJSON() ([]byte, error) {
 	type noMethod TagSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TargetWindow: Target Window.
@@ -9894,7 +9894,7 @@ type TargetWindow struct {
 func (s *TargetWindow) MarshalJSON() ([]byte, error) {
 	type noMethod TargetWindow
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TargetableRemarketingList: Contains properties of a targetable
@@ -9976,7 +9976,7 @@ type TargetableRemarketingList struct {
 func (s *TargetableRemarketingList) MarshalJSON() ([]byte, error) {
 	type noMethod TargetableRemarketingList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TargetableRemarketingListsListResponse: Targetable remarketing list
@@ -10009,7 +10009,7 @@ type TargetableRemarketingListsListResponse struct {
 func (s *TargetableRemarketingListsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TargetableRemarketingListsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TechnologyTargeting: Technology Targeting.
@@ -10065,7 +10065,7 @@ type TechnologyTargeting struct {
 func (s *TechnologyTargeting) MarshalJSON() ([]byte, error) {
 	type noMethod TechnologyTargeting
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ThirdPartyAuthenticationToken: Third Party Authentication Token
@@ -10089,7 +10089,7 @@ type ThirdPartyAuthenticationToken struct {
 func (s *ThirdPartyAuthenticationToken) MarshalJSON() ([]byte, error) {
 	type noMethod ThirdPartyAuthenticationToken
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ThirdPartyTrackingUrl: Third-party Tracking URL.
@@ -10132,7 +10132,7 @@ type ThirdPartyTrackingUrl struct {
 func (s *ThirdPartyTrackingUrl) MarshalJSON() ([]byte, error) {
 	type noMethod ThirdPartyTrackingUrl
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserDefinedVariableConfiguration: User Defined Variable
@@ -10187,7 +10187,7 @@ type UserDefinedVariableConfiguration struct {
 func (s *UserDefinedVariableConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod UserDefinedVariableConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserProfile: Represents a UserProfile resource.
@@ -10235,7 +10235,7 @@ type UserProfile struct {
 func (s *UserProfile) MarshalJSON() ([]byte, error) {
 	type noMethod UserProfile
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserProfileList: Represents the list of user profiles.
@@ -10266,7 +10266,7 @@ type UserProfileList struct {
 func (s *UserProfileList) MarshalJSON() ([]byte, error) {
 	type noMethod UserProfileList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserRole: Contains properties of auser role, which is used to manage
@@ -10323,7 +10323,7 @@ type UserRole struct {
 func (s *UserRole) MarshalJSON() ([]byte, error) {
 	type noMethod UserRole
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserRolePermission: Contains properties of a user role permission.
@@ -10368,7 +10368,7 @@ type UserRolePermission struct {
 func (s *UserRolePermission) MarshalJSON() ([]byte, error) {
 	type noMethod UserRolePermission
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserRolePermissionGroup: Represents a grouping of related user role
@@ -10400,7 +10400,7 @@ type UserRolePermissionGroup struct {
 func (s *UserRolePermissionGroup) MarshalJSON() ([]byte, error) {
 	type noMethod UserRolePermissionGroup
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserRolePermissionGroupsListResponse: User Role Permission Group List
@@ -10429,7 +10429,7 @@ type UserRolePermissionGroupsListResponse struct {
 func (s *UserRolePermissionGroupsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UserRolePermissionGroupsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserRolePermissionsListResponse: User Role Permission List Response
@@ -10457,7 +10457,7 @@ type UserRolePermissionsListResponse struct {
 func (s *UserRolePermissionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UserRolePermissionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserRolesListResponse: User Role List Response
@@ -10489,7 +10489,7 @@ type UserRolesListResponse struct {
 func (s *UserRolesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UserRolesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "dfareporting.accountActiveAdSummaries.get":

@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -131,7 +131,7 @@ type Binding struct {
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type noMethod Binding
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -181,7 +181,7 @@ type ListOrganizationsResponse struct {
 func (s *ListOrganizationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOrganizationsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListProjectsResponse: A page of the response received from the
@@ -220,7 +220,7 @@ type ListProjectsResponse struct {
 func (s *ListProjectsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListProjectsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Organization: The root node in the resource hierarchy to which a
@@ -256,7 +256,7 @@ type Organization struct {
 func (s *Organization) MarshalJSON() ([]byte, error) {
 	type noMethod Organization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OrganizationOwner: The entity that owns an Organization. The lifetime
@@ -280,7 +280,7 @@ type OrganizationOwner struct {
 func (s *OrganizationOwner) MarshalJSON() ([]byte, error) {
 	type noMethod OrganizationOwner
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Policy: Defines an Identity and Access Management (IAM) policy. It is
@@ -324,7 +324,7 @@ type Policy struct {
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type noMethod Policy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Project: A Project is a high-level Google Cloud Platform entity. It
@@ -391,7 +391,7 @@ type Project struct {
 func (s *Project) MarshalJSON() ([]byte, error) {
 	type noMethod Project
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResourceId: A container to reference an id for any resource type. A
@@ -420,7 +420,7 @@ type ResourceId struct {
 func (s *ResourceId) MarshalJSON() ([]byte, error) {
 	type noMethod ResourceId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -443,7 +443,7 @@ type SetIamPolicyRequest struct {
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SetIamPolicyRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
@@ -466,7 +466,7 @@ type TestIamPermissionsRequest struct {
 func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -492,7 +492,7 @@ type TestIamPermissionsResponse struct {
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "cloudresourcemanager.organizations.get":

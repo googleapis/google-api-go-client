@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -133,7 +133,7 @@ type Label struct {
 func (s *Label) MarshalJSON() ([]byte, error) {
 	type noMethod Label
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListResourceResponseItem: The list response item that contains the
@@ -157,7 +157,7 @@ type ListResourceResponseItem struct {
 func (s *ListResourceResponseItem) MarshalJSON() ([]byte, error) {
 	type noMethod ListResourceResponseItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListResourceResponseItemEndpoints: The list of service end points on
@@ -273,7 +273,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationError: [Output Only] If errors occurred during processing of
@@ -295,7 +295,7 @@ type OperationError struct {
 func (s *OperationError) MarshalJSON() ([]byte, error) {
 	type noMethod OperationError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationErrorErrors struct {
@@ -321,7 +321,7 @@ type OperationErrorErrors struct {
 func (s *OperationErrorErrors) MarshalJSON() ([]byte, error) {
 	type noMethod OperationErrorErrors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarnings struct {
@@ -347,7 +347,7 @@ type OperationWarnings struct {
 func (s *OperationWarnings) MarshalJSON() ([]byte, error) {
 	type noMethod OperationWarnings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarningsData struct {
@@ -369,7 +369,7 @@ type OperationWarningsData struct {
 func (s *OperationWarningsData) MarshalJSON() ([]byte, error) {
 	type noMethod OperationWarningsData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationList struct {
@@ -406,7 +406,7 @@ type OperationList struct {
 func (s *OperationList) MarshalJSON() ([]byte, error) {
 	type noMethod OperationList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResourceView: The resource view object.
@@ -464,7 +464,7 @@ type ResourceView struct {
 func (s *ResourceView) MarshalJSON() ([]byte, error) {
 	type noMethod ResourceView
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ServiceEndpoint: The service endpoint that may be started in a VM.
@@ -487,7 +487,7 @@ type ServiceEndpoint struct {
 func (s *ServiceEndpoint) MarshalJSON() ([]byte, error) {
 	type noMethod ServiceEndpoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsAddResourcesRequest: The request to add resources to the
@@ -508,7 +508,7 @@ type ZoneViewsAddResourcesRequest struct {
 func (s *ZoneViewsAddResourcesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsAddResourcesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ZoneViewsGetServiceResponse struct {
@@ -534,7 +534,7 @@ type ZoneViewsGetServiceResponse struct {
 func (s *ZoneViewsGetServiceResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsGetServiceResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsList: The response to a list request.
@@ -568,7 +568,7 @@ type ZoneViewsList struct {
 func (s *ZoneViewsList) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsListResourcesResponse: The response to a list resource
@@ -600,7 +600,7 @@ type ZoneViewsListResourcesResponse struct {
 func (s *ZoneViewsListResourcesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsListResourcesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsRemoveResourcesRequest: The request to remove resources from
@@ -621,7 +621,7 @@ type ZoneViewsRemoveResourcesRequest struct {
 func (s *ZoneViewsRemoveResourcesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsRemoveResourcesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ZoneViewsSetServiceRequest struct {
@@ -649,7 +649,7 @@ type ZoneViewsSetServiceRequest struct {
 func (s *ZoneViewsSetServiceRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsSetServiceRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "resourceviews.zoneOperations.get":

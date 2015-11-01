@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -122,7 +122,7 @@ type DetectionsListResponse struct {
 func (s *DetectionsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DetectionsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DetectionsResourceItem struct {
@@ -148,7 +148,7 @@ type DetectionsResourceItem struct {
 func (s *DetectionsResourceItem) MarshalJSON() ([]byte, error) {
 	type noMethod DetectionsResourceItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LanguagesListResponse struct {
@@ -175,7 +175,7 @@ type LanguagesListResponse struct {
 func (s *LanguagesListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LanguagesListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LanguagesResource struct {
@@ -198,7 +198,7 @@ type LanguagesResource struct {
 func (s *LanguagesResource) MarshalJSON() ([]byte, error) {
 	type noMethod LanguagesResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TranslationsListResponse struct {
@@ -222,7 +222,7 @@ type TranslationsListResponse struct {
 func (s *TranslationsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TranslationsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TranslationsResource struct {
@@ -246,7 +246,7 @@ type TranslationsResource struct {
 func (s *TranslationsResource) MarshalJSON() ([]byte, error) {
 	type noMethod TranslationsResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "language.detections.list":

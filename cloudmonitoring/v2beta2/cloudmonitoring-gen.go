@@ -14,10 +14,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -33,10 +33,10 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -135,7 +135,7 @@ type DeleteMetricDescriptorResponse struct {
 func (s *DeleteMetricDescriptorResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DeleteMetricDescriptorResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListMetricDescriptorsRequest: The request of
@@ -157,7 +157,7 @@ type ListMetricDescriptorsRequest struct {
 func (s *ListMetricDescriptorsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ListMetricDescriptorsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListMetricDescriptorsResponse: The response of
@@ -192,7 +192,7 @@ type ListMetricDescriptorsResponse struct {
 func (s *ListMetricDescriptorsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListMetricDescriptorsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTimeseriesDescriptorsRequest: The request of
@@ -214,7 +214,7 @@ type ListTimeseriesDescriptorsRequest struct {
 func (s *ListTimeseriesDescriptorsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ListTimeseriesDescriptorsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTimeseriesDescriptorsResponse: The response of
@@ -257,7 +257,7 @@ type ListTimeseriesDescriptorsResponse struct {
 func (s *ListTimeseriesDescriptorsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTimeseriesDescriptorsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTimeseriesRequest: The request of cloudmonitoring.timeseries.list
@@ -278,7 +278,7 @@ type ListTimeseriesRequest struct {
 func (s *ListTimeseriesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ListTimeseriesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTimeseriesResponse: The response of
@@ -322,7 +322,7 @@ type ListTimeseriesResponse struct {
 func (s *ListTimeseriesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTimeseriesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetricDescriptor: A metricDescriptor defines the name, label keys,
@@ -359,7 +359,7 @@ type MetricDescriptor struct {
 func (s *MetricDescriptor) MarshalJSON() ([]byte, error) {
 	type noMethod MetricDescriptor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetricDescriptorLabelDescriptor: A label in a metric is a description
@@ -384,7 +384,7 @@ type MetricDescriptorLabelDescriptor struct {
 func (s *MetricDescriptorLabelDescriptor) MarshalJSON() ([]byte, error) {
 	type noMethod MetricDescriptorLabelDescriptor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetricDescriptorTypeDescriptor: A type in a metric contains
@@ -411,7 +411,7 @@ type MetricDescriptorTypeDescriptor struct {
 func (s *MetricDescriptorTypeDescriptor) MarshalJSON() ([]byte, error) {
 	type noMethod MetricDescriptorTypeDescriptor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Point: Point is a single point in a time series. It consists of a
@@ -464,7 +464,7 @@ type Point struct {
 func (s *Point) MarshalJSON() ([]byte, error) {
 	type noMethod Point
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PointDistribution: Distribution data point value type. When writing
@@ -493,7 +493,7 @@ type PointDistribution struct {
 func (s *PointDistribution) MarshalJSON() ([]byte, error) {
 	type noMethod PointDistribution
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PointDistributionBucket: The histogram's bucket. Buckets that form
@@ -525,7 +525,7 @@ type PointDistributionBucket struct {
 func (s *PointDistributionBucket) MarshalJSON() ([]byte, error) {
 	type noMethod PointDistributionBucket
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PointDistributionOverflowBucket: The overflow bucket is a special
@@ -552,7 +552,7 @@ type PointDistributionOverflowBucket struct {
 func (s *PointDistributionOverflowBucket) MarshalJSON() ([]byte, error) {
 	type noMethod PointDistributionOverflowBucket
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PointDistributionUnderflowBucket: The underflow bucket is a special
@@ -579,7 +579,7 @@ type PointDistributionUnderflowBucket struct {
 func (s *PointDistributionUnderflowBucket) MarshalJSON() ([]byte, error) {
 	type noMethod PointDistributionUnderflowBucket
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Timeseries: The monitoring data is organized as metrics and stored as
@@ -606,7 +606,7 @@ type Timeseries struct {
 func (s *Timeseries) MarshalJSON() ([]byte, error) {
 	type noMethod Timeseries
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TimeseriesDescriptor: TimeseriesDescriptor identifies a single time
@@ -634,7 +634,7 @@ type TimeseriesDescriptor struct {
 func (s *TimeseriesDescriptor) MarshalJSON() ([]byte, error) {
 	type noMethod TimeseriesDescriptor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TimeseriesDescriptorLabel struct {
@@ -656,7 +656,7 @@ type TimeseriesDescriptorLabel struct {
 func (s *TimeseriesDescriptorLabel) MarshalJSON() ([]byte, error) {
 	type noMethod TimeseriesDescriptorLabel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TimeseriesPoint: When writing time series, TimeseriesPoint should be
@@ -681,7 +681,7 @@ type TimeseriesPoint struct {
 func (s *TimeseriesPoint) MarshalJSON() ([]byte, error) {
 	type noMethod TimeseriesPoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WriteTimeseriesRequest: The request of
@@ -707,7 +707,7 @@ type WriteTimeseriesRequest struct {
 func (s *WriteTimeseriesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod WriteTimeseriesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WriteTimeseriesResponse: The response of
@@ -733,7 +733,7 @@ type WriteTimeseriesResponse struct {
 func (s *WriteTimeseriesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod WriteTimeseriesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "cloudmonitoring.metricDescriptors.create":

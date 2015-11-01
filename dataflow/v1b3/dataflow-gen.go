@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -149,7 +147,7 @@ type ApproximateProgress struct {
 func (s *ApproximateProgress) MarshalJSON() ([]byte, error) {
 	type noMethod ApproximateProgress
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AutoscalingSettings: Settings for WorkerPool autoscaling.
@@ -177,7 +175,7 @@ type AutoscalingSettings struct {
 func (s *AutoscalingSettings) MarshalJSON() ([]byte, error) {
 	type noMethod AutoscalingSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ComputationTopology: All configuration data for a particular
@@ -216,7 +214,7 @@ type ComputationTopology struct {
 func (s *ComputationTopology) MarshalJSON() ([]byte, error) {
 	type noMethod ComputationTopology
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ConcatPosition: A position that encapsulates an inner position and an
@@ -241,7 +239,7 @@ type ConcatPosition struct {
 func (s *ConcatPosition) MarshalJSON() ([]byte, error) {
 	type noMethod ConcatPosition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomSourceLocation: Identifies the location of a custom souce.
@@ -261,7 +259,7 @@ type CustomSourceLocation struct {
 func (s *CustomSourceLocation) MarshalJSON() ([]byte, error) {
 	type noMethod CustomSourceLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DataDiskAssignment: Data disk assignment for a given VM instance.
@@ -289,7 +287,7 @@ type DataDiskAssignment struct {
 func (s *DataDiskAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod DataDiskAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DerivedSource: Specification of one of the bundles produced as a
@@ -322,7 +320,7 @@ type DerivedSource struct {
 func (s *DerivedSource) MarshalJSON() ([]byte, error) {
 	type noMethod DerivedSource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Disk: Describes the data disk used by a workflow job.
@@ -363,7 +361,7 @@ type Disk struct {
 func (s *Disk) MarshalJSON() ([]byte, error) {
 	type noMethod Disk
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DynamicSourceSplit: When a task splits using
@@ -391,7 +389,7 @@ type DynamicSourceSplit struct {
 func (s *DynamicSourceSplit) MarshalJSON() ([]byte, error) {
 	type noMethod DynamicSourceSplit
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Environment: Describes the environment in which a Dataflow Job runs.
@@ -454,7 +452,7 @@ type Environment struct {
 func (s *Environment) MarshalJSON() ([]byte, error) {
 	type noMethod Environment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type EnvironmentInternalExperiments interface{}
@@ -483,7 +481,7 @@ type FlattenInstruction struct {
 func (s *FlattenInstruction) MarshalJSON() ([]byte, error) {
 	type noMethod FlattenInstruction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstructionInput: An input of an instruction, as a reference to an
@@ -510,7 +508,7 @@ type InstructionInput struct {
 func (s *InstructionInput) MarshalJSON() ([]byte, error) {
 	type noMethod InstructionInput
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InstructionOutput: An output of an instruction.
@@ -537,7 +535,7 @@ type InstructionOutput struct {
 func (s *InstructionOutput) MarshalJSON() ([]byte, error) {
 	type noMethod InstructionOutput
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InstructionOutputCodec interface{}
@@ -660,7 +658,7 @@ type Job struct {
 func (s *Job) MarshalJSON() ([]byte, error) {
 	type noMethod Job
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JobExecutionInfo: Additional information about how a Dataflow job
@@ -682,7 +680,7 @@ type JobExecutionInfo struct {
 func (s *JobExecutionInfo) MarshalJSON() ([]byte, error) {
 	type noMethod JobExecutionInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JobExecutionStageInfo: Contains information about how a particular
@@ -706,7 +704,7 @@ type JobExecutionStageInfo struct {
 func (s *JobExecutionStageInfo) MarshalJSON() ([]byte, error) {
 	type noMethod JobExecutionStageInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JobMessage: A particular message pertaining to a Dataflow job.
@@ -744,7 +742,7 @@ type JobMessage struct {
 func (s *JobMessage) MarshalJSON() ([]byte, error) {
 	type noMethod JobMessage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JobMetrics: JobMetrics contains a collection of metrics descibing the
@@ -776,7 +774,7 @@ type JobMetrics struct {
 func (s *JobMetrics) MarshalJSON() ([]byte, error) {
 	type noMethod JobMetrics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // KeyRangeDataDiskAssignment: Data disk assignment information for a
@@ -807,7 +805,7 @@ type KeyRangeDataDiskAssignment struct {
 func (s *KeyRangeDataDiskAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod KeyRangeDataDiskAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // KeyRangeLocation: Location information for a specific key-range of a
@@ -846,7 +844,7 @@ type KeyRangeLocation struct {
 func (s *KeyRangeLocation) MarshalJSON() ([]byte, error) {
 	type noMethod KeyRangeLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaseWorkItemRequest: Request to lease WorkItems.
@@ -880,7 +878,7 @@ type LeaseWorkItemRequest struct {
 func (s *LeaseWorkItemRequest) MarshalJSON() ([]byte, error) {
 	type noMethod LeaseWorkItemRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LeaseWorkItemResponse: Response to a request to lease WorkItems.
@@ -904,7 +902,7 @@ type LeaseWorkItemResponse struct {
 func (s *LeaseWorkItemResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LeaseWorkItemResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListJobMessagesResponse: Response to a request to list job messages.
@@ -932,7 +930,7 @@ type ListJobMessagesResponse struct {
 func (s *ListJobMessagesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListJobMessagesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListJobsResponse: Response to a request to list Dataflow jobs. This
@@ -962,7 +960,7 @@ type ListJobsResponse struct {
 func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListJobsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MapTask: MapTask consists of an ordered set of instructions, each of
@@ -994,7 +992,7 @@ type MapTask struct {
 func (s *MapTask) MarshalJSON() ([]byte, error) {
 	type noMethod MapTask
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetricStructuredName: Identifies a metric, by describing the source
@@ -1028,7 +1026,7 @@ type MetricStructuredName struct {
 func (s *MetricStructuredName) MarshalJSON() ([]byte, error) {
 	type noMethod MetricStructuredName
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MetricUpdate: Describes the state of a metric.
@@ -1092,7 +1090,7 @@ type MetricUpdate struct {
 func (s *MetricUpdate) MarshalJSON() ([]byte, error) {
 	type noMethod MetricUpdate
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MountedDataDisk: Describes mounted data disk.
@@ -1114,7 +1112,7 @@ type MountedDataDisk struct {
 func (s *MountedDataDisk) MarshalJSON() ([]byte, error) {
 	type noMethod MountedDataDisk
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MultiOutputInfo: Information about an output of a multi-output DoFn.
@@ -1135,7 +1133,7 @@ type MultiOutputInfo struct {
 func (s *MultiOutputInfo) MarshalJSON() ([]byte, error) {
 	type noMethod MultiOutputInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Package: Packages that need to be installed in order for a worker to
@@ -1166,7 +1164,7 @@ type Package struct {
 func (s *Package) MarshalJSON() ([]byte, error) {
 	type noMethod Package
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ParDoInstruction: An instruction that does a ParDo operation. Takes
@@ -1201,7 +1199,7 @@ type ParDoInstruction struct {
 func (s *ParDoInstruction) MarshalJSON() ([]byte, error) {
 	type noMethod ParDoInstruction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ParDoInstructionUserFn interface{}
@@ -1247,7 +1245,7 @@ type ParallelInstruction struct {
 func (s *ParallelInstruction) MarshalJSON() ([]byte, error) {
 	type noMethod ParallelInstruction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PartialGroupByKeyInstruction: An instruction that does a partial
@@ -1275,7 +1273,7 @@ type PartialGroupByKeyInstruction struct {
 func (s *PartialGroupByKeyInstruction) MarshalJSON() ([]byte, error) {
 	type noMethod PartialGroupByKeyInstruction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PartialGroupByKeyInstructionInputElementCodec interface{}
@@ -1318,7 +1316,7 @@ type Position struct {
 func (s *Position) MarshalJSON() ([]byte, error) {
 	type noMethod Position
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PubsubLocation: Identifies a pubsub location to use for transferring
@@ -1365,7 +1363,7 @@ type PubsubLocation struct {
 func (s *PubsubLocation) MarshalJSON() ([]byte, error) {
 	type noMethod PubsubLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReadInstruction: An instruction that reads records. Takes no inputs,
@@ -1386,7 +1384,7 @@ type ReadInstruction struct {
 func (s *ReadInstruction) MarshalJSON() ([]byte, error) {
 	type noMethod ReadInstruction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportWorkItemStatusRequest: Request to report the status of
@@ -1418,7 +1416,7 @@ type ReportWorkItemStatusRequest struct {
 func (s *ReportWorkItemStatusRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ReportWorkItemStatusRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportWorkItemStatusResponse: Response from a request to report the
@@ -1447,7 +1445,7 @@ type ReportWorkItemStatusResponse struct {
 func (s *ReportWorkItemStatusResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ReportWorkItemStatusResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SeqMapTask: Describes a particular function to invoke.
@@ -1484,7 +1482,7 @@ type SeqMapTask struct {
 func (s *SeqMapTask) MarshalJSON() ([]byte, error) {
 	type noMethod SeqMapTask
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SeqMapTaskUserFn interface{}
@@ -1510,7 +1508,7 @@ type SeqMapTaskOutputInfo struct {
 func (s *SeqMapTaskOutputInfo) MarshalJSON() ([]byte, error) {
 	type noMethod SeqMapTaskOutputInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ShellTask: A task which consists of a shell command for the worker to
@@ -1534,7 +1532,7 @@ type ShellTask struct {
 func (s *ShellTask) MarshalJSON() ([]byte, error) {
 	type noMethod ShellTask
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SideInputInfo: Information about a side input of a DoFn or an input
@@ -1565,7 +1563,7 @@ type SideInputInfo struct {
 func (s *SideInputInfo) MarshalJSON() ([]byte, error) {
 	type noMethod SideInputInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SideInputInfoKind interface{}
@@ -1590,7 +1588,7 @@ type Sink struct {
 func (s *Sink) MarshalJSON() ([]byte, error) {
 	type noMethod Sink
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SinkCodec interface{}
@@ -1649,7 +1647,7 @@ type Source struct {
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type noMethod Source
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SourceBaseSpecs interface{}
@@ -1684,7 +1682,7 @@ type SourceFork struct {
 func (s *SourceFork) MarshalJSON() ([]byte, error) {
 	type noMethod SourceFork
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceGetMetadataRequest: A request to compute the SourceMetadata of
@@ -1706,7 +1704,7 @@ type SourceGetMetadataRequest struct {
 func (s *SourceGetMetadataRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SourceGetMetadataRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceGetMetadataResponse: The result of a
@@ -1727,7 +1725,7 @@ type SourceGetMetadataResponse struct {
 func (s *SourceGetMetadataResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SourceGetMetadataResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceMetadata: Metadata about a Source useful for automatically
@@ -1759,7 +1757,7 @@ type SourceMetadata struct {
 func (s *SourceMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod SourceMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceOperationRequest: A work item that represents the different
@@ -1785,7 +1783,7 @@ type SourceOperationRequest struct {
 func (s *SourceOperationRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SourceOperationRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceOperationResponse: The result of a SourceOperationRequest,
@@ -1810,7 +1808,7 @@ type SourceOperationResponse struct {
 func (s *SourceOperationResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SourceOperationResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceSplitOptions: Hints for splitting a Source into bundles (parts
@@ -1838,7 +1836,7 @@ type SourceSplitOptions struct {
 func (s *SourceSplitOptions) MarshalJSON() ([]byte, error) {
 	type noMethod SourceSplitOptions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceSplitRequest: Represents the operation to split a high-level
@@ -1872,7 +1870,7 @@ type SourceSplitRequest struct {
 func (s *SourceSplitRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SourceSplitRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceSplitResponse: The response to a SourceSplitRequest.
@@ -1910,7 +1908,7 @@ type SourceSplitResponse struct {
 func (s *SourceSplitResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SourceSplitResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceSplitShard: DEPRECATED in favor of DerivedSource.
@@ -1939,7 +1937,7 @@ type SourceSplitShard struct {
 func (s *SourceSplitShard) MarshalJSON() ([]byte, error) {
 	type noMethod SourceSplitShard
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StateFamilyConfig: State family configuration.
@@ -1962,7 +1960,7 @@ type StateFamilyConfig struct {
 func (s *StateFamilyConfig) MarshalJSON() ([]byte, error) {
 	type noMethod StateFamilyConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -2029,7 +2027,7 @@ type Status struct {
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type noMethod Status
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatusDetails interface{}
@@ -2071,7 +2069,7 @@ type Step struct {
 func (s *Step) MarshalJSON() ([]byte, error) {
 	type noMethod Step
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StepProperties interface{}
@@ -2105,7 +2103,7 @@ type StreamLocation struct {
 func (s *StreamLocation) MarshalJSON() ([]byte, error) {
 	type noMethod StreamLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StreamingComputationRanges: Describes full or partial data disk
@@ -2130,7 +2128,7 @@ type StreamingComputationRanges struct {
 func (s *StreamingComputationRanges) MarshalJSON() ([]byte, error) {
 	type noMethod StreamingComputationRanges
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StreamingComputationTask: A task which describes what action should
@@ -2163,7 +2161,7 @@ type StreamingComputationTask struct {
 func (s *StreamingComputationTask) MarshalJSON() ([]byte, error) {
 	type noMethod StreamingComputationTask
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StreamingSetupTask: A task which initializes part of a streaming
@@ -2193,7 +2191,7 @@ type StreamingSetupTask struct {
 func (s *StreamingSetupTask) MarshalJSON() ([]byte, error) {
 	type noMethod StreamingSetupTask
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StreamingSideInputLocation: Identifies the location of a streaming
@@ -2219,7 +2217,7 @@ type StreamingSideInputLocation struct {
 func (s *StreamingSideInputLocation) MarshalJSON() ([]byte, error) {
 	type noMethod StreamingSideInputLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StreamingStageLocation: Identifies the location of a streaming
@@ -2241,7 +2239,7 @@ type StreamingStageLocation struct {
 func (s *StreamingStageLocation) MarshalJSON() ([]byte, error) {
 	type noMethod StreamingStageLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TaskRunnerSettings: Taskrunner configuration settings.
@@ -2333,7 +2331,7 @@ type TaskRunnerSettings struct {
 func (s *TaskRunnerSettings) MarshalJSON() ([]byte, error) {
 	type noMethod TaskRunnerSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TopologyConfig: Global topology of the streaming Dataflow job,
@@ -2362,7 +2360,7 @@ type TopologyConfig struct {
 func (s *TopologyConfig) MarshalJSON() ([]byte, error) {
 	type noMethod TopologyConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WorkItem: WorkItem represents basic information about a WorkItem to
@@ -2427,7 +2425,7 @@ type WorkItem struct {
 func (s *WorkItem) MarshalJSON() ([]byte, error) {
 	type noMethod WorkItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WorkItemServiceState: The Dataflow service's idea of the current
@@ -2467,7 +2465,7 @@ type WorkItemServiceState struct {
 func (s *WorkItemServiceState) MarshalJSON() ([]byte, error) {
 	type noMethod WorkItemServiceState
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type WorkItemServiceStateHarnessData interface{}
@@ -2560,7 +2558,7 @@ type WorkItemStatus struct {
 func (s *WorkItemStatus) MarshalJSON() ([]byte, error) {
 	type noMethod WorkItemStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WorkerPool: Describes one particular pool of Dataflow workers to be
@@ -2669,7 +2667,7 @@ type WorkerPool struct {
 func (s *WorkerPool) MarshalJSON() ([]byte, error) {
 	type noMethod WorkerPool
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type WorkerPoolPoolArgs interface{}
@@ -2716,7 +2714,7 @@ type WorkerSettings struct {
 func (s *WorkerSettings) MarshalJSON() ([]byte, error) {
 	type noMethod WorkerSettings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WriteInstruction: An instruction that writes records. Takes one
@@ -2740,7 +2738,7 @@ type WriteInstruction struct {
 func (s *WriteInstruction) MarshalJSON() ([]byte, error) {
 	type noMethod WriteInstruction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "dataflow.projects.jobs.create":

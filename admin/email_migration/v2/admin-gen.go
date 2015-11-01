@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -125,7 +123,7 @@ type MailItem struct {
 func (s *MailItem) MarshalJSON() ([]byte, error) {
 	type noMethod MailItem
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "emailMigration.mail.insert":

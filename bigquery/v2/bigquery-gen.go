@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -206,7 +204,7 @@ type CsvOptions struct {
 func (s *CsvOptions) MarshalJSON() ([]byte, error) {
 	type noMethod CsvOptions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Dataset struct {
@@ -289,7 +287,7 @@ type Dataset struct {
 func (s *Dataset) MarshalJSON() ([]byte, error) {
 	type noMethod Dataset
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatasetAccess struct {
@@ -337,7 +335,7 @@ type DatasetAccess struct {
 func (s *DatasetAccess) MarshalJSON() ([]byte, error) {
 	type noMethod DatasetAccess
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatasetList struct {
@@ -375,7 +373,7 @@ type DatasetList struct {
 func (s *DatasetList) MarshalJSON() ([]byte, error) {
 	type noMethod DatasetList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatasetListDatasets struct {
@@ -405,7 +403,7 @@ type DatasetListDatasets struct {
 func (s *DatasetListDatasets) MarshalJSON() ([]byte, error) {
 	type noMethod DatasetListDatasets
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DatasetReference struct {
@@ -429,7 +427,7 @@ type DatasetReference struct {
 func (s *DatasetReference) MarshalJSON() ([]byte, error) {
 	type noMethod DatasetReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ErrorProto struct {
@@ -458,7 +456,7 @@ type ErrorProto struct {
 func (s *ErrorProto) MarshalJSON() ([]byte, error) {
 	type noMethod ErrorProto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ExternalDataConfiguration struct {
@@ -512,7 +510,7 @@ type ExternalDataConfiguration struct {
 func (s *ExternalDataConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod ExternalDataConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GetQueryResultsResponse struct {
@@ -581,7 +579,7 @@ type GetQueryResultsResponse struct {
 func (s *GetQueryResultsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetQueryResultsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Job struct {
@@ -632,7 +630,7 @@ type Job struct {
 func (s *Job) MarshalJSON() ([]byte, error) {
 	type noMethod Job
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobCancelResponse struct {
@@ -658,7 +656,7 @@ type JobCancelResponse struct {
 func (s *JobCancelResponse) MarshalJSON() ([]byte, error) {
 	type noMethod JobCancelResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobConfiguration struct {
@@ -695,7 +693,7 @@ type JobConfiguration struct {
 func (s *JobConfiguration) MarshalJSON() ([]byte, error) {
 	type noMethod JobConfiguration
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobConfigurationExtract struct {
@@ -744,7 +742,7 @@ type JobConfigurationExtract struct {
 func (s *JobConfigurationExtract) MarshalJSON() ([]byte, error) {
 	type noMethod JobConfigurationExtract
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobConfigurationLink struct {
@@ -787,7 +785,7 @@ type JobConfigurationLink struct {
 func (s *JobConfigurationLink) MarshalJSON() ([]byte, error) {
 	type noMethod JobConfigurationLink
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobConfigurationLoad struct {
@@ -922,7 +920,7 @@ type JobConfigurationLoad struct {
 func (s *JobConfigurationLoad) MarshalJSON() ([]byte, error) {
 	type noMethod JobConfigurationLoad
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobConfigurationQuery struct {
@@ -1010,7 +1008,7 @@ type JobConfigurationQuery struct {
 func (s *JobConfigurationQuery) MarshalJSON() ([]byte, error) {
 	type noMethod JobConfigurationQuery
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobConfigurationTableCopy struct {
@@ -1056,7 +1054,7 @@ type JobConfigurationTableCopy struct {
 func (s *JobConfigurationTableCopy) MarshalJSON() ([]byte, error) {
 	type noMethod JobConfigurationTableCopy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobList struct {
@@ -1088,7 +1086,7 @@ type JobList struct {
 func (s *JobList) MarshalJSON() ([]byte, error) {
 	type noMethod JobList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobListJobs struct {
@@ -1136,7 +1134,7 @@ type JobListJobs struct {
 func (s *JobListJobs) MarshalJSON() ([]byte, error) {
 	type noMethod JobListJobs
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobReference struct {
@@ -1160,7 +1158,7 @@ type JobReference struct {
 func (s *JobReference) MarshalJSON() ([]byte, error) {
 	type noMethod JobReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobStatistics struct {
@@ -1203,7 +1201,7 @@ type JobStatistics struct {
 func (s *JobStatistics) MarshalJSON() ([]byte, error) {
 	type noMethod JobStatistics
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobStatistics2 struct {
@@ -1232,7 +1230,7 @@ type JobStatistics2 struct {
 func (s *JobStatistics2) MarshalJSON() ([]byte, error) {
 	type noMethod JobStatistics2
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobStatistics3 struct {
@@ -1264,7 +1262,7 @@ type JobStatistics3 struct {
 func (s *JobStatistics3) MarshalJSON() ([]byte, error) {
 	type noMethod JobStatistics3
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobStatistics4 struct {
@@ -1287,7 +1285,7 @@ type JobStatistics4 struct {
 func (s *JobStatistics4) MarshalJSON() ([]byte, error) {
 	type noMethod JobStatistics4
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JobStatus struct {
@@ -1315,7 +1313,7 @@ type JobStatus struct {
 func (s *JobStatus) MarshalJSON() ([]byte, error) {
 	type noMethod JobStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type JsonValue interface{}
@@ -1352,7 +1350,7 @@ type ProjectList struct {
 func (s *ProjectList) MarshalJSON() ([]byte, error) {
 	type noMethod ProjectList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProjectListProjects struct {
@@ -1383,7 +1381,7 @@ type ProjectListProjects struct {
 func (s *ProjectListProjects) MarshalJSON() ([]byte, error) {
 	type noMethod ProjectListProjects
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ProjectReference struct {
@@ -1403,7 +1401,7 @@ type ProjectReference struct {
 func (s *ProjectReference) MarshalJSON() ([]byte, error) {
 	type noMethod ProjectReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type QueryRequest struct {
@@ -1466,7 +1464,7 @@ type QueryRequest struct {
 func (s *QueryRequest) MarshalJSON() ([]byte, error) {
 	type noMethod QueryRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type QueryResponse struct {
@@ -1532,7 +1530,7 @@ type QueryResponse struct {
 func (s *QueryResponse) MarshalJSON() ([]byte, error) {
 	type noMethod QueryResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Streamingbuffer struct {
@@ -1561,7 +1559,7 @@ type Streamingbuffer struct {
 func (s *Streamingbuffer) MarshalJSON() ([]byte, error) {
 	type noMethod Streamingbuffer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Table struct {
@@ -1652,7 +1650,7 @@ type Table struct {
 func (s *Table) MarshalJSON() ([]byte, error) {
 	type noMethod Table
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableCell struct {
@@ -1670,7 +1668,7 @@ type TableCell struct {
 func (s *TableCell) MarshalJSON() ([]byte, error) {
 	type noMethod TableCell
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableDataInsertAllRequest struct {
@@ -1702,7 +1700,7 @@ type TableDataInsertAllRequest struct {
 func (s *TableDataInsertAllRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TableDataInsertAllRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableDataInsertAllRequestRows struct {
@@ -1728,7 +1726,7 @@ type TableDataInsertAllRequestRows struct {
 func (s *TableDataInsertAllRequestRows) MarshalJSON() ([]byte, error) {
 	type noMethod TableDataInsertAllRequestRows
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableDataInsertAllResponse struct {
@@ -1754,7 +1752,7 @@ type TableDataInsertAllResponse struct {
 func (s *TableDataInsertAllResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TableDataInsertAllResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableDataInsertAllResponseInsertErrors struct {
@@ -1777,7 +1775,7 @@ type TableDataInsertAllResponseInsertErrors struct {
 func (s *TableDataInsertAllResponseInsertErrors) MarshalJSON() ([]byte, error) {
 	type noMethod TableDataInsertAllResponseInsertErrors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableDataList struct {
@@ -1814,7 +1812,7 @@ type TableDataList struct {
 func (s *TableDataList) MarshalJSON() ([]byte, error) {
 	type noMethod TableDataList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableFieldSchema struct {
@@ -1852,7 +1850,7 @@ type TableFieldSchema struct {
 func (s *TableFieldSchema) MarshalJSON() ([]byte, error) {
 	type noMethod TableFieldSchema
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableList struct {
@@ -1887,7 +1885,7 @@ type TableList struct {
 func (s *TableList) MarshalJSON() ([]byte, error) {
 	type noMethod TableList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableListTables struct {
@@ -1918,7 +1916,7 @@ type TableListTables struct {
 func (s *TableListTables) MarshalJSON() ([]byte, error) {
 	type noMethod TableListTables
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableReference struct {
@@ -1945,7 +1943,7 @@ type TableReference struct {
 func (s *TableReference) MarshalJSON() ([]byte, error) {
 	type noMethod TableReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableRow struct {
@@ -1965,7 +1963,7 @@ type TableRow struct {
 func (s *TableRow) MarshalJSON() ([]byte, error) {
 	type noMethod TableRow
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TableSchema struct {
@@ -1984,7 +1982,7 @@ type TableSchema struct {
 func (s *TableSchema) MarshalJSON() ([]byte, error) {
 	type noMethod TableSchema
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UserDefinedFunctionResource struct {
@@ -2009,7 +2007,7 @@ type UserDefinedFunctionResource struct {
 func (s *UserDefinedFunctionResource) MarshalJSON() ([]byte, error) {
 	type noMethod UserDefinedFunctionResource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ViewDefinition struct {
@@ -2029,7 +2027,7 @@ type ViewDefinition struct {
 func (s *ViewDefinition) MarshalJSON() ([]byte, error) {
 	type noMethod ViewDefinition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "bigquery.datasets.delete":

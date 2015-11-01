@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -120,7 +118,7 @@ type AcknowledgeRequest struct {
 func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AcknowledgeRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: An empty message that you can re-use to avoid defining
@@ -170,7 +168,7 @@ type Label struct {
 func (s *Label) MarshalJSON() ([]byte, error) {
 	type noMethod Label
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListSubscriptionsResponse: Response for the ListSubscriptions method.
@@ -199,7 +197,7 @@ type ListSubscriptionsResponse struct {
 func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListSubscriptionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTopicsResponse: Response for the ListTopics method.
@@ -228,7 +226,7 @@ type ListTopicsResponse struct {
 func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTopicsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
@@ -264,7 +262,7 @@ type ModifyAckDeadlineRequest struct {
 func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ModifyAckDeadlineRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
@@ -288,7 +286,7 @@ type ModifyPushConfigRequest struct {
 func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ModifyPushConfigRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishBatchRequest: Request for the PublishBatch method.
@@ -311,7 +309,7 @@ type PublishBatchRequest struct {
 func (s *PublishBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PublishBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishBatchResponse: Response for the PublishBatch method.
@@ -337,7 +335,7 @@ type PublishBatchResponse struct {
 func (s *PublishBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PublishBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishRequest: Request for the Publish method.
@@ -360,7 +358,7 @@ type PublishRequest struct {
 func (s *PublishRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PublishRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PubsubEvent: An event indicating a received message or truncation
@@ -393,7 +391,7 @@ type PubsubEvent struct {
 func (s *PubsubEvent) MarshalJSON() ([]byte, error) {
 	type noMethod PubsubEvent
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PubsubMessage: A message data and its labels.
@@ -424,7 +422,7 @@ type PubsubMessage struct {
 func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 	type noMethod PubsubMessage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PullBatchRequest: Request for the PullBatch method.
@@ -457,7 +455,7 @@ type PullBatchRequest struct {
 func (s *PullBatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PullBatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PullBatchResponse: Response for the PullBatch method.
@@ -485,7 +483,7 @@ type PullBatchResponse struct {
 func (s *PullBatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PullBatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PullRequest: Request for the Pull method.
@@ -513,7 +511,7 @@ type PullRequest struct {
 func (s *PullRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PullRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PullResponse: Either a PubsubMessage or a truncation event. One of
@@ -542,7 +540,7 @@ type PullResponse struct {
 func (s *PullResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PullResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PushConfig: Configuration for a push delivery endpoint.
@@ -564,7 +562,7 @@ type PushConfig struct {
 func (s *PushConfig) MarshalJSON() ([]byte, error) {
 	type noMethod PushConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subscription: A subscription resource.
@@ -614,7 +612,7 @@ type Subscription struct {
 func (s *Subscription) MarshalJSON() ([]byte, error) {
 	type noMethod Subscription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Topic: A topic resource.
@@ -638,7 +636,7 @@ type Topic struct {
 func (s *Topic) MarshalJSON() ([]byte, error) {
 	type noMethod Topic
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "pubsub.subscriptions.acknowledge":

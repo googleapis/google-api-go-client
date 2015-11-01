@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -170,7 +168,7 @@ type CustomField struct {
 func (s *CustomField) MarshalJSON() ([]byte, error) {
 	type noMethod CustomField
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomFieldDef: Custom field definition.
@@ -210,7 +208,7 @@ type CustomFieldDef struct {
 func (s *CustomFieldDef) MarshalJSON() ([]byte, error) {
 	type noMethod CustomFieldDef
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomFieldDefListResponse: Collection of custom field definitions
@@ -239,7 +237,7 @@ type CustomFieldDefListResponse struct {
 func (s *CustomFieldDefListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CustomFieldDefListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomFields: Collection of custom fields.
@@ -262,7 +260,7 @@ type CustomFields struct {
 func (s *CustomFields) MarshalJSON() ([]byte, error) {
 	type noMethod CustomFields
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EnumItemDef: Enum Item definition.
@@ -290,7 +288,7 @@ type EnumItemDef struct {
 func (s *EnumItemDef) MarshalJSON() ([]byte, error) {
 	type noMethod EnumItemDef
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Job: A job.
@@ -324,7 +322,7 @@ type Job struct {
 func (s *Job) MarshalJSON() ([]byte, error) {
 	type noMethod Job
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JobChange: Change to a job. For example assigning the job to a
@@ -352,7 +350,7 @@ type JobChange struct {
 func (s *JobChange) MarshalJSON() ([]byte, error) {
 	type noMethod JobChange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JobListResponse: Response from a List Jobs request.
@@ -382,7 +380,7 @@ type JobListResponse struct {
 func (s *JobListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod JobListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // JobState: Current state of a job.
@@ -427,7 +425,7 @@ type JobState struct {
 func (s *JobState) MarshalJSON() ([]byte, error) {
 	type noMethod JobState
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Location: Location of a job.
@@ -456,7 +454,7 @@ type Location struct {
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type noMethod Location
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LocationListResponse: Response from a List Locations request.
@@ -489,7 +487,7 @@ type LocationListResponse struct {
 func (s *LocationListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LocationListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LocationRecord: Recorded location of a worker.
@@ -522,7 +520,7 @@ type LocationRecord struct {
 func (s *LocationRecord) MarshalJSON() ([]byte, error) {
 	type noMethod LocationRecord
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Schedule: Job schedule.
@@ -559,7 +557,7 @@ type Schedule struct {
 func (s *Schedule) MarshalJSON() ([]byte, error) {
 	type noMethod Schedule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Team: A Coordinate team.
@@ -586,7 +584,7 @@ type Team struct {
 func (s *Team) MarshalJSON() ([]byte, error) {
 	type noMethod Team
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TeamListResponse: Response from a List Teams request.
@@ -613,7 +611,7 @@ type TeamListResponse struct {
 func (s *TeamListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TeamListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TokenPagination: Pagination information.
@@ -640,7 +638,7 @@ type TokenPagination struct {
 func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 	type noMethod TokenPagination
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Worker: A worker in a Coordinate team.
@@ -664,7 +662,7 @@ type Worker struct {
 func (s *Worker) MarshalJSON() ([]byte, error) {
 	type noMethod Worker
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WorkerListResponse: Response from a List Workers request.
@@ -691,7 +689,7 @@ type WorkerListResponse struct {
 func (s *WorkerListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod WorkerListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "coordinate.customFieldDef.list":

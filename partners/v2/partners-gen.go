@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -158,7 +156,7 @@ type CertificationExamStatus struct {
 func (s *CertificationExamStatus) MarshalJSON() ([]byte, error) {
 	type noMethod CertificationExamStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CertificationStatus: Google Partners certification status.
@@ -194,7 +192,7 @@ type CertificationStatus struct {
 func (s *CertificationStatus) MarshalJSON() ([]byte, error) {
 	type noMethod CertificationStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Company: A company resource in the Google Partners API. Once
@@ -275,7 +273,7 @@ type Company struct {
 func (s *Company) MarshalJSON() ([]byte, error) {
 	type noMethod Company
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreateLeadRequest: Request message for CreateLead.
@@ -303,7 +301,7 @@ type CreateLeadRequest struct {
 func (s *CreateLeadRequest) MarshalJSON() ([]byte, error) {
 	type noMethod CreateLeadRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreateLeadResponse: Response message for CreateLead. Debug
@@ -341,7 +339,7 @@ type CreateLeadResponse struct {
 func (s *CreateLeadResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreateLeadResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DebugInfo: Debug information about this request.
@@ -367,7 +365,7 @@ type DebugInfo struct {
 func (s *DebugInfo) MarshalJSON() ([]byte, error) {
 	type noMethod DebugInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // EventData: Key value data pair for an event.
@@ -430,7 +428,7 @@ type EventData struct {
 func (s *EventData) MarshalJSON() ([]byte, error) {
 	type noMethod EventData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetCompanyResponse: Response message for GetCompany.
@@ -457,7 +455,7 @@ type GetCompanyResponse struct {
 func (s *GetCompanyResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetCompanyResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LatLng: An object representing a latitude/longitude pair. This is
@@ -505,7 +503,7 @@ type LatLng struct {
 func (s *LatLng) MarshalJSON() ([]byte, error) {
 	type noMethod LatLng
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Lead: A lead resource that represents an advertiser contact for a
@@ -568,7 +566,7 @@ type Lead struct {
 func (s *Lead) MarshalJSON() ([]byte, error) {
 	type noMethod Lead
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListCompaniesResponse: Response message for ListCompanies.
@@ -601,7 +599,7 @@ type ListCompaniesResponse struct {
 func (s *ListCompaniesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListCompaniesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListUserStatesResponse: Response message for ListUserStates.
@@ -633,7 +631,7 @@ type ListUserStatesResponse struct {
 func (s *ListUserStatesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListUserStatesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LocalizedCompanyInfo: The localized company information.
@@ -664,7 +662,7 @@ type LocalizedCompanyInfo struct {
 func (s *LocalizedCompanyInfo) MarshalJSON() ([]byte, error) {
 	type noMethod LocalizedCompanyInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Location: A location with address and geographic coordinates.
@@ -687,7 +685,7 @@ type Location struct {
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type noMethod Location
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogMessageRequest: Request message for LogClientMessage.
@@ -724,7 +722,7 @@ type LogMessageRequest struct {
 func (s *LogMessageRequest) MarshalJSON() ([]byte, error) {
 	type noMethod LogMessageRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogMessageResponse: Response message for LogClientMessage.
@@ -748,7 +746,7 @@ type LogMessageResponse struct {
 func (s *LogMessageResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LogMessageResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogUserEventRequest: Request message for LogUserEvent.
@@ -966,7 +964,7 @@ type LogUserEventRequest struct {
 func (s *LogUserEventRequest) MarshalJSON() ([]byte, error) {
 	type noMethod LogUserEventRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogUserEventResponse: Response message for LogUserEvent.
@@ -990,7 +988,7 @@ type LogUserEventResponse struct {
 func (s *LogUserEventResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LogUserEventResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Money: Represents an amount of money with its currency type.
@@ -1022,7 +1020,7 @@ type Money struct {
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type noMethod Money
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublicProfile: Basic information from a public profile.
@@ -1053,7 +1051,7 @@ type PublicProfile struct {
 func (s *PublicProfile) MarshalJSON() ([]byte, error) {
 	type noMethod PublicProfile
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Rank: Information related to ranking of results.
@@ -1080,7 +1078,7 @@ type Rank struct {
 func (s *Rank) MarshalJSON() ([]byte, error) {
 	type noMethod Rank
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RecaptchaChallenge: reCaptcha challenge info.
@@ -1103,7 +1101,7 @@ type RecaptchaChallenge struct {
 func (s *RecaptchaChallenge) MarshalJSON() ([]byte, error) {
 	type noMethod RecaptchaChallenge
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RequestMetadata: Common data that is in each API request.
@@ -1137,7 +1135,7 @@ type RequestMetadata struct {
 func (s *RequestMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod RequestMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResponseMetadata: Common data that is in each API response.
@@ -1157,7 +1155,7 @@ type ResponseMetadata struct {
 func (s *ResponseMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod ResponseMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TrafficSource: Source of traffic for the current request.
@@ -1184,7 +1182,7 @@ type TrafficSource struct {
 func (s *TrafficSource) MarshalJSON() ([]byte, error) {
 	type noMethod TrafficSource
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserOverrides: Values to use instead of the user's respective
@@ -1209,7 +1207,7 @@ type UserOverrides struct {
 func (s *UserOverrides) MarshalJSON() ([]byte, error) {
 	type noMethod UserOverrides
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "partners.clientMessages.log":

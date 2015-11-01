@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -151,7 +149,7 @@ type AuthorizedKeysView struct {
 func (s *AuthorizedKeysView) MarshalJSON() ([]byte, error) {
 	type noMethod AuthorizedKeysView
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Group: A Group resource.
@@ -199,7 +197,7 @@ type Group struct {
 func (s *Group) MarshalJSON() ([]byte, error) {
 	type noMethod Group
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GroupList struct {
@@ -237,7 +235,7 @@ type GroupList struct {
 func (s *GroupList) MarshalJSON() ([]byte, error) {
 	type noMethod GroupList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GroupsAddMemberRequest struct {
@@ -256,7 +254,7 @@ type GroupsAddMemberRequest struct {
 func (s *GroupsAddMemberRequest) MarshalJSON() ([]byte, error) {
 	type noMethod GroupsAddMemberRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type GroupsRemoveMemberRequest struct {
@@ -275,7 +273,7 @@ type GroupsRemoveMemberRequest struct {
 func (s *GroupsRemoveMemberRequest) MarshalJSON() ([]byte, error) {
 	type noMethod GroupsRemoveMemberRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LinuxAccountViews: A list of all Linux accounts for this project.
@@ -306,7 +304,7 @@ type LinuxAccountViews struct {
 func (s *LinuxAccountViews) MarshalJSON() ([]byte, error) {
 	type noMethod LinuxAccountViews
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LinuxGetAuthorizedKeysViewResponse struct {
@@ -329,7 +327,7 @@ type LinuxGetAuthorizedKeysViewResponse struct {
 func (s *LinuxGetAuthorizedKeysViewResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LinuxGetAuthorizedKeysViewResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LinuxGetLinuxAccountViewsResponse struct {
@@ -353,7 +351,7 @@ type LinuxGetLinuxAccountViewsResponse struct {
 func (s *LinuxGetLinuxAccountViewsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod LinuxGetLinuxAccountViewsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LinuxGroupView: A detailed view of a Linux group.
@@ -380,7 +378,7 @@ type LinuxGroupView struct {
 func (s *LinuxGroupView) MarshalJSON() ([]byte, error) {
 	type noMethod LinuxGroupView
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LinuxUserView: A detailed view of a Linux user account.
@@ -417,7 +415,7 @@ type LinuxUserView struct {
 func (s *LinuxUserView) MarshalJSON() ([]byte, error) {
 	type noMethod LinuxUserView
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: An Operation resource, used to manage asynchronous API
@@ -533,7 +531,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationError: [Output Only] If errors are generated during
@@ -555,7 +553,7 @@ type OperationError struct {
 func (s *OperationError) MarshalJSON() ([]byte, error) {
 	type noMethod OperationError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationErrorErrors struct {
@@ -581,7 +579,7 @@ type OperationErrorErrors struct {
 func (s *OperationErrorErrors) MarshalJSON() ([]byte, error) {
 	type noMethod OperationErrorErrors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarnings struct {
@@ -623,7 +621,7 @@ type OperationWarnings struct {
 func (s *OperationWarnings) MarshalJSON() ([]byte, error) {
 	type noMethod OperationWarnings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarningsData struct {
@@ -645,7 +643,7 @@ type OperationWarningsData struct {
 func (s *OperationWarningsData) MarshalJSON() ([]byte, error) {
 	type noMethod OperationWarningsData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OperationList: Contains a list of Operation resources.
@@ -683,7 +681,7 @@ type OperationList struct {
 func (s *OperationList) MarshalJSON() ([]byte, error) {
 	type noMethod OperationList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublicKey: A public key for authenticating to guests.
@@ -720,7 +718,7 @@ type PublicKey struct {
 func (s *PublicKey) MarshalJSON() ([]byte, error) {
 	type noMethod PublicKey
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // User: A User resource.
@@ -777,7 +775,7 @@ type User struct {
 func (s *User) MarshalJSON() ([]byte, error) {
 	type noMethod User
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UserList struct {
@@ -815,7 +813,7 @@ type UserList struct {
 func (s *UserList) MarshalJSON() ([]byte, error) {
 	type noMethod UserList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "clouduseraccounts.globalAccountsOperations.delete":

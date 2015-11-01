@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// Package internal contains common code shared by all Google API libraries which is not exported to users of the libraries.
-package internal
+// Package gensupport contains common code shared by all generated Google API libraries.
+package gensupport
 
 import (
 	"encoding/json"

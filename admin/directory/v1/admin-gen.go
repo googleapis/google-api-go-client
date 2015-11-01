@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -431,7 +429,7 @@ type Alias struct {
 func (s *Alias) MarshalJSON() ([]byte, error) {
 	type noMethod Alias
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Aliases: JSON response template to list aliases in Directory API.
@@ -461,7 +459,7 @@ type Aliases struct {
 func (s *Aliases) MarshalJSON() ([]byte, error) {
 	type noMethod Aliases
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Asp: The template that returns individual ASP (Access Code) data.
@@ -507,7 +505,7 @@ type Asp struct {
 func (s *Asp) MarshalJSON() ([]byte, error) {
 	type noMethod Asp
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Asps struct {
@@ -537,7 +535,7 @@ type Asps struct {
 func (s *Asps) MarshalJSON() ([]byte, error) {
 	type noMethod Asps
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Channel: An notification channel used to watch for resource changes.
@@ -595,7 +593,7 @@ type Channel struct {
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type noMethod Channel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChromeOsDevice: JSON template for Chrome Os Device resource in
@@ -702,7 +700,7 @@ type ChromeOsDevice struct {
 func (s *ChromeOsDevice) MarshalJSON() ([]byte, error) {
 	type noMethod ChromeOsDevice
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ChromeOsDeviceActiveTimeRanges struct {
@@ -724,7 +722,7 @@ type ChromeOsDeviceActiveTimeRanges struct {
 func (s *ChromeOsDeviceActiveTimeRanges) MarshalJSON() ([]byte, error) {
 	type noMethod ChromeOsDeviceActiveTimeRanges
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ChromeOsDeviceRecentUsers struct {
@@ -747,7 +745,7 @@ type ChromeOsDeviceRecentUsers struct {
 func (s *ChromeOsDeviceRecentUsers) MarshalJSON() ([]byte, error) {
 	type noMethod ChromeOsDeviceRecentUsers
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ChromeOsDevices: JSON response template for List Chrome OS Devices
@@ -781,7 +779,7 @@ type ChromeOsDevices struct {
 func (s *ChromeOsDevices) MarshalJSON() ([]byte, error) {
 	type noMethod ChromeOsDevices
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Customer: JSON template for Customer Resource object in Directory
@@ -834,7 +832,7 @@ type Customer struct {
 func (s *Customer) MarshalJSON() ([]byte, error) {
 	type noMethod Customer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomerPostalAddress: JSON template for postal address of a
@@ -885,7 +883,7 @@ type CustomerPostalAddress struct {
 func (s *CustomerPostalAddress) MarshalJSON() ([]byte, error) {
 	type noMethod CustomerPostalAddress
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DomainAlias: JSON template for Domain Alias object in Directory API.
@@ -927,7 +925,7 @@ type DomainAlias struct {
 func (s *DomainAlias) MarshalJSON() ([]byte, error) {
 	type noMethod DomainAlias
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DomainAliases: JSON response template to list domain aliases in
@@ -958,7 +956,7 @@ type DomainAliases struct {
 func (s *DomainAliases) MarshalJSON() ([]byte, error) {
 	type noMethod DomainAliases
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Domains: JSON template for Domain object in Directory API.
@@ -1000,7 +998,7 @@ type Domains struct {
 func (s *Domains) MarshalJSON() ([]byte, error) {
 	type noMethod Domains
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Domains2: JSON response template to list Domains in Directory API.
@@ -1030,7 +1028,7 @@ type Domains2 struct {
 func (s *Domains2) MarshalJSON() ([]byte, error) {
 	type noMethod Domains2
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Group: JSON template for Group resource in Directory API.
@@ -1081,7 +1079,7 @@ type Group struct {
 func (s *Group) MarshalJSON() ([]byte, error) {
 	type noMethod Group
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Groups: JSON response template for List Groups operation in Directory
@@ -1115,7 +1113,7 @@ type Groups struct {
 func (s *Groups) MarshalJSON() ([]byte, error) {
 	type noMethod Groups
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Member: JSON template for Member resource in Directory API.
@@ -1156,7 +1154,7 @@ type Member struct {
 func (s *Member) MarshalJSON() ([]byte, error) {
 	type noMethod Member
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Members: JSON response template for List Members operation in
@@ -1190,7 +1188,7 @@ type Members struct {
 func (s *Members) MarshalJSON() ([]byte, error) {
 	type noMethod Members
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MobileDevice: JSON template for Mobile Device resource in Directory
@@ -1315,7 +1313,7 @@ type MobileDevice struct {
 func (s *MobileDevice) MarshalJSON() ([]byte, error) {
 	type noMethod MobileDevice
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MobileDeviceApplications struct {
@@ -1346,7 +1344,7 @@ type MobileDeviceApplications struct {
 func (s *MobileDeviceApplications) MarshalJSON() ([]byte, error) {
 	type noMethod MobileDeviceApplications
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MobileDeviceAction: JSON request template for firing commands on
@@ -1367,7 +1365,7 @@ type MobileDeviceAction struct {
 func (s *MobileDeviceAction) MarshalJSON() ([]byte, error) {
 	type noMethod MobileDeviceAction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MobileDevices: JSON response template for List Mobile Devices
@@ -1401,7 +1399,7 @@ type MobileDevices struct {
 func (s *MobileDevices) MarshalJSON() ([]byte, error) {
 	type noMethod MobileDevices
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Notification: Template for a notification resource.
@@ -1447,7 +1445,7 @@ type Notification struct {
 func (s *Notification) MarshalJSON() ([]byte, error) {
 	type noMethod Notification
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Notifications: Template for notifications list response.
@@ -1484,7 +1482,7 @@ type Notifications struct {
 func (s *Notifications) MarshalJSON() ([]byte, error) {
 	type noMethod Notifications
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OrgUnit: JSON template for Org Unit resource in Directory API.
@@ -1532,7 +1530,7 @@ type OrgUnit struct {
 func (s *OrgUnit) MarshalJSON() ([]byte, error) {
 	type noMethod OrgUnit
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // OrgUnits: JSON response template for List Organization Units
@@ -1563,7 +1561,7 @@ type OrgUnits struct {
 func (s *OrgUnits) MarshalJSON() ([]byte, error) {
 	type noMethod OrgUnits
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Privilege: JSON template for privilege resource in Directory API.
@@ -1605,7 +1603,7 @@ type Privilege struct {
 func (s *Privilege) MarshalJSON() ([]byte, error) {
 	type noMethod Privilege
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Privileges: JSON response template for List privileges operation in
@@ -1637,7 +1635,7 @@ type Privileges struct {
 func (s *Privileges) MarshalJSON() ([]byte, error) {
 	type noMethod Privileges
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Role: JSON template for role resource in Directory API.
@@ -1683,7 +1681,7 @@ type Role struct {
 func (s *Role) MarshalJSON() ([]byte, error) {
 	type noMethod Role
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RoleRolePrivileges struct {
@@ -1705,7 +1703,7 @@ type RoleRolePrivileges struct {
 func (s *RoleRolePrivileges) MarshalJSON() ([]byte, error) {
 	type noMethod RoleRolePrivileges
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoleAssignment: JSON template for roleAssignment resource in
@@ -1754,7 +1752,7 @@ type RoleAssignment struct {
 func (s *RoleAssignment) MarshalJSON() ([]byte, error) {
 	type noMethod RoleAssignment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RoleAssignments: JSON response template for List roleAssignments
@@ -1788,7 +1786,7 @@ type RoleAssignments struct {
 func (s *RoleAssignments) MarshalJSON() ([]byte, error) {
 	type noMethod RoleAssignments
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Roles: JSON response template for List roles operation in Directory
@@ -1822,7 +1820,7 @@ type Roles struct {
 func (s *Roles) MarshalJSON() ([]byte, error) {
 	type noMethod Roles
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Schema: JSON template for Schema resource in Directory API.
@@ -1858,7 +1856,7 @@ type Schema struct {
 func (s *Schema) MarshalJSON() ([]byte, error) {
 	type noMethod Schema
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SchemaFieldSpec: JSON template for FieldSpec resource for Schemas in
@@ -1910,7 +1908,7 @@ type SchemaFieldSpec struct {
 func (s *SchemaFieldSpec) MarshalJSON() ([]byte, error) {
 	type noMethod SchemaFieldSpec
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SchemaFieldSpecNumericIndexingSpec: Indexing spec for a numeric
@@ -1940,7 +1938,7 @@ type SchemaFieldSpecNumericIndexingSpec struct {
 func (s *SchemaFieldSpecNumericIndexingSpec) MarshalJSON() ([]byte, error) {
 	type noMethod SchemaFieldSpecNumericIndexingSpec
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Schemas: JSON response template for List Schema operation in
@@ -1971,7 +1969,7 @@ type Schemas struct {
 func (s *Schemas) MarshalJSON() ([]byte, error) {
 	type noMethod Schemas
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Token: JSON template for token resource in Directory API.
@@ -2021,7 +2019,7 @@ type Token struct {
 func (s *Token) MarshalJSON() ([]byte, error) {
 	type noMethod Token
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Tokens: JSON response template for List tokens operation in Directory
@@ -2053,7 +2051,7 @@ type Tokens struct {
 func (s *Tokens) MarshalJSON() ([]byte, error) {
 	type noMethod Tokens
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // User: JSON template for User object in Directory API.
@@ -2173,7 +2171,7 @@ type User struct {
 func (s *User) MarshalJSON() ([]byte, error) {
 	type noMethod User
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserAbout: JSON template for About (notes) of a user in Directory
@@ -2199,7 +2197,7 @@ type UserAbout struct {
 func (s *UserAbout) MarshalJSON() ([]byte, error) {
 	type noMethod UserAbout
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserAddress: JSON template for address.
@@ -2262,7 +2260,7 @@ type UserAddress struct {
 func (s *UserAddress) MarshalJSON() ([]byte, error) {
 	type noMethod UserAddress
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UserCustomProperties interface{}
@@ -2298,7 +2296,7 @@ type UserEmail struct {
 func (s *UserEmail) MarshalJSON() ([]byte, error) {
 	type noMethod UserEmail
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserExternalId: JSON template for an externalId entry.
@@ -2324,7 +2322,7 @@ type UserExternalId struct {
 func (s *UserExternalId) MarshalJSON() ([]byte, error) {
 	type noMethod UserExternalId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserIm: JSON template for instant messenger of an user.
@@ -2366,7 +2364,7 @@ type UserIm struct {
 func (s *UserIm) MarshalJSON() ([]byte, error) {
 	type noMethod UserIm
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserMakeAdmin: JSON request template for setting/revoking admin
@@ -2387,7 +2385,7 @@ type UserMakeAdmin struct {
 func (s *UserMakeAdmin) MarshalJSON() ([]byte, error) {
 	type noMethod UserMakeAdmin
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserName: JSON template for name of a user in Directory API.
@@ -2413,7 +2411,7 @@ type UserName struct {
 func (s *UserName) MarshalJSON() ([]byte, error) {
 	type noMethod UserName
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserOrganization: JSON template for an organization entry.
@@ -2468,7 +2466,7 @@ type UserOrganization struct {
 func (s *UserOrganization) MarshalJSON() ([]byte, error) {
 	type noMethod UserOrganization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserPhone: JSON template for a phone entry.
@@ -2501,7 +2499,7 @@ type UserPhone struct {
 func (s *UserPhone) MarshalJSON() ([]byte, error) {
 	type noMethod UserPhone
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserPhoto: JSON template for Photo object in Directory API.
@@ -2546,7 +2544,7 @@ type UserPhoto struct {
 func (s *UserPhoto) MarshalJSON() ([]byte, error) {
 	type noMethod UserPhoto
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserRelation: JSON template for a relation entry.
@@ -2573,7 +2571,7 @@ type UserRelation struct {
 func (s *UserRelation) MarshalJSON() ([]byte, error) {
 	type noMethod UserRelation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserUndelete: JSON request template to undelete a user in Directory
@@ -2594,7 +2592,7 @@ type UserUndelete struct {
 func (s *UserUndelete) MarshalJSON() ([]byte, error) {
 	type noMethod UserUndelete
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserWebsite: JSON template for a website entry.
@@ -2627,7 +2625,7 @@ type UserWebsite struct {
 func (s *UserWebsite) MarshalJSON() ([]byte, error) {
 	type noMethod UserWebsite
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Users: JSON response template for List Users operation in Apps
@@ -2665,7 +2663,7 @@ type Users struct {
 func (s *Users) MarshalJSON() ([]byte, error) {
 	type noMethod Users
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VerificationCode: JSON template for verification codes in Directory
@@ -2698,7 +2696,7 @@ type VerificationCode struct {
 func (s *VerificationCode) MarshalJSON() ([]byte, error) {
 	type noMethod VerificationCode
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VerificationCodes: JSON response template for List verification codes
@@ -2730,7 +2728,7 @@ type VerificationCodes struct {
 func (s *VerificationCodes) MarshalJSON() ([]byte, error) {
 	type noMethod VerificationCodes
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "directory.asps.delete":

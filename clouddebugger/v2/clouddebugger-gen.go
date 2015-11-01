@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -257,7 +255,7 @@ type Breakpoint struct {
 func (s *Breakpoint) MarshalJSON() ([]byte, error) {
 	type noMethod Breakpoint
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CloudRepoSourceContext: A CloudRepoSourceContext denotes a particular
@@ -285,7 +283,7 @@ type CloudRepoSourceContext struct {
 func (s *CloudRepoSourceContext) MarshalJSON() ([]byte, error) {
 	type noMethod CloudRepoSourceContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CloudWorkspaceId: A CloudWorkspaceId is a unique identifier for a
@@ -311,7 +309,7 @@ type CloudWorkspaceId struct {
 func (s *CloudWorkspaceId) MarshalJSON() ([]byte, error) {
 	type noMethod CloudWorkspaceId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CloudWorkspaceSourceContext: A CloudWorkspaceSourceContext denotes a
@@ -336,7 +334,7 @@ type CloudWorkspaceSourceContext struct {
 func (s *CloudWorkspaceSourceContext) MarshalJSON() ([]byte, error) {
 	type noMethod CloudWorkspaceSourceContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Debuggee: Represents the application to debug. The application may
@@ -402,7 +400,7 @@ type Debuggee struct {
 func (s *Debuggee) MarshalJSON() ([]byte, error) {
 	type noMethod Debuggee
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -441,7 +439,7 @@ type FormatMessage struct {
 func (s *FormatMessage) MarshalJSON() ([]byte, error) {
 	type noMethod FormatMessage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GerritSourceContext: A SourceContext referring to a Gerrit project.
@@ -472,7 +470,7 @@ type GerritSourceContext struct {
 func (s *GerritSourceContext) MarshalJSON() ([]byte, error) {
 	type noMethod GerritSourceContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetBreakpointResponse: The response of getting breakpoint
@@ -498,7 +496,7 @@ type GetBreakpointResponse struct {
 func (s *GetBreakpointResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetBreakpointResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GitSourceContext: A GitSourceContext denotes a particular revision in
@@ -522,7 +520,7 @@ type GitSourceContext struct {
 func (s *GitSourceContext) MarshalJSON() ([]byte, error) {
 	type noMethod GitSourceContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListActiveBreakpointsResponse: The response of listing active
@@ -552,7 +550,7 @@ type ListActiveBreakpointsResponse struct {
 func (s *ListActiveBreakpointsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListActiveBreakpointsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListBreakpointsResponse: The response of listing breakpoints.
@@ -581,7 +579,7 @@ type ListBreakpointsResponse struct {
 func (s *ListBreakpointsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListBreakpointsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListDebuggeesResponse: The response of listing debuggees.
@@ -608,7 +606,7 @@ type ListDebuggeesResponse struct {
 func (s *ListDebuggeesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListDebuggeesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ProjectRepoId: Selects a repo using a Google Cloud Platform project
@@ -632,7 +630,7 @@ type ProjectRepoId struct {
 func (s *ProjectRepoId) MarshalJSON() ([]byte, error) {
 	type noMethod ProjectRepoId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegisterDebuggeeRequest: The request to register a debuggee.
@@ -654,7 +652,7 @@ type RegisterDebuggeeRequest struct {
 func (s *RegisterDebuggeeRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RegisterDebuggeeRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegisterDebuggeeResponse: The response of registering a debuggee.
@@ -679,7 +677,7 @@ type RegisterDebuggeeResponse struct {
 func (s *RegisterDebuggeeResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RegisterDebuggeeResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RepoId: A unique identifier for a cloud repo.
@@ -702,7 +700,7 @@ type RepoId struct {
 func (s *RepoId) MarshalJSON() ([]byte, error) {
 	type noMethod RepoId
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SetBreakpointResponse: The response of setting a breakpoint.
@@ -727,7 +725,7 @@ type SetBreakpointResponse struct {
 func (s *SetBreakpointResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SetBreakpointResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceContext: A SourceContext is a reference to a tree of files. A
@@ -760,7 +758,7 @@ type SourceContext struct {
 func (s *SourceContext) MarshalJSON() ([]byte, error) {
 	type noMethod SourceContext
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceLocation: Represents a location in the source code.
@@ -784,7 +782,7 @@ type SourceLocation struct {
 func (s *SourceLocation) MarshalJSON() ([]byte, error) {
 	type noMethod SourceLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StackFrame: Represents a stack frame context.
@@ -815,7 +813,7 @@ type StackFrame struct {
 func (s *StackFrame) MarshalJSON() ([]byte, error) {
 	type noMethod StackFrame
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // StatusMessage: Represents a contextual status message. The message
@@ -853,7 +851,7 @@ type StatusMessage struct {
 func (s *StatusMessage) MarshalJSON() ([]byte, error) {
 	type noMethod StatusMessage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateActiveBreakpointRequest: The request to update an active
@@ -875,7 +873,7 @@ type UpdateActiveBreakpointRequest struct {
 func (s *UpdateActiveBreakpointRequest) MarshalJSON() ([]byte, error) {
 	type noMethod UpdateActiveBreakpointRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateActiveBreakpointResponse: The response of updating an active
@@ -960,7 +958,7 @@ type Variable struct {
 func (s *Variable) MarshalJSON() ([]byte, error) {
 	type noMethod Variable
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "clouddebugger.controller.debuggees.register":

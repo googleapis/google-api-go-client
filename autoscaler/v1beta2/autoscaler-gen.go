@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -161,7 +159,7 @@ type Autoscaler struct {
 func (s *Autoscaler) MarshalJSON() ([]byte, error) {
 	type noMethod Autoscaler
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AutoscalerListResponse struct {
@@ -191,7 +189,7 @@ type AutoscalerListResponse struct {
 func (s *AutoscalerListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod AutoscalerListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AutoscalingPolicy: Cloud Autoscaler policy.
@@ -236,7 +234,7 @@ type AutoscalingPolicy struct {
 func (s *AutoscalingPolicy) MarshalJSON() ([]byte, error) {
 	type noMethod AutoscalingPolicy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AutoscalingPolicyCpuUtilization: CPU utilization policy.
@@ -259,7 +257,7 @@ type AutoscalingPolicyCpuUtilization struct {
 func (s *AutoscalingPolicyCpuUtilization) MarshalJSON() ([]byte, error) {
 	type noMethod AutoscalingPolicyCpuUtilization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AutoscalingPolicyCustomMetricUtilization: Custom utilization metric
@@ -293,7 +291,7 @@ type AutoscalingPolicyCustomMetricUtilization struct {
 func (s *AutoscalingPolicyCustomMetricUtilization) MarshalJSON() ([]byte, error) {
 	type noMethod AutoscalingPolicyCustomMetricUtilization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AutoscalingPolicyLoadBalancingUtilization: Load balancing utilization
@@ -320,7 +318,7 @@ type AutoscalingPolicyLoadBalancingUtilization struct {
 func (s *AutoscalingPolicyLoadBalancingUtilization) MarshalJSON() ([]byte, error) {
 	type noMethod AutoscalingPolicyLoadBalancingUtilization
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type DeprecationStatus struct {
@@ -346,7 +344,7 @@ type DeprecationStatus struct {
 func (s *DeprecationStatus) MarshalJSON() ([]byte, error) {
 	type noMethod DeprecationStatus
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Operation struct {
@@ -412,7 +410,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationError struct {
@@ -430,7 +428,7 @@ type OperationError struct {
 func (s *OperationError) MarshalJSON() ([]byte, error) {
 	type noMethod OperationError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationErrorErrors struct {
@@ -452,7 +450,7 @@ type OperationErrorErrors struct {
 func (s *OperationErrorErrors) MarshalJSON() ([]byte, error) {
 	type noMethod OperationErrorErrors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarnings struct {
@@ -474,7 +472,7 @@ type OperationWarnings struct {
 func (s *OperationWarnings) MarshalJSON() ([]byte, error) {
 	type noMethod OperationWarnings
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationWarningsData struct {
@@ -494,7 +492,7 @@ type OperationWarningsData struct {
 func (s *OperationWarningsData) MarshalJSON() ([]byte, error) {
 	type noMethod OperationWarningsData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OperationList struct {
@@ -526,7 +524,7 @@ type OperationList struct {
 func (s *OperationList) MarshalJSON() ([]byte, error) {
 	type noMethod OperationList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Zone struct {
@@ -564,7 +562,7 @@ type Zone struct {
 func (s *Zone) MarshalJSON() ([]byte, error) {
 	type noMethod Zone
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ZoneMaintenanceWindows struct {
@@ -588,7 +586,7 @@ type ZoneMaintenanceWindows struct {
 func (s *ZoneMaintenanceWindows) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneMaintenanceWindows
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ZoneList struct {
@@ -620,7 +618,7 @@ type ZoneList struct {
 func (s *ZoneList) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "autoscaler.autoscalers.delete":

@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -258,7 +256,7 @@ type HttpRequest struct {
 func (s *HttpRequest) MarshalJSON() ([]byte, error) {
 	type noMethod HttpRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogMetricsResponse: Result returned from ListLogMetrics.
@@ -289,7 +287,7 @@ type ListLogMetricsResponse struct {
 func (s *ListLogMetricsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListLogMetricsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogServiceIndexesResponse: Result returned from
@@ -324,7 +322,7 @@ type ListLogServiceIndexesResponse struct {
 func (s *ListLogServiceIndexesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListLogServiceIndexesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogServiceSinksResponse: Result returned from
@@ -351,7 +349,7 @@ type ListLogServiceSinksResponse struct {
 func (s *ListLogServiceSinksResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListLogServiceSinksResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogServicesResponse: Result returned from
@@ -383,7 +381,7 @@ type ListLogServicesResponse struct {
 func (s *ListLogServicesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListLogServicesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogSinksResponse: Result returned from `ListLogSinks`.
@@ -409,7 +407,7 @@ type ListLogSinksResponse struct {
 func (s *ListLogSinksResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListLogSinksResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListLogsResponse: Result returned from ListLogs.
@@ -440,7 +438,7 @@ type ListLogsResponse struct {
 func (s *ListLogsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListLogsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListSinksResponse: Result returned from `ListSinks`.
@@ -466,7 +464,7 @@ type ListSinksResponse struct {
 func (s *ListSinksResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListSinksResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Log: _Output only._ Describes a log, which is a named stream of log
@@ -502,7 +500,7 @@ type Log struct {
 func (s *Log) MarshalJSON() ([]byte, error) {
 	type noMethod Log
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogEntry: An individual entry in a log.
@@ -547,7 +545,7 @@ type LogEntry struct {
 func (s *LogEntry) MarshalJSON() ([]byte, error) {
 	type noMethod LogEntry
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type LogEntryProtoPayload interface{}
@@ -622,7 +620,7 @@ type LogEntryMetadata struct {
 func (s *LogEntryMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod LogEntryMetadata
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogError: Describes a problem with a logging resource or operation.
@@ -652,7 +650,7 @@ type LogError struct {
 func (s *LogError) MarshalJSON() ([]byte, error) {
 	type noMethod LogError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogLine: Application log line emitted while processing a request.
@@ -692,7 +690,7 @@ type LogLine struct {
 func (s *LogLine) MarshalJSON() ([]byte, error) {
 	type noMethod LogLine
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogMetric: Describes a collected, logs-based metric. The value of the
@@ -730,7 +728,7 @@ type LogMetric struct {
 func (s *LogMetric) MarshalJSON() ([]byte, error) {
 	type noMethod LogMetric
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogService: _Output only._ Describes a service that writes log
@@ -763,7 +761,7 @@ type LogService struct {
 func (s *LogService) MarshalJSON() ([]byte, error) {
 	type noMethod LogService
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // LogSink: Describes where log entries are written outside of Cloud
@@ -804,7 +802,7 @@ type LogSink struct {
 func (s *LogSink) MarshalJSON() ([]byte, error) {
 	type noMethod LogSink
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RequestLog: Complete log information about a single request to an
@@ -943,7 +941,7 @@ type RequestLog struct {
 func (s *RequestLog) MarshalJSON() ([]byte, error) {
 	type noMethod RequestLog
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceLocation: Specifies a location in a source file.
@@ -975,7 +973,7 @@ type SourceLocation struct {
 func (s *SourceLocation) MarshalJSON() ([]byte, error) {
 	type noMethod SourceLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceReference: A reference to a particular snapshot of the source
@@ -1001,7 +999,7 @@ type SourceReference struct {
 func (s *SourceReference) MarshalJSON() ([]byte, error) {
 	type noMethod SourceReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -1066,7 +1064,7 @@ type Status struct {
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type noMethod Status
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type StatusDetails interface{}
@@ -1095,7 +1093,7 @@ type WriteLogEntriesRequest struct {
 func (s *WriteLogEntriesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod WriteLogEntriesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WriteLogEntriesResponse: Result returned from WriteLogEntries. empty

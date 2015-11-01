@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -198,7 +196,7 @@ type Draft struct {
 func (s *Draft) MarshalJSON() ([]byte, error) {
 	type noMethod Draft
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // History: A record of a change to the user's mailbox. Each history
@@ -238,7 +236,7 @@ type History struct {
 func (s *History) MarshalJSON() ([]byte, error) {
 	type noMethod History
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type HistoryLabelAdded struct {
@@ -259,7 +257,7 @@ type HistoryLabelAdded struct {
 func (s *HistoryLabelAdded) MarshalJSON() ([]byte, error) {
 	type noMethod HistoryLabelAdded
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type HistoryLabelRemoved struct {
@@ -280,7 +278,7 @@ type HistoryLabelRemoved struct {
 func (s *HistoryLabelRemoved) MarshalJSON() ([]byte, error) {
 	type noMethod HistoryLabelRemoved
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type HistoryMessageAdded struct {
@@ -298,7 +296,7 @@ type HistoryMessageAdded struct {
 func (s *HistoryMessageAdded) MarshalJSON() ([]byte, error) {
 	type noMethod HistoryMessageAdded
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type HistoryMessageDeleted struct {
@@ -316,7 +314,7 @@ type HistoryMessageDeleted struct {
 func (s *HistoryMessageDeleted) MarshalJSON() ([]byte, error) {
 	type noMethod HistoryMessageDeleted
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Label: Labels are used to categorize messages and threads within the
@@ -388,7 +386,7 @@ type Label struct {
 func (s *Label) MarshalJSON() ([]byte, error) {
 	type noMethod Label
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListDraftsResponse struct {
@@ -418,7 +416,7 @@ type ListDraftsResponse struct {
 func (s *ListDraftsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListDraftsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListHistoryResponse struct {
@@ -449,7 +447,7 @@ type ListHistoryResponse struct {
 func (s *ListHistoryResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListHistoryResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListLabelsResponse struct {
@@ -472,7 +470,7 @@ type ListLabelsResponse struct {
 func (s *ListLabelsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListLabelsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListMessagesResponse struct {
@@ -502,7 +500,7 @@ type ListMessagesResponse struct {
 func (s *ListMessagesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListMessagesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListThreadsResponse struct {
@@ -532,7 +530,7 @@ type ListThreadsResponse struct {
 func (s *ListThreadsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListThreadsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Message: An email message.
@@ -594,7 +592,7 @@ type Message struct {
 func (s *Message) MarshalJSON() ([]byte, error) {
 	type noMethod Message
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MessagePart: A single MIME message part.
@@ -637,7 +635,7 @@ type MessagePart struct {
 func (s *MessagePart) MarshalJSON() ([]byte, error) {
 	type noMethod MessagePart
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MessagePartBody: The body of a single MIME message part.
@@ -673,7 +671,7 @@ type MessagePartBody struct {
 func (s *MessagePartBody) MarshalJSON() ([]byte, error) {
 	type noMethod MessagePartBody
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type MessagePartHeader struct {
@@ -696,7 +694,7 @@ type MessagePartHeader struct {
 func (s *MessagePartHeader) MarshalJSON() ([]byte, error) {
 	type noMethod MessagePartHeader
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ModifyMessageRequest struct {
@@ -718,7 +716,7 @@ type ModifyMessageRequest struct {
 func (s *ModifyMessageRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ModifyMessageRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ModifyThreadRequest struct {
@@ -740,7 +738,7 @@ type ModifyThreadRequest struct {
 func (s *ModifyThreadRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ModifyThreadRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Profile: Profile for a Gmail user.
@@ -773,7 +771,7 @@ type Profile struct {
 func (s *Profile) MarshalJSON() ([]byte, error) {
 	type noMethod Profile
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Thread: A collection of messages representing a conversation.
@@ -807,7 +805,7 @@ type Thread struct {
 func (s *Thread) MarshalJSON() ([]byte, error) {
 	type noMethod Thread
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WatchRequest: Set up or update a new push notification watch on this
@@ -849,7 +847,7 @@ type WatchRequest struct {
 func (s *WatchRequest) MarshalJSON() ([]byte, error) {
 	type noMethod WatchRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // WatchResponse: Push notification watch response.
@@ -878,7 +876,7 @@ type WatchResponse struct {
 func (s *WatchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod WatchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "gmail.users.getProfile":

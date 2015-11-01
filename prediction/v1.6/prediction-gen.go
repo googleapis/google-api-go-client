@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -140,7 +138,7 @@ type Analyze struct {
 func (s *Analyze) MarshalJSON() ([]byte, error) {
 	type noMethod Analyze
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescription: Description of the data the model was trained
@@ -164,7 +162,7 @@ type AnalyzeDataDescription struct {
 func (s *AnalyzeDataDescription) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AnalyzeDataDescriptionFeatures struct {
@@ -192,7 +190,7 @@ type AnalyzeDataDescriptionFeatures struct {
 func (s *AnalyzeDataDescriptionFeatures) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescriptionFeatures
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionFeaturesCategorical: Description of the
@@ -216,7 +214,7 @@ type AnalyzeDataDescriptionFeaturesCategorical struct {
 func (s *AnalyzeDataDescriptionFeaturesCategorical) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescriptionFeaturesCategorical
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
@@ -238,7 +236,7 @@ type AnalyzeDataDescriptionFeaturesCategoricalValues struct {
 func (s *AnalyzeDataDescriptionFeaturesCategoricalValues) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescriptionFeaturesCategoricalValues
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionFeaturesNumeric: Description of the numeric
@@ -266,7 +264,7 @@ type AnalyzeDataDescriptionFeaturesNumeric struct {
 func (s *AnalyzeDataDescriptionFeaturesNumeric) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescriptionFeaturesNumeric
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionFeaturesText: Description of multiple-word text
@@ -287,7 +285,7 @@ type AnalyzeDataDescriptionFeaturesText struct {
 func (s *AnalyzeDataDescriptionFeaturesText) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescriptionFeaturesText
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionOutputFeature: Description of the output value
@@ -311,7 +309,7 @@ type AnalyzeDataDescriptionOutputFeature struct {
 func (s *AnalyzeDataDescriptionOutputFeature) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescriptionOutputFeature
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeDataDescriptionOutputFeatureNumeric: Description of the output
@@ -338,7 +336,7 @@ type AnalyzeDataDescriptionOutputFeatureNumeric struct {
 func (s *AnalyzeDataDescriptionOutputFeatureNumeric) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescriptionOutputFeatureNumeric
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AnalyzeDataDescriptionOutputFeatureText struct {
@@ -360,7 +358,7 @@ type AnalyzeDataDescriptionOutputFeatureText struct {
 func (s *AnalyzeDataDescriptionOutputFeatureText) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeDataDescriptionOutputFeatureText
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeModelDescription: Description of the model.
@@ -392,7 +390,7 @@ type AnalyzeModelDescription struct {
 func (s *AnalyzeModelDescription) MarshalJSON() ([]byte, error) {
 	type noMethod AnalyzeModelDescription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AnalyzeModelDescriptionConfusionMatrix: An output confusion matrix.
@@ -421,7 +419,7 @@ type Input struct {
 func (s *Input) MarshalJSON() ([]byte, error) {
 	type noMethod Input
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InputInput: Input to the model for a prediction.
@@ -442,7 +440,7 @@ type InputInput struct {
 func (s *InputInput) MarshalJSON() ([]byte, error) {
 	type noMethod InputInput
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Insert struct {
@@ -486,7 +484,7 @@ type Insert struct {
 func (s *Insert) MarshalJSON() ([]byte, error) {
 	type noMethod Insert
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type InsertTrainingInstances struct {
@@ -509,7 +507,7 @@ type InsertTrainingInstances struct {
 func (s *InsertTrainingInstances) MarshalJSON() ([]byte, error) {
 	type noMethod InsertTrainingInstances
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // InsertUtility: Class label (string).
@@ -570,7 +568,7 @@ type Insert2 struct {
 func (s *Insert2) MarshalJSON() ([]byte, error) {
 	type noMethod Insert2
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Insert2ModelInfo: Model metadata.
@@ -616,7 +614,7 @@ type Insert2ModelInfo struct {
 func (s *Insert2ModelInfo) MarshalJSON() ([]byte, error) {
 	type noMethod Insert2ModelInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type List struct {
@@ -649,7 +647,7 @@ type List struct {
 func (s *List) MarshalJSON() ([]byte, error) {
 	type noMethod List
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Output struct {
@@ -688,7 +686,7 @@ type Output struct {
 func (s *Output) MarshalJSON() ([]byte, error) {
 	type noMethod Output
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type OutputOutputMulti struct {
@@ -710,7 +708,7 @@ type OutputOutputMulti struct {
 func (s *OutputOutputMulti) MarshalJSON() ([]byte, error) {
 	type noMethod OutputOutputMulti
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Update struct {
@@ -733,7 +731,7 @@ type Update struct {
 func (s *Update) MarshalJSON() ([]byte, error) {
 	type noMethod Update
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "prediction.hostedmodels.predict":

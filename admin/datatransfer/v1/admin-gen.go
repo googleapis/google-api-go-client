@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -134,7 +132,7 @@ type Application struct {
 func (s *Application) MarshalJSON() ([]byte, error) {
 	type noMethod Application
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApplicationDataTransfer: Template to map fields of
@@ -164,7 +162,7 @@ type ApplicationDataTransfer struct {
 func (s *ApplicationDataTransfer) MarshalJSON() ([]byte, error) {
 	type noMethod ApplicationDataTransfer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApplicationTransferParam: Template for application transfer
@@ -189,7 +187,7 @@ type ApplicationTransferParam struct {
 func (s *ApplicationTransferParam) MarshalJSON() ([]byte, error) {
 	type noMethod ApplicationTransferParam
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ApplicationsListResponse: Template for a collection of Applications.
@@ -224,7 +222,7 @@ type ApplicationsListResponse struct {
 func (s *ApplicationsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ApplicationsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DataTransfer: The JSON template for a DataTransfer resource.
@@ -275,7 +273,7 @@ type DataTransfer struct {
 func (s *DataTransfer) MarshalJSON() ([]byte, error) {
 	type noMethod DataTransfer
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DataTransfersListResponse: Template for a collection of DataTransfer
@@ -311,7 +309,7 @@ type DataTransfersListResponse struct {
 func (s *DataTransfersListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DataTransfersListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "datatransfer.applications.get":

@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -133,7 +131,7 @@ type Label struct {
 func (s *Label) MarshalJSON() ([]byte, error) {
 	type noMethod Label
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegionViewsAddResourcesRequest: The request to add resources to the
@@ -154,7 +152,7 @@ type RegionViewsAddResourcesRequest struct {
 func (s *RegionViewsAddResourcesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RegionViewsAddResourcesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegionViewsInsertResponse: The response to a resource view insert
@@ -179,7 +177,7 @@ type RegionViewsInsertResponse struct {
 func (s *RegionViewsInsertResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RegionViewsInsertResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegionViewsListResourcesResponse: The response to the list resource
@@ -207,7 +205,7 @@ type RegionViewsListResourcesResponse struct {
 func (s *RegionViewsListResourcesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RegionViewsListResourcesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegionViewsListResponse: The response to the list resource view
@@ -235,7 +233,7 @@ type RegionViewsListResponse struct {
 func (s *RegionViewsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RegionViewsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RegionViewsRemoveResourcesRequest: The request to remove resources
@@ -256,7 +254,7 @@ type RegionViewsRemoveResourcesRequest struct {
 func (s *RegionViewsRemoveResourcesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod RegionViewsRemoveResourcesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResourceView: The resource view object.
@@ -307,7 +305,7 @@ type ResourceView struct {
 func (s *ResourceView) MarshalJSON() ([]byte, error) {
 	type noMethod ResourceView
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsAddResourcesRequest: The request to add resources to the
@@ -328,7 +326,7 @@ type ZoneViewsAddResourcesRequest struct {
 func (s *ZoneViewsAddResourcesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsAddResourcesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsInsertResponse: The response to an insert request.
@@ -352,7 +350,7 @@ type ZoneViewsInsertResponse struct {
 func (s *ZoneViewsInsertResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsInsertResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsListResourcesResponse: The response to a list resource
@@ -380,7 +378,7 @@ type ZoneViewsListResourcesResponse struct {
 func (s *ZoneViewsListResourcesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsListResourcesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsListResponse: The response to a list request.
@@ -408,7 +406,7 @@ type ZoneViewsListResponse struct {
 func (s *ZoneViewsListResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsListResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ZoneViewsRemoveResourcesRequest: The request to remove resources from
@@ -429,7 +427,7 @@ type ZoneViewsRemoveResourcesRequest struct {
 func (s *ZoneViewsRemoveResourcesRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ZoneViewsRemoveResourcesRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "resourceviews.regionViews.addresources":

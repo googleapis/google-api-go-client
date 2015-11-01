@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -243,7 +241,7 @@ type Account struct {
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type noMethod Account
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountAccess: Defines the Google Tag Manager Account access
@@ -272,7 +270,7 @@ type AccountAccess struct {
 func (s *AccountAccess) MarshalJSON() ([]byte, error) {
 	type noMethod AccountAccess
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Condition: Represents a predicate.
@@ -318,7 +316,7 @@ type Condition struct {
 func (s *Condition) MarshalJSON() ([]byte, error) {
 	type noMethod Condition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Container: Represents a Google Tag Manager Container.
@@ -433,7 +431,7 @@ type Container struct {
 func (s *Container) MarshalJSON() ([]byte, error) {
 	type noMethod Container
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ContainerAccess: Defines the Google Tag Manager Container access
@@ -465,7 +463,7 @@ type ContainerAccess struct {
 func (s *ContainerAccess) MarshalJSON() ([]byte, error) {
 	type noMethod ContainerAccess
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ContainerVersion: Represents a Google Tag Manager Container Version.
@@ -536,7 +534,7 @@ type ContainerVersion struct {
 func (s *ContainerVersion) MarshalJSON() ([]byte, error) {
 	type noMethod ContainerVersion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ContainerVersionHeader: Represents a Google Tag Manager Container
@@ -586,7 +584,7 @@ type ContainerVersionHeader struct {
 func (s *ContainerVersionHeader) MarshalJSON() ([]byte, error) {
 	type noMethod ContainerVersionHeader
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreateContainerVersionRequestVersionOptions: Options for new
@@ -614,7 +612,7 @@ type CreateContainerVersionRequestVersionOptions struct {
 func (s *CreateContainerVersionRequestVersionOptions) MarshalJSON() ([]byte, error) {
 	type noMethod CreateContainerVersionRequestVersionOptions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreateContainerVersionResponse: Create container versions response.
@@ -641,7 +639,7 @@ type CreateContainerVersionResponse struct {
 func (s *CreateContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreateContainerVersionResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Folder: Represents a Google Tag Manager Folder.
@@ -678,7 +676,7 @@ type Folder struct {
 func (s *Folder) MarshalJSON() ([]byte, error) {
 	type noMethod Folder
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // FolderEntities: Represents a Google Tag Manager Folder's contents.
@@ -708,7 +706,7 @@ type FolderEntities struct {
 func (s *FolderEntities) MarshalJSON() ([]byte, error) {
 	type noMethod FolderEntities
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListAccountUsersResponse: List AccountUsers Response.
@@ -732,7 +730,7 @@ type ListAccountUsersResponse struct {
 func (s *ListAccountUsersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListAccountUsersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListAccountsResponse: List Accounts Response.
@@ -756,7 +754,7 @@ type ListAccountsResponse struct {
 func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListAccountsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListContainerVersionsResponse: List container versions response.
@@ -784,7 +782,7 @@ type ListContainerVersionsResponse struct {
 func (s *ListContainerVersionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListContainerVersionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListContainersResponse: List Containers Response.
@@ -808,7 +806,7 @@ type ListContainersResponse struct {
 func (s *ListContainersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListContainersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListFoldersResponse: List Folders Response.
@@ -832,7 +830,7 @@ type ListFoldersResponse struct {
 func (s *ListFoldersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListFoldersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTagsResponse: List Tags Response.
@@ -856,7 +854,7 @@ type ListTagsResponse struct {
 func (s *ListTagsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTagsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTriggersResponse: List triggers response.
@@ -880,7 +878,7 @@ type ListTriggersResponse struct {
 func (s *ListTriggersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTriggersResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListVariablesResponse: List Variables Response.
@@ -904,7 +902,7 @@ type ListVariablesResponse struct {
 func (s *ListVariablesResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListVariablesResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Macro: Represents a Google Tag Manager Macro.
@@ -968,7 +966,7 @@ type Macro struct {
 func (s *Macro) MarshalJSON() ([]byte, error) {
 	type noMethod Macro
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Parameter: Represents a Google Tag Manager Parameter.
@@ -1019,7 +1017,7 @@ type Parameter struct {
 func (s *Parameter) MarshalJSON() ([]byte, error) {
 	type noMethod Parameter
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishContainerVersionResponse: Publish container version response.
@@ -1046,7 +1044,7 @@ type PublishContainerVersionResponse struct {
 func (s *PublishContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PublishContainerVersionResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Rule: Represents a Google Tag Manager Rule.
@@ -1086,7 +1084,7 @@ type Rule struct {
 func (s *Rule) MarshalJSON() ([]byte, error) {
 	type noMethod Rule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SetupTag struct {
@@ -1110,7 +1108,7 @@ type SetupTag struct {
 func (s *SetupTag) MarshalJSON() ([]byte, error) {
 	type noMethod SetupTag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Tag: Represents a Google Tag Manager Tag.
@@ -1208,7 +1206,7 @@ type Tag struct {
 func (s *Tag) MarshalJSON() ([]byte, error) {
 	type noMethod Tag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TeardownTag struct {
@@ -1233,7 +1231,7 @@ type TeardownTag struct {
 func (s *TeardownTag) MarshalJSON() ([]byte, error) {
 	type noMethod TeardownTag
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Trigger: Represents a Google Tag Manager Trigger
@@ -1350,7 +1348,7 @@ type Trigger struct {
 func (s *Trigger) MarshalJSON() ([]byte, error) {
 	type noMethod Trigger
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserAccess: Represents a user's permissions to an account and its
@@ -1387,7 +1385,7 @@ type UserAccess struct {
 func (s *UserAccess) MarshalJSON() ([]byte, error) {
 	type noMethod UserAccess
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Variable: Represents a Google Tag Manager Variable.
@@ -1457,7 +1455,7 @@ type Variable struct {
 func (s *Variable) MarshalJSON() ([]byte, error) {
 	type noMethod Variable
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "tagmanager.accounts.get":

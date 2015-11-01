@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -139,7 +137,7 @@ type AdministrationRegion struct {
 func (s *AdministrationRegion) MarshalJSON() ([]byte, error) {
 	type noMethod AdministrationRegion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AdministrativeBody: Information about an election administrative body
@@ -209,7 +207,7 @@ type AdministrativeBody struct {
 func (s *AdministrativeBody) MarshalJSON() ([]byte, error) {
 	type noMethod AdministrativeBody
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Candidate: Information about a candidate running for elected office.
@@ -251,7 +249,7 @@ type Candidate struct {
 func (s *Candidate) MarshalJSON() ([]byte, error) {
 	type noMethod Candidate
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Channel: A social media or web channel for a candidate.
@@ -276,7 +274,7 @@ type Channel struct {
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type noMethod Channel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Contest: Information about a contest that appears on a voter's
@@ -401,7 +399,7 @@ type Contest struct {
 func (s *Contest) MarshalJSON() ([]byte, error) {
 	type noMethod Contest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DivisionSearchResponse: The result of a division search query.
@@ -428,7 +426,7 @@ type DivisionSearchResponse struct {
 func (s *DivisionSearchResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DivisionSearchResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DivisionSearchResult: Represents a political geographic division that
@@ -460,7 +458,7 @@ type DivisionSearchResult struct {
 func (s *DivisionSearchResult) MarshalJSON() ([]byte, error) {
 	type noMethod DivisionSearchResult
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Election: Information about the election that was queried.
@@ -493,7 +491,7 @@ type Election struct {
 func (s *Election) MarshalJSON() ([]byte, error) {
 	type noMethod Election
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ElectionOfficial: Information about individual election officials.
@@ -525,7 +523,7 @@ type ElectionOfficial struct {
 func (s *ElectionOfficial) MarshalJSON() ([]byte, error) {
 	type noMethod ElectionOfficial
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ElectionsQueryResponse: The list of elections available for this
@@ -554,7 +552,7 @@ type ElectionsQueryResponse struct {
 func (s *ElectionsQueryResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ElectionsQueryResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ElectoralDistrict: Describes the geographic scope of a contest.
@@ -586,7 +584,7 @@ type ElectoralDistrict struct {
 func (s *ElectoralDistrict) MarshalJSON() ([]byte, error) {
 	type noMethod ElectoralDistrict
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GeographicDivision: Describes a political geography.
@@ -626,7 +624,7 @@ type GeographicDivision struct {
 func (s *GeographicDivision) MarshalJSON() ([]byte, error) {
 	type noMethod GeographicDivision
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Office: Information about an Office held by one or more Officials.
@@ -672,7 +670,7 @@ type Office struct {
 func (s *Office) MarshalJSON() ([]byte, error) {
 	type noMethod Office
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Official: Information about a person holding an elected office.
@@ -713,7 +711,7 @@ type Official struct {
 func (s *Official) MarshalJSON() ([]byte, error) {
 	type noMethod Official
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PollingLocation: A location where a voter can vote. This may be an
@@ -768,7 +766,7 @@ type PollingLocation struct {
 func (s *PollingLocation) MarshalJSON() ([]byte, error) {
 	type noMethod PollingLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type RepresentativeInfoData struct {
@@ -800,7 +798,7 @@ type RepresentativeInfoData struct {
 func (s *RepresentativeInfoData) MarshalJSON() ([]byte, error) {
 	type noMethod RepresentativeInfoData
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RepresentativeInfoResponse: The result of a representative info
@@ -841,7 +839,7 @@ type RepresentativeInfoResponse struct {
 func (s *RepresentativeInfoResponse) MarshalJSON() ([]byte, error) {
 	type noMethod RepresentativeInfoResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SimpleAddressType: A simple representation of an address.
@@ -879,7 +877,7 @@ type SimpleAddressType struct {
 func (s *SimpleAddressType) MarshalJSON() ([]byte, error) {
 	type noMethod SimpleAddressType
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Source: Contains information about the data source for the element
@@ -903,7 +901,7 @@ type Source struct {
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type noMethod Source
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VoterInfoResponse: The result of a voter info lookup query.
@@ -968,7 +966,7 @@ type VoterInfoResponse struct {
 func (s *VoterInfoResponse) MarshalJSON() ([]byte, error) {
 	type noMethod VoterInfoResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "civicinfo.divisions.search":

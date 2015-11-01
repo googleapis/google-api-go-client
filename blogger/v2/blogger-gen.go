@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -195,7 +193,7 @@ type Blog struct {
 func (s *Blog) MarshalJSON() ([]byte, error) {
 	type noMethod Blog
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BlogLocale: The locale this Blog is set to.
@@ -221,7 +219,7 @@ type BlogLocale struct {
 func (s *BlogLocale) MarshalJSON() ([]byte, error) {
 	type noMethod BlogLocale
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BlogPages: The container of pages in this blog.
@@ -244,7 +242,7 @@ type BlogPages struct {
 func (s *BlogPages) MarshalJSON() ([]byte, error) {
 	type noMethod BlogPages
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BlogPosts: The container of posts in this blog.
@@ -267,7 +265,7 @@ type BlogPosts struct {
 func (s *BlogPosts) MarshalJSON() ([]byte, error) {
 	type noMethod BlogPosts
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BlogList struct {
@@ -294,7 +292,7 @@ type BlogList struct {
 func (s *BlogList) MarshalJSON() ([]byte, error) {
 	type noMethod BlogList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Comment struct {
@@ -344,7 +342,7 @@ type Comment struct {
 func (s *Comment) MarshalJSON() ([]byte, error) {
 	type noMethod Comment
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentAuthor: The author of this Comment.
@@ -373,7 +371,7 @@ type CommentAuthor struct {
 func (s *CommentAuthor) MarshalJSON() ([]byte, error) {
 	type noMethod CommentAuthor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentAuthorImage: The comment creator's avatar.
@@ -393,7 +391,7 @@ type CommentAuthorImage struct {
 func (s *CommentAuthorImage) MarshalJSON() ([]byte, error) {
 	type noMethod CommentAuthorImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentBlog: Data about the blog containing this comment.
@@ -413,7 +411,7 @@ type CommentBlog struct {
 func (s *CommentBlog) MarshalJSON() ([]byte, error) {
 	type noMethod CommentBlog
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentInReplyTo: Data about the comment this is in reply to.
@@ -433,7 +431,7 @@ type CommentInReplyTo struct {
 func (s *CommentInReplyTo) MarshalJSON() ([]byte, error) {
 	type noMethod CommentInReplyTo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CommentPost: Data about the post containing this comment.
@@ -453,7 +451,7 @@ type CommentPost struct {
 func (s *CommentPost) MarshalJSON() ([]byte, error) {
 	type noMethod CommentPost
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CommentList struct {
@@ -487,7 +485,7 @@ type CommentList struct {
 func (s *CommentList) MarshalJSON() ([]byte, error) {
 	type noMethod CommentList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Page struct {
@@ -538,7 +536,7 @@ type Page struct {
 func (s *Page) MarshalJSON() ([]byte, error) {
 	type noMethod Page
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PageAuthor: The author of this Page.
@@ -567,7 +565,7 @@ type PageAuthor struct {
 func (s *PageAuthor) MarshalJSON() ([]byte, error) {
 	type noMethod PageAuthor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PageAuthorImage: The page author's avatar.
@@ -587,7 +585,7 @@ type PageAuthorImage struct {
 func (s *PageAuthorImage) MarshalJSON() ([]byte, error) {
 	type noMethod PageAuthorImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PageBlog: Data about the blog containing this Page.
@@ -607,7 +605,7 @@ type PageBlog struct {
 func (s *PageBlog) MarshalJSON() ([]byte, error) {
 	type noMethod PageBlog
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PageList struct {
@@ -633,7 +631,7 @@ type PageList struct {
 func (s *PageList) MarshalJSON() ([]byte, error) {
 	type noMethod PageList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Post struct {
@@ -689,7 +687,7 @@ type Post struct {
 func (s *Post) MarshalJSON() ([]byte, error) {
 	type noMethod Post
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PostAuthor: The author of this Post.
@@ -718,7 +716,7 @@ type PostAuthor struct {
 func (s *PostAuthor) MarshalJSON() ([]byte, error) {
 	type noMethod PostAuthor
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PostAuthorImage: The Post author's avatar.
@@ -738,7 +736,7 @@ type PostAuthorImage struct {
 func (s *PostAuthorImage) MarshalJSON() ([]byte, error) {
 	type noMethod PostAuthorImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PostBlog: Data about the blog containing this Post.
@@ -758,7 +756,7 @@ type PostBlog struct {
 func (s *PostBlog) MarshalJSON() ([]byte, error) {
 	type noMethod PostBlog
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PostReplies: The container of comments on this Post.
@@ -781,7 +779,7 @@ type PostReplies struct {
 func (s *PostReplies) MarshalJSON() ([]byte, error) {
 	type noMethod PostReplies
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PostList struct {
@@ -815,7 +813,7 @@ type PostList struct {
 func (s *PostList) MarshalJSON() ([]byte, error) {
 	type noMethod PostList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type User struct {
@@ -863,7 +861,7 @@ type User struct {
 func (s *User) MarshalJSON() ([]byte, error) {
 	type noMethod User
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserBlogs: The container of blogs for this user.
@@ -883,7 +881,7 @@ type UserBlogs struct {
 func (s *UserBlogs) MarshalJSON() ([]byte, error) {
 	type noMethod UserBlogs
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserLocale: This user's locale
@@ -909,7 +907,7 @@ type UserLocale struct {
 func (s *UserLocale) MarshalJSON() ([]byte, error) {
 	type noMethod UserLocale
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "blogger.blogs.get":

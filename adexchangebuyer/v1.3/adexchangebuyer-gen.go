@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -206,7 +204,7 @@ type Account struct {
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type noMethod Account
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type AccountBidderLocation struct {
@@ -237,7 +235,7 @@ type AccountBidderLocation struct {
 func (s *AccountBidderLocation) MarshalJSON() ([]byte, error) {
 	type noMethod AccountBidderLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // AccountsList: An account feed lists Ad Exchange buyer accounts that
@@ -266,7 +264,7 @@ type AccountsList struct {
 func (s *AccountsList) MarshalJSON() ([]byte, error) {
 	type noMethod AccountsList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BillingInfo: The configuration data for an Ad Exchange billing info.
@@ -301,7 +299,7 @@ type BillingInfo struct {
 func (s *BillingInfo) MarshalJSON() ([]byte, error) {
 	type noMethod BillingInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BillingInfoList: A billing info feed lists Billing Info the Ad
@@ -330,7 +328,7 @@ type BillingInfoList struct {
 func (s *BillingInfoList) MarshalJSON() ([]byte, error) {
 	type noMethod BillingInfoList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Budget: The configuration data for Ad Exchange RTB - Budget API.
@@ -373,7 +371,7 @@ type Budget struct {
 func (s *Budget) MarshalJSON() ([]byte, error) {
 	type noMethod Budget
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Creative: A creative and its classification data.
@@ -490,7 +488,7 @@ type Creative struct {
 func (s *Creative) MarshalJSON() ([]byte, error) {
 	type noMethod Creative
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeCorrections struct {
@@ -512,7 +510,7 @@ type CreativeCorrections struct {
 func (s *CreativeCorrections) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeCorrections
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeDisapprovalReasons struct {
@@ -534,7 +532,7 @@ type CreativeDisapprovalReasons struct {
 func (s *CreativeDisapprovalReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeDisapprovalReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeFilteringReasons: The filtering reasons for the creative.
@@ -559,7 +557,7 @@ type CreativeFilteringReasons struct {
 func (s *CreativeFilteringReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFilteringReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreativeFilteringReasonsReasons struct {
@@ -584,7 +582,7 @@ type CreativeFilteringReasonsReasons struct {
 func (s *CreativeFilteringReasonsReasons) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeFilteringReasonsReasons
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeNativeAd: If nativeAd is set, HTMLSnippet and videoURL should
@@ -641,7 +639,7 @@ type CreativeNativeAd struct {
 func (s *CreativeNativeAd) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeNativeAd
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeNativeAdAppIcon: The app icon, for app download ads.
@@ -664,7 +662,7 @@ type CreativeNativeAdAppIcon struct {
 func (s *CreativeNativeAdAppIcon) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeNativeAdAppIcon
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeNativeAdImage: A large image.
@@ -687,7 +685,7 @@ type CreativeNativeAdImage struct {
 func (s *CreativeNativeAdImage) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeNativeAdImage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativeNativeAdLogo: A smaller image, for the advertiser logo.
@@ -710,7 +708,7 @@ type CreativeNativeAdLogo struct {
 func (s *CreativeNativeAdLogo) MarshalJSON() ([]byte, error) {
 	type noMethod CreativeNativeAdLogo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CreativesList: The creatives feed lists the active creatives for the
@@ -744,7 +742,7 @@ type CreativesList struct {
 func (s *CreativesList) MarshalJSON() ([]byte, error) {
 	type noMethod CreativesList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectDeal: The configuration data for an Ad Exchange direct deal.
@@ -813,7 +811,7 @@ type DirectDeal struct {
 func (s *DirectDeal) MarshalJSON() ([]byte, error) {
 	type noMethod DirectDeal
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DirectDealsList: A direct deals feed lists Direct Deals the Ad
@@ -842,7 +840,7 @@ type DirectDealsList struct {
 func (s *DirectDealsList) MarshalJSON() ([]byte, error) {
 	type noMethod DirectDealsList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PerformanceReport: The configuration data for an Ad Exchange
@@ -943,7 +941,7 @@ type PerformanceReport struct {
 func (s *PerformanceReport) MarshalJSON() ([]byte, error) {
 	type noMethod PerformanceReport
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PerformanceReportList: The configuration data for an Ad Exchange
@@ -974,7 +972,7 @@ type PerformanceReportList struct {
 func (s *PerformanceReportList) MarshalJSON() ([]byte, error) {
 	type noMethod PerformanceReportList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfig struct {
@@ -1091,7 +1089,7 @@ type PretargetingConfig struct {
 func (s *PretargetingConfig) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfigDimensions struct {
@@ -1113,7 +1111,7 @@ type PretargetingConfigDimensions struct {
 func (s *PretargetingConfigDimensions) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigDimensions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfigExcludedPlacements struct {
@@ -1137,7 +1135,7 @@ type PretargetingConfigExcludedPlacements struct {
 func (s *PretargetingConfigExcludedPlacements) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigExcludedPlacements
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfigPlacements struct {
@@ -1161,7 +1159,7 @@ type PretargetingConfigPlacements struct {
 func (s *PretargetingConfigPlacements) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigPlacements
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type PretargetingConfigList struct {
@@ -1187,7 +1185,7 @@ type PretargetingConfigList struct {
 func (s *PretargetingConfigList) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "adexchangebuyer.accounts.get":

@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -138,7 +136,7 @@ type Task struct {
 func (s *Task) MarshalJSON() ([]byte, error) {
 	type noMethod Task
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type TaskQueue struct {
@@ -175,7 +173,7 @@ type TaskQueue struct {
 func (s *TaskQueue) MarshalJSON() ([]byte, error) {
 	type noMethod TaskQueue
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TaskQueueAcl: ACLs that are applicable to this TaskQueue object.
@@ -206,7 +204,7 @@ type TaskQueueAcl struct {
 func (s *TaskQueueAcl) MarshalJSON() ([]byte, error) {
 	type noMethod TaskQueueAcl
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TaskQueueStats: Statistics for the TaskQueue object in question.
@@ -236,7 +234,7 @@ type TaskQueueStats struct {
 func (s *TaskQueueStats) MarshalJSON() ([]byte, error) {
 	type noMethod TaskQueueStats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Tasks struct {
@@ -263,7 +261,7 @@ type Tasks struct {
 func (s *Tasks) MarshalJSON() ([]byte, error) {
 	type noMethod Tasks
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type Tasks2 struct {
@@ -289,7 +287,7 @@ type Tasks2 struct {
 func (s *Tasks2) MarshalJSON() ([]byte, error) {
 	type noMethod Tasks2
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "taskqueue.taskqueues.get":

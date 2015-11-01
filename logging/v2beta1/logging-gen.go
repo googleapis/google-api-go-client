@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -103,7 +101,7 @@ type LogLine struct {
 func (s *LogLine) MarshalJSON() ([]byte, error) {
 	type noMethod LogLine
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // RequestLog: Complete log information about a single request to an
@@ -242,7 +240,7 @@ type RequestLog struct {
 func (s *RequestLog) MarshalJSON() ([]byte, error) {
 	type noMethod RequestLog
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceLocation: Specifies a location in a source file.
@@ -274,7 +272,7 @@ type SourceLocation struct {
 func (s *SourceLocation) MarshalJSON() ([]byte, error) {
 	type noMethod SourceLocation
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SourceReference: A reference to a particular snapshot of the source
@@ -300,5 +298,5 @@ type SourceReference struct {
 func (s *SourceReference) MarshalJSON() ([]byte, error) {
 	type noMethod SourceReference
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }

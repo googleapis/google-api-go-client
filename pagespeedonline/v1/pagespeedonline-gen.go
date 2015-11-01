@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -132,7 +130,7 @@ type Result struct {
 func (s *Result) MarshalJSON() ([]byte, error) {
 	type noMethod Result
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResultFormattedResults: Localized PageSpeed results. Contains a
@@ -158,7 +156,7 @@ type ResultFormattedResults struct {
 func (s *ResultFormattedResults) MarshalJSON() ([]byte, error) {
 	type noMethod ResultFormattedResults
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResultFormattedResultsRuleResults: Dictionary of formatted rule
@@ -231,7 +229,7 @@ type ResultPageStats struct {
 func (s *ResultPageStats) MarshalJSON() ([]byte, error) {
 	type noMethod ResultPageStats
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResultScreenshot: Base64-encoded screenshot of the page that was
@@ -261,7 +259,7 @@ type ResultScreenshot struct {
 func (s *ResultScreenshot) MarshalJSON() ([]byte, error) {
 	type noMethod ResultScreenshot
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResultVersion: The version of PageSpeed used to generate these
@@ -287,7 +285,7 @@ type ResultVersion struct {
 func (s *ResultVersion) MarshalJSON() ([]byte, error) {
 	type noMethod ResultVersion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "pagespeedonline.pagespeedapi.runpagespeed":

@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -117,7 +115,7 @@ type CreateAuthUriResponse struct {
 func (s *CreateAuthUriResponse) MarshalJSON() ([]byte, error) {
 	type noMethod CreateAuthUriResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DeleteAccountResponse: Respone of deleting account.
@@ -141,7 +139,7 @@ type DeleteAccountResponse struct {
 func (s *DeleteAccountResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DeleteAccountResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // DownloadAccountResponse: Respone of downloading accounts in batch.
@@ -172,7 +170,7 @@ type DownloadAccountResponse struct {
 func (s *DownloadAccountResponse) MarshalJSON() ([]byte, error) {
 	type noMethod DownloadAccountResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetAccountInfoResponse: Response of getting account information.
@@ -199,7 +197,7 @@ type GetAccountInfoResponse struct {
 func (s *GetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetAccountInfoResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetOobConfirmationCodeResponse: Response of getting a code for user
@@ -228,7 +226,7 @@ type GetOobConfirmationCodeResponse struct {
 func (s *GetOobConfirmationCodeResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetOobConfirmationCodeResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // GetRecaptchaParamResponse: Response of getting recaptcha param.
@@ -259,7 +257,7 @@ type GetRecaptchaParamResponse struct {
 func (s *GetRecaptchaParamResponse) MarshalJSON() ([]byte, error) {
 	type noMethod GetRecaptchaParamResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyCreateAuthUriRequest: Request to get the
@@ -316,7 +314,7 @@ type IdentitytoolkitRelyingpartyCreateAuthUriRequest struct {
 func (s *IdentitytoolkitRelyingpartyCreateAuthUriRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyCreateAuthUriRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyDeleteAccountRequest: Request to delete
@@ -337,7 +335,7 @@ type IdentitytoolkitRelyingpartyDeleteAccountRequest struct {
 func (s *IdentitytoolkitRelyingpartyDeleteAccountRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyDeleteAccountRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyDownloadAccountRequest: Request to
@@ -362,7 +360,7 @@ type IdentitytoolkitRelyingpartyDownloadAccountRequest struct {
 func (s *IdentitytoolkitRelyingpartyDownloadAccountRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyDownloadAccountRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyGetAccountInfoRequest: Request to get the
@@ -389,7 +387,7 @@ type IdentitytoolkitRelyingpartyGetAccountInfoRequest struct {
 func (s *IdentitytoolkitRelyingpartyGetAccountInfoRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyGetAccountInfoRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyResetPasswordRequest: Request to reset the
@@ -419,7 +417,7 @@ type IdentitytoolkitRelyingpartyResetPasswordRequest struct {
 func (s *IdentitytoolkitRelyingpartyResetPasswordRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyResetPasswordRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartySetAccountInfoRequest: Request to set the
@@ -476,7 +474,7 @@ type IdentitytoolkitRelyingpartySetAccountInfoRequest struct {
 func (s *IdentitytoolkitRelyingpartySetAccountInfoRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartySetAccountInfoRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyUploadAccountRequest: Request to upload
@@ -514,7 +512,7 @@ type IdentitytoolkitRelyingpartyUploadAccountRequest struct {
 func (s *IdentitytoolkitRelyingpartyUploadAccountRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyUploadAccountRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyAssertionRequest: Request to verify
@@ -546,7 +544,7 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 func (s *IdentitytoolkitRelyingpartyVerifyAssertionRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyVerifyAssertionRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // IdentitytoolkitRelyingpartyVerifyPasswordRequest: Request to verify
@@ -580,7 +578,7 @@ type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 func (s *IdentitytoolkitRelyingpartyVerifyPasswordRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyVerifyPasswordRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Relyingparty: Request of getting a code for user confirmation (reset
@@ -622,7 +620,7 @@ type Relyingparty struct {
 func (s *Relyingparty) MarshalJSON() ([]byte, error) {
 	type noMethod Relyingparty
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ResetPasswordResponse: Response of resetting the password.
@@ -649,7 +647,7 @@ type ResetPasswordResponse struct {
 func (s *ResetPasswordResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ResetPasswordResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SetAccountInfoResponse: Respone of setting the account information.
@@ -688,7 +686,7 @@ type SetAccountInfoResponse struct {
 func (s *SetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 	type noMethod SetAccountInfoResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type SetAccountInfoResponseProviderUserInfo struct {
@@ -715,7 +713,7 @@ type SetAccountInfoResponseProviderUserInfo struct {
 func (s *SetAccountInfoResponseProviderUserInfo) MarshalJSON() ([]byte, error) {
 	type noMethod SetAccountInfoResponseProviderUserInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UploadAccountResponse: Respone of uploading accounts in batch.
@@ -742,7 +740,7 @@ type UploadAccountResponse struct {
 func (s *UploadAccountResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UploadAccountResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UploadAccountResponseError struct {
@@ -764,7 +762,7 @@ type UploadAccountResponseError struct {
 func (s *UploadAccountResponseError) MarshalJSON() ([]byte, error) {
 	type noMethod UploadAccountResponseError
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UserInfo: Template for an individual account info.
@@ -817,7 +815,7 @@ type UserInfo struct {
 func (s *UserInfo) MarshalJSON() ([]byte, error) {
 	type noMethod UserInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type UserInfoProviderUserInfo struct {
@@ -847,7 +845,7 @@ type UserInfoProviderUserInfo struct {
 func (s *UserInfoProviderUserInfo) MarshalJSON() ([]byte, error) {
 	type noMethod UserInfoProviderUserInfo
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VerifyAssertionResponse: Response of verifying the IDP assertion.
@@ -977,7 +975,7 @@ type VerifyAssertionResponse struct {
 func (s *VerifyAssertionResponse) MarshalJSON() ([]byte, error) {
 	type noMethod VerifyAssertionResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // VerifyPasswordResponse: Request of verifying the password.
@@ -1030,7 +1028,7 @@ type VerifyPasswordResponse struct {
 func (s *VerifyPasswordResponse) MarshalJSON() ([]byte, error) {
 	type noMethod VerifyPasswordResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "identitytoolkit.relyingparty.createAuthUri":

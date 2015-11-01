@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -145,7 +143,7 @@ type Availability struct {
 func (s *Availability) MarshalJSON() ([]byte, error) {
 	type noMethod Availability
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Conversion: A conversion containing data relevant to DoubleClick
@@ -289,7 +287,7 @@ type Conversion struct {
 func (s *Conversion) MarshalJSON() ([]byte, error) {
 	type noMethod Conversion
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ConversionList: A list of conversions.
@@ -317,7 +315,7 @@ type ConversionList struct {
 func (s *ConversionList) MarshalJSON() ([]byte, error) {
 	type noMethod ConversionList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomDimension: A message containing the custome dimension.
@@ -340,7 +338,7 @@ type CustomDimension struct {
 func (s *CustomDimension) MarshalJSON() ([]byte, error) {
 	type noMethod CustomDimension
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // CustomMetric: A message containing the custome metric.
@@ -363,7 +361,7 @@ type CustomMetric struct {
 func (s *CustomMetric) MarshalJSON() ([]byte, error) {
 	type noMethod CustomMetric
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Report: A DoubleClick Search report. This object contains the report
@@ -424,7 +422,7 @@ type Report struct {
 func (s *Report) MarshalJSON() ([]byte, error) {
 	type noMethod Report
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReportFiles struct {
@@ -446,7 +444,7 @@ type ReportFiles struct {
 func (s *ReportFiles) MarshalJSON() ([]byte, error) {
 	type noMethod ReportFiles
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportApiColumnSpec: A request object used to create a DoubleClick
@@ -517,7 +515,7 @@ type ReportApiColumnSpec struct {
 func (s *ReportApiColumnSpec) MarshalJSON() ([]byte, error) {
 	type noMethod ReportApiColumnSpec
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportRequest: A request object used to create a DoubleClick Search
@@ -607,7 +605,7 @@ type ReportRequest struct {
 func (s *ReportRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ReportRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReportRequestFilters struct {
@@ -634,7 +632,7 @@ type ReportRequestFilters struct {
 func (s *ReportRequestFilters) MarshalJSON() ([]byte, error) {
 	type noMethod ReportRequestFilters
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReportRequestOrderBy struct {
@@ -658,7 +656,7 @@ type ReportRequestOrderBy struct {
 func (s *ReportRequestOrderBy) MarshalJSON() ([]byte, error) {
 	type noMethod ReportRequestOrderBy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportRequestReportScope: The reportScope is a set of IDs that are
@@ -699,7 +697,7 @@ type ReportRequestReportScope struct {
 func (s *ReportRequestReportScope) MarshalJSON() ([]byte, error) {
 	type noMethod ReportRequestReportScope
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReportRequestTimeRange: If metrics are requested in a report, this
@@ -735,7 +733,7 @@ type ReportRequestTimeRange struct {
 func (s *ReportRequestTimeRange) MarshalJSON() ([]byte, error) {
 	type noMethod ReportRequestTimeRange
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ReportRow interface{}
@@ -764,7 +762,7 @@ type SavedColumn struct {
 func (s *SavedColumn) MarshalJSON() ([]byte, error) {
 	type noMethod SavedColumn
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SavedColumnList: A list of saved columns. Advertisers create saved
@@ -795,7 +793,7 @@ type SavedColumnList struct {
 func (s *SavedColumnList) MarshalJSON() ([]byte, error) {
 	type noMethod SavedColumnList
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateAvailabilityRequest: The request to update availability.
@@ -815,7 +813,7 @@ type UpdateAvailabilityRequest struct {
 func (s *UpdateAvailabilityRequest) MarshalJSON() ([]byte, error) {
 	type noMethod UpdateAvailabilityRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // UpdateAvailabilityResponse: The response to a update availability
@@ -840,7 +838,7 @@ type UpdateAvailabilityResponse struct {
 func (s *UpdateAvailabilityResponse) MarshalJSON() ([]byte, error) {
 	type noMethod UpdateAvailabilityResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "doubleclicksearch.conversion.get":

@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -233,7 +231,7 @@ type Bucket struct {
 func (s *Bucket) MarshalJSON() ([]byte, error) {
 	type noMethod Bucket
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BucketCors struct {
@@ -268,7 +266,7 @@ type BucketCors struct {
 func (s *BucketCors) MarshalJSON() ([]byte, error) {
 	type noMethod BucketCors
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketLifecycle: The bucket's lifecycle configuration. See object
@@ -290,7 +288,7 @@ type BucketLifecycle struct {
 func (s *BucketLifecycle) MarshalJSON() ([]byte, error) {
 	type noMethod BucketLifecycle
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type BucketLifecycleRule struct {
@@ -312,7 +310,7 @@ type BucketLifecycleRule struct {
 func (s *BucketLifecycleRule) MarshalJSON() ([]byte, error) {
 	type noMethod BucketLifecycleRule
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketLifecycleRuleAction: The action to take.
@@ -332,7 +330,7 @@ type BucketLifecycleRuleAction struct {
 func (s *BucketLifecycleRuleAction) MarshalJSON() ([]byte, error) {
 	type noMethod BucketLifecycleRuleAction
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketLifecycleRuleCondition: The condition(s) under which the action
@@ -369,7 +367,7 @@ type BucketLifecycleRuleCondition struct {
 func (s *BucketLifecycleRuleCondition) MarshalJSON() ([]byte, error) {
 	type noMethod BucketLifecycleRuleCondition
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketLogging: The bucket's logging configuration, which defines the
@@ -395,7 +393,7 @@ type BucketLogging struct {
 func (s *BucketLogging) MarshalJSON() ([]byte, error) {
 	type noMethod BucketLogging
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketOwner: The owner of the bucket. This is always the project
@@ -419,7 +417,7 @@ type BucketOwner struct {
 func (s *BucketOwner) MarshalJSON() ([]byte, error) {
 	type noMethod BucketOwner
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketVersioning: The bucket's versioning configuration.
@@ -440,7 +438,7 @@ type BucketVersioning struct {
 func (s *BucketVersioning) MarshalJSON() ([]byte, error) {
 	type noMethod BucketVersioning
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketWebsite: The bucket's website configuration.
@@ -465,7 +463,7 @@ type BucketWebsite struct {
 func (s *BucketWebsite) MarshalJSON() ([]byte, error) {
 	type noMethod BucketWebsite
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketAccessControl: An access-control entry.
@@ -531,7 +529,7 @@ type BucketAccessControl struct {
 func (s *BucketAccessControl) MarshalJSON() ([]byte, error) {
 	type noMethod BucketAccessControl
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // BucketAccessControls: An access-control list.
@@ -559,7 +557,7 @@ type BucketAccessControls struct {
 func (s *BucketAccessControls) MarshalJSON() ([]byte, error) {
 	type noMethod BucketAccessControls
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Buckets: A list of buckets.
@@ -592,7 +590,7 @@ type Buckets struct {
 func (s *Buckets) MarshalJSON() ([]byte, error) {
 	type noMethod Buckets
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Channel: An notification channel used to watch for resource changes.
@@ -650,7 +648,7 @@ type Channel struct {
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type noMethod Channel
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ComposeRequest: A Compose request.
@@ -677,7 +675,7 @@ type ComposeRequest struct {
 func (s *ComposeRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ComposeRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ComposeRequestSourceObjects struct {
@@ -704,7 +702,7 @@ type ComposeRequestSourceObjects struct {
 func (s *ComposeRequestSourceObjects) MarshalJSON() ([]byte, error) {
 	type noMethod ComposeRequestSourceObjects
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ComposeRequestSourceObjectsObjectPreconditions: Conditions that must
@@ -728,7 +726,7 @@ type ComposeRequestSourceObjectsObjectPreconditions struct {
 func (s *ComposeRequestSourceObjectsObjectPreconditions) MarshalJSON() ([]byte, error) {
 	type noMethod ComposeRequestSourceObjectsObjectPreconditions
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Object: An object.
@@ -831,7 +829,7 @@ type Object struct {
 func (s *Object) MarshalJSON() ([]byte, error) {
 	type noMethod Object
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectOwner: The owner of the object. This will always be the
@@ -855,7 +853,7 @@ type ObjectOwner struct {
 func (s *ObjectOwner) MarshalJSON() ([]byte, error) {
 	type noMethod ObjectOwner
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectAccessControl: An access-control entry.
@@ -926,7 +924,7 @@ type ObjectAccessControl struct {
 func (s *ObjectAccessControl) MarshalJSON() ([]byte, error) {
 	type noMethod ObjectAccessControl
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ObjectAccessControls: An access-control list.
@@ -954,7 +952,7 @@ type ObjectAccessControls struct {
 func (s *ObjectAccessControls) MarshalJSON() ([]byte, error) {
 	type noMethod ObjectAccessControls
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Objects: A list of objects.
@@ -991,7 +989,7 @@ type Objects struct {
 func (s *Objects) MarshalJSON() ([]byte, error) {
 	type noMethod Objects
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "storage.bucketAccessControls.delete":

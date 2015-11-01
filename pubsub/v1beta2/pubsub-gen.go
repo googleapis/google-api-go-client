@@ -14,10 +14,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
-	"google.golang.org/api/googleapi"
-	"google.golang.org/api/internal"
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
@@ -36,7 +35,6 @@ var _ = url.Parse
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
-var _ = internal.MarshalJSON
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
@@ -142,7 +140,7 @@ type AcknowledgeRequest struct {
 func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type noMethod AcknowledgeRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Binding: Associates `members` with a `role`.
@@ -180,7 +178,7 @@ type Binding struct {
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type noMethod Binding
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -222,7 +220,7 @@ type ListSubscriptionsResponse struct {
 func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListSubscriptionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTopicSubscriptionsResponse: Response for the
@@ -252,7 +250,7 @@ type ListTopicSubscriptionsResponse struct {
 func (s *ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTopicSubscriptionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ListTopicsResponse: Response for the `ListTopics` method.
@@ -281,7 +279,7 @@ type ListTopicsResponse struct {
 func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListTopicsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
@@ -312,7 +310,7 @@ type ModifyAckDeadlineRequest struct {
 func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ModifyAckDeadlineRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
@@ -336,7 +334,7 @@ type ModifyPushConfigRequest struct {
 func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	type noMethod ModifyPushConfigRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Policy: Defines an Identity and Access Management (IAM) policy. It is
@@ -379,7 +377,7 @@ type Policy struct {
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type noMethod Policy
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishRequest: Request for the Publish method.
@@ -399,7 +397,7 @@ type PublishRequest struct {
 func (s *PublishRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PublishRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PublishResponse: Response for the `Publish` method.
@@ -425,7 +423,7 @@ type PublishResponse struct {
 func (s *PublishResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PublishResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PubsubMessage: A message data and its attributes. The message payload
@@ -458,7 +456,7 @@ type PubsubMessage struct {
 func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
 	type noMethod PubsubMessage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PullRequest: Request for the `Pull` method.
@@ -488,7 +486,7 @@ type PullRequest struct {
 func (s *PullRequest) MarshalJSON() ([]byte, error) {
 	type noMethod PullRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PullResponse: Response for the `Pull` method.
@@ -515,7 +513,7 @@ type PullResponse struct {
 func (s *PullResponse) MarshalJSON() ([]byte, error) {
 	type noMethod PullResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // PushConfig: Configuration for a push delivery endpoint.
@@ -554,7 +552,7 @@ type PushConfig struct {
 func (s *PushConfig) MarshalJSON() ([]byte, error) {
 	type noMethod PushConfig
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ReceivedMessage: A message and its corresponding acknowledgment ID.
@@ -577,7 +575,7 @@ type ReceivedMessage struct {
 func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
 	type noMethod ReceivedMessage
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -600,7 +598,7 @@ type SetIamPolicyRequest struct {
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type noMethod SetIamPolicyRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Subscription: A subscription resource.
@@ -653,7 +651,7 @@ type Subscription struct {
 func (s *Subscription) MarshalJSON() ([]byte, error) {
 	type noMethod Subscription
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
@@ -676,7 +674,7 @@ type TestIamPermissionsRequest struct {
 func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsRequest
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -702,7 +700,7 @@ type TestIamPermissionsResponse struct {
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod TestIamPermissionsResponse
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Topic: A topic resource.
@@ -731,7 +729,7 @@ type Topic struct {
 func (s *Topic) MarshalJSON() ([]byte, error) {
 	type noMethod Topic
 	raw := noMethod(*s)
-	return internal.MarshalJSON(raw, s.ForceSendFields)
+	return googleapi.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "pubsub.projects.subscriptions.acknowledge":

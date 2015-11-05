@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6923665_d4a8f2fa",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-11-05T05:44:47Z",
+      "side": 1,
+      "message": "I think this might be a bit clearer as:\n\n        var base, rel string\n\n        if *baseURL !\u003d \"\" {\n                base, rel \u003d *baseURL, jstr(a.m, \"basePath\")\n        } else if a.RootURL !\u003d \"\" {\n                base, rel \u003d a.RootURL, a.ServicePath\n        } else {\n                base, rel \u003d *apisURL, jstr(a.m, \"basePath\")\n        }\n\n        return resolveRelative(base, rel)\n\n(technically, I think that a.ServicePath can be used in all cases (basePath is apparently deprecated: https://developers.google.com/discovery/v1/using#discovery-doc-apiproperties), but I have not checked whether this would break anything).",
+      "range": {
+        "startLine": 384,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 55
+      },
+      "revId": "f419b32385bd45a6f48f8f58f483b5b4f5a5166e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_74bf3e1f",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-11-05T05:44:47Z",
+      "side": 1,
+      "message": "Rather than reading the entire contents of the file into memory here, why not open the file and then do\n  io.Copy(\u0026buf, file)\n?",
+      "range": {
+        "startLine": 479,
+        "startChar": 17,
+        "endLine": 479,
+        "endChar": 45
+      },
+      "revId": "f419b32385bd45a6f48f8f58f483b5b4f5a5166e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_d4ad52f2",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-11-05T05:44:47Z",
+      "side": 1,
+      "message": "This seems inconsistent.  Why panic here instead of returning an error, as you do on line 481?",
+      "range": {
+        "startLine": 484,
+        "startChar": 3,
+        "endLine": 484,
+        "endChar": 13
+      },
+      "revId": "f419b32385bd45a6f48f8f58f483b5b4f5a5166e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_1427da5f",
+        "filename": "googleapi/json.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-11-05T05:44:47Z",
+      "side": 1,
+      "message": "Please don\u0027t move this code into googleapi.\n\nThe current plan is to do the opposite and move implementation details out of googleapi (see #113).  If we need to migrate code out of the internal package, it should be into a new package, not googleapi.",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "f419b32385bd45a6f48f8f58f483b5b4f5a5166e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

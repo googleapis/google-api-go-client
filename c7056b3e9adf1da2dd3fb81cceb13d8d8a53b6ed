@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d60ff2af_2a801f63",
+        "filename": "gensupport/json.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-11-06T12:03:39Z",
+      "side": 1,
+      "message": "drop the backticks. That\u0027s not Go style.\n\nAnd add more scary wording that this package should be considered an internal and should not used by end users and has no backwards compatibility guarantees.",
+      "revId": "c7056b3e9adf1da2dd3fb81cceb13d8d8a53b6ed",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d60ff2af_0a7d5b49",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-11-06T12:03:39Z",
+      "side": 1,
+      "message": "What is it if empty?\n\nI\u0027d first say what it is, and then say what the default value is if empty.",
+      "revId": "c7056b3e9adf1da2dd3fb81cceb13d8d8a53b6ed",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

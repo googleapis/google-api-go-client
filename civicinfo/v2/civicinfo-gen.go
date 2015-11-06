@@ -974,15 +974,16 @@ func (s *VoterInfoResponse) MarshalJSON() ([]byte, error) {
 // method id "civicinfo.divisions.search":
 
 type DivisionsSearchCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Search: Searches for political divisions by their natural name or OCD
 // ID.
 func (r *DivisionsService) Search() *DivisionsSearchCall {
-	c := &DivisionsSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &DivisionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
@@ -993,15 +994,15 @@ func (r *DivisionsService) Search() *DivisionsSearchCall {
 // are supported. See
 // http://lucene.apache.org/core/2_9_4/queryparsersyntax.html
 func (c *DivisionsSearchCall) Query(query string) *DivisionsSearchCall {
-	c.opt_["query"] = query
+	c.urlParams_.Set("query", query)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DivisionsSearchCall) Fields(s ...googleapi.Field) *DivisionsSearchCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1011,13 +1012,13 @@ func (c *DivisionsSearchCall) Fields(s ...googleapi.Field) *DivisionsSearchCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DivisionsSearchCall) IfNoneMatch(entityTag string) *DivisionsSearchCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *DivisionsSearchCall) Context(ctx context.Context) *DivisionsSearchCall {
 	c.ctx_ = ctx
 	return c
@@ -1025,21 +1026,14 @@ func (c *DivisionsSearchCall) Context(ctx context.Context) *DivisionsSearchCall 
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["query"]; ok {
-		params.Set("query", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "divisions")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1104,22 +1098,23 @@ func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
 // method id "civicinfo.elections.electionQuery":
 
 type ElectionsElectionQueryCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // ElectionQuery: List of available elections to query.
 func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
-	c := &ElectionsElectionQueryCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ElectionsElectionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ElectionsElectionQueryCall) Fields(s ...googleapi.Field) *ElectionsElectionQueryCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1129,13 +1124,13 @@ func (c *ElectionsElectionQueryCall) Fields(s ...googleapi.Field) *ElectionsElec
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ElectionsElectionQueryCall) IfNoneMatch(entityTag string) *ElectionsElectionQueryCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ElectionsElectionQueryCall) Context(ctx context.Context) *ElectionsElectionQueryCall {
 	c.ctx_ = ctx
 	return c
@@ -1143,18 +1138,14 @@ func (c *ElectionsElectionQueryCall) Context(ctx context.Context) *ElectionsElec
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "elections")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1212,17 +1203,17 @@ func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
 // method id "civicinfo.elections.voterInfoQuery":
 
 type ElectionsVoterInfoQueryCall struct {
-	s       *Service
-	address string
-	opt_    map[string]interface{}
-	ctx_    context.Context
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // VoterInfoQuery: Looks up information relevant to a voter based on the
 // voter's registered address.
 func (r *ElectionsService) VoterInfoQuery(address string) *ElectionsVoterInfoQueryCall {
-	c := &ElectionsVoterInfoQueryCall{s: r.s, opt_: make(map[string]interface{})}
-	c.address = address
+	c := &ElectionsVoterInfoQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("address", address)
 	return c
 }
 
@@ -1230,22 +1221,22 @@ func (r *ElectionsService) VoterInfoQuery(address string) *ElectionsVoterInfoQue
 // the election to look up. A list of election IDs can be obtained at
 // https://www.googleapis.com/civicinfo/{version}/elections
 func (c *ElectionsVoterInfoQueryCall) ElectionId(electionId int64) *ElectionsVoterInfoQueryCall {
-	c.opt_["electionId"] = electionId
+	c.urlParams_.Set("electionId", fmt.Sprintf("%v", electionId))
 	return c
 }
 
 // OfficialOnly sets the optional parameter "officialOnly": If set to
 // true, only data from official state sources will be returned.
 func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *ElectionsVoterInfoQueryCall {
-	c.opt_["officialOnly"] = officialOnly
+	c.urlParams_.Set("officialOnly", fmt.Sprintf("%v", officialOnly))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ElectionsVoterInfoQueryCall) Fields(s ...googleapi.Field) *ElectionsVoterInfoQueryCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1255,13 +1246,13 @@ func (c *ElectionsVoterInfoQueryCall) Fields(s ...googleapi.Field) *ElectionsVot
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ElectionsVoterInfoQueryCall) IfNoneMatch(entityTag string) *ElectionsVoterInfoQueryCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ElectionsVoterInfoQueryCall) Context(ctx context.Context) *ElectionsVoterInfoQueryCall {
 	c.ctx_ = ctx
 	return c
@@ -1269,25 +1260,14 @@ func (c *ElectionsVoterInfoQueryCall) Context(ctx context.Context) *ElectionsVot
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	params.Set("address", fmt.Sprintf("%v", c.address))
-	if v, ok := c.opt_["electionId"]; ok {
-		params.Set("electionId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["officialOnly"]; ok {
-		params.Set("officialOnly", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "voterinfo")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1369,22 +1349,23 @@ func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
 // method id "civicinfo.representatives.representativeInfoByAddress":
 
 type RepresentativesRepresentativeInfoByAddressCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // RepresentativeInfoByAddress: Looks up political geography and
 // representative information for a single address.
 func (r *RepresentativesService) RepresentativeInfoByAddress() *RepresentativesRepresentativeInfoByAddressCall {
-	c := &RepresentativesRepresentativeInfoByAddressCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RepresentativesRepresentativeInfoByAddressCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Address sets the optional parameter "address": The address to look
 // up. May only be specified if the field ocdId is not given in the URL.
 func (c *RepresentativesRepresentativeInfoByAddressCall) Address(address string) *RepresentativesRepresentativeInfoByAddressCall {
-	c.opt_["address"] = address
+	c.urlParams_.Set("address", address)
 	return c
 }
 
@@ -1392,7 +1373,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Address(address string)
 // to return information about offices and officials. If false, only the
 // top-level district information will be returned.
 func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeOffices bool) *RepresentativesRepresentativeInfoByAddressCall {
-	c.opt_["includeOffices"] = includeOffices
+	c.urlParams_.Set("includeOffices", fmt.Sprintf("%v", includeOffices))
 	return c
 }
 
@@ -1411,8 +1392,8 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeO
 //   "special"
 //   "subLocality1"
 //   "subLocality2"
-func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels string) *RepresentativesRepresentativeInfoByAddressCall {
-	c.opt_["levels"] = levels
+func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels []string) *RepresentativesRepresentativeInfoByAddressCall {
+	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
 }
 
@@ -1433,16 +1414,16 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels string) *
 //   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
-func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles string) *RepresentativesRepresentativeInfoByAddressCall {
-	c.opt_["roles"] = roles
+func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles []string) *RepresentativesRepresentativeInfoByAddressCall {
+	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RepresentativesRepresentativeInfoByAddressCall) Fields(s ...googleapi.Field) *RepresentativesRepresentativeInfoByAddressCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1452,13 +1433,13 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Fields(s ...googleapi.F
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RepresentativesRepresentativeInfoByAddressCall) IfNoneMatch(entityTag string) *RepresentativesRepresentativeInfoByAddressCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RepresentativesRepresentativeInfoByAddressCall) Context(ctx context.Context) *RepresentativesRepresentativeInfoByAddressCall {
 	c.ctx_ = ctx
 	return c
@@ -1466,30 +1447,14 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Context(ctx context.Con
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["address"]; ok {
-		params.Set("address", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["includeOffices"]; ok {
-		params.Set("includeOffices", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["levels"]; ok {
-		params.Set("levels", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["roles"]; ok {
-		params.Set("roles", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1620,16 +1585,17 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Do() (*RepresentativeIn
 // method id "civicinfo.representatives.representativeInfoByDivision":
 
 type RepresentativesRepresentativeInfoByDivisionCall struct {
-	s     *Service
-	ocdId string
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s            *Service
+	ocdId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // RepresentativeInfoByDivision: Looks up representative information for
 // a single geographic division.
 func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *RepresentativesRepresentativeInfoByDivisionCall {
-	c := &RepresentativesRepresentativeInfoByDivisionCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &RepresentativesRepresentativeInfoByDivisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ocdId = ocdId
 	return c
 }
@@ -1649,8 +1615,8 @@ func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *Rep
 //   "special"
 //   "subLocality1"
 //   "subLocality2"
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels string) *RepresentativesRepresentativeInfoByDivisionCall {
-	c.opt_["levels"] = levels
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels []string) *RepresentativesRepresentativeInfoByDivisionCall {
+	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
 }
 
@@ -1660,7 +1626,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels string) 
 // ocd-division/country:us/district:dc, this would also return all DC's
 // wards and ANCs.
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bool) *RepresentativesRepresentativeInfoByDivisionCall {
-	c.opt_["recursive"] = recursive
+	c.urlParams_.Set("recursive", fmt.Sprintf("%v", recursive))
 	return c
 }
 
@@ -1681,16 +1647,16 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 //   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles string) *RepresentativesRepresentativeInfoByDivisionCall {
-	c.opt_["roles"] = roles
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles []string) *RepresentativesRepresentativeInfoByDivisionCall {
+	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Fields(s ...googleapi.Field) *RepresentativesRepresentativeInfoByDivisionCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -1700,13 +1666,13 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Fields(s ...googleapi.
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RepresentativesRepresentativeInfoByDivisionCall) IfNoneMatch(entityTag string) *RepresentativesRepresentativeInfoByDivisionCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Context(ctx context.Context) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.ctx_ = ctx
 	return c
@@ -1714,29 +1680,16 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Context(ctx context.Co
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["levels"]; ok {
-		params.Set("levels", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["recursive"]; ok {
-		params.Set("recursive", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["roles"]; ok {
-		params.Set("roles", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "representatives/{ocdId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"ocdId": c.ocdId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

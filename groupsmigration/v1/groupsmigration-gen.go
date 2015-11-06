@@ -114,37 +114,38 @@ func (s *Groups) MarshalJSON() ([]byte, error) {
 // method id "groupsmigration.archive.insert":
 
 type ArchiveInsertCall struct {
-	s          *Service
-	groupId    string
-	opt_       map[string]interface{}
-	media_     io.Reader
-	resumable_ googleapi.SizeReaderAt
-	mediaType_ string
-	protocol_  string
-	ctx_       context.Context
+	s                *Service
+	groupId          string
+	urlParams_       gensupport.URLParams
+	media_           io.Reader
+	resumable_       googleapi.SizeReaderAt
+	mediaType_       string
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // Insert: Inserts a new mail into the archive of the Google group.
 func (r *ArchiveService) Insert(groupId string) *ArchiveInsertCall {
-	c := &ArchiveInsertCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ArchiveInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupId = groupId
 	return c
 }
 
-// Media specifies the media to upload in a single chunk.
-// At most one of Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk. At most one of
+// Media and ResumableMedia may be set.
 func (c *ArchiveInsertCall) Media(r io.Reader) *ArchiveInsertCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
-// At most one of Media and ResumableMedia may be set.
-// mediaType identifies the MIME media type of the upload, such as "image/png".
-// If mediaType is "", it will be auto-detected.
-// The provided ctx will supersede any context previously provided to
-// the Context method.
+// ResumableMedia specifies the media to upload in chunks and can be
+// canceled with ctx. At most one of Media and ResumableMedia may be
+// set. mediaType identifies the MIME media type of the upload, such as
+// "image/png". If mediaType is "", it will be auto-detected. The
+// provided ctx will supersede any context previously provided to the
+// Context method.
 func (c *ArchiveInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ArchiveInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -153,27 +154,28 @@ func (c *ArchiveInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, s
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called after every chunk.
-// It should be a low-latency function in order to not slow down the upload operation.
-// This should only be called when using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called
+// after every chunk. It should be a low-latency function in order to
+// not slow down the upload operation. This should only be called when
+// using ResumableMedia (as opposed to Media).
 func (c *ArchiveInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ArchiveInsertCall {
-	c.opt_["progressUpdater"] = pu
+	c.progressUpdater_ = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ArchiveInsertCall) Fields(s ...googleapi.Field) *ArchiveInsertCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
-// This context will supersede any context previously provided to
-// the ResumableMedia method.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
 func (c *ArchiveInsertCall) Context(ctx context.Context) *ArchiveInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -181,17 +183,13 @@ func (c *ArchiveInsertCall) Context(ctx context.Context) *ArchiveInsertCall {
 
 func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{groupId}/archive")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		params.Set("uploadType", c.protocol_)
+		c.urlParams_.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
@@ -246,12 +244,6 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var progressUpdater_ googleapi.ProgressUpdater
-	if v, ok := c.opt_["progressUpdater"]; ok {
-		if pu, ok := v.(googleapi.ProgressUpdater); ok {
-			progressUpdater_ = pu
-		}
-	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -261,7 +253,7 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      progressUpdater_,
+			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {

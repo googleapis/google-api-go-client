@@ -2751,16 +2751,16 @@ func (s *WriteInstruction) MarshalJSON() ([]byte, error) {
 // method id "dataflow.projects.jobs.create":
 
 type ProjectsJobsCreateCall struct {
-	s         *Service
-	projectId string
-	job       *Job
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	projectId  string
+	job        *Job
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
 }
 
 // Create: Creates a dataflow job.
 func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCreateCall {
-	c := &ProjectsJobsCreateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.job = job
 	return c
@@ -2769,7 +2769,7 @@ func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCr
 // ReplaceJobId sets the optional parameter "replaceJobId": DEPRECATED.
 // This field is now on the Job message.
 func (c *ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *ProjectsJobsCreateCall {
-	c.opt_["replaceJobId"] = replaceJobId
+	c.urlParams_.Set("replaceJobId", replaceJobId)
 	return c
 }
 
@@ -2781,21 +2781,21 @@ func (c *ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *ProjectsJobs
 //   "JOB_VIEW_SUMMARY"
 //   "JOB_VIEW_ALL"
 func (c *ProjectsJobsCreateCall) View(view string) *ProjectsJobsCreateCall {
-	c.opt_["view"] = view
+	c.urlParams_.Set("view", view)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsJobsCreateCall) Fields(s ...googleapi.Field) *ProjectsJobsCreateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsJobsCreateCall) Context(ctx context.Context) *ProjectsJobsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -2808,19 +2808,9 @@ func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["replaceJobId"]; ok {
-		params.Set("replaceJobId", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["view"]; ok {
-		params.Set("view", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -2916,16 +2906,17 @@ func (c *ProjectsJobsCreateCall) Do() (*Job, error) {
 // method id "dataflow.projects.jobs.get":
 
 type ProjectsJobsGetCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	jobId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets the state of the specified dataflow job.
 func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsGetCall {
-	c := &ProjectsJobsGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
@@ -2939,15 +2930,15 @@ func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsG
 //   "JOB_VIEW_SUMMARY"
 //   "JOB_VIEW_ALL"
 func (c *ProjectsJobsGetCall) View(view string) *ProjectsJobsGetCall {
-	c.opt_["view"] = view
+	c.urlParams_.Set("view", view)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsJobsGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -2957,13 +2948,13 @@ func (c *ProjectsJobsGetCall) Fields(s ...googleapi.Field) *ProjectsJobsGetCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsJobsGetCall) IfNoneMatch(entityTag string) *ProjectsJobsGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsJobsGetCall) Context(ctx context.Context) *ProjectsJobsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2971,24 +2962,17 @@ func (c *ProjectsJobsGetCall) Context(ctx context.Context) *ProjectsJobsGetCall 
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["view"]; ok {
-		params.Set("view", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3078,16 +3062,17 @@ func (c *ProjectsJobsGetCall) Do() (*Job, error) {
 // method id "dataflow.projects.jobs.getMetrics":
 
 type ProjectsJobsGetMetricsCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	jobId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // GetMetrics: Request the job status.
 func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *ProjectsJobsGetMetricsCall {
-	c := &ProjectsJobsGetMetricsCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsJobsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
@@ -3097,15 +3082,15 @@ func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *Projec
 // data that has changed since this time. Default is to return all
 // information about all metrics for the job.
 func (c *ProjectsJobsGetMetricsCall) StartTime(startTime string) *ProjectsJobsGetMetricsCall {
-	c.opt_["startTime"] = startTime
+	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsJobsGetMetricsCall) Fields(s ...googleapi.Field) *ProjectsJobsGetMetricsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3115,13 +3100,13 @@ func (c *ProjectsJobsGetMetricsCall) Fields(s ...googleapi.Field) *ProjectsJobsG
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsJobsGetMetricsCall) IfNoneMatch(entityTag string) *ProjectsJobsGetMetricsCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsJobsGetMetricsCall) Context(ctx context.Context) *ProjectsJobsGetMetricsCall {
 	c.ctx_ = ctx
 	return c
@@ -3129,24 +3114,17 @@ func (c *ProjectsJobsGetMetricsCall) Context(ctx context.Context) *ProjectsJobsG
 
 func (c *ProjectsJobsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["startTime"]; ok {
-		params.Set("startTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}/metrics")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3231,15 +3209,16 @@ func (c *ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
 // method id "dataflow.projects.jobs.list":
 
 type ProjectsJobsListCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List the jobs of a project
 func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
-	c := &ProjectsJobsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	return c
 }
@@ -3249,7 +3228,7 @@ func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 // returned will be the lesser of max_responses and an unspecified
 // server-defined limit.
 func (c *ProjectsJobsListCall) PageSize(pageSize int64) *ProjectsJobsListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -3257,7 +3236,7 @@ func (c *ProjectsJobsListCall) PageSize(pageSize int64) *ProjectsJobsListCall {
 // 'next_page_token' field of a previous response to request additional
 // results in a long list.
 func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -3269,15 +3248,15 @@ func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall
 //   "JOB_VIEW_SUMMARY"
 //   "JOB_VIEW_ALL"
 func (c *ProjectsJobsListCall) View(view string) *ProjectsJobsListCall {
-	c.opt_["view"] = view
+	c.urlParams_.Set("view", view)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsJobsListCall) Fields(s ...googleapi.Field) *ProjectsJobsListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3287,13 +3266,13 @@ func (c *ProjectsJobsListCall) Fields(s ...googleapi.Field) *ProjectsJobsListCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsJobsListCall) IfNoneMatch(entityTag string) *ProjectsJobsListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsJobsListCall) Context(ctx context.Context) *ProjectsJobsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3301,29 +3280,16 @@ func (c *ProjectsJobsListCall) Context(ctx context.Context) *ProjectsJobsListCal
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["view"]; ok {
-		params.Set("view", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3417,34 +3383,34 @@ func (c *ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
 // method id "dataflow.projects.jobs.update":
 
 type ProjectsJobsUpdateCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	job       *Job
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	projectId  string
+	jobId      string
+	job        *Job
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
 }
 
 // Update: Updates the state of an existing dataflow job.
 func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *ProjectsJobsUpdateCall {
-	c := &ProjectsJobsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsJobsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
 	c.job = job
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsJobsUpdateCall) Fields(s ...googleapi.Field) *ProjectsJobsUpdateCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsJobsUpdateCall) Context(ctx context.Context) *ProjectsJobsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -3457,13 +3423,9 @@ func (c *ProjectsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -3552,16 +3514,17 @@ func (c *ProjectsJobsUpdateCall) Do() (*Job, error) {
 // method id "dataflow.projects.jobs.messages.list":
 
 type ProjectsJobsMessagesListCall struct {
-	s         *Service
-	projectId string
-	jobId     string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	jobId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: Request the job status.
 func (r *ProjectsJobsMessagesService) List(projectId string, jobId string) *ProjectsJobsMessagesListCall {
-	c := &ProjectsJobsMessagesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsJobsMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
@@ -3571,7 +3534,7 @@ func (r *ProjectsJobsMessagesService) List(projectId string, jobId string) *Proj
 // with timestamps < end_time. The default is now (i.e. return up to the
 // latest messages available).
 func (c *ProjectsJobsMessagesListCall) EndTime(endTime string) *ProjectsJobsMessagesListCall {
-	c.opt_["endTime"] = endTime
+	c.urlParams_.Set("endTime", endTime)
 	return c
 }
 
@@ -3586,7 +3549,7 @@ func (c *ProjectsJobsMessagesListCall) EndTime(endTime string) *ProjectsJobsMess
 //   "JOB_MESSAGE_WARNING"
 //   "JOB_MESSAGE_ERROR"
 func (c *ProjectsJobsMessagesListCall) MinimumImportance(minimumImportance string) *ProjectsJobsMessagesListCall {
-	c.opt_["minimumImportance"] = minimumImportance
+	c.urlParams_.Set("minimumImportance", minimumImportance)
 	return c
 }
 
@@ -3595,7 +3558,7 @@ func (c *ProjectsJobsMessagesListCall) MinimumImportance(minimumImportance strin
 // the service may choose an appropriate default, or may return an
 // arbitrarily large number of results.
 func (c *ProjectsJobsMessagesListCall) PageSize(pageSize int64) *ProjectsJobsMessagesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -3603,7 +3566,7 @@ func (c *ProjectsJobsMessagesListCall) PageSize(pageSize int64) *ProjectsJobsMes
 // should be the value of next_page_token returned by an earlier call.
 // This will cause the next page of results to be returned.
 func (c *ProjectsJobsMessagesListCall) PageToken(pageToken string) *ProjectsJobsMessagesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
@@ -3611,15 +3574,15 @@ func (c *ProjectsJobsMessagesListCall) PageToken(pageToken string) *ProjectsJobs
 // return only messages with timestamps >= start_time. The default is
 // the job creation time (i.e. beginning of messages).
 func (c *ProjectsJobsMessagesListCall) StartTime(startTime string) *ProjectsJobsMessagesListCall {
-	c.opt_["startTime"] = startTime
+	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsJobsMessagesListCall) Fields(s ...googleapi.Field) *ProjectsJobsMessagesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -3629,13 +3592,13 @@ func (c *ProjectsJobsMessagesListCall) Fields(s ...googleapi.Field) *ProjectsJob
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsJobsMessagesListCall) IfNoneMatch(entityTag string) *ProjectsJobsMessagesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsJobsMessagesListCall) Context(ctx context.Context) *ProjectsJobsMessagesListCall {
 	c.ctx_ = ctx
 	return c
@@ -3643,36 +3606,17 @@ func (c *ProjectsJobsMessagesListCall) Context(ctx context.Context) *ProjectsJob
 
 func (c *ProjectsJobsMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["endTime"]; ok {
-		params.Set("endTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["minimumImportance"]; ok {
-		params.Set("minimumImportance", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startTime"]; ok {
-		params.Set("startTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}/messages")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3790,30 +3734,30 @@ type ProjectsJobsWorkItemsLeaseCall struct {
 	projectId            string
 	jobId                string
 	leaseworkitemrequest *LeaseWorkItemRequest
-	opt_                 map[string]interface{}
+	urlParams_           gensupport.URLParams
 	ctx_                 context.Context
 }
 
 // Lease: Leases a dataflow WorkItem to run.
 func (r *ProjectsJobsWorkItemsService) Lease(projectId string, jobId string, leaseworkitemrequest *LeaseWorkItemRequest) *ProjectsJobsWorkItemsLeaseCall {
-	c := &ProjectsJobsWorkItemsLeaseCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsJobsWorkItemsLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
 	c.leaseworkitemrequest = leaseworkitemrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsJobsWorkItemsLeaseCall) Fields(s ...googleapi.Field) *ProjectsJobsWorkItemsLeaseCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsJobsWorkItemsLeaseCall) Context(ctx context.Context) *ProjectsJobsWorkItemsLeaseCall {
 	c.ctx_ = ctx
 	return c
@@ -3826,13 +3770,9 @@ func (c *ProjectsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}/workItems:lease")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -3925,31 +3865,31 @@ type ProjectsJobsWorkItemsReportStatusCall struct {
 	projectId                   string
 	jobId                       string
 	reportworkitemstatusrequest *ReportWorkItemStatusRequest
-	opt_                        map[string]interface{}
+	urlParams_                  gensupport.URLParams
 	ctx_                        context.Context
 }
 
 // ReportStatus: Reports the status of dataflow WorkItems leased by a
 // worker.
 func (r *ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId string, reportworkitemstatusrequest *ReportWorkItemStatusRequest) *ProjectsJobsWorkItemsReportStatusCall {
-	c := &ProjectsJobsWorkItemsReportStatusCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsJobsWorkItemsReportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
 	c.reportworkitemstatusrequest = reportworkitemstatusrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsJobsWorkItemsReportStatusCall) Fields(s ...googleapi.Field) *ProjectsJobsWorkItemsReportStatusCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsJobsWorkItemsReportStatusCall) Context(ctx context.Context) *ProjectsJobsWorkItemsReportStatusCall {
 	c.ctx_ = ctx
 	return c
@@ -3962,13 +3902,9 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Res
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}/workItems:reportStatus")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,

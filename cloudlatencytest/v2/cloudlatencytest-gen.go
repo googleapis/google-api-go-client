@@ -233,28 +233,28 @@ func (s *StringValue) MarshalJSON() ([]byte, error) {
 type StatscollectionUpdateaggregatedstatsCall struct {
 	s               *Service
 	aggregatedstats *AggregatedStats
-	opt_            map[string]interface{}
+	urlParams_      internal.URLParams
 	ctx_            context.Context
 }
 
 // Updateaggregatedstats: RPC to update the new TCP stats.
 func (r *StatscollectionService) Updateaggregatedstats(aggregatedstats *AggregatedStats) *StatscollectionUpdateaggregatedstatsCall {
-	c := &StatscollectionUpdateaggregatedstatsCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StatscollectionUpdateaggregatedstatsCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.aggregatedstats = aggregatedstats
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StatscollectionUpdateaggregatedstatsCall) Fields(s ...googleapi.Field) *StatscollectionUpdateaggregatedstatsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StatscollectionUpdateaggregatedstatsCall) Context(ctx context.Context) *StatscollectionUpdateaggregatedstatsCall {
 	c.ctx_ = ctx
 	return c
@@ -267,13 +267,9 @@ func (c *StatscollectionUpdateaggregatedstatsCall) doRequest(alt string) (*http.
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "updateaggregatedstats")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -340,30 +336,30 @@ func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, 
 // method id "cloudlatencytest.statscollection.updatestats":
 
 type StatscollectionUpdatestatsCall struct {
-	s     *Service
-	stats *Stats
-	opt_  map[string]interface{}
-	ctx_  context.Context
+	s          *Service
+	stats      *Stats
+	urlParams_ internal.URLParams
+	ctx_       context.Context
 }
 
 // Updatestats: RPC to update the new TCP stats.
 func (r *StatscollectionService) Updatestats(stats *Stats) *StatscollectionUpdatestatsCall {
-	c := &StatscollectionUpdatestatsCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &StatscollectionUpdatestatsCall{s: r.s, urlParams_: make(internal.URLParams)}
 	c.stats = stats
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *StatscollectionUpdatestatsCall) Fields(s ...googleapi.Field) *StatscollectionUpdatestatsCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *StatscollectionUpdatestatsCall) Context(ctx context.Context) *StatscollectionUpdatestatsCall {
 	c.ctx_ = ctx
 	return c
@@ -376,13 +372,9 @@ func (c *StatscollectionUpdatestatsCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "updatestats")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)

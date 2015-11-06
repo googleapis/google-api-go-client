@@ -68,6 +68,30 @@
       "revId": "f61bfcf47b573770adb8b6ce9dd6a7c1ffb7cf8d",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_43d9a1a7",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-11-06T23:14:30Z",
+      "side": 1,
+      "message": "Whups, I meant:\npn(\" %s %q\"",
+      "parentUuid": "f6923665_835e29f6",
+      "range": {
+        "startLine": 536,
+        "startChar": 3,
+        "endLine": 536,
+        "endChar": 16
+      },
+      "revId": "f61bfcf47b573770adb8b6ce9dd6a7c1ffb7cf8d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

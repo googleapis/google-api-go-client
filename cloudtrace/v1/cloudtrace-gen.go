@@ -258,11 +258,11 @@ func (s *Traces) MarshalJSON() ([]byte, error) {
 // method id "cloudtrace.projects.patchTraces":
 
 type ProjectsPatchTracesCall struct {
-	s         *Service
-	projectId string
-	traces    *Traces
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s          *Service
+	projectId  string
+	traces     *Traces
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
 }
 
 // PatchTraces: Updates the existing traces specified by
@@ -271,23 +271,23 @@ type ProjectsPatchTracesCall struct {
 // any additional fields in an update are merged with the existing trace
 // data.
 func (r *ProjectsService) PatchTraces(projectId string, traces *Traces) *ProjectsPatchTracesCall {
-	c := &ProjectsPatchTracesCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsPatchTracesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.traces = traces
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsPatchTracesCall) Fields(s ...googleapi.Field) *ProjectsPatchTracesCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsPatchTracesCall) Context(ctx context.Context) *ProjectsPatchTracesCall {
 	c.ctx_ = ctx
 	return c
@@ -300,13 +300,9 @@ func (c *ProjectsPatchTracesCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/traces")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -386,26 +382,27 @@ func (c *ProjectsPatchTracesCall) Do() (*Empty, error) {
 // method id "cloudtrace.projects.traces.get":
 
 type ProjectsTracesGetCall struct {
-	s         *Service
-	projectId string
-	traceId   string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	traceId      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // Get: Gets one trace by id.
 func (r *ProjectsTracesService) Get(projectId string, traceId string) *ProjectsTracesGetCall {
-	c := &ProjectsTracesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsTracesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.traceId = traceId
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsTracesGetCall) Fields(s ...googleapi.Field) *ProjectsTracesGetCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -415,13 +412,13 @@ func (c *ProjectsTracesGetCall) Fields(s ...googleapi.Field) *ProjectsTracesGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsTracesGetCall) IfNoneMatch(entityTag string) *ProjectsTracesGetCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsTracesGetCall) Context(ctx context.Context) *ProjectsTracesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -429,21 +426,17 @@ func (c *ProjectsTracesGetCall) Context(ctx context.Context) *ProjectsTracesGetC
 
 func (c *ProjectsTracesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/traces/{traceId}")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"traceId":   c.traceId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -522,15 +515,16 @@ func (c *ProjectsTracesGetCall) Do() (*Trace, error) {
 // method id "cloudtrace.projects.traces.list":
 
 type ProjectsTracesListCall struct {
-	s         *Service
-	projectId string
-	opt_      map[string]interface{}
-	ctx_      context.Context
+	s            *Service
+	projectId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // List: List traces matching the filter expression.
 func (r *ProjectsTracesService) List(projectId string) *ProjectsTracesListCall {
-	c := &ProjectsTracesListCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ProjectsTracesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	return c
 }
@@ -538,14 +532,14 @@ func (r *ProjectsTracesService) List(projectId string) *ProjectsTracesListCall {
 // EndTime sets the optional parameter "endTime": Start of the time
 // interval (exclusive).
 func (c *ProjectsTracesListCall) EndTime(endTime string) *ProjectsTracesListCall {
-	c.opt_["endTime"] = endTime
+	c.urlParams_.Set("endTime", endTime)
 	return c
 }
 
 // Filter sets the optional parameter "filter": An optional filter for
 // the request.
 func (c *ProjectsTracesListCall) Filter(filter string) *ProjectsTracesListCall {
-	c.opt_["filter"] = filter
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -557,7 +551,7 @@ func (c *ProjectsTracesListCall) Filter(filter string) *ProjectsTracesListCall {
 // specified by appending "desc" to the sort field: name desc Only one
 // sort field is permitted, though this may change in the future.
 func (c *ProjectsTracesListCall) OrderBy(orderBy string) *ProjectsTracesListCall {
-	c.opt_["orderBy"] = orderBy
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -566,7 +560,7 @@ func (c *ProjectsTracesListCall) OrderBy(orderBy string) *ProjectsTracesListCall
 // select a reasonable value. The implemenation may always return fewer
 // than the requested page_size.
 func (c *ProjectsTracesListCall) PageSize(pageSize int64) *ProjectsTracesListCall {
-	c.opt_["pageSize"] = pageSize
+	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
 	return c
 }
 
@@ -575,14 +569,14 @@ func (c *ProjectsTracesListCall) PageSize(pageSize int64) *ProjectsTracesListCal
 // If present, this value is should be taken from the next_page_token
 // field of a previous ListTracesResponse.
 func (c *ProjectsTracesListCall) PageToken(pageToken string) *ProjectsTracesListCall {
-	c.opt_["pageToken"] = pageToken
+	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": End of the time
 // interval (inclusive).
 func (c *ProjectsTracesListCall) StartTime(startTime string) *ProjectsTracesListCall {
-	c.opt_["startTime"] = startTime
+	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
@@ -595,15 +589,15 @@ func (c *ProjectsTracesListCall) StartTime(startTime string) *ProjectsTracesList
 //   "ROOTSPAN"
 //   "COMPLETE"
 func (c *ProjectsTracesListCall) View(view string) *ProjectsTracesListCall {
-	c.opt_["view"] = view
+	c.urlParams_.Set("view", view)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsTracesListCall) Fields(s ...googleapi.Field) *ProjectsTracesListCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -613,13 +607,13 @@ func (c *ProjectsTracesListCall) Fields(s ...googleapi.Field) *ProjectsTracesLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsTracesListCall) IfNoneMatch(entityTag string) *ProjectsTracesListCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ProjectsTracesListCall) Context(ctx context.Context) *ProjectsTracesListCall {
 	c.ctx_ = ctx
 	return c
@@ -627,41 +621,16 @@ func (c *ProjectsTracesListCall) Context(ctx context.Context) *ProjectsTracesLis
 
 func (c *ProjectsTracesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["endTime"]; ok {
-		params.Set("endTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["filter"]; ok {
-		params.Set("filter", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["orderBy"]; ok {
-		params.Set("orderBy", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageSize"]; ok {
-		params.Set("pageSize", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["pageToken"]; ok {
-		params.Set("pageToken", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["startTime"]; ok {
-		params.Set("startTime", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["view"]; ok {
-		params.Set("view", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectId}/traces")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -775,51 +744,52 @@ func (c *ProjectsTracesListCall) Do() (*ListTracesResponse, error) {
 // method id "cloudtrace.getDiscovery":
 
 type V1GetDiscoveryCall struct {
-	s    *Service
-	opt_ map[string]interface{}
-	ctx_ context.Context
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
 }
 
 // GetDiscovery: Returns a discovery document in the specified `format`.
 // The typeurl in the returned google.protobuf.Any value depends on the
 // requested format.
 func (r *V1Service) GetDiscovery() *V1GetDiscoveryCall {
-	c := &V1GetDiscoveryCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &V1GetDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Args sets the optional parameter "args": Any additional arguments.
-func (c *V1GetDiscoveryCall) Args(args string) *V1GetDiscoveryCall {
-	c.opt_["args"] = args
+func (c *V1GetDiscoveryCall) Args(args []string) *V1GetDiscoveryCall {
+	c.urlParams_.SetMulti("args", append([]string{}, args...))
 	return c
 }
 
 // Format sets the optional parameter "format": The format requested for
 // discovery.
 func (c *V1GetDiscoveryCall) Format(format string) *V1GetDiscoveryCall {
-	c.opt_["format"] = format
+	c.urlParams_.Set("format", format)
 	return c
 }
 
 // Labels sets the optional parameter "labels": A list of labels (like
 // visibility) influencing the scope of the requested doc.
-func (c *V1GetDiscoveryCall) Labels(labels string) *V1GetDiscoveryCall {
-	c.opt_["labels"] = labels
+func (c *V1GetDiscoveryCall) Labels(labels []string) *V1GetDiscoveryCall {
+	c.urlParams_.SetMulti("labels", append([]string{}, labels...))
 	return c
 }
 
 // Version sets the optional parameter "version": The API version of the
 // requested discovery doc.
 func (c *V1GetDiscoveryCall) Version(version string) *V1GetDiscoveryCall {
-	c.opt_["version"] = version
+	c.urlParams_.Set("version", version)
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *V1GetDiscoveryCall) Fields(s ...googleapi.Field) *V1GetDiscoveryCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
@@ -829,13 +799,13 @@ func (c *V1GetDiscoveryCall) Fields(s ...googleapi.Field) *V1GetDiscoveryCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *V1GetDiscoveryCall) IfNoneMatch(entityTag string) *V1GetDiscoveryCall {
-	c.opt_["ifNoneMatch"] = entityTag
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *V1GetDiscoveryCall) Context(ctx context.Context) *V1GetDiscoveryCall {
 	c.ctx_ = ctx
 	return c
@@ -843,30 +813,14 @@ func (c *V1GetDiscoveryCall) Context(ctx context.Context) *V1GetDiscoveryCall {
 
 func (c *V1GetDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["args"]; ok {
-		params.Set("args", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["format"]; ok {
-		params.Set("format", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["labels"]; ok {
-		params.Set("labels", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["version"]; ok {
-		params.Set("version", fmt.Sprintf("%v", v))
-	}
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/discovery")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if v, ok := c.opt_["ifNoneMatch"]; ok {
-		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

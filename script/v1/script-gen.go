@@ -345,7 +345,7 @@ type ScriptsRunCall struct {
 	s                *Service
 	scriptId         string
 	executionrequest *ExecutionRequest
-	opt_             map[string]interface{}
+	urlParams_       gensupport.URLParams
 	ctx_             context.Context
 }
 
@@ -358,23 +358,23 @@ type ScriptsRunCall struct {
 // authentication token, open the project in the script editor, then
 // select **File > Project properties** and click the **Scopes** tab.
 func (r *ScriptsService) Run(scriptId string, executionrequest *ExecutionRequest) *ScriptsRunCall {
-	c := &ScriptsRunCall{s: r.s, opt_: make(map[string]interface{})}
+	c := &ScriptsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
 	c.executionrequest = executionrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved.
-// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ScriptsRunCall) Fields(s ...googleapi.Field) *ScriptsRunCall {
-	c.opt_["fields"] = googleapi.CombineFields(s)
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
-// Any pending HTTP request will be aborted if the provided context
-// is canceled.
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
 func (c *ScriptsRunCall) Context(ctx context.Context) *ScriptsRunCall {
 	c.ctx_ = ctx
 	return c
@@ -387,13 +387,9 @@ func (c *ScriptsRunCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	params := make(url.Values)
-	params.Set("alt", alt)
-	if v, ok := c.opt_["fields"]; ok {
-		params.Set("fields", fmt.Sprintf("%v", v))
-	}
+	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/scripts/{scriptId}:run")
-	urls += "?" + params.Encode()
+	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"scriptId": c.scriptId,

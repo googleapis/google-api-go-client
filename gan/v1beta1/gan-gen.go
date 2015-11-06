@@ -1134,12 +1134,11 @@ func (s *Report) MarshalJSON() ([]byte, error) {
 // method id "gan.advertisers.get":
 
 type AdvertisersGetCall struct {
-	s            *Service
-	role         string
-	roleId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves data about a single advertiser if that the requesting
@@ -1147,7 +1146,7 @@ type AdvertisersGetCall struct {
 // advertisers. Advertisers can request information about themselves by
 // omitting the advertiserId query parameter.
 func (r *AdvertisersService) Get(role string, roleId string) *AdvertisersGetCall {
-	c := &AdvertisersGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AdvertisersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	return c
@@ -1156,15 +1155,15 @@ func (r *AdvertisersService) Get(role string, roleId string) *AdvertisersGetCall
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
 // the advertiser to look up.
 func (c *AdvertisersGetCall) AdvertiserId(advertiserId string) *AdvertisersGetCall {
-	c.urlParams_.Set("advertiserId", advertiserId)
+	c.opt_["advertiserId"] = advertiserId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdvertisersGetCall) Fields(s ...googleapi.Field) *AdvertisersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1174,13 +1173,13 @@ func (c *AdvertisersGetCall) Fields(s ...googleapi.Field) *AdvertisersGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AdvertisersGetCall) IfNoneMatch(entityTag string) *AdvertisersGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AdvertisersGetCall) Context(ctx context.Context) *AdvertisersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1188,17 +1187,24 @@ func (c *AdvertisersGetCall) Context(ctx context.Context) *AdvertisersGetCall {
 
 func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["advertiserId"]; ok {
+		params.Set("advertiserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/advertiser")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1287,18 +1293,17 @@ func (c *AdvertisersGetCall) Do() (*Advertiser, error) {
 // method id "gan.advertisers.list":
 
 type AdvertisersListCall struct {
-	s            *Service
-	role         string
-	roleId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves data about all advertisers that the requesting
 // advertiser/publisher has access to.
 func (r *AdvertisersService) List(role string, roleId string) *AdvertisersListCall {
-	c := &AdvertisersListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AdvertisersListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	return c
@@ -1310,14 +1315,14 @@ func (r *AdvertisersService) List(role string, roleId string) *AdvertisersListCa
 // http://www.google.com/support/affiliatenetwork/advertiser/bin/answer.py?hl=en&answer=107581. Filters out all advertisers not in one of the given advertiser
 // categories.
 func (c *AdvertisersListCall) AdvertiserCategory(advertiserCategory string) *AdvertisersListCall {
-	c.urlParams_.Set("advertiserCategory", advertiserCategory)
+	c.opt_["advertiserCategory"] = advertiserCategory
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Max number of
 // items to return in this page.  Defaults to 20.
 func (c *AdvertisersListCall) MaxResults(maxResults int64) *AdvertisersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -1325,7 +1330,7 @@ func (c *AdvertisersListCall) MaxResults(maxResults int64) *AdvertisersListCall 
 // Filters out all advertisers that have a ninety day EPC average lower
 // than the given value (inclusive). Min value: 0.0.
 func (c *AdvertisersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *AdvertisersListCall {
-	c.urlParams_.Set("minNinetyDayEpc", fmt.Sprintf("%v", minNinetyDayEpc))
+	c.opt_["minNinetyDayEpc"] = minNinetyDayEpc
 	return c
 }
 
@@ -1336,7 +1341,7 @@ func (c *AdvertisersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *Advertis
 // the given quartile. For example if a 2 was given only advertisers
 // with a payout rank of 25 or higher would be included.
 func (c *AdvertisersListCall) MinPayoutRank(minPayoutRank int64) *AdvertisersListCall {
-	c.urlParams_.Set("minPayoutRank", fmt.Sprintf("%v", minPayoutRank))
+	c.opt_["minPayoutRank"] = minPayoutRank
 	return c
 }
 
@@ -1344,14 +1349,14 @@ func (c *AdvertisersListCall) MinPayoutRank(minPayoutRank int64) *AdvertisersLis
 // out all advertisers that have a seven day EPC average lower than the
 // given value (inclusive). Min value: 0.0.
 func (c *AdvertisersListCall) MinSevenDayEpc(minSevenDayEpc float64) *AdvertisersListCall {
-	c.urlParams_.Set("minSevenDayEpc", fmt.Sprintf("%v", minSevenDayEpc))
+	c.opt_["minSevenDayEpc"] = minSevenDayEpc
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of
 // 'nextPageToken' from the previous page.
 func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -1370,15 +1375,15 @@ func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 //   "pending" - An advertiser program that you've already applied to,
 // but they haven't yet decided to approve or decline your application.
 func (c *AdvertisersListCall) RelationshipStatus(relationshipStatus string) *AdvertisersListCall {
-	c.urlParams_.Set("relationshipStatus", relationshipStatus)
+	c.opt_["relationshipStatus"] = relationshipStatus
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AdvertisersListCall) Fields(s ...googleapi.Field) *AdvertisersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1388,13 +1393,13 @@ func (c *AdvertisersListCall) Fields(s ...googleapi.Field) *AdvertisersListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AdvertisersListCall) IfNoneMatch(entityTag string) *AdvertisersListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AdvertisersListCall) Context(ctx context.Context) *AdvertisersListCall {
 	c.ctx_ = ctx
 	return c
@@ -1402,17 +1407,42 @@ func (c *AdvertisersListCall) Context(ctx context.Context) *AdvertisersListCall 
 
 func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["advertiserCategory"]; ok {
+		params.Set("advertiserCategory", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minNinetyDayEpc"]; ok {
+		params.Set("minNinetyDayEpc", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minPayoutRank"]; ok {
+		params.Set("minPayoutRank", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minSevenDayEpc"]; ok {
+		params.Set("minSevenDayEpc", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["relationshipStatus"]; ok {
+		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/advertisers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1553,16 +1583,15 @@ func (c *AdvertisersListCall) Do() (*Advertisers, error) {
 // method id "gan.ccOffers.list":
 
 type CcOffersListCall struct {
-	s            *Service
-	publisher    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	publisher string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Retrieves credit card offers for the given publisher.
 func (r *CcOffersService) List(publisher string) *CcOffersListCall {
-	c := &CcOffersListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CcOffersListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.publisher = publisher
 	return c
 }
@@ -1570,8 +1599,8 @@ func (r *CcOffersService) List(publisher string) *CcOffersListCall {
 // Advertiser sets the optional parameter "advertiser": The advertiser
 // ID of a card issuer whose offers to include. Optional, may be
 // repeated.
-func (c *CcOffersListCall) Advertiser(advertiser []string) *CcOffersListCall {
-	c.urlParams_.SetMulti("advertiser", append([]string{}, advertiser...))
+func (c *CcOffersListCall) Advertiser(advertiser string) *CcOffersListCall {
+	c.opt_["advertiser"] = advertiser
 	return c
 }
 
@@ -1583,15 +1612,15 @@ func (c *CcOffersListCall) Advertiser(advertiser []string) *CcOffersListCall {
 //   "summary" - Include only the basic fields needed to display an
 // offer.
 func (c *CcOffersListCall) Projection(projection string) *CcOffersListCall {
-	c.urlParams_.Set("projection", projection)
+	c.opt_["projection"] = projection
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CcOffersListCall) Fields(s ...googleapi.Field) *CcOffersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1601,13 +1630,13 @@ func (c *CcOffersListCall) Fields(s ...googleapi.Field) *CcOffersListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CcOffersListCall) IfNoneMatch(entityTag string) *CcOffersListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CcOffersListCall) Context(ctx context.Context) *CcOffersListCall {
 	c.ctx_ = ctx
 	return c
@@ -1615,16 +1644,26 @@ func (c *CcOffersListCall) Context(ctx context.Context) *CcOffersListCall {
 
 func (c *CcOffersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["advertiser"]; ok {
+		params.Set("advertiser", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "publishers/{publisher}/ccOffers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"publisher": c.publisher,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1712,17 +1751,16 @@ func (c *CcOffersListCall) Do() (*CcOffers, error) {
 // method id "gan.events.list":
 
 type EventsListCall struct {
-	s            *Service
-	role         string
-	roleId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves event data for a given advertiser/publisher.
 func (r *EventsService) List(role string, roleId string) *EventsListCall {
-	c := &EventsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &EventsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	return c
@@ -1733,7 +1771,7 @@ func (r *EventsService) List(role string, roleId string) *EventsListCall {
 // reference one of the given advertiser IDs. Only used when under
 // publishers role.
 func (c *EventsListCall) AdvertiserId(advertiserId string) *EventsListCall {
-	c.urlParams_.Set("advertiserId", advertiserId)
+	c.opt_["advertiserId"] = advertiserId
 	return c
 }
 
@@ -1755,7 +1793,7 @@ func (c *EventsListCall) AdvertiserId(advertiserId string) *EventsListCall {
 //   "tier_bonus" - A payment from an advertiser to a publisher for the
 // publisher maintaining a high tier level
 func (c *EventsListCall) ChargeType(chargeType string) *EventsListCall {
-	c.urlParams_.Set("chargeType", chargeType)
+	c.opt_["chargeType"] = chargeType
 	return c
 }
 
@@ -1763,7 +1801,7 @@ func (c *EventsListCall) ChargeType(chargeType string) *EventsListCall {
 // all events later than given date.  Defaults to 24 hours after
 // eventMin.
 func (c *EventsListCall) EventDateMax(eventDateMax string) *EventsListCall {
-	c.urlParams_.Set("eventDateMax", eventDateMax)
+	c.opt_["eventDateMax"] = eventDateMax
 	return c
 }
 
@@ -1771,7 +1809,7 @@ func (c *EventsListCall) EventDateMax(eventDateMax string) *EventsListCall {
 // all events earlier than given date.  Defaults to 24 hours from
 // current date/time.
 func (c *EventsListCall) EventDateMin(eventDateMin string) *EventsListCall {
-	c.urlParams_.Set("eventDateMin", eventDateMin)
+	c.opt_["eventDateMin"] = eventDateMin
 	return c
 }
 
@@ -1779,14 +1817,14 @@ func (c *EventsListCall) EventDateMin(eventDateMin string) *EventsListCall {
 // of link IDs. Filters out all events that do not reference one of the
 // given link IDs.
 func (c *EventsListCall) LinkId(linkId string) *EventsListCall {
-	c.urlParams_.Set("linkId", linkId)
+	c.opt_["linkId"] = linkId
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Max number of
 // offers to return in this page.  Defaults to 20.
 func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -1794,7 +1832,7 @@ func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
 // list of member IDs. Filters out all events that do not reference one
 // of the given member IDs.
 func (c *EventsListCall) MemberId(memberId string) *EventsListCall {
-	c.urlParams_.Set("memberId", memberId)
+	c.opt_["memberId"] = memberId
 	return c
 }
 
@@ -1802,7 +1840,7 @@ func (c *EventsListCall) MemberId(memberId string) *EventsListCall {
 // out all events modified later than given date.  Defaults to 24 hours
 // after modifyDateMin, if modifyDateMin is explicitly set.
 func (c *EventsListCall) ModifyDateMax(modifyDateMax string) *EventsListCall {
-	c.urlParams_.Set("modifyDateMax", modifyDateMax)
+	c.opt_["modifyDateMax"] = modifyDateMax
 	return c
 }
 
@@ -1811,7 +1849,7 @@ func (c *EventsListCall) ModifyDateMax(modifyDateMax string) *EventsListCall {
 // hours before the current modifyDateMax, if modifyDateMax is
 // explicitly set.
 func (c *EventsListCall) ModifyDateMin(modifyDateMin string) *EventsListCall {
-	c.urlParams_.Set("modifyDateMin", modifyDateMin)
+	c.opt_["modifyDateMin"] = modifyDateMin
 	return c
 }
 
@@ -1819,14 +1857,14 @@ func (c *EventsListCall) ModifyDateMin(modifyDateMin string) *EventsListCall {
 // list of order IDs. Filters out all events that do not reference one
 // of the given order IDs.
 func (c *EventsListCall) OrderId(orderId string) *EventsListCall {
-	c.urlParams_.Set("orderId", orderId)
+	c.opt_["orderId"] = orderId
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of
 // 'nextPageToken' from the previous page.
 func (c *EventsListCall) PageToken(pageToken string) *EventsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -1835,7 +1873,7 @@ func (c *EventsListCall) PageToken(pageToken string) *EventsListCall {
 // that do not reference a product in one of the given product
 // categories.
 func (c *EventsListCall) ProductCategory(productCategory string) *EventsListCall {
-	c.urlParams_.Set("productCategory", productCategory)
+	c.opt_["productCategory"] = productCategory
 	return c
 }
 
@@ -1844,7 +1882,7 @@ func (c *EventsListCall) ProductCategory(productCategory string) *EventsListCall
 // reference one of the given publishers IDs. Only used when under
 // advertiser role.
 func (c *EventsListCall) PublisherId(publisherId string) *EventsListCall {
-	c.urlParams_.Set("publisherId", publisherId)
+	c.opt_["publisherId"] = publisherId
 	return c
 }
 
@@ -1852,7 +1890,7 @@ func (c *EventsListCall) PublisherId(publisherId string) *EventsListCall {
 // SKUs. Filters out all events that do not reference one of the given
 // SKU.
 func (c *EventsListCall) Sku(sku string) *EventsListCall {
-	c.urlParams_.Set("sku", sku)
+	c.opt_["sku"] = sku
 	return c
 }
 
@@ -1864,7 +1902,7 @@ func (c *EventsListCall) Sku(sku string) *EventsListCall {
 //   "active" - Event is currently active.
 //   "canceled" - Event is currently canceled.
 func (c *EventsListCall) Status(status string) *EventsListCall {
-	c.urlParams_.Set("status", status)
+	c.opt_["status"] = status
 	return c
 }
 
@@ -1882,15 +1920,15 @@ func (c *EventsListCall) Status(status string) *EventsListCall {
 // transaction. Some advertisers use a transaction to record other types
 // of events, such as magazine subscriptions.
 func (c *EventsListCall) Type(type_ string) *EventsListCall {
-	c.urlParams_.Set("type", type_)
+	c.opt_["type"] = type_
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1900,13 +1938,13 @@ func (c *EventsListCall) Fields(s ...googleapi.Field) *EventsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *EventsListCall) IfNoneMatch(entityTag string) *EventsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *EventsListCall) Context(ctx context.Context) *EventsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1914,17 +1952,69 @@ func (c *EventsListCall) Context(ctx context.Context) *EventsListCall {
 
 func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["advertiserId"]; ok {
+		params.Set("advertiserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["chargeType"]; ok {
+		params.Set("chargeType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["eventDateMax"]; ok {
+		params.Set("eventDateMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["eventDateMin"]; ok {
+		params.Set("eventDateMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["linkId"]; ok {
+		params.Set("linkId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["memberId"]; ok {
+		params.Set("memberId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["modifyDateMax"]; ok {
+		params.Set("modifyDateMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["modifyDateMin"]; ok {
+		params.Set("modifyDateMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderId"]; ok {
+		params.Set("orderId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["productCategory"]; ok {
+		params.Set("productCategory", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publisherId"]; ok {
+		params.Set("publisherId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sku"]; ok {
+		params.Set("sku", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["type"]; ok {
+		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/events")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2125,13 +2215,12 @@ func (c *EventsListCall) Do() (*Events, error) {
 // method id "gan.links.get":
 
 type LinksGetCall struct {
-	s            *Service
-	role         string
-	roleId       string
-	linkId       int64
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	role   string
+	roleId string
+	linkId int64
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves data about a single link if the requesting
@@ -2139,18 +2228,18 @@ type LinksGetCall struct {
 // own links. Publishers can look up visible links or links belonging to
 // advertisers they are in a relationship with.
 func (r *LinksService) Get(role string, roleId string, linkId int64) *LinksGetCall {
-	c := &LinksGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LinksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	c.linkId = linkId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LinksGetCall) Fields(s ...googleapi.Field) *LinksGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2160,13 +2249,13 @@ func (c *LinksGetCall) Fields(s ...googleapi.Field) *LinksGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LinksGetCall) IfNoneMatch(entityTag string) *LinksGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LinksGetCall) Context(ctx context.Context) *LinksGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2174,9 +2263,13 @@ func (c *LinksGetCall) Context(ctx context.Context) *LinksGetCall {
 
 func (c *LinksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/link/{linkId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":   c.role,
@@ -2184,8 +2277,8 @@ func (c *LinksGetCall) doRequest(alt string) (*http.Response, error) {
 		"linkId": strconv.FormatInt(c.linkId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2277,34 +2370,34 @@ func (c *LinksGetCall) Do() (*Link, error) {
 // method id "gan.links.insert":
 
 type LinksInsertCall struct {
-	s          *Service
-	role       string
-	roleId     string
-	link       *Link
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	role   string
+	roleId string
+	link   *Link
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Insert: Inserts a new link.
 func (r *LinksService) Insert(role string, roleId string, link *Link) *LinksInsertCall {
-	c := &LinksInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LinksInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	c.link = link
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LinksInsertCall) Fields(s ...googleapi.Field) *LinksInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LinksInsertCall) Context(ctx context.Context) *LinksInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -2317,9 +2410,13 @@ func (c *LinksInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/link")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":   c.role,
@@ -2412,17 +2509,16 @@ func (c *LinksInsertCall) Do() (*Link, error) {
 // method id "gan.links.list":
 
 type LinksListCall struct {
-	s            *Service
-	role         string
-	roleId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves all links that match the query parameters.
 func (r *LinksService) List(role string, roleId string) *LinksListCall {
-	c := &LinksListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LinksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	return c
@@ -2430,19 +2526,15 @@ func (r *LinksService) List(role string, roleId string) *LinksListCall {
 
 // AdvertiserId sets the optional parameter "advertiserId": Limits the
 // resulting links to the ones belonging to the listed advertisers.
-func (c *LinksListCall) AdvertiserId(advertiserId []int64) *LinksListCall {
-	var advertiserId_ []string
-	for _, v := range advertiserId {
-		advertiserId_ = append(advertiserId_, fmt.Sprintf("%v", v))
-	}
-	c.urlParams_.SetMulti("advertiserId", advertiserId_)
+func (c *LinksListCall) AdvertiserId(advertiserId int64) *LinksListCall {
+	c.opt_["advertiserId"] = advertiserId
 	return c
 }
 
 // AssetSize sets the optional parameter "assetSize": The size of the
 // given asset.
-func (c *LinksListCall) AssetSize(assetSize []string) *LinksListCall {
-	c.urlParams_.SetMulti("assetSize", append([]string{}, assetSize...))
+func (c *LinksListCall) AssetSize(assetSize string) *LinksListCall {
+	c.opt_["assetSize"] = assetSize
 	return c
 }
 
@@ -2453,21 +2545,21 @@ func (c *LinksListCall) AssetSize(assetSize []string) *LinksListCall {
 //   "advertiser"
 //   "publisher"
 func (c *LinksListCall) Authorship(authorship string) *LinksListCall {
-	c.urlParams_.Set("authorship", authorship)
+	c.opt_["authorship"] = authorship
 	return c
 }
 
 // CreateDateMax sets the optional parameter "createDateMax": The end of
 // the create date range.
 func (c *LinksListCall) CreateDateMax(createDateMax string) *LinksListCall {
-	c.urlParams_.Set("createDateMax", createDateMax)
+	c.opt_["createDateMax"] = createDateMax
 	return c
 }
 
 // CreateDateMin sets the optional parameter "createDateMin": The
 // beginning of the create date range.
 func (c *LinksListCall) CreateDateMin(createDateMin string) *LinksListCall {
-	c.urlParams_.Set("createDateMin", createDateMin)
+	c.opt_["createDateMin"] = createDateMin
 	return c
 }
 
@@ -2478,21 +2570,21 @@ func (c *LinksListCall) CreateDateMin(createDateMin string) *LinksListCall {
 //   "banner"
 //   "text"
 func (c *LinksListCall) LinkType(linkType string) *LinksListCall {
-	c.urlParams_.Set("linkType", linkType)
+	c.opt_["linkType"] = linkType
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Max number of
 // items to return in this page.  Defaults to 20.
 func (c *LinksListCall) MaxResults(maxResults int64) *LinksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of
 // 'nextPageToken' from the previous page.
 func (c *LinksListCall) PageToken(pageToken string) *LinksListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -2505,8 +2597,8 @@ func (c *LinksListCall) PageToken(pageToken string) *LinksListCall {
 //   "free_shipping"
 //   "percent_off"
 //   "price_cut"
-func (c *LinksListCall) PromotionType(promotionType []string) *LinksListCall {
-	c.urlParams_.SetMulti("promotionType", append([]string{}, promotionType...))
+func (c *LinksListCall) PromotionType(promotionType string) *LinksListCall {
+	c.opt_["promotionType"] = promotionType
 	return c
 }
 
@@ -2517,7 +2609,7 @@ func (c *LinksListCall) PromotionType(promotionType []string) *LinksListCall {
 //   "approved"
 //   "available"
 func (c *LinksListCall) RelationshipStatus(relationshipStatus string) *LinksListCall {
-	c.urlParams_.Set("relationshipStatus", relationshipStatus)
+	c.opt_["relationshipStatus"] = relationshipStatus
 	return c
 }
 
@@ -2525,29 +2617,29 @@ func (c *LinksListCall) RelationshipStatus(relationshipStatus string) *LinksList
 // text search across title and merchandising text, supports link id
 // search.
 func (c *LinksListCall) SearchText(searchText string) *LinksListCall {
-	c.urlParams_.Set("searchText", searchText)
+	c.opt_["searchText"] = searchText
 	return c
 }
 
 // StartDateMax sets the optional parameter "startDateMax": The end of
 // the start date range.
 func (c *LinksListCall) StartDateMax(startDateMax string) *LinksListCall {
-	c.urlParams_.Set("startDateMax", startDateMax)
+	c.opt_["startDateMax"] = startDateMax
 	return c
 }
 
 // StartDateMin sets the optional parameter "startDateMin": The
 // beginning of the start date range.
 func (c *LinksListCall) StartDateMin(startDateMin string) *LinksListCall {
-	c.urlParams_.Set("startDateMin", startDateMin)
+	c.opt_["startDateMin"] = startDateMin
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LinksListCall) Fields(s ...googleapi.Field) *LinksListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2557,13 +2649,13 @@ func (c *LinksListCall) Fields(s ...googleapi.Field) *LinksListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LinksListCall) IfNoneMatch(entityTag string) *LinksListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LinksListCall) Context(ctx context.Context) *LinksListCall {
 	c.ctx_ = ctx
 	return c
@@ -2571,17 +2663,60 @@ func (c *LinksListCall) Context(ctx context.Context) *LinksListCall {
 
 func (c *LinksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["advertiserId"]; ok {
+		params.Set("advertiserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["assetSize"]; ok {
+		params.Set("assetSize", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["authorship"]; ok {
+		params.Set("authorship", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["createDateMax"]; ok {
+		params.Set("createDateMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["createDateMin"]; ok {
+		params.Set("createDateMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["linkType"]; ok {
+		params.Set("linkType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["promotionType"]; ok {
+		params.Set("promotionType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["relationshipStatus"]; ok {
+		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["searchText"]; ok {
+		params.Set("searchText", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDateMax"]; ok {
+		params.Set("startDateMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDateMin"]; ok {
+		params.Set("startDateMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/links")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2775,12 +2910,11 @@ func (c *LinksListCall) Do() (*Links, error) {
 // method id "gan.publishers.get":
 
 type PublishersGetCall struct {
-	s            *Service
-	role         string
-	roleId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieves data about a single advertiser if that the requesting
@@ -2788,7 +2922,7 @@ type PublishersGetCall struct {
 // publishers. Publishers can request information about themselves by
 // omitting the publisherId query parameter.
 func (r *PublishersService) Get(role string, roleId string) *PublishersGetCall {
-	c := &PublishersGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PublishersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	return c
@@ -2797,15 +2931,15 @@ func (r *PublishersService) Get(role string, roleId string) *PublishersGetCall {
 // PublisherId sets the optional parameter "publisherId": The ID of the
 // publisher to look up.
 func (c *PublishersGetCall) PublisherId(publisherId string) *PublishersGetCall {
-	c.urlParams_.Set("publisherId", publisherId)
+	c.opt_["publisherId"] = publisherId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PublishersGetCall) Fields(s ...googleapi.Field) *PublishersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2815,13 +2949,13 @@ func (c *PublishersGetCall) Fields(s ...googleapi.Field) *PublishersGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PublishersGetCall) IfNoneMatch(entityTag string) *PublishersGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PublishersGetCall) Context(ctx context.Context) *PublishersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2829,17 +2963,24 @@ func (c *PublishersGetCall) Context(ctx context.Context) *PublishersGetCall {
 
 func (c *PublishersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["publisherId"]; ok {
+		params.Set("publisherId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/publisher")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2928,18 +3069,17 @@ func (c *PublishersGetCall) Do() (*Publisher, error) {
 // method id "gan.publishers.list":
 
 type PublishersListCall struct {
-	s            *Service
-	role         string
-	roleId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	role   string
+	roleId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves data about all publishers that the requesting
 // advertiser/publisher has access to.
 func (r *PublishersService) List(role string, roleId string) *PublishersListCall {
-	c := &PublishersListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PublishersListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	return c
@@ -2948,7 +3088,7 @@ func (r *PublishersService) List(role string, roleId string) *PublishersListCall
 // MaxResults sets the optional parameter "maxResults": Max number of
 // items to return in this page.  Defaults to 20.
 func (c *PublishersListCall) MaxResults(maxResults int64) *PublishersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -2956,7 +3096,7 @@ func (c *PublishersListCall) MaxResults(maxResults int64) *PublishersListCall {
 // Filters out all publishers that have a ninety day EPC average lower
 // than the given value (inclusive). Min value: 0.0.
 func (c *PublishersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *PublishersListCall {
-	c.urlParams_.Set("minNinetyDayEpc", fmt.Sprintf("%v", minNinetyDayEpc))
+	c.opt_["minNinetyDayEpc"] = minNinetyDayEpc
 	return c
 }
 
@@ -2967,7 +3107,7 @@ func (c *PublishersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *Publisher
 // given quartile. For example if a 2 was given only publishers with a
 // payout rank of 25 or higher would be included.
 func (c *PublishersListCall) MinPayoutRank(minPayoutRank int64) *PublishersListCall {
-	c.urlParams_.Set("minPayoutRank", fmt.Sprintf("%v", minPayoutRank))
+	c.opt_["minPayoutRank"] = minPayoutRank
 	return c
 }
 
@@ -2975,14 +3115,14 @@ func (c *PublishersListCall) MinPayoutRank(minPayoutRank int64) *PublishersListC
 // out all publishers that have a seven day EPC average lower than the
 // given value (inclusive). Min value 0.0.
 func (c *PublishersListCall) MinSevenDayEpc(minSevenDayEpc float64) *PublishersListCall {
-	c.urlParams_.Set("minSevenDayEpc", fmt.Sprintf("%v", minSevenDayEpc))
+	c.opt_["minSevenDayEpc"] = minSevenDayEpc
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The value of
 // 'nextPageToken' from the previous page.
 func (c *PublishersListCall) PageToken(pageToken string) *PublishersListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -2993,7 +3133,7 @@ func (c *PublishersListCall) PageToken(pageToken string) *PublishersListCall {
 // Filters out all publishers not in one of the given advertiser
 // categories.
 func (c *PublishersListCall) PublisherCategory(publisherCategory string) *PublishersListCall {
-	c.urlParams_.Set("publisherCategory", publisherCategory)
+	c.opt_["publisherCategory"] = publisherCategory
 	return c
 }
 
@@ -3012,15 +3152,15 @@ func (c *PublishersListCall) PublisherCategory(publisherCategory string) *Publis
 // recommend reviewing and deciding on pending publishers on a weekly
 // basis.
 func (c *PublishersListCall) RelationshipStatus(relationshipStatus string) *PublishersListCall {
-	c.urlParams_.Set("relationshipStatus", relationshipStatus)
+	c.opt_["relationshipStatus"] = relationshipStatus
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PublishersListCall) Fields(s ...googleapi.Field) *PublishersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3030,13 +3170,13 @@ func (c *PublishersListCall) Fields(s ...googleapi.Field) *PublishersListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PublishersListCall) IfNoneMatch(entityTag string) *PublishersListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PublishersListCall) Context(ctx context.Context) *PublishersListCall {
 	c.ctx_ = ctx
 	return c
@@ -3044,17 +3184,42 @@ func (c *PublishersListCall) Context(ctx context.Context) *PublishersListCall {
 
 func (c *PublishersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minNinetyDayEpc"]; ok {
+		params.Set("minNinetyDayEpc", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minPayoutRank"]; ok {
+		params.Set("minPayoutRank", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["minSevenDayEpc"]; ok {
+		params.Set("minSevenDayEpc", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publisherCategory"]; ok {
+		params.Set("publisherCategory", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["relationshipStatus"]; ok {
+		params.Set("relationshipStatus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/publishers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":   c.role,
 		"roleId": c.roleId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3195,18 +3360,17 @@ func (c *PublishersListCall) Do() (*Publishers, error) {
 // method id "gan.reports.get":
 
 type ReportsGetCall struct {
-	s            *Service
-	role         string
-	roleId       string
-	reportType   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	role       string
+	roleId     string
+	reportType string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Retrieves a report of the specified type.
 func (r *ReportsService) Get(role string, roleId string, reportType string) *ReportsGetCall {
-	c := &ReportsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ReportsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.role = role
 	c.roleId = roleId
 	c.reportType = reportType
@@ -3215,15 +3379,15 @@ func (r *ReportsService) Get(role string, roleId string, reportType string) *Rep
 
 // AdvertiserId sets the optional parameter "advertiserId": The IDs of
 // the advertisers to look up, if applicable.
-func (c *ReportsGetCall) AdvertiserId(advertiserId []string) *ReportsGetCall {
-	c.urlParams_.SetMulti("advertiserId", append([]string{}, advertiserId...))
+func (c *ReportsGetCall) AdvertiserId(advertiserId string) *ReportsGetCall {
+	c.opt_["advertiserId"] = advertiserId
 	return c
 }
 
 // CalculateTotals sets the optional parameter "calculateTotals":
 // Whether or not to calculate totals rows.
 func (c *ReportsGetCall) CalculateTotals(calculateTotals bool) *ReportsGetCall {
-	c.urlParams_.Set("calculateTotals", fmt.Sprintf("%v", calculateTotals))
+	c.opt_["calculateTotals"] = calculateTotals
 	return c
 }
 
@@ -3231,7 +3395,7 @@ func (c *ReportsGetCall) CalculateTotals(calculateTotals bool) *ReportsGetCall {
 // (exclusive), in RFC 3339 format, for the report data to be returned.
 // Defaults to one day after startDate, if that is given, or today.
 func (c *ReportsGetCall) EndDate(endDate string) *ReportsGetCall {
-	c.urlParams_.Set("endDate", endDate)
+	c.opt_["endDate"] = endDate
 	return c
 }
 
@@ -3244,35 +3408,35 @@ func (c *ReportsGetCall) EndDate(endDate string) *ReportsGetCall {
 //   "charge" - Event type is charge.
 //   "transaction" - Event type is transaction.
 func (c *ReportsGetCall) EventType(eventType string) *ReportsGetCall {
-	c.urlParams_.Set("eventType", eventType)
+	c.opt_["eventType"] = eventType
 	return c
 }
 
 // LinkId sets the optional parameter "linkId": Filters to capture one
 // of given link IDs.
-func (c *ReportsGetCall) LinkId(linkId []string) *ReportsGetCall {
-	c.urlParams_.SetMulti("linkId", append([]string{}, linkId...))
+func (c *ReportsGetCall) LinkId(linkId string) *ReportsGetCall {
+	c.opt_["linkId"] = linkId
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Max number of
 // items to return in this page.  Defaults to return all results.
 func (c *ReportsGetCall) MaxResults(maxResults int64) *ReportsGetCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // OrderId sets the optional parameter "orderId": Filters to capture one
 // of the given order IDs.
-func (c *ReportsGetCall) OrderId(orderId []string) *ReportsGetCall {
-	c.urlParams_.SetMulti("orderId", append([]string{}, orderId...))
+func (c *ReportsGetCall) OrderId(orderId string) *ReportsGetCall {
+	c.opt_["orderId"] = orderId
 	return c
 }
 
 // PublisherId sets the optional parameter "publisherId": The IDs of the
 // publishers to look up, if applicable.
-func (c *ReportsGetCall) PublisherId(publisherId []string) *ReportsGetCall {
-	c.urlParams_.SetMulti("publisherId", append([]string{}, publisherId...))
+func (c *ReportsGetCall) PublisherId(publisherId string) *ReportsGetCall {
+	c.opt_["publisherId"] = publisherId
 	return c
 }
 
@@ -3280,14 +3444,14 @@ func (c *ReportsGetCall) PublisherId(publisherId []string) *ReportsGetCall {
 // (inclusive), in RFC 3339 format, for the report data to be returned.
 // Defaults to one day before endDate, if that is given, or yesterday.
 func (c *ReportsGetCall) StartDate(startDate string) *ReportsGetCall {
-	c.urlParams_.Set("startDate", startDate)
+	c.opt_["startDate"] = startDate
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Offset on which
 // to return results when paging.
 func (c *ReportsGetCall) StartIndex(startIndex int64) *ReportsGetCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
@@ -3300,15 +3464,15 @@ func (c *ReportsGetCall) StartIndex(startIndex int64) *ReportsGetCall {
 //   "canceled" - Event is currently canceled.
 //   "invalid" - Event is currently invalid.
 func (c *ReportsGetCall) Status(status string) *ReportsGetCall {
-	c.urlParams_.Set("status", status)
+	c.opt_["status"] = status
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3318,13 +3482,13 @@ func (c *ReportsGetCall) Fields(s ...googleapi.Field) *ReportsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ReportsGetCall) IfNoneMatch(entityTag string) *ReportsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ReportsGetCall) Context(ctx context.Context) *ReportsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3332,9 +3496,46 @@ func (c *ReportsGetCall) Context(ctx context.Context) *ReportsGetCall {
 
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["advertiserId"]; ok {
+		params.Set("advertiserId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["calculateTotals"]; ok {
+		params.Set("calculateTotals", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["endDate"]; ok {
+		params.Set("endDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["eventType"]; ok {
+		params.Set("eventType", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["linkId"]; ok {
+		params.Set("linkId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderId"]; ok {
+		params.Set("orderId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publisherId"]; ok {
+		params.Set("publisherId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{role}/{roleId}/report/{reportType}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"role":       c.role,
@@ -3342,8 +3543,8 @@ func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 		"reportType": c.reportType,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

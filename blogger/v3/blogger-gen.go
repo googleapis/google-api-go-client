@@ -1253,17 +1253,16 @@ func (s *UserLocale) MarshalJSON() ([]byte, error) {
 // method id "blogger.blogUserInfos.get":
 
 type BlogUserInfosGetCall struct {
-	s            *Service
-	userId       string
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	blogId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one blog and user info pair by blogId and userId.
 func (r *BlogUserInfosService) Get(userId string, blogId string) *BlogUserInfosGetCall {
-	c := &BlogUserInfosGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BlogUserInfosGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.blogId = blogId
 	return c
@@ -1272,15 +1271,15 @@ func (r *BlogUserInfosService) Get(userId string, blogId string) *BlogUserInfosG
 // MaxPosts sets the optional parameter "maxPosts": Maximum number of
 // posts to pull back with the blog.
 func (c *BlogUserInfosGetCall) MaxPosts(maxPosts int64) *BlogUserInfosGetCall {
-	c.urlParams_.Set("maxPosts", fmt.Sprintf("%v", maxPosts))
+	c.opt_["maxPosts"] = maxPosts
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BlogUserInfosGetCall) Fields(s ...googleapi.Field) *BlogUserInfosGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1290,13 +1289,13 @@ func (c *BlogUserInfosGetCall) Fields(s ...googleapi.Field) *BlogUserInfosGetCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BlogUserInfosGetCall) IfNoneMatch(entityTag string) *BlogUserInfosGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BlogUserInfosGetCall) Context(ctx context.Context) *BlogUserInfosGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1304,17 +1303,24 @@ func (c *BlogUserInfosGetCall) Context(ctx context.Context) *BlogUserInfosGetCal
 
 func (c *BlogUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxPosts"]; ok {
+		params.Set("maxPosts", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs/{blogId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1400,16 +1406,15 @@ func (c *BlogUserInfosGetCall) Do() (*BlogUserInfo, error) {
 // method id "blogger.blogs.get":
 
 type BlogsGetCall struct {
-	s            *Service
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one blog by ID.
 func (r *BlogsService) Get(blogId string) *BlogsGetCall {
-	c := &BlogsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BlogsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	return c
 }
@@ -1417,7 +1422,7 @@ func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 // MaxPosts sets the optional parameter "maxPosts": Maximum number of
 // posts to pull back with the blog.
 func (c *BlogsGetCall) MaxPosts(maxPosts int64) *BlogsGetCall {
-	c.urlParams_.Set("maxPosts", fmt.Sprintf("%v", maxPosts))
+	c.opt_["maxPosts"] = maxPosts
 	return c
 }
 
@@ -1429,15 +1434,15 @@ func (c *BlogsGetCall) MaxPosts(maxPosts int64) *BlogsGetCall {
 //   "AUTHOR" - Author level detail.
 //   "READER" - Reader level detail.
 func (c *BlogsGetCall) View(view string) *BlogsGetCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BlogsGetCall) Fields(s ...googleapi.Field) *BlogsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1447,13 +1452,13 @@ func (c *BlogsGetCall) Fields(s ...googleapi.Field) *BlogsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BlogsGetCall) IfNoneMatch(entityTag string) *BlogsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BlogsGetCall) Context(ctx context.Context) *BlogsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1461,16 +1466,26 @@ func (c *BlogsGetCall) Context(ctx context.Context) *BlogsGetCall {
 
 func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxPosts"]; ok {
+		params.Set("maxPosts", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1564,16 +1579,16 @@ func (c *BlogsGetCall) Do() (*Blog, error) {
 // method id "blogger.blogs.getByUrl":
 
 type BlogsGetByUrlCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	url  string
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GetByUrl: Retrieve a Blog by URL.
 func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
-	c := &BlogsGetByUrlCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("url", url)
+	c := &BlogsGetByUrlCall{s: r.s, opt_: make(map[string]interface{})}
+	c.url = url
 	return c
 }
 
@@ -1585,15 +1600,15 @@ func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
 //   "AUTHOR" - Author level detail.
 //   "READER" - Reader level detail.
 func (c *BlogsGetByUrlCall) View(view string) *BlogsGetByUrlCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BlogsGetByUrlCall) Fields(s ...googleapi.Field) *BlogsGetByUrlCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1603,13 +1618,13 @@ func (c *BlogsGetByUrlCall) Fields(s ...googleapi.Field) *BlogsGetByUrlCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BlogsGetByUrlCall) IfNoneMatch(entityTag string) *BlogsGetByUrlCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BlogsGetByUrlCall) Context(ctx context.Context) *BlogsGetByUrlCall {
 	c.ctx_ = ctx
 	return c
@@ -1617,14 +1632,22 @@ func (c *BlogsGetByUrlCall) Context(ctx context.Context) *BlogsGetByUrlCall {
 
 func (c *BlogsGetByUrlCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("url", fmt.Sprintf("%v", c.url))
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/byurl")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1712,16 +1735,15 @@ func (c *BlogsGetByUrlCall) Do() (*Blog, error) {
 // method id "blogger.blogs.listByUser":
 
 type BlogsListByUserCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // ListByUser: Retrieves a list of blogs, possibly filtered.
 func (r *BlogsService) ListByUser(userId string) *BlogsListByUserCall {
-	c := &BlogsListByUserCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &BlogsListByUserCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
@@ -1730,7 +1752,7 @@ func (r *BlogsService) ListByUser(userId string) *BlogsListByUserCall {
 // the response is a list of blogs with per-user information instead of
 // just blogs.
 func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUserCall {
-	c.urlParams_.Set("fetchUserInfo", fmt.Sprintf("%v", fetchUserInfo))
+	c.opt_["fetchUserInfo"] = fetchUserInfo
 	return c
 }
 
@@ -1745,8 +1767,8 @@ func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUser
 // access.
 //   "READER" - Reader role - Blogs where the user has Reader level
 // access (to a private blog).
-func (c *BlogsListByUserCall) Role(role []string) *BlogsListByUserCall {
-	c.urlParams_.SetMulti("role", append([]string{}, role...))
+func (c *BlogsListByUserCall) Role(role string) *BlogsListByUserCall {
+	c.opt_["role"] = role
 	return c
 }
 
@@ -1757,8 +1779,8 @@ func (c *BlogsListByUserCall) Role(role []string) *BlogsListByUserCall {
 // Possible values:
 //   "DELETED" - Blog has been deleted by an administrator.
 //   "LIVE" (default) - Blog is currently live.
-func (c *BlogsListByUserCall) Status(status []string) *BlogsListByUserCall {
-	c.urlParams_.SetMulti("status", append([]string{}, status...))
+func (c *BlogsListByUserCall) Status(status string) *BlogsListByUserCall {
+	c.opt_["status"] = status
 	return c
 }
 
@@ -1770,15 +1792,15 @@ func (c *BlogsListByUserCall) Status(status []string) *BlogsListByUserCall {
 //   "AUTHOR" - Author level detail.
 //   "READER" - Reader level detail.
 func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *BlogsListByUserCall) Fields(s ...googleapi.Field) *BlogsListByUserCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1788,13 +1810,13 @@ func (c *BlogsListByUserCall) Fields(s ...googleapi.Field) *BlogsListByUserCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *BlogsListByUserCall) IfNoneMatch(entityTag string) *BlogsListByUserCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *BlogsListByUserCall) Context(ctx context.Context) *BlogsListByUserCall {
 	c.ctx_ = ctx
 	return c
@@ -1802,16 +1824,32 @@ func (c *BlogsListByUserCall) Context(ctx context.Context) *BlogsListByUserCall 
 
 func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fetchUserInfo"]; ok {
+		params.Set("fetchUserInfo", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["role"]; ok {
+		params.Set("role", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1935,34 +1973,34 @@ func (c *BlogsListByUserCall) Do() (*BlogList, error) {
 // method id "blogger.comments.approve":
 
 type CommentsApproveCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	commentId  string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Approve: Marks a comment as not spam.
 func (r *CommentsService) Approve(blogId string, postId string, commentId string) *CommentsApproveCall {
-	c := &CommentsApproveCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsApproveCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	c.commentId = commentId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsApproveCall) Fields(s ...googleapi.Field) *CommentsApproveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsApproveCall) Context(ctx context.Context) *CommentsApproveCall {
 	c.ctx_ = ctx
 	return c
@@ -1970,9 +2008,13 @@ func (c *CommentsApproveCall) Context(ctx context.Context) *CommentsApproveCall 
 
 func (c *CommentsApproveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}/approve")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId":    c.blogId,
@@ -2064,34 +2106,34 @@ func (c *CommentsApproveCall) Do() (*Comment, error) {
 // method id "blogger.comments.delete":
 
 type CommentsDeleteCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	commentId  string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Delete a comment by ID.
 func (r *CommentsService) Delete(blogId string, postId string, commentId string) *CommentsDeleteCall {
-	c := &CommentsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	c.commentId = commentId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsDeleteCall) Context(ctx context.Context) *CommentsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2099,9 +2141,13 @@ func (c *CommentsDeleteCall) Context(ctx context.Context) *CommentsDeleteCall {
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId":    c.blogId,
@@ -2166,18 +2212,17 @@ func (c *CommentsDeleteCall) Do() error {
 // method id "blogger.comments.get":
 
 type CommentsGetCall struct {
-	s            *Service
-	blogId       string
-	postId       string
-	commentId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets one comment by ID.
 func (r *CommentsService) Get(blogId string, postId string, commentId string) *CommentsGetCall {
-	c := &CommentsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	c.commentId = commentId
@@ -2195,15 +2240,15 @@ func (r *CommentsService) Get(blogId string, postId string, commentId string) *C
 //   "AUTHOR" - Author level detail
 //   "READER" - Admin level detail
 func (c *CommentsGetCall) View(view string) *CommentsGetCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2213,13 +2258,13 @@ func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CommentsGetCall) IfNoneMatch(entityTag string) *CommentsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2227,9 +2272,16 @@ func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId":    c.blogId,
@@ -2237,8 +2289,8 @@ func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2340,17 +2392,16 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 // method id "blogger.comments.list":
 
 type CommentsListCall struct {
-	s            *Service
-	blogId       string
-	postId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves the comments for a post, possibly filtered.
 func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
-	c := &CommentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	return c
@@ -2359,35 +2410,35 @@ func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 // EndDate sets the optional parameter "endDate": Latest date of comment
 // to fetch, a date-time with RFC 3339 formatting.
 func (c *CommentsListCall) EndDate(endDate string) *CommentsListCall {
-	c.urlParams_.Set("endDate", endDate)
+	c.opt_["endDate"] = endDate
 	return c
 }
 
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
 // body content of the comments is included.
 func (c *CommentsListCall) FetchBodies(fetchBodies bool) *CommentsListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.opt_["fetchBodies"] = fetchBodies
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of comments to include in the result.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // if request is paged.
 func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // StartDate sets the optional parameter "startDate": Earliest date of
 // comment to fetch, a date-time with RFC 3339 formatting.
 func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
-	c.urlParams_.Set("startDate", startDate)
+	c.opt_["startDate"] = startDate
 	return c
 }
 
@@ -2398,8 +2449,8 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListCall) Status(status []string) *CommentsListCall {
-	c.urlParams_.SetMulti("status", append([]string{}, status...))
+func (c *CommentsListCall) Status(status string) *CommentsListCall {
+	c.opt_["status"] = status
 	return c
 }
 
@@ -2412,15 +2463,15 @@ func (c *CommentsListCall) Status(status []string) *CommentsListCall {
 //   "AUTHOR" - Author level detail
 //   "READER" - Reader level detail
 func (c *CommentsListCall) View(view string) *CommentsListCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2430,13 +2481,13 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CommentsListCall) IfNoneMatch(entityTag string) *CommentsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2444,17 +2495,42 @@ func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["endDate"]; ok {
+		params.Set("endDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2594,17 +2670,16 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 // method id "blogger.comments.listByBlog":
 
 type CommentsListByBlogCall struct {
-	s            *Service
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // ListByBlog: Retrieves the comments for a blog, across all posts,
 // possibly filtered.
 func (r *CommentsService) ListByBlog(blogId string) *CommentsListByBlogCall {
-	c := &CommentsListByBlogCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsListByBlogCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	return c
 }
@@ -2612,35 +2687,35 @@ func (r *CommentsService) ListByBlog(blogId string) *CommentsListByBlogCall {
 // EndDate sets the optional parameter "endDate": Latest date of comment
 // to fetch, a date-time with RFC 3339 formatting.
 func (c *CommentsListByBlogCall) EndDate(endDate string) *CommentsListByBlogCall {
-	c.urlParams_.Set("endDate", endDate)
+	c.opt_["endDate"] = endDate
 	return c
 }
 
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
 // body content of the comments is included.
 func (c *CommentsListByBlogCall) FetchBodies(fetchBodies bool) *CommentsListByBlogCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.opt_["fetchBodies"] = fetchBodies
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of comments to include in the result.
 func (c *CommentsListByBlogCall) MaxResults(maxResults int64) *CommentsListByBlogCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // if request is paged.
 func (c *CommentsListByBlogCall) PageToken(pageToken string) *CommentsListByBlogCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // StartDate sets the optional parameter "startDate": Earliest date of
 // comment to fetch, a date-time with RFC 3339 formatting.
 func (c *CommentsListByBlogCall) StartDate(startDate string) *CommentsListByBlogCall {
-	c.urlParams_.Set("startDate", startDate)
+	c.opt_["startDate"] = startDate
 	return c
 }
 
@@ -2651,16 +2726,16 @@ func (c *CommentsListByBlogCall) StartDate(startDate string) *CommentsListByBlog
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListByBlogCall) Status(status []string) *CommentsListByBlogCall {
-	c.urlParams_.SetMulti("status", append([]string{}, status...))
+func (c *CommentsListByBlogCall) Status(status string) *CommentsListByBlogCall {
+	c.opt_["status"] = status
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsListByBlogCall) Fields(s ...googleapi.Field) *CommentsListByBlogCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2670,13 +2745,13 @@ func (c *CommentsListByBlogCall) Fields(s ...googleapi.Field) *CommentsListByBlo
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CommentsListByBlogCall) IfNoneMatch(entityTag string) *CommentsListByBlogCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsListByBlogCall) Context(ctx context.Context) *CommentsListByBlogCall {
 	c.ctx_ = ctx
 	return c
@@ -2684,16 +2759,38 @@ func (c *CommentsListByBlogCall) Context(ctx context.Context) *CommentsListByBlo
 
 func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["endDate"]; ok {
+		params.Set("endDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/comments")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2811,34 +2908,34 @@ func (c *CommentsListByBlogCall) Do() (*CommentList, error) {
 // method id "blogger.comments.markAsSpam":
 
 type CommentsMarkAsSpamCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	commentId  string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // MarkAsSpam: Marks a comment as spam.
 func (r *CommentsService) MarkAsSpam(blogId string, postId string, commentId string) *CommentsMarkAsSpamCall {
-	c := &CommentsMarkAsSpamCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsMarkAsSpamCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	c.commentId = commentId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsMarkAsSpamCall) Fields(s ...googleapi.Field) *CommentsMarkAsSpamCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsMarkAsSpamCall) Context(ctx context.Context) *CommentsMarkAsSpamCall {
 	c.ctx_ = ctx
 	return c
@@ -2846,9 +2943,13 @@ func (c *CommentsMarkAsSpamCall) Context(ctx context.Context) *CommentsMarkAsSpa
 
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}/spam")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId":    c.blogId,
@@ -2940,34 +3041,34 @@ func (c *CommentsMarkAsSpamCall) Do() (*Comment, error) {
 // method id "blogger.comments.removeContent":
 
 type CommentsRemoveContentCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	commentId  string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	blogId    string
+	postId    string
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // RemoveContent: Removes the content of a comment.
 func (r *CommentsService) RemoveContent(blogId string, postId string, commentId string) *CommentsRemoveContentCall {
-	c := &CommentsRemoveContentCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsRemoveContentCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	c.commentId = commentId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsRemoveContentCall) Fields(s ...googleapi.Field) *CommentsRemoveContentCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsRemoveContentCall) Context(ctx context.Context) *CommentsRemoveContentCall {
 	c.ctx_ = ctx
 	return c
@@ -2975,9 +3076,13 @@ func (c *CommentsRemoveContentCall) Context(ctx context.Context) *CommentsRemove
 
 func (c *CommentsRemoveContentCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId":    c.blogId,
@@ -3069,16 +3174,15 @@ func (c *CommentsRemoveContentCall) Do() (*Comment, error) {
 // method id "blogger.pageViews.get":
 
 type PageViewsGetCall struct {
-	s            *Service
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Retrieve pageview stats for a Blog.
 func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
-	c := &PageViewsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PageViewsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	return c
 }
@@ -3089,16 +3193,16 @@ func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 //   "30DAYS" - Page view counts from the last thirty days.
 //   "7DAYS" - Page view counts from the last seven days.
 //   "all" - Total page view counts from all time.
-func (c *PageViewsGetCall) Range(range_ []string) *PageViewsGetCall {
-	c.urlParams_.SetMulti("range", append([]string{}, range_...))
+func (c *PageViewsGetCall) Range(range_ string) *PageViewsGetCall {
+	c.opt_["range"] = range_
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PageViewsGetCall) Fields(s ...googleapi.Field) *PageViewsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3108,13 +3212,13 @@ func (c *PageViewsGetCall) Fields(s ...googleapi.Field) *PageViewsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PageViewsGetCall) IfNoneMatch(entityTag string) *PageViewsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PageViewsGetCall) Context(ctx context.Context) *PageViewsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3122,16 +3226,23 @@ func (c *PageViewsGetCall) Context(ctx context.Context) *PageViewsGetCall {
 
 func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["range"]; ok {
+		params.Set("range", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pageviews")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3218,32 +3329,32 @@ func (c *PageViewsGetCall) Do() (*Pageviews, error) {
 // method id "blogger.pages.delete":
 
 type PagesDeleteCall struct {
-	s          *Service
-	blogId     string
-	pageId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	pageId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Delete a page by ID.
 func (r *PagesService) Delete(blogId string, pageId string) *PagesDeleteCall {
-	c := &PagesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PagesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.pageId = pageId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagesDeleteCall) Fields(s ...googleapi.Field) *PagesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PagesDeleteCall) Context(ctx context.Context) *PagesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -3251,9 +3362,13 @@ func (c *PagesDeleteCall) Context(ctx context.Context) *PagesDeleteCall {
 
 func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -3310,17 +3425,16 @@ func (c *PagesDeleteCall) Do() error {
 // method id "blogger.pages.get":
 
 type PagesGetCall struct {
-	s            *Service
-	blogId       string
-	pageId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	pageId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one blog page by ID.
 func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
-	c := &PagesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PagesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.pageId = pageId
 	return c
@@ -3333,15 +3447,15 @@ func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 //   "AUTHOR" - Author level detail
 //   "READER" - Reader level detail
 func (c *PagesGetCall) View(view string) *PagesGetCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagesGetCall) Fields(s ...googleapi.Field) *PagesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3351,13 +3465,13 @@ func (c *PagesGetCall) Fields(s ...googleapi.Field) *PagesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PagesGetCall) IfNoneMatch(entityTag string) *PagesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PagesGetCall) Context(ctx context.Context) *PagesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3365,17 +3479,24 @@ func (c *PagesGetCall) Context(ctx context.Context) *PagesGetCall {
 
 func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 		"pageId": c.pageId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3469,16 +3590,16 @@ func (c *PagesGetCall) Do() (*Page, error) {
 // method id "blogger.pages.insert":
 
 type PagesInsertCall struct {
-	s          *Service
-	blogId     string
-	page       *Page
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	page   *Page
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Insert: Add a page.
 func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
-	c := &PagesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PagesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.page = page
 	return c
@@ -3487,21 +3608,21 @@ func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
 // IsDraft sets the optional parameter "isDraft": Whether to create the
 // page as a draft (default: false).
 func (c *PagesInsertCall) IsDraft(isDraft bool) *PagesInsertCall {
-	c.urlParams_.Set("isDraft", fmt.Sprintf("%v", isDraft))
+	c.opt_["isDraft"] = isDraft
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagesInsertCall) Fields(s ...googleapi.Field) *PagesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PagesInsertCall) Context(ctx context.Context) *PagesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -3514,9 +3635,16 @@ func (c *PagesInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["isDraft"]; ok {
+		params.Set("isDraft", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -3601,17 +3729,16 @@ func (c *PagesInsertCall) Do() (*Page, error) {
 // method id "blogger.pages.list":
 
 type PagesListCall struct {
-	s            *Service
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves the pages for a blog, optionally including non-LIVE
 // statuses.
 func (r *PagesService) List(blogId string) *PagesListCall {
-	c := &PagesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PagesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	return c
 }
@@ -3619,21 +3746,21 @@ func (r *PagesService) List(blogId string) *PagesListCall {
 // FetchBodies sets the optional parameter "fetchBodies": Whether to
 // retrieve the Page bodies.
 func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.opt_["fetchBodies"] = fetchBodies
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of Pages to fetch.
 func (c *PagesListCall) MaxResults(maxResults int64) *PagesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // if the request is paged.
 func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -3642,8 +3769,8 @@ func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
 // Possible values:
 //   "draft" - Draft (unpublished) Pages
 //   "live" - Pages that are publicly visible
-func (c *PagesListCall) Status(status []string) *PagesListCall {
-	c.urlParams_.SetMulti("status", append([]string{}, status...))
+func (c *PagesListCall) Status(status string) *PagesListCall {
+	c.opt_["status"] = status
 	return c
 }
 
@@ -3656,15 +3783,15 @@ func (c *PagesListCall) Status(status []string) *PagesListCall {
 //   "AUTHOR" - Author level detail
 //   "READER" - Reader level detail
 func (c *PagesListCall) View(view string) *PagesListCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagesListCall) Fields(s ...googleapi.Field) *PagesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3674,13 +3801,13 @@ func (c *PagesListCall) Fields(s ...googleapi.Field) *PagesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PagesListCall) IfNoneMatch(entityTag string) *PagesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PagesListCall) Context(ctx context.Context) *PagesListCall {
 	c.ctx_ = ctx
 	return c
@@ -3688,16 +3815,35 @@ func (c *PagesListCall) Context(ctx context.Context) *PagesListCall {
 
 func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3814,17 +3960,17 @@ func (c *PagesListCall) Do() (*PageList, error) {
 // method id "blogger.pages.patch":
 
 type PagesPatchCall struct {
-	s          *Service
-	blogId     string
-	pageId     string
-	page       *Page
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	pageId string
+	page   *Page
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Update a page. This method supports patch semantics.
 func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPatchCall {
-	c := &PagesPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PagesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.pageId = pageId
 	c.page = page
@@ -3834,28 +3980,28 @@ func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPat
 // Publish sets the optional parameter "publish": Whether a publish
 // action should be performed when the page is updated (default: false).
 func (c *PagesPatchCall) Publish(publish bool) *PagesPatchCall {
-	c.urlParams_.Set("publish", fmt.Sprintf("%v", publish))
+	c.opt_["publish"] = publish
 	return c
 }
 
 // Revert sets the optional parameter "revert": Whether a revert action
 // should be performed when the page is updated (default: false).
 func (c *PagesPatchCall) Revert(revert bool) *PagesPatchCall {
-	c.urlParams_.Set("revert", fmt.Sprintf("%v", revert))
+	c.opt_["revert"] = revert
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagesPatchCall) Fields(s ...googleapi.Field) *PagesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PagesPatchCall) Context(ctx context.Context) *PagesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -3868,9 +4014,19 @@ func (c *PagesPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["publish"]; ok {
+		params.Set("publish", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revert"]; ok {
+		params.Set("revert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -3968,32 +4124,32 @@ func (c *PagesPatchCall) Do() (*Page, error) {
 // method id "blogger.pages.publish":
 
 type PagesPublishCall struct {
-	s          *Service
-	blogId     string
-	pageId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	pageId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Publish: Publishes a draft page.
 func (r *PagesService) Publish(blogId string, pageId string) *PagesPublishCall {
-	c := &PagesPublishCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PagesPublishCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.pageId = pageId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagesPublishCall) Fields(s ...googleapi.Field) *PagesPublishCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PagesPublishCall) Context(ctx context.Context) *PagesPublishCall {
 	c.ctx_ = ctx
 	return c
@@ -4001,9 +4157,13 @@ func (c *PagesPublishCall) Context(ctx context.Context) *PagesPublishCall {
 
 func (c *PagesPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}/publish")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -4087,32 +4247,32 @@ func (c *PagesPublishCall) Do() (*Page, error) {
 // method id "blogger.pages.revert":
 
 type PagesRevertCall struct {
-	s          *Service
-	blogId     string
-	pageId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	pageId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Revert: Revert a published or scheduled page to draft state.
 func (r *PagesService) Revert(blogId string, pageId string) *PagesRevertCall {
-	c := &PagesRevertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PagesRevertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.pageId = pageId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagesRevertCall) Fields(s ...googleapi.Field) *PagesRevertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PagesRevertCall) Context(ctx context.Context) *PagesRevertCall {
 	c.ctx_ = ctx
 	return c
@@ -4120,9 +4280,13 @@ func (c *PagesRevertCall) Context(ctx context.Context) *PagesRevertCall {
 
 func (c *PagesRevertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}/revert")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -4206,17 +4370,17 @@ func (c *PagesRevertCall) Do() (*Page, error) {
 // method id "blogger.pages.update":
 
 type PagesUpdateCall struct {
-	s          *Service
-	blogId     string
-	pageId     string
-	page       *Page
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	pageId string
+	page   *Page
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Update a page.
 func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUpdateCall {
-	c := &PagesUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PagesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.pageId = pageId
 	c.page = page
@@ -4226,28 +4390,28 @@ func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUp
 // Publish sets the optional parameter "publish": Whether a publish
 // action should be performed when the page is updated (default: false).
 func (c *PagesUpdateCall) Publish(publish bool) *PagesUpdateCall {
-	c.urlParams_.Set("publish", fmt.Sprintf("%v", publish))
+	c.opt_["publish"] = publish
 	return c
 }
 
 // Revert sets the optional parameter "revert": Whether a revert action
 // should be performed when the page is updated (default: false).
 func (c *PagesUpdateCall) Revert(revert bool) *PagesUpdateCall {
-	c.urlParams_.Set("revert", fmt.Sprintf("%v", revert))
+	c.opt_["revert"] = revert
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PagesUpdateCall) Fields(s ...googleapi.Field) *PagesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PagesUpdateCall) Context(ctx context.Context) *PagesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -4260,9 +4424,19 @@ func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["publish"]; ok {
+		params.Set("publish", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revert"]; ok {
+		params.Set("revert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/pages/{pageId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -4360,20 +4534,19 @@ func (c *PagesUpdateCall) Do() (*Page, error) {
 // method id "blogger.postUserInfos.get":
 
 type PostUserInfosGetCall struct {
-	s            *Service
-	userId       string
-	blogId       string
-	postId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one post and user info pair, by post ID and user ID. The
 // post user info contains per-user information about the post, such as
 // access rights, specific to the user.
 func (r *PostUserInfosService) Get(userId string, blogId string, postId string) *PostUserInfosGetCall {
-	c := &PostUserInfosGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostUserInfosGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.blogId = blogId
 	c.postId = postId
@@ -4383,15 +4556,15 @@ func (r *PostUserInfosService) Get(userId string, blogId string, postId string) 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to pull back on a post.
 func (c *PostUserInfosGetCall) MaxComments(maxComments int64) *PostUserInfosGetCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.opt_["maxComments"] = maxComments
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostUserInfosGetCall) Fields(s ...googleapi.Field) *PostUserInfosGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4401,13 +4574,13 @@ func (c *PostUserInfosGetCall) Fields(s ...googleapi.Field) *PostUserInfosGetCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PostUserInfosGetCall) IfNoneMatch(entityTag string) *PostUserInfosGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostUserInfosGetCall) Context(ctx context.Context) *PostUserInfosGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4415,9 +4588,16 @@ func (c *PostUserInfosGetCall) Context(ctx context.Context) *PostUserInfosGetCal
 
 func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxComments"]; ok {
+		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs/{blogId}/posts/{postId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -4425,8 +4605,8 @@ func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4519,19 +4699,18 @@ func (c *PostUserInfosGetCall) Do() (*PostUserInfo, error) {
 // method id "blogger.postUserInfos.list":
 
 type PostUserInfosListCall struct {
-	s            *Service
-	userId       string
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	blogId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of post and post user info pairs, possibly
 // filtered. The post user info contains per-user information about the
 // post, such as access rights, specific to the user.
 func (r *PostUserInfosService) List(userId string, blogId string) *PostUserInfosListCall {
-	c := &PostUserInfosListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostUserInfosListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.blogId = blogId
 	return c
@@ -4540,28 +4719,28 @@ func (r *PostUserInfosService) List(userId string, blogId string) *PostUserInfos
 // EndDate sets the optional parameter "endDate": Latest post date to
 // fetch, a date-time with RFC 3339 formatting.
 func (c *PostUserInfosListCall) EndDate(endDate string) *PostUserInfosListCall {
-	c.urlParams_.Set("endDate", endDate)
+	c.opt_["endDate"] = endDate
 	return c
 }
 
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
 // body content of posts is included. Default is false.
 func (c *PostUserInfosListCall) FetchBodies(fetchBodies bool) *PostUserInfosListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.opt_["fetchBodies"] = fetchBodies
 	return c
 }
 
 // Labels sets the optional parameter "labels": Comma-separated list of
 // labels to search for.
 func (c *PostUserInfosListCall) Labels(labels string) *PostUserInfosListCall {
-	c.urlParams_.Set("labels", labels)
+	c.opt_["labels"] = labels
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of posts to fetch.
 func (c *PostUserInfosListCall) MaxResults(maxResults int64) *PostUserInfosListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -4572,21 +4751,21 @@ func (c *PostUserInfosListCall) MaxResults(maxResults int64) *PostUserInfosListC
 //   "published" - Order by the date the post was published
 //   "updated" - Order by the date the post was last updated
 func (c *PostUserInfosListCall) OrderBy(orderBy string) *PostUserInfosListCall {
-	c.urlParams_.Set("orderBy", orderBy)
+	c.opt_["orderBy"] = orderBy
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // if the request is paged.
 func (c *PostUserInfosListCall) PageToken(pageToken string) *PostUserInfosListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // StartDate sets the optional parameter "startDate": Earliest post date
 // to fetch, a date-time with RFC 3339 formatting.
 func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCall {
-	c.urlParams_.Set("startDate", startDate)
+	c.opt_["startDate"] = startDate
 	return c
 }
 
@@ -4596,8 +4775,8 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 //   "draft" - Draft posts
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in future.
-func (c *PostUserInfosListCall) Status(status []string) *PostUserInfosListCall {
-	c.urlParams_.SetMulti("status", append([]string{}, status...))
+func (c *PostUserInfosListCall) Status(status string) *PostUserInfosListCall {
+	c.opt_["status"] = status
 	return c
 }
 
@@ -4610,15 +4789,15 @@ func (c *PostUserInfosListCall) Status(status []string) *PostUserInfosListCall {
 //   "AUTHOR" - Author level detail
 //   "READER" - Reader level detail
 func (c *PostUserInfosListCall) View(view string) *PostUserInfosListCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostUserInfosListCall) Fields(s ...googleapi.Field) *PostUserInfosListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4628,13 +4807,13 @@ func (c *PostUserInfosListCall) Fields(s ...googleapi.Field) *PostUserInfosListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PostUserInfosListCall) IfNoneMatch(entityTag string) *PostUserInfosListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostUserInfosListCall) Context(ctx context.Context) *PostUserInfosListCall {
 	c.ctx_ = ctx
 	return c
@@ -4642,17 +4821,48 @@ func (c *PostUserInfosListCall) Context(ctx context.Context) *PostUserInfosListC
 
 func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["endDate"]; ok {
+		params.Set("endDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["labels"]; ok {
+		params.Set("labels", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}/blogs/{blogId}/posts")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4810,32 +5020,32 @@ func (c *PostUserInfosListCall) Do() (*PostUserInfosList, error) {
 // method id "blogger.posts.delete":
 
 type PostsDeleteCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Delete a post by ID.
 func (r *PostsService) Delete(blogId string, postId string) *PostsDeleteCall {
-	c := &PostsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsDeleteCall) Fields(s ...googleapi.Field) *PostsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsDeleteCall) Context(ctx context.Context) *PostsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -4843,9 +5053,13 @@ func (c *PostsDeleteCall) Context(ctx context.Context) *PostsDeleteCall {
 
 func (c *PostsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -4902,17 +5116,16 @@ func (c *PostsDeleteCall) Do() error {
 // method id "blogger.posts.get":
 
 type PostsGetCall struct {
-	s            *Service
-	blogId       string
-	postId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Get a post by ID.
 func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
-	c := &PostsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	return c
@@ -4923,21 +5136,21 @@ func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 // to false when the post bodies are not required, to help minimize
 // traffic.
 func (c *PostsGetCall) FetchBody(fetchBody bool) *PostsGetCall {
-	c.urlParams_.Set("fetchBody", fmt.Sprintf("%v", fetchBody))
+	c.opt_["fetchBody"] = fetchBody
 	return c
 }
 
 // FetchImages sets the optional parameter "fetchImages": Whether image
 // URL metadata for each post is included (default: false).
 func (c *PostsGetCall) FetchImages(fetchImages bool) *PostsGetCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.opt_["fetchImages"] = fetchImages
 	return c
 }
 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to pull back on a post.
 func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.opt_["maxComments"] = maxComments
 	return c
 }
 
@@ -4950,15 +5163,15 @@ func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
 //   "AUTHOR" - Author level detail
 //   "READER" - Reader level detail
 func (c *PostsGetCall) View(view string) *PostsGetCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsGetCall) Fields(s ...googleapi.Field) *PostsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4968,13 +5181,13 @@ func (c *PostsGetCall) Fields(s ...googleapi.Field) *PostsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PostsGetCall) IfNoneMatch(entityTag string) *PostsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsGetCall) Context(ctx context.Context) *PostsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4982,17 +5195,33 @@ func (c *PostsGetCall) Context(ctx context.Context) *PostsGetCall {
 
 func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fetchBody"]; ok {
+		params.Set("fetchBody", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxComments"]; ok {
+		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 		"postId": c.postId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5104,25 +5333,25 @@ func (c *PostsGetCall) Do() (*Post, error) {
 // method id "blogger.posts.getByPath":
 
 type PostsGetByPathCall struct {
-	s            *Service
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	path   string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // GetByPath: Retrieve a Post by Path.
 func (r *PostsService) GetByPath(blogId string, path string) *PostsGetByPathCall {
-	c := &PostsGetByPathCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsGetByPathCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
-	c.urlParams_.Set("path", path)
+	c.path = path
 	return c
 }
 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to pull back on a post.
 func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.opt_["maxComments"] = maxComments
 	return c
 }
 
@@ -5135,15 +5364,15 @@ func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall 
 //   "AUTHOR" - Author level detail
 //   "READER" - Reader level detail
 func (c *PostsGetByPathCall) View(view string) *PostsGetByPathCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsGetByPathCall) Fields(s ...googleapi.Field) *PostsGetByPathCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5153,13 +5382,13 @@ func (c *PostsGetByPathCall) Fields(s ...googleapi.Field) *PostsGetByPathCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PostsGetByPathCall) IfNoneMatch(entityTag string) *PostsGetByPathCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsGetByPathCall) Context(ctx context.Context) *PostsGetByPathCall {
 	c.ctx_ = ctx
 	return c
@@ -5167,16 +5396,27 @@ func (c *PostsGetByPathCall) Context(ctx context.Context) *PostsGetByPathCall {
 
 func (c *PostsGetByPathCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("path", fmt.Sprintf("%v", c.path))
+	if v, ok := c.opt_["maxComments"]; ok {
+		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/bypath")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5277,16 +5517,16 @@ func (c *PostsGetByPathCall) Do() (*Post, error) {
 // method id "blogger.posts.insert":
 
 type PostsInsertCall struct {
-	s          *Service
-	blogId     string
-	post       *Post
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	post   *Post
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Insert: Add a post.
 func (r *PostsService) Insert(blogId string, post *Post) *PostsInsertCall {
-	c := &PostsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.post = post
 	return c
@@ -5295,7 +5535,7 @@ func (r *PostsService) Insert(blogId string, post *Post) *PostsInsertCall {
 // FetchBody sets the optional parameter "fetchBody": Whether the body
 // content of the post is included with the result (default: true).
 func (c *PostsInsertCall) FetchBody(fetchBody bool) *PostsInsertCall {
-	c.urlParams_.Set("fetchBody", fmt.Sprintf("%v", fetchBody))
+	c.opt_["fetchBody"] = fetchBody
 	return c
 }
 
@@ -5303,28 +5543,28 @@ func (c *PostsInsertCall) FetchBody(fetchBody bool) *PostsInsertCall {
 // URL metadata for each post is included in the returned result
 // (default: false).
 func (c *PostsInsertCall) FetchImages(fetchImages bool) *PostsInsertCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.opt_["fetchImages"] = fetchImages
 	return c
 }
 
 // IsDraft sets the optional parameter "isDraft": Whether to create the
 // post as a draft (default: false).
 func (c *PostsInsertCall) IsDraft(isDraft bool) *PostsInsertCall {
-	c.urlParams_.Set("isDraft", fmt.Sprintf("%v", isDraft))
+	c.opt_["isDraft"] = isDraft
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsInsertCall) Fields(s ...googleapi.Field) *PostsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsInsertCall) Context(ctx context.Context) *PostsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -5337,9 +5577,22 @@ func (c *PostsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fetchBody"]; ok {
+		params.Set("fetchBody", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["isDraft"]; ok {
+		params.Set("isDraft", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -5435,16 +5688,15 @@ func (c *PostsInsertCall) Do() (*Post, error) {
 // method id "blogger.posts.list":
 
 type PostsListCall struct {
-	s            *Service
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Retrieves a list of posts, possibly filtered.
 func (r *PostsService) List(blogId string) *PostsListCall {
-	c := &PostsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	return c
 }
@@ -5452,7 +5704,7 @@ func (r *PostsService) List(blogId string) *PostsListCall {
 // EndDate sets the optional parameter "endDate": Latest post date to
 // fetch, a date-time with RFC 3339 formatting.
 func (c *PostsListCall) EndDate(endDate string) *PostsListCall {
-	c.urlParams_.Set("endDate", endDate)
+	c.opt_["endDate"] = endDate
 	return c
 }
 
@@ -5461,28 +5713,28 @@ func (c *PostsListCall) EndDate(endDate string) *PostsListCall {
 // to false when the post bodies are not required, to help minimize
 // traffic.
 func (c *PostsListCall) FetchBodies(fetchBodies bool) *PostsListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.opt_["fetchBodies"] = fetchBodies
 	return c
 }
 
 // FetchImages sets the optional parameter "fetchImages": Whether image
 // URL metadata for each post is included.
 func (c *PostsListCall) FetchImages(fetchImages bool) *PostsListCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.opt_["fetchImages"] = fetchImages
 	return c
 }
 
 // Labels sets the optional parameter "labels": Comma-separated list of
 // labels to search for.
 func (c *PostsListCall) Labels(labels string) *PostsListCall {
-	c.urlParams_.Set("labels", labels)
+	c.opt_["labels"] = labels
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of posts to fetch.
 func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -5492,21 +5744,21 @@ func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
 //   "published" - Order by the date the post was published
 //   "updated" - Order by the date the post was last updated
 func (c *PostsListCall) OrderBy(orderBy string) *PostsListCall {
-	c.urlParams_.Set("orderBy", orderBy)
+	c.opt_["orderBy"] = orderBy
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Continuation token
 // if the request is paged.
 func (c *PostsListCall) PageToken(pageToken string) *PostsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // StartDate sets the optional parameter "startDate": Earliest post date
 // to fetch, a date-time with RFC 3339 formatting.
 func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
-	c.urlParams_.Set("startDate", startDate)
+	c.opt_["startDate"] = startDate
 	return c
 }
 
@@ -5517,8 +5769,8 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 //   "draft" - Draft (non-published) posts.
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in the future.
-func (c *PostsListCall) Status(status []string) *PostsListCall {
-	c.urlParams_.SetMulti("status", append([]string{}, status...))
+func (c *PostsListCall) Status(status string) *PostsListCall {
+	c.opt_["status"] = status
 	return c
 }
 
@@ -5531,15 +5783,15 @@ func (c *PostsListCall) Status(status []string) *PostsListCall {
 //   "AUTHOR" - Author level detail
 //   "READER" - Reader level detail
 func (c *PostsListCall) View(view string) *PostsListCall {
-	c.urlParams_.Set("view", view)
+	c.opt_["view"] = view
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsListCall) Fields(s ...googleapi.Field) *PostsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5549,13 +5801,13 @@ func (c *PostsListCall) Fields(s ...googleapi.Field) *PostsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PostsListCall) IfNoneMatch(entityTag string) *PostsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsListCall) Context(ctx context.Context) *PostsListCall {
 	c.ctx_ = ctx
 	return c
@@ -5563,16 +5815,50 @@ func (c *PostsListCall) Context(ctx context.Context) *PostsListCall {
 
 func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["endDate"]; ok {
+		params.Set("endDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["labels"]; ok {
+		params.Set("labels", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startDate"]; ok {
+		params.Set("startDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["status"]; ok {
+		params.Set("status", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["view"]; ok {
+		params.Set("view", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5729,17 +6015,17 @@ func (c *PostsListCall) Do() (*PostList, error) {
 // method id "blogger.posts.patch":
 
 type PostsPatchCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	post       *Post
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	postId string
+	post   *Post
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Update a post. This method supports patch semantics.
 func (r *PostsService) Patch(blogId string, postId string, post *Post) *PostsPatchCall {
-	c := &PostsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	c.post = post
@@ -5749,7 +6035,7 @@ func (r *PostsService) Patch(blogId string, postId string, post *Post) *PostsPat
 // FetchBody sets the optional parameter "fetchBody": Whether the body
 // content of the post is included with the result (default: true).
 func (c *PostsPatchCall) FetchBody(fetchBody bool) *PostsPatchCall {
-	c.urlParams_.Set("fetchBody", fmt.Sprintf("%v", fetchBody))
+	c.opt_["fetchBody"] = fetchBody
 	return c
 }
 
@@ -5757,42 +6043,42 @@ func (c *PostsPatchCall) FetchBody(fetchBody bool) *PostsPatchCall {
 // URL metadata for each post is included in the returned result
 // (default: false).
 func (c *PostsPatchCall) FetchImages(fetchImages bool) *PostsPatchCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.opt_["fetchImages"] = fetchImages
 	return c
 }
 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to retrieve with the returned post.
 func (c *PostsPatchCall) MaxComments(maxComments int64) *PostsPatchCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.opt_["maxComments"] = maxComments
 	return c
 }
 
 // Publish sets the optional parameter "publish": Whether a publish
 // action should be performed when the post is updated (default: false).
 func (c *PostsPatchCall) Publish(publish bool) *PostsPatchCall {
-	c.urlParams_.Set("publish", fmt.Sprintf("%v", publish))
+	c.opt_["publish"] = publish
 	return c
 }
 
 // Revert sets the optional parameter "revert": Whether a revert action
 // should be performed when the post is updated (default: false).
 func (c *PostsPatchCall) Revert(revert bool) *PostsPatchCall {
-	c.urlParams_.Set("revert", fmt.Sprintf("%v", revert))
+	c.opt_["revert"] = revert
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsPatchCall) Fields(s ...googleapi.Field) *PostsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsPatchCall) Context(ctx context.Context) *PostsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -5805,9 +6091,28 @@ func (c *PostsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fetchBody"]; ok {
+		params.Set("fetchBody", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxComments"]; ok {
+		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publish"]; ok {
+		params.Set("publish", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revert"]; ok {
+		params.Set("revert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -5922,17 +6227,17 @@ func (c *PostsPatchCall) Do() (*Post, error) {
 // method id "blogger.posts.publish":
 
 type PostsPublishCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Publish: Publishes a draft post, optionally at the specific time of
 // the given publishDate parameter.
 func (r *PostsService) Publish(blogId string, postId string) *PostsPublishCall {
-	c := &PostsPublishCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsPublishCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	return c
@@ -5944,21 +6249,21 @@ func (r *PostsService) Publish(blogId string, postId string) *PostsPublishCall {
 // saved schedule date (if present), or the current time. If a future
 // date is given, the post will be scheduled to be published.
 func (c *PostsPublishCall) PublishDate(publishDate string) *PostsPublishCall {
-	c.urlParams_.Set("publishDate", publishDate)
+	c.opt_["publishDate"] = publishDate
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsPublishCall) Fields(s ...googleapi.Field) *PostsPublishCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsPublishCall) Context(ctx context.Context) *PostsPublishCall {
 	c.ctx_ = ctx
 	return c
@@ -5966,9 +6271,16 @@ func (c *PostsPublishCall) Context(ctx context.Context) *PostsPublishCall {
 
 func (c *PostsPublishCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["publishDate"]; ok {
+		params.Set("publishDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/publish")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -6058,32 +6370,32 @@ func (c *PostsPublishCall) Do() (*Post, error) {
 // method id "blogger.posts.revert":
 
 type PostsRevertCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	postId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Revert: Revert a published or scheduled post to draft state.
 func (r *PostsService) Revert(blogId string, postId string) *PostsRevertCall {
-	c := &PostsRevertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsRevertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsRevertCall) Fields(s ...googleapi.Field) *PostsRevertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsRevertCall) Context(ctx context.Context) *PostsRevertCall {
 	c.ctx_ = ctx
 	return c
@@ -6091,9 +6403,13 @@ func (c *PostsRevertCall) Context(ctx context.Context) *PostsRevertCall {
 
 func (c *PostsRevertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}/revert")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -6177,18 +6493,18 @@ func (c *PostsRevertCall) Do() (*Post, error) {
 // method id "blogger.posts.search":
 
 type PostsSearchCall struct {
-	s            *Service
-	blogId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	blogId string
+	q      string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Search: Search for a post.
 func (r *PostsService) Search(blogId string, q string) *PostsSearchCall {
-	c := &PostsSearchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsSearchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
-	c.urlParams_.Set("q", q)
+	c.q = q
 	return c
 }
 
@@ -6197,7 +6513,7 @@ func (r *PostsService) Search(blogId string, q string) *PostsSearchCall {
 // to false when the post bodies are not required, to help minimize
 // traffic.
 func (c *PostsSearchCall) FetchBodies(fetchBodies bool) *PostsSearchCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.opt_["fetchBodies"] = fetchBodies
 	return c
 }
 
@@ -6207,15 +6523,15 @@ func (c *PostsSearchCall) FetchBodies(fetchBodies bool) *PostsSearchCall {
 //   "published" - Order by the date the post was published
 //   "updated" - Order by the date the post was last updated
 func (c *PostsSearchCall) OrderBy(orderBy string) *PostsSearchCall {
-	c.urlParams_.Set("orderBy", orderBy)
+	c.opt_["orderBy"] = orderBy
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsSearchCall) Fields(s ...googleapi.Field) *PostsSearchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -6225,13 +6541,13 @@ func (c *PostsSearchCall) Fields(s ...googleapi.Field) *PostsSearchCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PostsSearchCall) IfNoneMatch(entityTag string) *PostsSearchCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsSearchCall) Context(ctx context.Context) *PostsSearchCall {
 	c.ctx_ = ctx
 	return c
@@ -6239,16 +6555,27 @@ func (c *PostsSearchCall) Context(ctx context.Context) *PostsSearchCall {
 
 func (c *PostsSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("q", fmt.Sprintf("%v", c.q))
+	if v, ok := c.opt_["fetchBodies"]; ok {
+		params.Set("fetchBodies", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/search")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -6348,17 +6675,17 @@ func (c *PostsSearchCall) Do() (*PostList, error) {
 // method id "blogger.posts.update":
 
 type PostsUpdateCall struct {
-	s          *Service
-	blogId     string
-	postId     string
-	post       *Post
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	blogId string
+	postId string
+	post   *Post
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Update a post.
 func (r *PostsService) Update(blogId string, postId string, post *Post) *PostsUpdateCall {
-	c := &PostsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PostsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.blogId = blogId
 	c.postId = postId
 	c.post = post
@@ -6368,7 +6695,7 @@ func (r *PostsService) Update(blogId string, postId string, post *Post) *PostsUp
 // FetchBody sets the optional parameter "fetchBody": Whether the body
 // content of the post is included with the result (default: true).
 func (c *PostsUpdateCall) FetchBody(fetchBody bool) *PostsUpdateCall {
-	c.urlParams_.Set("fetchBody", fmt.Sprintf("%v", fetchBody))
+	c.opt_["fetchBody"] = fetchBody
 	return c
 }
 
@@ -6376,42 +6703,42 @@ func (c *PostsUpdateCall) FetchBody(fetchBody bool) *PostsUpdateCall {
 // URL metadata for each post is included in the returned result
 // (default: false).
 func (c *PostsUpdateCall) FetchImages(fetchImages bool) *PostsUpdateCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.opt_["fetchImages"] = fetchImages
 	return c
 }
 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to retrieve with the returned post.
 func (c *PostsUpdateCall) MaxComments(maxComments int64) *PostsUpdateCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.opt_["maxComments"] = maxComments
 	return c
 }
 
 // Publish sets the optional parameter "publish": Whether a publish
 // action should be performed when the post is updated (default: false).
 func (c *PostsUpdateCall) Publish(publish bool) *PostsUpdateCall {
-	c.urlParams_.Set("publish", fmt.Sprintf("%v", publish))
+	c.opt_["publish"] = publish
 	return c
 }
 
 // Revert sets the optional parameter "revert": Whether a revert action
 // should be performed when the post is updated (default: false).
 func (c *PostsUpdateCall) Revert(revert bool) *PostsUpdateCall {
-	c.urlParams_.Set("revert", fmt.Sprintf("%v", revert))
+	c.opt_["revert"] = revert
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PostsUpdateCall) Fields(s ...googleapi.Field) *PostsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PostsUpdateCall) Context(ctx context.Context) *PostsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -6424,9 +6751,28 @@ func (c *PostsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fetchBody"]; ok {
+		params.Set("fetchBody", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fetchImages"]; ok {
+		params.Set("fetchImages", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxComments"]; ok {
+		params.Set("maxComments", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["publish"]; ok {
+		params.Set("publish", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revert"]; ok {
+		params.Set("revert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "blogs/{blogId}/posts/{postId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"blogId": c.blogId,
@@ -6541,25 +6887,24 @@ func (c *PostsUpdateCall) Do() (*Post, error) {
 // method id "blogger.users.get":
 
 type UsersGetCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets one user by ID.
 func (r *UsersService) Get(userId string) *UsersGetCall {
-	c := &UsersGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -6569,13 +6914,13 @@ func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersGetCall) IfNoneMatch(entityTag string) *UsersGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersGetCall) Context(ctx context.Context) *UsersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -6583,16 +6928,20 @@ func (c *UsersGetCall) Context(ctx context.Context) *UsersGetCall {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/{userId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

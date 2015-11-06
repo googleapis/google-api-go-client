@@ -1265,28 +1265,28 @@ func (s *UploadStatus) MarshalJSON() ([]byte, error) {
 type LineitemsDownloadlineitemsCall struct {
 	s                        *Service
 	downloadlineitemsrequest *DownloadLineItemsRequest
-	urlParams_               internal.URLParams
+	opt_                     map[string]interface{}
 	ctx_                     context.Context
 }
 
 // Downloadlineitems: Retrieves line items in CSV format.
 func (r *LineitemsService) Downloadlineitems(downloadlineitemsrequest *DownloadLineItemsRequest) *LineitemsDownloadlineitemsCall {
-	c := &LineitemsDownloadlineitemsCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LineitemsDownloadlineitemsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.downloadlineitemsrequest = downloadlineitemsrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LineitemsDownloadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsDownloadlineitemsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LineitemsDownloadlineitemsCall) Context(ctx context.Context) *LineitemsDownloadlineitemsCall {
 	c.ctx_ = ctx
 	return c
@@ -1299,9 +1299,13 @@ func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/downloadlineitems")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1367,28 +1371,28 @@ func (c *LineitemsDownloadlineitemsCall) Do() (*DownloadLineItemsResponse, error
 type LineitemsUploadlineitemsCall struct {
 	s                      *Service
 	uploadlineitemsrequest *UploadLineItemsRequest
-	urlParams_             internal.URLParams
+	opt_                   map[string]interface{}
 	ctx_                   context.Context
 }
 
 // Uploadlineitems: Uploads line items in CSV format.
 func (r *LineitemsService) Uploadlineitems(uploadlineitemsrequest *UploadLineItemsRequest) *LineitemsUploadlineitemsCall {
-	c := &LineitemsUploadlineitemsCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LineitemsUploadlineitemsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.uploadlineitemsrequest = uploadlineitemsrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LineitemsUploadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsUploadlineitemsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LineitemsUploadlineitemsCall) Context(ctx context.Context) *LineitemsUploadlineitemsCall {
 	c.ctx_ = ctx
 	return c
@@ -1401,9 +1405,13 @@ func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/uploadlineitems")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1467,30 +1475,30 @@ func (c *LineitemsUploadlineitemsCall) Do() (*UploadLineItemsResponse, error) {
 // method id "doubleclickbidmanager.queries.createquery":
 
 type QueriesCreatequeryCall struct {
-	s          *Service
-	query      *Query
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s     *Service
+	query *Query
+	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Createquery: Creates a query.
 func (r *QueriesService) Createquery(query *Query) *QueriesCreatequeryCall {
-	c := &QueriesCreatequeryCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QueriesCreatequeryCall{s: r.s, opt_: make(map[string]interface{})}
 	c.query = query
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QueriesCreatequeryCall) Fields(s ...googleapi.Field) *QueriesCreatequeryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QueriesCreatequeryCall) Context(ctx context.Context) *QueriesCreatequeryCall {
 	c.ctx_ = ctx
 	return c
@@ -1503,9 +1511,13 @@ func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -1569,31 +1581,31 @@ func (c *QueriesCreatequeryCall) Do() (*Query, error) {
 // method id "doubleclickbidmanager.queries.deletequery":
 
 type QueriesDeletequeryCall struct {
-	s          *Service
-	queryId    int64
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	queryId int64
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Deletequery: Deletes a stored query as well as the associated stored
 // reports.
 func (r *QueriesService) Deletequery(queryId int64) *QueriesDeletequeryCall {
-	c := &QueriesDeletequeryCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QueriesDeletequeryCall{s: r.s, opt_: make(map[string]interface{})}
 	c.queryId = queryId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QueriesDeletequeryCall) Fields(s ...googleapi.Field) *QueriesDeletequeryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QueriesDeletequeryCall) Context(ctx context.Context) *QueriesDeletequeryCall {
 	c.ctx_ = ctx
 	return c
@@ -1601,9 +1613,13 @@ func (c *QueriesDeletequeryCall) Context(ctx context.Context) *QueriesDeletequer
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
@@ -1650,25 +1666,24 @@ func (c *QueriesDeletequeryCall) Do() error {
 // method id "doubleclickbidmanager.queries.getquery":
 
 type QueriesGetqueryCall struct {
-	s            *Service
-	queryId      int64
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	queryId int64
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Getquery: Retrieves a stored query.
 func (r *QueriesService) Getquery(queryId int64) *QueriesGetqueryCall {
-	c := &QueriesGetqueryCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QueriesGetqueryCall{s: r.s, opt_: make(map[string]interface{})}
 	c.queryId = queryId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QueriesGetqueryCall) Fields(s ...googleapi.Field) *QueriesGetqueryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1678,13 +1693,13 @@ func (c *QueriesGetqueryCall) Fields(s ...googleapi.Field) *QueriesGetqueryCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *QueriesGetqueryCall) IfNoneMatch(entityTag string) *QueriesGetqueryCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QueriesGetqueryCall) Context(ctx context.Context) *QueriesGetqueryCall {
 	c.ctx_ = ctx
 	return c
@@ -1692,16 +1707,20 @@ func (c *QueriesGetqueryCall) Context(ctx context.Context) *QueriesGetqueryCall 
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1771,23 +1790,22 @@ func (c *QueriesGetqueryCall) Do() (*Query, error) {
 // method id "doubleclickbidmanager.queries.listqueries":
 
 type QueriesListqueriesCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Listqueries: Retrieves stored queries.
 func (r *QueriesService) Listqueries() *QueriesListqueriesCall {
-	c := &QueriesListqueriesCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QueriesListqueriesCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QueriesListqueriesCall) Fields(s ...googleapi.Field) *QueriesListqueriesCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1797,13 +1815,13 @@ func (c *QueriesListqueriesCall) Fields(s ...googleapi.Field) *QueriesListquerie
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *QueriesListqueriesCall) IfNoneMatch(entityTag string) *QueriesListqueriesCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QueriesListqueriesCall) Context(ctx context.Context) *QueriesListqueriesCall {
 	c.ctx_ = ctx
 	return c
@@ -1811,14 +1829,18 @@ func (c *QueriesListqueriesCall) Context(ctx context.Context) *QueriesListquerie
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "queries")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1879,29 +1901,29 @@ type QueriesRunqueryCall struct {
 	s               *Service
 	queryId         int64
 	runqueryrequest *RunQueryRequest
-	urlParams_      internal.URLParams
+	opt_            map[string]interface{}
 	ctx_            context.Context
 }
 
 // Runquery: Runs a stored query to generate a report.
 func (r *QueriesService) Runquery(queryId int64, runqueryrequest *RunQueryRequest) *QueriesRunqueryCall {
-	c := &QueriesRunqueryCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &QueriesRunqueryCall{s: r.s, opt_: make(map[string]interface{})}
 	c.queryId = queryId
 	c.runqueryrequest = runqueryrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *QueriesRunqueryCall) Fields(s ...googleapi.Field) *QueriesRunqueryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *QueriesRunqueryCall) Context(ctx context.Context) *QueriesRunqueryCall {
 	c.ctx_ = ctx
 	return c
@@ -1914,9 +1936,13 @@ func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
@@ -1967,25 +1993,24 @@ func (c *QueriesRunqueryCall) Do() error {
 // method id "doubleclickbidmanager.reports.listreports":
 
 type ReportsListreportsCall struct {
-	s            *Service
-	queryId      int64
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	queryId int64
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Listreports: Retrieves stored reports.
 func (r *ReportsService) Listreports(queryId int64) *ReportsListreportsCall {
-	c := &ReportsListreportsCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ReportsListreportsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.queryId = queryId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReportsListreportsCall) Fields(s ...googleapi.Field) *ReportsListreportsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1995,13 +2020,13 @@ func (c *ReportsListreportsCall) Fields(s ...googleapi.Field) *ReportsListreport
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ReportsListreportsCall) IfNoneMatch(entityTag string) *ReportsListreportsCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ReportsListreportsCall) Context(ctx context.Context) *ReportsListreportsCall {
 	c.ctx_ = ctx
 	return c
@@ -2009,16 +2034,20 @@ func (c *ReportsListreportsCall) Context(ctx context.Context) *ReportsListreport
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "queries/{queryId}/reports")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

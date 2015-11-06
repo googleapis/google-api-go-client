@@ -884,25 +884,24 @@ func (s *WatchResponse) MarshalJSON() ([]byte, error) {
 // method id "gmail.users.getProfile":
 
 type UsersGetProfileCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // GetProfile: Gets the current user's Gmail profile.
 func (r *UsersService) GetProfile(userId string) *UsersGetProfileCall {
-	c := &UsersGetProfileCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersGetProfileCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersGetProfileCall) Fields(s ...googleapi.Field) *UsersGetProfileCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -912,13 +911,13 @@ func (c *UsersGetProfileCall) Fields(s ...googleapi.Field) *UsersGetProfileCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersGetProfileCall) IfNoneMatch(entityTag string) *UsersGetProfileCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersGetProfileCall) Context(ctx context.Context) *UsersGetProfileCall {
 	c.ctx_ = ctx
 	return c
@@ -926,16 +925,20 @@ func (c *UsersGetProfileCall) Context(ctx context.Context) *UsersGetProfileCall 
 
 func (c *UsersGetProfileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/profile")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1011,30 +1014,30 @@ func (c *UsersGetProfileCall) Do() (*Profile, error) {
 // method id "gmail.users.stop":
 
 type UsersStopCall struct {
-	s          *Service
-	userId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Stop: Stop receiving push notifications for the given user mailbox.
 func (r *UsersService) Stop(userId string) *UsersStopCall {
-	c := &UsersStopCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersStopCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersStopCall) Fields(s ...googleapi.Field) *UsersStopCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersStopCall) Context(ctx context.Context) *UsersStopCall {
 	c.ctx_ = ctx
 	return c
@@ -1042,9 +1045,13 @@ func (c *UsersStopCall) Context(ctx context.Context) *UsersStopCall {
 
 func (c *UsersStopCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/stop")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -1099,30 +1106,30 @@ type UsersWatchCall struct {
 	s            *Service
 	userId       string
 	watchrequest *WatchRequest
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Watch: Set up or update a push notification watch on the given user
 // mailbox.
 func (r *UsersService) Watch(userId string, watchrequest *WatchRequest) *UsersWatchCall {
-	c := &UsersWatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersWatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.watchrequest = watchrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersWatchCall) Fields(s ...googleapi.Field) *UsersWatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersWatchCall) Context(ctx context.Context) *UsersWatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1135,9 +1142,13 @@ func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/watch")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -1220,40 +1231,39 @@ func (c *UsersWatchCall) Do() (*WatchResponse, error) {
 // method id "gmail.users.drafts.create":
 
 type UsersDraftsCreateCall struct {
-	s                *Service
-	userId           string
-	draft            *Draft
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	userId     string
+	draft      *Draft
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Create: Creates a new draft with the DRAFT label.
 func (r *UsersDraftsService) Create(userId string, draft *Draft) *UsersDraftsCreateCall {
-	c := &UsersDraftsCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersDraftsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.draft = draft
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersDraftsCreateCall) Media(r io.Reader) *UsersDraftsCreateCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersDraftsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsCreateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -1262,28 +1272,27 @@ func (c *UsersDraftsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderA
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *UsersDraftsCreateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsCreateCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDraftsCreateCall) Fields(s ...googleapi.Field) *UsersDraftsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *UsersDraftsCreateCall) Context(ctx context.Context) *UsersDraftsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -1296,13 +1305,17 @@ func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -1355,6 +1368,12 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -1364,7 +1383,7 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -1434,33 +1453,33 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 // method id "gmail.users.drafts.delete":
 
 type UsersDraftsDeleteCall struct {
-	s          *Service
-	userId     string
-	id         string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Immediately and permanently deletes the specified draft. Does
 // not simply trash it.
 func (r *UsersDraftsService) Delete(userId string, id string) *UsersDraftsDeleteCall {
-	c := &UsersDraftsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersDraftsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDraftsDeleteCall) Fields(s ...googleapi.Field) *UsersDraftsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersDraftsDeleteCall) Context(ctx context.Context) *UsersDraftsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1468,9 +1487,13 @@ func (c *UsersDraftsDeleteCall) Context(ctx context.Context) *UsersDraftsDeleteC
 
 func (c *UsersDraftsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -1530,17 +1553,16 @@ func (c *UsersDraftsDeleteCall) Do() error {
 // method id "gmail.users.drafts.get":
 
 type UsersDraftsGetCall struct {
-	s            *Service
-	userId       string
-	id           string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets the specified draft.
 func (r *UsersDraftsService) Get(userId string, id string) *UsersDraftsGetCall {
-	c := &UsersDraftsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersDraftsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
@@ -1555,15 +1577,15 @@ func (r *UsersDraftsService) Get(userId string, id string) *UsersDraftsGetCall {
 //   "minimal"
 //   "raw"
 func (c *UsersDraftsGetCall) Format(format string) *UsersDraftsGetCall {
-	c.urlParams_.Set("format", format)
+	c.opt_["format"] = format
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDraftsGetCall) Fields(s ...googleapi.Field) *UsersDraftsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1573,13 +1595,13 @@ func (c *UsersDraftsGetCall) Fields(s ...googleapi.Field) *UsersDraftsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersDraftsGetCall) IfNoneMatch(entityTag string) *UsersDraftsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersDraftsGetCall) Context(ctx context.Context) *UsersDraftsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1587,17 +1609,24 @@ func (c *UsersDraftsGetCall) Context(ctx context.Context) *UsersDraftsGetCall {
 
 func (c *UsersDraftsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1698,16 +1727,15 @@ func (c *UsersDraftsGetCall) Do() (*Draft, error) {
 // method id "gmail.users.drafts.list":
 
 type UsersDraftsListCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists the drafts in the user's mailbox.
 func (r *UsersDraftsService) List(userId string) *UsersDraftsListCall {
-	c := &UsersDraftsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersDraftsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
@@ -1715,22 +1743,22 @@ func (r *UsersDraftsService) List(userId string) *UsersDraftsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of drafts to return.
 func (c *UsersDraftsListCall) MaxResults(maxResults int64) *UsersDraftsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
 // retrieve a specific page of results in the list.
 func (c *UsersDraftsListCall) PageToken(pageToken string) *UsersDraftsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDraftsListCall) Fields(s ...googleapi.Field) *UsersDraftsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1740,13 +1768,13 @@ func (c *UsersDraftsListCall) Fields(s ...googleapi.Field) *UsersDraftsListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersDraftsListCall) IfNoneMatch(entityTag string) *UsersDraftsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersDraftsListCall) Context(ctx context.Context) *UsersDraftsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1754,16 +1782,26 @@ func (c *UsersDraftsListCall) Context(ctx context.Context) *UsersDraftsListCall 
 
 func (c *UsersDraftsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1851,41 +1889,40 @@ func (c *UsersDraftsListCall) Do() (*ListDraftsResponse, error) {
 // method id "gmail.users.drafts.send":
 
 type UsersDraftsSendCall struct {
-	s                *Service
-	userId           string
-	draft            *Draft
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	userId     string
+	draft      *Draft
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Send: Sends the specified, existing draft to the recipients in the
 // To, Cc, and Bcc headers.
 func (r *UsersDraftsService) Send(userId string, draft *Draft) *UsersDraftsSendCall {
-	c := &UsersDraftsSendCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersDraftsSendCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.draft = draft
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersDraftsSendCall) Media(r io.Reader) *UsersDraftsSendCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersDraftsSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsSendCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -1894,28 +1931,27 @@ func (c *UsersDraftsSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt,
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *UsersDraftsSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsSendCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDraftsSendCall) Fields(s ...googleapi.Field) *UsersDraftsSendCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *UsersDraftsSendCall) Context(ctx context.Context) *UsersDraftsSendCall {
 	c.ctx_ = ctx
 	return c
@@ -1928,13 +1964,17 @@ func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts/send")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -1987,6 +2027,12 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -1996,7 +2042,7 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -2066,42 +2112,41 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 // method id "gmail.users.drafts.update":
 
 type UsersDraftsUpdateCall struct {
-	s                *Service
-	userId           string
-	id               string
-	draft            *Draft
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	userId     string
+	id         string
+	draft      *Draft
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Update: Replaces a draft's content.
 func (r *UsersDraftsService) Update(userId string, id string, draft *Draft) *UsersDraftsUpdateCall {
-	c := &UsersDraftsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersDraftsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	c.draft = draft
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersDraftsUpdateCall) Media(r io.Reader) *UsersDraftsUpdateCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersDraftsUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersDraftsUpdateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -2110,28 +2155,27 @@ func (c *UsersDraftsUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderA
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *UsersDraftsUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersDraftsUpdateCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersDraftsUpdateCall) Fields(s ...googleapi.Field) *UsersDraftsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *UsersDraftsUpdateCall) Context(ctx context.Context) *UsersDraftsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2144,13 +2188,17 @@ func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/drafts/{id}")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -2204,6 +2252,12 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -2213,7 +2267,7 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -2290,17 +2344,16 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 // method id "gmail.users.history.list":
 
 type UsersHistoryListCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists the history of all changes to the given mailbox. History
 // results are returned in chronological order (increasing historyId).
 func (r *UsersHistoryService) List(userId string) *UsersHistoryListCall {
-	c := &UsersHistoryListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersHistoryListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
@@ -2308,21 +2361,21 @@ func (r *UsersHistoryService) List(userId string) *UsersHistoryListCall {
 // LabelId sets the optional parameter "labelId": Only return messages
 // with a label matching the ID.
 func (c *UsersHistoryListCall) LabelId(labelId string) *UsersHistoryListCall {
-	c.urlParams_.Set("labelId", labelId)
+	c.opt_["labelId"] = labelId
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of history records to return.
 func (c *UsersHistoryListCall) MaxResults(maxResults int64) *UsersHistoryListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
 // retrieve a specific page of results in the list.
 func (c *UsersHistoryListCall) PageToken(pageToken string) *UsersHistoryListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -2339,15 +2392,15 @@ func (c *UsersHistoryListCall) PageToken(pageToken string) *UsersHistoryListCall
 // no nextPageToken in the response, there are no updates to retrieve
 // and you can store the returned historyId for a future request.
 func (c *UsersHistoryListCall) StartHistoryId(startHistoryId uint64) *UsersHistoryListCall {
-	c.urlParams_.Set("startHistoryId", fmt.Sprintf("%v", startHistoryId))
+	c.opt_["startHistoryId"] = startHistoryId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersHistoryListCall) Fields(s ...googleapi.Field) *UsersHistoryListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2357,13 +2410,13 @@ func (c *UsersHistoryListCall) Fields(s ...googleapi.Field) *UsersHistoryListCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersHistoryListCall) IfNoneMatch(entityTag string) *UsersHistoryListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersHistoryListCall) Context(ctx context.Context) *UsersHistoryListCall {
 	c.ctx_ = ctx
 	return c
@@ -2371,16 +2424,32 @@ func (c *UsersHistoryListCall) Context(ctx context.Context) *UsersHistoryListCal
 
 func (c *UsersHistoryListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["labelId"]; ok {
+		params.Set("labelId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startHistoryId"]; ok {
+		params.Set("startHistoryId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/history")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2478,32 +2547,32 @@ func (c *UsersHistoryListCall) Do() (*ListHistoryResponse, error) {
 // method id "gmail.users.labels.create":
 
 type UsersLabelsCreateCall struct {
-	s          *Service
-	userId     string
-	label      *Label
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	label  *Label
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Create: Creates a new label.
 func (r *UsersLabelsService) Create(userId string, label *Label) *UsersLabelsCreateCall {
-	c := &UsersLabelsCreateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersLabelsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.label = label
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersLabelsCreateCall) Fields(s ...googleapi.Field) *UsersLabelsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersLabelsCreateCall) Context(ctx context.Context) *UsersLabelsCreateCall {
 	c.ctx_ = ctx
 	return c
@@ -2516,9 +2585,13 @@ func (c *UsersLabelsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/labels")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -2601,33 +2674,33 @@ func (c *UsersLabelsCreateCall) Do() (*Label, error) {
 // method id "gmail.users.labels.delete":
 
 type UsersLabelsDeleteCall struct {
-	s          *Service
-	userId     string
-	id         string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Immediately and permanently deletes the specified label and
 // removes it from any messages and threads that it is applied to.
 func (r *UsersLabelsService) Delete(userId string, id string) *UsersLabelsDeleteCall {
-	c := &UsersLabelsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersLabelsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersLabelsDeleteCall) Fields(s ...googleapi.Field) *UsersLabelsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersLabelsDeleteCall) Context(ctx context.Context) *UsersLabelsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2635,9 +2708,13 @@ func (c *UsersLabelsDeleteCall) Context(ctx context.Context) *UsersLabelsDeleteC
 
 func (c *UsersLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/labels/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -2697,27 +2774,26 @@ func (c *UsersLabelsDeleteCall) Do() error {
 // method id "gmail.users.labels.get":
 
 type UsersLabelsGetCall struct {
-	s            *Service
-	userId       string
-	id           string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets the specified label.
 func (r *UsersLabelsService) Get(userId string, id string) *UsersLabelsGetCall {
-	c := &UsersLabelsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersLabelsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersLabelsGetCall) Fields(s ...googleapi.Field) *UsersLabelsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2727,13 +2803,13 @@ func (c *UsersLabelsGetCall) Fields(s ...googleapi.Field) *UsersLabelsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersLabelsGetCall) IfNoneMatch(entityTag string) *UsersLabelsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersLabelsGetCall) Context(ctx context.Context) *UsersLabelsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2741,17 +2817,21 @@ func (c *UsersLabelsGetCall) Context(ctx context.Context) *UsersLabelsGetCall {
 
 func (c *UsersLabelsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/labels/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2834,25 +2914,24 @@ func (c *UsersLabelsGetCall) Do() (*Label, error) {
 // method id "gmail.users.labels.list":
 
 type UsersLabelsListCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists all labels in the user's mailbox.
 func (r *UsersLabelsService) List(userId string) *UsersLabelsListCall {
-	c := &UsersLabelsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersLabelsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersLabelsListCall) Fields(s ...googleapi.Field) *UsersLabelsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2862,13 +2941,13 @@ func (c *UsersLabelsListCall) Fields(s ...googleapi.Field) *UsersLabelsListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersLabelsListCall) IfNoneMatch(entityTag string) *UsersLabelsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersLabelsListCall) Context(ctx context.Context) *UsersLabelsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2876,16 +2955,20 @@ func (c *UsersLabelsListCall) Context(ctx context.Context) *UsersLabelsListCall 
 
 func (c *UsersLabelsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/labels")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2961,35 +3044,35 @@ func (c *UsersLabelsListCall) Do() (*ListLabelsResponse, error) {
 // method id "gmail.users.labels.patch":
 
 type UsersLabelsPatchCall struct {
-	s          *Service
-	userId     string
-	id         string
-	label      *Label
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	label  *Label
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Updates the specified label. This method supports patch
 // semantics.
 func (r *UsersLabelsService) Patch(userId string, id string, label *Label) *UsersLabelsPatchCall {
-	c := &UsersLabelsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersLabelsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	c.label = label
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersLabelsPatchCall) Fields(s ...googleapi.Field) *UsersLabelsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersLabelsPatchCall) Context(ctx context.Context) *UsersLabelsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -3002,9 +3085,13 @@ func (c *UsersLabelsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/labels/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -3095,34 +3182,34 @@ func (c *UsersLabelsPatchCall) Do() (*Label, error) {
 // method id "gmail.users.labels.update":
 
 type UsersLabelsUpdateCall struct {
-	s          *Service
-	userId     string
-	id         string
-	label      *Label
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	label  *Label
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Update: Updates the specified label.
 func (r *UsersLabelsService) Update(userId string, id string, label *Label) *UsersLabelsUpdateCall {
-	c := &UsersLabelsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersLabelsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	c.label = label
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersLabelsUpdateCall) Fields(s ...googleapi.Field) *UsersLabelsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersLabelsUpdateCall) Context(ctx context.Context) *UsersLabelsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -3135,9 +3222,13 @@ func (c *UsersLabelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/labels/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -3228,33 +3319,33 @@ func (c *UsersLabelsUpdateCall) Do() (*Label, error) {
 // method id "gmail.users.messages.delete":
 
 type UsersMessagesDeleteCall struct {
-	s          *Service
-	userId     string
-	id         string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Immediately and permanently deletes the specified message.
 // This operation cannot be undone. Prefer messages.trash instead.
 func (r *UsersMessagesService) Delete(userId string, id string) *UsersMessagesDeleteCall {
-	c := &UsersMessagesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesDeleteCall) Fields(s ...googleapi.Field) *UsersMessagesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersMessagesDeleteCall) Context(ctx context.Context) *UsersMessagesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -3262,9 +3353,13 @@ func (c *UsersMessagesDeleteCall) Context(ctx context.Context) *UsersMessagesDel
 
 func (c *UsersMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -3322,17 +3417,16 @@ func (c *UsersMessagesDeleteCall) Do() error {
 // method id "gmail.users.messages.get":
 
 type UsersMessagesGetCall struct {
-	s            *Service
-	userId       string
-	id           string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets the specified message.
 func (r *UsersMessagesService) Get(userId string, id string) *UsersMessagesGetCall {
-	c := &UsersMessagesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
@@ -3347,22 +3441,22 @@ func (r *UsersMessagesService) Get(userId string, id string) *UsersMessagesGetCa
 //   "minimal"
 //   "raw"
 func (c *UsersMessagesGetCall) Format(format string) *UsersMessagesGetCall {
-	c.urlParams_.Set("format", format)
+	c.opt_["format"] = format
 	return c
 }
 
 // MetadataHeaders sets the optional parameter "metadataHeaders": When
 // given and format is METADATA, only include headers specified.
-func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders []string) *UsersMessagesGetCall {
-	c.urlParams_.SetMulti("metadataHeaders", append([]string{}, metadataHeaders...))
+func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders string) *UsersMessagesGetCall {
+	c.opt_["metadataHeaders"] = metadataHeaders
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesGetCall) Fields(s ...googleapi.Field) *UsersMessagesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3372,13 +3466,13 @@ func (c *UsersMessagesGetCall) Fields(s ...googleapi.Field) *UsersMessagesGetCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersMessagesGetCall) IfNoneMatch(entityTag string) *UsersMessagesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersMessagesGetCall) Context(ctx context.Context) *UsersMessagesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3386,17 +3480,27 @@ func (c *UsersMessagesGetCall) Context(ctx context.Context) *UsersMessagesGetCal
 
 func (c *UsersMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["metadataHeaders"]; ok {
+		params.Set("metadataHeaders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3502,23 +3606,22 @@ func (c *UsersMessagesGetCall) Do() (*Message, error) {
 // method id "gmail.users.messages.import":
 
 type UsersMessagesImportCall struct {
-	s                *Service
-	userId           string
-	message          *Message
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	userId     string
+	message    *Message
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Import: Imports a message into only this user's mailbox, with
 // standard email delivery scanning and classification similar to
 // receiving via SMTP. Does not send a message.
 func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMessagesImportCall {
-	c := &UsersMessagesImportCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesImportCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.message = message
 	return c
@@ -3529,7 +3632,7 @@ func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMes
 // to a Vault administrator. Only used for Google Apps for Work
 // accounts.
 func (c *UsersMessagesImportCall) Deleted(deleted bool) *UsersMessagesImportCall {
-	c.urlParams_.Set("deleted", fmt.Sprintf("%v", deleted))
+	c.opt_["deleted"] = deleted
 	return c
 }
 
@@ -3540,7 +3643,7 @@ func (c *UsersMessagesImportCall) Deleted(deleted bool) *UsersMessagesImportCall
 //   "dateHeader" (default)
 //   "receivedTime"
 func (c *UsersMessagesImportCall) InternalDateSource(internalDateSource string) *UsersMessagesImportCall {
-	c.urlParams_.Set("internalDateSource", internalDateSource)
+	c.opt_["internalDateSource"] = internalDateSource
 	return c
 }
 
@@ -3548,7 +3651,7 @@ func (c *UsersMessagesImportCall) InternalDateSource(internalDateSource string) 
 // Gmail spam classifier decision and never mark this email as SPAM in
 // the mailbox.
 func (c *UsersMessagesImportCall) NeverMarkSpam(neverMarkSpam bool) *UsersMessagesImportCall {
-	c.urlParams_.Set("neverMarkSpam", fmt.Sprintf("%v", neverMarkSpam))
+	c.opt_["neverMarkSpam"] = neverMarkSpam
 	return c
 }
 
@@ -3556,24 +3659,24 @@ func (c *UsersMessagesImportCall) NeverMarkSpam(neverMarkSpam bool) *UsersMessag
 // Process calendar invites in the email and add any extracted meetings
 // to the Google Calendar for this user.
 func (c *UsersMessagesImportCall) ProcessForCalendar(processForCalendar bool) *UsersMessagesImportCall {
-	c.urlParams_.Set("processForCalendar", fmt.Sprintf("%v", processForCalendar))
+	c.opt_["processForCalendar"] = processForCalendar
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersMessagesImportCall) Media(r io.Reader) *UsersMessagesImportCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersMessagesImportCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesImportCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -3582,28 +3685,27 @@ func (c *UsersMessagesImportCall) ResumableMedia(ctx context.Context, r io.Reade
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *UsersMessagesImportCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesImportCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesImportCall) Fields(s ...googleapi.Field) *UsersMessagesImportCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *UsersMessagesImportCall) Context(ctx context.Context) *UsersMessagesImportCall {
 	c.ctx_ = ctx
 	return c
@@ -3616,13 +3718,29 @@ func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["deleted"]; ok {
+		params.Set("deleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["internalDateSource"]; ok {
+		params.Set("internalDateSource", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["neverMarkSpam"]; ok {
+		params.Set("neverMarkSpam", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["processForCalendar"]; ok {
+		params.Set("processForCalendar", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/import")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -3675,6 +3793,12 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -3684,7 +3808,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -3786,23 +3910,22 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 // method id "gmail.users.messages.insert":
 
 type UsersMessagesInsertCall struct {
-	s                *Service
-	userId           string
-	message          *Message
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	userId     string
+	message    *Message
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Directly inserts a message into only this user's mailbox
 // similar to IMAP APPEND, bypassing most scanning and classification.
 // Does not send a message.
 func (r *UsersMessagesService) Insert(userId string, message *Message) *UsersMessagesInsertCall {
-	c := &UsersMessagesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.message = message
 	return c
@@ -3813,7 +3936,7 @@ func (r *UsersMessagesService) Insert(userId string, message *Message) *UsersMes
 // to a Vault administrator. Only used for Google Apps for Work
 // accounts.
 func (c *UsersMessagesInsertCall) Deleted(deleted bool) *UsersMessagesInsertCall {
-	c.urlParams_.Set("deleted", fmt.Sprintf("%v", deleted))
+	c.opt_["deleted"] = deleted
 	return c
 }
 
@@ -3824,24 +3947,24 @@ func (c *UsersMessagesInsertCall) Deleted(deleted bool) *UsersMessagesInsertCall
 //   "dateHeader"
 //   "receivedTime" (default)
 func (c *UsersMessagesInsertCall) InternalDateSource(internalDateSource string) *UsersMessagesInsertCall {
-	c.urlParams_.Set("internalDateSource", internalDateSource)
+	c.opt_["internalDateSource"] = internalDateSource
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersMessagesInsertCall) Media(r io.Reader) *UsersMessagesInsertCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersMessagesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -3850,28 +3973,27 @@ func (c *UsersMessagesInsertCall) ResumableMedia(ctx context.Context, r io.Reade
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *UsersMessagesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesInsertCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesInsertCall) Fields(s ...googleapi.Field) *UsersMessagesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *UsersMessagesInsertCall) Context(ctx context.Context) *UsersMessagesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -3884,13 +4006,23 @@ func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["deleted"]; ok {
+		params.Set("deleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["internalDateSource"]; ok {
+		params.Set("internalDateSource", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -3943,6 +4075,12 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -3952,7 +4090,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -4042,16 +4180,15 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 // method id "gmail.users.messages.list":
 
 type UsersMessagesListCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists the messages in the user's mailbox.
 func (r *UsersMessagesService) List(userId string) *UsersMessagesListCall {
-	c := &UsersMessagesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
@@ -4059,28 +4196,28 @@ func (r *UsersMessagesService) List(userId string) *UsersMessagesListCall {
 // IncludeSpamTrash sets the optional parameter "includeSpamTrash":
 // Include messages from SPAM and TRASH in the results.
 func (c *UsersMessagesListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersMessagesListCall {
-	c.urlParams_.Set("includeSpamTrash", fmt.Sprintf("%v", includeSpamTrash))
+	c.opt_["includeSpamTrash"] = includeSpamTrash
 	return c
 }
 
 // LabelIds sets the optional parameter "labelIds": Only return messages
 // with labels that match all of the specified label IDs.
-func (c *UsersMessagesListCall) LabelIds(labelIds []string) *UsersMessagesListCall {
-	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
+func (c *UsersMessagesListCall) LabelIds(labelIds string) *UsersMessagesListCall {
+	c.opt_["labelIds"] = labelIds
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of messages to return.
 func (c *UsersMessagesListCall) MaxResults(maxResults int64) *UsersMessagesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
 // retrieve a specific page of results in the list.
 func (c *UsersMessagesListCall) PageToken(pageToken string) *UsersMessagesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -4088,15 +4225,15 @@ func (c *UsersMessagesListCall) PageToken(pageToken string) *UsersMessagesListCa
 // specified query. Supports the same query format as the Gmail search
 // box. For example, "from:someuser@example.com rfc822msgid: is:unread".
 func (c *UsersMessagesListCall) Q(q string) *UsersMessagesListCall {
-	c.urlParams_.Set("q", q)
+	c.opt_["q"] = q
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesListCall) Fields(s ...googleapi.Field) *UsersMessagesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4106,13 +4243,13 @@ func (c *UsersMessagesListCall) Fields(s ...googleapi.Field) *UsersMessagesListC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersMessagesListCall) IfNoneMatch(entityTag string) *UsersMessagesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersMessagesListCall) Context(ctx context.Context) *UsersMessagesListCall {
 	c.ctx_ = ctx
 	return c
@@ -4120,16 +4257,35 @@ func (c *UsersMessagesListCall) Context(ctx context.Context) *UsersMessagesListC
 
 func (c *UsersMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeSpamTrash"]; ok {
+		params.Set("includeSpamTrash", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["labelIds"]; ok {
+		params.Set("labelIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["q"]; ok {
+		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4237,30 +4393,30 @@ type UsersMessagesModifyCall struct {
 	userId               string
 	id                   string
 	modifymessagerequest *ModifyMessageRequest
-	urlParams_           internal.URLParams
+	opt_                 map[string]interface{}
 	ctx_                 context.Context
 }
 
 // Modify: Modifies the labels on the specified message.
 func (r *UsersMessagesService) Modify(userId string, id string, modifymessagerequest *ModifyMessageRequest) *UsersMessagesModifyCall {
-	c := &UsersMessagesModifyCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesModifyCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	c.modifymessagerequest = modifymessagerequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesModifyCall) Fields(s ...googleapi.Field) *UsersMessagesModifyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersMessagesModifyCall) Context(ctx context.Context) *UsersMessagesModifyCall {
 	c.ctx_ = ctx
 	return c
@@ -4273,9 +4429,13 @@ func (c *UsersMessagesModifyCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/{id}/modify")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -4365,41 +4525,40 @@ func (c *UsersMessagesModifyCall) Do() (*Message, error) {
 // method id "gmail.users.messages.send":
 
 type UsersMessagesSendCall struct {
-	s                *Service
-	userId           string
-	message          *Message
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	userId     string
+	message    *Message
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Send: Sends the specified message to the recipients in the To, Cc,
 // and Bcc headers.
 func (r *UsersMessagesService) Send(userId string, message *Message) *UsersMessagesSendCall {
-	c := &UsersMessagesSendCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesSendCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.message = message
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *UsersMessagesSendCall) Media(r io.Reader) *UsersMessagesSendCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *UsersMessagesSendCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *UsersMessagesSendCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -4408,28 +4567,27 @@ func (c *UsersMessagesSendCall) ResumableMedia(ctx context.Context, r io.ReaderA
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *UsersMessagesSendCall) ProgressUpdater(pu googleapi.ProgressUpdater) *UsersMessagesSendCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesSendCall) Fields(s ...googleapi.Field) *UsersMessagesSendCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *UsersMessagesSendCall) Context(ctx context.Context) *UsersMessagesSendCall {
 	c.ctx_ = ctx
 	return c
@@ -4442,13 +4600,17 @@ func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/send")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -4501,6 +4663,12 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -4510,7 +4678,7 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -4581,32 +4749,32 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 // method id "gmail.users.messages.trash":
 
 type UsersMessagesTrashCall struct {
-	s          *Service
-	userId     string
-	id         string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Trash: Moves the specified message to the trash.
 func (r *UsersMessagesService) Trash(userId string, id string) *UsersMessagesTrashCall {
-	c := &UsersMessagesTrashCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesTrashCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesTrashCall) Fields(s ...googleapi.Field) *UsersMessagesTrashCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersMessagesTrashCall) Context(ctx context.Context) *UsersMessagesTrashCall {
 	c.ctx_ = ctx
 	return c
@@ -4614,9 +4782,13 @@ func (c *UsersMessagesTrashCall) Context(ctx context.Context) *UsersMessagesTras
 
 func (c *UsersMessagesTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/{id}/trash")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -4702,32 +4874,32 @@ func (c *UsersMessagesTrashCall) Do() (*Message, error) {
 // method id "gmail.users.messages.untrash":
 
 type UsersMessagesUntrashCall struct {
-	s          *Service
-	userId     string
-	id         string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Untrash: Removes the specified message from the trash.
 func (r *UsersMessagesService) Untrash(userId string, id string) *UsersMessagesUntrashCall {
-	c := &UsersMessagesUntrashCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesUntrashCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesUntrashCall) Fields(s ...googleapi.Field) *UsersMessagesUntrashCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersMessagesUntrashCall) Context(ctx context.Context) *UsersMessagesUntrashCall {
 	c.ctx_ = ctx
 	return c
@@ -4735,9 +4907,13 @@ func (c *UsersMessagesUntrashCall) Context(ctx context.Context) *UsersMessagesUn
 
 func (c *UsersMessagesUntrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/{id}/untrash")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -4823,29 +4999,28 @@ func (c *UsersMessagesUntrashCall) Do() (*Message, error) {
 // method id "gmail.users.messages.attachments.get":
 
 type UsersMessagesAttachmentsGetCall struct {
-	s            *Service
-	userId       string
-	messageId    string
-	id           string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	userId    string
+	messageId string
+	id        string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets the specified message attachment.
 func (r *UsersMessagesAttachmentsService) Get(userId string, messageId string, id string) *UsersMessagesAttachmentsGetCall {
-	c := &UsersMessagesAttachmentsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersMessagesAttachmentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.messageId = messageId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersMessagesAttachmentsGetCall) Fields(s ...googleapi.Field) *UsersMessagesAttachmentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4855,13 +5030,13 @@ func (c *UsersMessagesAttachmentsGetCall) Fields(s ...googleapi.Field) *UsersMes
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersMessagesAttachmentsGetCall) IfNoneMatch(entityTag string) *UsersMessagesAttachmentsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersMessagesAttachmentsGetCall) Context(ctx context.Context) *UsersMessagesAttachmentsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4869,9 +5044,13 @@ func (c *UsersMessagesAttachmentsGetCall) Context(ctx context.Context) *UsersMes
 
 func (c *UsersMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/messages/{messageId}/attachments/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":    c.userId,
@@ -4879,8 +5058,8 @@ func (c *UsersMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response,
 		"id":        c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4969,33 +5148,33 @@ func (c *UsersMessagesAttachmentsGetCall) Do() (*MessagePartBody, error) {
 // method id "gmail.users.threads.delete":
 
 type UsersThreadsDeleteCall struct {
-	s          *Service
-	userId     string
-	id         string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Immediately and permanently deletes the specified thread.
 // This operation cannot be undone. Prefer threads.trash instead.
 func (r *UsersThreadsService) Delete(userId string, id string) *UsersThreadsDeleteCall {
-	c := &UsersThreadsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersThreadsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersThreadsDeleteCall) Fields(s ...googleapi.Field) *UsersThreadsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersThreadsDeleteCall) Context(ctx context.Context) *UsersThreadsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -5003,9 +5182,13 @@ func (c *UsersThreadsDeleteCall) Context(ctx context.Context) *UsersThreadsDelet
 
 func (c *UsersThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/threads/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -5063,17 +5246,16 @@ func (c *UsersThreadsDeleteCall) Do() error {
 // method id "gmail.users.threads.get":
 
 type UsersThreadsGetCall struct {
-	s            *Service
-	userId       string
-	id           string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets the specified thread.
 func (r *UsersThreadsService) Get(userId string, id string) *UsersThreadsGetCall {
-	c := &UsersThreadsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersThreadsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
@@ -5087,22 +5269,22 @@ func (r *UsersThreadsService) Get(userId string, id string) *UsersThreadsGetCall
 //   "metadata"
 //   "minimal"
 func (c *UsersThreadsGetCall) Format(format string) *UsersThreadsGetCall {
-	c.urlParams_.Set("format", format)
+	c.opt_["format"] = format
 	return c
 }
 
 // MetadataHeaders sets the optional parameter "metadataHeaders": When
 // given and format is METADATA, only include headers specified.
-func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders []string) *UsersThreadsGetCall {
-	c.urlParams_.SetMulti("metadataHeaders", append([]string{}, metadataHeaders...))
+func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders string) *UsersThreadsGetCall {
+	c.opt_["metadataHeaders"] = metadataHeaders
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersThreadsGetCall) Fields(s ...googleapi.Field) *UsersThreadsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5112,13 +5294,13 @@ func (c *UsersThreadsGetCall) Fields(s ...googleapi.Field) *UsersThreadsGetCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersThreadsGetCall) IfNoneMatch(entityTag string) *UsersThreadsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersThreadsGetCall) Context(ctx context.Context) *UsersThreadsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -5126,17 +5308,27 @@ func (c *UsersThreadsGetCall) Context(ctx context.Context) *UsersThreadsGetCall 
 
 func (c *UsersThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["metadataHeaders"]; ok {
+		params.Set("metadataHeaders", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/threads/{id}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 		"id":     c.id,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5240,16 +5432,15 @@ func (c *UsersThreadsGetCall) Do() (*Thread, error) {
 // method id "gmail.users.threads.list":
 
 type UsersThreadsListCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists the threads in the user's mailbox.
 func (r *UsersThreadsService) List(userId string) *UsersThreadsListCall {
-	c := &UsersThreadsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersThreadsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
@@ -5257,28 +5448,28 @@ func (r *UsersThreadsService) List(userId string) *UsersThreadsListCall {
 // IncludeSpamTrash sets the optional parameter "includeSpamTrash":
 // Include threads from SPAM and TRASH in the results.
 func (c *UsersThreadsListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersThreadsListCall {
-	c.urlParams_.Set("includeSpamTrash", fmt.Sprintf("%v", includeSpamTrash))
+	c.opt_["includeSpamTrash"] = includeSpamTrash
 	return c
 }
 
 // LabelIds sets the optional parameter "labelIds": Only return threads
 // with labels that match all of the specified label IDs.
-func (c *UsersThreadsListCall) LabelIds(labelIds []string) *UsersThreadsListCall {
-	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
+func (c *UsersThreadsListCall) LabelIds(labelIds string) *UsersThreadsListCall {
+	c.opt_["labelIds"] = labelIds
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of threads to return.
 func (c *UsersThreadsListCall) MaxResults(maxResults int64) *UsersThreadsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token to
 // retrieve a specific page of results in the list.
 func (c *UsersThreadsListCall) PageToken(pageToken string) *UsersThreadsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -5286,15 +5477,15 @@ func (c *UsersThreadsListCall) PageToken(pageToken string) *UsersThreadsListCall
 // specified query. Supports the same query format as the Gmail search
 // box. For example, "from:someuser@example.com rfc822msgid: is:unread".
 func (c *UsersThreadsListCall) Q(q string) *UsersThreadsListCall {
-	c.urlParams_.Set("q", q)
+	c.opt_["q"] = q
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersThreadsListCall) Fields(s ...googleapi.Field) *UsersThreadsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5304,13 +5495,13 @@ func (c *UsersThreadsListCall) Fields(s ...googleapi.Field) *UsersThreadsListCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *UsersThreadsListCall) IfNoneMatch(entityTag string) *UsersThreadsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersThreadsListCall) Context(ctx context.Context) *UsersThreadsListCall {
 	c.ctx_ = ctx
 	return c
@@ -5318,16 +5509,35 @@ func (c *UsersThreadsListCall) Context(ctx context.Context) *UsersThreadsListCal
 
 func (c *UsersThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeSpamTrash"]; ok {
+		params.Set("includeSpamTrash", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["labelIds"]; ok {
+		params.Set("labelIds", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["q"]; ok {
+		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/threads")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5435,31 +5645,31 @@ type UsersThreadsModifyCall struct {
 	userId              string
 	id                  string
 	modifythreadrequest *ModifyThreadRequest
-	urlParams_          internal.URLParams
+	opt_                map[string]interface{}
 	ctx_                context.Context
 }
 
 // Modify: Modifies the labels applied to the thread. This applies to
 // all messages in the thread.
 func (r *UsersThreadsService) Modify(userId string, id string, modifythreadrequest *ModifyThreadRequest) *UsersThreadsModifyCall {
-	c := &UsersThreadsModifyCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersThreadsModifyCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	c.modifythreadrequest = modifythreadrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersThreadsModifyCall) Fields(s ...googleapi.Field) *UsersThreadsModifyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersThreadsModifyCall) Context(ctx context.Context) *UsersThreadsModifyCall {
 	c.ctx_ = ctx
 	return c
@@ -5472,9 +5682,13 @@ func (c *UsersThreadsModifyCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/threads/{id}/modify")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -5564,32 +5778,32 @@ func (c *UsersThreadsModifyCall) Do() (*Thread, error) {
 // method id "gmail.users.threads.trash":
 
 type UsersThreadsTrashCall struct {
-	s          *Service
-	userId     string
-	id         string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Trash: Moves the specified thread to the trash.
 func (r *UsersThreadsService) Trash(userId string, id string) *UsersThreadsTrashCall {
-	c := &UsersThreadsTrashCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersThreadsTrashCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersThreadsTrashCall) Fields(s ...googleapi.Field) *UsersThreadsTrashCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersThreadsTrashCall) Context(ctx context.Context) *UsersThreadsTrashCall {
 	c.ctx_ = ctx
 	return c
@@ -5597,9 +5811,13 @@ func (c *UsersThreadsTrashCall) Context(ctx context.Context) *UsersThreadsTrashC
 
 func (c *UsersThreadsTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/threads/{id}/trash")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
@@ -5685,32 +5903,32 @@ func (c *UsersThreadsTrashCall) Do() (*Thread, error) {
 // method id "gmail.users.threads.untrash":
 
 type UsersThreadsUntrashCall struct {
-	s          *Service
-	userId     string
-	id         string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	userId string
+	id     string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Untrash: Removes the specified thread from the trash.
 func (r *UsersThreadsService) Untrash(userId string, id string) *UsersThreadsUntrashCall {
-	c := &UsersThreadsUntrashCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &UsersThreadsUntrashCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.id = id
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *UsersThreadsUntrashCall) Fields(s ...googleapi.Field) *UsersThreadsUntrashCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *UsersThreadsUntrashCall) Context(ctx context.Context) *UsersThreadsUntrashCall {
 	c.ctx_ = ctx
 	return c
@@ -5718,9 +5936,13 @@ func (c *UsersThreadsUntrashCall) Context(ctx context.Context) *UsersThreadsUntr
 
 func (c *UsersThreadsUntrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{userId}/threads/{id}/untrash")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,

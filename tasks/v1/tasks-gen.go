@@ -315,28 +315,28 @@ func (s *Tasks) MarshalJSON() ([]byte, error) {
 type TasklistsDeleteCall struct {
 	s          *Service
 	tasklistid string
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Delete: Deletes the authenticated user's specified task list.
 func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
-	c := &TasklistsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasklistsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasklistsDeleteCall) Fields(s ...googleapi.Field) *TasklistsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasklistsDeleteCall) Context(ctx context.Context) *TasklistsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -344,9 +344,13 @@ func (c *TasklistsDeleteCall) Context(ctx context.Context) *TasklistsDeleteCall 
 
 func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
@@ -395,25 +399,24 @@ func (c *TasklistsDeleteCall) Do() error {
 // method id "tasks.tasklists.get":
 
 type TasklistsGetCall struct {
-	s            *Service
-	tasklistid   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	tasklistid string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns the authenticated user's specified task list.
 func (r *TasklistsService) Get(tasklistid string) *TasklistsGetCall {
-	c := &TasklistsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasklistsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasklistsGetCall) Fields(s ...googleapi.Field) *TasklistsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -423,13 +426,13 @@ func (c *TasklistsGetCall) Fields(s ...googleapi.Field) *TasklistsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TasklistsGetCall) IfNoneMatch(entityTag string) *TasklistsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasklistsGetCall) Context(ctx context.Context) *TasklistsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -437,16 +440,20 @@ func (c *TasklistsGetCall) Context(ctx context.Context) *TasklistsGetCall {
 
 func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -519,31 +526,31 @@ func (c *TasklistsGetCall) Do() (*TaskList, error) {
 // method id "tasks.tasklists.insert":
 
 type TasklistsInsertCall struct {
-	s          *Service
-	tasklist   *TaskList
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	tasklist *TaskList
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Creates a new task list and adds it to the authenticated
 // user's task lists.
 func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
-	c := &TasklistsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasklistsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklist = tasklist
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasklistsInsertCall) Fields(s ...googleapi.Field) *TasklistsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasklistsInsertCall) Context(ctx context.Context) *TasklistsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -556,9 +563,13 @@ func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -625,37 +636,36 @@ func (c *TasklistsInsertCall) Do() (*TaskList, error) {
 // method id "tasks.tasklists.list":
 
 type TasklistsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Returns all the authenticated user's task lists.
 func (r *TasklistsService) List() *TasklistsListCall {
-	c := &TasklistsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasklistsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of task lists returned on one page.  The default is 100.
 func (c *TasklistsListCall) MaxResults(maxResults int64) *TasklistsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Token specifying
 // the result page to return.
 func (c *TasklistsListCall) PageToken(pageToken string) *TasklistsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasklistsListCall) Fields(s ...googleapi.Field) *TasklistsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -665,13 +675,13 @@ func (c *TasklistsListCall) Fields(s ...googleapi.Field) *TasklistsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TasklistsListCall) IfNoneMatch(entityTag string) *TasklistsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasklistsListCall) Context(ctx context.Context) *TasklistsListCall {
 	c.ctx_ = ctx
 	return c
@@ -679,14 +689,24 @@ func (c *TasklistsListCall) Context(ctx context.Context) *TasklistsListCall {
 
 func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -764,30 +784,30 @@ type TasklistsPatchCall struct {
 	s          *Service
 	tasklistid string
 	tasklist   *TaskList
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Patch: Updates the authenticated user's specified task list. This
 // method supports patch semantics.
 func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *TasklistsPatchCall {
-	c := &TasklistsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasklistsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	c.tasklist = tasklist
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasklistsPatchCall) Fields(s ...googleapi.Field) *TasklistsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasklistsPatchCall) Context(ctx context.Context) *TasklistsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -800,9 +820,13 @@ func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
@@ -885,29 +909,29 @@ type TasklistsUpdateCall struct {
 	s          *Service
 	tasklistid string
 	tasklist   *TaskList
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Update: Updates the authenticated user's specified task list.
 func (r *TasklistsService) Update(tasklistid string, tasklist *TaskList) *TasklistsUpdateCall {
-	c := &TasklistsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasklistsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	c.tasklist = tasklist
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasklistsUpdateCall) Fields(s ...googleapi.Field) *TasklistsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasklistsUpdateCall) Context(ctx context.Context) *TasklistsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -920,9 +944,13 @@ func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "users/@me/lists/{tasklist}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
@@ -1004,7 +1032,7 @@ func (c *TasklistsUpdateCall) Do() (*TaskList, error) {
 type TasksClearCall struct {
 	s          *Service
 	tasklistid string
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
@@ -1012,22 +1040,22 @@ type TasksClearCall struct {
 // affected tasks will be marked as 'hidden' and no longer be returned
 // by default when retrieving all tasks for a task list.
 func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
-	c := &TasksClearCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasksClearCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksClearCall) Fields(s ...googleapi.Field) *TasksClearCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasksClearCall) Context(ctx context.Context) *TasksClearCall {
 	c.ctx_ = ctx
 	return c
@@ -1035,9 +1063,13 @@ func (c *TasksClearCall) Context(ctx context.Context) *TasksClearCall {
 
 func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/clear")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
@@ -1089,29 +1121,29 @@ type TasksDeleteCall struct {
 	s          *Service
 	tasklistid string
 	taskid     string
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Delete: Deletes the specified task from the task list.
 func (r *TasksService) Delete(tasklistid string, taskid string) *TasksDeleteCall {
-	c := &TasksDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasksDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	c.taskid = taskid
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasksDeleteCall) Context(ctx context.Context) *TasksDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1119,9 +1151,13 @@ func (c *TasksDeleteCall) Context(ctx context.Context) *TasksDeleteCall {
 
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
@@ -1178,27 +1214,26 @@ func (c *TasksDeleteCall) Do() error {
 // method id "tasks.tasks.get":
 
 type TasksGetCall struct {
-	s            *Service
-	tasklistid   string
-	taskid       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	tasklistid string
+	taskid     string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Returns the specified task.
 func (r *TasksService) Get(tasklistid string, taskid string) *TasksGetCall {
-	c := &TasksGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasksGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	c.taskid = taskid
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1208,13 +1243,13 @@ func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TasksGetCall) IfNoneMatch(entityTag string) *TasksGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasksGetCall) Context(ctx context.Context) *TasksGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1222,17 +1257,21 @@ func (c *TasksGetCall) Context(ctx context.Context) *TasksGetCall {
 
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 		"task":     c.taskid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1315,13 +1354,13 @@ type TasksInsertCall struct {
 	s          *Service
 	tasklistid string
 	task       *Task
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Insert: Creates a new task on the specified task list.
 func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
-	c := &TasksInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasksInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	c.task = task
 	return c
@@ -1330,7 +1369,7 @@ func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 // Parent sets the optional parameter "parent": Parent task identifier.
 // If the task is created at the top level, this parameter is omitted.
 func (c *TasksInsertCall) Parent(parent string) *TasksInsertCall {
-	c.urlParams_.Set("parent", parent)
+	c.opt_["parent"] = parent
 	return c
 }
 
@@ -1338,21 +1377,21 @@ func (c *TasksInsertCall) Parent(parent string) *TasksInsertCall {
 // task identifier. If the task is created at the first position among
 // its siblings, this parameter is omitted.
 func (c *TasksInsertCall) Previous(previous string) *TasksInsertCall {
-	c.urlParams_.Set("previous", previous)
+	c.opt_["previous"] = previous
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksInsertCall) Fields(s ...googleapi.Field) *TasksInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasksInsertCall) Context(ctx context.Context) *TasksInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -1365,9 +1404,19 @@ func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["parent"]; ok {
+		params.Set("parent", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["previous"]; ok {
+		params.Set("previous", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
@@ -1457,16 +1506,15 @@ func (c *TasksInsertCall) Do() (*Task, error) {
 // method id "tasks.tasks.list":
 
 type TasksListCall struct {
-	s            *Service
-	tasklistid   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	tasklistid string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: Returns all tasks in the specified task list.
 func (r *TasksService) List(tasklistid string) *TasksListCall {
-	c := &TasksListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasksListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	return c
 }
@@ -1475,7 +1523,7 @@ func (r *TasksService) List(tasklistid string) *TasksListCall {
 // for a task's completion date (as a RFC 3339 timestamp) to filter by.
 // The default is not to filter by completion date.
 func (c *TasksListCall) CompletedMax(completedMax string) *TasksListCall {
-	c.urlParams_.Set("completedMax", completedMax)
+	c.opt_["completedMax"] = completedMax
 	return c
 }
 
@@ -1483,7 +1531,7 @@ func (c *TasksListCall) CompletedMax(completedMax string) *TasksListCall {
 // for a task's completion date (as a RFC 3339 timestamp) to filter by.
 // The default is not to filter by completion date.
 func (c *TasksListCall) CompletedMin(completedMin string) *TasksListCall {
-	c.urlParams_.Set("completedMin", completedMin)
+	c.opt_["completedMin"] = completedMin
 	return c
 }
 
@@ -1491,7 +1539,7 @@ func (c *TasksListCall) CompletedMin(completedMin string) *TasksListCall {
 // due date (as a RFC 3339 timestamp) to filter by.  The default is not
 // to filter by due date.
 func (c *TasksListCall) DueMax(dueMax string) *TasksListCall {
-	c.urlParams_.Set("dueMax", dueMax)
+	c.opt_["dueMax"] = dueMax
 	return c
 }
 
@@ -1499,21 +1547,21 @@ func (c *TasksListCall) DueMax(dueMax string) *TasksListCall {
 // due date (as a RFC 3339 timestamp) to filter by.  The default is not
 // to filter by due date.
 func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
-	c.urlParams_.Set("dueMin", dueMin)
+	c.opt_["dueMin"] = dueMin
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of task lists returned on one page.  The default is 100.
 func (c *TasksListCall) MaxResults(maxResults int64) *TasksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Token specifying
 // the result page to return.
 func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -1521,7 +1569,7 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 // indicating whether completed tasks are returned in the result.  The
 // default is True.
 func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
-	c.urlParams_.Set("showCompleted", fmt.Sprintf("%v", showCompleted))
+	c.opt_["showCompleted"] = showCompleted
 	return c
 }
 
@@ -1529,7 +1577,7 @@ func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
 // indicating whether deleted tasks are returned in the result.  The
 // default is False.
 func (c *TasksListCall) ShowDeleted(showDeleted bool) *TasksListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.opt_["showDeleted"] = showDeleted
 	return c
 }
 
@@ -1537,7 +1585,7 @@ func (c *TasksListCall) ShowDeleted(showDeleted bool) *TasksListCall {
 // whether hidden tasks are returned in the result.  The default is
 // False.
 func (c *TasksListCall) ShowHidden(showHidden bool) *TasksListCall {
-	c.urlParams_.Set("showHidden", fmt.Sprintf("%v", showHidden))
+	c.opt_["showHidden"] = showHidden
 	return c
 }
 
@@ -1545,15 +1593,15 @@ func (c *TasksListCall) ShowHidden(showHidden bool) *TasksListCall {
 // a task's last modification time (as a RFC 3339 timestamp) to filter
 // by.  The default is not to filter by last modification time.
 func (c *TasksListCall) UpdatedMin(updatedMin string) *TasksListCall {
-	c.urlParams_.Set("updatedMin", updatedMin)
+	c.opt_["updatedMin"] = updatedMin
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1563,13 +1611,13 @@ func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TasksListCall) IfNoneMatch(entityTag string) *TasksListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasksListCall) Context(ctx context.Context) *TasksListCall {
 	c.ctx_ = ctx
 	return c
@@ -1577,16 +1625,50 @@ func (c *TasksListCall) Context(ctx context.Context) *TasksListCall {
 
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["completedMax"]; ok {
+		params.Set("completedMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["completedMin"]; ok {
+		params.Set("completedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dueMax"]; ok {
+		params.Set("dueMax", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["dueMin"]; ok {
+		params.Set("dueMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showCompleted"]; ok {
+		params.Set("showCompleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showDeleted"]; ok {
+		params.Set("showDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["showHidden"]; ok {
+		params.Set("showHidden", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1713,7 +1795,7 @@ type TasksMoveCall struct {
 	s          *Service
 	tasklistid string
 	taskid     string
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
@@ -1721,7 +1803,7 @@ type TasksMoveCall struct {
 // This can include putting it as a child task under a new parent and/or
 // move it to a different position among its sibling tasks.
 func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
-	c := &TasksMoveCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasksMoveCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	c.taskid = taskid
 	return c
@@ -1731,7 +1813,7 @@ func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 // identifier. If the task is moved to the top level, this parameter is
 // omitted.
 func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
-	c.urlParams_.Set("parent", parent)
+	c.opt_["parent"] = parent
 	return c
 }
 
@@ -1739,21 +1821,21 @@ func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
 // task identifier. If the task is moved to the first position among its
 // siblings, this parameter is omitted.
 func (c *TasksMoveCall) Previous(previous string) *TasksMoveCall {
-	c.urlParams_.Set("previous", previous)
+	c.opt_["previous"] = previous
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksMoveCall) Fields(s ...googleapi.Field) *TasksMoveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasksMoveCall) Context(ctx context.Context) *TasksMoveCall {
 	c.ctx_ = ctx
 	return c
@@ -1761,9 +1843,19 @@ func (c *TasksMoveCall) Context(ctx context.Context) *TasksMoveCall {
 
 func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["parent"]; ok {
+		params.Set("parent", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["previous"]; ok {
+		params.Set("previous", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}/move")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
@@ -1861,31 +1953,31 @@ type TasksPatchCall struct {
 	tasklistid string
 	taskid     string
 	task       *Task
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Patch: Updates the specified task. This method supports patch
 // semantics.
 func (r *TasksService) Patch(tasklistid string, taskid string, task *Task) *TasksPatchCall {
-	c := &TasksPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasksPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	c.taskid = taskid
 	c.task = task
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksPatchCall) Fields(s ...googleapi.Field) *TasksPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasksPatchCall) Context(ctx context.Context) *TasksPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1898,9 +1990,13 @@ func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,
@@ -1992,30 +2088,30 @@ type TasksUpdateCall struct {
 	tasklistid string
 	taskid     string
 	task       *Task
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Update: Updates the specified task.
 func (r *TasksService) Update(tasklistid string, taskid string, task *Task) *TasksUpdateCall {
-	c := &TasksUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TasksUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.tasklistid = tasklistid
 	c.taskid = taskid
 	c.task = task
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TasksUpdateCall) Fields(s ...googleapi.Field) *TasksUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TasksUpdateCall) Context(ctx context.Context) *TasksUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2028,9 +2124,13 @@ func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "lists/{tasklist}/tasks/{task}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"tasklist": c.tasklistid,

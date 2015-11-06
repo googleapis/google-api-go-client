@@ -768,27 +768,26 @@ func (s *RestResource) MarshalJSON() ([]byte, error) {
 // method id "discovery.apis.getRest":
 
 type ApisGetRestCall struct {
-	s            *Service
-	api          string
-	version      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	api     string
+	version string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // GetRest: Retrieve the description of a particular version of an api.
 func (r *ApisService) GetRest(api string, version string) *ApisGetRestCall {
-	c := &ApisGetRestCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ApisGetRestCall{s: r.s, opt_: make(map[string]interface{})}
 	c.api = api
 	c.version = version
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -798,13 +797,13 @@ func (c *ApisGetRestCall) Fields(s ...googleapi.Field) *ApisGetRestCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ApisGetRestCall) IfNoneMatch(entityTag string) *ApisGetRestCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ApisGetRestCall) Context(ctx context.Context) *ApisGetRestCall {
 	c.ctx_ = ctx
 	return c
@@ -812,17 +811,21 @@ func (c *ApisGetRestCall) Context(ctx context.Context) *ApisGetRestCall {
 
 func (c *ApisGetRestCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apis/{api}/{version}/rest")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"api":     c.api,
 		"version": c.version,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -898,37 +901,36 @@ func (c *ApisGetRestCall) Do() (*RestDescription, error) {
 // method id "discovery.apis.list":
 
 type ApisListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Retrieve the list of APIs supported at this endpoint.
 func (r *ApisService) List() *ApisListCall {
-	c := &ApisListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ApisListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // Name sets the optional parameter "name": Only include APIs with the
 // given name.
 func (c *ApisListCall) Name(name string) *ApisListCall {
-	c.urlParams_.Set("name", name)
+	c.opt_["name"] = name
 	return c
 }
 
 // Preferred sets the optional parameter "preferred": Return only the
 // preferred version of an API.
 func (c *ApisListCall) Preferred(preferred bool) *ApisListCall {
-	c.urlParams_.Set("preferred", fmt.Sprintf("%v", preferred))
+	c.opt_["preferred"] = preferred
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -938,13 +940,13 @@ func (c *ApisListCall) Fields(s ...googleapi.Field) *ApisListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ApisListCall) IfNoneMatch(entityTag string) *ApisListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ApisListCall) Context(ctx context.Context) *ApisListCall {
 	c.ctx_ = ctx
 	return c
@@ -952,14 +954,24 @@ func (c *ApisListCall) Context(ctx context.Context) *ApisListCall {
 
 func (c *ApisListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["name"]; ok {
+		params.Set("name", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["preferred"]; ok {
+		params.Set("preferred", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apis")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

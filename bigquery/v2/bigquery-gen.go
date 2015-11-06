@@ -2035,11 +2035,11 @@ func (s *ViewDefinition) MarshalJSON() ([]byte, error) {
 // method id "bigquery.datasets.delete":
 
 type DatasetsDeleteCall struct {
-	s          *Service
-	projectId  string
-	datasetId  string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the dataset specified by the datasetId value. Before
@@ -2047,7 +2047,7 @@ type DatasetsDeleteCall struct {
 // manually or by specifying deleteContents. Immediately after deletion,
 // you can create another dataset with the same name.
 func (r *DatasetsService) Delete(projectId string, datasetId string) *DatasetsDeleteCall {
-	c := &DatasetsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	return c
@@ -2057,21 +2057,21 @@ func (r *DatasetsService) Delete(projectId string, datasetId string) *DatasetsDe
 // delete all the tables in the dataset. If False and the dataset
 // contains tables, the request will fail. Default is False
 func (c *DatasetsDeleteCall) DeleteContents(deleteContents bool) *DatasetsDeleteCall {
-	c.urlParams_.Set("deleteContents", fmt.Sprintf("%v", deleteContents))
+	c.opt_["deleteContents"] = deleteContents
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsDeleteCall) Fields(s ...googleapi.Field) *DatasetsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsDeleteCall) Context(ctx context.Context) *DatasetsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -2079,9 +2079,16 @@ func (c *DatasetsDeleteCall) Context(ctx context.Context) *DatasetsDeleteCall {
 
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["deleteContents"]; ok {
+		params.Set("deleteContents", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -2144,27 +2151,26 @@ func (c *DatasetsDeleteCall) Do() error {
 // method id "bigquery.datasets.get":
 
 type DatasetsGetCall struct {
-	s            *Service
-	projectId    string
-	datasetId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns the dataset specified by datasetID.
 func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCall {
-	c := &DatasetsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2174,13 +2180,13 @@ func (c *DatasetsGetCall) Fields(s ...googleapi.Field) *DatasetsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DatasetsGetCall) IfNoneMatch(entityTag string) *DatasetsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsGetCall) Context(ctx context.Context) *DatasetsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2188,17 +2194,21 @@ func (c *DatasetsGetCall) Context(ctx context.Context) *DatasetsGetCall {
 
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2279,32 +2289,32 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 // method id "bigquery.datasets.insert":
 
 type DatasetsInsertCall struct {
-	s          *Service
-	projectId  string
-	dataset    *Dataset
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	dataset   *Dataset
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Insert: Creates a new empty dataset.
 func (r *DatasetsService) Insert(projectId string, dataset *Dataset) *DatasetsInsertCall {
-	c := &DatasetsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.dataset = dataset
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsInsertCall) Fields(s ...googleapi.Field) *DatasetsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsInsertCall) Context(ctx context.Context) *DatasetsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -2317,9 +2327,13 @@ func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -2400,17 +2414,16 @@ func (c *DatasetsInsertCall) Do() (*Dataset, error) {
 // method id "bigquery.datasets.list":
 
 type DatasetsListCall struct {
-	s            *Service
-	projectId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	projectId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all datasets in the specified project to which you have
 // been granted the READER dataset role.
 func (r *DatasetsService) List(projectId string) *DatasetsListCall {
-	c := &DatasetsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	return c
 }
@@ -2418,29 +2431,29 @@ func (r *DatasetsService) List(projectId string) *DatasetsListCall {
 // All sets the optional parameter "all": Whether to list all datasets,
 // including hidden ones
 func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
-	c.urlParams_.Set("all", fmt.Sprintf("%v", all))
+	c.opt_["all"] = all
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results to return
 func (c *DatasetsListCall) MaxResults(maxResults int64) *DatasetsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
 // returned by a previous call, to request the next page of results
 func (c *DatasetsListCall) PageToken(pageToken string) *DatasetsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2450,13 +2463,13 @@ func (c *DatasetsListCall) Fields(s ...googleapi.Field) *DatasetsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DatasetsListCall) IfNoneMatch(entityTag string) *DatasetsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsListCall) Context(ctx context.Context) *DatasetsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2464,16 +2477,29 @@ func (c *DatasetsListCall) Context(ctx context.Context) *DatasetsListCall {
 
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["all"]; ok {
+		params.Set("all", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2563,12 +2589,12 @@ func (c *DatasetsListCall) Do() (*DatasetList, error) {
 // method id "bigquery.datasets.patch":
 
 type DatasetsPatchCall struct {
-	s          *Service
-	projectId  string
-	datasetId  string
-	dataset    *Dataset
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	dataset   *Dataset
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates information in an existing dataset. The update method
@@ -2576,24 +2602,24 @@ type DatasetsPatchCall struct {
 // replaces fields that are provided in the submitted dataset resource.
 // This method supports patch semantics.
 func (r *DatasetsService) Patch(projectId string, datasetId string, dataset *Dataset) *DatasetsPatchCall {
-	c := &DatasetsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.dataset = dataset
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsPatchCall) Fields(s ...googleapi.Field) *DatasetsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsPatchCall) Context(ctx context.Context) *DatasetsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -2606,9 +2632,13 @@ func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -2697,36 +2727,36 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 // method id "bigquery.datasets.update":
 
 type DatasetsUpdateCall struct {
-	s          *Service
-	projectId  string
-	datasetId  string
-	dataset    *Dataset
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	dataset   *Dataset
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates information in an existing dataset. The update method
 // replaces the entire dataset resource, whereas the patch method only
 // replaces fields that are provided in the submitted dataset resource.
 func (r *DatasetsService) Update(projectId string, datasetId string, dataset *Dataset) *DatasetsUpdateCall {
-	c := &DatasetsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &DatasetsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.dataset = dataset
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DatasetsUpdateCall) Fields(s ...googleapi.Field) *DatasetsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DatasetsUpdateCall) Context(ctx context.Context) *DatasetsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -2739,9 +2769,13 @@ func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -2830,11 +2864,11 @@ func (c *DatasetsUpdateCall) Do() (*Dataset, error) {
 // method id "bigquery.jobs.cancel":
 
 type JobsCancelCall struct {
-	s          *Service
-	projectId  string
-	jobId      string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	jobId     string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Cancel: Requests that a job be cancelled. This call will return
@@ -2842,23 +2876,23 @@ type JobsCancelCall struct {
 // see if the cancel completed successfully. Cancelled jobs may still
 // incur costs.
 func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
-	c := &JobsCancelCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &JobsCancelCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsCancelCall) Fields(s ...googleapi.Field) *JobsCancelCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *JobsCancelCall) Context(ctx context.Context) *JobsCancelCall {
 	c.ctx_ = ctx
 	return c
@@ -2866,9 +2900,13 @@ func (c *JobsCancelCall) Context(ctx context.Context) *JobsCancelCall {
 
 func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "project/{projectId}/jobs/{jobId}/cancel")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -2953,29 +2991,28 @@ func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
 // method id "bigquery.jobs.get":
 
 type JobsGetCall struct {
-	s            *Service
-	projectId    string
-	jobId        string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	projectId string
+	jobId     string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Returns information about a specific job. Job information is
 // available for a six month period after creation. Requires that you're
 // the person who ran the job, or have the Is Owner project role.
 func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
-	c := &JobsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &JobsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2985,13 +3022,13 @@ func (c *JobsGetCall) Fields(s ...googleapi.Field) *JobsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsGetCall) IfNoneMatch(entityTag string) *JobsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *JobsGetCall) Context(ctx context.Context) *JobsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2999,17 +3036,21 @@ func (c *JobsGetCall) Context(ctx context.Context) *JobsGetCall {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs/{jobId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3090,17 +3131,16 @@ func (c *JobsGetCall) Do() (*Job, error) {
 // method id "bigquery.jobs.getQueryResults":
 
 type JobsGetQueryResultsCall struct {
-	s            *Service
-	projectId    string
-	jobId        string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	projectId string
+	jobId     string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // GetQueryResults: Retrieves the results of a query job.
 func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQueryResultsCall {
-	c := &JobsGetQueryResultsCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &JobsGetQueryResultsCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.jobId = jobId
 	return c
@@ -3109,21 +3149,21 @@ func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQu
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to read
 func (c *JobsGetQueryResultsCall) MaxResults(maxResults int64) *JobsGetQueryResultsCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
 // returned by a previous call, to request the next page of results
 func (c *JobsGetQueryResultsCall) PageToken(pageToken string) *JobsGetQueryResultsCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Zero-based index
 // of the starting row
 func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryResultsCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
@@ -3132,15 +3172,15 @@ func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryRes
 // is 10 seconds. If the timeout passes before the job completes, the
 // 'jobComplete' field in the response will be false
 func (c *JobsGetQueryResultsCall) TimeoutMs(timeoutMs int64) *JobsGetQueryResultsCall {
-	c.urlParams_.Set("timeoutMs", fmt.Sprintf("%v", timeoutMs))
+	c.opt_["timeoutMs"] = timeoutMs
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsGetQueryResultsCall) Fields(s ...googleapi.Field) *JobsGetQueryResultsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3150,13 +3190,13 @@ func (c *JobsGetQueryResultsCall) Fields(s ...googleapi.Field) *JobsGetQueryResu
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsGetQueryResultsCall) IfNoneMatch(entityTag string) *JobsGetQueryResultsCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *JobsGetQueryResultsCall) Context(ctx context.Context) *JobsGetQueryResultsCall {
 	c.ctx_ = ctx
 	return c
@@ -3164,17 +3204,33 @@ func (c *JobsGetQueryResultsCall) Context(ctx context.Context) *JobsGetQueryResu
 
 func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timeoutMs"]; ok {
+		params.Set("timeoutMs", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/queries/{jobId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"jobId":     c.jobId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3278,41 +3334,40 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 // method id "bigquery.jobs.insert":
 
 type JobsInsertCall struct {
-	s                *Service
-	projectId        string
-	job              *Job
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	projectId  string
+	job        *Job
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Starts a new asynchronous job. Requires the Can View project
 // role.
 func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
-	c := &JobsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &JobsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.job = job
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *JobsInsertCall) Media(r io.Reader) *JobsInsertCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *JobsInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *JobsInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -3321,28 +3376,27 @@ func (c *JobsInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *JobsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *JobsInsertCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsInsertCall) Fields(s ...googleapi.Field) *JobsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *JobsInsertCall) Context(ctx context.Context) *JobsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -3355,13 +3409,17 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -3414,6 +3472,12 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -3423,7 +3487,7 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -3493,11 +3557,10 @@ func (c *JobsInsertCall) Do() (*Job, error) {
 // method id "bigquery.jobs.list":
 
 type JobsListCall struct {
-	s            *Service
-	projectId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	projectId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all jobs that you started in the specified project. Job
@@ -3506,7 +3569,7 @@ type JobsListCall struct {
 // time. Requires the Can View project role, or the Is Owner project
 // role if you set the allUsers property.
 func (r *JobsService) List(projectId string) *JobsListCall {
-	c := &JobsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &JobsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	return c
 }
@@ -3514,21 +3577,21 @@ func (r *JobsService) List(projectId string) *JobsListCall {
 // AllUsers sets the optional parameter "allUsers": Whether to display
 // jobs owned by all users in the project. Default false
 func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
-	c.urlParams_.Set("allUsers", fmt.Sprintf("%v", allUsers))
+	c.opt_["allUsers"] = allUsers
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
 // returned by a previous call, to request the next page of results
 func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -3539,7 +3602,7 @@ func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 //   "full" - Includes all job data
 //   "minimal" - Does not include the job configuration
 func (c *JobsListCall) Projection(projection string) *JobsListCall {
-	c.urlParams_.Set("projection", projection)
+	c.opt_["projection"] = projection
 	return c
 }
 
@@ -3550,16 +3613,16 @@ func (c *JobsListCall) Projection(projection string) *JobsListCall {
 //   "done" - Finished jobs
 //   "pending" - Pending jobs
 //   "running" - Running jobs
-func (c *JobsListCall) StateFilter(stateFilter []string) *JobsListCall {
-	c.urlParams_.SetMulti("stateFilter", append([]string{}, stateFilter...))
+func (c *JobsListCall) StateFilter(stateFilter string) *JobsListCall {
+	c.opt_["stateFilter"] = stateFilter
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3569,13 +3632,13 @@ func (c *JobsListCall) Fields(s ...googleapi.Field) *JobsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *JobsListCall) IfNoneMatch(entityTag string) *JobsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *JobsListCall) Context(ctx context.Context) *JobsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3583,16 +3646,35 @@ func (c *JobsListCall) Context(ctx context.Context) *JobsListCall {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["allUsers"]; ok {
+		params.Set("allUsers", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["stateFilter"]; ok {
+		params.Set("stateFilter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3714,30 +3796,30 @@ type JobsQueryCall struct {
 	s            *Service
 	projectId    string
 	queryrequest *QueryRequest
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Query: Runs a BigQuery SQL query synchronously and returns query
 // results if the query completes within a specified timeout.
 func (r *JobsService) Query(projectId string, queryrequest *QueryRequest) *JobsQueryCall {
-	c := &JobsQueryCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &JobsQueryCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.queryrequest = queryrequest
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *JobsQueryCall) Fields(s ...googleapi.Field) *JobsQueryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *JobsQueryCall) Context(ctx context.Context) *JobsQueryCall {
 	c.ctx_ = ctx
 	return c
@@ -3750,9 +3832,13 @@ func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/queries")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -3834,38 +3920,37 @@ func (c *JobsQueryCall) Do() (*QueryResponse, error) {
 // method id "bigquery.projects.list":
 
 type ProjectsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists all projects to which you have been granted any project
 // role.
 func (r *ProjectsService) List() *ProjectsListCall {
-	c := &ProjectsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ProjectsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *ProjectsListCall) MaxResults(maxResults int64) *ProjectsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
 // returned by a previous call, to request the next page of results
 func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3875,13 +3960,13 @@ func (c *ProjectsListCall) Fields(s ...googleapi.Field) *ProjectsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ProjectsListCall) IfNoneMatch(entityTag string) *ProjectsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ProjectsListCall) Context(ctx context.Context) *ProjectsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3889,14 +3974,24 @@ func (c *ProjectsListCall) Context(ctx context.Context) *ProjectsListCall {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3977,14 +4072,14 @@ type TabledataInsertAllCall struct {
 	datasetId                 string
 	tableId                   string
 	tabledatainsertallrequest *TableDataInsertAllRequest
-	urlParams_                internal.URLParams
+	opt_                      map[string]interface{}
 	ctx_                      context.Context
 }
 
 // InsertAll: Streams data into BigQuery one record at a time without
 // needing to run a load job. Requires the WRITER dataset role.
 func (r *TabledataService) InsertAll(projectId string, datasetId string, tableId string, tabledatainsertallrequest *TableDataInsertAllRequest) *TabledataInsertAllCall {
-	c := &TabledataInsertAllCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TabledataInsertAllCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.tableId = tableId
@@ -3992,17 +4087,17 @@ func (r *TabledataService) InsertAll(projectId string, datasetId string, tableId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TabledataInsertAllCall) Fields(s ...googleapi.Field) *TabledataInsertAllCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TabledataInsertAllCall) Context(ctx context.Context) *TabledataInsertAllCall {
 	c.ctx_ = ctx
 	return c
@@ -4015,9 +4110,13 @@ func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -4115,19 +4214,18 @@ func (c *TabledataInsertAllCall) Do() (*TableDataInsertAllResponse, error) {
 // method id "bigquery.tabledata.list":
 
 type TabledataListCall struct {
-	s            *Service
-	projectId    string
-	datasetId    string
-	tableId      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	tableId   string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Retrieves table data from a specified set of rows. Requires the
 // READER dataset role.
 func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
-	c := &TabledataListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TabledataListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.tableId = tableId
@@ -4137,29 +4235,29 @@ func (r *TabledataService) List(projectId string, datasetId string, tableId stri
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *TabledataListCall) MaxResults(maxResults int64) *TabledataListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
 // returned by a previous call, identifying the result set
 func (c *TabledataListCall) PageToken(pageToken string) *TabledataListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Zero-based index
 // of the starting row to read
 func (c *TabledataListCall) StartIndex(startIndex uint64) *TabledataListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.opt_["startIndex"] = startIndex
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TabledataListCall) Fields(s ...googleapi.Field) *TabledataListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4169,13 +4267,13 @@ func (c *TabledataListCall) Fields(s ...googleapi.Field) *TabledataListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TabledataListCall) IfNoneMatch(entityTag string) *TabledataListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TabledataListCall) Context(ctx context.Context) *TabledataListCall {
 	c.ctx_ = ctx
 	return c
@@ -4183,9 +4281,22 @@ func (c *TabledataListCall) Context(ctx context.Context) *TabledataListCall {
 
 func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startIndex"]; ok {
+		params.Set("startIndex", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -4193,8 +4304,8 @@ func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":   c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4299,35 +4410,35 @@ func (c *TabledataListCall) Do() (*TableDataList, error) {
 // method id "bigquery.tables.delete":
 
 type TablesDeleteCall struct {
-	s          *Service
-	projectId  string
-	datasetId  string
-	tableId    string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	tableId   string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the table specified by tableId from the dataset. If
 // the table contains data, all the data will be deleted.
 func (r *TablesService) Delete(projectId string, datasetId string, tableId string) *TablesDeleteCall {
-	c := &TablesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TablesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.tableId = tableId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesDeleteCall) Fields(s ...googleapi.Field) *TablesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TablesDeleteCall) Context(ctx context.Context) *TablesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -4335,9 +4446,13 @@ func (c *TablesDeleteCall) Context(ctx context.Context) *TablesDeleteCall {
 
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -4403,31 +4518,30 @@ func (c *TablesDeleteCall) Do() error {
 // method id "bigquery.tables.get":
 
 type TablesGetCall struct {
-	s            *Service
-	projectId    string
-	datasetId    string
-	tableId      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	tableId   string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets the specified table resource by table ID. This method does
 // not return the data in the table, it only returns the table resource,
 // which describes the structure of this table.
 func (r *TablesService) Get(projectId string, datasetId string, tableId string) *TablesGetCall {
-	c := &TablesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TablesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.tableId = tableId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4437,13 +4551,13 @@ func (c *TablesGetCall) Fields(s ...googleapi.Field) *TablesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TablesGetCall) IfNoneMatch(entityTag string) *TablesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TablesGetCall) Context(ctx context.Context) *TablesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -4451,9 +4565,13 @@ func (c *TablesGetCall) Context(ctx context.Context) *TablesGetCall {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -4461,8 +4579,8 @@ func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":   c.tableId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4550,34 +4668,34 @@ func (c *TablesGetCall) Do() (*Table, error) {
 // method id "bigquery.tables.insert":
 
 type TablesInsertCall struct {
-	s          *Service
-	projectId  string
-	datasetId  string
-	table      *Table
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	table     *Table
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Insert: Creates a new, empty table in the dataset.
 func (r *TablesService) Insert(projectId string, datasetId string, table *Table) *TablesInsertCall {
-	c := &TablesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TablesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.table = table
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesInsertCall) Fields(s ...googleapi.Field) *TablesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TablesInsertCall) Context(ctx context.Context) *TablesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -4590,9 +4708,13 @@ func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -4681,18 +4803,17 @@ func (c *TablesInsertCall) Do() (*Table, error) {
 // method id "bigquery.tables.list":
 
 type TablesListCall struct {
-	s            *Service
-	projectId    string
-	datasetId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all tables in the specified dataset. Requires the READER
 // dataset role.
 func (r *TablesService) List(projectId string, datasetId string) *TablesListCall {
-	c := &TablesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TablesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	return c
@@ -4701,22 +4822,22 @@ func (r *TablesService) List(projectId string, datasetId string) *TablesListCall
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *TablesListCall) MaxResults(maxResults int64) *TablesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
 // returned by a previous call, to request the next page of results
 func (c *TablesListCall) PageToken(pageToken string) *TablesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4726,13 +4847,13 @@ func (c *TablesListCall) Fields(s ...googleapi.Field) *TablesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TablesListCall) IfNoneMatch(entityTag string) *TablesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TablesListCall) Context(ctx context.Context) *TablesListCall {
 	c.ctx_ = ctx
 	return c
@@ -4740,17 +4861,27 @@ func (c *TablesListCall) Context(ctx context.Context) *TablesListCall {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 		"datasetId": c.datasetId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4842,13 +4973,13 @@ func (c *TablesListCall) Do() (*TableList, error) {
 // method id "bigquery.tables.patch":
 
 type TablesPatchCall struct {
-	s          *Service
-	projectId  string
-	datasetId  string
-	tableId    string
-	table      *Table
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	tableId   string
+	table     *Table
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates information in an existing table. The update method
@@ -4856,7 +4987,7 @@ type TablesPatchCall struct {
 // replaces fields that are provided in the submitted table resource.
 // This method supports patch semantics.
 func (r *TablesService) Patch(projectId string, datasetId string, tableId string, table *Table) *TablesPatchCall {
-	c := &TablesPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TablesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.tableId = tableId
@@ -4864,17 +4995,17 @@ func (r *TablesService) Patch(projectId string, datasetId string, tableId string
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesPatchCall) Fields(s ...googleapi.Field) *TablesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TablesPatchCall) Context(ctx context.Context) *TablesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -4887,9 +5018,13 @@ func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
@@ -4986,20 +5121,20 @@ func (c *TablesPatchCall) Do() (*Table, error) {
 // method id "bigquery.tables.update":
 
 type TablesUpdateCall struct {
-	s          *Service
-	projectId  string
-	datasetId  string
-	tableId    string
-	table      *Table
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	projectId string
+	datasetId string
+	tableId   string
+	table     *Table
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates information in an existing table. The update method
 // replaces the entire table resource, whereas the patch method only
 // replaces fields that are provided in the submitted table resource.
 func (r *TablesService) Update(projectId string, datasetId string, tableId string, table *Table) *TablesUpdateCall {
-	c := &TablesUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &TablesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.tableId = tableId
@@ -5007,17 +5142,17 @@ func (r *TablesService) Update(projectId string, datasetId string, tableId strin
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TablesUpdateCall) Fields(s ...googleapi.Field) *TablesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TablesUpdateCall) Context(ctx context.Context) *TablesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -5030,9 +5165,13 @@ func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,

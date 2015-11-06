@@ -2126,25 +2126,24 @@ func (s *PlusAclentryResource) MarshalJSON() ([]byte, error) {
 // method id "plus.activities.get":
 
 type ActivitiesGetCall struct {
-	s            *Service
-	activityId   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	activityId string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Get an activity.
 func (r *ActivitiesService) Get(activityId string) *ActivitiesGetCall {
-	c := &ActivitiesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ActivitiesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.activityId = activityId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ActivitiesGetCall) Fields(s ...googleapi.Field) *ActivitiesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2154,13 +2153,13 @@ func (c *ActivitiesGetCall) Fields(s ...googleapi.Field) *ActivitiesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ActivitiesGetCall) IfNoneMatch(entityTag string) *ActivitiesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ActivitiesGetCall) Context(ctx context.Context) *ActivitiesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2168,16 +2167,20 @@ func (c *ActivitiesGetCall) Context(ctx context.Context) *ActivitiesGetCall {
 
 func (c *ActivitiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"activityId": c.activityId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2250,18 +2253,17 @@ func (c *ActivitiesGetCall) Do() (*Activity, error) {
 // method id "plus.activities.list":
 
 type ActivitiesListCall struct {
-	s            *Service
-	userId       string
-	collection   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	userId     string
+	collection string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all of the activities in the specified collection for a
 // particular user.
 func (r *ActivitiesService) List(userId string, collection string) *ActivitiesListCall {
-	c := &ActivitiesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ActivitiesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.collection = collection
 	return c
@@ -2272,7 +2274,7 @@ func (r *ActivitiesService) List(userId string, collection string) *ActivitiesLi
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -2281,15 +2283,15 @@ func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 // next page of results, set this parameter to the value of
 // "nextPageToken" from the previous response.
 func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2299,13 +2301,13 @@ func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ActivitiesListCall) IfNoneMatch(entityTag string) *ActivitiesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ActivitiesListCall) Context(ctx context.Context) *ActivitiesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2313,17 +2315,27 @@ func (c *ActivitiesListCall) Context(ctx context.Context) *ActivitiesListCall {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/activities/{collection}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":     c.userId,
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2423,16 +2435,16 @@ func (c *ActivitiesListCall) Do() (*ActivityFeed, error) {
 // method id "plus.activities.search":
 
 type ActivitiesSearchCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s     *Service
+	query string
+	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Search: Search public activities.
 func (r *ActivitiesService) Search(query string) *ActivitiesSearchCall {
-	c := &ActivitiesSearchCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("query", query)
+	c := &ActivitiesSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.query = query
 	return c
 }
 
@@ -2440,7 +2452,7 @@ func (r *ActivitiesService) Search(query string) *ActivitiesSearchCall {
 // preferred language to search with. See search language codes for
 // available values.
 func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
-	c.urlParams_.Set("language", language)
+	c.opt_["language"] = language
 	return c
 }
 
@@ -2449,7 +2461,7 @@ func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -2462,7 +2474,7 @@ func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCal
 //   "recent" (default) - Sort activities by published date, most recent
 // first.
 func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
-	c.urlParams_.Set("orderBy", orderBy)
+	c.opt_["orderBy"] = orderBy
 	return c
 }
 
@@ -2472,15 +2484,15 @@ func (c *ActivitiesSearchCall) OrderBy(orderBy string) *ActivitiesSearchCall {
 // "nextPageToken" from the previous response. This token can be of any
 // length.
 func (c *ActivitiesSearchCall) PageToken(pageToken string) *ActivitiesSearchCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ActivitiesSearchCall) Fields(s ...googleapi.Field) *ActivitiesSearchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2490,13 +2502,13 @@ func (c *ActivitiesSearchCall) Fields(s ...googleapi.Field) *ActivitiesSearchCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ActivitiesSearchCall) IfNoneMatch(entityTag string) *ActivitiesSearchCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ActivitiesSearchCall) Context(ctx context.Context) *ActivitiesSearchCall {
 	c.ctx_ = ctx
 	return c
@@ -2504,14 +2516,31 @@ func (c *ActivitiesSearchCall) Context(ctx context.Context) *ActivitiesSearchCal
 
 func (c *ActivitiesSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("query", fmt.Sprintf("%v", c.query))
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2618,25 +2647,24 @@ func (c *ActivitiesSearchCall) Do() (*ActivityFeed, error) {
 // method id "plus.comments.get":
 
 type CommentsGetCall struct {
-	s            *Service
-	commentId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Get a comment.
 func (r *CommentsService) Get(commentId string) *CommentsGetCall {
-	c := &CommentsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.commentId = commentId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2646,13 +2674,13 @@ func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CommentsGetCall) IfNoneMatch(entityTag string) *CommentsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2660,16 +2688,20 @@ func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2742,16 +2774,15 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 // method id "plus.comments.list":
 
 type CommentsListCall struct {
-	s            *Service
-	activityId   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	activityId string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all of the comments for an activity.
 func (r *CommentsService) List(activityId string) *CommentsListCall {
-	c := &CommentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.activityId = activityId
 	return c
 }
@@ -2761,7 +2792,7 @@ func (r *CommentsService) List(activityId string) *CommentsListCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -2770,7 +2801,7 @@ func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
 // next page of results, set this parameter to the value of
 // "nextPageToken" from the previous response.
 func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -2781,15 +2812,15 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 //   "ascending" (default) - Sort oldest comments first.
 //   "descending" - Sort newest comments first.
 func (c *CommentsListCall) SortOrder(sortOrder string) *CommentsListCall {
-	c.urlParams_.Set("sortOrder", sortOrder)
+	c.opt_["sortOrder"] = sortOrder
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2799,13 +2830,13 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CommentsListCall) IfNoneMatch(entityTag string) *CommentsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2813,16 +2844,29 @@ func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sortOrder"]; ok {
+		params.Set("sortOrder", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"activityId": c.activityId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2927,14 +2971,14 @@ type MomentsInsertCall struct {
 	userId     string
 	collection string
 	moment     *Moment
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Insert: Record a moment representing a user's action such as making a
 // purchase or commenting on a blog.
 func (r *MomentsService) Insert(userId string, collection string, moment *Moment) *MomentsInsertCall {
-	c := &MomentsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MomentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.collection = collection
 	c.moment = moment
@@ -2944,21 +2988,21 @@ func (r *MomentsService) Insert(userId string, collection string, moment *Moment
 // Debug sets the optional parameter "debug": Return the moment as
 // written. Should be used only for debugging.
 func (c *MomentsInsertCall) Debug(debug bool) *MomentsInsertCall {
-	c.urlParams_.Set("debug", fmt.Sprintf("%v", debug))
+	c.opt_["debug"] = debug
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MomentsInsertCall) Fields(s ...googleapi.Field) *MomentsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MomentsInsertCall) Context(ctx context.Context) *MomentsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -2971,9 +3015,16 @@ func (c *MomentsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["debug"]; ok {
+		params.Set("debug", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/moments/{collection}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":     c.userId,
@@ -3073,17 +3124,16 @@ func (c *MomentsInsertCall) Do() (*Moment, error) {
 // method id "plus.moments.list":
 
 type MomentsListCall struct {
-	s            *Service
-	userId       string
-	collection   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	userId     string
+	collection string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all of the moments for a particular user.
 func (r *MomentsService) List(userId string, collection string) *MomentsListCall {
-	c := &MomentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &MomentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.collection = collection
 	return c
@@ -3094,7 +3144,7 @@ func (r *MomentsService) List(userId string, collection string) *MomentsListCall
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *MomentsListCall) MaxResults(maxResults int64) *MomentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -3103,29 +3153,29 @@ func (c *MomentsListCall) MaxResults(maxResults int64) *MomentsListCall {
 // next page of results, set this parameter to the value of
 // "nextPageToken" from the previous response.
 func (c *MomentsListCall) PageToken(pageToken string) *MomentsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // TargetUrl sets the optional parameter "targetUrl": Only moments
 // containing this targetUrl will be returned.
 func (c *MomentsListCall) TargetUrl(targetUrl string) *MomentsListCall {
-	c.urlParams_.Set("targetUrl", targetUrl)
+	c.opt_["targetUrl"] = targetUrl
 	return c
 }
 
 // Type sets the optional parameter "type": Only moments of this type
 // will be returned.
 func (c *MomentsListCall) Type(type_ string) *MomentsListCall {
-	c.urlParams_.Set("type", type_)
+	c.opt_["type"] = type_
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *MomentsListCall) Fields(s ...googleapi.Field) *MomentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3135,13 +3185,13 @@ func (c *MomentsListCall) Fields(s ...googleapi.Field) *MomentsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *MomentsListCall) IfNoneMatch(entityTag string) *MomentsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *MomentsListCall) Context(ctx context.Context) *MomentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -3149,17 +3199,33 @@ func (c *MomentsListCall) Context(ctx context.Context) *MomentsListCall {
 
 func (c *MomentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["targetUrl"]; ok {
+		params.Set("targetUrl", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["type"]; ok {
+		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/moments/{collection}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":     c.userId,
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3269,27 +3335,26 @@ func (c *MomentsListCall) Do() (*MomentsFeed, error) {
 // method id "plus.people.get":
 
 type PeopleGetCall struct {
-	s            *Service
-	userId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	userId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Get a person's profile. If your app uses scope
 // https://www.googleapis.com/auth/plus.login, this method is guaranteed
 // to return ageRange and language.
 func (r *PeopleService) Get(userId string) *PeopleGetCall {
-	c := &PeopleGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PeopleGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PeopleGetCall) Fields(s ...googleapi.Field) *PeopleGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3299,13 +3364,13 @@ func (c *PeopleGetCall) Fields(s ...googleapi.Field) *PeopleGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PeopleGetCall) IfNoneMatch(entityTag string) *PeopleGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PeopleGetCall) Context(ctx context.Context) *PeopleGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3313,16 +3378,20 @@ func (c *PeopleGetCall) Context(ctx context.Context) *PeopleGetCall {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3397,17 +3466,16 @@ func (c *PeopleGetCall) Do() (*Person, error) {
 // method id "plus.people.list":
 
 type PeopleListCall struct {
-	s            *Service
-	userId       string
-	collection   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	userId     string
+	collection string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // List: List all of the people in the specified collection.
 func (r *PeopleService) List(userId string, collection string) *PeopleListCall {
-	c := &PeopleListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PeopleListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.userId = userId
 	c.collection = collection
 	return c
@@ -3418,7 +3486,7 @@ func (r *PeopleService) List(userId string, collection string) *PeopleListCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleListCall) MaxResults(maxResults int64) *PeopleListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -3429,7 +3497,7 @@ func (c *PeopleListCall) MaxResults(maxResults int64) *PeopleListCall {
 //   "alphabetical" - Order the people by their display name.
 //   "best" - Order people based on the relevence to the viewer.
 func (c *PeopleListCall) OrderBy(orderBy string) *PeopleListCall {
-	c.urlParams_.Set("orderBy", orderBy)
+	c.opt_["orderBy"] = orderBy
 	return c
 }
 
@@ -3438,15 +3506,15 @@ func (c *PeopleListCall) OrderBy(orderBy string) *PeopleListCall {
 // next page of results, set this parameter to the value of
 // "nextPageToken" from the previous response.
 func (c *PeopleListCall) PageToken(pageToken string) *PeopleListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PeopleListCall) Fields(s ...googleapi.Field) *PeopleListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3456,13 +3524,13 @@ func (c *PeopleListCall) Fields(s ...googleapi.Field) *PeopleListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PeopleListCall) IfNoneMatch(entityTag string) *PeopleListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PeopleListCall) Context(ctx context.Context) *PeopleListCall {
 	c.ctx_ = ctx
 	return c
@@ -3470,17 +3538,30 @@ func (c *PeopleListCall) Context(ctx context.Context) *PeopleListCall {
 
 func (c *PeopleListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/people/{collection}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId":     c.userId,
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3595,18 +3676,17 @@ func (c *PeopleListCall) Do() (*PeopleFeed, error) {
 // method id "plus.people.listByActivity":
 
 type PeopleListByActivityCall struct {
-	s            *Service
-	activityId   string
-	collection   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	activityId string
+	collection string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // ListByActivity: List all of the people in the specified collection
 // for a particular activity.
 func (r *PeopleService) ListByActivity(activityId string, collection string) *PeopleListByActivityCall {
-	c := &PeopleListByActivityCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PeopleListByActivityCall{s: r.s, opt_: make(map[string]interface{})}
 	c.activityId = activityId
 	c.collection = collection
 	return c
@@ -3617,7 +3697,7 @@ func (r *PeopleService) ListByActivity(activityId string, collection string) *Pe
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleListByActivityCall) MaxResults(maxResults int64) *PeopleListByActivityCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -3626,15 +3706,15 @@ func (c *PeopleListByActivityCall) MaxResults(maxResults int64) *PeopleListByAct
 // next page of results, set this parameter to the value of
 // "nextPageToken" from the previous response.
 func (c *PeopleListByActivityCall) PageToken(pageToken string) *PeopleListByActivityCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PeopleListByActivityCall) Fields(s ...googleapi.Field) *PeopleListByActivityCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3644,13 +3724,13 @@ func (c *PeopleListByActivityCall) Fields(s ...googleapi.Field) *PeopleListByAct
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PeopleListByActivityCall) IfNoneMatch(entityTag string) *PeopleListByActivityCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PeopleListByActivityCall) Context(ctx context.Context) *PeopleListByActivityCall {
 	c.ctx_ = ctx
 	return c
@@ -3658,17 +3738,27 @@ func (c *PeopleListByActivityCall) Context(ctx context.Context) *PeopleListByAct
 
 func (c *PeopleListByActivityCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/people/{collection}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"activityId": c.activityId,
 		"collection": c.collection,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3770,16 +3860,16 @@ func (c *PeopleListByActivityCall) Do() (*PeopleFeed, error) {
 // method id "plus.people.search":
 
 type PeopleSearchCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s     *Service
+	query string
+	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Search: Search all public profiles.
 func (r *PeopleService) Search(query string) *PeopleSearchCall {
-	c := &PeopleSearchCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.Set("query", query)
+	c := &PeopleSearchCall{s: r.s, opt_: make(map[string]interface{})}
+	c.query = query
 	return c
 }
 
@@ -3787,7 +3877,7 @@ func (r *PeopleService) Search(query string) *PeopleSearchCall {
 // preferred language to search with. See search language codes for
 // available values.
 func (c *PeopleSearchCall) Language(language string) *PeopleSearchCall {
-	c.urlParams_.Set("language", language)
+	c.opt_["language"] = language
 	return c
 }
 
@@ -3796,7 +3886,7 @@ func (c *PeopleSearchCall) Language(language string) *PeopleSearchCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleSearchCall) MaxResults(maxResults int64) *PeopleSearchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -3806,15 +3896,15 @@ func (c *PeopleSearchCall) MaxResults(maxResults int64) *PeopleSearchCall {
 // "nextPageToken" from the previous response. This token can be of any
 // length.
 func (c *PeopleSearchCall) PageToken(pageToken string) *PeopleSearchCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PeopleSearchCall) Fields(s ...googleapi.Field) *PeopleSearchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3824,13 +3914,13 @@ func (c *PeopleSearchCall) Fields(s ...googleapi.Field) *PeopleSearchCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PeopleSearchCall) IfNoneMatch(entityTag string) *PeopleSearchCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PeopleSearchCall) Context(ctx context.Context) *PeopleSearchCall {
 	c.ctx_ = ctx
 	return c
@@ -3838,14 +3928,28 @@ func (c *PeopleSearchCall) Context(ctx context.Context) *PeopleSearchCall {
 
 func (c *PeopleSearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("query", fmt.Sprintf("%v", c.query))
+	if v, ok := c.opt_["language"]; ok {
+		params.Set("language", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "people")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

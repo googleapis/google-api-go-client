@@ -252,24 +252,24 @@ func (s *TranslationsResource) MarshalJSON() ([]byte, error) {
 // method id "language.detections.list":
 
 type DetectionsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	q    []string
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Detect the language of text.
 func (r *DetectionsService) List(q []string) *DetectionsListCall {
-	c := &DetectionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.SetMulti("q", append([]string{}, q...))
+	c := &DetectionsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.q = q
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *DetectionsListCall) Fields(s ...googleapi.Field) *DetectionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -279,13 +279,13 @@ func (c *DetectionsListCall) Fields(s ...googleapi.Field) *DetectionsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *DetectionsListCall) IfNoneMatch(entityTag string) *DetectionsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *DetectionsListCall) Context(ctx context.Context) *DetectionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -293,14 +293,21 @@ func (c *DetectionsListCall) Context(ctx context.Context) *DetectionsListCall {
 
 func (c *DetectionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	for _, v := range c.q {
+		params.Add("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/detect")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -370,30 +377,29 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 // method id "language.languages.list":
 
 type LanguagesListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: List the source/target languages supported by the API
 func (r *LanguagesService) List() *LanguagesListCall {
-	c := &LanguagesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &LanguagesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // Target sets the optional parameter "target": the language and
 // collation in which the localized results should be returned
 func (c *LanguagesListCall) Target(target string) *LanguagesListCall {
-	c.urlParams_.Set("target", target)
+	c.opt_["target"] = target
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -403,13 +409,13 @@ func (c *LanguagesListCall) Fields(s ...googleapi.Field) *LanguagesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *LanguagesListCall) IfNoneMatch(entityTag string) *LanguagesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *LanguagesListCall) Context(ctx context.Context) *LanguagesListCall {
 	c.ctx_ = ctx
 	return c
@@ -417,14 +423,21 @@ func (c *LanguagesListCall) Context(ctx context.Context) *LanguagesListCall {
 
 func (c *LanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["target"]; ok {
+		params.Set("target", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/languages")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -489,24 +502,25 @@ func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
 // method id "language.translations.list":
 
 type TranslationsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	q      []string
+	target string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Returns text translations from one language to another.
 func (r *TranslationsService) List(q []string, target string) *TranslationsListCall {
-	c := &TranslationsListCall{s: r.s, urlParams_: make(internal.URLParams)}
-	c.urlParams_.SetMulti("q", append([]string{}, q...))
-	c.urlParams_.Set("target", target)
+	c := &TranslationsListCall{s: r.s, opt_: make(map[string]interface{})}
+	c.q = q
+	c.target = target
 	return c
 }
 
 // Cid sets the optional parameter "cid": The customization id for
 // translate
-func (c *TranslationsListCall) Cid(cid []string) *TranslationsListCall {
-	c.urlParams_.SetMulti("cid", append([]string{}, cid...))
+func (c *TranslationsListCall) Cid(cid string) *TranslationsListCall {
+	c.opt_["cid"] = cid
 	return c
 }
 
@@ -516,22 +530,22 @@ func (c *TranslationsListCall) Cid(cid []string) *TranslationsListCall {
 //   "html" - Specifies the input is in HTML
 //   "text" - Specifies the input is in plain textual format
 func (c *TranslationsListCall) Format(format string) *TranslationsListCall {
-	c.urlParams_.Set("format", format)
+	c.opt_["format"] = format
 	return c
 }
 
 // Source sets the optional parameter "source": The source language of
 // the text
 func (c *TranslationsListCall) Source(source string) *TranslationsListCall {
-	c.urlParams_.Set("source", source)
+	c.opt_["source"] = source
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *TranslationsListCall) Fields(s ...googleapi.Field) *TranslationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -541,13 +555,13 @@ func (c *TranslationsListCall) Fields(s ...googleapi.Field) *TranslationsListCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *TranslationsListCall) IfNoneMatch(entityTag string) *TranslationsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *TranslationsListCall) Context(ctx context.Context) *TranslationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -555,14 +569,31 @@ func (c *TranslationsListCall) Context(ctx context.Context) *TranslationsListCal
 
 func (c *TranslationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("target", fmt.Sprintf("%v", c.target))
+	for _, v := range c.q {
+		params.Add("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["cid"]; ok {
+		params.Set("cid", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["source"]; ok {
+		params.Set("source", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

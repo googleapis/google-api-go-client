@@ -630,30 +630,30 @@ type AutoscalersDeleteCall struct {
 	project    string
 	zone       string
 	autoscaler string
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Delete: Deletes the specified Autoscaler resource.
 func (r *AutoscalersService) Delete(project string, zone string, autoscaler string) *AutoscalersDeleteCall {
-	c := &AutoscalersDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AutoscalersDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	c.autoscaler = autoscaler
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AutoscalersDeleteCall) Fields(s ...googleapi.Field) *AutoscalersDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AutoscalersDeleteCall) Context(ctx context.Context) *AutoscalersDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -661,9 +661,13 @@ func (c *AutoscalersDeleteCall) Context(ctx context.Context) *AutoscalersDeleteC
 
 func (c *AutoscalersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/autoscalers/{autoscaler}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":    c.project,
@@ -755,29 +759,28 @@ func (c *AutoscalersDeleteCall) Do() (*Operation, error) {
 // method id "autoscaler.autoscalers.get":
 
 type AutoscalersGetCall struct {
-	s            *Service
-	project      string
-	zone         string
-	autoscaler   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	project    string
+	zone       string
+	autoscaler string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Gets the specified Autoscaler resource.
 func (r *AutoscalersService) Get(project string, zone string, autoscaler string) *AutoscalersGetCall {
-	c := &AutoscalersGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AutoscalersGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	c.autoscaler = autoscaler
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AutoscalersGetCall) Fields(s ...googleapi.Field) *AutoscalersGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -787,13 +790,13 @@ func (c *AutoscalersGetCall) Fields(s ...googleapi.Field) *AutoscalersGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AutoscalersGetCall) IfNoneMatch(entityTag string) *AutoscalersGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AutoscalersGetCall) Context(ctx context.Context) *AutoscalersGetCall {
 	c.ctx_ = ctx
 	return c
@@ -801,9 +804,13 @@ func (c *AutoscalersGetCall) Context(ctx context.Context) *AutoscalersGetCall {
 
 func (c *AutoscalersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/autoscalers/{autoscaler}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":    c.project,
@@ -811,8 +818,8 @@ func (c *AutoscalersGetCall) doRequest(alt string) (*http.Response, error) {
 		"autoscaler": c.autoscaler,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -903,30 +910,30 @@ type AutoscalersInsertCall struct {
 	project    string
 	zone       string
 	autoscaler *Autoscaler
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Insert: Adds new Autoscaler resource.
 func (r *AutoscalersService) Insert(project string, zone string, autoscaler *Autoscaler) *AutoscalersInsertCall {
-	c := &AutoscalersInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AutoscalersInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	c.autoscaler = autoscaler
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AutoscalersInsertCall) Fields(s ...googleapi.Field) *AutoscalersInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AutoscalersInsertCall) Context(ctx context.Context) *AutoscalersInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -939,9 +946,13 @@ func (c *AutoscalersInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/autoscalers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
@@ -1029,17 +1040,16 @@ func (c *AutoscalersInsertCall) Do() (*Operation, error) {
 // method id "autoscaler.autoscalers.list":
 
 type AutoscalersListCall struct {
-	s            *Service
-	project      string
-	zone         string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Lists all Autoscaler resources in this zone.
 func (r *AutoscalersService) List(project string, zone string) *AutoscalersListCall {
-	c := &AutoscalersListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AutoscalersListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	return c
@@ -1047,27 +1057,27 @@ func (r *AutoscalersService) List(project string, zone string) *AutoscalersListC
 
 // Filter sets the optional parameter "filter":
 func (c *AutoscalersListCall) Filter(filter string) *AutoscalersListCall {
-	c.urlParams_.Set("filter", filter)
+	c.opt_["filter"] = filter
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults":
 func (c *AutoscalersListCall) MaxResults(maxResults int64) *AutoscalersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken":
 func (c *AutoscalersListCall) PageToken(pageToken string) *AutoscalersListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AutoscalersListCall) Fields(s ...googleapi.Field) *AutoscalersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1077,13 +1087,13 @@ func (c *AutoscalersListCall) Fields(s ...googleapi.Field) *AutoscalersListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AutoscalersListCall) IfNoneMatch(entityTag string) *AutoscalersListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AutoscalersListCall) Context(ctx context.Context) *AutoscalersListCall {
 	c.ctx_ = ctx
 	return c
@@ -1091,17 +1101,30 @@ func (c *AutoscalersListCall) Context(ctx context.Context) *AutoscalersListCall 
 
 func (c *AutoscalersListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/autoscalers")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1202,14 +1225,14 @@ type AutoscalersPatchCall struct {
 	zone        string
 	autoscaler  string
 	autoscaler2 *Autoscaler
-	urlParams_  internal.URLParams
+	opt_        map[string]interface{}
 	ctx_        context.Context
 }
 
 // Patch: Update the entire content of the Autoscaler resource. This
 // method supports patch semantics.
 func (r *AutoscalersService) Patch(project string, zone string, autoscaler string, autoscaler2 *Autoscaler) *AutoscalersPatchCall {
-	c := &AutoscalersPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AutoscalersPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	c.autoscaler = autoscaler
@@ -1217,17 +1240,17 @@ func (r *AutoscalersService) Patch(project string, zone string, autoscaler strin
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AutoscalersPatchCall) Fields(s ...googleapi.Field) *AutoscalersPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AutoscalersPatchCall) Context(ctx context.Context) *AutoscalersPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -1240,9 +1263,13 @@ func (c *AutoscalersPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/autoscalers/{autoscaler}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":    c.project,
@@ -1343,13 +1370,13 @@ type AutoscalersUpdateCall struct {
 	zone        string
 	autoscaler  string
 	autoscaler2 *Autoscaler
-	urlParams_  internal.URLParams
+	opt_        map[string]interface{}
 	ctx_        context.Context
 }
 
 // Update: Update the entire content of the Autoscaler resource.
 func (r *AutoscalersService) Update(project string, zone string, autoscaler string, autoscaler2 *Autoscaler) *AutoscalersUpdateCall {
-	c := &AutoscalersUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AutoscalersUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	c.autoscaler = autoscaler
@@ -1357,17 +1384,17 @@ func (r *AutoscalersService) Update(project string, zone string, autoscaler stri
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AutoscalersUpdateCall) Fields(s ...googleapi.Field) *AutoscalersUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AutoscalersUpdateCall) Context(ctx context.Context) *AutoscalersUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -1380,9 +1407,13 @@ func (c *AutoscalersUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/autoscalers/{autoscaler}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":    c.project,
@@ -1478,34 +1509,34 @@ func (c *AutoscalersUpdateCall) Do() (*Operation, error) {
 // method id "autoscaler.zoneOperations.delete":
 
 type ZoneOperationsDeleteCall struct {
-	s          *Service
-	project    string
-	zone       string
-	operation  string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	project   string
+	zone      string
+	operation string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes the specified zone-specific operation resource.
 func (r *ZoneOperationsService) Delete(project string, zone string, operation string) *ZoneOperationsDeleteCall {
-	c := &ZoneOperationsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneOperationsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	c.operation = operation
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneOperationsDeleteCall) Fields(s ...googleapi.Field) *ZoneOperationsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneOperationsDeleteCall) Context(ctx context.Context) *ZoneOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -1513,9 +1544,13 @@ func (c *ZoneOperationsDeleteCall) Context(ctx context.Context) *ZoneOperationsD
 
 func (c *ZoneOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations/{operation}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
@@ -1580,29 +1615,28 @@ func (c *ZoneOperationsDeleteCall) Do() error {
 // method id "autoscaler.zoneOperations.get":
 
 type ZoneOperationsGetCall struct {
-	s            *Service
-	project      string
-	zone         string
-	operation    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	project   string
+	zone      string
+	operation string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Retrieves the specified zone-specific operation resource.
 func (r *ZoneOperationsService) Get(project string, zone string, operation string) *ZoneOperationsGetCall {
-	c := &ZoneOperationsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneOperationsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	c.operation = operation
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1612,13 +1646,13 @@ func (c *ZoneOperationsGetCall) Fields(s ...googleapi.Field) *ZoneOperationsGetC
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZoneOperationsGetCall) IfNoneMatch(entityTag string) *ZoneOperationsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneOperationsGetCall) Context(ctx context.Context) *ZoneOperationsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -1626,9 +1660,13 @@ func (c *ZoneOperationsGetCall) Context(ctx context.Context) *ZoneOperationsGetC
 
 func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations/{operation}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
@@ -1636,8 +1674,8 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"operation": c.operation,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1724,18 +1762,17 @@ func (c *ZoneOperationsGetCall) Do() (*Operation, error) {
 // method id "autoscaler.zoneOperations.list":
 
 type ZoneOperationsListCall struct {
-	s            *Service
-	project      string
-	zone         string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	project string
+	zone    string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List: Retrieves the list of operation resources contained within the
 // specified zone.
 func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperationsListCall {
-	c := &ZoneOperationsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZoneOperationsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	c.zone = zone
 	return c
@@ -1743,27 +1780,27 @@ func (r *ZoneOperationsService) List(project string, zone string) *ZoneOperation
 
 // Filter sets the optional parameter "filter":
 func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
-	c.urlParams_.Set("filter", filter)
+	c.opt_["filter"] = filter
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults":
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken":
 func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1773,13 +1810,13 @@ func (c *ZoneOperationsListCall) Fields(s ...googleapi.Field) *ZoneOperationsLis
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZoneOperationsListCall) IfNoneMatch(entityTag string) *ZoneOperationsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZoneOperationsListCall) Context(ctx context.Context) *ZoneOperationsListCall {
 	c.ctx_ = ctx
 	return c
@@ -1787,17 +1824,30 @@ func (c *ZoneOperationsListCall) Context(ctx context.Context) *ZoneOperationsLis
 
 func (c *ZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/operations")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 		"zone":    c.zone,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -1893,43 +1943,42 @@ func (c *ZoneOperationsListCall) Do() (*OperationList, error) {
 // method id "autoscaler.zones.list":
 
 type ZonesListCall struct {
-	s            *Service
-	project      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s       *Service
+	project string
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // List:
 func (r *ZonesService) List(project string) *ZonesListCall {
-	c := &ZonesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ZonesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
 	return c
 }
 
 // Filter sets the optional parameter "filter":
 func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
-	c.urlParams_.Set("filter", filter)
+	c.opt_["filter"] = filter
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults":
 func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken":
 func (c *ZonesListCall) PageToken(pageToken string) *ZonesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ZonesListCall) Fields(s ...googleapi.Field) *ZonesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -1939,13 +1988,13 @@ func (c *ZonesListCall) Fields(s ...googleapi.Field) *ZonesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ZonesListCall) IfNoneMatch(entityTag string) *ZonesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ZonesListCall) Context(ctx context.Context) *ZonesListCall {
 	c.ctx_ = ctx
 	return c
@@ -1953,16 +2002,29 @@ func (c *ZonesListCall) Context(ctx context.Context) *ZonesListCall {
 
 func (c *ZonesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

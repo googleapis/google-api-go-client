@@ -214,65 +214,64 @@ func (s *ReconcileGetWarning) MarshalJSON() ([]byte, error) {
 // method id "freebase.reconcile":
 
 type ReconcileCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Reconcile: Reconcile entities to Freebase open data.
 func (s *Service) Reconcile() *ReconcileCall {
-	c := &ReconcileCall{s: s, urlParams_: make(internal.URLParams)}
+	c := &ReconcileCall{s: s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // Confidence sets the optional parameter "confidence": Required
 // confidence for a candidate to match. Must be between .5 and 1.0
 func (c *ReconcileCall) Confidence(confidence float64) *ReconcileCall {
-	c.urlParams_.Set("confidence", fmt.Sprintf("%v", confidence))
+	c.opt_["confidence"] = confidence
 	return c
 }
 
 // Kind sets the optional parameter "kind": Classifications of entity
 // e.g. type, category, title.
-func (c *ReconcileCall) Kind(kind []string) *ReconcileCall {
-	c.urlParams_.SetMulti("kind", append([]string{}, kind...))
+func (c *ReconcileCall) Kind(kind string) *ReconcileCall {
+	c.opt_["kind"] = kind
 	return c
 }
 
 // Lang sets the optional parameter "lang": Languages for names and
 // values. First language is used for display. Default is 'en'.
-func (c *ReconcileCall) Lang(lang []string) *ReconcileCall {
-	c.urlParams_.SetMulti("lang", append([]string{}, lang...))
+func (c *ReconcileCall) Lang(lang string) *ReconcileCall {
+	c.opt_["lang"] = lang
 	return c
 }
 
 // Limit sets the optional parameter "limit": Maximum number of
 // candidates to return.
 func (c *ReconcileCall) Limit(limit int64) *ReconcileCall {
-	c.urlParams_.Set("limit", fmt.Sprintf("%v", limit))
+	c.opt_["limit"] = limit
 	return c
 }
 
 // Name sets the optional parameter "name": Name of entity.
 func (c *ReconcileCall) Name(name string) *ReconcileCall {
-	c.urlParams_.Set("name", name)
+	c.opt_["name"] = name
 	return c
 }
 
 // Prop sets the optional parameter "prop": Property values for entity
 // formatted as
 // :
-func (c *ReconcileCall) Prop(prop []string) *ReconcileCall {
-	c.urlParams_.SetMulti("prop", append([]string{}, prop...))
+func (c *ReconcileCall) Prop(prop string) *ReconcileCall {
+	c.opt_["prop"] = prop
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -282,13 +281,13 @@ func (c *ReconcileCall) Fields(s ...googleapi.Field) *ReconcileCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ReconcileCall) IfNoneMatch(entityTag string) *ReconcileCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ReconcileCall) Context(ctx context.Context) *ReconcileCall {
 	c.ctx_ = ctx
 	return c
@@ -296,14 +295,36 @@ func (c *ReconcileCall) Context(ctx context.Context) *ReconcileCall {
 
 func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["confidence"]; ok {
+		params.Set("confidence", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["kind"]; ok {
+		params.Set("kind", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lang"]; ok {
+		params.Set("lang", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["limit"]; ok {
+		params.Set("limit", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["name"]; ok {
+		params.Set("name", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["prop"]; ok {
+		params.Set("prop", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "reconcile")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -404,43 +425,42 @@ func (c *ReconcileCall) Do() (*ReconcileGet, error) {
 // method id "freebase.search":
 
 type SearchCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Search: Search Freebase open data.
 func (s *Service) Search() *SearchCall {
-	c := &SearchCall{s: s, urlParams_: make(internal.URLParams)}
+	c := &SearchCall{s: s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // AsOfTime sets the optional parameter "as_of_time": A mql as_of_time
 // value to use with mql_output queries.
 func (c *SearchCall) AsOfTime(asOfTime string) *SearchCall {
-	c.urlParams_.Set("as_of_time", asOfTime)
+	c.opt_["as_of_time"] = asOfTime
 	return c
 }
 
 // Callback sets the optional parameter "callback": JS method name for
 // JSONP callbacks.
 func (c *SearchCall) Callback(callback string) *SearchCall {
-	c.urlParams_.Set("callback", callback)
+	c.opt_["callback"] = callback
 	return c
 }
 
 // Cursor sets the optional parameter "cursor": The cursor value to use
 // for the next page of results.
 func (c *SearchCall) Cursor(cursor int64) *SearchCall {
-	c.urlParams_.Set("cursor", fmt.Sprintf("%v", cursor))
+	c.opt_["cursor"] = cursor
 	return c
 }
 
 // Domain sets the optional parameter "domain": Restrict to topics with
 // this Freebase domain id.
-func (c *SearchCall) Domain(domain []string) *SearchCall {
-	c.urlParams_.SetMulti("domain", append([]string{}, domain...))
+func (c *SearchCall) Domain(domain string) *SearchCall {
+	c.opt_["domain"] = domain
 	return c
 }
 
@@ -454,21 +474,21 @@ func (c *SearchCall) Domain(domain []string) *SearchCall {
 // the results directly on an web page without html-escaping the content
 // first.
 func (c *SearchCall) Encode(encode string) *SearchCall {
-	c.urlParams_.Set("encode", encode)
+	c.opt_["encode"] = encode
 	return c
 }
 
 // Exact sets the optional parameter "exact": Query on exact name and
 // keys only.
 func (c *SearchCall) Exact(exact bool) *SearchCall {
-	c.urlParams_.Set("exact", fmt.Sprintf("%v", exact))
+	c.opt_["exact"] = exact
 	return c
 }
 
 // Filter sets the optional parameter "filter": A filter to apply to the
 // query.
-func (c *SearchCall) Filter(filter []string) *SearchCall {
-	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
+func (c *SearchCall) Filter(filter string) *SearchCall {
+	c.opt_["filter"] = filter
 	return c
 }
 
@@ -484,7 +504,7 @@ func (c *SearchCall) Filter(filter []string) *SearchCall {
 //   "ids" - Ordered list of freebase ids.
 //   "mids" - Ordered list of freebase mids.
 func (c *SearchCall) Format(format string) *SearchCall {
-	c.urlParams_.Set("format", format)
+	c.opt_["format"] = format
 	return c
 }
 
@@ -498,62 +518,62 @@ func (c *SearchCall) Format(format string) *SearchCall {
 //   "predicates" - The predicates and path-terminating properties
 // supported by the filter and output request parameters.
 func (c *SearchCall) Help(help string) *SearchCall {
-	c.urlParams_.Set("help", help)
+	c.opt_["help"] = help
 	return c
 }
 
 // Indent sets the optional parameter "indent": Whether to indent the
 // json results or not.
 func (c *SearchCall) Indent(indent bool) *SearchCall {
-	c.urlParams_.Set("indent", fmt.Sprintf("%v", indent))
+	c.opt_["indent"] = indent
 	return c
 }
 
 // Lang sets the optional parameter "lang": The code of the language to
 // run the query with. Default is 'en'.
-func (c *SearchCall) Lang(lang []string) *SearchCall {
-	c.urlParams_.SetMulti("lang", append([]string{}, lang...))
+func (c *SearchCall) Lang(lang string) *SearchCall {
+	c.opt_["lang"] = lang
 	return c
 }
 
 // Limit sets the optional parameter "limit": Maximum number of results
 // to return.
 func (c *SearchCall) Limit(limit int64) *SearchCall {
-	c.urlParams_.Set("limit", fmt.Sprintf("%v", limit))
+	c.opt_["limit"] = limit
 	return c
 }
 
 // Mid sets the optional parameter "mid": A mid to use instead of a
 // query.
-func (c *SearchCall) Mid(mid []string) *SearchCall {
-	c.urlParams_.SetMulti("mid", append([]string{}, mid...))
+func (c *SearchCall) Mid(mid string) *SearchCall {
+	c.opt_["mid"] = mid
 	return c
 }
 
 // MqlOutput sets the optional parameter "mql_output": The MQL query to
 // run againist the results to extract more data.
 func (c *SearchCall) MqlOutput(mqlOutput string) *SearchCall {
-	c.urlParams_.Set("mql_output", mqlOutput)
+	c.opt_["mql_output"] = mqlOutput
 	return c
 }
 
 // Output sets the optional parameter "output": An output expression to
 // request data from matches.
 func (c *SearchCall) Output(output string) *SearchCall {
-	c.urlParams_.Set("output", output)
+	c.opt_["output"] = output
 	return c
 }
 
 // Prefixed sets the optional parameter "prefixed": Prefix match against
 // names and aliases.
 func (c *SearchCall) Prefixed(prefixed bool) *SearchCall {
-	c.urlParams_.Set("prefixed", fmt.Sprintf("%v", prefixed))
+	c.opt_["prefixed"] = prefixed
 	return c
 }
 
 // Query sets the optional parameter "query": Query term to search for.
 func (c *SearchCall) Query(query string) *SearchCall {
-	c.urlParams_.Set("query", query)
+	c.opt_["query"] = query
 	return c
 }
 
@@ -565,7 +585,7 @@ func (c *SearchCall) Query(query string) *SearchCall {
 //   "freebase" - Use freebase entity ranking.
 //   "schema" - Use schema ranking for properties and types.
 func (c *SearchCall) Scoring(scoring string) *SearchCall {
-	c.urlParams_.Set("scoring", scoring)
+	c.opt_["scoring"] = scoring
 	return c
 }
 
@@ -579,42 +599,42 @@ func (c *SearchCall) Scoring(scoring string) *SearchCall {
 // found.
 //   "no_spelling" (default) - Don't request spelling suggestions.
 func (c *SearchCall) Spell(spell string) *SearchCall {
-	c.urlParams_.Set("spell", spell)
+	c.opt_["spell"] = spell
 	return c
 }
 
 // Stemmed sets the optional parameter "stemmed": Query on stemmed names
 // and aliases. May not be used with prefixed.
 func (c *SearchCall) Stemmed(stemmed bool) *SearchCall {
-	c.urlParams_.Set("stemmed", fmt.Sprintf("%v", stemmed))
+	c.opt_["stemmed"] = stemmed
 	return c
 }
 
 // Type sets the optional parameter "type": Restrict to topics with this
 // Freebase type id.
-func (c *SearchCall) Type(type_ []string) *SearchCall {
-	c.urlParams_.SetMulti("type", append([]string{}, type_...))
+func (c *SearchCall) Type(type_ string) *SearchCall {
+	c.opt_["type"] = type_
 	return c
 }
 
 // With sets the optional parameter "with": A rule to match against.
-func (c *SearchCall) With(with []string) *SearchCall {
-	c.urlParams_.SetMulti("with", append([]string{}, with...))
+func (c *SearchCall) With(with string) *SearchCall {
+	c.opt_["with"] = with
 	return c
 }
 
 // Without sets the optional parameter "without": A rule to not match
 // against.
-func (c *SearchCall) Without(without []string) *SearchCall {
-	c.urlParams_.SetMulti("without", append([]string{}, without...))
+func (c *SearchCall) Without(without string) *SearchCall {
+	c.opt_["without"] = without
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -624,13 +644,13 @@ func (c *SearchCall) Fields(s ...googleapi.Field) *SearchCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *SearchCall) IfNoneMatch(entityTag string) *SearchCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *SearchCall) Context(ctx context.Context) *SearchCall {
 	c.ctx_ = ctx
 	return c
@@ -638,14 +658,87 @@ func (c *SearchCall) Context(ctx context.Context) *SearchCall {
 
 func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["as_of_time"]; ok {
+		params.Set("as_of_time", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["callback"]; ok {
+		params.Set("callback", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["cursor"]; ok {
+		params.Set("cursor", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["domain"]; ok {
+		params.Set("domain", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["encode"]; ok {
+		params.Set("encode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["exact"]; ok {
+		params.Set("exact", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["filter"]; ok {
+		params.Set("filter", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["format"]; ok {
+		params.Set("format", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["help"]; ok {
+		params.Set("help", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["indent"]; ok {
+		params.Set("indent", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["lang"]; ok {
+		params.Set("lang", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["limit"]; ok {
+		params.Set("limit", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mid"]; ok {
+		params.Set("mid", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["mql_output"]; ok {
+		params.Set("mql_output", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["output"]; ok {
+		params.Set("output", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["prefixed"]; ok {
+		params.Set("prefixed", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["query"]; ok {
+		params.Set("query", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["scoring"]; ok {
+		params.Set("scoring", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["spell"]; ok {
+		params.Set("spell", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["stemmed"]; ok {
+		params.Set("stemmed", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["type"]; ok {
+		params.Set("type", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["with"]; ok {
+		params.Set("with", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["without"]; ok {
+		params.Set("without", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "search")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)

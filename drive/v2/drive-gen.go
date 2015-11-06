@@ -2152,16 +2152,15 @@ func (s *UserPicture) MarshalJSON() ([]byte, error) {
 // method id "drive.about.get":
 
 type AboutGetCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // Get: Gets the information about the current user along with Drive API
 // settings
 func (r *AboutService) Get() *AboutGetCall {
-	c := &AboutGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AboutGetCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
@@ -2172,14 +2171,14 @@ func (r *AboutService) Get() *AboutGetCall {
 // or public files that the user has explicitly added to a folder they
 // own.
 func (c *AboutGetCall) IncludeSubscribed(includeSubscribed bool) *AboutGetCall {
-	c.urlParams_.Set("includeSubscribed", fmt.Sprintf("%v", includeSubscribed))
+	c.opt_["includeSubscribed"] = includeSubscribed
 	return c
 }
 
 // MaxChangeIdCount sets the optional parameter "maxChangeIdCount":
 // Maximum number of remaining change IDs to count
 func (c *AboutGetCall) MaxChangeIdCount(maxChangeIdCount int64) *AboutGetCall {
-	c.urlParams_.Set("maxChangeIdCount", fmt.Sprintf("%v", maxChangeIdCount))
+	c.opt_["maxChangeIdCount"] = maxChangeIdCount
 	return c
 }
 
@@ -2187,15 +2186,15 @@ func (c *AboutGetCall) MaxChangeIdCount(maxChangeIdCount int64) *AboutGetCall {
 // to start counting from when calculating number of remaining change
 // IDs
 func (c *AboutGetCall) StartChangeId(startChangeId int64) *AboutGetCall {
-	c.urlParams_.Set("startChangeId", fmt.Sprintf("%v", startChangeId))
+	c.opt_["startChangeId"] = startChangeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AboutGetCall) Fields(s ...googleapi.Field) *AboutGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2205,13 +2204,13 @@ func (c *AboutGetCall) Fields(s ...googleapi.Field) *AboutGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AboutGetCall) IfNoneMatch(entityTag string) *AboutGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AboutGetCall) Context(ctx context.Context) *AboutGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2219,14 +2218,27 @@ func (c *AboutGetCall) Context(ctx context.Context) *AboutGetCall {
 
 func (c *AboutGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeSubscribed"]; ok {
+		params.Set("includeSubscribed", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxChangeIdCount"]; ok {
+		params.Set("maxChangeIdCount", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startChangeId"]; ok {
+		params.Set("startChangeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "about")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2314,25 +2326,24 @@ func (c *AboutGetCall) Do() (*About, error) {
 // method id "drive.apps.get":
 
 type AppsGetCall struct {
-	s            *Service
-	appId        string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s     *Service
+	appId string
+	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // Get: Gets a specific app.
 func (r *AppsService) Get(appId string) *AppsGetCall {
-	c := &AppsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AppsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.appId = appId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AppsGetCall) Fields(s ...googleapi.Field) *AppsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2342,13 +2353,13 @@ func (c *AppsGetCall) Fields(s ...googleapi.Field) *AppsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AppsGetCall) IfNoneMatch(entityTag string) *AppsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AppsGetCall) Context(ctx context.Context) *AppsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2356,16 +2367,20 @@ func (c *AppsGetCall) Context(ctx context.Context) *AppsGetCall {
 
 func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/{appId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"appId": c.appId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2443,15 +2458,14 @@ func (c *AppsGetCall) Do() (*App, error) {
 // method id "drive.apps.list":
 
 type AppsListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists a user's installed apps.
 func (r *AppsService) List() *AppsListCall {
-	c := &AppsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &AppsListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
@@ -2462,7 +2476,7 @@ func (r *AppsService) List() *AppsListCall {
 // response. If appFilterMimeTypes are provided as well, the result is a
 // union of the two resulting app lists.
 func (c *AppsListCall) AppFilterExtensions(appFilterExtensions string) *AppsListCall {
-	c.urlParams_.Set("appFilterExtensions", appFilterExtensions)
+	c.opt_["appFilterExtensions"] = appFilterExtensions
 	return c
 }
 
@@ -2473,7 +2487,7 @@ func (c *AppsListCall) AppFilterExtensions(appFilterExtensions string) *AppsList
 // are provided as well, the result is a union of the two resulting app
 // lists.
 func (c *AppsListCall) AppFilterMimeTypes(appFilterMimeTypes string) *AppsListCall {
-	c.urlParams_.Set("appFilterMimeTypes", appFilterMimeTypes)
+	c.opt_["appFilterMimeTypes"] = appFilterMimeTypes
 	return c
 }
 
@@ -2481,15 +2495,15 @@ func (c *AppsListCall) AppFilterMimeTypes(appFilterMimeTypes string) *AppsListCa
 // or locale code, as defined by BCP 47, with some extensions from
 // Unicode's LDML format (http://www.unicode.org/reports/tr35/).
 func (c *AppsListCall) LanguageCode(languageCode string) *AppsListCall {
-	c.urlParams_.Set("languageCode", languageCode)
+	c.opt_["languageCode"] = languageCode
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *AppsListCall) Fields(s ...googleapi.Field) *AppsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2499,13 +2513,13 @@ func (c *AppsListCall) Fields(s ...googleapi.Field) *AppsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *AppsListCall) IfNoneMatch(entityTag string) *AppsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *AppsListCall) Context(ctx context.Context) *AppsListCall {
 	c.ctx_ = ctx
 	return c
@@ -2513,14 +2527,27 @@ func (c *AppsListCall) Context(ctx context.Context) *AppsListCall {
 
 func (c *AppsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["appFilterExtensions"]; ok {
+		params.Set("appFilterExtensions", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["appFilterMimeTypes"]; ok {
+		params.Set("appFilterMimeTypes", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["languageCode"]; ok {
+		params.Set("languageCode", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2600,25 +2627,24 @@ func (c *AppsListCall) Do() (*AppList, error) {
 // method id "drive.changes.get":
 
 type ChangesGetCall struct {
-	s            *Service
-	changeId     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	changeId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Gets a specific change.
 func (r *ChangesService) Get(changeId string) *ChangesGetCall {
-	c := &ChangesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ChangesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.changeId = changeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ChangesGetCall) Fields(s ...googleapi.Field) *ChangesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2628,13 +2654,13 @@ func (c *ChangesGetCall) Fields(s ...googleapi.Field) *ChangesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ChangesGetCall) IfNoneMatch(entityTag string) *ChangesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ChangesGetCall) Context(ctx context.Context) *ChangesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -2642,16 +2668,20 @@ func (c *ChangesGetCall) Context(ctx context.Context) *ChangesGetCall {
 
 func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "changes/{changeId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"changeId": c.changeId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2730,22 +2760,21 @@ func (c *ChangesGetCall) Do() (*Change, error) {
 // method id "drive.changes.list":
 
 type ChangesListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the changes for a user.
 func (r *ChangesService) List() *ChangesListCall {
-	c := &ChangesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ChangesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // IncludeDeleted sets the optional parameter "includeDeleted": Whether
 // to include deleted items.
 func (c *ChangesListCall) IncludeDeleted(includeDeleted bool) *ChangesListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.opt_["includeDeleted"] = includeDeleted
 	return c
 }
 
@@ -2754,21 +2783,21 @@ func (c *ChangesListCall) IncludeDeleted(includeDeleted bool) *ChangesListCall {
 // When set to false, the list only includes owned files plus any shared
 // or public files the user has explicitly added to a folder they own.
 func (c *ChangesListCall) IncludeSubscribed(includeSubscribed bool) *ChangesListCall {
-	c.urlParams_.Set("includeSubscribed", fmt.Sprintf("%v", includeSubscribed))
+	c.opt_["includeSubscribed"] = includeSubscribed
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of changes to return.
 func (c *ChangesListCall) MaxResults(maxResults int64) *ChangesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token for
 // changes.
 func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -2776,22 +2805,22 @@ func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 // of spaces to query. Supported values are 'drive', 'appDataFolder' and
 // 'photos'.
 func (c *ChangesListCall) Spaces(spaces string) *ChangesListCall {
-	c.urlParams_.Set("spaces", spaces)
+	c.opt_["spaces"] = spaces
 	return c
 }
 
 // StartChangeId sets the optional parameter "startChangeId": Change ID
 // to start listing changes from.
 func (c *ChangesListCall) StartChangeId(startChangeId int64) *ChangesListCall {
-	c.urlParams_.Set("startChangeId", fmt.Sprintf("%v", startChangeId))
+	c.opt_["startChangeId"] = startChangeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ChangesListCall) Fields(s ...googleapi.Field) *ChangesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -2801,13 +2830,13 @@ func (c *ChangesListCall) Fields(s ...googleapi.Field) *ChangesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ChangesListCall) IfNoneMatch(entityTag string) *ChangesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ChangesListCall) Context(ctx context.Context) *ChangesListCall {
 	c.ctx_ = ctx
 	return c
@@ -2815,14 +2844,36 @@ func (c *ChangesListCall) Context(ctx context.Context) *ChangesListCall {
 
 func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["includeSubscribed"]; ok {
+		params.Set("includeSubscribed", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["spaces"]; ok {
+		params.Set("spaces", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startChangeId"]; ok {
+		params.Set("startChangeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "changes")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -2929,15 +2980,15 @@ func (c *ChangesListCall) Do() (*ChangeList, error) {
 // method id "drive.changes.watch":
 
 type ChangesWatchCall struct {
-	s          *Service
-	channel    *Channel
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Watch: Subscribe to changes for a user.
 func (r *ChangesService) Watch(channel *Channel) *ChangesWatchCall {
-	c := &ChangesWatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ChangesWatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.channel = channel
 	return c
 }
@@ -2945,7 +2996,7 @@ func (r *ChangesService) Watch(channel *Channel) *ChangesWatchCall {
 // IncludeDeleted sets the optional parameter "includeDeleted": Whether
 // to include deleted items.
 func (c *ChangesWatchCall) IncludeDeleted(includeDeleted bool) *ChangesWatchCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.opt_["includeDeleted"] = includeDeleted
 	return c
 }
 
@@ -2954,21 +3005,21 @@ func (c *ChangesWatchCall) IncludeDeleted(includeDeleted bool) *ChangesWatchCall
 // When set to false, the list only includes owned files plus any shared
 // or public files the user has explicitly added to a folder they own.
 func (c *ChangesWatchCall) IncludeSubscribed(includeSubscribed bool) *ChangesWatchCall {
-	c.urlParams_.Set("includeSubscribed", fmt.Sprintf("%v", includeSubscribed))
+	c.opt_["includeSubscribed"] = includeSubscribed
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of changes to return.
 func (c *ChangesWatchCall) MaxResults(maxResults int64) *ChangesWatchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token for
 // changes.
 func (c *ChangesWatchCall) PageToken(pageToken string) *ChangesWatchCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -2976,28 +3027,28 @@ func (c *ChangesWatchCall) PageToken(pageToken string) *ChangesWatchCall {
 // of spaces to query. Supported values are 'drive', 'appDataFolder' and
 // 'photos'.
 func (c *ChangesWatchCall) Spaces(spaces string) *ChangesWatchCall {
-	c.urlParams_.Set("spaces", spaces)
+	c.opt_["spaces"] = spaces
 	return c
 }
 
 // StartChangeId sets the optional parameter "startChangeId": Change ID
 // to start listing changes from.
 func (c *ChangesWatchCall) StartChangeId(startChangeId int64) *ChangesWatchCall {
-	c.urlParams_.Set("startChangeId", fmt.Sprintf("%v", startChangeId))
+	c.opt_["startChangeId"] = startChangeId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ChangesWatchCall) Fields(s ...googleapi.Field) *ChangesWatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ChangesWatchCall) Context(ctx context.Context) *ChangesWatchCall {
 	c.ctx_ = ctx
 	return c
@@ -3010,9 +3061,31 @@ func (c *ChangesWatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["includeSubscribed"]; ok {
+		params.Set("includeSubscribed", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["spaces"]; ok {
+		params.Set("spaces", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["startChangeId"]; ok {
+		params.Set("startChangeId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "changes/watch")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -3126,30 +3199,30 @@ func (c *ChangesWatchCall) Do() (*Channel, error) {
 // method id "drive.channels.stop":
 
 type ChannelsStopCall struct {
-	s          *Service
-	channel    *Channel
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	channel *Channel
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Stop: Stop watching resources through this channel
 func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
-	c := &ChannelsStopCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ChannelsStopCall{s: r.s, opt_: make(map[string]interface{})}
 	c.channel = channel
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ChannelsStopCall) Context(ctx context.Context) *ChannelsStopCall {
 	c.ctx_ = ctx
 	return c
@@ -3162,9 +3235,13 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "channels/stop")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("Content-Type", ctype)
@@ -3212,32 +3289,32 @@ func (c *ChannelsStopCall) Do() error {
 // method id "drive.children.delete":
 
 type ChildrenDeleteCall struct {
-	s          *Service
-	folderId   string
-	childId    string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	folderId string
+	childId  string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Removes a child from a folder.
 func (r *ChildrenService) Delete(folderId string, childId string) *ChildrenDeleteCall {
-	c := &ChildrenDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ChildrenDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.folderId = folderId
 	c.childId = childId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ChildrenDeleteCall) Fields(s ...googleapi.Field) *ChildrenDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ChildrenDeleteCall) Context(ctx context.Context) *ChildrenDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -3245,9 +3322,13 @@ func (c *ChildrenDeleteCall) Context(ctx context.Context) *ChildrenDeleteCall {
 
 func (c *ChildrenDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{folderId}/children/{childId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"folderId": c.folderId,
@@ -3305,27 +3386,26 @@ func (c *ChildrenDeleteCall) Do() error {
 // method id "drive.children.get":
 
 type ChildrenGetCall struct {
-	s            *Service
-	folderId     string
-	childId      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	folderId string
+	childId  string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Gets a specific child reference.
 func (r *ChildrenService) Get(folderId string, childId string) *ChildrenGetCall {
-	c := &ChildrenGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ChildrenGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.folderId = folderId
 	c.childId = childId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ChildrenGetCall) Fields(s ...googleapi.Field) *ChildrenGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3335,13 +3415,13 @@ func (c *ChildrenGetCall) Fields(s ...googleapi.Field) *ChildrenGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ChildrenGetCall) IfNoneMatch(entityTag string) *ChildrenGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ChildrenGetCall) Context(ctx context.Context) *ChildrenGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3349,17 +3429,21 @@ func (c *ChildrenGetCall) Context(ctx context.Context) *ChildrenGetCall {
 
 func (c *ChildrenGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{folderId}/children/{childId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"folderId": c.folderId,
 		"childId":  c.childId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3447,29 +3531,29 @@ type ChildrenInsertCall struct {
 	s              *Service
 	folderId       string
 	childreference *ChildReference
-	urlParams_     internal.URLParams
+	opt_           map[string]interface{}
 	ctx_           context.Context
 }
 
 // Insert: Inserts a file into a folder.
 func (r *ChildrenService) Insert(folderId string, childreference *ChildReference) *ChildrenInsertCall {
-	c := &ChildrenInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ChildrenInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.folderId = folderId
 	c.childreference = childreference
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ChildrenInsertCall) Fields(s ...googleapi.Field) *ChildrenInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ChildrenInsertCall) Context(ctx context.Context) *ChildrenInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -3482,9 +3566,13 @@ func (c *ChildrenInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{folderId}/children")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"folderId": c.folderId,
@@ -3566,16 +3654,15 @@ func (c *ChildrenInsertCall) Do() (*ChildReference, error) {
 // method id "drive.children.list":
 
 type ChildrenListCall struct {
-	s            *Service
-	folderId     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	folderId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // List: Lists a folder's children.
 func (r *ChildrenService) List(folderId string) *ChildrenListCall {
-	c := &ChildrenListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ChildrenListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.folderId = folderId
 	return c
 }
@@ -3583,7 +3670,7 @@ func (r *ChildrenService) List(folderId string) *ChildrenListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of children to return.
 func (c *ChildrenListCall) MaxResults(maxResults int64) *ChildrenListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -3597,29 +3684,29 @@ func (c *ChildrenListCall) MaxResults(maxResults int64) *ChildrenListCall {
 // with approximately one million files in which the requested sort
 // order is ignored.
 func (c *ChildrenListCall) OrderBy(orderBy string) *ChildrenListCall {
-	c.urlParams_.Set("orderBy", orderBy)
+	c.opt_["orderBy"] = orderBy
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token for
 // children.
 func (c *ChildrenListCall) PageToken(pageToken string) *ChildrenListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
 // Q sets the optional parameter "q": Query string for searching
 // children.
 func (c *ChildrenListCall) Q(q string) *ChildrenListCall {
-	c.urlParams_.Set("q", q)
+	c.opt_["q"] = q
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ChildrenListCall) Fields(s ...googleapi.Field) *ChildrenListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3629,13 +3716,13 @@ func (c *ChildrenListCall) Fields(s ...googleapi.Field) *ChildrenListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ChildrenListCall) IfNoneMatch(entityTag string) *ChildrenListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ChildrenListCall) Context(ctx context.Context) *ChildrenListCall {
 	c.ctx_ = ctx
 	return c
@@ -3643,16 +3730,32 @@ func (c *ChildrenListCall) Context(ctx context.Context) *ChildrenListCall {
 
 func (c *ChildrenListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["q"]; ok {
+		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{folderId}/children")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"folderId": c.folderId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3753,32 +3856,32 @@ func (c *ChildrenListCall) Do() (*ChildList, error) {
 // method id "drive.comments.delete":
 
 type CommentsDeleteCall struct {
-	s          *Service
-	fileId     string
-	commentId  string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	fileId    string
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes a comment.
 func (r *CommentsService) Delete(fileId string, commentId string) *CommentsDeleteCall {
-	c := &CommentsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsDeleteCall) Context(ctx context.Context) *CommentsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -3786,9 +3889,13 @@ func (c *CommentsDeleteCall) Context(ctx context.Context) *CommentsDeleteCall {
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
@@ -3846,17 +3953,16 @@ func (c *CommentsDeleteCall) Do() error {
 // method id "drive.comments.get":
 
 type CommentsGetCall struct {
-	s            *Service
-	fileId       string
-	commentId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	fileId    string
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a comment by ID.
 func (r *CommentsService) Get(fileId string, commentId string) *CommentsGetCall {
-	c := &CommentsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	return c
@@ -3866,15 +3972,15 @@ func (r *CommentsService) Get(fileId string, commentId string) *CommentsGetCall 
 // this will succeed when retrieving a deleted comment, and will include
 // any deleted replies.
 func (c *CommentsGetCall) IncludeDeleted(includeDeleted bool) *CommentsGetCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.opt_["includeDeleted"] = includeDeleted
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -3884,13 +3990,13 @@ func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CommentsGetCall) IfNoneMatch(entityTag string) *CommentsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -3898,17 +4004,24 @@ func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -3995,32 +4108,32 @@ func (c *CommentsGetCall) Do() (*Comment, error) {
 // method id "drive.comments.insert":
 
 type CommentsInsertCall struct {
-	s          *Service
-	fileId     string
-	comment    *Comment
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	fileId  string
+	comment *Comment
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Insert: Creates a new comment on the given file.
 func (r *CommentsService) Insert(fileId string, comment *Comment) *CommentsInsertCall {
-	c := &CommentsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.comment = comment
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsInsertCall) Fields(s ...googleapi.Field) *CommentsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsInsertCall) Context(ctx context.Context) *CommentsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -4033,9 +4146,13 @@ func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -4116,16 +4233,15 @@ func (c *CommentsInsertCall) Do() (*Comment, error) {
 // method id "drive.comments.list":
 
 type CommentsListCall struct {
-	s            *Service
-	fileId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists a file's comments.
 func (r *CommentsService) List(fileId string) *CommentsListCall {
-	c := &CommentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
@@ -4134,14 +4250,14 @@ func (r *CommentsService) List(fileId string) *CommentsListCall {
 // all comments and replies, including deleted comments and replies
 // (with content stripped) will be returned.
 func (c *CommentsListCall) IncludeDeleted(includeDeleted bool) *CommentsListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.opt_["includeDeleted"] = includeDeleted
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of discussions to include in the response, used for paging.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -4150,7 +4266,7 @@ func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
 // of results, set this parameter to the value of "nextPageToken" from
 // the previous response.
 func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -4158,15 +4274,15 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 // that were updated after this timestamp will be returned. Formatted as
 // an RFC 3339 timestamp.
 func (c *CommentsListCall) UpdatedMin(updatedMin string) *CommentsListCall {
-	c.urlParams_.Set("updatedMin", updatedMin)
+	c.opt_["updatedMin"] = updatedMin
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4176,13 +4292,13 @@ func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *CommentsListCall) IfNoneMatch(entityTag string) *CommentsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -4190,16 +4306,32 @@ func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updatedMin"]; ok {
+		params.Set("updatedMin", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -4298,35 +4430,35 @@ func (c *CommentsListCall) Do() (*CommentList, error) {
 // method id "drive.comments.patch":
 
 type CommentsPatchCall struct {
-	s          *Service
-	fileId     string
-	commentId  string
-	comment    *Comment
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	fileId    string
+	commentId string
+	comment   *Comment
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Patch: Updates an existing comment. This method supports patch
 // semantics.
 func (r *CommentsService) Patch(fileId string, commentId string, comment *Comment) *CommentsPatchCall {
-	c := &CommentsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	c.comment = comment
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsPatchCall) Fields(s ...googleapi.Field) *CommentsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsPatchCall) Context(ctx context.Context) *CommentsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -4339,9 +4471,13 @@ func (c *CommentsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
@@ -4430,34 +4566,34 @@ func (c *CommentsPatchCall) Do() (*Comment, error) {
 // method id "drive.comments.update":
 
 type CommentsUpdateCall struct {
-	s          *Service
-	fileId     string
-	commentId  string
-	comment    *Comment
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	fileId    string
+	commentId string
+	comment   *Comment
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Update: Updates an existing comment.
 func (r *CommentsService) Update(fileId string, commentId string, comment *Comment) *CommentsUpdateCall {
-	c := &CommentsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &CommentsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	c.comment = comment
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *CommentsUpdateCall) Fields(s ...googleapi.Field) *CommentsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *CommentsUpdateCall) Context(ctx context.Context) *CommentsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -4470,9 +4606,13 @@ func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
@@ -4561,16 +4701,16 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 // method id "drive.files.copy":
 
 type FilesCopyCall struct {
-	s          *Service
-	fileId     string
-	file       *File
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	fileId string
+	file   *File
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Copy: Creates a copy of the specified file.
 func (r *FilesService) Copy(fileId string, file *File) *FilesCopyCall {
-	c := &FilesCopyCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesCopyCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.file = file
 	return c
@@ -4579,21 +4719,21 @@ func (r *FilesService) Copy(fileId string, file *File) *FilesCopyCall {
 // Convert sets the optional parameter "convert": Whether to convert
 // this file to the corresponding Google Docs format.
 func (c *FilesCopyCall) Convert(convert bool) *FilesCopyCall {
-	c.urlParams_.Set("convert", fmt.Sprintf("%v", convert))
+	c.opt_["convert"] = convert
 	return c
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesCopyCall) Ocr(ocr bool) *FilesCopyCall {
-	c.urlParams_.Set("ocr", fmt.Sprintf("%v", ocr))
+	c.opt_["ocr"] = ocr
 	return c
 }
 
 // OcrLanguage sets the optional parameter "ocrLanguage": If ocr is
 // true, hints at the language to use. Valid values are BCP 47 codes.
 func (c *FilesCopyCall) OcrLanguage(ocrLanguage string) *FilesCopyCall {
-	c.urlParams_.Set("ocrLanguage", ocrLanguage)
+	c.opt_["ocrLanguage"] = ocrLanguage
 	return c
 }
 
@@ -4601,21 +4741,21 @@ func (c *FilesCopyCall) OcrLanguage(ocrLanguage string) *FilesCopyCall {
 // revision of the new copy. A file can have a maximum of 200 pinned
 // revisions.
 func (c *FilesCopyCall) Pinned(pinned bool) *FilesCopyCall {
-	c.urlParams_.Set("pinned", fmt.Sprintf("%v", pinned))
+	c.opt_["pinned"] = pinned
 	return c
 }
 
 // TimedTextLanguage sets the optional parameter "timedTextLanguage":
 // The language of the timed text.
 func (c *FilesCopyCall) TimedTextLanguage(timedTextLanguage string) *FilesCopyCall {
-	c.urlParams_.Set("timedTextLanguage", timedTextLanguage)
+	c.opt_["timedTextLanguage"] = timedTextLanguage
 	return c
 }
 
 // TimedTextTrackName sets the optional parameter "timedTextTrackName":
 // The timed text track name.
 func (c *FilesCopyCall) TimedTextTrackName(timedTextTrackName string) *FilesCopyCall {
-	c.urlParams_.Set("timedTextTrackName", timedTextTrackName)
+	c.opt_["timedTextTrackName"] = timedTextTrackName
 	return c
 }
 
@@ -4628,21 +4768,21 @@ func (c *FilesCopyCall) TimedTextTrackName(timedTextTrackName string) *FilesCopy
 // by the user's default visibility/sharing policies.
 //   "PRIVATE" - The new file will be visible to only the owner.
 func (c *FilesCopyCall) Visibility(visibility string) *FilesCopyCall {
-	c.urlParams_.Set("visibility", visibility)
+	c.opt_["visibility"] = visibility
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesCopyCall) Fields(s ...googleapi.Field) *FilesCopyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesCopyCall) Context(ctx context.Context) *FilesCopyCall {
 	c.ctx_ = ctx
 	return c
@@ -4655,9 +4795,34 @@ func (c *FilesCopyCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["convert"]; ok {
+		params.Set("convert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ocr"]; ok {
+		params.Set("ocr", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ocrLanguage"]; ok {
+		params.Set("ocrLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pinned"]; ok {
+		params.Set("pinned", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timedTextLanguage"]; ok {
+		params.Set("timedTextLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timedTextTrackName"]; ok {
+		params.Set("timedTextTrackName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/copy")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -4788,31 +4953,31 @@ func (c *FilesCopyCall) Do() (*File, error) {
 // method id "drive.files.delete":
 
 type FilesDeleteCall struct {
-	s          *Service
-	fileId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Delete: Permanently deletes a file by ID. Skips the trash. The
 // currently authenticated user must own the file.
 func (r *FilesService) Delete(fileId string) *FilesDeleteCall {
-	c := &FilesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesDeleteCall) Fields(s ...googleapi.Field) *FilesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesDeleteCall) Context(ctx context.Context) *FilesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -4820,9 +4985,13 @@ func (c *FilesDeleteCall) Context(ctx context.Context) *FilesDeleteCall {
 
 func (c *FilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -4873,28 +5042,28 @@ func (c *FilesDeleteCall) Do() error {
 // method id "drive.files.emptyTrash":
 
 type FilesEmptyTrashCall struct {
-	s          *Service
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // EmptyTrash: Permanently deletes all of the user's trashed files.
 func (r *FilesService) EmptyTrash() *FilesEmptyTrashCall {
-	c := &FilesEmptyTrashCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesEmptyTrashCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesEmptyTrashCall) Fields(s ...googleapi.Field) *FilesEmptyTrashCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesEmptyTrashCall) Context(ctx context.Context) *FilesEmptyTrashCall {
 	c.ctx_ = ctx
 	return c
@@ -4902,9 +5071,13 @@ func (c *FilesEmptyTrashCall) Context(ctx context.Context) *FilesEmptyTrashCall 
 
 func (c *FilesEmptyTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/trash")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4940,23 +5113,22 @@ func (c *FilesEmptyTrashCall) Do() error {
 // method id "drive.files.generateIds":
 
 type FilesGenerateIdsCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // GenerateIds: Generates a set of file IDs which can be provided in
 // insert requests.
 func (r *FilesService) GenerateIds() *FilesGenerateIdsCall {
-	c := &FilesGenerateIdsCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesGenerateIdsCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of IDs to return.
 func (c *FilesGenerateIdsCall) MaxResults(maxResults int64) *FilesGenerateIdsCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -4964,15 +5136,15 @@ func (c *FilesGenerateIdsCall) MaxResults(maxResults int64) *FilesGenerateIdsCal
 // can be used to create new files. Supported values are 'drive' and
 // 'appDataFolder'.
 func (c *FilesGenerateIdsCall) Space(space string) *FilesGenerateIdsCall {
-	c.urlParams_.Set("space", space)
+	c.opt_["space"] = space
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesGenerateIdsCall) Fields(s ...googleapi.Field) *FilesGenerateIdsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -4982,13 +5154,13 @@ func (c *FilesGenerateIdsCall) Fields(s ...googleapi.Field) *FilesGenerateIdsCal
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *FilesGenerateIdsCall) IfNoneMatch(entityTag string) *FilesGenerateIdsCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesGenerateIdsCall) Context(ctx context.Context) *FilesGenerateIdsCall {
 	c.ctx_ = ctx
 	return c
@@ -4996,14 +5168,24 @@ func (c *FilesGenerateIdsCall) Context(ctx context.Context) *FilesGenerateIdsCal
 
 func (c *FilesGenerateIdsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["space"]; ok {
+		params.Set("space", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/generateIds")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5083,16 +5265,15 @@ func (c *FilesGenerateIdsCall) Do() (*GeneratedIds, error) {
 // method id "drive.files.get":
 
 type FilesGetCall struct {
-	s            *Service
-	fileId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Gets a file's metadata by ID.
 func (r *FilesService) Get(fileId string) *FilesGetCall {
-	c := &FilesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
@@ -5101,7 +5282,7 @@ func (r *FilesService) Get(fileId string) *FilesGetCall {
 // Whether the user is acknowledging the risk of downloading known
 // malware or other abusive files.
 func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
-	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprintf("%v", acknowledgeAbuse))
+	c.opt_["acknowledgeAbuse"] = acknowledgeAbuse
 	return c
 }
 
@@ -5112,7 +5293,7 @@ func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
 //   "BASIC" - Deprecated
 //   "FULL" - Deprecated
 func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
-	c.urlParams_.Set("projection", projection)
+	c.opt_["projection"] = projection
 	return c
 }
 
@@ -5120,7 +5301,7 @@ func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 // Revision ID that should be downloaded. Ignored unless alt=media is
 // specified.
 func (c *FilesGetCall) RevisionId(revisionId string) *FilesGetCall {
-	c.urlParams_.Set("revisionId", revisionId)
+	c.opt_["revisionId"] = revisionId
 	return c
 }
 
@@ -5128,15 +5309,15 @@ func (c *FilesGetCall) RevisionId(revisionId string) *FilesGetCall {
 // Deprecated: Use files.update with modifiedDateBehavior=noChange,
 // updateViewedDate=true and an empty request body.
 func (c *FilesGetCall) UpdateViewedDate(updateViewedDate bool) *FilesGetCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.opt_["updateViewedDate"] = updateViewedDate
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesGetCall) Fields(s ...googleapi.Field) *FilesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5146,13 +5327,13 @@ func (c *FilesGetCall) Fields(s ...googleapi.Field) *FilesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *FilesGetCall) IfNoneMatch(entityTag string) *FilesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesGetCall) Context(ctx context.Context) *FilesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -5160,16 +5341,32 @@ func (c *FilesGetCall) Context(ctx context.Context) *FilesGetCall {
 
 func (c *FilesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
+		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revisionId"]; ok {
+		params.Set("revisionId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updateViewedDate"]; ok {
+		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5295,20 +5492,19 @@ func (c *FilesGetCall) Do() (*File, error) {
 // method id "drive.files.insert":
 
 type FilesInsertCall struct {
-	s                *Service
-	file             *File
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	file       *File
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Insert: Insert a new file.
 func (r *FilesService) Insert(file *File) *FilesInsertCall {
-	c := &FilesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.file = file
 	return c
 }
@@ -5316,21 +5512,21 @@ func (r *FilesService) Insert(file *File) *FilesInsertCall {
 // Convert sets the optional parameter "convert": Whether to convert
 // this file to the corresponding Google Docs format.
 func (c *FilesInsertCall) Convert(convert bool) *FilesInsertCall {
-	c.urlParams_.Set("convert", fmt.Sprintf("%v", convert))
+	c.opt_["convert"] = convert
 	return c
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesInsertCall) Ocr(ocr bool) *FilesInsertCall {
-	c.urlParams_.Set("ocr", fmt.Sprintf("%v", ocr))
+	c.opt_["ocr"] = ocr
 	return c
 }
 
 // OcrLanguage sets the optional parameter "ocrLanguage": If ocr is
 // true, hints at the language to use. Valid values are BCP 47 codes.
 func (c *FilesInsertCall) OcrLanguage(ocrLanguage string) *FilesInsertCall {
-	c.urlParams_.Set("ocrLanguage", ocrLanguage)
+	c.opt_["ocrLanguage"] = ocrLanguage
 	return c
 }
 
@@ -5338,21 +5534,21 @@ func (c *FilesInsertCall) OcrLanguage(ocrLanguage string) *FilesInsertCall {
 // revision of the uploaded file. A file can have a maximum of 200
 // pinned revisions.
 func (c *FilesInsertCall) Pinned(pinned bool) *FilesInsertCall {
-	c.urlParams_.Set("pinned", fmt.Sprintf("%v", pinned))
+	c.opt_["pinned"] = pinned
 	return c
 }
 
 // TimedTextLanguage sets the optional parameter "timedTextLanguage":
 // The language of the timed text.
 func (c *FilesInsertCall) TimedTextLanguage(timedTextLanguage string) *FilesInsertCall {
-	c.urlParams_.Set("timedTextLanguage", timedTextLanguage)
+	c.opt_["timedTextLanguage"] = timedTextLanguage
 	return c
 }
 
 // TimedTextTrackName sets the optional parameter "timedTextTrackName":
 // The timed text track name.
 func (c *FilesInsertCall) TimedTextTrackName(timedTextTrackName string) *FilesInsertCall {
-	c.urlParams_.Set("timedTextTrackName", timedTextTrackName)
+	c.opt_["timedTextTrackName"] = timedTextTrackName
 	return c
 }
 
@@ -5360,7 +5556,7 @@ func (c *FilesInsertCall) TimedTextTrackName(timedTextTrackName string) *FilesIn
 // "useContentAsIndexableText": Whether to use the content as indexable
 // text.
 func (c *FilesInsertCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesInsertCall {
-	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprintf("%v", useContentAsIndexableText))
+	c.opt_["useContentAsIndexableText"] = useContentAsIndexableText
 	return c
 }
 
@@ -5372,24 +5568,24 @@ func (c *FilesInsertCall) UseContentAsIndexableText(useContentAsIndexableText bo
 // by the user's default visibility/sharing policies.
 //   "PRIVATE" - The new file will be visible to only the owner.
 func (c *FilesInsertCall) Visibility(visibility string) *FilesInsertCall {
-	c.urlParams_.Set("visibility", visibility)
+	c.opt_["visibility"] = visibility
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *FilesInsertCall) Media(r io.Reader) *FilesInsertCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *FilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *FilesInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -5398,28 +5594,27 @@ func (c *FilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, siz
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *FilesInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *FilesInsertCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesInsertCall) Fields(s ...googleapi.Field) *FilesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *FilesInsertCall) Context(ctx context.Context) *FilesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -5432,13 +5627,41 @@ func (c *FilesInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["convert"]; ok {
+		params.Set("convert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ocr"]; ok {
+		params.Set("ocr", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ocrLanguage"]; ok {
+		params.Set("ocrLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pinned"]; ok {
+		params.Set("pinned", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timedTextLanguage"]; ok {
+		params.Set("timedTextLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timedTextTrackName"]; ok {
+		params.Set("timedTextTrackName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["useContentAsIndexableText"]; ok {
+		params.Set("useContentAsIndexableText", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -5489,6 +5712,12 @@ func (c *FilesInsertCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -5498,7 +5727,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -5613,15 +5842,14 @@ func (c *FilesInsertCall) Do() (*File, error) {
 // method id "drive.files.list":
 
 type FilesListCall struct {
-	s            *Service
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
 }
 
 // List: Lists the user's files.
 func (r *FilesService) List() *FilesListCall {
-	c := &FilesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
 }
 
@@ -5632,14 +5860,14 @@ func (r *FilesService) List() *FilesListCall {
 //   "DEFAULT" - The items that the user has accessed.
 //   "DOMAIN" - Items shared to the user's domain.
 func (c *FilesListCall) Corpus(corpus string) *FilesListCall {
-	c.urlParams_.Set("corpus", corpus)
+	c.opt_["corpus"] = corpus
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of files to return.
 func (c *FilesListCall) MaxResults(maxResults int64) *FilesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -5653,14 +5881,14 @@ func (c *FilesListCall) MaxResults(maxResults int64) *FilesListCall {
 // with approximately one million files in which the requested sort
 // order is ignored.
 func (c *FilesListCall) OrderBy(orderBy string) *FilesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
+	c.opt_["orderBy"] = orderBy
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token for
 // files.
 func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
@@ -5671,13 +5899,13 @@ func (c *FilesListCall) PageToken(pageToken string) *FilesListCall {
 //   "BASIC" - Deprecated
 //   "FULL" - Deprecated
 func (c *FilesListCall) Projection(projection string) *FilesListCall {
-	c.urlParams_.Set("projection", projection)
+	c.opt_["projection"] = projection
 	return c
 }
 
 // Q sets the optional parameter "q": Query string for searching files.
 func (c *FilesListCall) Q(q string) *FilesListCall {
-	c.urlParams_.Set("q", q)
+	c.opt_["q"] = q
 	return c
 }
 
@@ -5685,15 +5913,15 @@ func (c *FilesListCall) Q(q string) *FilesListCall {
 // of spaces to query. Supported values are 'drive', 'appDataFolder' and
 // 'photos'.
 func (c *FilesListCall) Spaces(spaces string) *FilesListCall {
-	c.urlParams_.Set("spaces", spaces)
+	c.opt_["spaces"] = spaces
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesListCall) Fields(s ...googleapi.Field) *FilesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -5703,13 +5931,13 @@ func (c *FilesListCall) Fields(s ...googleapi.Field) *FilesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *FilesListCall) IfNoneMatch(entityTag string) *FilesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesListCall) Context(ctx context.Context) *FilesListCall {
 	c.ctx_ = ctx
 	return c
@@ -5717,14 +5945,39 @@ func (c *FilesListCall) Context(ctx context.Context) *FilesListCall {
 
 func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["corpus"]; ok {
+		params.Set("corpus", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["orderBy"]; ok {
+		params.Set("orderBy", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["q"]; ok {
+		params.Set("q", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["spaces"]; ok {
+		params.Set("spaces", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.SetOpaque(req.URL)
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -5848,17 +6101,17 @@ func (c *FilesListCall) Do() (*FileList, error) {
 // method id "drive.files.patch":
 
 type FilesPatchCall struct {
-	s          *Service
-	fileId     string
-	file       *File
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	fileId string
+	file   *File
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Patch: Updates file metadata and/or content. This method supports
 // patch semantics.
 func (r *FilesService) Patch(fileId string, file *File) *FilesPatchCall {
-	c := &FilesPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.file = file
 	return c
@@ -5867,14 +6120,14 @@ func (r *FilesService) Patch(fileId string, file *File) *FilesPatchCall {
 // AddParents sets the optional parameter "addParents": Comma-separated
 // list of parent IDs to add.
 func (c *FilesPatchCall) AddParents(addParents string) *FilesPatchCall {
-	c.urlParams_.Set("addParents", addParents)
+	c.opt_["addParents"] = addParents
 	return c
 }
 
 // Convert sets the optional parameter "convert": This parameter is
 // deprecated and has no function.
 func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
-	c.urlParams_.Set("convert", fmt.Sprintf("%v", convert))
+	c.opt_["convert"] = convert
 	return c
 }
 
@@ -5894,7 +6147,7 @@ func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
 //   "nowIfNeeded" - Set modifiedDate to the current time depending on
 // contents of the update.
 func (c *FilesPatchCall) ModifiedDateBehavior(modifiedDateBehavior string) *FilesPatchCall {
-	c.urlParams_.Set("modifiedDateBehavior", modifiedDateBehavior)
+	c.opt_["modifiedDateBehavior"] = modifiedDateBehavior
 	return c
 }
 
@@ -5907,63 +6160,63 @@ func (c *FilesPatchCall) ModifiedDateBehavior(modifiedDateBehavior string) *File
 // revisions. For details on how revisions are retained, see the Drive
 // Help Center.
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
-	c.urlParams_.Set("newRevision", fmt.Sprintf("%v", newRevision))
+	c.opt_["newRevision"] = newRevision
 	return c
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesPatchCall) Ocr(ocr bool) *FilesPatchCall {
-	c.urlParams_.Set("ocr", fmt.Sprintf("%v", ocr))
+	c.opt_["ocr"] = ocr
 	return c
 }
 
 // OcrLanguage sets the optional parameter "ocrLanguage": If ocr is
 // true, hints at the language to use. Valid values are BCP 47 codes.
 func (c *FilesPatchCall) OcrLanguage(ocrLanguage string) *FilesPatchCall {
-	c.urlParams_.Set("ocrLanguage", ocrLanguage)
+	c.opt_["ocrLanguage"] = ocrLanguage
 	return c
 }
 
 // Pinned sets the optional parameter "pinned": Whether to pin the new
 // revision. A file can have a maximum of 200 pinned revisions.
 func (c *FilesPatchCall) Pinned(pinned bool) *FilesPatchCall {
-	c.urlParams_.Set("pinned", fmt.Sprintf("%v", pinned))
+	c.opt_["pinned"] = pinned
 	return c
 }
 
 // RemoveParents sets the optional parameter "removeParents":
 // Comma-separated list of parent IDs to remove.
 func (c *FilesPatchCall) RemoveParents(removeParents string) *FilesPatchCall {
-	c.urlParams_.Set("removeParents", removeParents)
+	c.opt_["removeParents"] = removeParents
 	return c
 }
 
 // SetModifiedDate sets the optional parameter "setModifiedDate":
 // Whether to set the modified date with the supplied modified date.
 func (c *FilesPatchCall) SetModifiedDate(setModifiedDate bool) *FilesPatchCall {
-	c.urlParams_.Set("setModifiedDate", fmt.Sprintf("%v", setModifiedDate))
+	c.opt_["setModifiedDate"] = setModifiedDate
 	return c
 }
 
 // TimedTextLanguage sets the optional parameter "timedTextLanguage":
 // The language of the timed text.
 func (c *FilesPatchCall) TimedTextLanguage(timedTextLanguage string) *FilesPatchCall {
-	c.urlParams_.Set("timedTextLanguage", timedTextLanguage)
+	c.opt_["timedTextLanguage"] = timedTextLanguage
 	return c
 }
 
 // TimedTextTrackName sets the optional parameter "timedTextTrackName":
 // The timed text track name.
 func (c *FilesPatchCall) TimedTextTrackName(timedTextTrackName string) *FilesPatchCall {
-	c.urlParams_.Set("timedTextTrackName", timedTextTrackName)
+	c.opt_["timedTextTrackName"] = timedTextTrackName
 	return c
 }
 
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
 // Whether to update the view date after successfully updating the file.
 func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.opt_["updateViewedDate"] = updateViewedDate
 	return c
 }
 
@@ -5971,21 +6224,21 @@ func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall
 // "useContentAsIndexableText": Whether to use the content as indexable
 // text.
 func (c *FilesPatchCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesPatchCall {
-	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprintf("%v", useContentAsIndexableText))
+	c.opt_["useContentAsIndexableText"] = useContentAsIndexableText
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesPatchCall) Fields(s ...googleapi.Field) *FilesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesPatchCall) Context(ctx context.Context) *FilesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -5998,9 +6251,52 @@ func (c *FilesPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["addParents"]; ok {
+		params.Set("addParents", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["convert"]; ok {
+		params.Set("convert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["modifiedDateBehavior"]; ok {
+		params.Set("modifiedDateBehavior", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["newRevision"]; ok {
+		params.Set("newRevision", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ocr"]; ok {
+		params.Set("ocr", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ocrLanguage"]; ok {
+		params.Set("ocrLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pinned"]; ok {
+		params.Set("pinned", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["removeParents"]; ok {
+		params.Set("removeParents", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["setModifiedDate"]; ok {
+		params.Set("setModifiedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timedTextLanguage"]; ok {
+		params.Set("timedTextLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timedTextTrackName"]; ok {
+		params.Set("timedTextTrackName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updateViewedDate"]; ok {
+		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["useContentAsIndexableText"]; ok {
+		params.Set("useContentAsIndexableText", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -6173,30 +6469,30 @@ func (c *FilesPatchCall) Do() (*File, error) {
 // method id "drive.files.touch":
 
 type FilesTouchCall struct {
-	s          *Service
-	fileId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Touch: Set the file's updated time to the current server time.
 func (r *FilesService) Touch(fileId string) *FilesTouchCall {
-	c := &FilesTouchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesTouchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesTouchCall) Fields(s ...googleapi.Field) *FilesTouchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesTouchCall) Context(ctx context.Context) *FilesTouchCall {
 	c.ctx_ = ctx
 	return c
@@ -6204,9 +6500,13 @@ func (c *FilesTouchCall) Context(ctx context.Context) *FilesTouchCall {
 
 func (c *FilesTouchCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/touch")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -6286,31 +6586,31 @@ func (c *FilesTouchCall) Do() (*File, error) {
 // method id "drive.files.trash":
 
 type FilesTrashCall struct {
-	s          *Service
-	fileId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Trash: Moves a file to the trash. The currently authenticated user
 // must own the file.
 func (r *FilesService) Trash(fileId string) *FilesTrashCall {
-	c := &FilesTrashCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesTrashCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesTrashCall) Fields(s ...googleapi.Field) *FilesTrashCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesTrashCall) Context(ctx context.Context) *FilesTrashCall {
 	c.ctx_ = ctx
 	return c
@@ -6318,9 +6618,13 @@ func (c *FilesTrashCall) Context(ctx context.Context) *FilesTrashCall {
 
 func (c *FilesTrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/trash")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -6399,30 +6703,30 @@ func (c *FilesTrashCall) Do() (*File, error) {
 // method id "drive.files.untrash":
 
 type FilesUntrashCall struct {
-	s          *Service
-	fileId     string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Untrash: Restores a file from the trash.
 func (r *FilesService) Untrash(fileId string) *FilesUntrashCall {
-	c := &FilesUntrashCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesUntrashCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesUntrashCall) Fields(s ...googleapi.Field) *FilesUntrashCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesUntrashCall) Context(ctx context.Context) *FilesUntrashCall {
 	c.ctx_ = ctx
 	return c
@@ -6430,9 +6734,13 @@ func (c *FilesUntrashCall) Context(ctx context.Context) *FilesUntrashCall {
 
 func (c *FilesUntrashCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/untrash")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -6511,21 +6819,20 @@ func (c *FilesUntrashCall) Do() (*File, error) {
 // method id "drive.files.update":
 
 type FilesUpdateCall struct {
-	s                *Service
-	fileId           string
-	file             *File
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	fileId     string
+	file       *File
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Update: Updates file metadata and/or content.
 func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {
-	c := &FilesUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.file = file
 	return c
@@ -6534,14 +6841,14 @@ func (r *FilesService) Update(fileId string, file *File) *FilesUpdateCall {
 // AddParents sets the optional parameter "addParents": Comma-separated
 // list of parent IDs to add.
 func (c *FilesUpdateCall) AddParents(addParents string) *FilesUpdateCall {
-	c.urlParams_.Set("addParents", addParents)
+	c.opt_["addParents"] = addParents
 	return c
 }
 
 // Convert sets the optional parameter "convert": This parameter is
 // deprecated and has no function.
 func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
-	c.urlParams_.Set("convert", fmt.Sprintf("%v", convert))
+	c.opt_["convert"] = convert
 	return c
 }
 
@@ -6561,7 +6868,7 @@ func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
 //   "nowIfNeeded" - Set modifiedDate to the current time depending on
 // contents of the update.
 func (c *FilesUpdateCall) ModifiedDateBehavior(modifiedDateBehavior string) *FilesUpdateCall {
-	c.urlParams_.Set("modifiedDateBehavior", modifiedDateBehavior)
+	c.opt_["modifiedDateBehavior"] = modifiedDateBehavior
 	return c
 }
 
@@ -6574,63 +6881,63 @@ func (c *FilesUpdateCall) ModifiedDateBehavior(modifiedDateBehavior string) *Fil
 // revisions. For details on how revisions are retained, see the Drive
 // Help Center.
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
-	c.urlParams_.Set("newRevision", fmt.Sprintf("%v", newRevision))
+	c.opt_["newRevision"] = newRevision
 	return c
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesUpdateCall) Ocr(ocr bool) *FilesUpdateCall {
-	c.urlParams_.Set("ocr", fmt.Sprintf("%v", ocr))
+	c.opt_["ocr"] = ocr
 	return c
 }
 
 // OcrLanguage sets the optional parameter "ocrLanguage": If ocr is
 // true, hints at the language to use. Valid values are BCP 47 codes.
 func (c *FilesUpdateCall) OcrLanguage(ocrLanguage string) *FilesUpdateCall {
-	c.urlParams_.Set("ocrLanguage", ocrLanguage)
+	c.opt_["ocrLanguage"] = ocrLanguage
 	return c
 }
 
 // Pinned sets the optional parameter "pinned": Whether to pin the new
 // revision. A file can have a maximum of 200 pinned revisions.
 func (c *FilesUpdateCall) Pinned(pinned bool) *FilesUpdateCall {
-	c.urlParams_.Set("pinned", fmt.Sprintf("%v", pinned))
+	c.opt_["pinned"] = pinned
 	return c
 }
 
 // RemoveParents sets the optional parameter "removeParents":
 // Comma-separated list of parent IDs to remove.
 func (c *FilesUpdateCall) RemoveParents(removeParents string) *FilesUpdateCall {
-	c.urlParams_.Set("removeParents", removeParents)
+	c.opt_["removeParents"] = removeParents
 	return c
 }
 
 // SetModifiedDate sets the optional parameter "setModifiedDate":
 // Whether to set the modified date with the supplied modified date.
 func (c *FilesUpdateCall) SetModifiedDate(setModifiedDate bool) *FilesUpdateCall {
-	c.urlParams_.Set("setModifiedDate", fmt.Sprintf("%v", setModifiedDate))
+	c.opt_["setModifiedDate"] = setModifiedDate
 	return c
 }
 
 // TimedTextLanguage sets the optional parameter "timedTextLanguage":
 // The language of the timed text.
 func (c *FilesUpdateCall) TimedTextLanguage(timedTextLanguage string) *FilesUpdateCall {
-	c.urlParams_.Set("timedTextLanguage", timedTextLanguage)
+	c.opt_["timedTextLanguage"] = timedTextLanguage
 	return c
 }
 
 // TimedTextTrackName sets the optional parameter "timedTextTrackName":
 // The timed text track name.
 func (c *FilesUpdateCall) TimedTextTrackName(timedTextTrackName string) *FilesUpdateCall {
-	c.urlParams_.Set("timedTextTrackName", timedTextTrackName)
+	c.opt_["timedTextTrackName"] = timedTextTrackName
 	return c
 }
 
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
 // Whether to update the view date after successfully updating the file.
 func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.opt_["updateViewedDate"] = updateViewedDate
 	return c
 }
 
@@ -6638,24 +6945,24 @@ func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCa
 // "useContentAsIndexableText": Whether to use the content as indexable
 // text.
 func (c *FilesUpdateCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesUpdateCall {
-	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprintf("%v", useContentAsIndexableText))
+	c.opt_["useContentAsIndexableText"] = useContentAsIndexableText
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *FilesUpdateCall) Media(r io.Reader) *FilesUpdateCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *FilesUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *FilesUpdateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -6664,28 +6971,27 @@ func (c *FilesUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, siz
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *FilesUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *FilesUpdateCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesUpdateCall) Fields(s ...googleapi.Field) *FilesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *FilesUpdateCall) Context(ctx context.Context) *FilesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -6698,13 +7004,56 @@ func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["addParents"]; ok {
+		params.Set("addParents", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["convert"]; ok {
+		params.Set("convert", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["modifiedDateBehavior"]; ok {
+		params.Set("modifiedDateBehavior", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["newRevision"]; ok {
+		params.Set("newRevision", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ocr"]; ok {
+		params.Set("ocr", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["ocrLanguage"]; ok {
+		params.Set("ocrLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pinned"]; ok {
+		params.Set("pinned", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["removeParents"]; ok {
+		params.Set("removeParents", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["setModifiedDate"]; ok {
+		params.Set("setModifiedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timedTextLanguage"]; ok {
+		params.Set("timedTextLanguage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["timedTextTrackName"]; ok {
+		params.Set("timedTextTrackName", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updateViewedDate"]; ok {
+		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["useContentAsIndexableText"]; ok {
+		params.Set("useContentAsIndexableText", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	if c.protocol_ != "resumable" {
 		var cancel func()
 		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
@@ -6757,6 +7106,12 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -6766,7 +7121,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -6926,16 +7281,16 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 // method id "drive.files.watch":
 
 type FilesWatchCall struct {
-	s          *Service
-	fileId     string
-	channel    *Channel
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s       *Service
+	fileId  string
+	channel *Channel
+	opt_    map[string]interface{}
+	ctx_    context.Context
 }
 
 // Watch: Subscribe to changes on a file
 func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
-	c := &FilesWatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &FilesWatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.channel = channel
 	return c
@@ -6945,7 +7300,7 @@ func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
 // Whether the user is acknowledging the risk of downloading known
 // malware or other abusive files.
 func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall {
-	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprintf("%v", acknowledgeAbuse))
+	c.opt_["acknowledgeAbuse"] = acknowledgeAbuse
 	return c
 }
 
@@ -6956,7 +7311,7 @@ func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall
 //   "BASIC" - Deprecated
 //   "FULL" - Deprecated
 func (c *FilesWatchCall) Projection(projection string) *FilesWatchCall {
-	c.urlParams_.Set("projection", projection)
+	c.opt_["projection"] = projection
 	return c
 }
 
@@ -6964,7 +7319,7 @@ func (c *FilesWatchCall) Projection(projection string) *FilesWatchCall {
 // Revision ID that should be downloaded. Ignored unless alt=media is
 // specified.
 func (c *FilesWatchCall) RevisionId(revisionId string) *FilesWatchCall {
-	c.urlParams_.Set("revisionId", revisionId)
+	c.opt_["revisionId"] = revisionId
 	return c
 }
 
@@ -6972,21 +7327,21 @@ func (c *FilesWatchCall) RevisionId(revisionId string) *FilesWatchCall {
 // Deprecated: Use files.update with modifiedDateBehavior=noChange,
 // updateViewedDate=true and an empty request body.
 func (c *FilesWatchCall) UpdateViewedDate(updateViewedDate bool) *FilesWatchCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.opt_["updateViewedDate"] = updateViewedDate
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *FilesWatchCall) Fields(s ...googleapi.Field) *FilesWatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *FilesWatchCall) Context(ctx context.Context) *FilesWatchCall {
 	c.ctx_ = ctx
 	return c
@@ -6999,9 +7354,25 @@ func (c *FilesWatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["acknowledgeAbuse"]; ok {
+		params.Set("acknowledgeAbuse", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["projection"]; ok {
+		params.Set("projection", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["revisionId"]; ok {
+		params.Set("revisionId", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["updateViewedDate"]; ok {
+		params.Set("updateViewedDate", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/watch")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -7136,32 +7507,32 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 // method id "drive.parents.delete":
 
 type ParentsDeleteCall struct {
-	s          *Service
-	fileId     string
-	parentId   string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	fileId   string
+	parentId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Delete: Removes a parent from a file.
 func (r *ParentsService) Delete(fileId string, parentId string) *ParentsDeleteCall {
-	c := &ParentsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ParentsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.parentId = parentId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ParentsDeleteCall) Fields(s ...googleapi.Field) *ParentsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ParentsDeleteCall) Context(ctx context.Context) *ParentsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -7169,9 +7540,13 @@ func (c *ParentsDeleteCall) Context(ctx context.Context) *ParentsDeleteCall {
 
 func (c *ParentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/parents/{parentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":   c.fileId,
@@ -7229,27 +7604,26 @@ func (c *ParentsDeleteCall) Do() error {
 // method id "drive.parents.get":
 
 type ParentsGetCall struct {
-	s            *Service
-	fileId       string
-	parentId     string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s        *Service
+	fileId   string
+	parentId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Get: Gets a specific parent reference.
 func (r *ParentsService) Get(fileId string, parentId string) *ParentsGetCall {
-	c := &ParentsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ParentsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.parentId = parentId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ParentsGetCall) Fields(s ...googleapi.Field) *ParentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -7259,13 +7633,13 @@ func (c *ParentsGetCall) Fields(s ...googleapi.Field) *ParentsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ParentsGetCall) IfNoneMatch(entityTag string) *ParentsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ParentsGetCall) Context(ctx context.Context) *ParentsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -7273,17 +7647,21 @@ func (c *ParentsGetCall) Context(ctx context.Context) *ParentsGetCall {
 
 func (c *ParentsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/parents/{parentId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":   c.fileId,
 		"parentId": c.parentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7371,29 +7749,29 @@ type ParentsInsertCall struct {
 	s               *Service
 	fileId          string
 	parentreference *ParentReference
-	urlParams_      internal.URLParams
+	opt_            map[string]interface{}
 	ctx_            context.Context
 }
 
 // Insert: Adds a parent folder for a file.
 func (r *ParentsService) Insert(fileId string, parentreference *ParentReference) *ParentsInsertCall {
-	c := &ParentsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ParentsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.parentreference = parentreference
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ParentsInsertCall) Fields(s ...googleapi.Field) *ParentsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ParentsInsertCall) Context(ctx context.Context) *ParentsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -7406,9 +7784,13 @@ func (c *ParentsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/parents")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -7490,25 +7872,24 @@ func (c *ParentsInsertCall) Do() (*ParentReference, error) {
 // method id "drive.parents.list":
 
 type ParentsListCall struct {
-	s            *Service
-	fileId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists a file's parents.
 func (r *ParentsService) List(fileId string) *ParentsListCall {
-	c := &ParentsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &ParentsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *ParentsListCall) Fields(s ...googleapi.Field) *ParentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -7518,13 +7899,13 @@ func (c *ParentsListCall) Fields(s ...googleapi.Field) *ParentsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *ParentsListCall) IfNoneMatch(entityTag string) *ParentsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *ParentsListCall) Context(ctx context.Context) *ParentsListCall {
 	c.ctx_ = ctx
 	return c
@@ -7532,16 +7913,20 @@ func (c *ParentsListCall) Context(ctx context.Context) *ParentsListCall {
 
 func (c *ParentsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/parents")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7622,29 +8007,29 @@ type PermissionsDeleteCall struct {
 	s            *Service
 	fileId       string
 	permissionId string
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Delete: Deletes a permission from a file.
 func (r *PermissionsService) Delete(fileId string, permissionId string) *PermissionsDeleteCall {
-	c := &PermissionsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PermissionsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.permissionId = permissionId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PermissionsDeleteCall) Fields(s ...googleapi.Field) *PermissionsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PermissionsDeleteCall) Context(ctx context.Context) *PermissionsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -7652,9 +8037,13 @@ func (c *PermissionsDeleteCall) Context(ctx context.Context) *PermissionsDeleteC
 
 func (c *PermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions/{permissionId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":       c.fileId,
@@ -7715,24 +8104,23 @@ type PermissionsGetCall struct {
 	s            *Service
 	fileId       string
 	permissionId string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Get: Gets a permission by ID.
 func (r *PermissionsService) Get(fileId string, permissionId string) *PermissionsGetCall {
-	c := &PermissionsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PermissionsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.permissionId = permissionId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PermissionsGetCall) Fields(s ...googleapi.Field) *PermissionsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -7742,13 +8130,13 @@ func (c *PermissionsGetCall) Fields(s ...googleapi.Field) *PermissionsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PermissionsGetCall) IfNoneMatch(entityTag string) *PermissionsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PermissionsGetCall) Context(ctx context.Context) *PermissionsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -7756,17 +8144,21 @@ func (c *PermissionsGetCall) Context(ctx context.Context) *PermissionsGetCall {
 
 func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions/{permissionId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":       c.fileId,
 		"permissionId": c.permissionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7850,25 +8242,24 @@ func (c *PermissionsGetCall) Do() (*Permission, error) {
 // method id "drive.permissions.getIdForEmail":
 
 type PermissionsGetIdForEmailCall struct {
-	s            *Service
-	email        string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s     *Service
+	email string
+	opt_  map[string]interface{}
+	ctx_  context.Context
 }
 
 // GetIdForEmail: Returns the permission ID for an email address.
 func (r *PermissionsService) GetIdForEmail(email string) *PermissionsGetIdForEmailCall {
-	c := &PermissionsGetIdForEmailCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PermissionsGetIdForEmailCall{s: r.s, opt_: make(map[string]interface{})}
 	c.email = email
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PermissionsGetIdForEmailCall) Fields(s ...googleapi.Field) *PermissionsGetIdForEmailCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -7878,13 +8269,13 @@ func (c *PermissionsGetIdForEmailCall) Fields(s ...googleapi.Field) *Permissions
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PermissionsGetIdForEmailCall) IfNoneMatch(entityTag string) *PermissionsGetIdForEmailCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PermissionsGetIdForEmailCall) Context(ctx context.Context) *PermissionsGetIdForEmailCall {
 	c.ctx_ = ctx
 	return c
@@ -7892,16 +8283,20 @@ func (c *PermissionsGetIdForEmailCall) Context(ctx context.Context) *Permissions
 
 func (c *PermissionsGetIdForEmailCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "permissionIds/{email}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"email": c.email,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -7983,13 +8378,13 @@ type PermissionsInsertCall struct {
 	s          *Service
 	fileId     string
 	permission *Permission
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Insert: Inserts a permission for a file.
 func (r *PermissionsService) Insert(fileId string, permission *Permission) *PermissionsInsertCall {
-	c := &PermissionsInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PermissionsInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.permission = permission
 	return c
@@ -7998,7 +8393,7 @@ func (r *PermissionsService) Insert(fileId string, permission *Permission) *Perm
 // EmailMessage sets the optional parameter "emailMessage": A custom
 // message to include in notification emails.
 func (c *PermissionsInsertCall) EmailMessage(emailMessage string) *PermissionsInsertCall {
-	c.urlParams_.Set("emailMessage", emailMessage)
+	c.opt_["emailMessage"] = emailMessage
 	return c
 }
 
@@ -8007,21 +8402,21 @@ func (c *PermissionsInsertCall) EmailMessage(emailMessage string) *PermissionsIn
 // sharing to users or groups. This parameter is ignored and an email is
 // sent if the role is owner.
 func (c *PermissionsInsertCall) SendNotificationEmails(sendNotificationEmails bool) *PermissionsInsertCall {
-	c.urlParams_.Set("sendNotificationEmails", fmt.Sprintf("%v", sendNotificationEmails))
+	c.opt_["sendNotificationEmails"] = sendNotificationEmails
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PermissionsInsertCall) Fields(s ...googleapi.Field) *PermissionsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PermissionsInsertCall) Context(ctx context.Context) *PermissionsInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -8034,9 +8429,19 @@ func (c *PermissionsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["emailMessage"]; ok {
+		params.Set("emailMessage", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["sendNotificationEmails"]; ok {
+		params.Set("sendNotificationEmails", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -8128,25 +8533,24 @@ func (c *PermissionsInsertCall) Do() (*Permission, error) {
 // method id "drive.permissions.list":
 
 type PermissionsListCall struct {
-	s            *Service
-	fileId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists a file's permissions.
 func (r *PermissionsService) List(fileId string) *PermissionsListCall {
-	c := &PermissionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PermissionsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PermissionsListCall) Fields(s ...googleapi.Field) *PermissionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -8156,13 +8560,13 @@ func (c *PermissionsListCall) Fields(s ...googleapi.Field) *PermissionsListCall 
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PermissionsListCall) IfNoneMatch(entityTag string) *PermissionsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PermissionsListCall) Context(ctx context.Context) *PermissionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -8170,16 +8574,20 @@ func (c *PermissionsListCall) Context(ctx context.Context) *PermissionsListCall 
 
 func (c *PermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8260,13 +8668,13 @@ type PermissionsPatchCall struct {
 	fileId       string
 	permissionId string
 	permission   *Permission
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Patch: Updates a permission using patch semantics.
 func (r *PermissionsService) Patch(fileId string, permissionId string, permission *Permission) *PermissionsPatchCall {
-	c := &PermissionsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PermissionsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.permissionId = permissionId
 	c.permission = permission
@@ -8277,21 +8685,21 @@ func (r *PermissionsService) Patch(fileId string, permissionId string, permissio
 // Whether changing a role to 'owner' downgrades the current owners to
 // writers. Does nothing if the specified role is not 'owner'.
 func (c *PermissionsPatchCall) TransferOwnership(transferOwnership bool) *PermissionsPatchCall {
-	c.urlParams_.Set("transferOwnership", fmt.Sprintf("%v", transferOwnership))
+	c.opt_["transferOwnership"] = transferOwnership
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PermissionsPatchCall) Fields(s ...googleapi.Field) *PermissionsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PermissionsPatchCall) Context(ctx context.Context) *PermissionsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -8304,9 +8712,16 @@ func (c *PermissionsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["transferOwnership"]; ok {
+		params.Set("transferOwnership", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions/{permissionId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":       c.fileId,
@@ -8405,13 +8820,13 @@ type PermissionsUpdateCall struct {
 	fileId       string
 	permissionId string
 	permission   *Permission
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Update: Updates a permission.
 func (r *PermissionsService) Update(fileId string, permissionId string, permission *Permission) *PermissionsUpdateCall {
-	c := &PermissionsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PermissionsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.permissionId = permissionId
 	c.permission = permission
@@ -8422,21 +8837,21 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 // Whether changing a role to 'owner' downgrades the current owners to
 // writers. Does nothing if the specified role is not 'owner'.
 func (c *PermissionsUpdateCall) TransferOwnership(transferOwnership bool) *PermissionsUpdateCall {
-	c.urlParams_.Set("transferOwnership", fmt.Sprintf("%v", transferOwnership))
+	c.opt_["transferOwnership"] = transferOwnership
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PermissionsUpdateCall) Fields(s ...googleapi.Field) *PermissionsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PermissionsUpdateCall) Context(ctx context.Context) *PermissionsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -8449,9 +8864,16 @@ func (c *PermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["transferOwnership"]; ok {
+		params.Set("transferOwnership", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/permissions/{permissionId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":       c.fileId,
@@ -8549,13 +8971,13 @@ type PropertiesDeleteCall struct {
 	s           *Service
 	fileId      string
 	propertyKey string
-	urlParams_  internal.URLParams
+	opt_        map[string]interface{}
 	ctx_        context.Context
 }
 
 // Delete: Deletes a property.
 func (r *PropertiesService) Delete(fileId string, propertyKey string) *PropertiesDeleteCall {
-	c := &PropertiesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PropertiesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.propertyKey = propertyKey
 	return c
@@ -8564,21 +8986,21 @@ func (r *PropertiesService) Delete(fileId string, propertyKey string) *Propertie
 // Visibility sets the optional parameter "visibility": The visibility
 // of the property.
 func (c *PropertiesDeleteCall) Visibility(visibility string) *PropertiesDeleteCall {
-	c.urlParams_.Set("visibility", visibility)
+	c.opt_["visibility"] = visibility
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PropertiesDeleteCall) Fields(s ...googleapi.Field) *PropertiesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PropertiesDeleteCall) Context(ctx context.Context) *PropertiesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -8586,9 +9008,16 @@ func (c *PropertiesDeleteCall) Context(ctx context.Context) *PropertiesDeleteCal
 
 func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties/{propertyKey}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":      c.fileId,
@@ -8654,17 +9083,16 @@ func (c *PropertiesDeleteCall) Do() error {
 // method id "drive.properties.get":
 
 type PropertiesGetCall struct {
-	s            *Service
-	fileId       string
-	propertyKey  string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s           *Service
+	fileId      string
+	propertyKey string
+	opt_        map[string]interface{}
+	ctx_        context.Context
 }
 
 // Get: Gets a property by its key.
 func (r *PropertiesService) Get(fileId string, propertyKey string) *PropertiesGetCall {
-	c := &PropertiesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PropertiesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.propertyKey = propertyKey
 	return c
@@ -8673,15 +9101,15 @@ func (r *PropertiesService) Get(fileId string, propertyKey string) *PropertiesGe
 // Visibility sets the optional parameter "visibility": The visibility
 // of the property.
 func (c *PropertiesGetCall) Visibility(visibility string) *PropertiesGetCall {
-	c.urlParams_.Set("visibility", visibility)
+	c.opt_["visibility"] = visibility
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PropertiesGetCall) Fields(s ...googleapi.Field) *PropertiesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -8691,13 +9119,13 @@ func (c *PropertiesGetCall) Fields(s ...googleapi.Field) *PropertiesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PropertiesGetCall) IfNoneMatch(entityTag string) *PropertiesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PropertiesGetCall) Context(ctx context.Context) *PropertiesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -8705,17 +9133,24 @@ func (c *PropertiesGetCall) Context(ctx context.Context) *PropertiesGetCall {
 
 func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties/{propertyKey}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":      c.fileId,
 		"propertyKey": c.propertyKey,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -8806,32 +9241,32 @@ func (c *PropertiesGetCall) Do() (*Property, error) {
 // method id "drive.properties.insert":
 
 type PropertiesInsertCall struct {
-	s          *Service
-	fileId     string
-	property   *Property
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s        *Service
+	fileId   string
+	property *Property
+	opt_     map[string]interface{}
+	ctx_     context.Context
 }
 
 // Insert: Adds a property to a file.
 func (r *PropertiesService) Insert(fileId string, property *Property) *PropertiesInsertCall {
-	c := &PropertiesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PropertiesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.property = property
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PropertiesInsertCall) Fields(s ...googleapi.Field) *PropertiesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PropertiesInsertCall) Context(ctx context.Context) *PropertiesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -8844,9 +9279,13 @@ func (c *PropertiesInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
@@ -8929,25 +9368,24 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 // method id "drive.properties.list":
 
 type PropertiesListCall struct {
-	s            *Service
-	fileId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists a file's properties.
 func (r *PropertiesService) List(fileId string) *PropertiesListCall {
-	c := &PropertiesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PropertiesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PropertiesListCall) Fields(s ...googleapi.Field) *PropertiesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -8957,13 +9395,13 @@ func (c *PropertiesListCall) Fields(s ...googleapi.Field) *PropertiesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *PropertiesListCall) IfNoneMatch(entityTag string) *PropertiesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PropertiesListCall) Context(ctx context.Context) *PropertiesListCall {
 	c.ctx_ = ctx
 	return c
@@ -8971,16 +9409,20 @@ func (c *PropertiesListCall) Context(ctx context.Context) *PropertiesListCall {
 
 func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9062,13 +9504,13 @@ type PropertiesPatchCall struct {
 	fileId      string
 	propertyKey string
 	property    *Property
-	urlParams_  internal.URLParams
+	opt_        map[string]interface{}
 	ctx_        context.Context
 }
 
 // Patch: Updates a property. This method supports patch semantics.
 func (r *PropertiesService) Patch(fileId string, propertyKey string, property *Property) *PropertiesPatchCall {
-	c := &PropertiesPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PropertiesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.propertyKey = propertyKey
 	c.property = property
@@ -9078,21 +9520,21 @@ func (r *PropertiesService) Patch(fileId string, propertyKey string, property *P
 // Visibility sets the optional parameter "visibility": The visibility
 // of the property.
 func (c *PropertiesPatchCall) Visibility(visibility string) *PropertiesPatchCall {
-	c.urlParams_.Set("visibility", visibility)
+	c.opt_["visibility"] = visibility
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PropertiesPatchCall) Fields(s ...googleapi.Field) *PropertiesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PropertiesPatchCall) Context(ctx context.Context) *PropertiesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -9105,9 +9547,16 @@ func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties/{propertyKey}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":      c.fileId,
@@ -9208,13 +9657,13 @@ type PropertiesUpdateCall struct {
 	fileId      string
 	propertyKey string
 	property    *Property
-	urlParams_  internal.URLParams
+	opt_        map[string]interface{}
 	ctx_        context.Context
 }
 
 // Update: Updates a property.
 func (r *PropertiesService) Update(fileId string, propertyKey string, property *Property) *PropertiesUpdateCall {
-	c := &PropertiesUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &PropertiesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.propertyKey = propertyKey
 	c.property = property
@@ -9224,21 +9673,21 @@ func (r *PropertiesService) Update(fileId string, propertyKey string, property *
 // Visibility sets the optional parameter "visibility": The visibility
 // of the property.
 func (c *PropertiesUpdateCall) Visibility(visibility string) *PropertiesUpdateCall {
-	c.urlParams_.Set("visibility", visibility)
+	c.opt_["visibility"] = visibility
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *PropertiesUpdateCall) Fields(s ...googleapi.Field) *PropertiesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *PropertiesUpdateCall) Context(ctx context.Context) *PropertiesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -9251,9 +9700,16 @@ func (c *PropertiesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["visibility"]; ok {
+		params.Set("visibility", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/properties/{propertyKey}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":      c.fileId,
@@ -9350,17 +9806,16 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 // method id "drive.realtime.get":
 
 type RealtimeGetCall struct {
-	s            *Service
-	fileId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // Get: Exports the contents of the Realtime API data model associated
 // with this file as JSON.
 func (r *RealtimeService) Get(fileId string) *RealtimeGetCall {
-	c := &RealtimeGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RealtimeGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
@@ -9370,15 +9825,15 @@ func (r *RealtimeService) Get(fileId string) *RealtimeGetCall {
 // empty data model) and are incremented with each change. If this
 // parameter is excluded, the most recent data model will be returned.
 func (c *RealtimeGetCall) Revision(revision int64) *RealtimeGetCall {
-	c.urlParams_.Set("revision", fmt.Sprintf("%v", revision))
+	c.opt_["revision"] = revision
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RealtimeGetCall) Fields(s ...googleapi.Field) *RealtimeGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -9388,13 +9843,13 @@ func (c *RealtimeGetCall) Fields(s ...googleapi.Field) *RealtimeGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RealtimeGetCall) IfNoneMatch(entityTag string) *RealtimeGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RealtimeGetCall) Context(ctx context.Context) *RealtimeGetCall {
 	c.ctx_ = ctx
 	return c
@@ -9402,16 +9857,23 @@ func (c *RealtimeGetCall) Context(ctx context.Context) *RealtimeGetCall {
 
 func (c *RealtimeGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["revision"]; ok {
+		params.Set("revision", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/realtime")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9481,21 +9943,20 @@ func (c *RealtimeGetCall) Do() error {
 // method id "drive.realtime.update":
 
 type RealtimeUpdateCall struct {
-	s                *Service
-	fileId           string
-	urlParams_       internal.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s          *Service
+	fileId     string
+	opt_       map[string]interface{}
+	media_     io.Reader
+	resumable_ googleapi.SizeReaderAt
+	mediaType_ string
+	protocol_  string
+	ctx_       context.Context
 }
 
 // Update: Overwrites the Realtime API data model associated with this
 // file with the provided JSON data model.
 func (r *RealtimeService) Update(fileId string) *RealtimeUpdateCall {
-	c := &RealtimeUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RealtimeUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
@@ -9507,24 +9968,24 @@ func (r *RealtimeService) Update(fileId string) *RealtimeUpdateCall {
 // revision. If not set, the uploaded model replaces the current model
 // on the server.
 func (c *RealtimeUpdateCall) BaseRevision(baseRevision string) *RealtimeUpdateCall {
-	c.urlParams_.Set("baseRevision", baseRevision)
+	c.opt_["baseRevision"] = baseRevision
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
+// Media specifies the media to upload in a single chunk.
+// At most one of Media and ResumableMedia may be set.
 func (c *RealtimeUpdateCall) Media(r io.Reader) *RealtimeUpdateCall {
 	c.media_ = r
 	c.protocol_ = "multipart"
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// ResumableMedia specifies the media to upload in chunks and can be canceled with ctx.
+// At most one of Media and ResumableMedia may be set.
+// mediaType identifies the MIME media type of the upload, such as "image/png".
+// If mediaType is "", it will be auto-detected.
+// The provided ctx will supersede any context previously provided to
+// the Context method.
 func (c *RealtimeUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *RealtimeUpdateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
@@ -9533,28 +9994,27 @@ func (c *RealtimeUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, 
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every chunk.
+// It should be a low-latency function in order to not slow down the upload operation.
+// This should only be called when using ResumableMedia (as opposed to Media).
 func (c *RealtimeUpdateCall) ProgressUpdater(pu googleapi.ProgressUpdater) *RealtimeUpdateCall {
-	c.progressUpdater_ = pu
+	c.opt_["progressUpdater"] = pu
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RealtimeUpdateCall) Fields(s ...googleapi.Field) *RealtimeUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-// This context will supersede any context previously provided to the
-// ResumableMedia method.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+// This context will supersede any context previously provided to
+// the ResumableMedia method.
 func (c *RealtimeUpdateCall) Context(ctx context.Context) *RealtimeUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -9562,13 +10022,20 @@ func (c *RealtimeUpdateCall) Context(ctx context.Context) *RealtimeUpdateCall {
 
 func (c *RealtimeUpdateCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["baseRevision"]; ok {
+		params.Set("baseRevision", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/realtime")
 	if c.media_ != nil || c.resumable_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		params.Set("uploadType", c.protocol_)
 	}
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
@@ -9608,6 +10075,12 @@ func (c *RealtimeUpdateCall) Do() error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
+	var progressUpdater_ googleapi.ProgressUpdater
+	if v, ok := c.opt_["progressUpdater"]; ok {
+		if pu, ok := v.(googleapi.ProgressUpdater); ok {
+			progressUpdater_ = pu
+		}
+	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
 		rx := &googleapi.ResumableUpload{
@@ -9617,7 +10090,7 @@ func (c *RealtimeUpdateCall) Do() error {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback:      progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -9675,34 +10148,34 @@ func (c *RealtimeUpdateCall) Do() error {
 // method id "drive.replies.delete":
 
 type RepliesDeleteCall struct {
-	s          *Service
-	fileId     string
-	commentId  string
-	replyId    string
-	urlParams_ internal.URLParams
-	ctx_       context.Context
+	s         *Service
+	fileId    string
+	commentId string
+	replyId   string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Delete: Deletes a reply.
 func (r *RepliesService) Delete(fileId string, commentId string, replyId string) *RepliesDeleteCall {
-	c := &RepliesDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RepliesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	c.replyId = replyId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RepliesDeleteCall) Fields(s ...googleapi.Field) *RepliesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RepliesDeleteCall) Context(ctx context.Context) *RepliesDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -9710,9 +10183,13 @@ func (c *RepliesDeleteCall) Context(ctx context.Context) *RepliesDeleteCall {
 
 func (c *RepliesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies/{replyId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
@@ -9778,18 +10255,17 @@ func (c *RepliesDeleteCall) Do() error {
 // method id "drive.replies.get":
 
 type RepliesGetCall struct {
-	s            *Service
-	fileId       string
-	commentId    string
-	replyId      string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	fileId    string
+	commentId string
+	replyId   string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // Get: Gets a reply.
 func (r *RepliesService) Get(fileId string, commentId string, replyId string) *RepliesGetCall {
-	c := &RepliesGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RepliesGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	c.replyId = replyId
@@ -9799,15 +10275,15 @@ func (r *RepliesService) Get(fileId string, commentId string, replyId string) *R
 // IncludeDeleted sets the optional parameter "includeDeleted": If set,
 // this will succeed when retrieving a deleted reply.
 func (c *RepliesGetCall) IncludeDeleted(includeDeleted bool) *RepliesGetCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.opt_["includeDeleted"] = includeDeleted
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RepliesGetCall) Fields(s ...googleapi.Field) *RepliesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -9817,13 +10293,13 @@ func (c *RepliesGetCall) Fields(s ...googleapi.Field) *RepliesGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RepliesGetCall) IfNoneMatch(entityTag string) *RepliesGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RepliesGetCall) Context(ctx context.Context) *RepliesGetCall {
 	c.ctx_ = ctx
 	return c
@@ -9831,9 +10307,16 @@ func (c *RepliesGetCall) Context(ctx context.Context) *RepliesGetCall {
 
 func (c *RepliesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies/{replyId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
@@ -9841,8 +10324,8 @@ func (c *RepliesGetCall) doRequest(alt string) (*http.Response, error) {
 		"replyId":   c.replyId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -9940,30 +10423,30 @@ type RepliesInsertCall struct {
 	fileId       string
 	commentId    string
 	commentreply *CommentReply
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Insert: Creates a new reply to the given comment.
 func (r *RepliesService) Insert(fileId string, commentId string, commentreply *CommentReply) *RepliesInsertCall {
-	c := &RepliesInsertCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RepliesInsertCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	c.commentreply = commentreply
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RepliesInsertCall) Fields(s ...googleapi.Field) *RepliesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RepliesInsertCall) Context(ctx context.Context) *RepliesInsertCall {
 	c.ctx_ = ctx
 	return c
@@ -9976,9 +10459,13 @@ func (c *RepliesInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
@@ -10067,17 +10554,16 @@ func (c *RepliesInsertCall) Do() (*CommentReply, error) {
 // method id "drive.replies.list":
 
 type RepliesListCall struct {
-	s            *Service
-	fileId       string
-	commentId    string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s         *Service
+	fileId    string
+	commentId string
+	opt_      map[string]interface{}
+	ctx_      context.Context
 }
 
 // List: Lists all of the replies to a comment.
 func (r *RepliesService) List(fileId string, commentId string) *RepliesListCall {
-	c := &RepliesListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RepliesListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	return c
@@ -10087,14 +10573,14 @@ func (r *RepliesService) List(fileId string, commentId string) *RepliesListCall 
 // all replies, including deleted replies (with content stripped) will
 // be returned.
 func (c *RepliesListCall) IncludeDeleted(includeDeleted bool) *RepliesListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.opt_["includeDeleted"] = includeDeleted
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of replies to include in the response, used for paging.
 func (c *RepliesListCall) MaxResults(maxResults int64) *RepliesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.opt_["maxResults"] = maxResults
 	return c
 }
 
@@ -10103,15 +10589,15 @@ func (c *RepliesListCall) MaxResults(maxResults int64) *RepliesListCall {
 // of results, set this parameter to the value of "nextPageToken" from
 // the previous response.
 func (c *RepliesListCall) PageToken(pageToken string) *RepliesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.opt_["pageToken"] = pageToken
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RepliesListCall) Fields(s ...googleapi.Field) *RepliesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -10121,13 +10607,13 @@ func (c *RepliesListCall) Fields(s ...googleapi.Field) *RepliesListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RepliesListCall) IfNoneMatch(entityTag string) *RepliesListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RepliesListCall) Context(ctx context.Context) *RepliesListCall {
 	c.ctx_ = ctx
 	return c
@@ -10135,17 +10621,30 @@ func (c *RepliesListCall) Context(ctx context.Context) *RepliesListCall {
 
 func (c *RepliesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["maxResults"]; ok {
+		params.Set("maxResults", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["pageToken"]; ok {
+		params.Set("pageToken", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
 		"commentId": c.commentId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -10251,14 +10750,14 @@ type RepliesPatchCall struct {
 	commentId    string
 	replyId      string
 	commentreply *CommentReply
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Patch: Updates an existing reply. This method supports patch
 // semantics.
 func (r *RepliesService) Patch(fileId string, commentId string, replyId string, commentreply *CommentReply) *RepliesPatchCall {
-	c := &RepliesPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RepliesPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	c.replyId = replyId
@@ -10266,17 +10765,17 @@ func (r *RepliesService) Patch(fileId string, commentId string, replyId string, 
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RepliesPatchCall) Fields(s ...googleapi.Field) *RepliesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RepliesPatchCall) Context(ctx context.Context) *RepliesPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -10289,9 +10788,13 @@ func (c *RepliesPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies/{replyId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
@@ -10393,13 +10896,13 @@ type RepliesUpdateCall struct {
 	commentId    string
 	replyId      string
 	commentreply *CommentReply
-	urlParams_   internal.URLParams
+	opt_         map[string]interface{}
 	ctx_         context.Context
 }
 
 // Update: Updates an existing reply.
 func (r *RepliesService) Update(fileId string, commentId string, replyId string, commentreply *CommentReply) *RepliesUpdateCall {
-	c := &RepliesUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RepliesUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.commentId = commentId
 	c.replyId = replyId
@@ -10407,17 +10910,17 @@ func (r *RepliesService) Update(fileId string, commentId string, replyId string,
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RepliesUpdateCall) Fields(s ...googleapi.Field) *RepliesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RepliesUpdateCall) Context(ctx context.Context) *RepliesUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -10430,9 +10933,13 @@ func (c *RepliesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}/replies/{replyId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":    c.fileId,
@@ -10532,29 +11039,29 @@ type RevisionsDeleteCall struct {
 	s          *Service
 	fileId     string
 	revisionId string
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Delete: Removes a revision.
 func (r *RevisionsService) Delete(fileId string, revisionId string) *RevisionsDeleteCall {
-	c := &RevisionsDeleteCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RevisionsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.revisionId = revisionId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RevisionsDeleteCall) Fields(s ...googleapi.Field) *RevisionsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RevisionsDeleteCall) Context(ctx context.Context) *RevisionsDeleteCall {
 	c.ctx_ = ctx
 	return c
@@ -10562,9 +11069,13 @@ func (c *RevisionsDeleteCall) Context(ctx context.Context) *RevisionsDeleteCall 
 
 func (c *RevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions/{revisionId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("DELETE", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":     c.fileId,
@@ -10623,27 +11134,26 @@ func (c *RevisionsDeleteCall) Do() error {
 // method id "drive.revisions.get":
 
 type RevisionsGetCall struct {
-	s            *Service
-	fileId       string
-	revisionId   string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s          *Service
+	fileId     string
+	revisionId string
+	opt_       map[string]interface{}
+	ctx_       context.Context
 }
 
 // Get: Gets a specific revision.
 func (r *RevisionsService) Get(fileId string, revisionId string) *RevisionsGetCall {
-	c := &RevisionsGetCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RevisionsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.revisionId = revisionId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RevisionsGetCall) Fields(s ...googleapi.Field) *RevisionsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -10653,13 +11163,13 @@ func (c *RevisionsGetCall) Fields(s ...googleapi.Field) *RevisionsGetCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RevisionsGetCall) IfNoneMatch(entityTag string) *RevisionsGetCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RevisionsGetCall) Context(ctx context.Context) *RevisionsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -10667,17 +11177,21 @@ func (c *RevisionsGetCall) Context(ctx context.Context) *RevisionsGetCall {
 
 func (c *RevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions/{revisionId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":     c.fileId,
 		"revisionId": c.revisionId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -10762,25 +11276,24 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 // method id "drive.revisions.list":
 
 type RevisionsListCall struct {
-	s            *Service
-	fileId       string
-	urlParams_   internal.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
+	s      *Service
+	fileId string
+	opt_   map[string]interface{}
+	ctx_   context.Context
 }
 
 // List: Lists a file's revisions.
 func (r *RevisionsService) List(fileId string) *RevisionsListCall {
-	c := &RevisionsListCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RevisionsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RevisionsListCall) Fields(s ...googleapi.Field) *RevisionsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
@@ -10790,13 +11303,13 @@ func (c *RevisionsListCall) Fields(s ...googleapi.Field) *RevisionsListCall {
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
 func (c *RevisionsListCall) IfNoneMatch(entityTag string) *RevisionsListCall {
-	c.ifNoneMatch_ = entityTag
+	c.opt_["ifNoneMatch"] = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RevisionsListCall) Context(ctx context.Context) *RevisionsListCall {
 	c.ctx_ = ctx
 	return c
@@ -10804,16 +11317,20 @@ func (c *RevisionsListCall) Context(ctx context.Context) *RevisionsListCall {
 
 func (c *RevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId": c.fileId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
 	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
@@ -10895,30 +11412,30 @@ type RevisionsPatchCall struct {
 	fileId     string
 	revisionId string
 	revision   *Revision
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Patch: Updates a revision. This method supports patch semantics.
 func (r *RevisionsService) Patch(fileId string, revisionId string, revision *Revision) *RevisionsPatchCall {
-	c := &RevisionsPatchCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RevisionsPatchCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.revisionId = revisionId
 	c.revision = revision
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RevisionsPatchCall) Fields(s ...googleapi.Field) *RevisionsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RevisionsPatchCall) Context(ctx context.Context) *RevisionsPatchCall {
 	c.ctx_ = ctx
 	return c
@@ -10931,9 +11448,13 @@ func (c *RevisionsPatchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions/{revisionId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":     c.fileId,
@@ -11027,30 +11548,30 @@ type RevisionsUpdateCall struct {
 	fileId     string
 	revisionId string
 	revision   *Revision
-	urlParams_ internal.URLParams
+	opt_       map[string]interface{}
 	ctx_       context.Context
 }
 
 // Update: Updates a revision.
 func (r *RevisionsService) Update(fileId string, revisionId string, revision *Revision) *RevisionsUpdateCall {
-	c := &RevisionsUpdateCall{s: r.s, urlParams_: make(internal.URLParams)}
+	c := &RevisionsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.fileId = fileId
 	c.revisionId = revisionId
 	c.revision = revision
 	return c
 }
 
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
 func (c *RevisionsUpdateCall) Fields(s ...googleapi.Field) *RevisionsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	c.opt_["fields"] = googleapi.CombineFields(s)
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
 func (c *RevisionsUpdateCall) Context(ctx context.Context) *RevisionsUpdateCall {
 	c.ctx_ = ctx
 	return c
@@ -11063,9 +11584,13 @@ func (c *RevisionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	ctype := "application/json"
-	c.urlParams_.Set("alt", alt)
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
 	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/revisions/{revisionId}")
-	urls += "?" + c.urlParams_.Encode()
+	urls += "?" + params.Encode()
 	req, _ := http.NewRequest("PUT", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
 		"fileId":     c.fileId,

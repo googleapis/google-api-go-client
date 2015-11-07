@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f6923665_b9b35257",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-11-07T16:08:14Z",
+      "side": 1,
+      "message": "Hmmm... not my first choice, but OK.  I was trying to get you to capitalize \"API\" per Go style.",
+      "parentUuid": "f6923665_5978aea7",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "f61bfcf47b573770adb8b6ce9dd6a7c1ffb7cf8d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6923665_436441ca",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Ah yes definitely. Sorry: I mutated the original call, didn\u0027t even think to change it.",
       "parentUuid": "f6923665_436441ca",
+      "range": {
+        "startLine": 534,
+        "startChar": 3,
+        "endLine": 534,
+        "endChar": 13
+      },
+      "revId": "f61bfcf47b573770adb8b6ce9dd6a7c1ffb7cf8d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6923665_d9b01e4d",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-11-07T16:08:14Z",
+      "side": 1,
+      "message": "We are also trying to replace all the tabs with spaces because the formatter formats the whole thing anyway and a space is much easier to read in this source code.",
+      "parentUuid": "f6923665_797d6a96",
       "range": {
         "startLine": 534,
         "startChar": 3,

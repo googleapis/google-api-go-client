@@ -7,7 +7,7 @@
 //   import "google.golang.org/api/container/v1beta1"
 //   ...
 //   containerService, err := container.New(oauthHttpClient)
-package container
+package container // import "google.golang.org/api/container/v1beta1"
 
 import (
 	"bytes"
@@ -16,6 +16,7 @@ import (
 	"fmt"
 	context "golang.org/x/net/context"
 	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
@@ -32,6 +33,7 @@ var _ = fmt.Sprintf
 var _ = json.NewDecoder
 var _ = io.Copy
 var _ = url.Parse
+var _ = gensupport.MarshalJSON
 var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
@@ -240,6 +242,10 @@ type Cluster struct {
 	// which the cluster resides.
 	Zone string `json:"zone,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "ClusterApiVersion")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -252,7 +258,7 @@ type Cluster struct {
 func (s *Cluster) MarshalJSON() ([]byte, error) {
 	type noMethod Cluster
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type CreateClusterRequest struct {
@@ -271,12 +277,16 @@ type CreateClusterRequest struct {
 func (s *CreateClusterRequest) MarshalJSON() ([]byte, error) {
 	type noMethod CreateClusterRequest
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListAggregatedClustersResponse struct {
 	// Clusters: A list of clusters in the project, across all zones.
 	Clusters []*Cluster `json:"clusters,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Clusters") to
 	// unconditionally include in API requests. By default, fields with
@@ -290,12 +300,16 @@ type ListAggregatedClustersResponse struct {
 func (s *ListAggregatedClustersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListAggregatedClustersResponse
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListAggregatedOperationsResponse struct {
 	// Operations: A list of operations in the project, across all zones.
 	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Operations") to
 	// unconditionally include in API requests. By default, fields with
@@ -309,12 +323,16 @@ type ListAggregatedOperationsResponse struct {
 func (s *ListAggregatedOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListAggregatedOperationsResponse
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListClustersResponse struct {
 	// Clusters: A list of clusters in the project in the specified zone.
 	Clusters []*Cluster `json:"clusters,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Clusters") to
 	// unconditionally include in API requests. By default, fields with
@@ -328,13 +346,17 @@ type ListClustersResponse struct {
 func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListClustersResponse
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type ListOperationsResponse struct {
 	// Operations: A list of operations in the project in the specified
 	// zone.
 	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Operations") to
 	// unconditionally include in API requests. By default, fields with
@@ -348,7 +370,7 @@ type ListOperationsResponse struct {
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type noMethod ListOperationsResponse
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // MasterAuth: The authentication information for accessing the master.
@@ -394,7 +416,7 @@ type MasterAuth struct {
 func (s *MasterAuth) MarshalJSON() ([]byte, error) {
 	type noMethod MasterAuth
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 type NodeConfig struct {
@@ -435,7 +457,7 @@ type NodeConfig struct {
 func (s *NodeConfig) MarshalJSON() ([]byte, error) {
 	type noMethod NodeConfig
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // Operation: Defines the operation resource. All fields are output
@@ -477,6 +499,10 @@ type Operation struct {
 	// operation is taking place.
 	Zone string `json:"zone,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -489,7 +515,7 @@ type Operation struct {
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type noMethod Operation
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // ServiceAccount: A Compute Engine service account.
@@ -513,7 +539,7 @@ type ServiceAccount struct {
 func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 	type noMethod ServiceAccount
 	raw := noMethod(*s)
-	return googleapi.MarshalJSON(raw, s.ForceSendFields)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
 // method id "container.projects.clusters.list":
@@ -540,6 +566,16 @@ func (c *ProjectsClustersListCall) Fields(s ...googleapi.Field) *ProjectsCluster
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsClustersListCall) IfNoneMatch(entityTag string) *ProjectsClustersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -562,14 +598,33 @@ func (c *ProjectsClustersListCall) doRequest(alt string) (*http.Response, error)
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "container.projects.clusters.list" call.
+// Exactly one of *ListAggregatedClustersResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAggregatedClustersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *ProjectsClustersListCall) Do() (*ListAggregatedClustersResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -577,7 +632,12 @@ func (c *ProjectsClustersListCall) Do() (*ListAggregatedClustersResponse, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListAggregatedClustersResponse
+	ret := &ListAggregatedClustersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -632,6 +692,16 @@ func (c *ProjectsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsOpera
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsOperationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -654,14 +724,33 @@ func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, erro
 		"projectId": c.projectId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "container.projects.operations.list" call.
+// Exactly one of *ListAggregatedOperationsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAggregatedOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *ProjectsOperationsListCall) Do() (*ListAggregatedOperationsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -669,7 +758,12 @@ func (c *ProjectsOperationsListCall) Do() (*ListAggregatedOperationsResponse, er
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListAggregatedOperationsResponse
+	ret := &ListAggregatedOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -775,8 +869,24 @@ func (c *ProjectsZonesClustersCreateCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "container.projects.zones.clusters.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -784,7 +894,12 @@ func (c *ProjectsZonesClustersCreateCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Operation
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -887,8 +1002,24 @@ func (c *ProjectsZonesClustersDeleteCall) doRequest(alt string) (*http.Response,
 	return c.s.client.Do(req)
 }
 
+// Do executes the "container.projects.zones.clusters.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -896,7 +1027,12 @@ func (c *ProjectsZonesClustersDeleteCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Operation
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -969,6 +1105,16 @@ func (c *ProjectsZonesClustersGetCall) Fields(s ...googleapi.Field) *ProjectsZon
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsZonesClustersGetCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -993,14 +1139,33 @@ func (c *ProjectsZonesClustersGetCall) doRequest(alt string) (*http.Response, er
 		"clusterId": c.clusterId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "container.projects.zones.clusters.get" call.
+// Exactly one of *Cluster or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Cluster.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
 func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1008,7 +1173,12 @@ func (c *ProjectsZonesClustersGetCall) Do() (*Cluster, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Cluster
+	ret := &Cluster{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1079,6 +1249,16 @@ func (c *ProjectsZonesClustersListCall) Fields(s ...googleapi.Field) *ProjectsZo
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsZonesClustersListCall) IfNoneMatch(entityTag string) *ProjectsZonesClustersListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1102,14 +1282,33 @@ func (c *ProjectsZonesClustersListCall) doRequest(alt string) (*http.Response, e
 		"zoneId":    c.zoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "container.projects.zones.clusters.list" call.
+// Exactly one of *ListClustersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListClustersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1117,7 +1316,12 @@ func (c *ProjectsZonesClustersListCall) Do() (*ListClustersResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListClustersResponse
+	ret := &ListClustersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1183,6 +1387,16 @@ func (c *ProjectsZonesOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsZ
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsZonesOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsZonesOperationsGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1207,14 +1421,33 @@ func (c *ProjectsZonesOperationsGetCall) doRequest(alt string) (*http.Response, 
 		"operationId": c.operationId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "container.projects.zones.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1222,7 +1455,12 @@ func (c *ProjectsZonesOperationsGetCall) Do() (*Operation, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *Operation
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
@@ -1293,6 +1531,16 @@ func (c *ProjectsZonesOperationsListCall) Fields(s ...googleapi.Field) *Projects
 	return c
 }
 
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsZonesOperationsListCall) IfNoneMatch(entityTag string) *ProjectsZonesOperationsListCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
 // Context sets the context to be used in this call's Do method.
 // Any pending HTTP request will be aborted if the provided context
 // is canceled.
@@ -1316,14 +1564,33 @@ func (c *ProjectsZonesOperationsListCall) doRequest(alt string) (*http.Response,
 		"zoneId":    c.zoneId,
 	})
 	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
 	if c.ctx_ != nil {
 		return ctxhttp.Do(c.ctx_, c.s.client, req)
 	}
 	return c.s.client.Do(req)
 }
 
+// Do executes the "container.projects.zones.operations.list" call.
+// Exactly one of *ListOperationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
 func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) {
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -1331,7 +1598,12 @@ func (c *ProjectsZonesOperationsListCall) Do() (*ListOperationsResponse, error) 
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	var ret *ListOperationsResponse
+	ret := &ListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}

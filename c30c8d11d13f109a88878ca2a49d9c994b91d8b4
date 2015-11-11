@@ -622,6 +622,30 @@
     },
     {
       "key": {
+        "uuid": "dbe8fb67_e2bd2684",
+        "filename": "integration-tests/storage/integration_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-11-11T22:59:57Z",
+      "side": 1,
+      "message": "I think including \"DESTRUCTIVE\" is a very good idea.\n\nWhat about combining the two: \"GCLOUD_TESTS_GOLANG_DESTRUCTIVE_TEST_BUCKET_NAME\"?",
+      "parentUuid": "76d4867d_d0716d7d",
+      "range": {
+        "startLine": 259,
+        "startChar": 45,
+        "endLine": 259,
+        "endChar": 60
+      },
+      "revId": "c30c8d11d13f109a88878ca2a49d9c994b91d8b4",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "161fca56_be08563c",
         "filename": "integration-tests/storage/integration_test.go",
         "patchSetId": 3

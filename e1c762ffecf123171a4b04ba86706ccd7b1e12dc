@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe8fb67_8272dac7",
+        "filename": ".travis.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-11-11T23:57:18Z",
+      "side": 1,
+      "message": "it might also be a good idea to create a bucket with a name that references the particular test it\u0027s used for, e.g. \"dulcet-port-762-api-go-client-storage-integration-test\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 103,
+        "endLine": 16,
+        "endChar": 132
+      },
+      "revId": "e1c762ffecf123171a4b04ba86706ccd7b1e12dc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

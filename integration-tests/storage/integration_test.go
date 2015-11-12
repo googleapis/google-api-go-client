@@ -63,6 +63,9 @@ func TestFunctions(t *testing.T) {
 	const defaultType = "text/plain; charset=utf-8"
 
 	client, err := google.DefaultClient(context.Background(), storage.DevstorageFullControlScope)
+	if err != nil {
+		t.Fatalf("unable to create default client: %v", err)
+	}
 	s, err := storage.New(client)
 	if err != nil {
 		t.Fatalf("unable to create service: %v", err)

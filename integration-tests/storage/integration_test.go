@@ -4,6 +4,7 @@ package storage
 
 import (
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 	"testing"
 
 	"golang.org/x/net/context"
+	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/googleapi"
 	storage "google.golang.org/api/storage/v1"
@@ -27,7 +29,8 @@ var (
 )
 
 const (
-	envProject = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
+	envProject    = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
+	envPrivateKey = "GCLOUD_TESTS_GOLANG_KEY"
 	// NOTE that running this test on a bucket deletes ALL contents of the bucket!
 	envBucket    = "GCLOUD_TESTS_GOLANG_DESTRUCTIVE_TEST_BUCKET_NAME"
 	testContents = "some text that will be saved to a bucket object"
@@ -52,6 +55,23 @@ func verifyAcls(obj *storage.Object, wantDomainRole, wantAllUsersRole string) (e
 	return err
 }
 
+// TODO(gmlewis): Move this to a common location.
+func tokenSource(ctx context.Context, scopes ...string) (oauth2.TokenSource, error) {
+	keyFile := os.Getenv(envPrivateKey)
+	if keyFile == "" {
+		return nil, errors.New(envPrivateKey + " not set")
+	}
+	jsonKey, err := ioutil.ReadFile(keyFile)
+	if err != nil {
+		return nil, fmt.Errorf("unable to read %q: %v", keyFile, err)
+	}
+	conf, err := google.JWTConfigFromJSON(jsonKey, scopes...)
+	if err != nil {
+		return nil, fmt.Errorf("google.JWTConfigFromJSON: %v", err)
+	}
+	return conf.TokenSource(ctx), nil
+}
+
 func TestFunctions(t *testing.T) {
 	if projectID = os.Getenv(envProject); projectID == "" {
 		t.Fatalf("no project ID specified")
@@ -62,10 +82,12 @@ func TestFunctions(t *testing.T) {
 
 	const defaultType = "text/plain; charset=utf-8"
 
-	client, err := google.DefaultClient(context.Background(), storage.DevstorageFullControlScope)
+	ctx := context.Background()
+	ts, err := tokenSource(ctx, storage.DevstorageFullControlScope)
 	if err != nil {
-		t.Fatalf("unable to create default client: %v", err)
+		t.Fatal(err)
 	}
+	client := oauth2.NewClient(ctx, ts)
 	s, err := storage.New(client)
 	if err != nil {
 		t.Fatalf("unable to create service: %v", err)

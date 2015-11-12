@@ -22,6 +22,30 @@
       "revId": "e1c762ffecf123171a4b04ba86706ccd7b1e12dc",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76d4867d_04b467a7",
+        "filename": ".travis.yml",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-11-12T00:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe8fb67_8272dac7",
+      "range": {
+        "startLine": 16,
+        "startChar": 103,
+        "endLine": 16,
+        "endChar": 132
+      },
+      "revId": "e1c762ffecf123171a4b04ba86706ccd7b1e12dc",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

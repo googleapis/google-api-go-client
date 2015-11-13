@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/NUnz0H_oWow0qcTRC55iG-5RpbM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/D9alDxtbvUeWpOHmptYNh69Xd00\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.2",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.2",
- "revision": "20150909",
+ "revision": "20151102",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -199,7 +199,7 @@
      "description": "The agency id for this creative.",
      "format": "int64"
     },
-    "api_upload_timestamp": {
+    "apiUploadTimestamp": {
      "type": "string",
      "description": "The last upload timestamp of this creative if it was uploaded via API. Read-only. The value of this field is generated, and will be ignored for uploads. (formatted RFC 3339 timestamp).",
      "format": "date-time"

@@ -847,6 +847,22 @@
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
    },
    "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dfareporting:v2.3",
+   "name": "dfareporting",
+   "version": "v2.3",
+   "title": "DCM/DFA Reporting And Trafficking API",
+   "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.3/rest",
+   "discoveryLink": "./apis/dfareporting/v2.3/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
+    "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/doubleclick-advertisers/reporting/",
    "preferred": true
   },
   {
@@ -1306,7 +1322,7 @@
    "name": "logging",
    "version": "v1beta3",
    "title": "Google Cloud Logging API",
-   "description": "Google Cloud Logging API lets you create logs, ingest log entries, and manage log sinks.",
+   "description": "The Google Cloud Logging API lets you write log entries and manage your logs, log sinks and logs-based metrics.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/logging/v1beta3/rest",
    "discoveryLink": "./apis/logging/v1beta3/rest",
    "icons": {
@@ -1322,7 +1338,7 @@
    "name": "logging",
    "version": "v2beta1",
    "title": "Google Cloud Logging API",
-   "description": "Google Cloud Logging API lets you create logs, ingest log entries, and manage log sinks.",
+   "description": "The Google Cloud Logging API lets you write log entries and manage your logs, log sinks and logs-based metrics.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/logging/v2beta1/rest",
    "discoveryLink": "./apis/logging/v2beta1/rest",
    "icons": {
@@ -1684,8 +1700,8 @@
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.2/rest",
    "discoveryLink": "./apis/prediction/v1.2/rest",
    "icons": {
-    "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
+    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
+    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
    },
    "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
    "preferred": false
@@ -1700,8 +1716,8 @@
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.3/rest",
    "discoveryLink": "./apis/prediction/v1.3/rest",
    "icons": {
-    "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
+    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
+    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
    },
    "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
    "preferred": false
@@ -1716,8 +1732,8 @@
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.4/rest",
    "discoveryLink": "./apis/prediction/v1.4/rest",
    "icons": {
-    "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
+    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
+    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
    },
    "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
    "preferred": false
@@ -1732,8 +1748,8 @@
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.5/rest",
    "discoveryLink": "./apis/prediction/v1.5/rest",
    "icons": {
-    "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
+    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
+    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
    },
    "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
    "preferred": false
@@ -1748,29 +1764,10 @@
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.6/rest",
    "discoveryLink": "./apis/prediction/v1.6/rest",
    "icons": {
-    "x16": "http://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "http://www.google.com/images/icons/feature/predictionapi-32.png"
+    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
+    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
    },
    "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "pubsub:v1beta1",
-   "name": "pubsub",
-   "version": "v1beta1",
-   "title": "Google Cloud Pub/Sub API",
-   "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/pubsub/v1beta1/rest",
-   "discoveryLink": "./apis/pubsub/v1beta1/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/search-16.gif",
-    "x32": "https://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/pubsub/v1beta1",
-   "labels": [
-    "limited_availability"
-   ],
    "preferred": true
   },
   {

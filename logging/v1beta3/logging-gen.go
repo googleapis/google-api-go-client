@@ -532,7 +532,8 @@ type LogEntry struct {
 	// is expressed as a JSON object.
 	StructPayload LogEntryStructPayload `json:"structPayload,omitempty"`
 
-	// TextPayload: The log entry payload, represented as a text string.
+	// TextPayload: The log entry payload, represented as a Unicode string
+	// (UTF-8).
 	TextPayload string `json:"textPayload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HttpRequest") to
@@ -695,9 +696,8 @@ func (s *LogLine) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// LogMetric: Describes a collected, logs-based metric. The value of the
-// metric is the number of log entries in the project that match the
-// advanced logs filter in the `filter` field.
+// LogMetric: Describes a logs-based metric. The value of the metric is
+// the number of log entries in your project that match a logs filter.
 type LogMetric struct {
 	// Description: A description of this metric.
 	Description string `json:"description,omitempty"`
@@ -709,9 +709,10 @@ type LogMetric struct {
 
 	// Name: The client-assigned name for this metric, such as
 	// "severe_errors". Metric names are limited to 1000 characters and
-	// can include only the following characters: `-A-Za-z0-9_.,+!*',()%/\`.
-	// The slash character `/` implies a hierarchy of name pieces, and
-	// cannot be the first character of the name.
+	// can include only the following characters: `A-Z`, `a-z`, `0-9`, and
+	// the special characters `_-.,+!*',()%/\`. The slash character (`/`)
+	// denotes a hierarchy of name pieces, and it cannot be the first
+	// character of the name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -881,8 +882,7 @@ type RequestLog struct {
 
 	// RequestId: Globally unique identifier for a request, based on request
 	// start time. Request IDs for requests which started later will compare
-	// greater as binary strings than those for requests which started
-	// earlier.
+	// greater as strings than those for requests which started earlier.
 	RequestId string `json:"requestId,omitempty"`
 
 	// Resource: Contains the path and query portion of the URL that was
@@ -3377,7 +3377,7 @@ type ProjectsMetricsCreateCall struct {
 	ctx_       context.Context
 }
 
-// Create: Create the specified log metric resource.
+// Create: Creates a logs-based metric.
 func (r *ProjectsMetricsService) Create(projectsId string, logmetric *LogMetric) *ProjectsMetricsCreateCall {
 	c := &ProjectsMetricsCreateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3463,7 +3463,7 @@ func (c *ProjectsMetricsCreateCall) Do() (*LogMetric, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create the specified log metric resource.",
+	//   "description": "Creates a logs-based metric.",
 	//   "httpMethod": "POST",
 	//   "id": "logging.projects.metrics.create",
 	//   "parameterOrder": [
@@ -3486,7 +3486,8 @@ func (c *ProjectsMetricsCreateCall) Do() (*LogMetric, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin"
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.write"
 	//   ]
 	// }
 
@@ -3502,7 +3503,7 @@ type ProjectsMetricsDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes the specified log metric.
+// Delete: Deletes a logs-based metric.
 func (r *ProjectsMetricsService) Delete(projectsId string, metricsId string) *ProjectsMetricsDeleteCall {
 	c := &ProjectsMetricsDeleteCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3583,7 +3584,7 @@ func (c *ProjectsMetricsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified log metric.",
+	//   "description": "Deletes a logs-based metric.",
 	//   "httpMethod": "DELETE",
 	//   "id": "logging.projects.metrics.delete",
 	//   "parameterOrder": [
@@ -3610,7 +3611,8 @@ func (c *ProjectsMetricsDeleteCall) Do() (*Empty, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin"
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.write"
 	//   ]
 	// }
 
@@ -3626,7 +3628,7 @@ type ProjectsMetricsGetCall struct {
 	ctx_       context.Context
 }
 
-// Get: Get the specified log metric resource.
+// Get: Gets a logs-based metric.
 func (r *ProjectsMetricsService) Get(projectsId string, metricsId string) *ProjectsMetricsGetCall {
 	c := &ProjectsMetricsGetCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3720,7 +3722,7 @@ func (c *ProjectsMetricsGetCall) Do() (*LogMetric, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the specified log metric resource.",
+	//   "description": "Gets a logs-based metric.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.metrics.get",
 	//   "parameterOrder": [
@@ -3764,7 +3766,7 @@ type ProjectsMetricsListCall struct {
 	ctx_       context.Context
 }
 
-// List: List log metrics associated with the specified project.
+// List: Lists the logs-based metrics associated with a project.
 func (r *ProjectsMetricsService) List(projectsId string) *ProjectsMetricsListCall {
 	c := &ProjectsMetricsListCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -3879,7 +3881,7 @@ func (c *ProjectsMetricsListCall) Do() (*ListLogMetricsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List log metrics associated with the specified project.",
+	//   "description": "Lists the logs-based metrics associated with a project.",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.metrics.list",
 	//   "parameterOrder": [
@@ -3929,7 +3931,7 @@ type ProjectsMetricsUpdateCall struct {
 	ctx_       context.Context
 }
 
-// Update: Create or update the specified log metric resource.
+// Update: Creates or updates a logs-based metric.
 func (r *ProjectsMetricsService) Update(projectsId string, metricsId string, logmetric *LogMetric) *ProjectsMetricsUpdateCall {
 	c := &ProjectsMetricsUpdateCall{s: r.s, opt_: make(map[string]interface{})}
 	c.projectsId = projectsId
@@ -4017,7 +4019,7 @@ func (c *ProjectsMetricsUpdateCall) Do() (*LogMetric, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Create or update the specified log metric resource.",
+	//   "description": "Creates or updates a logs-based metric.",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.projects.metrics.update",
 	//   "parameterOrder": [
@@ -4047,7 +4049,8 @@ func (c *ProjectsMetricsUpdateCall) Do() (*LogMetric, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/logging.admin"
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.write"
 	//   ]
 	// }
 

@@ -464,6 +464,7 @@ func (s *ErrorProto) MarshalJSON() ([]byte, error) {
 type ExternalDataConfiguration struct {
 	// Compression: [Optional] The compression type of the data source.
 	// Possible values include GZIP and NONE. The default value is NONE.
+	// This setting is ignored for Google Cloud Datastore backups.
 	Compression string `json:"compression,omitempty"`
 
 	// CsvOptions: Additional properties to set if sourceFormat is set to
@@ -477,27 +478,35 @@ type ExternalDataConfiguration struct {
 	// invalid error is returned in the job result. The default value is
 	// false. The sourceFormat property determines what BigQuery treats as
 	// an extra value: CSV: Trailing columns JSON: Named values that don't
-	// match any column names
+	// match any column names Google Cloud Datastore backups: This setting
+	// is ignored.
 	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
 
 	// MaxBadRecords: [Optional] The maximum number of bad records that
 	// BigQuery can ignore when reading data. If the number of bad records
 	// exceeds this value, an invalid error is returned in the job result.
 	// The default value is 0, which requires that all records are valid.
+	// This setting is ignored for Google Cloud Datastore backups.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
-	// Schema: [Required] The schema for the data.
+	// Schema: [Optional] The schema for the data. Schema is required for
+	// CSV and JSON formats. Schema is disallowed for Google Cloud Datastore
+	// backups.
 	Schema *TableSchema `json:"schema,omitempty"`
 
 	// SourceFormat: [Required] The data format. For CSV files, specify
 	// "CSV". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON".
+	// For Google Cloud Datastore backups, specify "DATASTORE_BACKUP".
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
 	// data in Google Cloud Storage. Each URI can contain one '*' wildcard
 	// character and it must come after the 'bucket' name. Size limits
 	// related to load jobs apply to external data sources, plus an
-	// additional limit of 10 GB maximum size across all URIs.
+	// additional limit of 10 GB maximum size across all URIs. For Google
+	// Cloud Datastore backups, exactly one URI can be specified, and it
+	// must end with '.backup_info'. Also, the '*' wildcard character is not
+	// allowed.
 	SourceUris []string `json:"sourceUris,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Compression") to
@@ -2016,6 +2025,10 @@ type ViewDefinition struct {
 	// Query: [Required] A query that BigQuery executes when the view is
 	// referenced.
 	Query string `json:"query,omitempty"`
+
+	// UserDefinedFunctionResources: [Experimental] Describes user-defined
+	// function resources used in the query.
+	UserDefinedFunctionResources []*UserDefinedFunctionResource `json:"userDefinedFunctionResources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Query") to
 	// unconditionally include in API requests. By default, fields with

@@ -429,7 +429,7 @@ type Operation struct {
 	// This is in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
-	// Kind: [Output Only] Type of the resource. Always compute#Operation
+	// Kind: [Output Only] Type of the resource. Always compute#operation
 	// for Operation resources.
 	Kind string `json:"kind,omitempty"`
 
@@ -437,7 +437,7 @@ type Operation struct {
 	Name string `json:"name,omitempty"`
 
 	// OperationType: [Output Only] Type of the operation, such as insert,
-	// update, and delete.
+	// compute.instanceGroups.update, or compute.instanceGroups.delete.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Progress: [Output Only] An optional progress indicator that ranges

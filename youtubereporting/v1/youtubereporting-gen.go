@@ -1091,6 +1091,13 @@ func (r *JobsReportsService) List(jobId string) *JobsReportsListCall {
 	return c
 }
 
+// CreatedAfter sets the optional parameter "createdAfter": If set, only
+// reports created after the specified date/time are returned.
+func (c *JobsReportsListCall) CreatedAfter(createdAfter string) *JobsReportsListCall {
+	c.opt_["createdAfter"] = createdAfter
+	return c
+}
+
 // OnBehalfOfContentOwner sets the optional parameter
 // "onBehalfOfContentOwner": The content owner's external ID on which
 // behalf the user is acting on. If not set, the user is acting for
@@ -1147,6 +1154,9 @@ func (c *JobsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	params := make(url.Values)
 	params.Set("alt", alt)
+	if v, ok := c.opt_["createdAfter"]; ok {
+		params.Set("createdAfter", fmt.Sprintf("%v", v))
+	}
 	if v, ok := c.opt_["onBehalfOfContentOwner"]; ok {
 		params.Set("onBehalfOfContentOwner", fmt.Sprintf("%v", v))
 	}
@@ -1218,6 +1228,11 @@ func (c *JobsReportsListCall) Do() (*ListReportsResponse, error) {
 	//     "jobId"
 	//   ],
 	//   "parameters": {
+	//     "createdAfter": {
+	//       "description": "If set, only reports created after the specified date/time are returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "jobId": {
 	//       "description": "The ID of the job.",
 	//       "location": "path",

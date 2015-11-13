@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/pd3kPnOWeE_pyZMoVhvVpjurmVg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/JuFctzv7DbhH8sUX0olMhZkcdjY\"",
  "discoveryVersion": "v1",
  "id": "gamesManagement:v1management",
  "name": "gamesManagement",
  "canonicalName": "Games Management",
  "version": "v1management",
- "revision": "20150707",
+ "revision": "20151110",
  "title": "Google Play Game Services Management API",
  "description": "The Management API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -276,6 +276,14 @@
     "avatarImageUrl": {
      "type": "string",
      "description": "The base URL for the image that represents the player."
+    },
+    "bannerUrlLandscape": {
+     "type": "string",
+     "description": "The url to the landscape mode player banner image."
+    },
+    "bannerUrlPortrait": {
+     "type": "string",
+     "description": "The url to the portrait mode player banner image."
     },
     "displayName": {
      "type": "string",

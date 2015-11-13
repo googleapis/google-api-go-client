@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/VJrCHXHaMQfXi6fEi9qa_MKwS3Y\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/e32oSFoZ2KakZjHNn-XHFVe6R6o\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20151008",
+ "revision": "20151109",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -97,6 +97,10 @@
     "registered": {
      "type": "boolean",
      "description": "Whether the user is registered if the identifier is an email."
+    },
+    "sessionId": {
+     "type": "string",
+     "description": "Session ID which should be passed in the following verifyAssertion request."
     }
    }
   },
@@ -159,6 +163,10 @@
    "type": "object",
    "description": "Response of getting a code for user confirmation (reset password, change email etc.).",
    "properties": {
+    "email": {
+     "type": "string",
+     "description": "The email address that the email is sent to."
+    },
     "kind": {
      "type": "string",
      "description": "The fixed string \"identitytoolkit#GetOobConfirmationCodeResponse\".",
@@ -286,6 +294,32 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "IdentitytoolkitRelyingpartyGetProjectConfigResponse": {
+   "id": "IdentitytoolkitRelyingpartyGetProjectConfigResponse",
+   "type": "object",
+   "description": "Response of getting the project configuration.",
+   "properties": {
+    "allowPasswordUser": {
+     "type": "boolean",
+     "description": "Whether to allow password user sign in or sign up."
+    },
+    "apiKey": {
+     "type": "string",
+     "description": "Browser API key, needed when making http request to Apiary."
+    },
+    "idpConfig": {
+     "type": "array",
+     "description": "OAuth2 provider configuration.",
+     "items": {
+      "$ref": "IdpConfig"
+     }
+    },
+    "projectId": {
+     "type": "string",
+     "description": "Project ID of the relying party."
     }
    }
   },
@@ -441,6 +475,10 @@
     "returnRefreshToken": {
      "type": "boolean",
      "description": "Whether to return refresh tokens."
+    },
+    "sessionId": {
+     "type": "string",
+     "description": "Session ID, which should match the one in previous createAuthUri request."
     }
    }
   },
@@ -468,6 +506,30 @@
     "pendingIdToken": {
      "type": "string",
      "description": "The GITKit token for the non-trusted IDP, which is to be confirmed by the user."
+    }
+   }
+  },
+  "IdpConfig": {
+   "id": "IdpConfig",
+   "type": "object",
+   "description": "Template for a single idp configuration.",
+   "properties": {
+    "clientId": {
+     "type": "string",
+     "description": "OAuth2 client ID."
+    },
+    "enabled": {
+     "type": "boolean",
+     "description": "Whether this IDP is enabled."
+    },
+    "experimentPercent": {
+     "type": "integer",
+     "description": "Percent of users who will be prompted/redirected federated login for this IDP.",
+     "format": "int32"
+    },
+    "provider": {
+     "type": "string",
+     "description": "OAuth2 provider."
     }
    }
   },
@@ -934,6 +996,15 @@
      },
      "response": {
       "$ref": "GetOobConfirmationCodeResponse"
+     }
+    },
+    "getProjectConfig": {
+     "id": "identitytoolkit.relyingparty.getProjectConfig",
+     "path": "getProjectConfig",
+     "httpMethod": "GET",
+     "description": "Get project configuration.",
+     "response": {
+      "$ref": "IdentitytoolkitRelyingpartyGetProjectConfigResponse"
      }
     },
     "getPublicKeys": {

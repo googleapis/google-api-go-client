@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/NfC6HUSyutjMUJzqUOocETnJU2I\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dRgfGk7DF17Jm0ty3Xvqoes1c_4\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20150921",
+ "revision": "20151105",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -1149,7 +1149,13 @@
      "description": "Resource type.",
      "default": "books#notification"
     },
-    "linkUrl": {
+    "notification_type": {
+     "type": "string"
+    },
+    "show_notification_settings_action": {
+     "type": "boolean"
+    },
+    "targetUrl": {
      "type": "string"
     },
     "title": {
@@ -1331,6 +1337,57 @@
     "volumeId": {
      "type": "string",
      "description": "Volume that this review is for."
+    }
+   }
+  },
+  "Series": {
+   "id": "Series",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#series"
+    },
+    "series": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "bannerImageUrl": {
+        "type": "string"
+       },
+       "imageUrl": {
+        "type": "string"
+       },
+       "seriesId": {
+        "type": "string"
+       },
+       "title": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   }
+  },
+  "Seriesmembership": {
+   "id": "Seriesmembership",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Resorce type.",
+     "default": "books#series#membership"
+    },
+    "member": {
+     "type": "array",
+     "items": {
+      "$ref": "Volume"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
     }
    }
   },
@@ -1885,6 +1942,9 @@
        "description": "Total number of sample pages as per publisher metadata.",
        "format": "int32"
       },
+      "seriesInfo": {
+       "$ref": "Volumeseriesinfo"
+      },
       "subtitle": {
        "type": "string",
        "description": "Volume subtitle. (In LITE projection.)"
@@ -2054,6 +2114,62 @@
      "type": "integer",
      "description": "Total number of volumes found. This might be greater than the number of volumes returned in this response if results have been paginated.",
      "format": "int32"
+    }
+   }
+  },
+  "Volumeseriesinfo": {
+   "id": "Volumeseriesinfo",
+   "type": "object",
+   "properties": {
+    "bookDisplayNumber": {
+     "type": "string",
+     "description": "The display number string. This should be used only for display purposes and the actual sequence should be inferred from the below orderNumber."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Resource type.",
+     "default": "books#volume_series_info"
+    },
+    "shortSeriesBookTitle": {
+     "type": "string",
+     "description": "Short book title in the context of the series."
+    },
+    "volumeSeries": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "issue": {
+        "type": "array",
+        "description": "List of issues. Applicable only for Collection Edition and Omnibus.",
+        "items": {
+         "type": "object",
+         "properties": {
+          "issueDisplayNumber": {
+           "type": "string"
+          },
+          "issueOrderNumber": {
+           "type": "integer",
+           "format": "int32"
+          }
+         }
+        }
+       },
+       "orderNumber": {
+        "type": "integer",
+        "description": "The book order number in the series.",
+        "format": "int32"
+       },
+       "seriesBookType": {
+        "type": "string",
+        "description": "The book type in the context of series. Examples - Single Issue, Collection Edition, etc."
+       },
+       "seriesId": {
+        "type": "string",
+        "description": "The series id."
+       }
+      }
+     }
     }
    }
   }
@@ -3781,6 +3897,74 @@
      "scopes": [
       "https://www.googleapis.com/auth/books"
      ]
+    }
+   }
+  },
+  "series": {
+   "methods": {
+    "get": {
+     "id": "books.series.get",
+     "path": "series/get",
+     "httpMethod": "GET",
+     "description": "Returns Series metadata for the given series ids.",
+     "parameters": {
+      "series_id": {
+       "type": "string",
+       "description": "String that identifies the series",
+       "required": true,
+       "repeated": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "series_id"
+     ],
+     "response": {
+      "$ref": "Series"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/books"
+     ]
+    }
+   },
+   "resources": {
+    "membership": {
+     "methods": {
+      "get": {
+       "id": "books.series.membership.get",
+       "path": "series/membership/get",
+       "httpMethod": "GET",
+       "description": "Returns Series membership data given the series id.",
+       "parameters": {
+        "page_size": {
+         "type": "integer",
+         "description": "Number of maximum results per page to be included in the response.",
+         "format": "uint32",
+         "location": "query"
+        },
+        "page_token": {
+         "type": "string",
+         "description": "The value of the nextToken from the previous page.",
+         "location": "query"
+        },
+        "series_id": {
+         "type": "string",
+         "description": "String that identifies the series",
+         "required": true,
+         "location": "query"
+        }
+       },
+       "parameterOrder": [
+        "series_id"
+       ],
+       "response": {
+        "$ref": "Seriesmembership"
+       },
+       "scopes": [
+        "https://www.googleapis.com/auth/books"
+       ]
+      }
+     }
     }
    }
   },

@@ -186,6 +186,10 @@ type Customer struct {
 	// CustomerDomain: The domain name of the customer.
 	CustomerDomain string `json:"customerDomain,omitempty"`
 
+	// CustomerDomainVerified: Whether the customer's primary domain has
+	// been verified.
+	CustomerDomainVerified bool `json:"customerDomainVerified,omitempty"`
+
 	// CustomerId: The id of the customer.
 	CustomerId string `json:"customerId,omitempty"`
 
@@ -316,7 +320,20 @@ type Subscription struct {
 	// SubscriptionId: The id of the subscription.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
 
-	// SuspensionReasons: Suspension Reasons
+	// SuspensionReasons: field listing all current reasons the subscription
+	// is suspended. It is possible for a subscription to have multiple
+	// suspension reasons. A subscription's status is SUSPENDED until all
+	// pending suspensions are removed. Possible options include:
+	// - PENDING_TOS_ACCEPTANCE — The customer has not logged in and
+	// accepted the Google Apps Resold Terms of Services.
+	// - RENEWAL_WITH_TYPE_CANCEL — The customer's commitment ended and
+	// their service was cancelled at the end of their term.
+	// - RESELLER_INITIATED — A manual suspension invoked by a Reseller.
+	//
+	// - TRIAL_ENDED — The customer's trial expired without a plan
+	// selected.
+	// - OTHER — The customer is suspended for an internal Google reason
+	// (e.g. abuse or otherwise).
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
 
 	// TransferInfo: Transfer related information for the subscription.

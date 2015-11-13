@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/-5hQwJsgwNQCq1DK1Ud7--ggMIg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/O56CW5d-dWo_5TIxEF1Juc5QIxA\"",
  "discoveryVersion": "v1",
  "id": "tagmanager:v1",
  "name": "tagmanager",
  "canonicalName": "Tag Manager",
  "version": "v1",
- "revision": "20151008",
+ "revision": "20151112",
  "title": "Tag Manager API",
  "description": "API for accessing Tag Manager accounts and containers.",
  "ownerDomain": "google.com",
@@ -2545,6 +2545,12 @@
           "headers": {
            "type": "boolean",
            "description": "Retrieve headers only when true.",
+           "default": "false",
+           "location": "query"
+          },
+          "includeDeleted": {
+           "type": "boolean",
+           "description": "Also retrieve deleted (archived) versions when true.",
            "default": "false",
            "location": "query"
           }

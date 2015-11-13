@@ -233,7 +233,7 @@ type Creative struct {
 	// was uploaded via API. Read-only. The value of this field is
 	// generated, and will be ignored for uploads. (formatted RFC 3339
 	// timestamp).
-	ApiUploadTimestamp string `json:"api_upload_timestamp,omitempty"`
+	ApiUploadTimestamp string `json:"apiUploadTimestamp,omitempty"`
 
 	// Attribute: All attributes for the ads that may be shown from this
 	// snippet.

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/HDPUkwKxWfeChsVb7MggQS7MZkw\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/WRSrXd8ZFNmuEU1-lWdcTz7dfu4\"",
  "discoveryVersion": "v1",
  "id": "fitness:v1",
  "name": "fitness",
  "version": "v1",
- "revision": "20150720",
+ "revision": "20151021",
  "title": "Fitness",
  "description": "Google Fit API",
  "ownerDomain": "google.com",
@@ -468,6 +468,7 @@
      "type": "string",
      "description": "The different supported formats for each field in a data type.",
      "enum": [
+      "blob",
       "floatList",
       "floatPoint",
       "integer",
@@ -476,6 +477,7 @@
       "string"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -1184,8 +1186,11 @@
         "$ref": "AggregateResponse"
        },
        "scopes": [
+        "https://www.googleapis.com/auth/fitness.activity.read",
         "https://www.googleapis.com/auth/fitness.activity.write",
+        "https://www.googleapis.com/auth/fitness.body.read",
         "https://www.googleapis.com/auth/fitness.body.write",
+        "https://www.googleapis.com/auth/fitness.location.read",
         "https://www.googleapis.com/auth/fitness.location.write"
        ]
       }

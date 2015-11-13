@@ -758,6 +758,9 @@ type Account struct {
 	// - "34" for VEF
 	// - "35" for COP
 	// - "36" for GTQ
+	// - "37" for PLN
+	// - "39" for INR
+	// - "40" for THB
 	CurrencyId int64 `json:"currencyId,omitempty,string"`
 
 	// DefaultCreativeSizeId: Default placement dimensions for this account.
@@ -2730,14 +2733,14 @@ type Creative struct {
 	ClickTags []*ClickTag `json:"clickTags,omitempty"`
 
 	// CommercialId: Industry standard ID assigned to creative for reach and
-	// frequency. Applicable to the following creative types: INSTREAM_VIDEO
-	// and all VPAID.
+	// frequency. Applicable to the following creative types: all
+	// INSTREAM_VIDEO and all VPAID.
 	CommercialId string `json:"commercialId,omitempty"`
 
 	// CompanionCreatives: List of companion creatives assigned to an
 	// in-Stream videocreative. Acceptable values include IDs of existing
 	// flash and image creatives. Applicable to the following creative
-	// types: INSTREAM_VIDEO and all VPAID.
+	// types: all INSTREAM_VIDEO and all VPAID.
 	CompanionCreatives googleapi.Int64s `json:"companionCreatives,omitempty"`
 
 	// Compatibility: Compatibilities associated with this creative. This is
@@ -2764,8 +2767,9 @@ type Creative struct {
 	Compatibility []string `json:"compatibility,omitempty"`
 
 	// CounterCustomEvents: List of counter events configured for the
-	// creative. Applicable to the following creative types: all RICH_MEDIA,
-	// and all VPAID.
+	// creative. For ENHANCED_IMAGE creatives, these are read-only and
+	// auto-generated from clickTags. Applicable to the following creative
+	// types: ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID.
 	CounterCustomEvents []*CreativeCustomEvent `json:"counterCustomEvents,omitempty"`
 
 	// CreativeAssets: Assets associated with a creative. Applicable to all
@@ -2786,8 +2790,11 @@ type Creative struct {
 	CustomKeyValues []string `json:"customKeyValues,omitempty"`
 
 	// ExitCustomEvents: List of exit events configured for the creative.
-	// Applicable to the following creative types: all RICH_MEDIA, and all
-	// VPAID.
+	// For ENHANCED_BANNER and ENHANCED_IMAGE creatives, these are read-only
+	// and auto-generated from clickTags, For ENHANCED_BANNER, an event is
+	// also created from the backupImageReportingLabel. Applicable to the
+	// following creative types: ENHANCED_BANNER, ENHANCED_IMAGE, all
+	// RICH_MEDIA, and all VPAID.
 	ExitCustomEvents []*CreativeCustomEvent `json:"exitCustomEvents,omitempty"`
 
 	// FsCommand: OpenWindow FSCommand of this creative. This lets the SWF
@@ -2838,10 +2845,13 @@ type Creative struct {
 	// to the following creative types: all RICH_MEDIA.
 	OverrideCss string `json:"overrideCss,omitempty"`
 
-	// RedirectUrl: URL of hosted image or another ad tag. This is a
-	// required field when applicable. Applicable to the following creative
-	// types: INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT, and
-	// REDIRECT
+	// RedirectUrl: URL of hosted image or hosted video or another ad tag.
+	// For INSTREAM_VIDEO_REDIRECT creatives this is the in-stream video
+	// redirect URL. The standard for a VAST (Video Ad Serving Template) ad
+	// response allows for a redirect link to another VAST 2.0 or 3.0 call.
+	// This is a required field when applicable. Applicable to the following
+	// creative types: INTERNAL_REDIRECT, INTERSTITIAL_INTERNAL_REDIRECT,
+	// REDIRECT, and INSTREAM_VIDEO_REDIRECT
 	RedirectUrl string `json:"redirectUrl,omitempty"`
 
 	// RenderingId: ID of current rendering version. This is a read-only
@@ -2876,7 +2886,8 @@ type Creative struct {
 	Size *Size `json:"size,omitempty"`
 
 	// Skippable: Whether the user can choose to skip the creative.
-	// Applicable to the following creative types: INSTREAM_VIDEO.
+	// Applicable to the following creative types: all INSTREAM_VIDEO and
+	// all VPAID.
 	Skippable bool `json:"skippable,omitempty"`
 
 	// SslCompliant: Whether the creative is SSL-compliant. This is a
@@ -2915,13 +2926,14 @@ type Creative struct {
 	ThirdPartyRichMediaImpressionsUrl string `json:"thirdPartyRichMediaImpressionsUrl,omitempty"`
 
 	// ThirdPartyUrls: Third-party URLs for tracking in-stream video
-	// creative events. Applicable to the following creative types:
+	// creative events. Applicable to the following creative types: all
 	// INSTREAM_VIDEO and all VPAID.
 	ThirdPartyUrls []*ThirdPartyTrackingUrl `json:"thirdPartyUrls,omitempty"`
 
 	// TimerCustomEvents: List of timer events configured for the creative.
-	// Applicable to the following creative types: all RICH_MEDIA, and all
-	// VPAID.
+	// For ENHANCED_IMAGE creatives, these are read-only and auto-generated
+	// from clickTags. Applicable to the following creative types:
+	// ENHANCED_IMAGE, all RICH_MEDIA, and all VPAID.
 	TimerCustomEvents []*CreativeCustomEvent `json:"timerCustomEvents,omitempty"`
 
 	// TotalFileSize: Combined size of all creative assets. This is a
@@ -2970,7 +2982,7 @@ type Creative struct {
 	Version int64 `json:"version,omitempty"`
 
 	// VideoDescription: Description of the video ad. Applicable to the
-	// following creative types: INSTREAM_VIDEO and all VPAID.
+	// following creative types: all INSTREAM_VIDEO and all VPAID.
 	VideoDescription string `json:"videoDescription,omitempty"`
 
 	// VideoDuration: Creative video duration in seconds. This is a
@@ -3538,7 +3550,9 @@ type CreativeAssetMetadata struct {
 	//   "ADMOB_REFERENCED"
 	//   "ASSET_FORMAT_UNSUPPORTED_DCM"
 	//   "ASSET_INVALID"
+	//   "CLICK_TAG_HARD_CODED"
 	//   "CLICK_TAG_INVALID"
+	//   "CLICK_TAG_IN_GWD"
 	//   "CLICK_TAG_MISSING"
 	//   "CLICK_TAG_MORE_THAN_ONE"
 	//   "CLICK_TAG_NON_TOP_LEVEL"
@@ -3715,8 +3729,8 @@ type CreativeCustomEvent struct {
 	//   "TARGET_TOP"
 	TargetType string `json:"targetType,omitempty"`
 
-	// VideoReportingId: Reporting ID, used to differentiate multiple videos
-	// in a single creative.
+	// VideoReportingId: Video reporting ID, used to differentiate multiple
+	// videos in a single creative. This is a read-only field.
 	VideoReportingId string `json:"videoReportingId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Active") to
@@ -4672,6 +4686,9 @@ type DirectorySite struct {
 	// - "34" for VEF
 	// - "35" for COP
 	// - "36" for GTQ
+	// - "37" for PLN
+	// - "39" for INR
+	// - "40" for THB
 	CurrencyId int64 `json:"currencyId,omitempty,string"`
 
 	// Description: Description of this directory site.

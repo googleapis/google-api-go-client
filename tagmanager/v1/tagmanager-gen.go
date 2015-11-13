@@ -5920,6 +5920,13 @@ func (c *AccountsContainersVersionsListCall) Headers(headers bool) *AccountsCont
 	return c
 }
 
+// IncludeDeleted sets the optional parameter "includeDeleted": Also
+// retrieve deleted (archived) versions when true.
+func (c *AccountsContainersVersionsListCall) IncludeDeleted(includeDeleted bool) *AccountsContainersVersionsListCall {
+	c.opt_["includeDeleted"] = includeDeleted
+	return c
+}
+
 // Fields allows partial responses to be retrieved.
 // See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5952,6 +5959,9 @@ func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Respon
 	params.Set("alt", alt)
 	if v, ok := c.opt_["headers"]; ok {
 		params.Set("headers", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["includeDeleted"]; ok {
+		params.Set("includeDeleted", fmt.Sprintf("%v", v))
 	}
 	if v, ok := c.opt_["fields"]; ok {
 		params.Set("fields", fmt.Sprintf("%v", v))
@@ -6032,6 +6042,12 @@ func (c *AccountsContainersVersionsListCall) Do() (*ListContainerVersionsRespons
 	//     "headers": {
 	//       "default": "false",
 	//       "description": "Retrieve headers only when true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "includeDeleted": {
+	//       "default": "false",
+	//       "description": "Also retrieve deleted (archived) versions when true.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

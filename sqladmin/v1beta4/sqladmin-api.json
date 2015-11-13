@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dmM5e1LsyAJYfrXQoy2C4h3tVuA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/K22CvhoLMtMx3qHuSsow6H1rRp4\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20151013",
+ "revision": "20151030",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -753,6 +753,31 @@
     }
    }
   },
+  "MaintenanceWindow": {
+   "id": "MaintenanceWindow",
+   "type": "object",
+   "description": "Maintenance window. This specifies when a v2 Cloud SQL instance should preferably be restarted for system maintenance puruposes.",
+   "properties": {
+    "day": {
+     "type": "integer",
+     "description": "day of week (1-7), starting on Monday.",
+     "format": "int32"
+    },
+    "hour": {
+     "type": "integer",
+     "description": "hour of day - 0 to 23.",
+     "format": "int32"
+    },
+    "kind": {
+     "type": "string",
+     "description": "This is always sql#maintenanceWindow.",
+     "default": "sql#maintenanceWindow"
+    },
+    "updateTrack": {
+     "type": "string"
+    }
+   }
+  },
   "MySqlReplicaConfiguration": {
    "id": "MySqlReplicaConfiguration",
    "type": "object",
@@ -1028,7 +1053,7 @@
     },
     "dataDiskSizeGb": {
      "type": "string",
-     "description": "The size of data disk for the performance instance, specified in GB. Setting this value for non-performance instances will result in an error.",
+     "description": "The size of data disk, in GB. Only supported for 2nd Generation instances. The data disk size minimum is 10GB.",
      "format": "int64"
     },
     "databaseFlags": {
@@ -1054,6 +1079,10 @@
     "locationPreference": {
      "$ref": "LocationPreference",
      "description": "The location preference settings. This allows the instance to be located as near as possible to either an App Engine app or GCE zone for better performance."
+    },
+    "maintenanceWindow": {
+     "$ref": "MaintenanceWindow",
+     "description": "The maintenance window for this instance. This specifies when the instance may be restarted for maintenance purposes."
     },
     "pricingPlan": {
      "type": "string",

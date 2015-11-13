@@ -624,6 +624,7 @@ type DataTypeField struct {
 	// type.
 	//
 	// Possible values:
+	//   "blob"
 	//   "floatList"
 	//   "floatPoint"
 	//   "integer"
@@ -2425,8 +2426,11 @@ func (c *UsersDatasetAggregateCall) Do() (*AggregateResponse, error) {
 	//     "$ref": "AggregateResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/fitness.activity.read",
 	//     "https://www.googleapis.com/auth/fitness.activity.write",
+	//     "https://www.googleapis.com/auth/fitness.body.read",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
+	//     "https://www.googleapis.com/auth/fitness.location.read",
 	//     "https://www.googleapis.com/auth/fitness.location.write"
 	//   ]
 	// }

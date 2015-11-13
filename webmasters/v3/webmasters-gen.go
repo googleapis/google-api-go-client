@@ -47,10 +47,10 @@ const basePath = "https://www.googleapis.com/webmasters/v3/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and modify Webmaster Tools data for your verified sites
+	// View and manage Search Console data for your verified sites
 	WebmastersScope = "https://www.googleapis.com/auth/webmasters"
 
-	// View Webmaster Tools data for your verified sites
+	// View Search Console data for your verified sites
 	WebmastersReadonlyScope = "https://www.googleapis.com/auth/webmasters.readonly"
 )
 
@@ -326,8 +326,9 @@ func (s *SitemapsListResponse) MarshalJSON() ([]byte, error) {
 
 // SitesListResponse: List of sites with access level information.
 type SitesListResponse struct {
-	// SiteEntry: Contains permission level information about a Webmaster
-	// Tools site. For more information, see Permissions in Webmaster Tools.
+	// SiteEntry: Contains permission level information about a Search
+	// Console site. For more information, see Permissions in Search
+	// Console.
 	SiteEntry []*WmxSite `json:"siteEntry,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -516,9 +517,8 @@ func (s *UrlSampleDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// WmxSite: Contains permission level information about a Webmaster
-// Tools site. For more information, see  Permissions in Webmaster
-// Tools.
+// WmxSite: Contains permission level information about a Search Console
+// site. For more information, see  Permissions in Search Console.
 type WmxSite struct {
 	// PermissionLevel: The user's permission level for the site.
 	PermissionLevel string `json:"permissionLevel,omitempty"`
@@ -1242,7 +1242,7 @@ type SitesAddCall struct {
 	ctx_    context.Context
 }
 
-// Add: Adds a site to the set of the user's sites in Webmaster Tools.
+// Add: Adds a site to the set of the user's sites in Search Console.
 func (r *SitesService) Add(siteUrl string) *SitesAddCall {
 	c := &SitesAddCall{s: r.s, opt_: make(map[string]interface{})}
 	c.siteUrl = siteUrl
@@ -1297,7 +1297,7 @@ func (c *SitesAddCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Adds a site to the set of the user's sites in Webmaster Tools.",
+	//   "description": "Adds a site to the set of the user's sites in Search Console.",
 	//   "httpMethod": "PUT",
 	//   "id": "webmasters.sites.add",
 	//   "parameterOrder": [
@@ -1328,7 +1328,7 @@ type SitesDeleteCall struct {
 	ctx_    context.Context
 }
 
-// Delete: Removes a site from the set of the user's Webmaster Tools
+// Delete: Removes a site from the set of the user's Search Console
 // sites.
 func (r *SitesService) Delete(siteUrl string) *SitesDeleteCall {
 	c := &SitesDeleteCall{s: r.s, opt_: make(map[string]interface{})}
@@ -1384,7 +1384,7 @@ func (c *SitesDeleteCall) Do() error {
 	}
 	return nil
 	// {
-	//   "description": "Removes a site from the set of the user's Webmaster Tools sites.",
+	//   "description": "Removes a site from the set of the user's Search Console sites.",
 	//   "httpMethod": "DELETE",
 	//   "id": "webmasters.sites.delete",
 	//   "parameterOrder": [
@@ -1541,7 +1541,7 @@ type SitesListCall struct {
 	ctx_ context.Context
 }
 
-// List: Lists the user's Webmaster Tools sites.
+// List: Lists the user's Search Console sites.
 func (r *SitesService) List() *SitesListCall {
 	c := &SitesListCall{s: r.s, opt_: make(map[string]interface{})}
 	return c
@@ -1630,7 +1630,7 @@ func (c *SitesListCall) Do() (*SitesListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the user's Webmaster Tools sites.",
+	//   "description": "Lists the user's Search Console sites.",
 	//   "httpMethod": "GET",
 	//   "id": "webmasters.sites.list",
 	//   "path": "sites",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Cbmd7CRXSYNWgkRD3A5YJaaBrgY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/461mKpl6MBGkRaHsOq8o28ZgRUk\"",
  "discoveryVersion": "v1",
  "id": "reseller:v1sandbox",
  "name": "reseller",
  "version": "v1sandbox",
- "revision": "20150603",
+ "revision": "20151110",
  "title": "Enterprise Apps Reseller API",
  "description": "Lets you create and manage your customers and their subscriptions.",
  "ownerDomain": "google.com",
@@ -167,6 +167,10 @@
      "type": "string",
      "description": "The domain name of the customer."
     },
+    "customerDomainVerified": {
+     "type": "boolean",
+     "description": "Whether the customer's primary domain has been verified."
+    },
     "customerId": {
      "type": "string",
      "description": "The id of the customer."
@@ -316,7 +320,7 @@
     },
     "suspensionReasons": {
      "type": "array",
-     "description": "Suspension Reasons",
+     "description": "field listing all current reasons the subscription is suspended. It is possible for a subscription to have multiple suspension reasons. A subscription's status is SUSPENDED until all pending suspensions are removed. Possible options include:  \n- PENDING_TOS_ACCEPTANCE — The customer has not logged in and accepted the Google Apps Resold Terms of Services.  \n- RENEWAL_WITH_TYPE_CANCEL — The customer's commitment ended and their service was cancelled at the end of their term.  \n- RESELLER_INITIATED — A manual suspension invoked by a Reseller.  \n- TRIAL_ENDED — The customer's trial expired without a plan selected.  \n- OTHER — The customer is suspended for an internal Google reason (e.g. abuse or otherwise).",
      "items": {
       "type": "string"
      }

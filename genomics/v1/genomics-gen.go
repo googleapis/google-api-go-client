@@ -946,7 +946,12 @@ type Policy struct {
 	// no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
-	// Etag: Can be used to perform a read-modify-write.
+	// Etag: The etag is used for optimistic concurrency control as a way to
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the etag in
+	// the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions. If no etag is provided in the call to
+	// SetIamPolicy, then the existing policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
 	// Version: Version of the `Policy`. The default version is 0.

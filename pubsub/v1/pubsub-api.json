@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/5PwJv4HxhbjrzfsQfToP7wx4-Xk\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/TtGrMYjs5tjj7tJBA8iFYBEj3yY\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1",
  "name": "pubsub",
  "version": "v1",
- "revision": "20150526",
+ "revision": "20151103",
  "title": "Google Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -238,7 +238,11 @@
     },
     "messageId": {
      "type": "string",
-     "description": "ID of this message assigned by the server at publication time. Guaranteed to be unique within the topic. This value may be read by a subscriber that receives a `PubsubMessage` via a `Pull` call or a push delivery. It must not be populated by a publisher in a `Publish` call."
+     "description": "ID of this message, assigned by the server when the message is published. Guaranteed to be unique within the topic. This value may be read by a subscriber that receives a `PubsubMessage` via a `Pull` call or a push delivery. It must not be populated by the publisher in a `Publish` call."
+    },
+    "publishTime": {
+     "type": "string",
+     "description": "The time at which the message was published, populated by the server when it receives the `Publish` call. It must not be populated by the publisher in a `Publish` call."
     }
    }
   },
@@ -460,7 +464,7 @@
        "parameters": {
         "resource": {
          "type": "string",
-         "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`.",
+         "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective SetIamPolicy rpc.",
          "required": true,
          "pattern": "^projects/[^/]*/topics/[^/]*$",
          "location": "path"
@@ -488,7 +492,7 @@
        "parameters": {
         "resource": {
          "type": "string",
-         "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, `projects/{project}`.",
+         "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective GetIamPolicy rpc.",
          "required": true,
          "pattern": "^projects/[^/]*/topics/[^/]*$",
          "location": "path"
@@ -513,7 +517,7 @@
        "parameters": {
         "resource": {
          "type": "string",
-         "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}`.",
+         "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective TestIamPermissions rpc.",
          "required": true,
          "pattern": "^projects/[^/]*/topics/[^/]*$",
          "location": "path"
@@ -729,7 +733,7 @@
        "parameters": {
         "resource": {
          "type": "string",
-         "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`.",
+         "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective SetIamPolicy rpc.",
          "required": true,
          "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
          "location": "path"
@@ -757,7 +761,7 @@
        "parameters": {
         "resource": {
          "type": "string",
-         "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, `projects/{project}`.",
+         "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective GetIamPolicy rpc.",
          "required": true,
          "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
          "location": "path"
@@ -782,7 +786,7 @@
        "parameters": {
         "resource": {
          "type": "string",
-         "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}`.",
+         "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective TestIamPermissions rpc.",
          "required": true,
          "pattern": "^projects/[^/]*/subscriptions/[^/]*$",
          "location": "path"

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QdYDjcUqG0q-JcD5cct0JnvA9Ps\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/UgKFlV6G56Fj9gp6fbMZ8iKvRnY\"",
  "discoveryVersion": "v1",
  "id": "pubsub:v1beta1a",
  "name": "pubsub",
  "version": "v1beta1a",
- "revision": "20150427",
+ "revision": "20151103",
  "title": "Google Cloud Pub/Sub API",
  "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
  "ownerDomain": "google.com",
@@ -159,6 +159,11 @@
     "messageId": {
      "type": "string",
      "description": "ID of this message assigned by the server at publication time. Guaranteed to be unique within the topic. This value may be read by a subscriber that receives a PubsubMessage via a Pull call or a push delivery. It must not be populated by a publisher in a Publish call."
+    },
+    "publishTime": {
+     "type": "string",
+     "description": "The time at which the message was published. The time is milliseconds since the UNIX epoch.",
+     "format": "int64"
     }
    }
   },

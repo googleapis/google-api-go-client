@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/bK7COdWEll7PQZwJL9pvnKDHpyY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/cVHuFBXoG_c6eyG9Phq4cE2ZgS4\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20150917",
+ "revision": "20151112",
  "title": "Genomics API",
  "description": "An API to store, process, explore, and share DNA sequence reads, reference-based alignments, and variant calls.",
  "ownerDomain": "google.com",
@@ -202,7 +202,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "Can be used to perform a read-modify-write.",
+     "description": "The etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the etag in the read-modify-write cycle to perform policy updates in order to avoid race conditions. If no etag is provided in the call to SetIamPolicy, then the existing policy is overwritten blindly.",
      "format": "byte"
     }
    }

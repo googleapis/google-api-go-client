@@ -1384,9 +1384,10 @@ type BackendService struct {
 	// fingerprint must be provided in order to update the BackendService.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// HealthChecks: The list of URLs to the HttpHealthCheck resource for
-	// health checking this BackendService. Currently at most one health
-	// check can be specified, and a health check is required.
+	// HealthChecks: The list of URLs to the HttpHealthCheck or
+	// HttpsHealthCheck resource for health checking this BackendService.
+	// Currently at most one health check can be specified, and a health
+	// check is required.
 	HealthChecks []string `json:"healthChecks,omitempty"`
 
 	// Id: [Output Only] Unique identifier for the resource; defined by the
@@ -2334,7 +2335,7 @@ type ForwardingRule struct {
 
 	// PortRange: Applicable only when IPProtocol is TCP, UDP, or SCTP, only
 	// packets addressed to ports in the specified range will be forwarded
-	// to target. Forwarding rules with the same `[IPAddress, IPProtocol]`
+	// to target. Forwarding rules with the same [IPAddress, IPProtocol]
 	// pair must have disjoint port ranges.
 	PortRange string `json:"portRange,omitempty"`
 
@@ -3336,7 +3337,7 @@ func (s *InstanceGroupList) MarshalJSON() ([]byte, error) {
 
 // InstanceGroupManager: InstanceGroupManagers
 //
-// Next available tag: 19
+// Next available tag: 20
 type InstanceGroupManager struct {
 	// BaseInstanceName: The base instance name to use for instances in this
 	// group. The value must be 1-58 characters long. Instances are named by
@@ -5439,9 +5440,6 @@ func (s *OperationsScopedListWarningData) MarshalJSON() ([]byte, error) {
 // BackendService from the longest-matched rule will serve the URL. If
 // no rule was matched, the default service will be used.
 type PathMatcher struct {
-	// DefaultService: The URL to the BackendService resource. This will be
-	// used if none of the 'pathRules' defined by this PathMatcher is met by
-	// the URL's path portion.
 	DefaultService string `json:"defaultService,omitempty"`
 
 	// Description: An optional textual description of the resource.
@@ -5581,7 +5579,9 @@ type Quota struct {
 	//   "ROUTES"
 	//   "SNAPSHOTS"
 	//   "SSD_TOTAL_GB"
+	//   "SSL_CERTIFICATES"
 	//   "STATIC_ADDRESSES"
+	//   "TARGET_HTTPS_PROXIES"
 	//   "TARGET_HTTP_PROXIES"
 	//   "TARGET_INSTANCES"
 	//   "TARGET_POOLS"
@@ -14260,7 +14260,8 @@ type ForwardingRulesSetTargetCall struct {
 	ctx_            context.Context
 }
 
-// SetTarget: Changes target url for forwarding rule.
+// SetTarget: Changes target url for forwarding rule. The new target
+// should be of the same type as the old target.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/forwardingRules/setTarget
 func (r *ForwardingRulesService) SetTarget(project string, region string, forwardingRule string, targetreference *TargetReference) *ForwardingRulesSetTargetCall {
 	c := &ForwardingRulesSetTargetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -14351,7 +14352,7 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Changes target url for forwarding rule.",
+	//   "description": "Changes target url for forwarding rule. The new target should be of the same type as the old target.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.forwardingRules.setTarget",
 	//   "parameterOrder": [
@@ -15589,7 +15590,8 @@ type GlobalForwardingRulesSetTargetCall struct {
 	ctx_            context.Context
 }
 
-// SetTarget: Changes target url for forwarding rule.
+// SetTarget: Changes target url for forwarding rule. The new target
+// should be of the same type as the old target.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/setTarget
 func (r *GlobalForwardingRulesService) SetTarget(project string, forwardingRule string, targetreference *TargetReference) *GlobalForwardingRulesSetTargetCall {
 	c := &GlobalForwardingRulesSetTargetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -15678,7 +15680,7 @@ func (c *GlobalForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Changes target url for forwarding rule.",
+	//   "description": "Changes target url for forwarding rule. The new target should be of the same type as the old target.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.globalForwardingRules.setTarget",
 	//   "parameterOrder": [
@@ -20718,8 +20720,7 @@ type InstanceGroupsAddInstancesCall struct {
 
 // AddInstances: Adds a list of instances to the specified instance
 // group. All of the instances in the instance group must be in the same
-// network/subnetwork. TODO: Change to comment to state "if IG is load
-// balanced."
+// network/subnetwork.
 func (r *InstanceGroupsService) AddInstances(project string, zone string, instanceGroup string, instancegroupsaddinstancesrequest *InstanceGroupsAddInstancesRequest) *InstanceGroupsAddInstancesCall {
 	c := &InstanceGroupsAddInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -20809,7 +20810,7 @@ func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork. TODO: Change to comment to state \"if IG is load balanced.\"",
+	//   "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroups.addInstances",
 	//   "parameterOrder": [

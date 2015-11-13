@@ -180,8 +180,7 @@ type RequestLog struct {
 
 	// RequestId: Globally unique identifier for a request, based on request
 	// start time. Request IDs for requests which started later will compare
-	// greater as binary strings than those for requests which started
-	// earlier.
+	// greater as strings than those for requests which started earlier.
 	RequestId string `json:"requestId,omitempty"`
 
 	// Resource: Contains the path and query portion of the URL that was

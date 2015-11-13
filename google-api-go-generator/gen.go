@@ -1714,7 +1714,7 @@ func (meth *Method) generateCode() {
 	}
 	for _, p := range meth.RequiredRepeatedQueryParams() {
 		pn("for _, v := range c.%s { params.Add(%q, fmt.Sprintf(\"%%v\", v)) }",
-			p.name, p.name)
+			p.goCallFieldName(), p.name)
 	}
 	opts := meth.OptParams()
 	opts = append(opts, &Param{name: "fields"})

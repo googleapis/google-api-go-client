@@ -1063,6 +1063,36 @@ func (s *LocationPreference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// MaintenanceWindow: Maintenance window. This specifies when a v2 Cloud
+// SQL instance should preferably be restarted for system maintenance
+// puruposes.
+type MaintenanceWindow struct {
+	// Day: day of week (1-7), starting on Monday.
+	Day int64 `json:"day,omitempty"`
+
+	// Hour: hour of day - 0 to 23.
+	Hour int64 `json:"hour,omitempty"`
+
+	// Kind: This is always sql#maintenanceWindow.
+	Kind string `json:"kind,omitempty"`
+
+	UpdateTrack string `json:"updateTrack,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type noMethod MaintenanceWindow
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // MySqlReplicaConfiguration: Read-replica configuration specific to
 // MySQL databases.
 type MySqlReplicaConfiguration struct {
@@ -1398,9 +1428,8 @@ type Settings struct {
 	// replication are enabled.
 	CrashSafeReplicationEnabled bool `json:"crashSafeReplicationEnabled,omitempty"`
 
-	// DataDiskSizeGb: The size of data disk for the performance instance,
-	// specified in GB. Setting this value for non-performance instances
-	// will result in an error.
+	// DataDiskSizeGb: The size of data disk, in GB. Only supported for 2nd
+	// Generation instances. The data disk size minimum is 10GB.
 	DataDiskSizeGb int64 `json:"dataDiskSizeGb,omitempty,string"`
 
 	// DatabaseFlags: The database flags passed to the instance at startup.
@@ -1422,6 +1451,11 @@ type Settings struct {
 	// instance to be located as near as possible to either an App Engine
 	// app or GCE zone for better performance.
 	LocationPreference *LocationPreference `json:"locationPreference,omitempty"`
+
+	// MaintenanceWindow: The maintenance window for this instance. This
+	// specifies when the instance may be restarted for maintenance
+	// purposes.
+	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 
 	// PricingPlan: The pricing plan for this instance. This can be either
 	// PER_USE or PACKAGE.

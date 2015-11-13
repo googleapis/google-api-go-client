@@ -1885,6 +1885,13 @@ type Player struct {
 	// player.
 	AvatarImageUrl string `json:"avatarImageUrl,omitempty"`
 
+	// BannerUrlLandscape: The url to the landscape mode player banner
+	// image.
+	BannerUrlLandscape string `json:"bannerUrlLandscape,omitempty"`
+
+	// BannerUrlPortrait: The url to the portrait mode player banner image.
+	BannerUrlPortrait string `json:"bannerUrlPortrait,omitempty"`
+
 	// DisplayName: The name to display for the player.
 	DisplayName string `json:"displayName,omitempty"`
 

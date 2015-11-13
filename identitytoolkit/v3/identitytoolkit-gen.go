@@ -101,6 +101,10 @@ type CreateAuthUriResponse struct {
 	// email.
 	Registered bool `json:"registered,omitempty"`
 
+	// SessionId: Session ID which should be passed in the following
+	// verifyAssertion request.
+	SessionId string `json:"sessionId,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -205,6 +209,9 @@ func (s *GetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 // GetOobConfirmationCodeResponse: Response of getting a code for user
 // confirmation (reset password, change email etc.).
 type GetOobConfirmationCodeResponse struct {
+	// Email: The email address that the email is sent to.
+	Email string `json:"email,omitempty"`
+
 	// Kind: The fixed string
 	// "identitytoolkit#GetOobConfirmationCodeResponse".
 	Kind string `json:"kind,omitempty"`
@@ -216,7 +223,7 @@ type GetOobConfirmationCodeResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -392,6 +399,40 @@ func (s *IdentitytoolkitRelyingpartyGetAccountInfoRequest) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// IdentitytoolkitRelyingpartyGetProjectConfigResponse: Response of
+// getting the project configuration.
+type IdentitytoolkitRelyingpartyGetProjectConfigResponse struct {
+	// AllowPasswordUser: Whether to allow password user sign in or sign up.
+	AllowPasswordUser bool `json:"allowPasswordUser,omitempty"`
+
+	// ApiKey: Browser API key, needed when making http request to Apiary.
+	ApiKey string `json:"apiKey,omitempty"`
+
+	// IdpConfig: OAuth2 provider configuration.
+	IdpConfig []*IdpConfig `json:"idpConfig,omitempty"`
+
+	// ProjectId: Project ID of the relying party.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowPasswordUser")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdentitytoolkitRelyingpartyGetProjectConfigResponse) MarshalJSON() ([]byte, error) {
+	type noMethod IdentitytoolkitRelyingpartyGetProjectConfigResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // IdentitytoolkitRelyingpartyResetPasswordRequest: Request to reset the
 // password.
 type IdentitytoolkitRelyingpartyResetPasswordRequest struct {
@@ -534,6 +575,10 @@ type IdentitytoolkitRelyingpartyVerifyAssertionRequest struct {
 	// ReturnRefreshToken: Whether to return refresh tokens.
 	ReturnRefreshToken bool `json:"returnRefreshToken,omitempty"`
 
+	// SessionId: Session ID, which should match the one in previous
+	// createAuthUri request.
+	SessionId string `json:"sessionId,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "PendingIdToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -579,6 +624,36 @@ type IdentitytoolkitRelyingpartyVerifyPasswordRequest struct {
 
 func (s *IdentitytoolkitRelyingpartyVerifyPasswordRequest) MarshalJSON() ([]byte, error) {
 	type noMethod IdentitytoolkitRelyingpartyVerifyPasswordRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// IdpConfig: Template for a single idp configuration.
+type IdpConfig struct {
+	// ClientId: OAuth2 client ID.
+	ClientId string `json:"clientId,omitempty"`
+
+	// Enabled: Whether this IDP is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ExperimentPercent: Percent of users who will be prompted/redirected
+	// federated login for this IDP.
+	ExperimentPercent int64 `json:"experimentPercent,omitempty"`
+
+	// Provider: OAuth2 provider.
+	Provider string `json:"provider,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *IdpConfig) MarshalJSON() ([]byte, error) {
+	type noMethod IdpConfig
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1559,6 +1634,116 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeRe
 	//   },
 	//   "response": {
 	//     "$ref": "GetOobConfirmationCodeResponse"
+	//   }
+	// }
+
+}
+
+// method id "identitytoolkit.relyingparty.getProjectConfig":
+
+type RelyingpartyGetProjectConfigCall struct {
+	s    *Service
+	opt_ map[string]interface{}
+	ctx_ context.Context
+}
+
+// GetProjectConfig: Get project configuration.
+func (r *RelyingpartyService) GetProjectConfig() *RelyingpartyGetProjectConfigCall {
+	c := &RelyingpartyGetProjectConfigCall{s: r.s, opt_: make(map[string]interface{})}
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RelyingpartyGetProjectConfigCall) Fields(s ...googleapi.Field) *RelyingpartyGetProjectConfigCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RelyingpartyGetProjectConfigCall) IfNoneMatch(entityTag string) *RelyingpartyGetProjectConfigCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *RelyingpartyGetProjectConfigCall) Context(ctx context.Context) *RelyingpartyGetProjectConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RelyingpartyGetProjectConfigCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "getProjectConfig")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "identitytoolkit.relyingparty.getProjectConfig" call.
+// Exactly one of *IdentitytoolkitRelyingpartyGetProjectConfigResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *IdentitytoolkitRelyingpartyGetProjectConfigResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RelyingpartyGetProjectConfigCall) Do() (*IdentitytoolkitRelyingpartyGetProjectConfigResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &IdentitytoolkitRelyingpartyGetProjectConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get project configuration.",
+	//   "httpMethod": "GET",
+	//   "id": "identitytoolkit.relyingparty.getProjectConfig",
+	//   "path": "getProjectConfig",
+	//   "response": {
+	//     "$ref": "IdentitytoolkitRelyingpartyGetProjectConfigResponse"
 	//   }
 	// }
 

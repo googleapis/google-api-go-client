@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/P7g-a3C968F6LpsV-dK3V_5H2MQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/tCYT3REWG_WbTQWvK-166jnCJhE\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20151012",
+ "revision": "20151110",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -1331,6 +1331,14 @@
     "avatarImageUrl": {
      "type": "string",
      "description": "The base URL for the image that represents the player."
+    },
+    "bannerUrlLandscape": {
+     "type": "string",
+     "description": "The url to the landscape mode player banner image."
+    },
+    "bannerUrlPortrait": {
+     "type": "string",
+     "description": "The url to the portrait mode player banner image."
     },
     "displayName": {
      "type": "string",

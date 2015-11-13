@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/8bskZWHrpgKCT1-uvibNvSv4NtA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/RGkzhqSB3FajvpNvflV8YsVuejw\"",
  "discoveryVersion": "v1",
  "id": "youtubereporting:v1",
  "name": "youtubereporting",
  "canonicalName": "YouTube Reporting",
  "version": "v1",
- "revision": "20150923",
+ "revision": "20151026",
  "title": "YouTube Reporting API",
  "description": "An API to schedule reporting jobs and download the resulting bulk data reports about YouTube channels, videos etc. in the form of CSV files.",
  "ownerDomain": "google.com",
@@ -464,6 +464,11 @@
         "pageToken": {
          "type": "string",
          "description": "A token identifying a page of results the server should return. Typically, this is the value of ListReportsResponse.next_page_token returned in response to the previous call to the `ListReports` method.",
+         "location": "query"
+        },
+        "createdAfter": {
+         "type": "string",
+         "description": "If set, only reports created after the specified date/time are returned.",
          "location": "query"
         }
        },

@@ -1416,9 +1416,10 @@ type BackendService struct {
 	// fingerprint must be provided in order to update the BackendService.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// HealthChecks: The list of URLs to the HttpHealthCheck resource for
-	// health checking this BackendService. Currently at most one health
-	// check can be specified, and a health check is required.
+	// HealthChecks: The list of URLs to the HttpHealthCheck or
+	// HttpsHealthCheck resource for health checking this BackendService.
+	// Currently at most one health check can be specified, and a health
+	// check is required.
 	HealthChecks []string `json:"healthChecks,omitempty"`
 
 	// Id: [Output Only] Unique identifier for the resource; defined by the
@@ -2410,7 +2411,7 @@ type ForwardingRule struct {
 
 	// PortRange: Applicable only when IPProtocol is TCP, UDP, or SCTP, only
 	// packets addressed to ports in the specified range will be forwarded
-	// to target. Forwarding rules with the same `[IPAddress, IPProtocol]`
+	// to target. Forwarding rules with the same [IPAddress, IPProtocol]
 	// pair must have disjoint port ranges.
 	PortRange string `json:"portRange,omitempty"`
 
@@ -3451,7 +3452,7 @@ func (s *InstanceGroupList) MarshalJSON() ([]byte, error) {
 
 // InstanceGroupManager: InstanceGroupManagers
 //
-// Next available tag: 19
+// Next available tag: 20
 type InstanceGroupManager struct {
 	// AutoHealingPolicies: The autohealing policy for this managed instance
 	// group. You can specify only one value.
@@ -3500,6 +3501,10 @@ type InstanceGroupManager struct {
 	// Name: The name of the managed instance group. The name must be 1-63
 	// characters long, and comply with RFC1035.
 	Name string `json:"name,omitempty"`
+
+	// NamedPorts: Named ports configured for the Instance Groups
+	// complementary to this Instance Group Manager.
+	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
 
 	// SelfLink: [Output Only] The URL for this managed instance group. The
 	// server defines this URL.
@@ -3633,22 +3638,17 @@ func (s *InstanceGroupManagerAggregatedList) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagerAutoHealingPolicy struct {
-	// ActionType: The action to perform when an instance in this group
-	// becomes unhealthy. Possible values are RECREATE or RESTART. RECREATE
-	// replaces an unhealthy instance using the same name and instance
-	// template as the unhealthy instance. RESTART performs a soft restart
-	// on an instance. If the instance cannot reboot, the instance performs
-	// a hard restart.
-	//
-	// Possible values:
-	//   "RECREATE"
-	//   "RESTART"
-	ActionType string `json:"actionType,omitempty"`
-
 	// HealthCheck: The URL for the HealthCheck that signals autohealing.
 	HealthCheck string `json:"healthCheck,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// InitialDelaySec: Length of the period during which IGM will refrain
+	// from autohealing the instance even if the instance is reported as
+	// UNHEALTHY. The period starts every time the instance is (re-)created.
+	// You should define a period that is at least as long as the
+	// initialization time of the instance.
+	InitialDelaySec int64 `json:"initialDelaySec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HealthCheck") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -5586,9 +5586,6 @@ func (s *OperationsScopedListWarningData) MarshalJSON() ([]byte, error) {
 // BackendService from the longest-matched rule will serve the URL. If
 // no rule was matched, the default service will be used.
 type PathMatcher struct {
-	// DefaultService: The URL to the BackendService resource. This will be
-	// used if none of the 'pathRules' defined by this PathMatcher is met by
-	// the URL's path portion.
 	DefaultService string `json:"defaultService,omitempty"`
 
 	// Description: An optional textual description of the resource.
@@ -5728,7 +5725,9 @@ type Quota struct {
 	//   "ROUTES"
 	//   "SNAPSHOTS"
 	//   "SSD_TOTAL_GB"
+	//   "SSL_CERTIFICATES"
 	//   "STATIC_ADDRESSES"
+	//   "TARGET_HTTPS_PROXIES"
 	//   "TARGET_HTTP_PROXIES"
 	//   "TARGET_INSTANCES"
 	//   "TARGET_POOLS"
@@ -14731,7 +14730,8 @@ type ForwardingRulesSetTargetCall struct {
 	ctx_            context.Context
 }
 
-// SetTarget: Changes target url for forwarding rule.
+// SetTarget: Changes target url for forwarding rule. The new target
+// should be of the same type as the old target.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/forwardingRules/setTarget
 func (r *ForwardingRulesService) SetTarget(project string, region string, forwardingRule string, targetreference *TargetReference) *ForwardingRulesSetTargetCall {
 	c := &ForwardingRulesSetTargetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -14822,7 +14822,7 @@ func (c *ForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Changes target url for forwarding rule.",
+	//   "description": "Changes target url for forwarding rule. The new target should be of the same type as the old target.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.forwardingRules.setTarget",
 	//   "parameterOrder": [
@@ -16110,7 +16110,8 @@ type GlobalForwardingRulesSetTargetCall struct {
 	ctx_            context.Context
 }
 
-// SetTarget: Changes target url for forwarding rule.
+// SetTarget: Changes target url for forwarding rule. The new target
+// should be of the same type as the old target.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/globalForwardingRules/setTarget
 func (r *GlobalForwardingRulesService) SetTarget(project string, forwardingRule string, targetreference *TargetReference) *GlobalForwardingRulesSetTargetCall {
 	c := &GlobalForwardingRulesSetTargetCall{s: r.s, opt_: make(map[string]interface{})}
@@ -16199,7 +16200,7 @@ func (c *GlobalForwardingRulesSetTargetCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Changes target url for forwarding rule.",
+	//   "description": "Changes target url for forwarding rule. The new target should be of the same type as the old target.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.globalForwardingRules.setTarget",
 	//   "parameterOrder": [
@@ -21560,8 +21561,7 @@ type InstanceGroupsAddInstancesCall struct {
 
 // AddInstances: Adds a list of instances to the specified instance
 // group. All of the instances in the instance group must be in the same
-// network/subnetwork. TODO: Change to comment to state "if IG is load
-// balanced."
+// network/subnetwork.
 func (r *InstanceGroupsService) AddInstances(project string, zone string, instanceGroup string, instancegroupsaddinstancesrequest *InstanceGroupsAddInstancesRequest) *InstanceGroupsAddInstancesCall {
 	c := &InstanceGroupsAddInstancesCall{s: r.s, opt_: make(map[string]interface{})}
 	c.project = project
@@ -21651,7 +21651,7 @@ func (c *InstanceGroupsAddInstancesCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork. TODO: Change to comment to state \"if IG is load balanced.\"",
+	//   "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroups.addInstances",
 	//   "parameterOrder": [

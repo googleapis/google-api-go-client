@@ -343,8 +343,9 @@ type Budget struct {
 	// budget information for. This is required for get and update requests.
 	BillingId int64 `json:"billingId,omitempty,string"`
 
-	// BudgetAmount: The budget amount to apply for the billingId provided.
-	// This is required for update requests.
+	// BudgetAmount: The daily budget amount in unit amount of the account
+	// currency to apply for the billingId provided. This is required for
+	// update requests.
 	BudgetAmount int64 `json:"budgetAmount,omitempty,string"`
 
 	// CurrencyCode: The currency code for the buyer. This cannot be altered
@@ -400,7 +401,7 @@ type Creative struct {
 	// was uploaded via API. Read-only. The value of this field is
 	// generated, and will be ignored for uploads. (formatted RFC 3339
 	// timestamp).
-	ApiUploadTimestamp string `json:"api_upload_timestamp,omitempty"`
+	ApiUploadTimestamp string `json:"apiUploadTimestamp,omitempty"`
 
 	// Attribute: All attributes for the ads that may be shown from this
 	// snippet.
@@ -758,6 +759,10 @@ type DirectDeal struct {
 	// CurrencyCode: The currency code that applies to the fixed_cpm value.
 	// If not set then assumed to be USD.
 	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// DealTier: The deal type such as programmatic reservation or fixed
+	// price and so on.
+	DealTier string `json:"dealTier,omitempty"`
 
 	// EndTime: End time for when this deal stops being active. If not set
 	// then this deal is valid until manually disabled by the publisher. In

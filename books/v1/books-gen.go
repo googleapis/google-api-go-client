@@ -66,6 +66,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Onboarding = NewOnboardingService(s)
 	s.Personalizedstream = NewPersonalizedstreamService(s)
 	s.Promooffer = NewPromoofferService(s)
+	s.Series = NewSeriesService(s)
 	s.Volumes = NewVolumesService(s)
 	return s, nil
 }
@@ -94,6 +95,8 @@ type Service struct {
 	Personalizedstream *PersonalizedstreamService
 
 	Promooffer *PromoofferService
+
+	Series *SeriesService
 
 	Volumes *VolumesService
 }
@@ -276,6 +279,27 @@ func NewPromoofferService(s *Service) *PromoofferService {
 }
 
 type PromoofferService struct {
+	s *Service
+}
+
+func NewSeriesService(s *Service) *SeriesService {
+	rs := &SeriesService{s: s}
+	rs.Membership = NewSeriesMembershipService(s)
+	return rs
+}
+
+type SeriesService struct {
+	s *Service
+
+	Membership *SeriesMembershipService
+}
+
+func NewSeriesMembershipService(s *Service) *SeriesMembershipService {
+	rs := &SeriesMembershipService{s: s}
+	return rs
+}
+
+type SeriesMembershipService struct {
 	s *Service
 }
 
@@ -1829,7 +1853,11 @@ type Notification struct {
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 
-	LinkUrl string `json:"linkUrl,omitempty"`
+	NotificationType string `json:"notification_type,omitempty"`
+
+	ShowNotificationSettingsAction bool `json:"show_notification_settings_action,omitempty"`
+
+	TargetUrl string `json:"targetUrl,omitempty"`
 
 	Title string `json:"title,omitempty"`
 
@@ -2094,6 +2122,82 @@ type ReviewSource struct {
 
 func (s *ReviewSource) MarshalJSON() ([]byte, error) {
 	type noMethod ReviewSource
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type Series struct {
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	Series []*SeriesSeries `json:"series,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Series) MarshalJSON() ([]byte, error) {
+	type noMethod Series
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SeriesSeries struct {
+	BannerImageUrl string `json:"bannerImageUrl,omitempty"`
+
+	ImageUrl string `json:"imageUrl,omitempty"`
+
+	SeriesId string `json:"seriesId,omitempty"`
+
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BannerImageUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SeriesSeries) MarshalJSON() ([]byte, error) {
+	type noMethod SeriesSeries
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type Seriesmembership struct {
+	// Kind: Resorce type.
+	Kind string `json:"kind,omitempty"`
+
+	Member []*Volume `json:"member,omitempty"`
+
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Seriesmembership) MarshalJSON() ([]byte, error) {
+	type noMethod Seriesmembership
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2885,6 +2989,8 @@ type VolumeVolumeInfo struct {
 	// metadata.
 	SamplePageCount int64 `json:"samplePageCount,omitempty"`
 
+	SeriesInfo *Volumeseriesinfo `json:"seriesInfo,omitempty"`
+
 	// Subtitle: Volume subtitle. (In LITE projection.)
 	Subtitle string `json:"subtitle,omitempty"`
 
@@ -3186,6 +3292,85 @@ type Volumes struct {
 
 func (s *Volumes) MarshalJSON() ([]byte, error) {
 	type noMethod Volumes
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type Volumeseriesinfo struct {
+	// BookDisplayNumber: The display number string. This should be used
+	// only for display purposes and the actual sequence should be inferred
+	// from the below orderNumber.
+	BookDisplayNumber string `json:"bookDisplayNumber,omitempty"`
+
+	// Kind: Resource type.
+	Kind string `json:"kind,omitempty"`
+
+	// ShortSeriesBookTitle: Short book title in the context of the series.
+	ShortSeriesBookTitle string `json:"shortSeriesBookTitle,omitempty"`
+
+	VolumeSeries []*VolumeseriesinfoVolumeSeries `json:"volumeSeries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BookDisplayNumber")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Volumeseriesinfo) MarshalJSON() ([]byte, error) {
+	type noMethod Volumeseriesinfo
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type VolumeseriesinfoVolumeSeries struct {
+	// Issue: List of issues. Applicable only for Collection Edition and
+	// Omnibus.
+	Issue []*VolumeseriesinfoVolumeSeriesIssue `json:"issue,omitempty"`
+
+	// OrderNumber: The book order number in the series.
+	OrderNumber int64 `json:"orderNumber,omitempty"`
+
+	// SeriesBookType: The book type in the context of series. Examples -
+	// Single Issue, Collection Edition, etc.
+	SeriesBookType string `json:"seriesBookType,omitempty"`
+
+	// SeriesId: The series id.
+	SeriesId string `json:"seriesId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Issue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *VolumeseriesinfoVolumeSeries) MarshalJSON() ([]byte, error) {
+	type noMethod VolumeseriesinfoVolumeSeries
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type VolumeseriesinfoVolumeSeriesIssue struct {
+	IssueDisplayNumber string `json:"issueDisplayNumber,omitempty"`
+
+	IssueOrderNumber int64 `json:"issueOrderNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IssueDisplayNumber")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *VolumeseriesinfoVolumeSeriesIssue) MarshalJSON() ([]byte, error) {
+	type noMethod VolumeseriesinfoVolumeSeriesIssue
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -9721,6 +9906,290 @@ func (c *PromoofferGetCall) Do() (*Offers, error) {
 	//   "path": "promooffer/get",
 	//   "response": {
 	//     "$ref": "Offers"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.series.get":
+
+type SeriesGetCall struct {
+	s        *Service
+	seriesId []string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// Get: Returns Series metadata for the given series ids.
+func (r *SeriesService) Get(seriesId []string) *SeriesGetCall {
+	c := &SeriesGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.seriesId = seriesId
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SeriesGetCall) Fields(s ...googleapi.Field) *SeriesGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SeriesGetCall) IfNoneMatch(entityTag string) *SeriesGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SeriesGetCall) Context(ctx context.Context) *SeriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	for _, v := range c.seriesId {
+		params.Add("series_id", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "series/get")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "books.series.get" call.
+// Exactly one of *Series or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Series.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SeriesGetCall) Do() (*Series, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Series{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns Series metadata for the given series ids.",
+	//   "httpMethod": "GET",
+	//   "id": "books.series.get",
+	//   "parameterOrder": [
+	//     "series_id"
+	//   ],
+	//   "parameters": {
+	//     "series_id": {
+	//       "description": "String that identifies the series",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "series/get",
+	//   "response": {
+	//     "$ref": "Series"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/books"
+	//   ]
+	// }
+
+}
+
+// method id "books.series.membership.get":
+
+type SeriesMembershipGetCall struct {
+	s        *Service
+	seriesId string
+	opt_     map[string]interface{}
+	ctx_     context.Context
+}
+
+// Get: Returns Series membership data given the series id.
+func (r *SeriesMembershipService) Get(seriesId string) *SeriesMembershipGetCall {
+	c := &SeriesMembershipGetCall{s: r.s, opt_: make(map[string]interface{})}
+	c.seriesId = seriesId
+	return c
+}
+
+// PageSize sets the optional parameter "page_size": Number of maximum
+// results per page to be included in the response.
+func (c *SeriesMembershipGetCall) PageSize(pageSize int64) *SeriesMembershipGetCall {
+	c.opt_["page_size"] = pageSize
+	return c
+}
+
+// PageToken sets the optional parameter "page_token": The value of the
+// nextToken from the previous page.
+func (c *SeriesMembershipGetCall) PageToken(pageToken string) *SeriesMembershipGetCall {
+	c.opt_["page_token"] = pageToken
+	return c
+}
+
+// Fields allows partial responses to be retrieved.
+// See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SeriesMembershipGetCall) Fields(s ...googleapi.Field) *SeriesMembershipGetCall {
+	c.opt_["fields"] = googleapi.CombineFields(s)
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SeriesMembershipGetCall) IfNoneMatch(entityTag string) *SeriesMembershipGetCall {
+	c.opt_["ifNoneMatch"] = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// Any pending HTTP request will be aborted if the provided context
+// is canceled.
+func (c *SeriesMembershipGetCall) Context(ctx context.Context) *SeriesMembershipGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	params := make(url.Values)
+	params.Set("alt", alt)
+	params.Set("series_id", fmt.Sprintf("%v", c.seriesId))
+	if v, ok := c.opt_["page_size"]; ok {
+		params.Set("page_size", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["page_token"]; ok {
+		params.Set("page_token", fmt.Sprintf("%v", v))
+	}
+	if v, ok := c.opt_["fields"]; ok {
+		params.Set("fields", fmt.Sprintf("%v", v))
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "series/membership/get")
+	urls += "?" + params.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if v, ok := c.opt_["ifNoneMatch"]; ok {
+		req.Header.Set("If-None-Match", fmt.Sprintf("%v", v))
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "books.series.membership.get" call.
+// Exactly one of *Seriesmembership or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *Seriesmembership.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SeriesMembershipGetCall) Do() (*Seriesmembership, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Seriesmembership{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns Series membership data given the series id.",
+	//   "httpMethod": "GET",
+	//   "id": "books.series.membership.get",
+	//   "parameterOrder": [
+	//     "series_id"
+	//   ],
+	//   "parameters": {
+	//     "page_size": {
+	//       "description": "Number of maximum results per page to be included in the response.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "page_token": {
+	//       "description": "The value of the nextToken from the previous page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "series_id": {
+	//       "description": "String that identifies the series",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "series/membership/get",
+	//   "response": {
+	//     "$ref": "Seriesmembership"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/books"

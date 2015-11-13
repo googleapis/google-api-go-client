@@ -412,6 +412,10 @@ type PubsubMessage struct {
 	// call.
 	MessageId string `json:"messageId,omitempty"`
 
+	// PublishTime: The time at which the message was published. The time is
+	// milliseconds since the UNIX epoch.
+	PublishTime int64 `json:"publishTime,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "Data") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

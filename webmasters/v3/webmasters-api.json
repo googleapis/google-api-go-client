@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/2KfwPsPFjdvTmw1MTymtM96q3zo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/7TyaeniToMAAPVYC9dRmCQ0J2v8\"",
  "discoveryVersion": "v1",
  "id": "webmasters:v3",
  "name": "webmasters",
  "version": "v3",
- "revision": "20150804",
+ "revision": "20151102",
  "title": "Webmaster Tools API",
  "description": "Lets you view Google Webmaster Tools data for your verified sites.",
  "ownerDomain": "google.com",
@@ -70,10 +70,10 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/webmasters": {
-     "description": "View and modify Webmaster Tools data for your verified sites"
+     "description": "View and manage Search Console data for your verified sites"
     },
     "https://www.googleapis.com/auth/webmasters.readonly": {
-     "description": "View Webmaster Tools data for your verified sites"
+     "description": "View Search Console data for your verified sites"
     }
    }
   }
@@ -217,7 +217,7 @@
    "properties": {
     "siteEntry": {
      "type": "array",
-     "description": "Contains permission level information about a Webmaster Tools site. For more information, see Permissions in Webmaster Tools.",
+     "description": "Contains permission level information about a Search Console site. For more information, see Permissions in Search Console.",
      "items": {
       "$ref": "WmxSite"
      }
@@ -345,7 +345,7 @@
   "WmxSite": {
    "id": "WmxSite",
    "type": "object",
-   "description": "Contains permission level information about a Webmaster Tools site. For more information, see  Permissions in Webmaster Tools.",
+   "description": "Contains permission level information about a Search Console site. For more information, see  Permissions in Search Console.",
    "properties": {
     "permissionLevel": {
      "type": "string",
@@ -585,7 +585,7 @@
      "id": "webmasters.sites.add",
      "path": "sites/{siteUrl}",
      "httpMethod": "PUT",
-     "description": "Adds a site to the set of the user's sites in Webmaster Tools.",
+     "description": "Adds a site to the set of the user's sites in Search Console.",
      "parameters": {
       "siteUrl": {
        "type": "string",
@@ -605,7 +605,7 @@
      "id": "webmasters.sites.delete",
      "path": "sites/{siteUrl}",
      "httpMethod": "DELETE",
-     "description": "Removes a site from the set of the user's Webmaster Tools sites.",
+     "description": "Removes a site from the set of the user's Search Console sites.",
      "parameters": {
       "siteUrl": {
        "type": "string",
@@ -649,7 +649,7 @@
      "id": "webmasters.sites.list",
      "path": "sites",
      "httpMethod": "GET",
-     "description": "Lists the user's Webmaster Tools sites.",
+     "description": "Lists the user's Search Console sites.",
      "response": {
       "$ref": "SitesListResponse"
      },

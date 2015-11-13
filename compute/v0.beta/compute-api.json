@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/53Hy10U_as1pSFK_KirJ2eQZmGA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_JLuoqmCom34HYgPe5CD4tx2tWU\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20151015",
+ "revision": "20151111",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -808,7 +808,7 @@
     },
     "healthChecks": {
      "type": "array",
-     "description": "The list of URLs to the HttpHealthCheck resource for health checking this BackendService. Currently at most one health check can be specified, and a health check is required.",
+     "description": "The list of URLs to the HttpHealthCheck or HttpsHealthCheck resource for health checking this BackendService. Currently at most one health check can be specified, and a health check is required.",
      "items": {
       "type": "string"
      }
@@ -1592,7 +1592,7 @@
     },
     "portRange": {
      "type": "string",
-     "description": "Applicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same `[IPAddress, IPProtocol]` pair must have disjoint port ranges."
+     "description": "Applicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges."
     },
     "region": {
      "type": "string",
@@ -2452,7 +2452,7 @@
   "InstanceGroupManager": {
    "id": "InstanceGroupManager",
    "type": "object",
-   "description": "InstanceGroupManagers\n\nNext available tag: 19",
+   "description": "InstanceGroupManagers\n\nNext available tag: 20",
    "properties": {
     "autoHealingPolicies": {
      "type": "array",
@@ -2519,6 +2519,13 @@
       "required": [
        "compute.instanceGroupManagers.insert"
       ]
+     }
+    },
+    "namedPorts": {
+     "type": "array",
+     "description": "Named ports configured for the Instance Groups complementary to this Instance Group Manager.",
+     "items": {
+      "$ref": "NamedPort"
      }
     },
     "selfLink": {
@@ -2624,21 +2631,14 @@
    "id": "InstanceGroupManagerAutoHealingPolicy",
    "type": "object",
    "properties": {
-    "actionType": {
-     "type": "string",
-     "description": "The action to perform when an instance in this group becomes unhealthy. Possible values are RECREATE or RESTART. RECREATE replaces an unhealthy instance using the same name and instance template as the unhealthy instance. RESTART performs a soft restart on an instance. If the instance cannot reboot, the instance performs a hard restart.",
-     "enum": [
-      "RECREATE",
-      "RESTART"
-     ],
-     "enumDescriptions": [
-      "",
-      ""
-     ]
-    },
     "healthCheck": {
      "type": "string",
      "description": "The URL for the HealthCheck that signals autohealing."
+    },
+    "initialDelaySec": {
+     "type": "integer",
+     "description": "Length of the period during which IGM will refrain from autohealing the instance even if the instance is reported as UNHEALTHY. The period starts every time the instance is (re-)created. You should define a period that is at least as long as the initialization time of the instance.",
+     "format": "int32"
     }
    }
   },
@@ -4165,8 +4165,7 @@
    "description": "A matcher for the path portion of the URL. The BackendService from the longest-matched rule will serve the URL. If no rule was matched, the default service will be used.",
    "properties": {
     "defaultService": {
-     "type": "string",
-     "description": "The URL to the BackendService resource. This will be used if none of the 'pathRules' defined by this PathMatcher is met by the URL's path portion."
+     "type": "string"
     },
     "description": {
      "type": "string",
@@ -4289,7 +4288,9 @@
       "ROUTES",
       "SNAPSHOTS",
       "SSD_TOTAL_GB",
+      "SSL_CERTIFICATES",
       "STATIC_ADDRESSES",
+      "TARGET_HTTPS_PROXIES",
       "TARGET_HTTP_PROXIES",
       "TARGET_INSTANCES",
       "TARGET_POOLS",
@@ -4298,6 +4299,8 @@
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
+      "",
       "",
       "",
       "",
@@ -8024,7 +8027,7 @@
      "id": "compute.forwardingRules.setTarget",
      "path": "{project}/regions/{region}/forwardingRules/{forwardingRule}/setTarget",
      "httpMethod": "POST",
-     "description": "Changes target url for forwarding rule.",
+     "description": "Changes target url for forwarding rule. The new target should be of the same type as the old target.",
      "parameters": {
       "forwardingRule": {
        "type": "string",
@@ -8366,7 +8369,7 @@
      "id": "compute.globalForwardingRules.setTarget",
      "path": "{project}/global/forwardingRules/{forwardingRule}/setTarget",
      "httpMethod": "POST",
-     "description": "Changes target url for forwarding rule.",
+     "description": "Changes target url for forwarding rule. The new target should be of the same type as the old target.",
      "parameters": {
       "forwardingRule": {
        "type": "string",
@@ -9768,7 +9771,7 @@
      "id": "compute.instanceGroups.addInstances",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/addInstances",
      "httpMethod": "POST",
-     "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork. TODO: Change to comment to state \"if IG is load balanced.\"",
+     "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork.",
      "parameters": {
       "instanceGroup": {
        "type": "string",

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76d4867d_02428d21",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-11-16T06:48:47Z",
+      "side": 1,
+      "message": "Thanks, Dave. I\u0027ll put that in the next change.",
+      "parentUuid": "dbe8fb67_05c13402",
+      "range": {
+        "startLine": 1545,
+        "startChar": 27,
+        "endLine": 1545,
+        "endChar": 48
+      },
+      "revId": "4d6c29dd67d8f208c6924fb66ce80b12a0db1920",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbe8fb67_e5bd3084",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2015-11-16T06:42:53Z",
       "side": 1,
       "message": "did you consider \"...\" here? i.e. making the method variadic? The code would be the same inside the function, but would alleviate the caller of having to construct a slice if they\u0027re passing a fixed number of elements (which might often be 1).",
+      "range": {
+        "startLine": 1653,
+        "startChar": 17,
+        "endLine": 1653,
+        "endChar": 19
+      },
+      "revId": "4d6c29dd67d8f208c6924fb66ce80b12a0db1920",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "76d4867d_62470931",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2015-11-16T06:48:47Z",
+      "side": 1,
+      "message": "I like that! Michael, thoughts?\nI can test that out in the next change.\nThanks, Dave.",
+      "parentUuid": "dbe8fb67_e5bd3084",
       "range": {
         "startLine": 1653,
         "startChar": 17,

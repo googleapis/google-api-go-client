@@ -3344,7 +3344,7 @@ func (r *ChromeosdevicesService) List(customerId string) *ChromeosdevicesListCal
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 100
 func (c *ChromeosdevicesListCall) MaxResults(maxResults int64) *ChromeosdevicesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5548,7 +5548,7 @@ func (c *GroupsListCall) Domain(domain string) *GroupsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 200
 func (c *GroupsListCall) MaxResults(maxResults int64) *GroupsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6637,7 +6637,7 @@ func (r *MembersService) List(groupKey string) *MembersListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 200
 func (c *MembersListCall) MaxResults(maxResults int64) *MembersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7420,7 +7420,7 @@ func (r *MobiledevicesService) List(customerId string) *MobiledevicesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 100
 func (c *MobiledevicesListCall) MaxResults(maxResults int64) *MobiledevicesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7909,7 +7909,7 @@ func (c *NotificationsListCall) Language(language string) *NotificationsListCall
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of notifications to return per page. The default is 100.
 func (c *NotificationsListCall) MaxResults(maxResults int64) *NotificationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -9564,7 +9564,7 @@ func (r *RoleAssignmentsService) List(customer string) *RoleAssignmentsListCall 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *RoleAssignmentsListCall) MaxResults(maxResults int64) *RoleAssignmentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10087,7 +10087,7 @@ func (r *RolesService) List(customer string) *RolesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *RolesListCall) MaxResults(maxResults int64) *RolesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -11992,7 +11992,7 @@ func (c *UsersListCall) Event(event string) *UsersListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 100. Max allowed is 500
 func (c *UsersListCall) MaxResults(maxResults int64) *UsersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -12760,7 +12760,7 @@ func (c *UsersWatchCall) Event(event string) *UsersWatchCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 100. Max allowed is 500
 func (c *UsersWatchCall) MaxResults(maxResults int64) *UsersWatchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

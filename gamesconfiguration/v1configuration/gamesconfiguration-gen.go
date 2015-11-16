@@ -874,7 +874,7 @@ func (r *AchievementConfigurationsService) List(applicationId string) *Achieveme
 // paging. For any response, the actual number of resources returned may
 // be less than the specified maxResults.
 func (c *AchievementConfigurationsListCall) MaxResults(maxResults int64) *AchievementConfigurationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1818,7 +1818,7 @@ func (r *LeaderboardConfigurationsService) List(applicationId string) *Leaderboa
 // paging. For any response, the actual number of resources returned may
 // be less than the specified maxResults.
 func (c *LeaderboardConfigurationsListCall) MaxResults(maxResults int64) *LeaderboardConfigurationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

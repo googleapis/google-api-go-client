@@ -196,7 +196,7 @@ func (c *DataGetCall) Filters(filters string) *DataGetCall {
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of entries to include in this feed.
 func (c *DataGetCall) MaxResults(maxResults int64) *DataGetCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -219,7 +219,7 @@ func (c *DataGetCall) Sort(sort string) *DataGetCall {
 // first entity to retrieve. Use this parameter as a pagination
 // mechanism along with the max-results parameter.
 func (c *DataGetCall) StartIndex(startIndex int64) *DataGetCall {
-	c.urlParams_.Set("start-index", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -380,7 +380,7 @@ func (r *ManagementAccountsService) List() *ManagementAccountsListCall {
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of accounts to include in this response.
 func (c *ManagementAccountsListCall) MaxResults(maxResults int64) *ManagementAccountsListCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -388,7 +388,7 @@ func (c *ManagementAccountsListCall) MaxResults(maxResults int64) *ManagementAcc
 // first account to retrieve. Use this parameter as a pagination
 // mechanism along with the max-results parameter.
 func (c *ManagementAccountsListCall) StartIndex(startIndex int64) *ManagementAccountsListCall {
-	c.urlParams_.Set("start-index", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -498,7 +498,7 @@ func (r *ManagementGoalsService) List(accountId string, webPropertyId string, pr
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of goals to include in this response.
 func (c *ManagementGoalsListCall) MaxResults(maxResults int64) *ManagementGoalsListCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -506,7 +506,7 @@ func (c *ManagementGoalsListCall) MaxResults(maxResults int64) *ManagementGoalsL
 // first goal to retrieve. Use this parameter as a pagination mechanism
 // along with the max-results parameter.
 func (c *ManagementGoalsListCall) StartIndex(startIndex int64) *ManagementGoalsListCall {
-	c.urlParams_.Set("start-index", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -641,7 +641,7 @@ func (r *ManagementProfilesService) List(accountId string, webPropertyId string)
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of views (profiles) to include in this response.
 func (c *ManagementProfilesListCall) MaxResults(maxResults int64) *ManagementProfilesListCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -649,7 +649,7 @@ func (c *ManagementProfilesListCall) MaxResults(maxResults int64) *ManagementPro
 // first entity to retrieve. Use this parameter as a pagination
 // mechanism along with the max-results parameter.
 func (c *ManagementProfilesListCall) StartIndex(startIndex int64) *ManagementProfilesListCall {
-	c.urlParams_.Set("start-index", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -772,7 +772,7 @@ func (r *ManagementSegmentsService) List() *ManagementSegmentsListCall {
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of advanced segments to include in this response.
 func (c *ManagementSegmentsListCall) MaxResults(maxResults int64) *ManagementSegmentsListCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -780,7 +780,7 @@ func (c *ManagementSegmentsListCall) MaxResults(maxResults int64) *ManagementSeg
 // first advanced segment to retrieve. Use this parameter as a
 // pagination mechanism along with the max-results parameter.
 func (c *ManagementSegmentsListCall) StartIndex(startIndex int64) *ManagementSegmentsListCall {
-	c.urlParams_.Set("start-index", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -886,7 +886,7 @@ func (r *ManagementWebpropertiesService) List(accountId string) *ManagementWebpr
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of web properties to include in this response.
 func (c *ManagementWebpropertiesListCall) MaxResults(maxResults int64) *ManagementWebpropertiesListCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -894,7 +894,7 @@ func (c *ManagementWebpropertiesListCall) MaxResults(maxResults int64) *Manageme
 // first entity to retrieve. Use this parameter as a pagination
 // mechanism along with the max-results parameter.
 func (c *ManagementWebpropertiesListCall) StartIndex(startIndex int64) *ManagementWebpropertiesListCall {
-	c.urlParams_.Set("start-index", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
 	return c
 }
 

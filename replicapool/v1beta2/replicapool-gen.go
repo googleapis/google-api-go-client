@@ -1228,7 +1228,7 @@ func (r *InstanceGroupManagersService) Insert(project string, zone string, size 
 	c := &InstanceGroupManagersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
-	c.urlParams_.Set("size", fmt.Sprintf("%v", size))
+	c.urlParams_.Set("size", fmt.Sprint(size))
 	c.instancegroupmanager = instancegroupmanager
 	return c
 }
@@ -1386,7 +1386,7 @@ func (c *InstanceGroupManagersListCall) Filter(filter string) *InstanceGroupMana
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *InstanceGroupManagersListCall) MaxResults(maxResults int64) *InstanceGroupManagersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1702,7 +1702,7 @@ func (r *InstanceGroupManagersService) Resize(project string, zone string, insta
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
-	c.urlParams_.Set("size", fmt.Sprintf("%v", size))
+	c.urlParams_.Set("size", fmt.Sprint(size))
 	return c
 }
 
@@ -2297,7 +2297,7 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

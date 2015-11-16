@@ -1466,7 +1466,7 @@ func (r *DeploymentsService) Insert(project string, deployment *Deployment) *Dep
 // cancel the preview and you must separately delete this deployment if
 // you want to remove it.
 func (c *DeploymentsInsertCall) Preview(preview bool) *DeploymentsInsertCall {
-	c.urlParams_.Set("preview", fmt.Sprintf("%v", preview))
+	c.urlParams_.Set("preview", fmt.Sprint(preview))
 	return c
 }
 
@@ -1619,7 +1619,7 @@ func (c *DeploymentsListCall) Filter(filter string) *DeploymentsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1816,7 +1816,7 @@ func (c *DeploymentsPatchCall) DeletePolicy(deletePolicy string) *DeploymentsPat
 // exist after you cancel the preview and you must separately delete
 // this deployment if you want to remove it.
 func (c *DeploymentsPatchCall) Preview(preview bool) *DeploymentsPatchCall {
-	c.urlParams_.Set("preview", fmt.Sprintf("%v", preview))
+	c.urlParams_.Set("preview", fmt.Sprint(preview))
 	return c
 }
 
@@ -2157,7 +2157,7 @@ func (c *DeploymentsUpdateCall) DeletePolicy(deletePolicy string) *DeploymentsUp
 // exist after you cancel the preview and you must separately delete
 // this deployment if you want to remove it.
 func (c *DeploymentsUpdateCall) Preview(preview bool) *DeploymentsUpdateCall {
-	c.urlParams_.Set("preview", fmt.Sprintf("%v", preview))
+	c.urlParams_.Set("preview", fmt.Sprint(preview))
 	return c
 }
 
@@ -2499,7 +2499,7 @@ func (c *ManifestsListCall) Filter(filter string) *ManifestsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ManifestsListCall) MaxResults(maxResults int64) *ManifestsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2827,7 +2827,7 @@ func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3159,7 +3159,7 @@ func (c *ResourcesListCall) Filter(filter string) *ResourcesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ResourcesListCall) MaxResults(maxResults int64) *ResourcesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3350,7 +3350,7 @@ func (c *TypesListCall) Filter(filter string) *TypesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TypesListCall) MaxResults(maxResults int64) *TypesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

@@ -920,7 +920,7 @@ func (c *ApisListCall) Name(name string) *ApisListCall {
 // Preferred sets the optional parameter "preferred": Return only the
 // preferred version of an API.
 func (c *ApisListCall) Preferred(preferred bool) *ApisListCall {
-	c.urlParams_.Set("preferred", fmt.Sprintf("%v", preferred))
+	c.urlParams_.Set("preferred", fmt.Sprint(preferred))
 	return c
 }
 

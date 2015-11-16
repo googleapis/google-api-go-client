@@ -1015,7 +1015,7 @@ func (r *CoursesService) List() *CoursesListCall {
 // assign a maximum. The server may return fewer than the specified
 // number of results.
 func (c *CoursesListCall) PageSize(pageSize int64) *CoursesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1703,7 +1703,7 @@ func (r *CoursesAliasesService) List(courseId string) *CoursesAliasesListCall {
 // assign a maximum. The server may return fewer than the specified
 // number of results.
 func (c *CoursesAliasesListCall) PageSize(pageSize int64) *CoursesAliasesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -2266,7 +2266,7 @@ func (r *CoursesStudentsService) List(courseId string) *CoursesStudentsListCall 
 // items to return. Zero means no maximum. The server may return fewer
 // than the specified number of results.
 func (c *CoursesStudentsListCall) PageSize(pageSize int64) *CoursesStudentsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -2817,7 +2817,7 @@ func (r *CoursesTeachersService) List(courseId string) *CoursesTeachersListCall 
 // items to return. Zero means no maximum. The server may return fewer
 // than the specified number of results.
 func (c *CoursesTeachersListCall) PageSize(pageSize int64) *CoursesTeachersListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -3449,7 +3449,7 @@ func (c *InvitationsListCall) CourseId(courseId string) *InvitationsListCall {
 // items to return. Zero means no maximum. The server may return fewer
 // than the specified number of results.
 func (c *InvitationsListCall) PageSize(pageSize int64) *InvitationsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

@@ -1376,7 +1376,7 @@ func (r *ProjectsSubscriptionsService) List(project string) *ProjectsSubscriptio
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // subscriptions to return.
 func (c *ProjectsSubscriptionsListCall) PageSize(pageSize int64) *ProjectsSubscriptionsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -2640,7 +2640,7 @@ func (r *ProjectsTopicsService) List(project string) *ProjectsTopicsListCall {
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // topics to return.
 func (c *ProjectsTopicsListCall) PageSize(pageSize int64) *ProjectsTopicsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -3163,7 +3163,7 @@ func (r *ProjectsTopicsSubscriptionsService) List(topic string) *ProjectsTopicsS
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // subscription names to return.
 func (c *ProjectsTopicsSubscriptionsListCall) PageSize(pageSize int64) *ProjectsTopicsSubscriptionsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

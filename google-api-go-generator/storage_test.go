@@ -387,7 +387,7 @@ func TestRepeatedParams(t *testing.T) {
 	s.UserAgent = "myagent/1.0"
 	cs := dfa.NewCreativesService(s)
 
-	_, err = cs.List(10).Active(true).MaxResults(1).Ids([]int64{2, 3}).PageToken("abc").SizeIds([]int64{4, 5}).Types([]string{"def", "ghi"}).IfNoneMatch("not-a-param").Do()
+	_, err = cs.List(10).Active(true).MaxResults(1).Ids(2, 3).PageToken("abc").SizeIds(4, 5).Types("def", "ghi").IfNoneMatch("not-a-param").Do()
 	if err != nil {
 		t.Fatalf("dfa.List: %v", err)
 	}

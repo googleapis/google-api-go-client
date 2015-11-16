@@ -1389,7 +1389,7 @@ func (c *GlobalAccountsOperationsListCall) Filter(filter string) *GlobalAccounts
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *GlobalAccountsOperationsListCall) MaxResults(maxResults int64) *GlobalAccountsOperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2249,7 +2249,7 @@ func (c *GroupsListCall) Filter(filter string) *GroupsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *GroupsListCall) MaxResults(maxResults int64) *GroupsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2843,7 +2843,7 @@ func (r *LinuxService) GetAuthorizedKeysView(project string, zone string, user s
 // Login sets the optional parameter "login": Whether the view was
 // requested as part of a user-initiated login.
 func (c *LinuxGetAuthorizedKeysViewCall) Login(login bool) *LinuxGetAuthorizedKeysViewCall {
-	c.urlParams_.Set("login", fmt.Sprintf("%v", login))
+	c.urlParams_.Set("login", fmt.Sprint(login))
 	return c
 }
 
@@ -3018,7 +3018,7 @@ func (c *LinuxGetLinuxAccountViewsCall) Filter(filter string) *LinuxGetLinuxAcco
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *LinuxGetLinuxAccountViewsCall) MaxResults(maxResults int64) *LinuxGetLinuxAccountViewsCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3883,7 +3883,7 @@ func (c *UsersListCall) Filter(filter string) *UsersListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *UsersListCall) MaxResults(maxResults int64) *UsersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

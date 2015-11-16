@@ -640,7 +640,7 @@ func (r *TasklistsService) List() *TasklistsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of task lists returned on one page.  The default is 100.
 func (c *TasklistsListCall) MaxResults(maxResults int64) *TasklistsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1506,7 +1506,7 @@ func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of task lists returned on one page.  The default is 100.
 func (c *TasksListCall) MaxResults(maxResults int64) *TasksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1521,7 +1521,7 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 // indicating whether completed tasks are returned in the result.  The
 // default is True.
 func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
-	c.urlParams_.Set("showCompleted", fmt.Sprintf("%v", showCompleted))
+	c.urlParams_.Set("showCompleted", fmt.Sprint(showCompleted))
 	return c
 }
 
@@ -1529,7 +1529,7 @@ func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
 // indicating whether deleted tasks are returned in the result.  The
 // default is False.
 func (c *TasksListCall) ShowDeleted(showDeleted bool) *TasksListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -1537,7 +1537,7 @@ func (c *TasksListCall) ShowDeleted(showDeleted bool) *TasksListCall {
 // whether hidden tasks are returned in the result.  The default is
 // False.
 func (c *TasksListCall) ShowHidden(showHidden bool) *TasksListCall {
-	c.urlParams_.Set("showHidden", fmt.Sprintf("%v", showHidden))
+	c.urlParams_.Set("showHidden", fmt.Sprint(showHidden))
 	return c
 }
 

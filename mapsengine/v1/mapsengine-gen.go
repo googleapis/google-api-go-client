@@ -3160,7 +3160,7 @@ func (c *AssetsListCall) CreatorEmail(creatorEmail string) *AssetsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *AssetsListCall) MaxResults(maxResults int64) *AssetsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3432,7 +3432,7 @@ func (r *AssetsParentsService) List(id string) *AssetsParentsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *AssetsParentsListCall) MaxResults(maxResults int64) *AssetsParentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3815,7 +3815,7 @@ func (r *LayersService) Create(layer *Layer) *LayersCreateCall {
 // Process sets the optional parameter "process": Whether to queue the
 // created layer for processing.
 func (c *LayersCreateCall) Process(process bool) *LayersCreateCall {
-	c.urlParams_.Set("process", fmt.Sprintf("%v", process))
+	c.urlParams_.Set("process", fmt.Sprint(process))
 	return c
 }
 
@@ -4323,7 +4323,7 @@ func (c *LayersListCall) CreatorEmail(creatorEmail string) *LayersListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *LayersListCall) MaxResults(maxResults int64) *LayersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4611,7 +4611,7 @@ func (r *LayersService) ListPublished() *LayersListPublishedCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *LayersListPublishedCall) MaxResults(maxResults int64) *LayersListPublishedCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4969,7 +4969,7 @@ func (r *LayersService) Publish(id string) *LayersPublishCall {
 // true, you'll need to reprocess any out-of-date layer before
 // publishing.
 func (c *LayersPublishCall) Force(force bool) *LayersPublishCall {
-	c.urlParams_.Set("force", fmt.Sprintf("%v", force))
+	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 
@@ -5201,7 +5201,7 @@ func (r *LayersParentsService) List(id string) *LayersParentsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *LayersParentsListCall) MaxResults(maxResults int64) *LayersParentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6214,7 +6214,7 @@ func (c *MapsListCall) CreatorEmail(creatorEmail string) *MapsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *MapsListCall) MaxResults(maxResults int64) *MapsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6499,7 +6499,7 @@ func (r *MapsService) ListPublished() *MapsListPublishedCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *MapsListPublishedCall) MaxResults(maxResults int64) *MapsListPublishedCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6747,7 +6747,7 @@ func (r *MapsService) Publish(id string) *MapsPublishCall {
 // will allow publication of the map even if it's out of date. If false,
 // the map must have a processingStatus of complete before publishing.
 func (c *MapsPublishCall) Force(force bool) *MapsPublishCall {
-	c.urlParams_.Set("force", fmt.Sprintf("%v", force))
+	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 
@@ -7818,7 +7818,7 @@ func (r *ProjectsIconsService) List(projectId string) *ProjectsIconsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *ProjectsIconsListCall) MaxResults(maxResults int64) *ProjectsIconsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8420,7 +8420,7 @@ func (c *RasterCollectionsListCall) CreatorEmail(creatorEmail string) *RasterCol
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *RasterCollectionsListCall) MaxResults(maxResults int64) *RasterCollectionsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8911,7 +8911,7 @@ func (r *RasterCollectionsParentsService) List(id string) *RasterCollectionsPare
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *RasterCollectionsParentsListCall) MaxResults(maxResults int64) *RasterCollectionsParentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -9716,7 +9716,7 @@ func (c *RasterCollectionsRastersListCall) CreatorEmail(creatorEmail string) *Ra
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *RasterCollectionsRastersListCall) MaxResults(maxResults int64) *RasterCollectionsRastersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10208,7 +10208,7 @@ func (c *RastersListCall) CreatorEmail(creatorEmail string) *RastersListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *RastersListCall) MaxResults(maxResults int64) *RastersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10982,7 +10982,7 @@ func (r *RastersParentsService) List(id string) *RastersParentsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *RastersParentsListCall) MaxResults(maxResults int64) *RastersParentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -11866,7 +11866,7 @@ func (c *TablesListCall) CreatorEmail(creatorEmail string) *TablesListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 100.
 func (c *TablesListCall) MaxResults(maxResults int64) *TablesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -12964,7 +12964,7 @@ func (c *TablesFeaturesListCall) Intersects(intersects string) *TablesFeaturesLi
 // features to return from the query, irrespective of the number of
 // pages.
 func (c *TablesFeaturesListCall) Limit(limit int64) *TablesFeaturesListCall {
-	c.urlParams_.Set("limit", fmt.Sprintf("%v", limit))
+	c.urlParams_.Set("limit", fmt.Sprint(limit))
 	return c
 }
 
@@ -12972,7 +12972,7 @@ func (c *TablesFeaturesListCall) Limit(limit int64) *TablesFeaturesListCall {
 // number of items to include in the response, used for paging. The
 // maximum supported value is 1000.
 func (c *TablesFeaturesListCall) MaxResults(maxResults int64) *TablesFeaturesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -13389,7 +13389,7 @@ func (r *TablesParentsService) List(id string) *TablesParentsListCall {
 // number of items to include in a single response page. The maximum
 // supported value is 50.
 func (c *TablesParentsListCall) MaxResults(maxResults int64) *TablesParentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

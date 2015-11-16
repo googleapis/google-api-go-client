@@ -1221,14 +1221,14 @@ func (r *ElectionsService) VoterInfoQuery(address string) *ElectionsVoterInfoQue
 // the election to look up. A list of election IDs can be obtained at
 // https://www.googleapis.com/civicinfo/{version}/elections
 func (c *ElectionsVoterInfoQueryCall) ElectionId(electionId int64) *ElectionsVoterInfoQueryCall {
-	c.urlParams_.Set("electionId", fmt.Sprintf("%v", electionId))
+	c.urlParams_.Set("electionId", fmt.Sprint(electionId))
 	return c
 }
 
 // OfficialOnly sets the optional parameter "officialOnly": If set to
 // true, only data from official state sources will be returned.
 func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *ElectionsVoterInfoQueryCall {
-	c.urlParams_.Set("officialOnly", fmt.Sprintf("%v", officialOnly))
+	c.urlParams_.Set("officialOnly", fmt.Sprint(officialOnly))
 	return c
 }
 
@@ -1373,7 +1373,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Address(address string)
 // to return information about offices and officials. If false, only the
 // top-level district information will be returned.
 func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeOffices bool) *RepresentativesRepresentativeInfoByAddressCall {
-	c.urlParams_.Set("includeOffices", fmt.Sprintf("%v", includeOffices))
+	c.urlParams_.Set("includeOffices", fmt.Sprint(includeOffices))
 	return c
 }
 
@@ -1392,7 +1392,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeO
 //   "special"
 //   "subLocality1"
 //   "subLocality2"
-func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels []string) *RepresentativesRepresentativeInfoByAddressCall {
+func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
 }
@@ -1414,7 +1414,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels []string)
 //   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
-func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles []string) *RepresentativesRepresentativeInfoByAddressCall {
+func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
 }
@@ -1615,7 +1615,7 @@ func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *Rep
 //   "special"
 //   "subLocality1"
 //   "subLocality2"
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels []string) *RepresentativesRepresentativeInfoByDivisionCall {
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
 }
@@ -1626,7 +1626,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels []string
 // ocd-division/country:us/district:dc, this would also return all DC's
 // wards and ANCs.
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bool) *RepresentativesRepresentativeInfoByDivisionCall {
-	c.urlParams_.Set("recursive", fmt.Sprintf("%v", recursive))
+	c.urlParams_.Set("recursive", fmt.Sprint(recursive))
 	return c
 }
 
@@ -1647,7 +1647,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 //   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles []string) *RepresentativesRepresentativeInfoByDivisionCall {
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
 }

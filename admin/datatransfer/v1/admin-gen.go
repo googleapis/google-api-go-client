@@ -466,7 +466,7 @@ func (c *ApplicationsListCall) CustomerId(customerId string) *ApplicationsListCa
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 100.
 func (c *ApplicationsListCall) MaxResults(maxResults int64) *ApplicationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -846,7 +846,7 @@ func (c *TransfersListCall) CustomerId(customerId string) *TransfersListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Default is 100.
 func (c *TransfersListCall) MaxResults(maxResults int64) *TransfersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

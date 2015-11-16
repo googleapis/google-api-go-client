@@ -612,7 +612,7 @@ func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
 // MaxResults sets the optional parameter "maxResults": Number of
 // activity records to be shown in each page.
 func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -853,7 +853,7 @@ func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 // MaxResults sets the optional parameter "maxResults": Number of
 // activity records to be shown in each page.
 func (c *ActivitiesWatchCall) MaxResults(maxResults int64) *ActivitiesWatchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1311,7 +1311,7 @@ func (c *UserUsageReportGetCall) Filters(filters string) *UserUsageReportGetCall
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return. Maximum allowed is 1000
 func (c *UserUsageReportGetCall) MaxResults(maxResults int64) *UserUsageReportGetCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

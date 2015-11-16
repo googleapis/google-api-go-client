@@ -2107,7 +2107,7 @@ func (r *BackupRunsService) List(project string, instance string) *BackupRunsLis
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of backup runs per response.
 func (c *BackupRunsListCall) MaxResults(maxResults int64) *BackupRunsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4103,7 +4103,7 @@ func (r *InstancesService) List(project string) *InstancesListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results to return per response.
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5395,7 +5395,7 @@ func (r *OperationsService) List(project string, instance string) *OperationsLis
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of operations per response.
 func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

@@ -1105,7 +1105,7 @@ func (r *ApplicationsService) ListHidden(applicationId string) *ApplicationsList
 // paging. For any response, the actual number of player resources
 // returned may be less than the specified maxResults.
 func (c *ApplicationsListHiddenCall) MaxResults(maxResults int64) *ApplicationsListHiddenCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

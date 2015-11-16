@@ -312,7 +312,7 @@ func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeed
 // "filter_third_party_resources": Indicates if third party resources
 // should be filtered out before PageSpeed analysis.
 func (c *PagespeedapiRunpagespeedCall) FilterThirdPartyResources(filterThirdPartyResources bool) *PagespeedapiRunpagespeedCall {
-	c.urlParams_.Set("filter_third_party_resources", fmt.Sprintf("%v", filterThirdPartyResources))
+	c.urlParams_.Set("filter_third_party_resources", fmt.Sprint(filterThirdPartyResources))
 	return c
 }
 
@@ -325,7 +325,7 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 
 // Rule sets the optional parameter "rule": A PageSpeed rule to run; if
 // none are given, all rules are run
-func (c *PagespeedapiRunpagespeedCall) Rule(rule []string) *PagespeedapiRunpagespeedCall {
+func (c *PagespeedapiRunpagespeedCall) Rule(rule ...string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.SetMulti("rule", append([]string{}, rule...))
 	return c
 }
@@ -333,7 +333,7 @@ func (c *PagespeedapiRunpagespeedCall) Rule(rule []string) *PagespeedapiRunpages
 // Screenshot sets the optional parameter "screenshot": Indicates if
 // binary data containing a screenshot should be included
 func (c *PagespeedapiRunpagespeedCall) Screenshot(screenshot bool) *PagespeedapiRunpagespeedCall {
-	c.urlParams_.Set("screenshot", fmt.Sprintf("%v", screenshot))
+	c.urlParams_.Set("screenshot", fmt.Sprint(screenshot))
 	return c
 }
 

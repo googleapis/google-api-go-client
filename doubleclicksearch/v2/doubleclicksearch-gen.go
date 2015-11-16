@@ -862,37 +862,37 @@ func (r *ConversionService) Get(agencyId int64, advertiserId int64, engineAccoun
 	c.agencyId = agencyId
 	c.advertiserId = advertiserId
 	c.engineAccountId = engineAccountId
-	c.urlParams_.Set("endDate", fmt.Sprintf("%v", endDate))
-	c.urlParams_.Set("rowCount", fmt.Sprintf("%v", rowCount))
-	c.urlParams_.Set("startDate", fmt.Sprintf("%v", startDate))
-	c.urlParams_.Set("startRow", fmt.Sprintf("%v", startRow))
+	c.urlParams_.Set("endDate", fmt.Sprint(endDate))
+	c.urlParams_.Set("rowCount", fmt.Sprint(rowCount))
+	c.urlParams_.Set("startDate", fmt.Sprint(startDate))
+	c.urlParams_.Set("startRow", fmt.Sprint(startRow))
 	return c
 }
 
 // AdGroupId sets the optional parameter "adGroupId": Numeric ID of the
 // ad group.
 func (c *ConversionGetCall) AdGroupId(adGroupId int64) *ConversionGetCall {
-	c.urlParams_.Set("adGroupId", fmt.Sprintf("%v", adGroupId))
+	c.urlParams_.Set("adGroupId", fmt.Sprint(adGroupId))
 	return c
 }
 
 // AdId sets the optional parameter "adId": Numeric ID of the ad.
 func (c *ConversionGetCall) AdId(adId int64) *ConversionGetCall {
-	c.urlParams_.Set("adId", fmt.Sprintf("%v", adId))
+	c.urlParams_.Set("adId", fmt.Sprint(adId))
 	return c
 }
 
 // CampaignId sets the optional parameter "campaignId": Numeric ID of
 // the campaign.
 func (c *ConversionGetCall) CampaignId(campaignId int64) *ConversionGetCall {
-	c.urlParams_.Set("campaignId", fmt.Sprintf("%v", campaignId))
+	c.urlParams_.Set("campaignId", fmt.Sprint(campaignId))
 	return c
 }
 
 // CriterionId sets the optional parameter "criterionId": Numeric ID of
 // the criterion.
 func (c *ConversionGetCall) CriterionId(criterionId int64) *ConversionGetCall {
-	c.urlParams_.Set("criterionId", fmt.Sprintf("%v", criterionId))
+	c.urlParams_.Set("criterionId", fmt.Sprint(criterionId))
 	return c
 }
 
@@ -1201,13 +1201,13 @@ type ConversionPatchCall struct {
 // method supports patch semantics.
 func (r *ConversionService) Patch(advertiserId int64, agencyId int64, endDate int64, engineAccountId int64, rowCount int64, startDate int64, startRow int64, conversionlist *ConversionList) *ConversionPatchCall {
 	c := &ConversionPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("advertiserId", fmt.Sprintf("%v", advertiserId))
-	c.urlParams_.Set("agencyId", fmt.Sprintf("%v", agencyId))
-	c.urlParams_.Set("endDate", fmt.Sprintf("%v", endDate))
-	c.urlParams_.Set("engineAccountId", fmt.Sprintf("%v", engineAccountId))
-	c.urlParams_.Set("rowCount", fmt.Sprintf("%v", rowCount))
-	c.urlParams_.Set("startDate", fmt.Sprintf("%v", startDate))
-	c.urlParams_.Set("startRow", fmt.Sprintf("%v", startRow))
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	c.urlParams_.Set("agencyId", fmt.Sprint(agencyId))
+	c.urlParams_.Set("endDate", fmt.Sprint(endDate))
+	c.urlParams_.Set("engineAccountId", fmt.Sprint(engineAccountId))
+	c.urlParams_.Set("rowCount", fmt.Sprint(rowCount))
+	c.urlParams_.Set("startDate", fmt.Sprint(startDate))
+	c.urlParams_.Set("startRow", fmt.Sprint(startRow))
 	c.conversionlist = conversionlist
 	return c
 }

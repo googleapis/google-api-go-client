@@ -1272,7 +1272,7 @@ func (r *BlogUserInfosService) Get(userId string, blogId string) *BlogUserInfosG
 // MaxPosts sets the optional parameter "maxPosts": Maximum number of
 // posts to pull back with the blog.
 func (c *BlogUserInfosGetCall) MaxPosts(maxPosts int64) *BlogUserInfosGetCall {
-	c.urlParams_.Set("maxPosts", fmt.Sprintf("%v", maxPosts))
+	c.urlParams_.Set("maxPosts", fmt.Sprint(maxPosts))
 	return c
 }
 
@@ -1417,7 +1417,7 @@ func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 // MaxPosts sets the optional parameter "maxPosts": Maximum number of
 // posts to pull back with the blog.
 func (c *BlogsGetCall) MaxPosts(maxPosts int64) *BlogsGetCall {
-	c.urlParams_.Set("maxPosts", fmt.Sprintf("%v", maxPosts))
+	c.urlParams_.Set("maxPosts", fmt.Sprint(maxPosts))
 	return c
 }
 
@@ -1730,7 +1730,7 @@ func (r *BlogsService) ListByUser(userId string) *BlogsListByUserCall {
 // the response is a list of blogs with per-user information instead of
 // just blogs.
 func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUserCall {
-	c.urlParams_.Set("fetchUserInfo", fmt.Sprintf("%v", fetchUserInfo))
+	c.urlParams_.Set("fetchUserInfo", fmt.Sprint(fetchUserInfo))
 	return c
 }
 
@@ -1745,7 +1745,7 @@ func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUser
 // access.
 //   "READER" - Reader role - Blogs where the user has Reader level
 // access (to a private blog).
-func (c *BlogsListByUserCall) Role(role []string) *BlogsListByUserCall {
+func (c *BlogsListByUserCall) Role(role ...string) *BlogsListByUserCall {
 	c.urlParams_.SetMulti("role", append([]string{}, role...))
 	return c
 }
@@ -1757,7 +1757,7 @@ func (c *BlogsListByUserCall) Role(role []string) *BlogsListByUserCall {
 // Possible values:
 //   "DELETED" - Blog has been deleted by an administrator.
 //   "LIVE" (default) - Blog is currently live.
-func (c *BlogsListByUserCall) Status(status []string) *BlogsListByUserCall {
+func (c *BlogsListByUserCall) Status(status ...string) *BlogsListByUserCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -2366,14 +2366,14 @@ func (c *CommentsListCall) EndDate(endDate string) *CommentsListCall {
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
 // body content of the comments is included.
 func (c *CommentsListCall) FetchBodies(fetchBodies bool) *CommentsListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of comments to include in the result.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2398,7 +2398,7 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListCall) Status(status []string) *CommentsListCall {
+func (c *CommentsListCall) Status(status ...string) *CommentsListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -2619,14 +2619,14 @@ func (c *CommentsListByBlogCall) EndDate(endDate string) *CommentsListByBlogCall
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
 // body content of the comments is included.
 func (c *CommentsListByBlogCall) FetchBodies(fetchBodies bool) *CommentsListByBlogCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of comments to include in the result.
 func (c *CommentsListByBlogCall) MaxResults(maxResults int64) *CommentsListByBlogCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2651,7 +2651,7 @@ func (c *CommentsListByBlogCall) StartDate(startDate string) *CommentsListByBlog
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListByBlogCall) Status(status []string) *CommentsListByBlogCall {
+func (c *CommentsListByBlogCall) Status(status ...string) *CommentsListByBlogCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -3089,7 +3089,7 @@ func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 //   "30DAYS" - Page view counts from the last thirty days.
 //   "7DAYS" - Page view counts from the last seven days.
 //   "all" - Total page view counts from all time.
-func (c *PageViewsGetCall) Range(range_ []string) *PageViewsGetCall {
+func (c *PageViewsGetCall) Range(range_ ...string) *PageViewsGetCall {
 	c.urlParams_.SetMulti("range", append([]string{}, range_...))
 	return c
 }
@@ -3487,7 +3487,7 @@ func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
 // IsDraft sets the optional parameter "isDraft": Whether to create the
 // page as a draft (default: false).
 func (c *PagesInsertCall) IsDraft(isDraft bool) *PagesInsertCall {
-	c.urlParams_.Set("isDraft", fmt.Sprintf("%v", isDraft))
+	c.urlParams_.Set("isDraft", fmt.Sprint(isDraft))
 	return c
 }
 
@@ -3619,14 +3619,14 @@ func (r *PagesService) List(blogId string) *PagesListCall {
 // FetchBodies sets the optional parameter "fetchBodies": Whether to
 // retrieve the Page bodies.
 func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of Pages to fetch.
 func (c *PagesListCall) MaxResults(maxResults int64) *PagesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3642,7 +3642,7 @@ func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
 // Possible values:
 //   "draft" - Draft (unpublished) Pages
 //   "live" - Pages that are publicly visible
-func (c *PagesListCall) Status(status []string) *PagesListCall {
+func (c *PagesListCall) Status(status ...string) *PagesListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -3834,14 +3834,14 @@ func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPat
 // Publish sets the optional parameter "publish": Whether a publish
 // action should be performed when the page is updated (default: false).
 func (c *PagesPatchCall) Publish(publish bool) *PagesPatchCall {
-	c.urlParams_.Set("publish", fmt.Sprintf("%v", publish))
+	c.urlParams_.Set("publish", fmt.Sprint(publish))
 	return c
 }
 
 // Revert sets the optional parameter "revert": Whether a revert action
 // should be performed when the page is updated (default: false).
 func (c *PagesPatchCall) Revert(revert bool) *PagesPatchCall {
-	c.urlParams_.Set("revert", fmt.Sprintf("%v", revert))
+	c.urlParams_.Set("revert", fmt.Sprint(revert))
 	return c
 }
 
@@ -4226,14 +4226,14 @@ func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUp
 // Publish sets the optional parameter "publish": Whether a publish
 // action should be performed when the page is updated (default: false).
 func (c *PagesUpdateCall) Publish(publish bool) *PagesUpdateCall {
-	c.urlParams_.Set("publish", fmt.Sprintf("%v", publish))
+	c.urlParams_.Set("publish", fmt.Sprint(publish))
 	return c
 }
 
 // Revert sets the optional parameter "revert": Whether a revert action
 // should be performed when the page is updated (default: false).
 func (c *PagesUpdateCall) Revert(revert bool) *PagesUpdateCall {
-	c.urlParams_.Set("revert", fmt.Sprintf("%v", revert))
+	c.urlParams_.Set("revert", fmt.Sprint(revert))
 	return c
 }
 
@@ -4383,7 +4383,7 @@ func (r *PostUserInfosService) Get(userId string, blogId string, postId string) 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to pull back on a post.
 func (c *PostUserInfosGetCall) MaxComments(maxComments int64) *PostUserInfosGetCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.urlParams_.Set("maxComments", fmt.Sprint(maxComments))
 	return c
 }
 
@@ -4547,7 +4547,7 @@ func (c *PostUserInfosListCall) EndDate(endDate string) *PostUserInfosListCall {
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
 // body content of posts is included. Default is false.
 func (c *PostUserInfosListCall) FetchBodies(fetchBodies bool) *PostUserInfosListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
@@ -4561,7 +4561,7 @@ func (c *PostUserInfosListCall) Labels(labels string) *PostUserInfosListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of posts to fetch.
 func (c *PostUserInfosListCall) MaxResults(maxResults int64) *PostUserInfosListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4596,7 +4596,7 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 //   "draft" - Draft posts
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in future.
-func (c *PostUserInfosListCall) Status(status []string) *PostUserInfosListCall {
+func (c *PostUserInfosListCall) Status(status ...string) *PostUserInfosListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -4923,21 +4923,21 @@ func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 // to false when the post bodies are not required, to help minimize
 // traffic.
 func (c *PostsGetCall) FetchBody(fetchBody bool) *PostsGetCall {
-	c.urlParams_.Set("fetchBody", fmt.Sprintf("%v", fetchBody))
+	c.urlParams_.Set("fetchBody", fmt.Sprint(fetchBody))
 	return c
 }
 
 // FetchImages sets the optional parameter "fetchImages": Whether image
 // URL metadata for each post is included (default: false).
 func (c *PostsGetCall) FetchImages(fetchImages bool) *PostsGetCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.urlParams_.Set("fetchImages", fmt.Sprint(fetchImages))
 	return c
 }
 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to pull back on a post.
 func (c *PostsGetCall) MaxComments(maxComments int64) *PostsGetCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.urlParams_.Set("maxComments", fmt.Sprint(maxComments))
 	return c
 }
 
@@ -5122,7 +5122,7 @@ func (r *PostsService) GetByPath(blogId string, path string) *PostsGetByPathCall
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to pull back on a post.
 func (c *PostsGetByPathCall) MaxComments(maxComments int64) *PostsGetByPathCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.urlParams_.Set("maxComments", fmt.Sprint(maxComments))
 	return c
 }
 
@@ -5295,7 +5295,7 @@ func (r *PostsService) Insert(blogId string, post *Post) *PostsInsertCall {
 // FetchBody sets the optional parameter "fetchBody": Whether the body
 // content of the post is included with the result (default: true).
 func (c *PostsInsertCall) FetchBody(fetchBody bool) *PostsInsertCall {
-	c.urlParams_.Set("fetchBody", fmt.Sprintf("%v", fetchBody))
+	c.urlParams_.Set("fetchBody", fmt.Sprint(fetchBody))
 	return c
 }
 
@@ -5303,14 +5303,14 @@ func (c *PostsInsertCall) FetchBody(fetchBody bool) *PostsInsertCall {
 // URL metadata for each post is included in the returned result
 // (default: false).
 func (c *PostsInsertCall) FetchImages(fetchImages bool) *PostsInsertCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.urlParams_.Set("fetchImages", fmt.Sprint(fetchImages))
 	return c
 }
 
 // IsDraft sets the optional parameter "isDraft": Whether to create the
 // post as a draft (default: false).
 func (c *PostsInsertCall) IsDraft(isDraft bool) *PostsInsertCall {
-	c.urlParams_.Set("isDraft", fmt.Sprintf("%v", isDraft))
+	c.urlParams_.Set("isDraft", fmt.Sprint(isDraft))
 	return c
 }
 
@@ -5461,14 +5461,14 @@ func (c *PostsListCall) EndDate(endDate string) *PostsListCall {
 // to false when the post bodies are not required, to help minimize
 // traffic.
 func (c *PostsListCall) FetchBodies(fetchBodies bool) *PostsListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
 // FetchImages sets the optional parameter "fetchImages": Whether image
 // URL metadata for each post is included.
 func (c *PostsListCall) FetchImages(fetchImages bool) *PostsListCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.urlParams_.Set("fetchImages", fmt.Sprint(fetchImages))
 	return c
 }
 
@@ -5482,7 +5482,7 @@ func (c *PostsListCall) Labels(labels string) *PostsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of posts to fetch.
 func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5517,7 +5517,7 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 //   "draft" - Draft (non-published) posts.
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in the future.
-func (c *PostsListCall) Status(status []string) *PostsListCall {
+func (c *PostsListCall) Status(status ...string) *PostsListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -5749,7 +5749,7 @@ func (r *PostsService) Patch(blogId string, postId string, post *Post) *PostsPat
 // FetchBody sets the optional parameter "fetchBody": Whether the body
 // content of the post is included with the result (default: true).
 func (c *PostsPatchCall) FetchBody(fetchBody bool) *PostsPatchCall {
-	c.urlParams_.Set("fetchBody", fmt.Sprintf("%v", fetchBody))
+	c.urlParams_.Set("fetchBody", fmt.Sprint(fetchBody))
 	return c
 }
 
@@ -5757,28 +5757,28 @@ func (c *PostsPatchCall) FetchBody(fetchBody bool) *PostsPatchCall {
 // URL metadata for each post is included in the returned result
 // (default: false).
 func (c *PostsPatchCall) FetchImages(fetchImages bool) *PostsPatchCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.urlParams_.Set("fetchImages", fmt.Sprint(fetchImages))
 	return c
 }
 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to retrieve with the returned post.
 func (c *PostsPatchCall) MaxComments(maxComments int64) *PostsPatchCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.urlParams_.Set("maxComments", fmt.Sprint(maxComments))
 	return c
 }
 
 // Publish sets the optional parameter "publish": Whether a publish
 // action should be performed when the post is updated (default: false).
 func (c *PostsPatchCall) Publish(publish bool) *PostsPatchCall {
-	c.urlParams_.Set("publish", fmt.Sprintf("%v", publish))
+	c.urlParams_.Set("publish", fmt.Sprint(publish))
 	return c
 }
 
 // Revert sets the optional parameter "revert": Whether a revert action
 // should be performed when the post is updated (default: false).
 func (c *PostsPatchCall) Revert(revert bool) *PostsPatchCall {
-	c.urlParams_.Set("revert", fmt.Sprintf("%v", revert))
+	c.urlParams_.Set("revert", fmt.Sprint(revert))
 	return c
 }
 
@@ -6197,7 +6197,7 @@ func (r *PostsService) Search(blogId string, q string) *PostsSearchCall {
 // to false when the post bodies are not required, to help minimize
 // traffic.
 func (c *PostsSearchCall) FetchBodies(fetchBodies bool) *PostsSearchCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
@@ -6368,7 +6368,7 @@ func (r *PostsService) Update(blogId string, postId string, post *Post) *PostsUp
 // FetchBody sets the optional parameter "fetchBody": Whether the body
 // content of the post is included with the result (default: true).
 func (c *PostsUpdateCall) FetchBody(fetchBody bool) *PostsUpdateCall {
-	c.urlParams_.Set("fetchBody", fmt.Sprintf("%v", fetchBody))
+	c.urlParams_.Set("fetchBody", fmt.Sprint(fetchBody))
 	return c
 }
 
@@ -6376,28 +6376,28 @@ func (c *PostsUpdateCall) FetchBody(fetchBody bool) *PostsUpdateCall {
 // URL metadata for each post is included in the returned result
 // (default: false).
 func (c *PostsUpdateCall) FetchImages(fetchImages bool) *PostsUpdateCall {
-	c.urlParams_.Set("fetchImages", fmt.Sprintf("%v", fetchImages))
+	c.urlParams_.Set("fetchImages", fmt.Sprint(fetchImages))
 	return c
 }
 
 // MaxComments sets the optional parameter "maxComments": Maximum number
 // of comments to retrieve with the returned post.
 func (c *PostsUpdateCall) MaxComments(maxComments int64) *PostsUpdateCall {
-	c.urlParams_.Set("maxComments", fmt.Sprintf("%v", maxComments))
+	c.urlParams_.Set("maxComments", fmt.Sprint(maxComments))
 	return c
 }
 
 // Publish sets the optional parameter "publish": Whether a publish
 // action should be performed when the post is updated (default: false).
 func (c *PostsUpdateCall) Publish(publish bool) *PostsUpdateCall {
-	c.urlParams_.Set("publish", fmt.Sprintf("%v", publish))
+	c.urlParams_.Set("publish", fmt.Sprint(publish))
 	return c
 }
 
 // Revert sets the optional parameter "revert": Whether a revert action
 // should be performed when the post is updated (default: false).
 func (c *PostsUpdateCall) Revert(revert bool) *PostsUpdateCall {
-	c.urlParams_.Set("revert", fmt.Sprintf("%v", revert))
+	c.urlParams_.Set("revert", fmt.Sprint(revert))
 	return c
 }
 

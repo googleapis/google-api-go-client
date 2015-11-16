@@ -3071,14 +3071,14 @@ func (c *TimelineListCall) BundleId(bundleId string) *TimelineListCall {
 // IncludeDeleted sets the optional parameter "includeDeleted": If true,
 // tombstone records for deleted items will be returned.
 func (c *TimelineListCall) IncludeDeleted(includeDeleted bool) *TimelineListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of items to include in the response, used for paging.
 func (c *TimelineListCall) MaxResults(maxResults int64) *TimelineListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3105,7 +3105,7 @@ func (c *TimelineListCall) PageToken(pageToken string) *TimelineListCall {
 // PinnedOnly sets the optional parameter "pinnedOnly": If true, only
 // pinned items will be returned.
 func (c *TimelineListCall) PinnedOnly(pinnedOnly bool) *TimelineListCall {
-	c.urlParams_.Set("pinnedOnly", fmt.Sprintf("%v", pinnedOnly))
+	c.urlParams_.Set("pinnedOnly", fmt.Sprint(pinnedOnly))
 	return c
 }
 

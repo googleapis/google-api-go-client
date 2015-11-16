@@ -3228,7 +3228,7 @@ func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 // returned will be the lesser of max_responses and an unspecified
 // server-defined limit.
 func (c *ProjectsJobsListCall) PageSize(pageSize int64) *ProjectsJobsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -3558,7 +3558,7 @@ func (c *ProjectsJobsMessagesListCall) MinimumImportance(minimumImportance strin
 // the service may choose an appropriate default, or may return an
 // arbitrarily large number of results.
 func (c *ProjectsJobsMessagesListCall) PageSize(pageSize int64) *ProjectsJobsMessagesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

@@ -5093,7 +5093,7 @@ func (r *AccountsService) Custombatch(accountscustombatchrequest *AccountsCustom
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsCustombatchCall) DryRun(dryRun bool) *AccountsCustombatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -5214,7 +5214,7 @@ func (r *AccountsService) Delete(merchantId uint64, accountId uint64) *AccountsD
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsDeleteCall) DryRun(dryRun bool) *AccountsDeleteCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -5455,7 +5455,7 @@ func (r *AccountsService) Insert(merchantId uint64, account *Account) *AccountsI
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsInsertCall) DryRun(dryRun bool) *AccountsInsertCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -5587,7 +5587,7 @@ func (r *AccountsService) List(merchantId uint64) *AccountsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of accounts to return in the response, used for paging.
 func (c *AccountsListCall) MaxResults(maxResults int64) *AccountsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5740,7 +5740,7 @@ func (r *AccountsService) Patch(merchantId uint64, accountId uint64, account *Ac
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsPatchCall) DryRun(dryRun bool) *AccountsPatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -5884,7 +5884,7 @@ func (r *AccountsService) Update(merchantId uint64, accountId uint64, account *A
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountsUpdateCall) DryRun(dryRun bool) *AccountsUpdateCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -6025,7 +6025,7 @@ func (r *AccountshippingService) Custombatch(accountshippingcustombatchrequest *
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountshippingCustombatchCall) DryRun(dryRun bool) *AccountshippingCustombatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -6283,7 +6283,7 @@ func (r *AccountshippingService) List(merchantId uint64) *AccountshippingListCal
 // number of shipping settings to return in the response, used for
 // paging.
 func (c *AccountshippingListCall) MaxResults(maxResults int64) *AccountshippingListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6436,7 +6436,7 @@ func (r *AccountshippingService) Patch(merchantId uint64, accountId uint64, acco
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountshippingPatchCall) DryRun(dryRun bool) *AccountshippingPatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -6580,7 +6580,7 @@ func (r *AccountshippingService) Update(merchantId uint64, accountId uint64, acc
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccountshippingUpdateCall) DryRun(dryRun bool) *AccountshippingUpdateCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -6963,7 +6963,7 @@ func (r *AccountstatusesService) List(merchantId uint64) *AccountstatusesListCal
 // number of account statuses to return in the response, used for
 // paging.
 func (c *AccountstatusesListCall) MaxResults(maxResults int64) *AccountstatusesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7112,7 +7112,7 @@ func (r *AccounttaxService) Custombatch(accounttaxcustombatchrequest *Accounttax
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccounttaxCustombatchCall) DryRun(dryRun bool) *AccounttaxCustombatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -7368,7 +7368,7 @@ func (r *AccounttaxService) List(merchantId uint64) *AccounttaxListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of tax settings to return in the response, used for paging.
 func (c *AccounttaxListCall) MaxResults(maxResults int64) *AccounttaxListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7521,7 +7521,7 @@ func (r *AccounttaxService) Patch(merchantId uint64, accountId uint64, accountta
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccounttaxPatchCall) DryRun(dryRun bool) *AccounttaxPatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -7665,7 +7665,7 @@ func (r *AccounttaxService) Update(merchantId uint64, accountId uint64, accountt
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *AccounttaxUpdateCall) DryRun(dryRun bool) *AccounttaxUpdateCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -7805,7 +7805,7 @@ func (r *DatafeedsService) Custombatch(datafeedscustombatchrequest *DatafeedsCus
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsCustombatchCall) DryRun(dryRun bool) *DatafeedsCustombatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -7925,7 +7925,7 @@ func (r *DatafeedsService) Delete(merchantId uint64, datafeedId uint64) *Datafee
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsDeleteCall) DryRun(dryRun bool) *DatafeedsDeleteCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -8162,7 +8162,7 @@ func (r *DatafeedsService) Insert(merchantId uint64, datafeed *Datafeed) *Datafe
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsInsertCall) DryRun(dryRun bool) *DatafeedsInsertCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -8293,7 +8293,7 @@ func (r *DatafeedsService) List(merchantId uint64) *DatafeedsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of products to return in the response, used for paging.
 func (c *DatafeedsListCall) MaxResults(maxResults int64) *DatafeedsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8446,7 +8446,7 @@ func (r *DatafeedsService) Patch(merchantId uint64, datafeedId uint64, datafeed 
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsPatchCall) DryRun(dryRun bool) *DatafeedsPatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -8588,7 +8588,7 @@ func (r *DatafeedsService) Update(merchantId uint64, datafeedId uint64, datafeed
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *DatafeedsUpdateCall) DryRun(dryRun bool) *DatafeedsUpdateCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -8967,7 +8967,7 @@ func (r *DatafeedstatusesService) List(merchantId uint64) *DatafeedstatusesListC
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of products to return in the response, used for paging.
 func (c *DatafeedstatusesListCall) MaxResults(maxResults int64) *DatafeedstatusesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -9117,7 +9117,7 @@ func (r *InventoryService) Custombatch(inventorycustombatchrequest *InventoryCus
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *InventoryCustombatchCall) DryRun(dryRun bool) *InventoryCustombatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -9244,7 +9244,7 @@ func (r *InventoryService) Set(merchantId uint64, storeCode string, productId st
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *InventorySetCall) DryRun(dryRun bool) *InventorySetCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -10550,7 +10550,7 @@ func (r *OrdersService) List(merchantId uint64) *OrdersListCall {
 // We recommend using this filter set to false, in conjunction with the
 // acknowledge call, such that only un-acknowledged orders are returned.
 func (c *OrdersListCall) Acknowledged(acknowledged bool) *OrdersListCall {
-	c.urlParams_.Set("acknowledged", fmt.Sprintf("%v", acknowledged))
+	c.urlParams_.Set("acknowledged", fmt.Sprint(acknowledged))
 	return c
 }
 
@@ -10561,7 +10561,7 @@ func (c *OrdersListCall) Acknowledged(acknowledged bool) *OrdersListCall {
 // Known issue: All List calls will return all Orders without limit
 // regardless of the value of this field.
 func (c *OrdersListCall) MaxResults(maxResults int64) *OrdersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10622,7 +10622,7 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 //   "pendingShipment"
 //   "returned"
 //   "shipped"
-func (c *OrdersListCall) Statuses(statuses []string) *OrdersListCall {
+func (c *OrdersListCall) Statuses(statuses ...string) *OrdersListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
 }
@@ -11483,7 +11483,7 @@ func (r *ProductsService) Custombatch(productscustombatchrequest *ProductsCustom
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *ProductsCustombatchCall) DryRun(dryRun bool) *ProductsCustombatchCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -11604,7 +11604,7 @@ func (r *ProductsService) Delete(merchantId uint64, productId string) *ProductsD
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *ProductsDeleteCall) DryRun(dryRun bool) *ProductsDeleteCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -11843,7 +11843,7 @@ func (r *ProductsService) Insert(merchantId uint64, product *Product) *ProductsI
 // DryRun sets the optional parameter "dryRun": Flag to run the request
 // in dry-run mode.
 func (c *ProductsInsertCall) DryRun(dryRun bool) *ProductsInsertCall {
-	c.urlParams_.Set("dryRun", fmt.Sprintf("%v", dryRun))
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
 	return c
 }
 
@@ -11975,7 +11975,7 @@ func (r *ProductsService) List(merchantId uint64) *ProductsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of products to return in the response, used for paging.
 func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -12367,7 +12367,7 @@ func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCal
 // number of product statuses to return in the response, used for
 // paging.
 func (c *ProductstatusesListCall) MaxResults(maxResults int64) *ProductstatusesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

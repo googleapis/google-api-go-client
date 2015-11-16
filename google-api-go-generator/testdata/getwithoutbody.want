@@ -156,7 +156,7 @@ func (r *MetricDescriptorsService) List(project string, listmetricrequest *ListM
 // descriptors per page. Used for pagination. If not specified, count =
 // 100.
 func (c *MetricDescriptorsListCall) Count(count int64) *MetricDescriptorsListCall {
-	c.urlParams_.Set("count", fmt.Sprintf("%v", count))
+	c.urlParams_.Set("count", fmt.Sprint(count))
 	return c
 }
 

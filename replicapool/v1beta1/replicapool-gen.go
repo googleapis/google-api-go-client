@@ -1294,7 +1294,7 @@ func (r *PoolsService) List(projectName string, zone string) *PoolsListCall {
 // results to be returned. Acceptable values are 0 to 100, inclusive.
 // (Default: 50)
 func (c *PoolsListCall) MaxResults(maxResults int64) *PoolsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1466,7 +1466,7 @@ func (r *PoolsService) Resize(projectName string, zone string, poolName string) 
 // existing number of replicas, new replicas will be added. If the
 // number is smaller, then existing replicas will be deleted.
 func (c *PoolsResizeCall) NumReplicas(numReplicas int64) *PoolsResizeCall {
-	c.urlParams_.Set("numReplicas", fmt.Sprintf("%v", numReplicas))
+	c.urlParams_.Set("numReplicas", fmt.Sprint(numReplicas))
 	return c
 }
 
@@ -2037,7 +2037,7 @@ func (r *ReplicasService) List(projectName string, zone string, poolName string)
 // results to be returned. Acceptable values are 0 to 100, inclusive.
 // (Default: 50)
 func (c *ReplicasListCall) MaxResults(maxResults int64) *ReplicasListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

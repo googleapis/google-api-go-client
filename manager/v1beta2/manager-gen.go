@@ -1551,7 +1551,7 @@ func (r *DeploymentsService) List(projectId string, region string) *DeploymentsL
 // results to be returned. Acceptable values are 0 to 100, inclusive.
 // (Default: 50)
 func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2059,7 +2059,7 @@ func (r *TemplatesService) List(projectId string) *TemplatesListCall {
 // results to be returned. Acceptable values are 0 to 100, inclusive.
 // (Default: 50)
 func (c *TemplatesListCall) MaxResults(maxResults int64) *TemplatesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

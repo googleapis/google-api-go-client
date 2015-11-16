@@ -2070,7 +2070,7 @@ func (r *DatasetsService) Delete(projectId string, datasetId string) *DatasetsDe
 // delete all the tables in the dataset. If False and the dataset
 // contains tables, the request will fail. Default is False
 func (c *DatasetsDeleteCall) DeleteContents(deleteContents bool) *DatasetsDeleteCall {
-	c.urlParams_.Set("deleteContents", fmt.Sprintf("%v", deleteContents))
+	c.urlParams_.Set("deleteContents", fmt.Sprint(deleteContents))
 	return c
 }
 
@@ -2431,14 +2431,14 @@ func (r *DatasetsService) List(projectId string) *DatasetsListCall {
 // All sets the optional parameter "all": Whether to list all datasets,
 // including hidden ones
 func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
-	c.urlParams_.Set("all", fmt.Sprintf("%v", all))
+	c.urlParams_.Set("all", fmt.Sprint(all))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of results to return
 func (c *DatasetsListCall) MaxResults(maxResults int64) *DatasetsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3122,7 +3122,7 @@ func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQu
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to read
 func (c *JobsGetQueryResultsCall) MaxResults(maxResults int64) *JobsGetQueryResultsCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3136,7 +3136,7 @@ func (c *JobsGetQueryResultsCall) PageToken(pageToken string) *JobsGetQueryResul
 // StartIndex sets the optional parameter "startIndex": Zero-based index
 // of the starting row
 func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryResultsCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -3145,7 +3145,7 @@ func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryRes
 // is 10 seconds. If the timeout passes before the job completes, the
 // 'jobComplete' field in the response will be false
 func (c *JobsGetQueryResultsCall) TimeoutMs(timeoutMs int64) *JobsGetQueryResultsCall {
-	c.urlParams_.Set("timeoutMs", fmt.Sprintf("%v", timeoutMs))
+	c.urlParams_.Set("timeoutMs", fmt.Sprint(timeoutMs))
 	return c
 }
 
@@ -3527,14 +3527,14 @@ func (r *JobsService) List(projectId string) *JobsListCall {
 // AllUsers sets the optional parameter "allUsers": Whether to display
 // jobs owned by all users in the project. Default false
 func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
-	c.urlParams_.Set("allUsers", fmt.Sprintf("%v", allUsers))
+	c.urlParams_.Set("allUsers", fmt.Sprint(allUsers))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3563,7 +3563,7 @@ func (c *JobsListCall) Projection(projection string) *JobsListCall {
 //   "done" - Finished jobs
 //   "pending" - Pending jobs
 //   "running" - Running jobs
-func (c *JobsListCall) StateFilter(stateFilter []string) *JobsListCall {
+func (c *JobsListCall) StateFilter(stateFilter ...string) *JobsListCall {
 	c.urlParams_.SetMulti("stateFilter", append([]string{}, stateFilter...))
 	return c
 }
@@ -3863,7 +3863,7 @@ func (r *ProjectsService) List() *ProjectsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *ProjectsListCall) MaxResults(maxResults int64) *ProjectsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4150,7 +4150,7 @@ func (r *TabledataService) List(projectId string, datasetId string, tableId stri
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *TabledataListCall) MaxResults(maxResults int64) *TabledataListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4164,7 +4164,7 @@ func (c *TabledataListCall) PageToken(pageToken string) *TabledataListCall {
 // StartIndex sets the optional parameter "startIndex": Zero-based index
 // of the starting row to read
 func (c *TabledataListCall) StartIndex(startIndex uint64) *TabledataListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -4714,7 +4714,7 @@ func (r *TablesService) List(projectId string, datasetId string) *TablesListCall
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *TablesListCall) MaxResults(maxResults int64) *TablesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

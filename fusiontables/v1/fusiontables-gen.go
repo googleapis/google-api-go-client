@@ -1326,7 +1326,7 @@ func (r *ColumnService) List(tableId string) *ColumnListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of columns to return.  Default is 5.
 func (c *ColumnListCall) MaxResults(maxResults int64) *ColumnListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1736,7 +1736,7 @@ func (r *QueryService) Sql(sql string) *QuerySqlCall {
 // Hdrs sets the optional parameter "hdrs": Should column names be
 // included (in the first row)?. Default is true.
 func (c *QuerySqlCall) Hdrs(hdrs bool) *QuerySqlCall {
-	c.urlParams_.Set("hdrs", fmt.Sprintf("%v", hdrs))
+	c.urlParams_.Set("hdrs", fmt.Sprint(hdrs))
 	return c
 }
 
@@ -1744,7 +1744,7 @@ func (c *QuerySqlCall) Hdrs(hdrs bool) *QuerySqlCall {
 // returned in the (JSON) response -- numbers for numeric values and
 // parsed geometries for KML values? Default is true.
 func (c *QuerySqlCall) Typed(typed bool) *QuerySqlCall {
-	c.urlParams_.Set("typed", fmt.Sprintf("%v", typed))
+	c.urlParams_.Set("typed", fmt.Sprint(typed))
 	return c
 }
 
@@ -1885,7 +1885,7 @@ func (r *QueryService) SqlGet(sql string) *QuerySqlGetCall {
 // Hdrs sets the optional parameter "hdrs": Should column names be
 // included (in the first row)?. Default is true.
 func (c *QuerySqlGetCall) Hdrs(hdrs bool) *QuerySqlGetCall {
-	c.urlParams_.Set("hdrs", fmt.Sprintf("%v", hdrs))
+	c.urlParams_.Set("hdrs", fmt.Sprint(hdrs))
 	return c
 }
 
@@ -1893,7 +1893,7 @@ func (c *QuerySqlGetCall) Hdrs(hdrs bool) *QuerySqlGetCall {
 // returned in the (JSON) response -- numbers for numeric values and
 // parsed geometries for KML values? Default is true.
 func (c *QuerySqlGetCall) Typed(typed bool) *QuerySqlGetCall {
-	c.urlParams_.Set("typed", fmt.Sprintf("%v", typed))
+	c.urlParams_.Set("typed", fmt.Sprint(typed))
 	return c
 }
 
@@ -2396,7 +2396,7 @@ func (r *StyleService) List(tableId string) *StyleListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of styles to return.  Default is 5.
 func (c *StyleListCall) MaxResults(maxResults int64) *StyleListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2808,7 +2808,7 @@ func (r *TableService) Copy(tableId string) *TableCopyCall {
 // CopyPresentation sets the optional parameter "copyPresentation":
 // Whether to also copy tabs, styles, and templates. Default is false.
 func (c *TableCopyCall) CopyPresentation(copyPresentation bool) *TableCopyCall {
-	c.urlParams_.Set("copyPresentation", fmt.Sprintf("%v", copyPresentation))
+	c.urlParams_.Set("copyPresentation", fmt.Sprint(copyPresentation))
 	return c
 }
 
@@ -3164,7 +3164,7 @@ func (c *TableImportRowsCall) Encoding(encoding string) *TableImportRowsCall {
 // number of lines in the file, and the number of imported lines will be
 // N + endLine - startLine.
 func (c *TableImportRowsCall) EndLine(endLine int64) *TableImportRowsCall {
-	c.urlParams_.Set("endLine", fmt.Sprintf("%v", endLine))
+	c.urlParams_.Set("endLine", fmt.Sprint(endLine))
 	return c
 }
 
@@ -3172,14 +3172,14 @@ func (c *TableImportRowsCall) EndLine(endLine int64) *TableImportRowsCall {
 // have the same number of values for each row. If false, rows with
 // fewer values will be padded with empty values. Default is true.
 func (c *TableImportRowsCall) IsStrict(isStrict bool) *TableImportRowsCall {
-	c.urlParams_.Set("isStrict", fmt.Sprintf("%v", isStrict))
+	c.urlParams_.Set("isStrict", fmt.Sprint(isStrict))
 	return c
 }
 
 // StartLine sets the optional parameter "startLine": The index of the
 // first line from which to start importing, inclusive. Default is 0.
 func (c *TableImportRowsCall) StartLine(startLine int64) *TableImportRowsCall {
-	c.urlParams_.Set("startLine", fmt.Sprintf("%v", startLine))
+	c.urlParams_.Set("startLine", fmt.Sprint(startLine))
 	return c
 }
 
@@ -3741,7 +3741,7 @@ func (r *TableService) List() *TableListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of styles to return.  Default is 5.
 func (c *TableListCall) MaxResults(maxResults int64) *TableListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3885,7 +3885,7 @@ func (r *TableService) Patch(tableId string, table *Table) *TablePatchCall {
 // The specified view definition replaces the existing one. Only a view
 // can be updated with a new definition.
 func (c *TablePatchCall) ReplaceViewDefinition(replaceViewDefinition bool) *TablePatchCall {
-	c.urlParams_.Set("replaceViewDefinition", fmt.Sprintf("%v", replaceViewDefinition))
+	c.urlParams_.Set("replaceViewDefinition", fmt.Sprint(replaceViewDefinition))
 	return c
 }
 
@@ -4020,7 +4020,7 @@ func (r *TableService) Update(tableId string, table *Table) *TableUpdateCall {
 // The specified view definition replaces the existing one. Only a view
 // can be updated with a new definition.
 func (c *TableUpdateCall) ReplaceViewDefinition(replaceViewDefinition bool) *TableUpdateCall {
-	c.urlParams_.Set("replaceViewDefinition", fmt.Sprintf("%v", replaceViewDefinition))
+	c.urlParams_.Set("replaceViewDefinition", fmt.Sprint(replaceViewDefinition))
 	return c
 }
 
@@ -4375,7 +4375,7 @@ func (r *TaskService) List(tableId string) *TaskListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of columns to return.  Default is 5.
 func (c *TaskListCall) MaxResults(maxResults int64) *TaskListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4387,7 +4387,7 @@ func (c *TaskListCall) PageToken(pageToken string) *TaskListCall {
 
 // StartIndex sets the optional parameter "startIndex":
 func (c *TaskListCall) StartIndex(startIndex int64) *TaskListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -4882,7 +4882,7 @@ func (r *TemplateService) List(tableId string) *TemplateListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of templates to return.  Default is 5.
 func (c *TemplateListCall) MaxResults(maxResults int64) *TemplateListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

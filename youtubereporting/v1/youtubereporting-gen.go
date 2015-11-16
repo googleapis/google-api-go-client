@@ -763,7 +763,7 @@ func (c *JobsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *Jo
 // Server may return fewer jobs than requested. If unspecified, server
 // will pick an appropriate default.
 func (c *JobsListCall) PageSize(pageSize int64) *JobsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1074,7 +1074,7 @@ func (c *JobsReportsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 // Server may return fewer report types than requested. If unspecified,
 // server will pick an appropriate default.
 func (c *JobsReportsListCall) PageSize(pageSize int64) *JobsReportsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1385,7 +1385,7 @@ func (c *ReportTypesListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 // Server may return fewer report types than requested. If unspecified,
 // server will pick an appropriate default.
 func (c *ReportTypesListCall) PageSize(pageSize int64) *ReportTypesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

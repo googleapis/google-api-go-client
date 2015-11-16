@@ -7291,7 +7291,7 @@ func (c *ActivitiesListCall) ChannelId(channelId string) *ActivitiesListCall {
 // to true to retrieve the activity feed that displays on the YouTube
 // home page for the currently authenticated user.
 func (c *ActivitiesListCall) Home(home bool) *ActivitiesListCall {
-	c.urlParams_.Set("home", fmt.Sprintf("%v", home))
+	c.urlParams_.Set("home", fmt.Sprint(home))
 	return c
 }
 
@@ -7299,14 +7299,14 @@ func (c *ActivitiesListCall) Home(home bool) *ActivitiesListCall {
 // parameter specifies the maximum number of items that should be
 // returned in the result set.
 func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // Mine sets the optional parameter "mine": Set this parameter's value
 // to true to retrieve a feed of the authenticated user's activities.
 func (c *ActivitiesListCall) Mine(mine bool) *ActivitiesListCall {
-	c.urlParams_.Set("mine", fmt.Sprintf("%v", mine))
+	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
@@ -7883,7 +7883,7 @@ func (c *CaptionsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 // transcript, which has no time codes, or if you suspect the time codes
 // in your file are incorrect and want YouTube to try to fix them.
 func (c *CaptionsInsertCall) Sync(sync bool) *CaptionsInsertCall {
-	c.urlParams_.Set("sync", fmt.Sprintf("%v", sync))
+	c.urlParams_.Set("sync", fmt.Sprint(sync))
 	return c
 }
 
@@ -8332,7 +8332,7 @@ func (c *CaptionsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 // you set the value to true, YouTube will automatically synchronize the
 // caption track with the audio track.
 func (c *CaptionsUpdateCall) Sync(sync bool) *CaptionsUpdateCall {
-	c.urlParams_.Set("sync", fmt.Sprintf("%v", sync))
+	c.urlParams_.Set("sync", fmt.Sprint(sync))
 	return c
 }
 
@@ -9104,7 +9104,7 @@ func (c *ChannelSectionsListCall) Id(id string) *ChannelSectionsListCall {
 // to true to retrieve a feed of the authenticated user's
 // channelSections.
 func (c *ChannelSectionsListCall) Mine(mine bool) *ChannelSectionsListCall {
-	c.urlParams_.Set("mine", fmt.Sprintf("%v", mine))
+	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
@@ -9459,7 +9459,7 @@ func (c *ChannelsListCall) Id(id string) *ChannelsListCall {
 // linked to the specified content owner and onBehalfOfContentOwner must
 // be provided.
 func (c *ChannelsListCall) ManagedByMe(managedByMe bool) *ChannelsListCall {
-	c.urlParams_.Set("managedByMe", fmt.Sprintf("%v", managedByMe))
+	c.urlParams_.Set("managedByMe", fmt.Sprint(managedByMe))
 	return c
 }
 
@@ -9467,7 +9467,7 @@ func (c *ChannelsListCall) ManagedByMe(managedByMe bool) *ChannelsListCall {
 // parameter specifies the maximum number of items that should be
 // returned in the result set.
 func (c *ChannelsListCall) MaxResults(maxResults int64) *ChannelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -9475,7 +9475,7 @@ func (c *ChannelsListCall) MaxResults(maxResults int64) *ChannelsListCall {
 // to true to instruct the API to only return channels owned by the
 // authenticated user.
 func (c *ChannelsListCall) Mine(mine bool) *ChannelsListCall {
-	c.urlParams_.Set("mine", fmt.Sprintf("%v", mine))
+	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
@@ -9483,7 +9483,7 @@ func (c *ChannelsListCall) Mine(mine bool) *ChannelsListCall {
 // subscriptions.list method and its mySubscribers parameter to retrieve
 // a list of subscribers to the authenticated user's channel.
 func (c *ChannelsListCall) MySubscribers(mySubscribers bool) *ChannelsListCall {
-	c.urlParams_.Set("mySubscribers", fmt.Sprintf("%v", mySubscribers))
+	c.urlParams_.Set("mySubscribers", fmt.Sprint(mySubscribers))
 	return c
 }
 
@@ -9986,7 +9986,7 @@ func (c *CommentThreadsListCall) Id(id string) *CommentThreadsListCall {
 // Note: This parameter is not supported for use in conjunction with the
 // id parameter.
 func (c *CommentThreadsListCall) MaxResults(maxResults int64) *CommentThreadsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10609,7 +10609,7 @@ func (c *CommentsListCall) Id(id string) *CommentsListCall {
 // Note: This parameter is not supported for use in conjunction with the
 // id parameter.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10897,7 +10897,7 @@ func (r *CommentsService) SetModerationStatus(id string, moderationStatus string
 // Note: This parameter is only valid if the moderationStatus parameter
 // is also set to rejected.
 func (c *CommentsSetModerationStatusCall) BanAuthor(banAuthor bool) *CommentsSetModerationStatusCall {
-	c.urlParams_.Set("banAuthor", fmt.Sprintf("%v", banAuthor))
+	c.urlParams_.Set("banAuthor", fmt.Sprint(banAuthor))
 	return c
 }
 
@@ -11751,7 +11751,7 @@ func (r *LiveBroadcastsService) Control(id string, part string) *LiveBroadcastsC
 // displaySlate parameter specifies whether the slate is being enabled
 // or disabled.
 func (c *LiveBroadcastsControlCall) DisplaySlate(displaySlate bool) *LiveBroadcastsControlCall {
-	c.urlParams_.Set("displaySlate", fmt.Sprintf("%v", displaySlate))
+	c.urlParams_.Set("displaySlate", fmt.Sprint(displaySlate))
 	return c
 }
 
@@ -11771,7 +11771,7 @@ func (c *LiveBroadcastsControlCall) DisplaySlate(displaySlate bool) *LiveBroadca
 // Important: You should only specify a value for this parameter if your
 // broadcast stream is delayed.
 func (c *LiveBroadcastsControlCall) OffsetTimeMs(offsetTimeMs uint64) *LiveBroadcastsControlCall {
-	c.urlParams_.Set("offsetTimeMs", fmt.Sprintf("%v", offsetTimeMs))
+	c.urlParams_.Set("offsetTimeMs", fmt.Sprint(offsetTimeMs))
 	return c
 }
 
@@ -12304,7 +12304,7 @@ func (c *LiveBroadcastsListCall) Id(id string) *LiveBroadcastsListCall {
 // parameter specifies the maximum number of items that should be
 // returned in the result set.
 func (c *LiveBroadcastsListCall) MaxResults(maxResults int64) *LiveBroadcastsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -12313,7 +12313,7 @@ func (c *LiveBroadcastsListCall) MaxResults(maxResults int64) *LiveBroadcastsLis
 // authenticated user. Set the parameter value to true to only retrieve
 // your own broadcasts.
 func (c *LiveBroadcastsListCall) Mine(mine bool) *LiveBroadcastsListCall {
-	c.urlParams_.Set("mine", fmt.Sprintf("%v", mine))
+	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
@@ -13232,7 +13232,7 @@ func (c *LiveStreamsListCall) Id(id string) *LiveStreamsListCall {
 // parameter specifies the maximum number of items that should be
 // returned in the result set.
 func (c *LiveStreamsListCall) MaxResults(maxResults int64) *LiveStreamsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -13241,7 +13241,7 @@ func (c *LiveStreamsListCall) MaxResults(maxResults int64) *LiveStreamsListCall 
 // authenticated user. Set the parameter value to true to only retrieve
 // your own streams.
 func (c *LiveStreamsListCall) Mine(mine bool) *LiveStreamsListCall {
-	c.urlParams_.Set("mine", fmt.Sprintf("%v", mine))
+	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
@@ -13865,7 +13865,7 @@ func (c *PlaylistItemsListCall) Id(id string) *PlaylistItemsListCall {
 // parameter specifies the maximum number of items that should be
 // returned in the result set.
 func (c *PlaylistItemsListCall) MaxResults(maxResults int64) *PlaylistItemsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -14501,7 +14501,7 @@ func (c *PlaylistsListCall) Id(id string) *PlaylistsListCall {
 // parameter specifies the maximum number of items that should be
 // returned in the result set.
 func (c *PlaylistsListCall) MaxResults(maxResults int64) *PlaylistsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -14509,7 +14509,7 @@ func (c *PlaylistsListCall) MaxResults(maxResults int64) *PlaylistsListCall {
 // to true to instruct the API to only return playlists owned by the
 // authenticated user.
 func (c *PlaylistsListCall) Mine(mine bool) *PlaylistsListCall {
-	c.urlParams_.Set("mine", fmt.Sprintf("%v", mine))
+	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
@@ -14924,7 +14924,7 @@ func (c *SearchListCall) EventType(eventType string) *SearchListCall {
 // using a CMS account linked to the specified content owner and
 // onBehalfOfContentOwner must be provided.
 func (c *SearchListCall) ForContentOwner(forContentOwner bool) *SearchListCall {
-	c.urlParams_.Set("forContentOwner", fmt.Sprintf("%v", forContentOwner))
+	c.urlParams_.Set("forContentOwner", fmt.Sprint(forContentOwner))
 	return c
 }
 
@@ -14936,7 +14936,7 @@ func (c *SearchListCall) ForContentOwner(forContentOwner bool) *SearchListCall {
 // uploaded through the developer's own app or website but not to videos
 // uploaded through other apps or sites.
 func (c *SearchListCall) ForDeveloper(forDeveloper bool) *SearchListCall {
-	c.urlParams_.Set("forDeveloper", fmt.Sprintf("%v", forDeveloper))
+	c.urlParams_.Set("forDeveloper", fmt.Sprint(forDeveloper))
 	return c
 }
 
@@ -14945,7 +14945,7 @@ func (c *SearchListCall) ForDeveloper(forDeveloper bool) *SearchListCall {
 // authenticated user. If you set this parameter to true, then the type
 // parameter's value must also be set to video.
 func (c *SearchListCall) ForMine(forMine bool) *SearchListCall {
-	c.urlParams_.Set("forMine", fmt.Sprintf("%v", forMine))
+	c.urlParams_.Set("forMine", fmt.Sprint(forMine))
 	return c
 }
 
@@ -14990,7 +14990,7 @@ func (c *SearchListCall) LocationRadius(locationRadius string) *SearchListCall {
 // parameter specifies the maximum number of items that should be
 // returned in the result set.
 func (c *SearchListCall) MaxResults(maxResults int64) *SearchListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -15913,14 +15913,14 @@ func (c *SubscriptionsListCall) Id(id string) *SubscriptionsListCall {
 // parameter specifies the maximum number of items that should be
 // returned in the result set.
 func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // Mine sets the optional parameter "mine": Set this parameter's value
 // to true to retrieve a feed of the authenticated user's subscriptions.
 func (c *SubscriptionsListCall) Mine(mine bool) *SubscriptionsListCall {
-	c.urlParams_.Set("mine", fmt.Sprintf("%v", mine))
+	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
@@ -15928,7 +15928,7 @@ func (c *SubscriptionsListCall) Mine(mine bool) *SubscriptionsListCall {
 // parameter's value to true to retrieve a feed of the subscribers of
 // the authenticated user.
 func (c *SubscriptionsListCall) MySubscribers(mySubscribers bool) *SubscriptionsListCall {
-	c.urlParams_.Set("mySubscribers", fmt.Sprintf("%v", mySubscribers))
+	c.urlParams_.Set("mySubscribers", fmt.Sprint(mySubscribers))
 	return c
 }
 
@@ -16979,7 +16979,7 @@ func (r *VideosService) Insert(part string, video *Video) *VideosInsertCall {
 // parameter indicates whether YouTube should automatically enhance the
 // video's lighting and color.
 func (c *VideosInsertCall) AutoLevels(autoLevels bool) *VideosInsertCall {
-	c.urlParams_.Set("autoLevels", fmt.Sprintf("%v", autoLevels))
+	c.urlParams_.Set("autoLevels", fmt.Sprint(autoLevels))
 	return c
 }
 
@@ -16992,7 +16992,7 @@ func (c *VideosInsertCall) AutoLevels(autoLevels bool) *VideosInsertCall {
 // to avoid sending a notification about each new video to the channel's
 // subscribers.
 func (c *VideosInsertCall) NotifySubscribers(notifySubscribers bool) *VideosInsertCall {
-	c.urlParams_.Set("notifySubscribers", fmt.Sprintf("%v", notifySubscribers))
+	c.urlParams_.Set("notifySubscribers", fmt.Sprint(notifySubscribers))
 	return c
 }
 
@@ -17044,7 +17044,7 @@ func (c *VideosInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerC
 // parameter indicates whether YouTube should adjust the video to remove
 // shaky camera motions.
 func (c *VideosInsertCall) Stabilize(stabilize bool) *VideosInsertCall {
-	c.urlParams_.Set("stabilize", fmt.Sprintf("%v", stabilize))
+	c.urlParams_.Set("stabilize", fmt.Sprint(stabilize))
 	return c
 }
 
@@ -17330,7 +17330,7 @@ func (c *VideosListCall) Locale(locale string) *VideosListCall {
 // myRating parameter, but it is not supported for use in conjunction
 // with the id parameter.
 func (c *VideosListCall) MaxResults(maxResults int64) *VideosListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

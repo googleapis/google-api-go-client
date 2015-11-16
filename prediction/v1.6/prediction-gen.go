@@ -1368,7 +1368,7 @@ func (r *TrainedmodelsService) List(project string) *TrainedmodelsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *TrainedmodelsListCall) MaxResults(maxResults int64) *TrainedmodelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

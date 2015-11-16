@@ -1125,7 +1125,7 @@ func (r *ProjectsLogServicesService) List(projectsId string) *ProjectsLogService
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of `LogService` objects to return in one operation.
 func (c *ProjectsLogServicesListCall) PageSize(pageSize int64) *ProjectsLogServicesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1289,7 +1289,7 @@ func (r *ProjectsLogServicesIndexesService) List(projectsId string, logServicesI
 // be any positive value less than the number of components in
 // `indexPrefix`.
 func (c *ProjectsLogServicesIndexesListCall) Depth(depth int64) *ProjectsLogServicesIndexesListCall {
-	c.urlParams_.Set("depth", fmt.Sprintf("%v", depth))
+	c.urlParams_.Set("depth", fmt.Sprint(depth))
 	return c
 }
 
@@ -1312,7 +1312,7 @@ func (c *ProjectsLogServicesIndexesListCall) IndexPrefix(indexPrefix string) *Pr
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of log service index resources to return in one operation.
 func (c *ProjectsLogServicesIndexesListCall) PageSize(pageSize int64) *ProjectsLogServicesIndexesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -2294,7 +2294,7 @@ func (r *ProjectsLogsService) List(projectsId string) *ProjectsLogsListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return.
 func (c *ProjectsLogsListCall) PageSize(pageSize int64) *ProjectsLogsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -3683,7 +3683,7 @@ func (r *ProjectsMetricsService) List(projectsId string) *ProjectsMetricsListCal
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of `LogMetric` objects to return in one operation.
 func (c *ProjectsMetricsListCall) PageSize(pageSize int64) *ProjectsMetricsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe8fb67_a5b728a2",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2015-11-16T07:13:08Z",
+      "side": 1,
+      "message": "if you want, you could put this line back to using double quotes like the ones that surround it.",
+      "revId": "56a1d82b28e17a2e854fbb3b75862594e68cf7c5",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -990,7 +990,7 @@ func (c *JobsInsertCall) Assignee(assignee string) *JobsInsertCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsInsertCall) CustomField(customField []string) *JobsInsertCall {
+func (c *JobsInsertCall) CustomField(customField ...string) *JobsInsertCall {
 	c.urlParams_.SetMulti("customField", append([]string{}, customField...))
 	return c
 }
@@ -1390,7 +1390,7 @@ func (c *JobsPatchCall) Assignee(assignee string) *JobsPatchCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsPatchCall) CustomField(customField []string) *JobsPatchCall {
+func (c *JobsPatchCall) CustomField(customField ...string) *JobsPatchCall {
 	c.urlParams_.SetMulti("customField", append([]string{}, customField...))
 	return c
 }
@@ -1669,7 +1669,7 @@ func (c *JobsUpdateCall) Assignee(assignee string) *JobsUpdateCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsUpdateCall) CustomField(customField []string) *JobsUpdateCall {
+func (c *JobsUpdateCall) CustomField(customField ...string) *JobsUpdateCall {
 	c.urlParams_.SetMulti("customField", append([]string{}, customField...))
 	return c
 }

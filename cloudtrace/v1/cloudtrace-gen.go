@@ -759,7 +759,7 @@ func (r *V1Service) GetDiscovery() *V1GetDiscoveryCall {
 }
 
 // Args sets the optional parameter "args": Any additional arguments.
-func (c *V1GetDiscoveryCall) Args(args []string) *V1GetDiscoveryCall {
+func (c *V1GetDiscoveryCall) Args(args ...string) *V1GetDiscoveryCall {
 	c.urlParams_.SetMulti("args", append([]string{}, args...))
 	return c
 }
@@ -773,7 +773,7 @@ func (c *V1GetDiscoveryCall) Format(format string) *V1GetDiscoveryCall {
 
 // Labels sets the optional parameter "labels": A list of labels (like
 // visibility) influencing the scope of the requested doc.
-func (c *V1GetDiscoveryCall) Labels(labels []string) *V1GetDiscoveryCall {
+func (c *V1GetDiscoveryCall) Labels(labels ...string) *V1GetDiscoveryCall {
 	c.urlParams_.SetMulti("labels", append([]string{}, labels...))
 	return c
 }

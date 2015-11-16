@@ -235,14 +235,14 @@ func (c *ReconcileCall) Confidence(confidence float64) *ReconcileCall {
 
 // Kind sets the optional parameter "kind": Classifications of entity
 // e.g. type, category, title.
-func (c *ReconcileCall) Kind(kind []string) *ReconcileCall {
+func (c *ReconcileCall) Kind(kind ...string) *ReconcileCall {
 	c.urlParams_.SetMulti("kind", append([]string{}, kind...))
 	return c
 }
 
 // Lang sets the optional parameter "lang": Languages for names and
 // values. First language is used for display. Default is 'en'.
-func (c *ReconcileCall) Lang(lang []string) *ReconcileCall {
+func (c *ReconcileCall) Lang(lang ...string) *ReconcileCall {
 	c.urlParams_.SetMulti("lang", append([]string{}, lang...))
 	return c
 }
@@ -263,7 +263,7 @@ func (c *ReconcileCall) Name(name string) *ReconcileCall {
 // Prop sets the optional parameter "prop": Property values for entity
 // formatted as
 // :
-func (c *ReconcileCall) Prop(prop []string) *ReconcileCall {
+func (c *ReconcileCall) Prop(prop ...string) *ReconcileCall {
 	c.urlParams_.SetMulti("prop", append([]string{}, prop...))
 	return c
 }
@@ -439,7 +439,7 @@ func (c *SearchCall) Cursor(cursor int64) *SearchCall {
 
 // Domain sets the optional parameter "domain": Restrict to topics with
 // this Freebase domain id.
-func (c *SearchCall) Domain(domain []string) *SearchCall {
+func (c *SearchCall) Domain(domain ...string) *SearchCall {
 	c.urlParams_.SetMulti("domain", append([]string{}, domain...))
 	return c
 }
@@ -467,7 +467,7 @@ func (c *SearchCall) Exact(exact bool) *SearchCall {
 
 // Filter sets the optional parameter "filter": A filter to apply to the
 // query.
-func (c *SearchCall) Filter(filter []string) *SearchCall {
+func (c *SearchCall) Filter(filter ...string) *SearchCall {
 	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
 	return c
 }
@@ -511,7 +511,7 @@ func (c *SearchCall) Indent(indent bool) *SearchCall {
 
 // Lang sets the optional parameter "lang": The code of the language to
 // run the query with. Default is 'en'.
-func (c *SearchCall) Lang(lang []string) *SearchCall {
+func (c *SearchCall) Lang(lang ...string) *SearchCall {
 	c.urlParams_.SetMulti("lang", append([]string{}, lang...))
 	return c
 }
@@ -525,7 +525,7 @@ func (c *SearchCall) Limit(limit int64) *SearchCall {
 
 // Mid sets the optional parameter "mid": A mid to use instead of a
 // query.
-func (c *SearchCall) Mid(mid []string) *SearchCall {
+func (c *SearchCall) Mid(mid ...string) *SearchCall {
 	c.urlParams_.SetMulti("mid", append([]string{}, mid...))
 	return c
 }
@@ -592,20 +592,20 @@ func (c *SearchCall) Stemmed(stemmed bool) *SearchCall {
 
 // Type sets the optional parameter "type": Restrict to topics with this
 // Freebase type id.
-func (c *SearchCall) Type(type_ []string) *SearchCall {
+func (c *SearchCall) Type(type_ ...string) *SearchCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
 }
 
 // With sets the optional parameter "with": A rule to match against.
-func (c *SearchCall) With(with []string) *SearchCall {
+func (c *SearchCall) With(with ...string) *SearchCall {
 	c.urlParams_.SetMulti("with", append([]string{}, with...))
 	return c
 }
 
 // Without sets the optional parameter "without": A rule to not match
 // against.
-func (c *SearchCall) Without(without []string) *SearchCall {
+func (c *SearchCall) Without(without ...string) *SearchCall {
 	c.urlParams_.SetMulti("without", append([]string{}, without...))
 	return c
 }

@@ -1570,7 +1570,7 @@ func (r *CcOffersService) List(publisher string) *CcOffersListCall {
 // Advertiser sets the optional parameter "advertiser": The advertiser
 // ID of a card issuer whose offers to include. Optional, may be
 // repeated.
-func (c *CcOffersListCall) Advertiser(advertiser []string) *CcOffersListCall {
+func (c *CcOffersListCall) Advertiser(advertiser ...string) *CcOffersListCall {
 	c.urlParams_.SetMulti("advertiser", append([]string{}, advertiser...))
 	return c
 }
@@ -2430,10 +2430,10 @@ func (r *LinksService) List(role string, roleId string) *LinksListCall {
 
 // AdvertiserId sets the optional parameter "advertiserId": Limits the
 // resulting links to the ones belonging to the listed advertisers.
-func (c *LinksListCall) AdvertiserId(advertiserId []int64) *LinksListCall {
+func (c *LinksListCall) AdvertiserId(advertiserId ...int64) *LinksListCall {
 	var advertiserId_ []string
 	for _, v := range advertiserId {
-		advertiserId_ = append(advertiserId_, fmt.Sprintf("%v", v))
+		advertiserId_ = append(advertiserId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserId", advertiserId_)
 	return c
@@ -2441,7 +2441,7 @@ func (c *LinksListCall) AdvertiserId(advertiserId []int64) *LinksListCall {
 
 // AssetSize sets the optional parameter "assetSize": The size of the
 // given asset.
-func (c *LinksListCall) AssetSize(assetSize []string) *LinksListCall {
+func (c *LinksListCall) AssetSize(assetSize ...string) *LinksListCall {
 	c.urlParams_.SetMulti("assetSize", append([]string{}, assetSize...))
 	return c
 }
@@ -2505,7 +2505,7 @@ func (c *LinksListCall) PageToken(pageToken string) *LinksListCall {
 //   "free_shipping"
 //   "percent_off"
 //   "price_cut"
-func (c *LinksListCall) PromotionType(promotionType []string) *LinksListCall {
+func (c *LinksListCall) PromotionType(promotionType ...string) *LinksListCall {
 	c.urlParams_.SetMulti("promotionType", append([]string{}, promotionType...))
 	return c
 }
@@ -3215,7 +3215,7 @@ func (r *ReportsService) Get(role string, roleId string, reportType string) *Rep
 
 // AdvertiserId sets the optional parameter "advertiserId": The IDs of
 // the advertisers to look up, if applicable.
-func (c *ReportsGetCall) AdvertiserId(advertiserId []string) *ReportsGetCall {
+func (c *ReportsGetCall) AdvertiserId(advertiserId ...string) *ReportsGetCall {
 	c.urlParams_.SetMulti("advertiserId", append([]string{}, advertiserId...))
 	return c
 }
@@ -3250,7 +3250,7 @@ func (c *ReportsGetCall) EventType(eventType string) *ReportsGetCall {
 
 // LinkId sets the optional parameter "linkId": Filters to capture one
 // of given link IDs.
-func (c *ReportsGetCall) LinkId(linkId []string) *ReportsGetCall {
+func (c *ReportsGetCall) LinkId(linkId ...string) *ReportsGetCall {
 	c.urlParams_.SetMulti("linkId", append([]string{}, linkId...))
 	return c
 }
@@ -3264,14 +3264,14 @@ func (c *ReportsGetCall) MaxResults(maxResults int64) *ReportsGetCall {
 
 // OrderId sets the optional parameter "orderId": Filters to capture one
 // of the given order IDs.
-func (c *ReportsGetCall) OrderId(orderId []string) *ReportsGetCall {
+func (c *ReportsGetCall) OrderId(orderId ...string) *ReportsGetCall {
 	c.urlParams_.SetMulti("orderId", append([]string{}, orderId...))
 	return c
 }
 
 // PublisherId sets the optional parameter "publisherId": The IDs of the
 // publishers to look up, if applicable.
-func (c *ReportsGetCall) PublisherId(publisherId []string) *ReportsGetCall {
+func (c *ReportsGetCall) PublisherId(publisherId ...string) *ReportsGetCall {
 	c.urlParams_.SetMulti("publisherId", append([]string{}, publisherId...))
 	return c
 }

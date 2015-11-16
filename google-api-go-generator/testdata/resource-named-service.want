@@ -2223,7 +2223,7 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListCall) Statuses(statuses []string) *CommentsListCall {
+func (c *CommentsListCall) Statuses(statuses ...string) *CommentsListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
 }
@@ -2882,7 +2882,7 @@ func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 //   "30DAYS" - Page view counts from the last thirty days.
 //   "7DAYS" - Page view counts from the last seven days.
 //   "all" - Total page view counts from all time.
-func (c *PageViewsGetCall) Range(range_ []string) *PageViewsGetCall {
+func (c *PageViewsGetCall) Range(range_ ...string) *PageViewsGetCall {
 	c.urlParams_.SetMulti("range", append([]string{}, range_...))
 	return c
 }
@@ -3410,7 +3410,7 @@ func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
 //   "draft" - Draft (unpublished) Pages
 //   "imported" - Pages that have had their content removed
 //   "live" - Pages that are publicly visible
-func (c *PagesListCall) Statuses(statuses []string) *PagesListCall {
+func (c *PagesListCall) Statuses(statuses ...string) *PagesListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
 }
@@ -4062,7 +4062,7 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 //   "draft" - Draft posts
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in future.
-func (c *PostUserInfosListCall) Statuses(statuses []string) *PostUserInfosListCall {
+func (c *PostUserInfosListCall) Statuses(statuses ...string) *PostUserInfosListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
 }
@@ -4919,7 +4919,7 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 //   "draft" - Draft posts
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in future.
-func (c *PostsListCall) Statuses(statuses []string) *PostsListCall {
+func (c *PostsListCall) Statuses(statuses ...string) *PostsListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
 }

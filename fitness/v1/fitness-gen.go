@@ -1375,7 +1375,7 @@ func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall 
 // DataTypeName sets the optional parameter "dataTypeName": The names of
 // data types to include in the list. If not specified, all data sources
 // will be returned.
-func (c *UsersDataSourcesListCall) DataTypeName(dataTypeName []string) *UsersDataSourcesListCall {
+func (c *UsersDataSourcesListCall) DataTypeName(dataTypeName ...string) *UsersDataSourcesListCall {
 	c.urlParams_.SetMulti("dataTypeName", append([]string{}, dataTypeName...))
 	return c
 }

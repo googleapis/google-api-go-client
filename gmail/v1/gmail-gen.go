@@ -3353,7 +3353,7 @@ func (c *UsersMessagesGetCall) Format(format string) *UsersMessagesGetCall {
 
 // MetadataHeaders sets the optional parameter "metadataHeaders": When
 // given and format is METADATA, only include headers specified.
-func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders []string) *UsersMessagesGetCall {
+func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders ...string) *UsersMessagesGetCall {
 	c.urlParams_.SetMulti("metadataHeaders", append([]string{}, metadataHeaders...))
 	return c
 }
@@ -4065,7 +4065,7 @@ func (c *UsersMessagesListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersMe
 
 // LabelIds sets the optional parameter "labelIds": Only return messages
 // with labels that match all of the specified label IDs.
-func (c *UsersMessagesListCall) LabelIds(labelIds []string) *UsersMessagesListCall {
+func (c *UsersMessagesListCall) LabelIds(labelIds ...string) *UsersMessagesListCall {
 	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
 	return c
 }
@@ -5093,7 +5093,7 @@ func (c *UsersThreadsGetCall) Format(format string) *UsersThreadsGetCall {
 
 // MetadataHeaders sets the optional parameter "metadataHeaders": When
 // given and format is METADATA, only include headers specified.
-func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders []string) *UsersThreadsGetCall {
+func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders ...string) *UsersThreadsGetCall {
 	c.urlParams_.SetMulti("metadataHeaders", append([]string{}, metadataHeaders...))
 	return c
 }
@@ -5263,7 +5263,7 @@ func (c *UsersThreadsListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersThr
 
 // LabelIds sets the optional parameter "labelIds": Only return threads
 // with labels that match all of the specified label IDs.
-func (c *UsersThreadsListCall) LabelIds(labelIds []string) *UsersThreadsListCall {
+func (c *UsersThreadsListCall) LabelIds(labelIds ...string) *UsersThreadsListCall {
 	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
 	return c
 }

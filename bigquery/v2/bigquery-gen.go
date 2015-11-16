@@ -3563,7 +3563,7 @@ func (c *JobsListCall) Projection(projection string) *JobsListCall {
 //   "done" - Finished jobs
 //   "pending" - Pending jobs
 //   "running" - Running jobs
-func (c *JobsListCall) StateFilter(stateFilter []string) *JobsListCall {
+func (c *JobsListCall) StateFilter(stateFilter ...string) *JobsListCall {
 	c.urlParams_.SetMulti("stateFilter", append([]string{}, stateFilter...))
 	return c
 }

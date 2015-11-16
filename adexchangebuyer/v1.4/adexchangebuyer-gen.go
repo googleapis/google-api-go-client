@@ -3744,10 +3744,10 @@ func (r *CreativesService) List() *CreativesListCall {
 
 // AccountId sets the optional parameter "accountId": When specified,
 // only creatives for the given account ids are returned.
-func (c *CreativesListCall) AccountId(accountId []int64) *CreativesListCall {
+func (c *CreativesListCall) AccountId(accountId ...int64) *CreativesListCall {
 	var accountId_ []string
 	for _, v := range accountId {
-		accountId_ = append(accountId_, fmt.Sprintf("%v", v))
+		accountId_ = append(accountId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("accountId", accountId_)
 	return c
@@ -3756,7 +3756,7 @@ func (c *CreativesListCall) AccountId(accountId []int64) *CreativesListCall {
 // BuyerCreativeId sets the optional parameter "buyerCreativeId": When
 // specified, only creatives for the given buyer creative ids are
 // returned.
-func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId []string) *CreativesListCall {
+func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId ...string) *CreativesListCall {
 	c.urlParams_.SetMulti("buyerCreativeId", append([]string{}, buyerCreativeId...))
 	return c
 }

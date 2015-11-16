@@ -1392,7 +1392,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) IncludeOffices(includeO
 //   "special"
 //   "subLocality1"
 //   "subLocality2"
-func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels []string) *RepresentativesRepresentativeInfoByAddressCall {
+func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
 }
@@ -1414,7 +1414,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels []string)
 //   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
-func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles []string) *RepresentativesRepresentativeInfoByAddressCall {
+func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
 }
@@ -1615,7 +1615,7 @@ func (r *RepresentativesService) RepresentativeInfoByDivision(ocdId string) *Rep
 //   "special"
 //   "subLocality1"
 //   "subLocality2"
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels []string) *RepresentativesRepresentativeInfoByDivisionCall {
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("levels", append([]string{}, levels...))
 	return c
 }
@@ -1647,7 +1647,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 //   "legislatorUpperBody"
 //   "schoolBoard"
 //   "specialPurposeOfficer"
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles []string) *RepresentativesRepresentativeInfoByDivisionCall {
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
 	return c
 }

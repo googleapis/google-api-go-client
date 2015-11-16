@@ -11465,10 +11465,10 @@ func (c *AccountUserProfilesListCall) Active(active bool) *AccountUserProfilesLi
 
 // Ids sets the optional parameter "ids": Select only user profiles with
 // these IDs.
-func (c *AccountUserProfilesListCall) Ids(ids []int64) *AccountUserProfilesListCall {
+func (c *AccountUserProfilesListCall) Ids(ids ...int64) *AccountUserProfilesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -12125,10 +12125,10 @@ func (c *AccountsListCall) Active(active bool) *AccountsListCall {
 
 // Ids sets the optional parameter "ids": Select only accounts with
 // these IDs.
-func (c *AccountsListCall) Ids(ids []int64) *AccountsListCall {
+func (c *AccountsListCall) Ids(ids ...int64) *AccountsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -12891,10 +12891,10 @@ func (c *AdsListCall) Archived(archived bool) *AdsListCall {
 
 // AudienceSegmentIds sets the optional parameter "audienceSegmentIds":
 // Select only ads with these audience segment IDs.
-func (c *AdsListCall) AudienceSegmentIds(audienceSegmentIds []int64) *AdsListCall {
+func (c *AdsListCall) AudienceSegmentIds(audienceSegmentIds ...int64) *AdsListCall {
 	var audienceSegmentIds_ []string
 	for _, v := range audienceSegmentIds {
-		audienceSegmentIds_ = append(audienceSegmentIds_, fmt.Sprintf("%v", v))
+		audienceSegmentIds_ = append(audienceSegmentIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("audienceSegmentIds", audienceSegmentIds_)
 	return c
@@ -12902,10 +12902,10 @@ func (c *AdsListCall) AudienceSegmentIds(audienceSegmentIds []int64) *AdsListCal
 
 // CampaignIds sets the optional parameter "campaignIds": Select only
 // ads with these campaign IDs.
-func (c *AdsListCall) CampaignIds(campaignIds []int64) *AdsListCall {
+func (c *AdsListCall) CampaignIds(campaignIds ...int64) *AdsListCall {
 	var campaignIds_ []string
 	for _, v := range campaignIds {
-		campaignIds_ = append(campaignIds_, fmt.Sprintf("%v", v))
+		campaignIds_ = append(campaignIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("campaignIds", campaignIds_)
 	return c
@@ -12932,10 +12932,10 @@ func (c *AdsListCall) Compatibility(compatibility string) *AdsListCall {
 
 // CreativeIds sets the optional parameter "creativeIds": Select only
 // ads with these creative IDs assigned.
-func (c *AdsListCall) CreativeIds(creativeIds []int64) *AdsListCall {
+func (c *AdsListCall) CreativeIds(creativeIds ...int64) *AdsListCall {
 	var creativeIds_ []string
 	for _, v := range creativeIds {
-		creativeIds_ = append(creativeIds_, fmt.Sprintf("%v", v))
+		creativeIds_ = append(creativeIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("creativeIds", creativeIds_)
 	return c
@@ -12944,10 +12944,10 @@ func (c *AdsListCall) CreativeIds(creativeIds []int64) *AdsListCall {
 // CreativeOptimizationConfigurationIds sets the optional parameter
 // "creativeOptimizationConfigurationIds": Select only ads with these
 // creative optimization configuration IDs.
-func (c *AdsListCall) CreativeOptimizationConfigurationIds(creativeOptimizationConfigurationIds []int64) *AdsListCall {
+func (c *AdsListCall) CreativeOptimizationConfigurationIds(creativeOptimizationConfigurationIds ...int64) *AdsListCall {
 	var creativeOptimizationConfigurationIds_ []string
 	for _, v := range creativeOptimizationConfigurationIds {
-		creativeOptimizationConfigurationIds_ = append(creativeOptimizationConfigurationIds_, fmt.Sprintf("%v", v))
+		creativeOptimizationConfigurationIds_ = append(creativeOptimizationConfigurationIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("creativeOptimizationConfigurationIds", creativeOptimizationConfigurationIds_)
 	return c
@@ -12998,10 +12998,10 @@ func (c *AdsListCall) DynamicClickTracker(dynamicClickTracker bool) *AdsListCall
 
 // Ids sets the optional parameter "ids": Select only ads with these
 // IDs.
-func (c *AdsListCall) Ids(ids []int64) *AdsListCall {
+func (c *AdsListCall) Ids(ids ...int64) *AdsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -13009,10 +13009,10 @@ func (c *AdsListCall) Ids(ids []int64) *AdsListCall {
 
 // LandingPageIds sets the optional parameter "landingPageIds": Select
 // only ads with these landing page IDs.
-func (c *AdsListCall) LandingPageIds(landingPageIds []int64) *AdsListCall {
+func (c *AdsListCall) LandingPageIds(landingPageIds ...int64) *AdsListCall {
 	var landingPageIds_ []string
 	for _, v := range landingPageIds {
-		landingPageIds_ = append(landingPageIds_, fmt.Sprintf("%v", v))
+		landingPageIds_ = append(landingPageIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("landingPageIds", landingPageIds_)
 	return c
@@ -13042,10 +13042,10 @@ func (c *AdsListCall) PageToken(pageToken string) *AdsListCall {
 
 // PlacementIds sets the optional parameter "placementIds": Select only
 // ads with these placement IDs assigned.
-func (c *AdsListCall) PlacementIds(placementIds []int64) *AdsListCall {
+func (c *AdsListCall) PlacementIds(placementIds ...int64) *AdsListCall {
 	var placementIds_ []string
 	for _, v := range placementIds {
-		placementIds_ = append(placementIds_, fmt.Sprintf("%v", v))
+		placementIds_ = append(placementIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("placementIds", placementIds_)
 	return c
@@ -13054,10 +13054,10 @@ func (c *AdsListCall) PlacementIds(placementIds []int64) *AdsListCall {
 // RemarketingListIds sets the optional parameter "remarketingListIds":
 // Select only ads whose list targeting expression use these remarketing
 // list IDs.
-func (c *AdsListCall) RemarketingListIds(remarketingListIds []int64) *AdsListCall {
+func (c *AdsListCall) RemarketingListIds(remarketingListIds ...int64) *AdsListCall {
 	var remarketingListIds_ []string
 	for _, v := range remarketingListIds {
-		remarketingListIds_ = append(remarketingListIds_, fmt.Sprintf("%v", v))
+		remarketingListIds_ = append(remarketingListIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("remarketingListIds", remarketingListIds_)
 	return c
@@ -13077,10 +13077,10 @@ func (c *AdsListCall) SearchString(searchString string) *AdsListCall {
 
 // SizeIds sets the optional parameter "sizeIds": Select only ads with
 // these size IDs.
-func (c *AdsListCall) SizeIds(sizeIds []int64) *AdsListCall {
+func (c *AdsListCall) SizeIds(sizeIds ...int64) *AdsListCall {
 	var sizeIds_ []string
 	for _, v := range sizeIds {
-		sizeIds_ = append(sizeIds_, fmt.Sprintf("%v", v))
+		sizeIds_ = append(sizeIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("sizeIds", sizeIds_)
 	return c
@@ -13130,7 +13130,7 @@ func (c *AdsListCall) SslRequired(sslRequired bool) *AdsListCall {
 //   "AD_SERVING_DEFAULT_AD"
 //   "AD_SERVING_STANDARD_AD"
 //   "AD_SERVING_TRACKING"
-func (c *AdsListCall) Type(type_ []string) *AdsListCall {
+func (c *AdsListCall) Type(type_ ...string) *AdsListCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
 }
@@ -14098,10 +14098,10 @@ func (r *AdvertiserGroupsService) List(profileId int64) *AdvertiserGroupsListCal
 
 // Ids sets the optional parameter "ids": Select only advertiser groups
 // with these IDs.
-func (c *AdvertiserGroupsListCall) Ids(ids []int64) *AdvertiserGroupsListCall {
+func (c *AdvertiserGroupsListCall) Ids(ids ...int64) *AdvertiserGroupsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -14840,10 +14840,10 @@ func (r *AdvertisersService) List(profileId int64) *AdvertisersListCall {
 
 // AdvertiserGroupIds sets the optional parameter "advertiserGroupIds":
 // Select only advertisers with these advertiser group IDs.
-func (c *AdvertisersListCall) AdvertiserGroupIds(advertiserGroupIds []int64) *AdvertisersListCall {
+func (c *AdvertisersListCall) AdvertiserGroupIds(advertiserGroupIds ...int64) *AdvertisersListCall {
 	var advertiserGroupIds_ []string
 	for _, v := range advertiserGroupIds {
-		advertiserGroupIds_ = append(advertiserGroupIds_, fmt.Sprintf("%v", v))
+		advertiserGroupIds_ = append(advertiserGroupIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserGroupIds", advertiserGroupIds_)
 	return c
@@ -14852,10 +14852,10 @@ func (c *AdvertisersListCall) AdvertiserGroupIds(advertiserGroupIds []int64) *Ad
 // FloodlightConfigurationIds sets the optional parameter
 // "floodlightConfigurationIds": Select only advertisers with these
 // floodlight configuration IDs.
-func (c *AdvertisersListCall) FloodlightConfigurationIds(floodlightConfigurationIds []int64) *AdvertisersListCall {
+func (c *AdvertisersListCall) FloodlightConfigurationIds(floodlightConfigurationIds ...int64) *AdvertisersListCall {
 	var floodlightConfigurationIds_ []string
 	for _, v := range floodlightConfigurationIds {
-		floodlightConfigurationIds_ = append(floodlightConfigurationIds_, fmt.Sprintf("%v", v))
+		floodlightConfigurationIds_ = append(floodlightConfigurationIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("floodlightConfigurationIds", floodlightConfigurationIds_)
 	return c
@@ -14863,10 +14863,10 @@ func (c *AdvertisersListCall) FloodlightConfigurationIds(floodlightConfiguration
 
 // Ids sets the optional parameter "ids": Select only advertisers with
 // these IDs.
-func (c *AdvertisersListCall) Ids(ids []int64) *AdvertisersListCall {
+func (c *AdvertisersListCall) Ids(ids ...int64) *AdvertisersListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -16142,10 +16142,10 @@ func (r *CampaignsService) List(profileId int64) *CampaignsListCall {
 // AdvertiserGroupIds sets the optional parameter "advertiserGroupIds":
 // Select only campaigns whose advertisers belong to these advertiser
 // groups.
-func (c *CampaignsListCall) AdvertiserGroupIds(advertiserGroupIds []int64) *CampaignsListCall {
+func (c *CampaignsListCall) AdvertiserGroupIds(advertiserGroupIds ...int64) *CampaignsListCall {
 	var advertiserGroupIds_ []string
 	for _, v := range advertiserGroupIds {
-		advertiserGroupIds_ = append(advertiserGroupIds_, fmt.Sprintf("%v", v))
+		advertiserGroupIds_ = append(advertiserGroupIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserGroupIds", advertiserGroupIds_)
 	return c
@@ -16153,10 +16153,10 @@ func (c *CampaignsListCall) AdvertiserGroupIds(advertiserGroupIds []int64) *Camp
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only campaigns that belong to these advertisers.
-func (c *CampaignsListCall) AdvertiserIds(advertiserIds []int64) *CampaignsListCall {
+func (c *CampaignsListCall) AdvertiserIds(advertiserIds ...int64) *CampaignsListCall {
 	var advertiserIds_ []string
 	for _, v := range advertiserIds {
-		advertiserIds_ = append(advertiserIds_, fmt.Sprintf("%v", v))
+		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
 	return c
@@ -16180,10 +16180,10 @@ func (c *CampaignsListCall) AtLeastOneOptimizationActivity(atLeastOneOptimizatio
 
 // ExcludedIds sets the optional parameter "excludedIds": Exclude
 // campaigns with these IDs.
-func (c *CampaignsListCall) ExcludedIds(excludedIds []int64) *CampaignsListCall {
+func (c *CampaignsListCall) ExcludedIds(excludedIds ...int64) *CampaignsListCall {
 	var excludedIds_ []string
 	for _, v := range excludedIds {
-		excludedIds_ = append(excludedIds_, fmt.Sprintf("%v", v))
+		excludedIds_ = append(excludedIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("excludedIds", excludedIds_)
 	return c
@@ -16191,10 +16191,10 @@ func (c *CampaignsListCall) ExcludedIds(excludedIds []int64) *CampaignsListCall 
 
 // Ids sets the optional parameter "ids": Select only campaigns with
 // these IDs.
-func (c *CampaignsListCall) Ids(ids []int64) *CampaignsListCall {
+func (c *CampaignsListCall) Ids(ids ...int64) *CampaignsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -16895,10 +16895,10 @@ func (c *ChangeLogsListCall) Action(action string) *ChangeLogsListCall {
 
 // Ids sets the optional parameter "ids": Select only change logs with
 // these IDs.
-func (c *ChangeLogsListCall) Ids(ids []int64) *ChangeLogsListCall {
+func (c *ChangeLogsListCall) Ids(ids ...int64) *ChangeLogsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -16939,10 +16939,10 @@ func (c *ChangeLogsListCall) MinChangeTime(minChangeTime string) *ChangeLogsList
 
 // ObjectIds sets the optional parameter "objectIds": Select only change
 // logs with these object IDs.
-func (c *ChangeLogsListCall) ObjectIds(objectIds []int64) *ChangeLogsListCall {
+func (c *ChangeLogsListCall) ObjectIds(objectIds ...int64) *ChangeLogsListCall {
 	var objectIds_ []string
 	for _, v := range objectIds {
-		objectIds_ = append(objectIds_, fmt.Sprintf("%v", v))
+		objectIds_ = append(objectIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("objectIds", objectIds_)
 	return c
@@ -17010,10 +17010,10 @@ func (c *ChangeLogsListCall) SearchString(searchString string) *ChangeLogsListCa
 
 // UserProfileIds sets the optional parameter "userProfileIds": Select
 // only change logs with these user profile IDs.
-func (c *ChangeLogsListCall) UserProfileIds(userProfileIds []int64) *ChangeLogsListCall {
+func (c *ChangeLogsListCall) UserProfileIds(userProfileIds ...int64) *ChangeLogsListCall {
 	var userProfileIds_ []string
 	for _, v := range userProfileIds {
-		userProfileIds_ = append(userProfileIds_, fmt.Sprintf("%v", v))
+		userProfileIds_ = append(userProfileIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("userProfileIds", userProfileIds_)
 	return c
@@ -17316,10 +17316,10 @@ func (r *CitiesService) List(profileId int64) *CitiesListCall {
 
 // CountryDartIds sets the optional parameter "countryDartIds": Select
 // only cities from these countries.
-func (c *CitiesListCall) CountryDartIds(countryDartIds []int64) *CitiesListCall {
+func (c *CitiesListCall) CountryDartIds(countryDartIds ...int64) *CitiesListCall {
 	var countryDartIds_ []string
 	for _, v := range countryDartIds {
-		countryDartIds_ = append(countryDartIds_, fmt.Sprintf("%v", v))
+		countryDartIds_ = append(countryDartIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("countryDartIds", countryDartIds_)
 	return c
@@ -17327,10 +17327,10 @@ func (c *CitiesListCall) CountryDartIds(countryDartIds []int64) *CitiesListCall 
 
 // DartIds sets the optional parameter "dartIds": Select only cities
 // with these DART IDs.
-func (c *CitiesListCall) DartIds(dartIds []int64) *CitiesListCall {
+func (c *CitiesListCall) DartIds(dartIds ...int64) *CitiesListCall {
 	var dartIds_ []string
 	for _, v := range dartIds {
-		dartIds_ = append(dartIds_, fmt.Sprintf("%v", v))
+		dartIds_ = append(dartIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("dartIds", dartIds_)
 	return c
@@ -17345,10 +17345,10 @@ func (c *CitiesListCall) NamePrefix(namePrefix string) *CitiesListCall {
 
 // RegionDartIds sets the optional parameter "regionDartIds": Select
 // only cities from these regions.
-func (c *CitiesListCall) RegionDartIds(regionDartIds []int64) *CitiesListCall {
+func (c *CitiesListCall) RegionDartIds(regionDartIds ...int64) *CitiesListCall {
 	var regionDartIds_ []string
 	for _, v := range regionDartIds {
-		regionDartIds_ = append(regionDartIds_, fmt.Sprintf("%v", v))
+		regionDartIds_ = append(regionDartIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("regionDartIds", regionDartIds_)
 	return c
@@ -18115,10 +18115,10 @@ func (r *ContentCategoriesService) List(profileId int64) *ContentCategoriesListC
 
 // Ids sets the optional parameter "ids": Select only content categories
 // with these IDs.
-func (c *ContentCategoriesListCall) Ids(ids []int64) *ContentCategoriesListCall {
+func (c *ContentCategoriesListCall) Ids(ids ...int64) *ContentCategoriesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -19468,10 +19468,10 @@ func (r *CreativeFieldValuesService) List(profileId int64, creativeFieldId int64
 
 // Ids sets the optional parameter "ids": Select only creative field
 // values with these IDs.
-func (c *CreativeFieldValuesListCall) Ids(ids []int64) *CreativeFieldValuesListCall {
+func (c *CreativeFieldValuesListCall) Ids(ids ...int64) *CreativeFieldValuesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -20329,10 +20329,10 @@ func (r *CreativeFieldsService) List(profileId int64) *CreativeFieldsListCall {
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only creative fields that belong to these advertisers.
-func (c *CreativeFieldsListCall) AdvertiserIds(advertiserIds []int64) *CreativeFieldsListCall {
+func (c *CreativeFieldsListCall) AdvertiserIds(advertiserIds ...int64) *CreativeFieldsListCall {
 	var advertiserIds_ []string
 	for _, v := range advertiserIds {
-		advertiserIds_ = append(advertiserIds_, fmt.Sprintf("%v", v))
+		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
 	return c
@@ -20340,10 +20340,10 @@ func (c *CreativeFieldsListCall) AdvertiserIds(advertiserIds []int64) *CreativeF
 
 // Ids sets the optional parameter "ids": Select only creative fields
 // with these IDs.
-func (c *CreativeFieldsListCall) Ids(ids []int64) *CreativeFieldsListCall {
+func (c *CreativeFieldsListCall) Ids(ids ...int64) *CreativeFieldsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -21089,10 +21089,10 @@ func (r *CreativeGroupsService) List(profileId int64) *CreativeGroupsListCall {
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only creative groups that belong to these advertisers.
-func (c *CreativeGroupsListCall) AdvertiserIds(advertiserIds []int64) *CreativeGroupsListCall {
+func (c *CreativeGroupsListCall) AdvertiserIds(advertiserIds ...int64) *CreativeGroupsListCall {
 	var advertiserIds_ []string
 	for _, v := range advertiserIds {
-		advertiserIds_ = append(advertiserIds_, fmt.Sprintf("%v", v))
+		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
 	return c
@@ -21107,10 +21107,10 @@ func (c *CreativeGroupsListCall) GroupNumber(groupNumber int64) *CreativeGroupsL
 
 // Ids sets the optional parameter "ids": Select only creative groups
 // with these IDs.
-func (c *CreativeGroupsListCall) Ids(ids []int64) *CreativeGroupsListCall {
+func (c *CreativeGroupsListCall) Ids(ids ...int64) *CreativeGroupsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -21891,10 +21891,10 @@ func (c *CreativesListCall) CampaignId(campaignId int64) *CreativesListCall {
 // CompanionCreativeIds sets the optional parameter
 // "companionCreativeIds": Select only in-stream video creatives with
 // these companion IDs.
-func (c *CreativesListCall) CompanionCreativeIds(companionCreativeIds []int64) *CreativesListCall {
+func (c *CreativesListCall) CompanionCreativeIds(companionCreativeIds ...int64) *CreativesListCall {
 	var companionCreativeIds_ []string
 	for _, v := range companionCreativeIds {
-		companionCreativeIds_ = append(companionCreativeIds_, fmt.Sprintf("%v", v))
+		companionCreativeIds_ = append(companionCreativeIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("companionCreativeIds", companionCreativeIds_)
 	return c
@@ -21902,10 +21902,10 @@ func (c *CreativesListCall) CompanionCreativeIds(companionCreativeIds []int64) *
 
 // CreativeFieldIds sets the optional parameter "creativeFieldIds":
 // Select only creatives with these creative field IDs.
-func (c *CreativesListCall) CreativeFieldIds(creativeFieldIds []int64) *CreativesListCall {
+func (c *CreativesListCall) CreativeFieldIds(creativeFieldIds ...int64) *CreativesListCall {
 	var creativeFieldIds_ []string
 	for _, v := range creativeFieldIds {
-		creativeFieldIds_ = append(creativeFieldIds_, fmt.Sprintf("%v", v))
+		creativeFieldIds_ = append(creativeFieldIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("creativeFieldIds", creativeFieldIds_)
 	return c
@@ -21913,10 +21913,10 @@ func (c *CreativesListCall) CreativeFieldIds(creativeFieldIds []int64) *Creative
 
 // Ids sets the optional parameter "ids": Select only creatives with
 // these IDs.
-func (c *CreativesListCall) Ids(ids []int64) *CreativesListCall {
+func (c *CreativesListCall) Ids(ids ...int64) *CreativesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -21938,10 +21938,10 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 
 // RenderingIds sets the optional parameter "renderingIds": Select only
 // creatives with these rendering IDs.
-func (c *CreativesListCall) RenderingIds(renderingIds []int64) *CreativesListCall {
+func (c *CreativesListCall) RenderingIds(renderingIds ...int64) *CreativesListCall {
 	var renderingIds_ []string
 	for _, v := range renderingIds {
-		renderingIds_ = append(renderingIds_, fmt.Sprintf("%v", v))
+		renderingIds_ = append(renderingIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("renderingIds", renderingIds_)
 	return c
@@ -21962,10 +21962,10 @@ func (c *CreativesListCall) SearchString(searchString string) *CreativesListCall
 
 // SizeIds sets the optional parameter "sizeIds": Select only creatives
 // with these size IDs.
-func (c *CreativesListCall) SizeIds(sizeIds []int64) *CreativesListCall {
+func (c *CreativesListCall) SizeIds(sizeIds ...int64) *CreativesListCall {
 	var sizeIds_ []string
 	for _, v := range sizeIds {
-		sizeIds_ = append(sizeIds_, fmt.Sprintf("%v", v))
+		sizeIds_ = append(sizeIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("sizeIds", sizeIds_)
 	return c
@@ -22028,7 +22028,7 @@ func (c *CreativesListCall) StudioCreativeId(studioCreativeId int64) *CreativesL
 //   "TRACKING_TEXT"
 //   "VPAID_LINEAR"
 //   "VPAID_NON_LINEAR"
-func (c *CreativesListCall) Types(types []string) *CreativesListCall {
+func (c *CreativesListCall) Types(types ...string) *CreativesListCall {
 	c.urlParams_.SetMulti("types", append([]string{}, types...))
 	return c
 }
@@ -22859,10 +22859,10 @@ func (r *DirectorySiteContactsService) List(profileId int64) *DirectorySiteConta
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
 // Select only directory site contacts with these directory site IDs.
 // This is a required field.
-func (c *DirectorySiteContactsListCall) DirectorySiteIds(directorySiteIds []int64) *DirectorySiteContactsListCall {
+func (c *DirectorySiteContactsListCall) DirectorySiteIds(directorySiteIds ...int64) *DirectorySiteContactsListCall {
 	var directorySiteIds_ []string
 	for _, v := range directorySiteIds {
-		directorySiteIds_ = append(directorySiteIds_, fmt.Sprintf("%v", v))
+		directorySiteIds_ = append(directorySiteIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("directorySiteIds", directorySiteIds_)
 	return c
@@ -22870,10 +22870,10 @@ func (c *DirectorySiteContactsListCall) DirectorySiteIds(directorySiteIds []int6
 
 // Ids sets the optional parameter "ids": Select only directory site
 // contacts with these IDs.
-func (c *DirectorySiteContactsListCall) Ids(ids []int64) *DirectorySiteContactsListCall {
+func (c *DirectorySiteContactsListCall) Ids(ids ...int64) *DirectorySiteContactsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -23415,10 +23415,10 @@ func (c *DirectorySitesListCall) DfpNetworkCode(dfpNetworkCode string) *Director
 
 // Ids sets the optional parameter "ids": Select only directory sites
 // with these IDs.
-func (c *DirectorySitesListCall) Ids(ids []int64) *DirectorySitesListCall {
+func (c *DirectorySitesListCall) Ids(ids ...int64) *DirectorySitesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -24098,17 +24098,17 @@ func (c *EventTagsListCall) Enabled(enabled bool) *EventTagsListCall {
 //   "CLICK_THROUGH_EVENT_TAG"
 //   "IMPRESSION_IMAGE_EVENT_TAG"
 //   "IMPRESSION_JAVASCRIPT_EVENT_TAG"
-func (c *EventTagsListCall) EventTagTypes(eventTagTypes []string) *EventTagsListCall {
+func (c *EventTagsListCall) EventTagTypes(eventTagTypes ...string) *EventTagsListCall {
 	c.urlParams_.SetMulti("eventTagTypes", append([]string{}, eventTagTypes...))
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only event tags with
 // these IDs.
-func (c *EventTagsListCall) Ids(ids []int64) *EventTagsListCall {
+func (c *EventTagsListCall) Ids(ids ...int64) *EventTagsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -25474,10 +25474,10 @@ func (c *FloodlightActivitiesListCall) AdvertiserId(advertiserId int64) *Floodli
 // FloodlightActivityGroupIds sets the optional parameter
 // "floodlightActivityGroupIds": Select only floodlight activities with
 // the specified floodlight activity group IDs.
-func (c *FloodlightActivitiesListCall) FloodlightActivityGroupIds(floodlightActivityGroupIds []int64) *FloodlightActivitiesListCall {
+func (c *FloodlightActivitiesListCall) FloodlightActivityGroupIds(floodlightActivityGroupIds ...int64) *FloodlightActivitiesListCall {
 	var floodlightActivityGroupIds_ []string
 	for _, v := range floodlightActivityGroupIds {
-		floodlightActivityGroupIds_ = append(floodlightActivityGroupIds_, fmt.Sprintf("%v", v))
+		floodlightActivityGroupIds_ = append(floodlightActivityGroupIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("floodlightActivityGroupIds", floodlightActivityGroupIds_)
 	return c
@@ -25523,10 +25523,10 @@ func (c *FloodlightActivitiesListCall) FloodlightConfigurationId(floodlightConfi
 // Ids sets the optional parameter "ids": Select only floodlight
 // activities with the specified IDs. Must specify either ids,
 // advertiserId, or floodlightConfigurationId for a non-empty result.
-func (c *FloodlightActivitiesListCall) Ids(ids []int64) *FloodlightActivitiesListCall {
+func (c *FloodlightActivitiesListCall) Ids(ids ...int64) *FloodlightActivitiesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -26339,10 +26339,10 @@ func (c *FloodlightActivityGroupsListCall) FloodlightConfigurationId(floodlightC
 // Ids sets the optional parameter "ids": Select only floodlight
 // activity groups with the specified IDs. Must specify either
 // advertiserId or floodlightConfigurationId for a non-empty result.
-func (c *FloodlightActivityGroupsListCall) Ids(ids []int64) *FloodlightActivityGroupsListCall {
+func (c *FloodlightActivityGroupsListCall) Ids(ids ...int64) *FloodlightActivityGroupsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -27000,10 +27000,10 @@ func (r *FloodlightConfigurationsService) List(profileId int64) *FloodlightConfi
 // Ids sets the optional parameter "ids": Set of IDs of floodlight
 // configurations to retrieve. Required field; otherwise an empty list
 // will be returned.
-func (c *FloodlightConfigurationsListCall) Ids(ids []int64) *FloodlightConfigurationsListCall {
+func (c *FloodlightConfigurationsListCall) Ids(ids ...int64) *FloodlightConfigurationsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -27543,10 +27543,10 @@ func (r *InventoryItemsService) List(profileId int64, projectId int64) *Inventor
 
 // Ids sets the optional parameter "ids": Select only inventory items
 // with these IDs.
-func (c *InventoryItemsListCall) Ids(ids []int64) *InventoryItemsListCall {
+func (c *InventoryItemsListCall) Ids(ids ...int64) *InventoryItemsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -27568,10 +27568,10 @@ func (c *InventoryItemsListCall) MaxResults(maxResults int64) *InventoryItemsLis
 
 // OrderId sets the optional parameter "orderId": Select only inventory
 // items that belong to specified orders.
-func (c *InventoryItemsListCall) OrderId(orderId []int64) *InventoryItemsListCall {
+func (c *InventoryItemsListCall) OrderId(orderId ...int64) *InventoryItemsListCall {
 	var orderId_ []string
 	for _, v := range orderId {
-		orderId_ = append(orderId_, fmt.Sprintf("%v", v))
+		orderId_ = append(orderId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("orderId", orderId_)
 	return c
@@ -27586,10 +27586,10 @@ func (c *InventoryItemsListCall) PageToken(pageToken string) *InventoryItemsList
 
 // SiteId sets the optional parameter "siteId": Select only inventory
 // items that are associated with these sites.
-func (c *InventoryItemsListCall) SiteId(siteId []int64) *InventoryItemsListCall {
+func (c *InventoryItemsListCall) SiteId(siteId ...int64) *InventoryItemsListCall {
 	var siteId_ []string
 	for _, v := range siteId {
-		siteId_ = append(siteId_, fmt.Sprintf("%v", v))
+		siteId_ = append(siteId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("siteId", siteId_)
 	return c
@@ -29664,10 +29664,10 @@ func (c *OrderDocumentsListCall) Approved(approved bool) *OrderDocumentsListCall
 
 // Ids sets the optional parameter "ids": Select only order documents
 // with these IDs.
-func (c *OrderDocumentsListCall) Ids(ids []int64) *OrderDocumentsListCall {
+func (c *OrderDocumentsListCall) Ids(ids ...int64) *OrderDocumentsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -29682,10 +29682,10 @@ func (c *OrderDocumentsListCall) MaxResults(maxResults int64) *OrderDocumentsLis
 
 // OrderId sets the optional parameter "orderId": Select only order
 // documents for specified orders.
-func (c *OrderDocumentsListCall) OrderId(orderId []int64) *OrderDocumentsListCall {
+func (c *OrderDocumentsListCall) OrderId(orderId ...int64) *OrderDocumentsListCall {
 	var orderId_ []string
 	for _, v := range orderId {
-		orderId_ = append(orderId_, fmt.Sprintf("%v", v))
+		orderId_ = append(orderId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("orderId", orderId_)
 	return c
@@ -29714,10 +29714,10 @@ func (c *OrderDocumentsListCall) SearchString(searchString string) *OrderDocumen
 
 // SiteId sets the optional parameter "siteId": Select only order
 // documents that are associated with these sites.
-func (c *OrderDocumentsListCall) SiteId(siteId []int64) *OrderDocumentsListCall {
+func (c *OrderDocumentsListCall) SiteId(siteId ...int64) *OrderDocumentsListCall {
 	var siteId_ []string
 	for _, v := range siteId {
-		siteId_ = append(siteId_, fmt.Sprintf("%v", v))
+		siteId_ = append(siteId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("siteId", siteId_)
 	return c
@@ -30096,10 +30096,10 @@ func (r *OrdersService) List(profileId int64, projectId int64) *OrdersListCall {
 
 // Ids sets the optional parameter "ids": Select only orders with these
 // IDs.
-func (c *OrdersListCall) Ids(ids []int64) *OrdersListCall {
+func (c *OrdersListCall) Ids(ids ...int64) *OrdersListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -30133,10 +30133,10 @@ func (c *OrdersListCall) SearchString(searchString string) *OrdersListCall {
 
 // SiteId sets the optional parameter "siteId": Select only orders that
 // are associated with these site IDs.
-func (c *OrdersListCall) SiteId(siteId []int64) *OrdersListCall {
+func (c *OrdersListCall) SiteId(siteId ...int64) *OrdersListCall {
 	var siteId_ []string
 	for _, v := range siteId {
-		siteId_ = append(siteId_, fmt.Sprintf("%v", v))
+		siteId_ = append(siteId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("siteId", siteId_)
 	return c
@@ -30611,10 +30611,10 @@ func (r *PlacementGroupsService) List(profileId int64) *PlacementGroupsListCall 
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only placement groups that belong to these advertisers.
-func (c *PlacementGroupsListCall) AdvertiserIds(advertiserIds []int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) AdvertiserIds(advertiserIds ...int64) *PlacementGroupsListCall {
 	var advertiserIds_ []string
 	for _, v := range advertiserIds {
-		advertiserIds_ = append(advertiserIds_, fmt.Sprintf("%v", v))
+		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
 	return c
@@ -30630,10 +30630,10 @@ func (c *PlacementGroupsListCall) Archived(archived bool) *PlacementGroupsListCa
 
 // CampaignIds sets the optional parameter "campaignIds": Select only
 // placement groups that belong to these campaigns.
-func (c *PlacementGroupsListCall) CampaignIds(campaignIds []int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) CampaignIds(campaignIds ...int64) *PlacementGroupsListCall {
 	var campaignIds_ []string
 	for _, v := range campaignIds {
-		campaignIds_ = append(campaignIds_, fmt.Sprintf("%v", v))
+		campaignIds_ = append(campaignIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("campaignIds", campaignIds_)
 	return c
@@ -30642,10 +30642,10 @@ func (c *PlacementGroupsListCall) CampaignIds(campaignIds []int64) *PlacementGro
 // ContentCategoryIds sets the optional parameter "contentCategoryIds":
 // Select only placement groups that are associated with these content
 // categories.
-func (c *PlacementGroupsListCall) ContentCategoryIds(contentCategoryIds []int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) ContentCategoryIds(contentCategoryIds ...int64) *PlacementGroupsListCall {
 	var contentCategoryIds_ []string
 	for _, v := range contentCategoryIds {
-		contentCategoryIds_ = append(contentCategoryIds_, fmt.Sprintf("%v", v))
+		contentCategoryIds_ = append(contentCategoryIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("contentCategoryIds", contentCategoryIds_)
 	return c
@@ -30654,10 +30654,10 @@ func (c *PlacementGroupsListCall) ContentCategoryIds(contentCategoryIds []int64)
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
 // Select only placement groups that are associated with these directory
 // sites.
-func (c *PlacementGroupsListCall) DirectorySiteIds(directorySiteIds []int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) DirectorySiteIds(directorySiteIds ...int64) *PlacementGroupsListCall {
 	var directorySiteIds_ []string
 	for _, v := range directorySiteIds {
-		directorySiteIds_ = append(directorySiteIds_, fmt.Sprintf("%v", v))
+		directorySiteIds_ = append(directorySiteIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("directorySiteIds", directorySiteIds_)
 	return c
@@ -30665,10 +30665,10 @@ func (c *PlacementGroupsListCall) DirectorySiteIds(directorySiteIds []int64) *Pl
 
 // Ids sets the optional parameter "ids": Select only placement groups
 // with these IDs.
-func (c *PlacementGroupsListCall) Ids(ids []int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) Ids(ids ...int64) *PlacementGroupsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -30739,10 +30739,10 @@ func (c *PlacementGroupsListCall) PlacementGroupType(placementGroupType string) 
 // PlacementStrategyIds sets the optional parameter
 // "placementStrategyIds": Select only placement groups that are
 // associated with these placement strategies.
-func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds []int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds ...int64) *PlacementGroupsListCall {
 	var placementStrategyIds_ []string
 	for _, v := range placementStrategyIds {
-		placementStrategyIds_ = append(placementStrategyIds_, fmt.Sprintf("%v", v))
+		placementStrategyIds_ = append(placementStrategyIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("placementStrategyIds", placementStrategyIds_)
 	return c
@@ -30757,7 +30757,7 @@ func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds []in
 //   "PRICING_TYPE_CPM"
 //   "PRICING_TYPE_FLAT_RATE_CLICKS"
 //   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
-func (c *PlacementGroupsListCall) PricingTypes(pricingTypes []string) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) PricingTypes(pricingTypes ...string) *PlacementGroupsListCall {
 	c.urlParams_.SetMulti("pricingTypes", append([]string{}, pricingTypes...))
 	return c
 }
@@ -30778,10 +30778,10 @@ func (c *PlacementGroupsListCall) SearchString(searchString string) *PlacementGr
 
 // SiteIds sets the optional parameter "siteIds": Select only placement
 // groups that are associated with these sites.
-func (c *PlacementGroupsListCall) SiteIds(siteIds []int64) *PlacementGroupsListCall {
+func (c *PlacementGroupsListCall) SiteIds(siteIds ...int64) *PlacementGroupsListCall {
 	var siteIds_ []string
 	for _, v := range siteIds {
-		siteIds_ = append(siteIds_, fmt.Sprintf("%v", v))
+		siteIds_ = append(siteIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("siteIds", siteIds_)
 	return c
@@ -31686,10 +31686,10 @@ func (r *PlacementStrategiesService) List(profileId int64) *PlacementStrategiesL
 
 // Ids sets the optional parameter "ids": Select only placement
 // strategies with these IDs.
-func (c *PlacementStrategiesListCall) Ids(ids []int64) *PlacementStrategiesListCall {
+func (c *PlacementStrategiesListCall) Ids(ids ...int64) *PlacementStrategiesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -32178,10 +32178,10 @@ func (c *PlacementsGeneratetagsCall) CampaignId(campaignId int64) *PlacementsGen
 
 // PlacementIds sets the optional parameter "placementIds": Generate
 // tags for these placements.
-func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds []int64) *PlacementsGeneratetagsCall {
+func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds ...int64) *PlacementsGeneratetagsCall {
 	var placementIds_ []string
 	for _, v := range placementIds {
-		placementIds_ = append(placementIds_, fmt.Sprintf("%v", v))
+		placementIds_ = append(placementIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("placementIds", placementIds_)
 	return c
@@ -32209,7 +32209,7 @@ func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds []int64) *Placeme
 //   "PLACEMENT_TAG_TRACKING"
 //   "PLACEMENT_TAG_TRACKING_IFRAME"
 //   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
-func (c *PlacementsGeneratetagsCall) TagFormats(tagFormats []string) *PlacementsGeneratetagsCall {
+func (c *PlacementsGeneratetagsCall) TagFormats(tagFormats ...string) *PlacementsGeneratetagsCall {
 	c.urlParams_.SetMulti("tagFormats", append([]string{}, tagFormats...))
 	return c
 }
@@ -32642,10 +32642,10 @@ func (r *PlacementsService) List(profileId int64) *PlacementsListCall {
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only placements that belong to these advertisers.
-func (c *PlacementsListCall) AdvertiserIds(advertiserIds []int64) *PlacementsListCall {
+func (c *PlacementsListCall) AdvertiserIds(advertiserIds ...int64) *PlacementsListCall {
 	var advertiserIds_ []string
 	for _, v := range advertiserIds {
-		advertiserIds_ = append(advertiserIds_, fmt.Sprintf("%v", v))
+		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
 	return c
@@ -32661,10 +32661,10 @@ func (c *PlacementsListCall) Archived(archived bool) *PlacementsListCall {
 
 // CampaignIds sets the optional parameter "campaignIds": Select only
 // placements that belong to these campaigns.
-func (c *PlacementsListCall) CampaignIds(campaignIds []int64) *PlacementsListCall {
+func (c *PlacementsListCall) CampaignIds(campaignIds ...int64) *PlacementsListCall {
 	var campaignIds_ []string
 	for _, v := range campaignIds {
-		campaignIds_ = append(campaignIds_, fmt.Sprintf("%v", v))
+		campaignIds_ = append(campaignIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("campaignIds", campaignIds_)
 	return c
@@ -32684,7 +32684,7 @@ func (c *PlacementsListCall) CampaignIds(campaignIds []int64) *PlacementsListCal
 //   "IN_STREAM_VIDEO"
 //   "WEB"
 //   "WEB_INTERSTITIAL"
-func (c *PlacementsListCall) Compatibilities(compatibilities []string) *PlacementsListCall {
+func (c *PlacementsListCall) Compatibilities(compatibilities ...string) *PlacementsListCall {
 	c.urlParams_.SetMulti("compatibilities", append([]string{}, compatibilities...))
 	return c
 }
@@ -32692,10 +32692,10 @@ func (c *PlacementsListCall) Compatibilities(compatibilities []string) *Placemen
 // ContentCategoryIds sets the optional parameter "contentCategoryIds":
 // Select only placements that are associated with these content
 // categories.
-func (c *PlacementsListCall) ContentCategoryIds(contentCategoryIds []int64) *PlacementsListCall {
+func (c *PlacementsListCall) ContentCategoryIds(contentCategoryIds ...int64) *PlacementsListCall {
 	var contentCategoryIds_ []string
 	for _, v := range contentCategoryIds {
-		contentCategoryIds_ = append(contentCategoryIds_, fmt.Sprintf("%v", v))
+		contentCategoryIds_ = append(contentCategoryIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("contentCategoryIds", contentCategoryIds_)
 	return c
@@ -32704,10 +32704,10 @@ func (c *PlacementsListCall) ContentCategoryIds(contentCategoryIds []int64) *Pla
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
 // Select only placements that are associated with these directory
 // sites.
-func (c *PlacementsListCall) DirectorySiteIds(directorySiteIds []int64) *PlacementsListCall {
+func (c *PlacementsListCall) DirectorySiteIds(directorySiteIds ...int64) *PlacementsListCall {
 	var directorySiteIds_ []string
 	for _, v := range directorySiteIds {
-		directorySiteIds_ = append(directorySiteIds_, fmt.Sprintf("%v", v))
+		directorySiteIds_ = append(directorySiteIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("directorySiteIds", directorySiteIds_)
 	return c
@@ -32715,10 +32715,10 @@ func (c *PlacementsListCall) DirectorySiteIds(directorySiteIds []int64) *Placeme
 
 // GroupIds sets the optional parameter "groupIds": Select only
 // placements that belong to these placement groups.
-func (c *PlacementsListCall) GroupIds(groupIds []int64) *PlacementsListCall {
+func (c *PlacementsListCall) GroupIds(groupIds ...int64) *PlacementsListCall {
 	var groupIds_ []string
 	for _, v := range groupIds {
-		groupIds_ = append(groupIds_, fmt.Sprintf("%v", v))
+		groupIds_ = append(groupIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("groupIds", groupIds_)
 	return c
@@ -32726,10 +32726,10 @@ func (c *PlacementsListCall) GroupIds(groupIds []int64) *PlacementsListCall {
 
 // Ids sets the optional parameter "ids": Select only placements with
 // these IDs.
-func (c *PlacementsListCall) Ids(ids []int64) *PlacementsListCall {
+func (c *PlacementsListCall) Ids(ids ...int64) *PlacementsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -32795,10 +32795,10 @@ func (c *PlacementsListCall) PaymentSource(paymentSource string) *PlacementsList
 // PlacementStrategyIds sets the optional parameter
 // "placementStrategyIds": Select only placements that are associated
 // with these placement strategies.
-func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds []int64) *PlacementsListCall {
+func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds ...int64) *PlacementsListCall {
 	var placementStrategyIds_ []string
 	for _, v := range placementStrategyIds {
-		placementStrategyIds_ = append(placementStrategyIds_, fmt.Sprintf("%v", v))
+		placementStrategyIds_ = append(placementStrategyIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("placementStrategyIds", placementStrategyIds_)
 	return c
@@ -32813,7 +32813,7 @@ func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds []int64) 
 //   "PRICING_TYPE_CPM"
 //   "PRICING_TYPE_FLAT_RATE_CLICKS"
 //   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
-func (c *PlacementsListCall) PricingTypes(pricingTypes []string) *PlacementsListCall {
+func (c *PlacementsListCall) PricingTypes(pricingTypes ...string) *PlacementsListCall {
 	c.urlParams_.SetMulti("pricingTypes", append([]string{}, pricingTypes...))
 	return c
 }
@@ -32833,10 +32833,10 @@ func (c *PlacementsListCall) SearchString(searchString string) *PlacementsListCa
 
 // SiteIds sets the optional parameter "siteIds": Select only placements
 // that are associated with these sites.
-func (c *PlacementsListCall) SiteIds(siteIds []int64) *PlacementsListCall {
+func (c *PlacementsListCall) SiteIds(siteIds ...int64) *PlacementsListCall {
 	var siteIds_ []string
 	for _, v := range siteIds {
-		siteIds_ = append(siteIds_, fmt.Sprintf("%v", v))
+		siteIds_ = append(siteIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("siteIds", siteIds_)
 	return c
@@ -32844,10 +32844,10 @@ func (c *PlacementsListCall) SiteIds(siteIds []int64) *PlacementsListCall {
 
 // SizeIds sets the optional parameter "sizeIds": Select only placements
 // that are associated with these sizes.
-func (c *PlacementsListCall) SizeIds(sizeIds []int64) *PlacementsListCall {
+func (c *PlacementsListCall) SizeIds(sizeIds ...int64) *PlacementsListCall {
 	var sizeIds_ []string
 	for _, v := range sizeIds {
-		sizeIds_ = append(sizeIds_, fmt.Sprintf("%v", v))
+		sizeIds_ = append(sizeIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("sizeIds", sizeIds_)
 	return c
@@ -34088,10 +34088,10 @@ func (r *ProjectsService) List(profileId int64) *ProjectsListCall {
 
 // AdvertiserIds sets the optional parameter "advertiserIds": Select
 // only projects with these advertiser IDs.
-func (c *ProjectsListCall) AdvertiserIds(advertiserIds []int64) *ProjectsListCall {
+func (c *ProjectsListCall) AdvertiserIds(advertiserIds ...int64) *ProjectsListCall {
 	var advertiserIds_ []string
 	for _, v := range advertiserIds {
-		advertiserIds_ = append(advertiserIds_, fmt.Sprintf("%v", v))
+		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
 	return c
@@ -34099,10 +34099,10 @@ func (c *ProjectsListCall) AdvertiserIds(advertiserIds []int64) *ProjectsListCal
 
 // Ids sets the optional parameter "ids": Select only projects with
 // these IDs.
-func (c *ProjectsListCall) Ids(ids []int64) *ProjectsListCall {
+func (c *ProjectsListCall) Ids(ids ...int64) *ProjectsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -37375,10 +37375,10 @@ func (c *SitesListCall) Approved(approved bool) *SitesListCall {
 
 // CampaignIds sets the optional parameter "campaignIds": Select only
 // sites with these campaign IDs.
-func (c *SitesListCall) CampaignIds(campaignIds []int64) *SitesListCall {
+func (c *SitesListCall) CampaignIds(campaignIds ...int64) *SitesListCall {
 	var campaignIds_ []string
 	for _, v := range campaignIds {
-		campaignIds_ = append(campaignIds_, fmt.Sprintf("%v", v))
+		campaignIds_ = append(campaignIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("campaignIds", campaignIds_)
 	return c
@@ -37386,10 +37386,10 @@ func (c *SitesListCall) CampaignIds(campaignIds []int64) *SitesListCall {
 
 // DirectorySiteIds sets the optional parameter "directorySiteIds":
 // Select only sites with these directory site IDs.
-func (c *SitesListCall) DirectorySiteIds(directorySiteIds []int64) *SitesListCall {
+func (c *SitesListCall) DirectorySiteIds(directorySiteIds ...int64) *SitesListCall {
 	var directorySiteIds_ []string
 	for _, v := range directorySiteIds {
-		directorySiteIds_ = append(directorySiteIds_, fmt.Sprintf("%v", v))
+		directorySiteIds_ = append(directorySiteIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("directorySiteIds", directorySiteIds_)
 	return c
@@ -37397,10 +37397,10 @@ func (c *SitesListCall) DirectorySiteIds(directorySiteIds []int64) *SitesListCal
 
 // Ids sets the optional parameter "ids": Select only sites with these
 // IDs.
-func (c *SitesListCall) Ids(ids []int64) *SitesListCall {
+func (c *SitesListCall) Ids(ids ...int64) *SitesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -38215,10 +38215,10 @@ func (c *SizesListCall) IabStandard(iabStandard bool) *SizesListCall {
 
 // Ids sets the optional parameter "ids": Select only sizes with these
 // IDs.
-func (c *SizesListCall) Ids(ids []int64) *SizesListCall {
+func (c *SizesListCall) Ids(ids ...int64) *SizesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -38637,10 +38637,10 @@ func (r *SubaccountsService) List(profileId int64) *SubaccountsListCall {
 
 // Ids sets the optional parameter "ids": Select only subaccounts with
 // these IDs.
-func (c *SubaccountsListCall) Ids(ids []int64) *SubaccountsListCall {
+func (c *SubaccountsListCall) Ids(ids ...int64) *SubaccountsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -40124,10 +40124,10 @@ func (r *UserRolePermissionsService) List(profileId int64) *UserRolePermissionsL
 
 // Ids sets the optional parameter "ids": Select only user role
 // permissions with these IDs.
-func (c *UserRolePermissionsListCall) Ids(ids []int64) *UserRolePermissionsListCall {
+func (c *UserRolePermissionsListCall) Ids(ids ...int64) *UserRolePermissionsListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c
@@ -40624,10 +40624,10 @@ func (c *UserRolesListCall) AccountUserRoleOnly(accountUserRoleOnly bool) *UserR
 
 // Ids sets the optional parameter "ids": Select only user roles with
 // the specified IDs.
-func (c *UserRolesListCall) Ids(ids []int64) *UserRolesListCall {
+func (c *UserRolesListCall) Ids(ids ...int64) *UserRolesListCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c

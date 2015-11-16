@@ -1542,7 +1542,7 @@ func (meth *Method) cacheResponseTypes(api *API) {
 func convertMultiParams(a *API, param string) string {
 	a.pn(" var %v_ []string", param)
 	a.pn(" for _, v := range %v {", param)
-	a.pn(`  %v_ = append(%v_, fmt.Sprintf("%%v", v))`, param, param)
+	a.pn(`  %v_ = append(%v_, fmt.Sprint(v))`, param, param)
 	a.pn(" }")
 	return param + "_"
 }
@@ -1650,7 +1650,7 @@ func (meth *Method) generateCode() {
 		paramName := np.Get(validGoIdentifer(opt.name))
 		typePrefix := ""
 		if opt.IsRepeated() {
-			typePrefix = "[]"
+			typePrefix = "..."
 		}
 		pn("func (c *%s) %s(%s %s%s) *%s {", callName, setter, paramName, typePrefix, opt.GoType(), callName)
 		if opt.IsRepeated() {

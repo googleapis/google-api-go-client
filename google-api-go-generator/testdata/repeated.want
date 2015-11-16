@@ -105,7 +105,7 @@ func (r *AccountsReportsService) Generate(ids []int64, currency string, accountI
 	c := &AccountsReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	c.urlParams_.Set("currency", currency)
@@ -124,17 +124,17 @@ func (c *AccountsReportsGenerateCall) Currency(currency string) *AccountsReports
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *AccountsReportsGenerateCall) Dimension(dimension []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Dimension(dimension ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("dimension", append([]string{}, dimension...))
 	return c
 }
 
 // Ids sets the optional parameter "ids": Select only user profiles with
 // these IDs.
-func (c *AccountsReportsGenerateCall) Ids(ids []int64) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Ids(ids ...int64) *AccountsReportsGenerateCall {
 	var ids_ []string
 	for _, v := range ids {
-		ids_ = append(ids_, fmt.Sprintf("%v", v))
+		ids_ = append(ids_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("ids", ids_)
 	return c

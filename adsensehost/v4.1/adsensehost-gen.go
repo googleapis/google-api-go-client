@@ -1707,7 +1707,7 @@ func (r *AccountsAdunitsService) GetAdCode(accountId string, adClientId string, 
 
 // HostCustomChannelId sets the optional parameter
 // "hostCustomChannelId": Host custom channel to attach to the ad code.
-func (c *AccountsAdunitsGetAdCodeCall) HostCustomChannelId(hostCustomChannelId []string) *AccountsAdunitsGetAdCodeCall {
+func (c *AccountsAdunitsGetAdCodeCall) HostCustomChannelId(hostCustomChannelId ...string) *AccountsAdunitsGetAdCodeCall {
 	c.urlParams_.SetMulti("hostCustomChannelId", append([]string{}, hostCustomChannelId...))
 	return c
 }
@@ -2438,14 +2438,14 @@ func (r *AccountsReportsService) Generate(accountId string, startDate string, en
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *AccountsReportsGenerateCall) Dimension(dimension []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Dimension(dimension ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("dimension", append([]string{}, dimension...))
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *AccountsReportsGenerateCall) Filter(filter []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Filter(filter ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
 	return c
 }
@@ -2467,7 +2467,7 @@ func (c *AccountsReportsGenerateCall) MaxResults(maxResults int64) *AccountsRepo
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *AccountsReportsGenerateCall) Metric(metric []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Metric(metric ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("metric", append([]string{}, metric...))
 	return c
 }
@@ -2476,7 +2476,7 @@ func (c *AccountsReportsGenerateCall) Metric(metric []string) *AccountsReportsGe
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *AccountsReportsGenerateCall) Sort(sort []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Sort(sort ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("sort", append([]string{}, sort...))
 	return c
 }
@@ -4008,14 +4008,14 @@ func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGene
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *ReportsGenerateCall) Dimension(dimension []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Dimension(dimension ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("dimension", append([]string{}, dimension...))
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *ReportsGenerateCall) Filter(filter []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Filter(filter ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
 	return c
 }
@@ -4037,7 +4037,7 @@ func (c *ReportsGenerateCall) MaxResults(maxResults int64) *ReportsGenerateCall 
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *ReportsGenerateCall) Metric(metric []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Metric(metric ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("metric", append([]string{}, metric...))
 	return c
 }
@@ -4046,7 +4046,7 @@ func (c *ReportsGenerateCall) Metric(metric []string) *ReportsGenerateCall {
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *ReportsGenerateCall) Sort(sort []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Sort(sort ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("sort", append([]string{}, sort...))
 	return c
 }

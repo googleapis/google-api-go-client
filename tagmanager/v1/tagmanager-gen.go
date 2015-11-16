@@ -3269,21 +3269,21 @@ func (r *AccountsContainersMoveFoldersService) Update(accountId string, containe
 
 // TagId sets the optional parameter "tagId": The tags to be moved to
 // the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) TagId(tagId []string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) TagId(tagId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("tagId", append([]string{}, tagId...))
 	return c
 }
 
 // TriggerId sets the optional parameter "triggerId": The triggers to be
 // moved to the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) TriggerId(triggerId []string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) TriggerId(triggerId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("triggerId", append([]string{}, triggerId...))
 	return c
 }
 
 // VariableId sets the optional parameter "variableId": The variables to
 // be moved to the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) VariableId(variableId []string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) VariableId(variableId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("variableId", append([]string{}, variableId...))
 	return c
 }

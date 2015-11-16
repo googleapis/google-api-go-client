@@ -1745,7 +1745,7 @@ func (c *BlogsListByUserCall) FetchUserInfo(fetchUserInfo bool) *BlogsListByUser
 // access.
 //   "READER" - Reader role - Blogs where the user has Reader level
 // access (to a private blog).
-func (c *BlogsListByUserCall) Role(role []string) *BlogsListByUserCall {
+func (c *BlogsListByUserCall) Role(role ...string) *BlogsListByUserCall {
 	c.urlParams_.SetMulti("role", append([]string{}, role...))
 	return c
 }
@@ -1757,7 +1757,7 @@ func (c *BlogsListByUserCall) Role(role []string) *BlogsListByUserCall {
 // Possible values:
 //   "DELETED" - Blog has been deleted by an administrator.
 //   "LIVE" (default) - Blog is currently live.
-func (c *BlogsListByUserCall) Status(status []string) *BlogsListByUserCall {
+func (c *BlogsListByUserCall) Status(status ...string) *BlogsListByUserCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -2398,7 +2398,7 @@ func (c *CommentsListCall) StartDate(startDate string) *CommentsListCall {
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListCall) Status(status []string) *CommentsListCall {
+func (c *CommentsListCall) Status(status ...string) *CommentsListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -2651,7 +2651,7 @@ func (c *CommentsListByBlogCall) StartDate(startDate string) *CommentsListByBlog
 //   "live" - Comments that are publicly visible
 //   "pending" - Comments that are awaiting administrator approval
 //   "spam" - Comments marked as spam by the administrator
-func (c *CommentsListByBlogCall) Status(status []string) *CommentsListByBlogCall {
+func (c *CommentsListByBlogCall) Status(status ...string) *CommentsListByBlogCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -3089,7 +3089,7 @@ func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 //   "30DAYS" - Page view counts from the last thirty days.
 //   "7DAYS" - Page view counts from the last seven days.
 //   "all" - Total page view counts from all time.
-func (c *PageViewsGetCall) Range(range_ []string) *PageViewsGetCall {
+func (c *PageViewsGetCall) Range(range_ ...string) *PageViewsGetCall {
 	c.urlParams_.SetMulti("range", append([]string{}, range_...))
 	return c
 }
@@ -3642,7 +3642,7 @@ func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
 // Possible values:
 //   "draft" - Draft (unpublished) Pages
 //   "live" - Pages that are publicly visible
-func (c *PagesListCall) Status(status []string) *PagesListCall {
+func (c *PagesListCall) Status(status ...string) *PagesListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -4596,7 +4596,7 @@ func (c *PostUserInfosListCall) StartDate(startDate string) *PostUserInfosListCa
 //   "draft" - Draft posts
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in future.
-func (c *PostUserInfosListCall) Status(status []string) *PostUserInfosListCall {
+func (c *PostUserInfosListCall) Status(status ...string) *PostUserInfosListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
@@ -5517,7 +5517,7 @@ func (c *PostsListCall) StartDate(startDate string) *PostsListCall {
 //   "draft" - Draft (non-published) posts.
 //   "live" - Published posts
 //   "scheduled" - Posts that are scheduled to publish in the future.
-func (c *PostsListCall) Status(status []string) *PostsListCall {
+func (c *PostsListCall) Status(status ...string) *PostsListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }

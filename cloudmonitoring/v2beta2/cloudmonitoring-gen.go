@@ -1215,7 +1215,7 @@ func (c *TimeseriesListCall) Count(count int64) *TimeseriesListCall {
 // you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
-func (c *TimeseriesListCall) Labels(labels []string) *TimeseriesListCall {
+func (c *TimeseriesListCall) Labels(labels ...string) *TimeseriesListCall {
 	c.urlParams_.SetMulti("labels", append([]string{}, labels...))
 	return c
 }
@@ -1637,7 +1637,7 @@ func (c *TimeseriesDescriptorsListCall) Count(count int64) *TimeseriesDescriptor
 // you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
-func (c *TimeseriesDescriptorsListCall) Labels(labels []string) *TimeseriesDescriptorsListCall {
+func (c *TimeseriesDescriptorsListCall) Labels(labels ...string) *TimeseriesDescriptorsListCall {
 	c.urlParams_.SetMulti("labels", append([]string{}, labels...))
 	return c
 }

@@ -2856,14 +2856,14 @@ func (r *CirclesService) AddPeople(circleId string) *CirclesAddPeopleCall {
 
 // Email sets the optional parameter "email": Email of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesAddPeopleCall) Email(email []string) *CirclesAddPeopleCall {
+func (c *CirclesAddPeopleCall) Email(email ...string) *CirclesAddPeopleCall {
 	c.urlParams_.SetMulti("email", append([]string{}, email...))
 	return c
 }
 
 // UserId sets the optional parameter "userId": IDs of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesAddPeopleCall) UserId(userId []string) *CirclesAddPeopleCall {
+func (c *CirclesAddPeopleCall) UserId(userId ...string) *CirclesAddPeopleCall {
 	c.urlParams_.SetMulti("userId", append([]string{}, userId...))
 	return c
 }
@@ -3600,14 +3600,14 @@ func (r *CirclesService) RemovePeople(circleId string) *CirclesRemovePeopleCall 
 
 // Email sets the optional parameter "email": Email of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesRemovePeopleCall) Email(email []string) *CirclesRemovePeopleCall {
+func (c *CirclesRemovePeopleCall) Email(email ...string) *CirclesRemovePeopleCall {
 	c.urlParams_.SetMulti("email", append([]string{}, email...))
 	return c
 }
 
 // UserId sets the optional parameter "userId": IDs of the people to
 // remove from the circle. Optional, can be repeated.
-func (c *CirclesRemovePeopleCall) UserId(userId []string) *CirclesRemovePeopleCall {
+func (c *CirclesRemovePeopleCall) UserId(userId ...string) *CirclesRemovePeopleCall {
 	c.urlParams_.SetMulti("userId", append([]string{}, userId...))
 	return c
 }

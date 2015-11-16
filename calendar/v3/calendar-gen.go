@@ -5325,7 +5325,7 @@ func (c *EventsListCall) PageToken(pageToken string) *EventsListCall {
 // as propertyName=value. Matches only private properties. This
 // parameter might be repeated multiple times to return events that
 // match all given constraints.
-func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty []string) *EventsListCall {
+func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty ...string) *EventsListCall {
 	c.urlParams_.SetMulti("privateExtendedProperty", append([]string{}, privateExtendedProperty...))
 	return c
 }
@@ -5343,7 +5343,7 @@ func (c *EventsListCall) Q(q string) *EventsListCall {
 // propertyName=value. Matches only shared properties. This parameter
 // might be repeated multiple times to return events that match all
 // given constraints.
-func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty []string) *EventsListCall {
+func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty ...string) *EventsListCall {
 	c.urlParams_.SetMulti("sharedExtendedProperty", append([]string{}, sharedExtendedProperty...))
 	return c
 }
@@ -6382,7 +6382,7 @@ func (c *EventsWatchCall) PageToken(pageToken string) *EventsWatchCall {
 // as propertyName=value. Matches only private properties. This
 // parameter might be repeated multiple times to return events that
 // match all given constraints.
-func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty []string) *EventsWatchCall {
+func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty ...string) *EventsWatchCall {
 	c.urlParams_.SetMulti("privateExtendedProperty", append([]string{}, privateExtendedProperty...))
 	return c
 }
@@ -6400,7 +6400,7 @@ func (c *EventsWatchCall) Q(q string) *EventsWatchCall {
 // propertyName=value. Matches only shared properties. This parameter
 // might be repeated multiple times to return events that match all
 // given constraints.
-func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty []string) *EventsWatchCall {
+func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty ...string) *EventsWatchCall {
 	c.urlParams_.SetMulti("sharedExtendedProperty", append([]string{}, sharedExtendedProperty...))
 	return c
 }

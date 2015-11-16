@@ -483,7 +483,7 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 
 // Rule sets the optional parameter "rule": A PageSpeed rule to run; if
 // none are given, all rules are run
-func (c *PagespeedapiRunpagespeedCall) Rule(rule []string) *PagespeedapiRunpagespeedCall {
+func (c *PagespeedapiRunpagespeedCall) Rule(rule ...string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.SetMulti("rule", append([]string{}, rule...))
 	return c
 }

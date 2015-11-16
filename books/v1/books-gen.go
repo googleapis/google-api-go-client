@@ -4872,7 +4872,7 @@ func (r *LayersAnnotationDataService) List(volumeId string, layerId string, cont
 // AnnotationDataId sets the optional parameter "annotationDataId": The
 // list of Annotation Data Ids to retrieve. Pagination is ignored if
 // this is set.
-func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId []string) *LayersAnnotationDataListCall {
+func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId ...string) *LayersAnnotationDataListCall {
 	c.urlParams_.SetMulti("annotationDataId", append([]string{}, annotationDataId...))
 	return c
 }
@@ -6022,7 +6022,7 @@ func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksve
 //
 // Possible values:
 //   "RENTALS" - Client supports rentals.
-func (c *MyconfigSyncVolumeLicensesCall) Features(features []string) *MyconfigSyncVolumeLicensesCall {
+func (c *MyconfigSyncVolumeLicensesCall) Features(features ...string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.SetMulti("features", append([]string{}, features...))
 	return c
 }
@@ -6043,7 +6043,7 @@ func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *Myco
 
 // VolumeIds sets the optional parameter "volumeIds": The volume(s) to
 // request download restrictions for.
-func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds []string) *MyconfigSyncVolumeLicensesCall {
+func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds ...string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
 	return c
 }
@@ -6557,7 +6557,7 @@ func (c *MylibraryAnnotationsListCall) LayerId(layerId string) *MylibraryAnnotat
 
 // LayerIds sets the optional parameter "layerIds": The layer ID(s) to
 // limit annotation by.
-func (c *MylibraryAnnotationsListCall) LayerIds(layerIds []string) *MylibraryAnnotationsListCall {
+func (c *MylibraryAnnotationsListCall) LayerIds(layerIds ...string) *MylibraryAnnotationsListCall {
 	c.urlParams_.SetMulti("layerIds", append([]string{}, layerIds...))
 	return c
 }
@@ -8551,7 +8551,7 @@ func (r *OnboardingService) ListCategoryVolumes() *OnboardingListCategoryVolumes
 
 // CategoryId sets the optional parameter "categoryId": List of category
 // ids requested.
-func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId []string) *OnboardingListCategoryVolumesCall {
+func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId ...string) *OnboardingListCategoryVolumesCall {
 	c.urlParams_.SetMulti("categoryId", append([]string{}, categoryId...))
 	return c
 }
@@ -10398,7 +10398,7 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 //   "RENTED" - User-rented books
 //   "SAMPLE" - Sample books
 //   "UPLOADED" - User uploaded books
-func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod []string) *VolumesMybooksListCall {
+func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("acquireMethod", append([]string{}, acquireMethod...))
 	return c
 }
@@ -10426,7 +10426,7 @@ func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksLis
 //   "COMPLETED_FAILED" - The volume processing hase failed.
 //   "COMPLETED_SUCCESS" - The volume processing was completed.
 //   "RUNNING" - The volume processing is not completed.
-func (c *VolumesMybooksListCall) ProcessingState(processingState []string) *VolumesMybooksListCall {
+func (c *VolumesMybooksListCall) ProcessingState(processingState ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
 }
@@ -10951,7 +10951,7 @@ func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseru
 //   "COMPLETED_FAILED" - The volume processing hase failed.
 //   "COMPLETED_SUCCESS" - The volume processing was completed.
 //   "RUNNING" - The volume processing is not completed.
-func (c *VolumesUseruploadedListCall) ProcessingState(processingState []string) *VolumesUseruploadedListCall {
+func (c *VolumesUseruploadedListCall) ProcessingState(processingState ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
 }
@@ -10973,7 +10973,7 @@ func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseru
 // VolumeId sets the optional parameter "volumeId": The ids of the
 // volumes to be returned. If not specified all that match the
 // processingState are returned.
-func (c *VolumesUseruploadedListCall) VolumeId(volumeId []string) *VolumesUseruploadedListCall {
+func (c *VolumesUseruploadedListCall) VolumeId(volumeId ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("volumeId", append([]string{}, volumeId...))
 	return c
 }

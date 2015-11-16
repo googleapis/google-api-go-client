@@ -570,7 +570,7 @@ func (r *StatesService) List() *StatesListCall {
 // IncludeData sets the optional parameter "includeData": Whether to
 // include the full data in addition to the version number
 func (c *StatesListCall) IncludeData(includeData bool) *StatesListCall {
-	c.urlParams_.Set("includeData", fmt.Sprintf("%v", includeData))
+	c.urlParams_.Set("includeData", fmt.Sprint(includeData))
 	return c
 }
 

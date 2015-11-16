@@ -1914,7 +1914,7 @@ func (c *SubscriptionsListCall) CustomerNamePrefix(customerNamePrefix string) *S
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

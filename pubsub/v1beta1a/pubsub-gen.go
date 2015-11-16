@@ -1123,7 +1123,7 @@ func (r *SubscriptionsService) List() *SubscriptionsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of subscriptions to return.
 func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2054,7 +2054,7 @@ func (r *TopicsService) List() *TopicsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of topics to return.
 func (c *TopicsListCall) MaxResults(maxResults int64) *TopicsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

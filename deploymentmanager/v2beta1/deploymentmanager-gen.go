@@ -1031,7 +1031,7 @@ func (r *DeploymentsService) List(project string) *DeploymentsListCall {
 // of results to be returned. ! Acceptable values are 0 to 100,
 // inclusive. (Default: 50)
 func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1340,7 +1340,7 @@ func (r *ManifestsService) List(project string, deployment string) *ManifestsLis
 // of results to be returned. ! Acceptable values are 0 to 100,
 // inclusive. (Default: 50)
 func (c *ManifestsListCall) MaxResults(maxResults int64) *ManifestsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1644,7 +1644,7 @@ func (r *OperationsService) List(project string) *OperationsListCall {
 // of results to be returned. ! Acceptable values are 0 to 100,
 // inclusive. (Default: 50)
 func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1953,7 +1953,7 @@ func (r *ResourcesService) List(project string, deployment string) *ResourcesLis
 // of results to be returned. ! Acceptable values are 0 to 100,
 // inclusive. (Default: 50)
 func (c *ResourcesListCall) MaxResults(maxResults int64) *ResourcesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2120,7 +2120,7 @@ func (r *TypesService) List(project string) *TypesListCall {
 // of results to be returned. ! Acceptable values are 0 to 100,
 // inclusive. (Default: 50)
 func (c *TypesListCall) MaxResults(maxResults int64) *TypesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

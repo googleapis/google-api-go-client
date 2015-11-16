@@ -954,7 +954,7 @@ func (r *RegionViewsService) List(projectName string, region string) *RegionView
 // results to be returned. Acceptable values are 0 to 5000, inclusive.
 // (Default: 5000)
 func (c *RegionViewsListCall) MaxResults(maxResults int64) *RegionViewsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1124,7 +1124,7 @@ func (r *RegionViewsService) Listresources(projectName string, region string, re
 // results to be returned. Acceptable values are 0 to 5000, inclusive.
 // (Default: 5000)
 func (c *RegionViewsListresourcesCall) MaxResults(maxResults int64) *RegionViewsListresourcesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1902,7 +1902,7 @@ func (r *ZoneViewsService) List(projectName string, zone string) *ZoneViewsListC
 // results to be returned. Acceptable values are 0 to 5000, inclusive.
 // (Default: 5000)
 func (c *ZoneViewsListCall) MaxResults(maxResults int64) *ZoneViewsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2072,7 +2072,7 @@ func (r *ZoneViewsService) Listresources(projectName string, zone string, resour
 // results to be returned. Acceptable values are 0 to 5000, inclusive.
 // (Default: 5000)
 func (c *ZoneViewsListresourcesCall) MaxResults(maxResults int64) *ZoneViewsListresourcesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

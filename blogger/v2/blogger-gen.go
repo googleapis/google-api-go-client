@@ -1200,14 +1200,14 @@ func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
 // body content of the comments is included.
 func (c *CommentsListCall) FetchBodies(fetchBodies bool) *CommentsListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of comments to include in the result.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1514,7 +1514,7 @@ func (r *PagesService) List(blogId string) *PagesListCall {
 // FetchBodies sets the optional parameter "fetchBodies": Whether to
 // retrieve the Page bodies.
 func (c *PagesListCall) FetchBodies(fetchBodies bool) *PagesListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
@@ -1782,14 +1782,14 @@ func (r *PostsService) List(blogId string) *PostsListCall {
 // FetchBodies sets the optional parameter "fetchBodies": Whether the
 // body content of posts is included.
 func (c *PostsListCall) FetchBodies(fetchBodies bool) *PostsListCall {
-	c.urlParams_.Set("fetchBodies", fmt.Sprintf("%v", fetchBodies))
+	c.urlParams_.Set("fetchBodies", fmt.Sprint(fetchBodies))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of posts to fetch.
 func (c *PostsListCall) MaxResults(maxResults int64) *PostsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

@@ -1465,7 +1465,7 @@ func (r *AccountsService) Get(accountId string) *AccountsGetCall {
 // Tree sets the optional parameter "tree": Whether the tree of sub
 // accounts should be returned.
 func (c *AccountsGetCall) Tree(tree bool) *AccountsGetCall {
-	c.urlParams_.Set("tree", fmt.Sprintf("%v", tree))
+	c.urlParams_.Set("tree", fmt.Sprint(tree))
 	return c
 }
 
@@ -1599,7 +1599,7 @@ func (r *AccountsService) List() *AccountsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of accounts to include in the response, used for paging.
 func (c *AccountsListCall) MaxResults(maxResults int64) *AccountsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1741,7 +1741,7 @@ func (r *AccountsAdclientsService) List(accountId string) *AccountsAdclientsList
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad clients to include in the response, used for paging.
 func (c *AccountsAdclientsListCall) MaxResults(maxResults int64) *AccountsAdclientsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2186,14 +2186,14 @@ func (r *AccountsAdunitsService) List(accountId string, adClientId string) *Acco
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *AccountsAdunitsListCall) IncludeInactive(includeInactive bool) *AccountsAdunitsListCall {
-	c.urlParams_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
+	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *AccountsAdunitsListCall) MaxResults(maxResults int64) *AccountsAdunitsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2365,7 +2365,7 @@ func (r *AccountsAdunitsCustomchannelsService) List(accountId string, adClientId
 // number of custom channels to include in the response, used for
 // paging.
 func (c *AccountsAdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AccountsAdunitsCustomchannelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2914,7 +2914,7 @@ func (r *AccountsCustomchannelsService) List(accountId string, adClientId string
 // number of custom channels to include in the response, used for
 // paging.
 func (c *AccountsCustomchannelsListCall) MaxResults(maxResults int64) *AccountsCustomchannelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3079,14 +3079,14 @@ func (r *AccountsCustomchannelsAdunitsService) List(accountId string, adClientId
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *AccountsCustomchannelsAdunitsListCall) IncludeInactive(includeInactive bool) *AccountsCustomchannelsAdunitsListCall {
-	c.urlParams_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
+	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *AccountsCustomchannelsAdunitsListCall) MaxResults(maxResults int64) *AccountsCustomchannelsAdunitsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3395,14 +3395,14 @@ func (c *AccountsReportsGenerateCall) Currency(currency string) *AccountsReports
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *AccountsReportsGenerateCall) Dimension(dimension []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Dimension(dimension ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("dimension", append([]string{}, dimension...))
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *AccountsReportsGenerateCall) Filter(filter []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Filter(filter ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
 	return c
 }
@@ -3418,13 +3418,13 @@ func (c *AccountsReportsGenerateCall) Locale(locale string) *AccountsReportsGene
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *AccountsReportsGenerateCall) MaxResults(maxResults int64) *AccountsReportsGenerateCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *AccountsReportsGenerateCall) Metric(metric []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Metric(metric ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("metric", append([]string{}, metric...))
 	return c
 }
@@ -3433,7 +3433,7 @@ func (c *AccountsReportsGenerateCall) Metric(metric []string) *AccountsReportsGe
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *AccountsReportsGenerateCall) Sort(sort []string) *AccountsReportsGenerateCall {
+func (c *AccountsReportsGenerateCall) Sort(sort ...string) *AccountsReportsGenerateCall {
 	c.urlParams_.SetMulti("sort", append([]string{}, sort...))
 	return c
 }
@@ -3441,7 +3441,7 @@ func (c *AccountsReportsGenerateCall) Sort(sort []string) *AccountsReportsGenera
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *AccountsReportsGenerateCall) StartIndex(startIndex int64) *AccountsReportsGenerateCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -3450,7 +3450,7 @@ func (c *AccountsReportsGenerateCall) StartIndex(startIndex int64) *AccountsRepo
 // AdSense account's local timezone. If false default PST/PDT timezone
 // will be used.
 func (c *AccountsReportsGenerateCall) UseTimezoneReporting(useTimezoneReporting bool) *AccountsReportsGenerateCall {
-	c.urlParams_.Set("useTimezoneReporting", fmt.Sprintf("%v", useTimezoneReporting))
+	c.urlParams_.Set("useTimezoneReporting", fmt.Sprint(useTimezoneReporting))
 	return c
 }
 
@@ -3685,14 +3685,14 @@ func (c *AccountsReportsSavedGenerateCall) Locale(locale string) *AccountsReport
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *AccountsReportsSavedGenerateCall) MaxResults(maxResults int64) *AccountsReportsSavedGenerateCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *AccountsReportsSavedGenerateCall) StartIndex(startIndex int64) *AccountsReportsSavedGenerateCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -3853,7 +3853,7 @@ func (r *AccountsReportsSavedService) List(accountId string) *AccountsReportsSav
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of saved reports to include in the response, used for paging.
 func (c *AccountsReportsSavedListCall) MaxResults(maxResults int64) *AccountsReportsSavedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4141,7 +4141,7 @@ func (r *AccountsSavedadstylesService) List(accountId string) *AccountsSavedadst
 // number of saved ad styles to include in the response, used for
 // paging.
 func (c *AccountsSavedadstylesListCall) MaxResults(maxResults int64) *AccountsSavedadstylesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4297,7 +4297,7 @@ func (r *AccountsUrlchannelsService) List(accountId string, adClientId string) *
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of URL channels to include in the response, used for paging.
 func (c *AccountsUrlchannelsListCall) MaxResults(maxResults int64) *AccountsUrlchannelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4456,7 +4456,7 @@ func (r *AdclientsService) List() *AdclientsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad clients to include in the response, used for paging.
 func (c *AdclientsListCall) MaxResults(maxResults int64) *AdclientsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4867,14 +4867,14 @@ func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *AdunitsListCall) IncludeInactive(includeInactive bool) *AdunitsListCall {
-	c.urlParams_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
+	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *AdunitsListCall) MaxResults(maxResults int64) *AdunitsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5036,7 +5036,7 @@ func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) 
 // number of custom channels to include in the response, used for
 // paging.
 func (c *AdunitsCustomchannelsListCall) MaxResults(maxResults int64) *AdunitsCustomchannelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5541,7 +5541,7 @@ func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall 
 // number of custom channels to include in the response, used for
 // paging.
 func (c *CustomchannelsListCall) MaxResults(maxResults int64) *CustomchannelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5696,14 +5696,14 @@ func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId s
 // IncludeInactive sets the optional parameter "includeInactive":
 // Whether to include inactive ad units. Default: true.
 func (c *CustomchannelsAdunitsListCall) IncludeInactive(includeInactive bool) *CustomchannelsAdunitsListCall {
-	c.urlParams_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
+	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of ad units to include in the response, used for paging.
 func (c *CustomchannelsAdunitsListCall) MaxResults(maxResults int64) *CustomchannelsAdunitsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6199,7 +6199,7 @@ func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGene
 
 // AccountId sets the optional parameter "accountId": Accounts upon
 // which to report.
-func (c *ReportsGenerateCall) AccountId(accountId []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) AccountId(accountId ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("accountId", append([]string{}, accountId...))
 	return c
 }
@@ -6214,14 +6214,14 @@ func (c *ReportsGenerateCall) Currency(currency string) *ReportsGenerateCall {
 
 // Dimension sets the optional parameter "dimension": Dimensions to base
 // the report on.
-func (c *ReportsGenerateCall) Dimension(dimension []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Dimension(dimension ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("dimension", append([]string{}, dimension...))
 	return c
 }
 
 // Filter sets the optional parameter "filter": Filters to be run on the
 // report.
-func (c *ReportsGenerateCall) Filter(filter []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Filter(filter ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("filter", append([]string{}, filter...))
 	return c
 }
@@ -6237,13 +6237,13 @@ func (c *ReportsGenerateCall) Locale(locale string) *ReportsGenerateCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *ReportsGenerateCall) MaxResults(maxResults int64) *ReportsGenerateCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // Metric sets the optional parameter "metric": Numeric columns to
 // include in the report.
-func (c *ReportsGenerateCall) Metric(metric []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Metric(metric ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("metric", append([]string{}, metric...))
 	return c
 }
@@ -6252,7 +6252,7 @@ func (c *ReportsGenerateCall) Metric(metric []string) *ReportsGenerateCall {
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
 // specified, the column is sorted ascending.
-func (c *ReportsGenerateCall) Sort(sort []string) *ReportsGenerateCall {
+func (c *ReportsGenerateCall) Sort(sort ...string) *ReportsGenerateCall {
 	c.urlParams_.SetMulti("sort", append([]string{}, sort...))
 	return c
 }
@@ -6260,7 +6260,7 @@ func (c *ReportsGenerateCall) Sort(sort []string) *ReportsGenerateCall {
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -6269,7 +6269,7 @@ func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall 
 // AdSense account's local timezone. If false default PST/PDT timezone
 // will be used.
 func (c *ReportsGenerateCall) UseTimezoneReporting(useTimezoneReporting bool) *ReportsGenerateCall {
-	c.urlParams_.Set("useTimezoneReporting", fmt.Sprintf("%v", useTimezoneReporting))
+	c.urlParams_.Set("useTimezoneReporting", fmt.Sprint(useTimezoneReporting))
 	return c
 }
 
@@ -6499,14 +6499,14 @@ func (c *ReportsSavedGenerateCall) Locale(locale string) *ReportsSavedGenerateCa
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of rows of report data to return.
 func (c *ReportsSavedGenerateCall) MaxResults(maxResults int64) *ReportsSavedGenerateCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first row of report data to return.
 func (c *ReportsSavedGenerateCall) StartIndex(startIndex int64) *ReportsSavedGenerateCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -6657,7 +6657,7 @@ func (r *ReportsSavedService) List() *ReportsSavedListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of saved reports to include in the response, used for paging.
 func (c *ReportsSavedListCall) MaxResults(maxResults int64) *ReportsSavedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6922,7 +6922,7 @@ func (r *SavedadstylesService) List() *SavedadstylesListCall {
 // number of saved ad styles to include in the response, used for
 // paging.
 func (c *SavedadstylesListCall) MaxResults(maxResults int64) *SavedadstylesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7065,7 +7065,7 @@ func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of URL channels to include in the response, used for paging.
 func (c *UrlchannelsListCall) MaxResults(maxResults int64) *UrlchannelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

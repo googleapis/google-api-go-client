@@ -1120,7 +1120,7 @@ func (c *RollingUpdatesListCall) Filter(filter string) *RollingUpdatesListCall {
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *RollingUpdatesListCall) MaxResults(maxResults int64) *RollingUpdatesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1303,7 +1303,7 @@ func (c *RollingUpdatesListInstanceUpdatesCall) Filter(filter string) *RollingUp
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *RollingUpdatesListInstanceUpdatesCall) MaxResults(maxResults int64) *RollingUpdatesListInstanceUpdatesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2037,7 +2037,7 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 // results to be returned. Maximum value is 500 and default value is
 // 500.
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

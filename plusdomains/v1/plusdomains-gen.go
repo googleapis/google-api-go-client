@@ -2393,7 +2393,7 @@ func (r *ActivitiesService) Insert(userId string, activity *Activity) *Activitie
 // possible attachments for a URL, including video, photos, and articles
 // based on the content of the page.
 func (c *ActivitiesInsertCall) Preview(preview bool) *ActivitiesInsertCall {
-	c.urlParams_.Set("preview", fmt.Sprintf("%v", preview))
+	c.urlParams_.Set("preview", fmt.Sprint(preview))
 	return c
 }
 
@@ -2531,7 +2531,7 @@ func (r *ActivitiesService) List(userId string, collection string) *ActivitiesLi
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2702,7 +2702,7 @@ func (r *AudiencesService) List(userId string) *AudiencesListCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *AudiencesListCall) MaxResults(maxResults int64) *AudiencesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2856,14 +2856,14 @@ func (r *CirclesService) AddPeople(circleId string) *CirclesAddPeopleCall {
 
 // Email sets the optional parameter "email": Email of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesAddPeopleCall) Email(email []string) *CirclesAddPeopleCall {
+func (c *CirclesAddPeopleCall) Email(email ...string) *CirclesAddPeopleCall {
 	c.urlParams_.SetMulti("email", append([]string{}, email...))
 	return c
 }
 
 // UserId sets the optional parameter "userId": IDs of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesAddPeopleCall) UserId(userId []string) *CirclesAddPeopleCall {
+func (c *CirclesAddPeopleCall) UserId(userId ...string) *CirclesAddPeopleCall {
 	c.urlParams_.SetMulti("userId", append([]string{}, userId...))
 	return c
 }
@@ -3242,7 +3242,7 @@ func (r *CirclesService) List(userId string) *CirclesListCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *CirclesListCall) MaxResults(maxResults int64) *CirclesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3600,14 +3600,14 @@ func (r *CirclesService) RemovePeople(circleId string) *CirclesRemovePeopleCall 
 
 // Email sets the optional parameter "email": Email of the people to add
 // to the circle. Optional, can be repeated.
-func (c *CirclesRemovePeopleCall) Email(email []string) *CirclesRemovePeopleCall {
+func (c *CirclesRemovePeopleCall) Email(email ...string) *CirclesRemovePeopleCall {
 	c.urlParams_.SetMulti("email", append([]string{}, email...))
 	return c
 }
 
 // UserId sets the optional parameter "userId": IDs of the people to
 // remove from the circle. Optional, can be repeated.
-func (c *CirclesRemovePeopleCall) UserId(userId []string) *CirclesRemovePeopleCall {
+func (c *CirclesRemovePeopleCall) UserId(userId ...string) *CirclesRemovePeopleCall {
 	c.urlParams_.SetMulti("userId", append([]string{}, userId...))
 	return c
 }
@@ -4079,7 +4079,7 @@ func (r *CommentsService) List(activityId string) *CommentsListCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4620,7 +4620,7 @@ func (r *PeopleService) List(userId string, collection string) *PeopleListCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleListCall) MaxResults(maxResults int64) *PeopleListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4818,7 +4818,7 @@ func (r *PeopleService) ListByActivity(activityId string, collection string) *Pe
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleListByActivityCall) MaxResults(maxResults int64) *PeopleListByActivityCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4992,7 +4992,7 @@ func (r *PeopleService) ListByCircle(circleId string) *PeopleListByCircleCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleListByCircleCall) MaxResults(maxResults int64) *PeopleListByCircleCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

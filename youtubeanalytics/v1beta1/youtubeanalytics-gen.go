@@ -1484,7 +1484,7 @@ func (c *GroupsListCall) Id(id string) *GroupsListCall {
 // to true to instruct the API to only return groups owned by the
 // authenticated user.
 func (c *GroupsListCall) Mine(mine bool) *GroupsListCall {
-	c.urlParams_.Set("mine", fmt.Sprintf("%v", mine))
+	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
@@ -1808,7 +1808,7 @@ func (c *ReportsQueryCall) Filters(filters string) *ReportsQueryCall {
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of rows to include in the response.
 func (c *ReportsQueryCall) MaxResults(maxResults int64) *ReportsQueryCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1826,7 +1826,7 @@ func (c *ReportsQueryCall) Sort(sort string) *ReportsQueryCall {
 // mechanism along with the max-results parameter (one-based,
 // inclusive).
 func (c *ReportsQueryCall) StartIndex(startIndex int64) *ReportsQueryCall {
-	c.urlParams_.Set("start-index", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
 	return c
 }
 

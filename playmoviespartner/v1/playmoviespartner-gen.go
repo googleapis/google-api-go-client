@@ -856,7 +856,7 @@ func (c *AccountsAvailsListCall) AltId(altId string) *AccountsAvailsListCall {
 // PageSize sets the optional parameter "pageSize": See _List methods
 // rules_ for info about this field.
 func (c *AccountsAvailsListCall) PageSize(pageSize int64) *AccountsAvailsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -869,14 +869,14 @@ func (c *AccountsAvailsListCall) PageToken(pageToken string) *AccountsAvailsList
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsAvailsListCall) PphNames(pphNames []string) *AccountsAvailsListCall {
+func (c *AccountsAvailsListCall) PphNames(pphNames ...string) *AccountsAvailsListCall {
 	c.urlParams_.SetMulti("pphNames", append([]string{}, pphNames...))
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsAvailsListCall) StudioNames(studioNames []string) *AccountsAvailsListCall {
+func (c *AccountsAvailsListCall) StudioNames(studioNames ...string) *AccountsAvailsListCall {
 	c.urlParams_.SetMulti("studioNames", append([]string{}, studioNames...))
 	return c
 }
@@ -884,7 +884,7 @@ func (c *AccountsAvailsListCall) StudioNames(studioNames []string) *AccountsAvai
 // Territories sets the optional parameter "territories": Filter Avails
 // that match (case-insensitive) any of the given country codes, using
 // the "ISO 3166-1 alpha-2" format (examples: "US", "us", "Us").
-func (c *AccountsAvailsListCall) Territories(territories []string) *AccountsAvailsListCall {
+func (c *AccountsAvailsListCall) Territories(territories ...string) *AccountsAvailsListCall {
 	c.urlParams_.SetMulti("territories", append([]string{}, territories...))
 	return c
 }
@@ -898,7 +898,7 @@ func (c *AccountsAvailsListCall) Title(title string) *AccountsAvailsListCall {
 
 // VideoIds sets the optional parameter "videoIds": Filter Avails that
 // match any of the given `video_id`s.
-func (c *AccountsAvailsListCall) VideoIds(videoIds []string) *AccountsAvailsListCall {
+func (c *AccountsAvailsListCall) VideoIds(videoIds ...string) *AccountsAvailsListCall {
 	c.urlParams_.SetMulti("videoIds", append([]string{}, videoIds...))
 	return c
 }
@@ -1234,7 +1234,7 @@ func (c *AccountsExperienceLocalesListCall) EditLevelEidr(editLevelEidr string) 
 // PageSize sets the optional parameter "pageSize": See _List methods
 // rules_ for info about this field.
 func (c *AccountsExperienceLocalesListCall) PageSize(pageSize int64) *AccountsExperienceLocalesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1247,7 +1247,7 @@ func (c *AccountsExperienceLocalesListCall) PageToken(pageToken string) *Account
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsExperienceLocalesListCall) PphNames(pphNames []string) *AccountsExperienceLocalesListCall {
+func (c *AccountsExperienceLocalesListCall) PphNames(pphNames ...string) *AccountsExperienceLocalesListCall {
 	c.urlParams_.SetMulti("pphNames", append([]string{}, pphNames...))
 	return c
 }
@@ -1262,14 +1262,14 @@ func (c *AccountsExperienceLocalesListCall) PphNames(pphNames []string) *Account
 //   "STATUS_PROCESSING"
 //   "STATUS_UNFULFILLED"
 //   "STATUS_NOT_AVAILABLE"
-func (c *AccountsExperienceLocalesListCall) Status(status []string) *AccountsExperienceLocalesListCall {
+func (c *AccountsExperienceLocalesListCall) Status(status ...string) *AccountsExperienceLocalesListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsExperienceLocalesListCall) StudioNames(studioNames []string) *AccountsExperienceLocalesListCall {
+func (c *AccountsExperienceLocalesListCall) StudioNames(studioNames ...string) *AccountsExperienceLocalesListCall {
 	c.urlParams_.SetMulti("studioNames", append([]string{}, studioNames...))
 	return c
 }
@@ -1615,7 +1615,7 @@ func (c *AccountsOrdersListCall) Name(name string) *AccountsOrdersListCall {
 // PageSize sets the optional parameter "pageSize": See _List methods
 // rules_ for info about this field.
 func (c *AccountsOrdersListCall) PageSize(pageSize int64) *AccountsOrdersListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1628,7 +1628,7 @@ func (c *AccountsOrdersListCall) PageToken(pageToken string) *AccountsOrdersList
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsOrdersListCall) PphNames(pphNames []string) *AccountsOrdersListCall {
+func (c *AccountsOrdersListCall) PphNames(pphNames ...string) *AccountsOrdersListCall {
 	c.urlParams_.SetMulti("pphNames", append([]string{}, pphNames...))
 	return c
 }
@@ -1643,14 +1643,14 @@ func (c *AccountsOrdersListCall) PphNames(pphNames []string) *AccountsOrdersList
 //   "STATUS_PROCESSING"
 //   "STATUS_UNFULFILLED"
 //   "STATUS_NOT_AVAILABLE"
-func (c *AccountsOrdersListCall) Status(status []string) *AccountsOrdersListCall {
+func (c *AccountsOrdersListCall) Status(status ...string) *AccountsOrdersListCall {
 	c.urlParams_.SetMulti("status", append([]string{}, status...))
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsOrdersListCall) StudioNames(studioNames []string) *AccountsOrdersListCall {
+func (c *AccountsOrdersListCall) StudioNames(studioNames ...string) *AccountsOrdersListCall {
 	c.urlParams_.SetMulti("studioNames", append([]string{}, studioNames...))
 	return c
 }
@@ -1830,7 +1830,7 @@ func (r *AccountsStoreInfosService) List(accountId string) *AccountsStoreInfosLi
 // Countries sets the optional parameter "countries": Filter StoreInfos
 // that match (case-insensitive) any of the given country codes, using
 // the "ISO 3166-1 alpha-2" format (examples: "US", "us", "Us").
-func (c *AccountsStoreInfosListCall) Countries(countries []string) *AccountsStoreInfosListCall {
+func (c *AccountsStoreInfosListCall) Countries(countries ...string) *AccountsStoreInfosListCall {
 	c.urlParams_.SetMulti("countries", append([]string{}, countries...))
 	return c
 }
@@ -1845,7 +1845,7 @@ func (c *AccountsStoreInfosListCall) Name(name string) *AccountsStoreInfosListCa
 // PageSize sets the optional parameter "pageSize": See _List methods
 // rules_ for info about this field.
 func (c *AccountsStoreInfosListCall) PageSize(pageSize int64) *AccountsStoreInfosListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1858,14 +1858,14 @@ func (c *AccountsStoreInfosListCall) PageToken(pageToken string) *AccountsStoreI
 
 // PphNames sets the optional parameter "pphNames": See _List methods
 // rules_ for info about this field.
-func (c *AccountsStoreInfosListCall) PphNames(pphNames []string) *AccountsStoreInfosListCall {
+func (c *AccountsStoreInfosListCall) PphNames(pphNames ...string) *AccountsStoreInfosListCall {
 	c.urlParams_.SetMulti("pphNames", append([]string{}, pphNames...))
 	return c
 }
 
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
-func (c *AccountsStoreInfosListCall) StudioNames(studioNames []string) *AccountsStoreInfosListCall {
+func (c *AccountsStoreInfosListCall) StudioNames(studioNames ...string) *AccountsStoreInfosListCall {
 	c.urlParams_.SetMulti("studioNames", append([]string{}, studioNames...))
 	return c
 }
@@ -1880,7 +1880,7 @@ func (c *AccountsStoreInfosListCall) VideoId(videoId string) *AccountsStoreInfos
 
 // VideoIds sets the optional parameter "videoIds": Filter StoreInfos
 // that match any of the given `video_id`s.
-func (c *AccountsStoreInfosListCall) VideoIds(videoIds []string) *AccountsStoreInfosListCall {
+func (c *AccountsStoreInfosListCall) VideoIds(videoIds ...string) *AccountsStoreInfosListCall {
 	c.urlParams_.SetMulti("videoIds", append([]string{}, videoIds...))
 	return c
 }

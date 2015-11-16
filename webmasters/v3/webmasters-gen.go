@@ -1649,7 +1649,7 @@ func (c *UrlcrawlerrorscountsQueryCall) Category(category string) *Urlcrawlerror
 // LatestCountsOnly sets the optional parameter "latestCountsOnly": If
 // true, returns only the latest crawl error counts.
 func (c *UrlcrawlerrorscountsQueryCall) LatestCountsOnly(latestCountsOnly bool) *UrlcrawlerrorscountsQueryCall {
-	c.urlParams_.Set("latestCountsOnly", fmt.Sprintf("%v", latestCountsOnly))
+	c.urlParams_.Set("latestCountsOnly", fmt.Sprint(latestCountsOnly))
 	return c
 }
 

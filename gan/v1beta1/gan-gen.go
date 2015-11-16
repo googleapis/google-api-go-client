@@ -1317,7 +1317,7 @@ func (c *AdvertisersListCall) AdvertiserCategory(advertiserCategory string) *Adv
 // MaxResults sets the optional parameter "maxResults": Max number of
 // items to return in this page.  Defaults to 20.
 func (c *AdvertisersListCall) MaxResults(maxResults int64) *AdvertisersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1325,7 +1325,7 @@ func (c *AdvertisersListCall) MaxResults(maxResults int64) *AdvertisersListCall 
 // Filters out all advertisers that have a ninety day EPC average lower
 // than the given value (inclusive). Min value: 0.0.
 func (c *AdvertisersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *AdvertisersListCall {
-	c.urlParams_.Set("minNinetyDayEpc", fmt.Sprintf("%v", minNinetyDayEpc))
+	c.urlParams_.Set("minNinetyDayEpc", fmt.Sprint(minNinetyDayEpc))
 	return c
 }
 
@@ -1336,7 +1336,7 @@ func (c *AdvertisersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *Advertis
 // the given quartile. For example if a 2 was given only advertisers
 // with a payout rank of 25 or higher would be included.
 func (c *AdvertisersListCall) MinPayoutRank(minPayoutRank int64) *AdvertisersListCall {
-	c.urlParams_.Set("minPayoutRank", fmt.Sprintf("%v", minPayoutRank))
+	c.urlParams_.Set("minPayoutRank", fmt.Sprint(minPayoutRank))
 	return c
 }
 
@@ -1344,7 +1344,7 @@ func (c *AdvertisersListCall) MinPayoutRank(minPayoutRank int64) *AdvertisersLis
 // out all advertisers that have a seven day EPC average lower than the
 // given value (inclusive). Min value: 0.0.
 func (c *AdvertisersListCall) MinSevenDayEpc(minSevenDayEpc float64) *AdvertisersListCall {
-	c.urlParams_.Set("minSevenDayEpc", fmt.Sprintf("%v", minSevenDayEpc))
+	c.urlParams_.Set("minSevenDayEpc", fmt.Sprint(minSevenDayEpc))
 	return c
 }
 
@@ -1570,7 +1570,7 @@ func (r *CcOffersService) List(publisher string) *CcOffersListCall {
 // Advertiser sets the optional parameter "advertiser": The advertiser
 // ID of a card issuer whose offers to include. Optional, may be
 // repeated.
-func (c *CcOffersListCall) Advertiser(advertiser []string) *CcOffersListCall {
+func (c *CcOffersListCall) Advertiser(advertiser ...string) *CcOffersListCall {
 	c.urlParams_.SetMulti("advertiser", append([]string{}, advertiser...))
 	return c
 }
@@ -1786,7 +1786,7 @@ func (c *EventsListCall) LinkId(linkId string) *EventsListCall {
 // MaxResults sets the optional parameter "maxResults": Max number of
 // offers to return in this page.  Defaults to 20.
 func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2430,10 +2430,10 @@ func (r *LinksService) List(role string, roleId string) *LinksListCall {
 
 // AdvertiserId sets the optional parameter "advertiserId": Limits the
 // resulting links to the ones belonging to the listed advertisers.
-func (c *LinksListCall) AdvertiserId(advertiserId []int64) *LinksListCall {
+func (c *LinksListCall) AdvertiserId(advertiserId ...int64) *LinksListCall {
 	var advertiserId_ []string
 	for _, v := range advertiserId {
-		advertiserId_ = append(advertiserId_, fmt.Sprintf("%v", v))
+		advertiserId_ = append(advertiserId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("advertiserId", advertiserId_)
 	return c
@@ -2441,7 +2441,7 @@ func (c *LinksListCall) AdvertiserId(advertiserId []int64) *LinksListCall {
 
 // AssetSize sets the optional parameter "assetSize": The size of the
 // given asset.
-func (c *LinksListCall) AssetSize(assetSize []string) *LinksListCall {
+func (c *LinksListCall) AssetSize(assetSize ...string) *LinksListCall {
 	c.urlParams_.SetMulti("assetSize", append([]string{}, assetSize...))
 	return c
 }
@@ -2485,7 +2485,7 @@ func (c *LinksListCall) LinkType(linkType string) *LinksListCall {
 // MaxResults sets the optional parameter "maxResults": Max number of
 // items to return in this page.  Defaults to 20.
 func (c *LinksListCall) MaxResults(maxResults int64) *LinksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2505,7 +2505,7 @@ func (c *LinksListCall) PageToken(pageToken string) *LinksListCall {
 //   "free_shipping"
 //   "percent_off"
 //   "price_cut"
-func (c *LinksListCall) PromotionType(promotionType []string) *LinksListCall {
+func (c *LinksListCall) PromotionType(promotionType ...string) *LinksListCall {
 	c.urlParams_.SetMulti("promotionType", append([]string{}, promotionType...))
 	return c
 }
@@ -2948,7 +2948,7 @@ func (r *PublishersService) List(role string, roleId string) *PublishersListCall
 // MaxResults sets the optional parameter "maxResults": Max number of
 // items to return in this page.  Defaults to 20.
 func (c *PublishersListCall) MaxResults(maxResults int64) *PublishersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2956,7 +2956,7 @@ func (c *PublishersListCall) MaxResults(maxResults int64) *PublishersListCall {
 // Filters out all publishers that have a ninety day EPC average lower
 // than the given value (inclusive). Min value: 0.0.
 func (c *PublishersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *PublishersListCall {
-	c.urlParams_.Set("minNinetyDayEpc", fmt.Sprintf("%v", minNinetyDayEpc))
+	c.urlParams_.Set("minNinetyDayEpc", fmt.Sprint(minNinetyDayEpc))
 	return c
 }
 
@@ -2967,7 +2967,7 @@ func (c *PublishersListCall) MinNinetyDayEpc(minNinetyDayEpc float64) *Publisher
 // given quartile. For example if a 2 was given only publishers with a
 // payout rank of 25 or higher would be included.
 func (c *PublishersListCall) MinPayoutRank(minPayoutRank int64) *PublishersListCall {
-	c.urlParams_.Set("minPayoutRank", fmt.Sprintf("%v", minPayoutRank))
+	c.urlParams_.Set("minPayoutRank", fmt.Sprint(minPayoutRank))
 	return c
 }
 
@@ -2975,7 +2975,7 @@ func (c *PublishersListCall) MinPayoutRank(minPayoutRank int64) *PublishersListC
 // out all publishers that have a seven day EPC average lower than the
 // given value (inclusive). Min value 0.0.
 func (c *PublishersListCall) MinSevenDayEpc(minSevenDayEpc float64) *PublishersListCall {
-	c.urlParams_.Set("minSevenDayEpc", fmt.Sprintf("%v", minSevenDayEpc))
+	c.urlParams_.Set("minSevenDayEpc", fmt.Sprint(minSevenDayEpc))
 	return c
 }
 
@@ -3215,7 +3215,7 @@ func (r *ReportsService) Get(role string, roleId string, reportType string) *Rep
 
 // AdvertiserId sets the optional parameter "advertiserId": The IDs of
 // the advertisers to look up, if applicable.
-func (c *ReportsGetCall) AdvertiserId(advertiserId []string) *ReportsGetCall {
+func (c *ReportsGetCall) AdvertiserId(advertiserId ...string) *ReportsGetCall {
 	c.urlParams_.SetMulti("advertiserId", append([]string{}, advertiserId...))
 	return c
 }
@@ -3223,7 +3223,7 @@ func (c *ReportsGetCall) AdvertiserId(advertiserId []string) *ReportsGetCall {
 // CalculateTotals sets the optional parameter "calculateTotals":
 // Whether or not to calculate totals rows.
 func (c *ReportsGetCall) CalculateTotals(calculateTotals bool) *ReportsGetCall {
-	c.urlParams_.Set("calculateTotals", fmt.Sprintf("%v", calculateTotals))
+	c.urlParams_.Set("calculateTotals", fmt.Sprint(calculateTotals))
 	return c
 }
 
@@ -3250,7 +3250,7 @@ func (c *ReportsGetCall) EventType(eventType string) *ReportsGetCall {
 
 // LinkId sets the optional parameter "linkId": Filters to capture one
 // of given link IDs.
-func (c *ReportsGetCall) LinkId(linkId []string) *ReportsGetCall {
+func (c *ReportsGetCall) LinkId(linkId ...string) *ReportsGetCall {
 	c.urlParams_.SetMulti("linkId", append([]string{}, linkId...))
 	return c
 }
@@ -3258,20 +3258,20 @@ func (c *ReportsGetCall) LinkId(linkId []string) *ReportsGetCall {
 // MaxResults sets the optional parameter "maxResults": Max number of
 // items to return in this page.  Defaults to return all results.
 func (c *ReportsGetCall) MaxResults(maxResults int64) *ReportsGetCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // OrderId sets the optional parameter "orderId": Filters to capture one
 // of the given order IDs.
-func (c *ReportsGetCall) OrderId(orderId []string) *ReportsGetCall {
+func (c *ReportsGetCall) OrderId(orderId ...string) *ReportsGetCall {
 	c.urlParams_.SetMulti("orderId", append([]string{}, orderId...))
 	return c
 }
 
 // PublisherId sets the optional parameter "publisherId": The IDs of the
 // publishers to look up, if applicable.
-func (c *ReportsGetCall) PublisherId(publisherId []string) *ReportsGetCall {
+func (c *ReportsGetCall) PublisherId(publisherId ...string) *ReportsGetCall {
 	c.urlParams_.SetMulti("publisherId", append([]string{}, publisherId...))
 	return c
 }
@@ -3287,7 +3287,7 @@ func (c *ReportsGetCall) StartDate(startDate string) *ReportsGetCall {
 // StartIndex sets the optional parameter "startIndex": Offset on which
 // to return results when paging.
 func (c *ReportsGetCall) StartIndex(startIndex int64) *ReportsGetCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 

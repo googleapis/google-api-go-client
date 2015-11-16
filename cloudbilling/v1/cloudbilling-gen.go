@@ -404,7 +404,7 @@ func (r *BillingAccountsService) List() *BillingAccountsListCall {
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The maximum page size is 100; this is also the default.
 func (c *BillingAccountsListCall) PageSize(pageSize int64) *BillingAccountsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -546,7 +546,7 @@ func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProje
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The maximum page size is 100; this is also the default.
 func (c *BillingAccountsProjectsListCall) PageSize(pageSize int64) *BillingAccountsProjectsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

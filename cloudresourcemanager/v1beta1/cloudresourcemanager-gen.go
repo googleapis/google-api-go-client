@@ -772,7 +772,7 @@ func (c *OrganizationsListCall) Filter(filter string) *OrganizationsListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of Organizations to return in the response. This field is optional.
 func (c *OrganizationsListCall) PageSize(pageSize int64) *OrganizationsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1784,7 +1784,7 @@ func (c *ProjectsListCall) Filter(filter string) *ProjectsListCall {
 // default. Note: pagination is not yet supported; the server ignores
 // this field.
 func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

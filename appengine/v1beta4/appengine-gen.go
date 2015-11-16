@@ -1440,7 +1440,7 @@ func (r *AppsService) Get(appsId string) *AppsGetCall {
 // and any resources cloud not be created, the request will fail with an
 // error code.
 func (c *AppsGetCall) EnsureResourcesExist(ensureResourcesExist bool) *AppsGetCall {
-	c.urlParams_.Set("ensureResourcesExist", fmt.Sprintf("%v", ensureResourcesExist))
+	c.urlParams_.Set("ensureResourcesExist", fmt.Sprint(ensureResourcesExist))
 	return c
 }
 
@@ -1827,7 +1827,7 @@ func (r *AppsModulesService) List(appsId string) *AppsModulesListCall {
 // PageSize sets the optional parameter "pageSize": Maximum results to
 // return per page.
 func (c *AppsModulesListCall) PageSize(pageSize int64) *AppsModulesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1986,7 +1986,7 @@ func (c *AppsModulesPatchCall) Mask(mask string) *AppsModulesPatchCall {
 // to use Traffic Migration to shift traffic gradually. Traffic can only
 // be migrated from a single version to another single version.
 func (c *AppsModulesPatchCall) MigrateTraffic(migrateTraffic bool) *AppsModulesPatchCall {
-	c.urlParams_.Set("migrateTraffic", fmt.Sprintf("%v", migrateTraffic))
+	c.urlParams_.Set("migrateTraffic", fmt.Sprint(migrateTraffic))
 	return c
 }
 
@@ -2554,7 +2554,7 @@ func (r *AppsModulesVersionsService) List(appsId string, modulesId string) *Apps
 // PageSize sets the optional parameter "pageSize": Maximum results to
 // return per page.
 func (c *AppsModulesVersionsListCall) PageSize(pageSize int64) *AppsModulesVersionsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -2876,7 +2876,7 @@ func (c *AppsOperationsListCall) Filter(filter string) *AppsOperationsListCall {
 // PageSize sets the optional parameter "pageSize": The standard list
 // page size.
 func (c *AppsOperationsListCall) PageSize(pageSize int64) *AppsOperationsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

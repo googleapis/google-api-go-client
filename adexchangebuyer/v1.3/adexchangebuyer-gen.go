@@ -2566,10 +2566,10 @@ func (r *CreativesService) List() *CreativesListCall {
 
 // AccountId sets the optional parameter "accountId": When specified,
 // only creatives for the given account ids are returned.
-func (c *CreativesListCall) AccountId(accountId []int64) *CreativesListCall {
+func (c *CreativesListCall) AccountId(accountId ...int64) *CreativesListCall {
 	var accountId_ []string
 	for _, v := range accountId {
-		accountId_ = append(accountId_, fmt.Sprintf("%v", v))
+		accountId_ = append(accountId_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("accountId", accountId_)
 	return c
@@ -2578,7 +2578,7 @@ func (c *CreativesListCall) AccountId(accountId []int64) *CreativesListCall {
 // BuyerCreativeId sets the optional parameter "buyerCreativeId": When
 // specified, only creatives for the given buyer creative ids are
 // returned.
-func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId []string) *CreativesListCall {
+func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId ...string) *CreativesListCall {
 	c.urlParams_.SetMulti("buyerCreativeId", append([]string{}, buyerCreativeId...))
 	return c
 }
@@ -2587,7 +2587,7 @@ func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId []string) *Creatives
 // of entries returned on one result page. If not set, the default is
 // 100.
 func (c *CreativesListCall) MaxResults(maxResults int64) *CreativesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2992,7 +2992,7 @@ type PerformanceReportListCall struct {
 // List: Retrieves the authenticated user's list of performance metrics.
 func (r *PerformanceReportService) List(accountId int64, endDateTime string, startDateTime string) *PerformanceReportListCall {
 	c := &PerformanceReportListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("accountId", fmt.Sprintf("%v", accountId))
+	c.urlParams_.Set("accountId", fmt.Sprint(accountId))
 	c.urlParams_.Set("endDateTime", endDateTime)
 	c.urlParams_.Set("startDateTime", startDateTime)
 	return c
@@ -3002,7 +3002,7 @@ func (r *PerformanceReportService) List(accountId int64, endDateTime string, sta
 // of entries returned on one result page. If not set, the default is
 // 100.
 func (c *PerformanceReportListCall) MaxResults(maxResults int64) *PerformanceReportListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

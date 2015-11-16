@@ -728,7 +728,7 @@ func (c *CseListCall) Lr(lr string) *CseListCall {
 // Num sets the optional parameter "num": Number of search results to
 // return
 func (c *CseListCall) Num(num int64) *CseListCall {
-	c.urlParams_.Set("num", fmt.Sprintf("%v", num))
+	c.urlParams_.Set("num", fmt.Sprint(num))
 	return c
 }
 
@@ -808,7 +808,7 @@ func (c *CseListCall) Sort(sort string) *CseListCall {
 // Start sets the optional parameter "start": The index of the first
 // result to return
 func (c *CseListCall) Start(start int64) *CseListCall {
-	c.urlParams_.Set("start", fmt.Sprintf("%v", start))
+	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c
 }
 

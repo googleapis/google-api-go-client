@@ -1929,7 +1929,7 @@ func (r *AclService) List(calendarId string) *AclListCall {
 // of entries returned on one result page. By default the value is 100
 // entries. The page size can never be larger than 250 entries.
 func (c *AclListCall) MaxResults(maxResults int64) *AclListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1945,7 +1945,7 @@ func (c *AclListCall) PageToken(pageToken string) *AclListCall {
 // role equal to "none". Deleted ACLs will always be included if
 // syncToken is provided.  The default is False.
 func (c *AclListCall) ShowDeleted(showDeleted bool) *AclListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -2377,7 +2377,7 @@ func (r *AclService) Watch(calendarId string, channel *Channel) *AclWatchCall {
 // of entries returned on one result page. By default the value is 100
 // entries. The page size can never be larger than 250 entries.
 func (c *AclWatchCall) MaxResults(maxResults int64) *AclWatchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2393,7 +2393,7 @@ func (c *AclWatchCall) PageToken(pageToken string) *AclWatchCall {
 // role equal to "none". Deleted ACLs will always be included if
 // syncToken is provided.  The default is False.
 func (c *AclWatchCall) ShowDeleted(showDeleted bool) *AclWatchCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -2767,7 +2767,7 @@ func (r *CalendarListService) Insert(calendarlistentry *CalendarListEntry) *Cale
 // colorId field will be set to the best matching option automatically.
 // The default is False.
 func (c *CalendarListInsertCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListInsertCall {
-	c.urlParams_.Set("colorRgbFormat", fmt.Sprintf("%v", colorRgbFormat))
+	c.urlParams_.Set("colorRgbFormat", fmt.Sprint(colorRgbFormat))
 	return c
 }
 
@@ -2886,7 +2886,7 @@ func (r *CalendarListService) List() *CalendarListListCall {
 // of entries returned on one result page. By default the value is 100
 // entries. The page size can never be larger than 250 entries.
 func (c *CalendarListListCall) MaxResults(maxResults int64) *CalendarListListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2916,14 +2916,14 @@ func (c *CalendarListListCall) PageToken(pageToken string) *CalendarListListCall
 // include deleted calendar list entries in the result.  The default is
 // False.
 func (c *CalendarListListCall) ShowDeleted(showDeleted bool) *CalendarListListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
 // ShowHidden sets the optional parameter "showHidden": Whether to show
 // hidden entries.  The default is False.
 func (c *CalendarListListCall) ShowHidden(showHidden bool) *CalendarListListCall {
-	c.urlParams_.Set("showHidden", fmt.Sprintf("%v", showHidden))
+	c.urlParams_.Set("showHidden", fmt.Sprint(showHidden))
 	return c
 }
 
@@ -3113,7 +3113,7 @@ func (r *CalendarListService) Patch(calendarId string, calendarlistentry *Calend
 // colorId field will be set to the best matching option automatically.
 // The default is False.
 func (c *CalendarListPatchCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListPatchCall {
-	c.urlParams_.Set("colorRgbFormat", fmt.Sprintf("%v", colorRgbFormat))
+	c.urlParams_.Set("colorRgbFormat", fmt.Sprint(colorRgbFormat))
 	return c
 }
 
@@ -3248,7 +3248,7 @@ func (r *CalendarListService) Update(calendarId string, calendarlistentry *Calen
 // colorId field will be set to the best matching option automatically.
 // The default is False.
 func (c *CalendarListUpdateCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListUpdateCall {
-	c.urlParams_.Set("colorRgbFormat", fmt.Sprintf("%v", colorRgbFormat))
+	c.urlParams_.Set("colorRgbFormat", fmt.Sprint(colorRgbFormat))
 	return c
 }
 
@@ -3379,7 +3379,7 @@ func (r *CalendarListService) Watch(channel *Channel) *CalendarListWatchCall {
 // of entries returned on one result page. By default the value is 100
 // entries. The page size can never be larger than 250 entries.
 func (c *CalendarListWatchCall) MaxResults(maxResults int64) *CalendarListWatchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3409,14 +3409,14 @@ func (c *CalendarListWatchCall) PageToken(pageToken string) *CalendarListWatchCa
 // include deleted calendar list entries in the result.  The default is
 // False.
 func (c *CalendarListWatchCall) ShowDeleted(showDeleted bool) *CalendarListWatchCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
 // ShowHidden sets the optional parameter "showHidden": Whether to show
 // hidden entries.  The default is False.
 func (c *CalendarListWatchCall) ShowHidden(showHidden bool) *CalendarListWatchCall {
-	c.urlParams_.Set("showHidden", fmt.Sprintf("%v", showHidden))
+	c.urlParams_.Set("showHidden", fmt.Sprint(showHidden))
 	return c
 }
 
@@ -4425,7 +4425,7 @@ func (r *EventsService) Delete(calendarId string, eventId string) *EventsDeleteC
 // Whether to send notifications about the deletion of the event.  The
 // default is False.
 func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDeleteCall {
-	c.urlParams_.Set("sendNotifications", fmt.Sprintf("%v", sendNotifications))
+	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
 }
 
@@ -4535,7 +4535,7 @@ func (r *EventsService) Get(calendarId string, eventId string) *EventsGetCall {
 // cannot handle the absence of an email address value in the mentioned
 // places.  The default is False.
 func (c *EventsGetCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsGetCall {
-	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprintf("%v", alwaysIncludeEmail))
+	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
 	return c
 }
 
@@ -4544,7 +4544,7 @@ func (c *EventsGetCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsGetCa
 // than the specified number of attendees, only the participant is
 // returned.
 func (c *EventsGetCall) MaxAttendees(maxAttendees int64) *EventsGetCall {
-	c.urlParams_.Set("maxAttendees", fmt.Sprintf("%v", maxAttendees))
+	c.urlParams_.Set("maxAttendees", fmt.Sprint(maxAttendees))
 	return c
 }
 
@@ -4710,7 +4710,7 @@ func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCal
 // "supportsAttachments": Whether API client performing operation
 // supports event attachments.  The default is False.
 func (c *EventsImportCall) SupportsAttachments(supportsAttachments bool) *EventsImportCall {
-	c.urlParams_.Set("supportsAttachments", fmt.Sprintf("%v", supportsAttachments))
+	c.urlParams_.Set("supportsAttachments", fmt.Sprint(supportsAttachments))
 	return c
 }
 
@@ -4844,7 +4844,7 @@ func (r *EventsService) Insert(calendarId string, event *Event) *EventsInsertCal
 // than the specified number of attendees, only the participant is
 // returned.
 func (c *EventsInsertCall) MaxAttendees(maxAttendees int64) *EventsInsertCall {
-	c.urlParams_.Set("maxAttendees", fmt.Sprintf("%v", maxAttendees))
+	c.urlParams_.Set("maxAttendees", fmt.Sprint(maxAttendees))
 	return c
 }
 
@@ -4852,7 +4852,7 @@ func (c *EventsInsertCall) MaxAttendees(maxAttendees int64) *EventsInsertCall {
 // Whether to send notifications about the creation of the new event.
 // The default is False.
 func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInsertCall {
-	c.urlParams_.Set("sendNotifications", fmt.Sprintf("%v", sendNotifications))
+	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
 }
 
@@ -4860,7 +4860,7 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 // "supportsAttachments": Whether API client performing operation
 // supports event attachments.  The default is False.
 func (c *EventsInsertCall) SupportsAttachments(supportsAttachments bool) *EventsInsertCall {
-	c.urlParams_.Set("supportsAttachments", fmt.Sprintf("%v", supportsAttachments))
+	c.urlParams_.Set("supportsAttachments", fmt.Sprint(supportsAttachments))
 	return c
 }
 
@@ -5010,7 +5010,7 @@ func (r *EventsService) Instances(calendarId string, eventId string) *EventsInst
 // cannot handle the absence of an email address value in the mentioned
 // places.  The default is False.
 func (c *EventsInstancesCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsInstancesCall {
-	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprintf("%v", alwaysIncludeEmail))
+	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
 	return c
 }
 
@@ -5019,7 +5019,7 @@ func (c *EventsInstancesCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *Event
 // than the specified number of attendees, only the participant is
 // returned.
 func (c *EventsInstancesCall) MaxAttendees(maxAttendees int64) *EventsInstancesCall {
-	c.urlParams_.Set("maxAttendees", fmt.Sprintf("%v", maxAttendees))
+	c.urlParams_.Set("maxAttendees", fmt.Sprint(maxAttendees))
 	return c
 }
 
@@ -5027,7 +5027,7 @@ func (c *EventsInstancesCall) MaxAttendees(maxAttendees int64) *EventsInstancesC
 // of events returned on one result page. By default the value is 250
 // events. The page size can never be larger than 2500 events.
 func (c *EventsInstancesCall) MaxResults(maxResults int64) *EventsInstancesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5050,7 +5050,7 @@ func (c *EventsInstancesCall) PageToken(pageToken string) *EventsInstancesCall {
 // result. Cancelled instances of recurring events will still be
 // included if singleEvents is False.  The default is False.
 func (c *EventsInstancesCall) ShowDeleted(showDeleted bool) *EventsInstancesCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -5271,7 +5271,7 @@ func (r *EventsService) List(calendarId string) *EventsListCall {
 // cannot handle the absence of an email address value in the mentioned
 // places.  The default is False.
 func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsListCall {
-	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprintf("%v", alwaysIncludeEmail))
+	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
 	return c
 }
 
@@ -5287,7 +5287,7 @@ func (c *EventsListCall) ICalUID(iCalUID string) *EventsListCall {
 // than the specified number of attendees, only the participant is
 // returned.
 func (c *EventsListCall) MaxAttendees(maxAttendees int64) *EventsListCall {
-	c.urlParams_.Set("maxAttendees", fmt.Sprintf("%v", maxAttendees))
+	c.urlParams_.Set("maxAttendees", fmt.Sprint(maxAttendees))
 	return c
 }
 
@@ -5295,7 +5295,7 @@ func (c *EventsListCall) MaxAttendees(maxAttendees int64) *EventsListCall {
 // of events returned on one result page. By default the value is 250
 // events. The page size can never be larger than 2500 events.
 func (c *EventsListCall) MaxResults(maxResults int64) *EventsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5325,7 +5325,7 @@ func (c *EventsListCall) PageToken(pageToken string) *EventsListCall {
 // as propertyName=value. Matches only private properties. This
 // parameter might be repeated multiple times to return events that
 // match all given constraints.
-func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty []string) *EventsListCall {
+func (c *EventsListCall) PrivateExtendedProperty(privateExtendedProperty ...string) *EventsListCall {
 	c.urlParams_.SetMulti("privateExtendedProperty", append([]string{}, privateExtendedProperty...))
 	return c
 }
@@ -5343,7 +5343,7 @@ func (c *EventsListCall) Q(q string) *EventsListCall {
 // propertyName=value. Matches only shared properties. This parameter
 // might be repeated multiple times to return events that match all
 // given constraints.
-func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty []string) *EventsListCall {
+func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty ...string) *EventsListCall {
 	c.urlParams_.SetMulti("sharedExtendedProperty", append([]string{}, sharedExtendedProperty...))
 	return c
 }
@@ -5356,7 +5356,7 @@ func (c *EventsListCall) SharedExtendedProperty(sharedExtendedProperty []string)
 // True, only single instances of deleted events (but not the underlying
 // recurring events) are returned.  The default is False.
 func (c *EventsListCall) ShowDeleted(showDeleted bool) *EventsListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -5364,7 +5364,7 @@ func (c *EventsListCall) ShowDeleted(showDeleted bool) *EventsListCall {
 // "showHiddenInvitations": Whether to include hidden invitations in the
 // result.  The default is False.
 func (c *EventsListCall) ShowHiddenInvitations(showHiddenInvitations bool) *EventsListCall {
-	c.urlParams_.Set("showHiddenInvitations", fmt.Sprintf("%v", showHiddenInvitations))
+	c.urlParams_.Set("showHiddenInvitations", fmt.Sprint(showHiddenInvitations))
 	return c
 }
 
@@ -5373,7 +5373,7 @@ func (c *EventsListCall) ShowHiddenInvitations(showHiddenInvitations bool) *Even
 // events and instances of recurring events, but not the underlying
 // recurring events themselves.  The default is False.
 func (c *EventsListCall) SingleEvents(singleEvents bool) *EventsListCall {
-	c.urlParams_.Set("singleEvents", fmt.Sprintf("%v", singleEvents))
+	c.urlParams_.Set("singleEvents", fmt.Sprint(singleEvents))
 	return c
 }
 
@@ -5677,7 +5677,7 @@ func (r *EventsService) Move(calendarId string, eventId string, destinationid st
 // Whether to send notifications about the change of the event's
 // organizer.  The default is False.
 func (c *EventsMoveCall) SendNotifications(sendNotifications bool) *EventsMoveCall {
-	c.urlParams_.Set("sendNotifications", fmt.Sprintf("%v", sendNotifications))
+	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
 }
 
@@ -5822,7 +5822,7 @@ func (r *EventsService) Patch(calendarId string, eventId string, event *Event) *
 // cannot handle the absence of an email address value in the mentioned
 // places.  The default is False.
 func (c *EventsPatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsPatchCall {
-	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprintf("%v", alwaysIncludeEmail))
+	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
 	return c
 }
 
@@ -5831,7 +5831,7 @@ func (c *EventsPatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsPat
 // than the specified number of attendees, only the participant is
 // returned.
 func (c *EventsPatchCall) MaxAttendees(maxAttendees int64) *EventsPatchCall {
-	c.urlParams_.Set("maxAttendees", fmt.Sprintf("%v", maxAttendees))
+	c.urlParams_.Set("maxAttendees", fmt.Sprint(maxAttendees))
 	return c
 }
 
@@ -5839,7 +5839,7 @@ func (c *EventsPatchCall) MaxAttendees(maxAttendees int64) *EventsPatchCall {
 // Whether to send notifications about the event update (e.g. attendee's
 // responses, title changes, etc.).  The default is False.
 func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatchCall {
-	c.urlParams_.Set("sendNotifications", fmt.Sprintf("%v", sendNotifications))
+	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
 }
 
@@ -5847,7 +5847,7 @@ func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatch
 // "supportsAttachments": Whether API client performing operation
 // supports event attachments.  The default is False.
 func (c *EventsPatchCall) SupportsAttachments(supportsAttachments bool) *EventsPatchCall {
-	c.urlParams_.Set("supportsAttachments", fmt.Sprintf("%v", supportsAttachments))
+	c.urlParams_.Set("supportsAttachments", fmt.Sprint(supportsAttachments))
 	return c
 }
 
@@ -6004,7 +6004,7 @@ func (r *EventsService) QuickAdd(calendarId string, text string) *EventsQuickAdd
 // Whether to send notifications about the creation of the event.  The
 // default is False.
 func (c *EventsQuickAddCall) SendNotifications(sendNotifications bool) *EventsQuickAddCall {
-	c.urlParams_.Set("sendNotifications", fmt.Sprintf("%v", sendNotifications))
+	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
 }
 
@@ -6141,7 +6141,7 @@ func (r *EventsService) Update(calendarId string, eventId string, event *Event) 
 // cannot handle the absence of an email address value in the mentioned
 // places.  The default is False.
 func (c *EventsUpdateCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsUpdateCall {
-	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprintf("%v", alwaysIncludeEmail))
+	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
 	return c
 }
 
@@ -6150,7 +6150,7 @@ func (c *EventsUpdateCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsUp
 // than the specified number of attendees, only the participant is
 // returned.
 func (c *EventsUpdateCall) MaxAttendees(maxAttendees int64) *EventsUpdateCall {
-	c.urlParams_.Set("maxAttendees", fmt.Sprintf("%v", maxAttendees))
+	c.urlParams_.Set("maxAttendees", fmt.Sprint(maxAttendees))
 	return c
 }
 
@@ -6158,7 +6158,7 @@ func (c *EventsUpdateCall) MaxAttendees(maxAttendees int64) *EventsUpdateCall {
 // Whether to send notifications about the event update (e.g. attendee's
 // responses, title changes, etc.).  The default is False.
 func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpdateCall {
-	c.urlParams_.Set("sendNotifications", fmt.Sprintf("%v", sendNotifications))
+	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
 }
 
@@ -6166,7 +6166,7 @@ func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpda
 // "supportsAttachments": Whether API client performing operation
 // supports event attachments.  The default is False.
 func (c *EventsUpdateCall) SupportsAttachments(supportsAttachments bool) *EventsUpdateCall {
-	c.urlParams_.Set("supportsAttachments", fmt.Sprintf("%v", supportsAttachments))
+	c.urlParams_.Set("supportsAttachments", fmt.Sprint(supportsAttachments))
 	return c
 }
 
@@ -6328,7 +6328,7 @@ func (r *EventsService) Watch(calendarId string, channel *Channel) *EventsWatchC
 // cannot handle the absence of an email address value in the mentioned
 // places.  The default is False.
 func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWatchCall {
-	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprintf("%v", alwaysIncludeEmail))
+	c.urlParams_.Set("alwaysIncludeEmail", fmt.Sprint(alwaysIncludeEmail))
 	return c
 }
 
@@ -6344,7 +6344,7 @@ func (c *EventsWatchCall) ICalUID(iCalUID string) *EventsWatchCall {
 // than the specified number of attendees, only the participant is
 // returned.
 func (c *EventsWatchCall) MaxAttendees(maxAttendees int64) *EventsWatchCall {
-	c.urlParams_.Set("maxAttendees", fmt.Sprintf("%v", maxAttendees))
+	c.urlParams_.Set("maxAttendees", fmt.Sprint(maxAttendees))
 	return c
 }
 
@@ -6352,7 +6352,7 @@ func (c *EventsWatchCall) MaxAttendees(maxAttendees int64) *EventsWatchCall {
 // of events returned on one result page. By default the value is 250
 // events. The page size can never be larger than 2500 events.
 func (c *EventsWatchCall) MaxResults(maxResults int64) *EventsWatchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6382,7 +6382,7 @@ func (c *EventsWatchCall) PageToken(pageToken string) *EventsWatchCall {
 // as propertyName=value. Matches only private properties. This
 // parameter might be repeated multiple times to return events that
 // match all given constraints.
-func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty []string) *EventsWatchCall {
+func (c *EventsWatchCall) PrivateExtendedProperty(privateExtendedProperty ...string) *EventsWatchCall {
 	c.urlParams_.SetMulti("privateExtendedProperty", append([]string{}, privateExtendedProperty...))
 	return c
 }
@@ -6400,7 +6400,7 @@ func (c *EventsWatchCall) Q(q string) *EventsWatchCall {
 // propertyName=value. Matches only shared properties. This parameter
 // might be repeated multiple times to return events that match all
 // given constraints.
-func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty []string) *EventsWatchCall {
+func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty ...string) *EventsWatchCall {
 	c.urlParams_.SetMulti("sharedExtendedProperty", append([]string{}, sharedExtendedProperty...))
 	return c
 }
@@ -6413,7 +6413,7 @@ func (c *EventsWatchCall) SharedExtendedProperty(sharedExtendedProperty []string
 // True, only single instances of deleted events (but not the underlying
 // recurring events) are returned.  The default is False.
 func (c *EventsWatchCall) ShowDeleted(showDeleted bool) *EventsWatchCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -6421,7 +6421,7 @@ func (c *EventsWatchCall) ShowDeleted(showDeleted bool) *EventsWatchCall {
 // "showHiddenInvitations": Whether to include hidden invitations in the
 // result.  The default is False.
 func (c *EventsWatchCall) ShowHiddenInvitations(showHiddenInvitations bool) *EventsWatchCall {
-	c.urlParams_.Set("showHiddenInvitations", fmt.Sprintf("%v", showHiddenInvitations))
+	c.urlParams_.Set("showHiddenInvitations", fmt.Sprint(showHiddenInvitations))
 	return c
 }
 
@@ -6430,7 +6430,7 @@ func (c *EventsWatchCall) ShowHiddenInvitations(showHiddenInvitations bool) *Eve
 // events and instances of recurring events, but not the underlying
 // recurring events themselves.  The default is False.
 func (c *EventsWatchCall) SingleEvents(singleEvents bool) *EventsWatchCall {
-	c.urlParams_.Set("singleEvents", fmt.Sprintf("%v", singleEvents))
+	c.urlParams_.Set("singleEvents", fmt.Sprint(singleEvents))
 	return c
 }
 
@@ -6956,7 +6956,7 @@ func (r *SettingsService) List() *SettingsListCall {
 // of entries returned on one result page. By default the value is 100
 // entries. The page size can never be larger than 250 entries.
 func (c *SettingsListCall) MaxResults(maxResults int64) *SettingsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7115,7 +7115,7 @@ func (r *SettingsService) Watch(channel *Channel) *SettingsWatchCall {
 // of entries returned on one result page. By default the value is 100
 // entries. The page size can never be larger than 250 entries.
 func (c *SettingsWatchCall) MaxResults(maxResults int64) *SettingsWatchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

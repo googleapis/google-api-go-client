@@ -1363,7 +1363,7 @@ func (c *CompaniesGetCall) OrderBy(orderBy string) *CompaniesGetCall {
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *CompaniesGetCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *CompaniesGetCall {
+func (c *CompaniesGetCall) RequestMetadataExperimentIds(requestMetadataExperimentIds ...string) *CompaniesGetCall {
 	c.urlParams_.SetMulti("requestMetadata.experimentIds", append([]string{}, requestMetadataExperimentIds...))
 	return c
 }
@@ -1628,7 +1628,7 @@ func (c *CompaniesListCall) CompanyName(companyName string) *CompaniesListCall {
 //   "GPSM_HELP_WITH_ADVERTISING"
 //   "GPSM_HELP_WITH_WEBSITE"
 //   "GPSM_NO_WEBSITE"
-func (c *CompaniesListCall) GpsMotivations(gpsMotivations []string) *CompaniesListCall {
+func (c *CompaniesListCall) GpsMotivations(gpsMotivations ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("gpsMotivations", append([]string{}, gpsMotivations...))
 	return c
 }
@@ -1648,7 +1648,7 @@ func (c *CompaniesListCall) GpsMotivations(gpsMotivations []string) *CompaniesLi
 //   "I_RETAIL"
 //   "I_TECHNOLOGY"
 //   "I_TRAVEL"
-func (c *CompaniesListCall) Industries(industries []string) *CompaniesListCall {
+func (c *CompaniesListCall) Industries(industries ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("industries", append([]string{}, industries...))
 	return c
 }
@@ -1657,7 +1657,7 @@ func (c *CompaniesListCall) Industries(industries []string) *CompaniesListCall {
 // language codes that company can support. Only primary language
 // subtags are accepted as defined by BCP 47 (IETF BCP 47, "Tags for
 // Identifying Languages").
-func (c *CompaniesListCall) LanguageCodes(languageCodes []string) *CompaniesListCall {
+func (c *CompaniesListCall) LanguageCodes(languageCodes ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("languageCodes", append([]string{}, languageCodes...))
 	return c
 }
@@ -1678,7 +1678,7 @@ func (c *CompaniesListCall) MaxMonthlyBudgetCurrencyCode(maxMonthlyBudgetCurrenc
 // negative, `nanos` must be negative or zero. For example $-1.75 is
 // represented as `units`=-1 and `nanos`=-750,000,000.
 func (c *CompaniesListCall) MaxMonthlyBudgetNanos(maxMonthlyBudgetNanos int64) *CompaniesListCall {
-	c.urlParams_.Set("maxMonthlyBudget.nanos", fmt.Sprintf("%v", maxMonthlyBudgetNanos))
+	c.urlParams_.Set("maxMonthlyBudget.nanos", fmt.Sprint(maxMonthlyBudgetNanos))
 	return c
 }
 
@@ -1686,7 +1686,7 @@ func (c *CompaniesListCall) MaxMonthlyBudgetNanos(maxMonthlyBudgetNanos int64) *
 // "maxMonthlyBudget.units": The whole units of the amount. For example
 // if `currencyCode` is "USD", then 1 unit is one US dollar.
 func (c *CompaniesListCall) MaxMonthlyBudgetUnits(maxMonthlyBudgetUnits int64) *CompaniesListCall {
-	c.urlParams_.Set("maxMonthlyBudget.units", fmt.Sprintf("%v", maxMonthlyBudgetUnits))
+	c.urlParams_.Set("maxMonthlyBudget.units", fmt.Sprint(maxMonthlyBudgetUnits))
 	return c
 }
 
@@ -1706,7 +1706,7 @@ func (c *CompaniesListCall) MinMonthlyBudgetCurrencyCode(minMonthlyBudgetCurrenc
 // negative, `nanos` must be negative or zero. For example $-1.75 is
 // represented as `units`=-1 and `nanos`=-750,000,000.
 func (c *CompaniesListCall) MinMonthlyBudgetNanos(minMonthlyBudgetNanos int64) *CompaniesListCall {
-	c.urlParams_.Set("minMonthlyBudget.nanos", fmt.Sprintf("%v", minMonthlyBudgetNanos))
+	c.urlParams_.Set("minMonthlyBudget.nanos", fmt.Sprint(minMonthlyBudgetNanos))
 	return c
 }
 
@@ -1714,7 +1714,7 @@ func (c *CompaniesListCall) MinMonthlyBudgetNanos(minMonthlyBudgetNanos int64) *
 // "minMonthlyBudget.units": The whole units of the amount. For example
 // if `currencyCode` is "USD", then 1 unit is one US dollar.
 func (c *CompaniesListCall) MinMonthlyBudgetUnits(minMonthlyBudgetUnits int64) *CompaniesListCall {
-	c.urlParams_.Set("minMonthlyBudget.units", fmt.Sprintf("%v", minMonthlyBudgetUnits))
+	c.urlParams_.Set("minMonthlyBudget.units", fmt.Sprint(minMonthlyBudgetUnits))
 	return c
 }
 
@@ -1732,7 +1732,7 @@ func (c *CompaniesListCall) OrderBy(orderBy string) *CompaniesListCall {
 // Server may return fewer companies than requested. If unspecified,
 // server picks an appropriate default.
 func (c *CompaniesListCall) PageSize(pageSize int64) *CompaniesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -1748,7 +1748,7 @@ func (c *CompaniesListCall) PageToken(pageToken string) *CompaniesListCall {
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *CompaniesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *CompaniesListCall {
+func (c *CompaniesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("requestMetadata.experimentIds", append([]string{}, requestMetadataExperimentIds...))
 	return c
 }
@@ -1811,7 +1811,7 @@ func (c *CompaniesListCall) RequestMetadataUserOverridesUserId(requestMetadataUs
 //   "S_AN_ENHANCED_WEBSITE"
 //   "S_AN_ONLINE_MARKETING_PLAN"
 //   "S_MOBILE_AND_VIDEO_ADS"
-func (c *CompaniesListCall) Services(services []string) *CompaniesListCall {
+func (c *CompaniesListCall) Services(services ...string) *CompaniesListCall {
 	c.urlParams_.SetMulti("services", append([]string{}, services...))
 	return c
 }
@@ -2324,7 +2324,7 @@ func (r *UserStatesService) List() *UserStatesListCall {
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
-func (c *UserStatesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds []string) *UserStatesListCall {
+func (c *UserStatesListCall) RequestMetadataExperimentIds(requestMetadataExperimentIds ...string) *UserStatesListCall {
 	c.urlParams_.SetMulti("requestMetadata.experimentIds", append([]string{}, requestMetadataExperimentIds...))
 	return c
 }

@@ -7020,7 +7020,7 @@ func (r *EntitlementsService) List(packageName string) *EntitlementsListCall {
 
 // MaxResults sets the optional parameter "maxResults":
 func (c *EntitlementsListCall) MaxResults(maxResults int64) *EntitlementsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7034,7 +7034,7 @@ func (c *EntitlementsListCall) ProductId(productId string) *EntitlementsListCall
 
 // StartIndex sets the optional parameter "startIndex":
 func (c *EntitlementsListCall) StartIndex(startIndex int64) *EntitlementsListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -7518,7 +7518,7 @@ func (r *InappproductsService) Insert(packageNameid string, inappproduct *InAppP
 // in-app product will be auto converted to the target currency based on
 // the default price. Defaults to false.
 func (c *InappproductsInsertCall) AutoConvertMissingPrices(autoConvertMissingPrices bool) *InappproductsInsertCall {
-	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprintf("%v", autoConvertMissingPrices))
+	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprint(autoConvertMissingPrices))
 	return c
 }
 
@@ -7649,13 +7649,13 @@ func (r *InappproductsService) List(packageNameid string) *InappproductsListCall
 
 // MaxResults sets the optional parameter "maxResults":
 func (c *InappproductsListCall) MaxResults(maxResults int64) *InappproductsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex":
 func (c *InappproductsListCall) StartIndex(startIndex int64) *InappproductsListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -7812,7 +7812,7 @@ func (r *InappproductsService) Patch(packageNameid string, skuid string, inapppr
 // in-app product will be auto converted to the target currency based on
 // the default price. Defaults to false.
 func (c *InappproductsPatchCall) AutoConvertMissingPrices(autoConvertMissingPrices bool) *InappproductsPatchCall {
-	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprintf("%v", autoConvertMissingPrices))
+	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprint(autoConvertMissingPrices))
 	return c
 }
 
@@ -7957,7 +7957,7 @@ func (r *InappproductsService) Update(packageNameid string, skuid string, inappp
 // in-app product will be auto converted to the target currency based on
 // the default price. Defaults to false.
 func (c *InappproductsUpdateCall) AutoConvertMissingPrices(autoConvertMissingPrices bool) *InappproductsUpdateCall {
-	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprintf("%v", autoConvertMissingPrices))
+	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprint(autoConvertMissingPrices))
 	return c
 }
 

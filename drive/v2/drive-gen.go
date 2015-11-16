@@ -2172,14 +2172,14 @@ func (r *AboutService) Get() *AboutGetCall {
 // or public files that the user has explicitly added to a folder they
 // own.
 func (c *AboutGetCall) IncludeSubscribed(includeSubscribed bool) *AboutGetCall {
-	c.urlParams_.Set("includeSubscribed", fmt.Sprintf("%v", includeSubscribed))
+	c.urlParams_.Set("includeSubscribed", fmt.Sprint(includeSubscribed))
 	return c
 }
 
 // MaxChangeIdCount sets the optional parameter "maxChangeIdCount":
 // Maximum number of remaining change IDs to count
 func (c *AboutGetCall) MaxChangeIdCount(maxChangeIdCount int64) *AboutGetCall {
-	c.urlParams_.Set("maxChangeIdCount", fmt.Sprintf("%v", maxChangeIdCount))
+	c.urlParams_.Set("maxChangeIdCount", fmt.Sprint(maxChangeIdCount))
 	return c
 }
 
@@ -2187,7 +2187,7 @@ func (c *AboutGetCall) MaxChangeIdCount(maxChangeIdCount int64) *AboutGetCall {
 // to start counting from when calculating number of remaining change
 // IDs
 func (c *AboutGetCall) StartChangeId(startChangeId int64) *AboutGetCall {
-	c.urlParams_.Set("startChangeId", fmt.Sprintf("%v", startChangeId))
+	c.urlParams_.Set("startChangeId", fmt.Sprint(startChangeId))
 	return c
 }
 
@@ -2745,7 +2745,7 @@ func (r *ChangesService) List() *ChangesListCall {
 // IncludeDeleted sets the optional parameter "includeDeleted": Whether
 // to include deleted items.
 func (c *ChangesListCall) IncludeDeleted(includeDeleted bool) *ChangesListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
@@ -2754,14 +2754,14 @@ func (c *ChangesListCall) IncludeDeleted(includeDeleted bool) *ChangesListCall {
 // When set to false, the list only includes owned files plus any shared
 // or public files the user has explicitly added to a folder they own.
 func (c *ChangesListCall) IncludeSubscribed(includeSubscribed bool) *ChangesListCall {
-	c.urlParams_.Set("includeSubscribed", fmt.Sprintf("%v", includeSubscribed))
+	c.urlParams_.Set("includeSubscribed", fmt.Sprint(includeSubscribed))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of changes to return.
 func (c *ChangesListCall) MaxResults(maxResults int64) *ChangesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2783,7 +2783,7 @@ func (c *ChangesListCall) Spaces(spaces string) *ChangesListCall {
 // StartChangeId sets the optional parameter "startChangeId": Change ID
 // to start listing changes from.
 func (c *ChangesListCall) StartChangeId(startChangeId int64) *ChangesListCall {
-	c.urlParams_.Set("startChangeId", fmt.Sprintf("%v", startChangeId))
+	c.urlParams_.Set("startChangeId", fmt.Sprint(startChangeId))
 	return c
 }
 
@@ -2945,7 +2945,7 @@ func (r *ChangesService) Watch(channel *Channel) *ChangesWatchCall {
 // IncludeDeleted sets the optional parameter "includeDeleted": Whether
 // to include deleted items.
 func (c *ChangesWatchCall) IncludeDeleted(includeDeleted bool) *ChangesWatchCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
@@ -2954,14 +2954,14 @@ func (c *ChangesWatchCall) IncludeDeleted(includeDeleted bool) *ChangesWatchCall
 // When set to false, the list only includes owned files plus any shared
 // or public files the user has explicitly added to a folder they own.
 func (c *ChangesWatchCall) IncludeSubscribed(includeSubscribed bool) *ChangesWatchCall {
-	c.urlParams_.Set("includeSubscribed", fmt.Sprintf("%v", includeSubscribed))
+	c.urlParams_.Set("includeSubscribed", fmt.Sprint(includeSubscribed))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of changes to return.
 func (c *ChangesWatchCall) MaxResults(maxResults int64) *ChangesWatchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2983,7 +2983,7 @@ func (c *ChangesWatchCall) Spaces(spaces string) *ChangesWatchCall {
 // StartChangeId sets the optional parameter "startChangeId": Change ID
 // to start listing changes from.
 func (c *ChangesWatchCall) StartChangeId(startChangeId int64) *ChangesWatchCall {
-	c.urlParams_.Set("startChangeId", fmt.Sprintf("%v", startChangeId))
+	c.urlParams_.Set("startChangeId", fmt.Sprint(startChangeId))
 	return c
 }
 
@@ -3583,7 +3583,7 @@ func (r *ChildrenService) List(folderId string) *ChildrenListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of children to return.
 func (c *ChildrenListCall) MaxResults(maxResults int64) *ChildrenListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3866,7 +3866,7 @@ func (r *CommentsService) Get(fileId string, commentId string) *CommentsGetCall 
 // this will succeed when retrieving a deleted comment, and will include
 // any deleted replies.
 func (c *CommentsGetCall) IncludeDeleted(includeDeleted bool) *CommentsGetCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
@@ -4134,14 +4134,14 @@ func (r *CommentsService) List(fileId string) *CommentsListCall {
 // all comments and replies, including deleted comments and replies
 // (with content stripped) will be returned.
 func (c *CommentsListCall) IncludeDeleted(includeDeleted bool) *CommentsListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of discussions to include in the response, used for paging.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4579,14 +4579,14 @@ func (r *FilesService) Copy(fileId string, file *File) *FilesCopyCall {
 // Convert sets the optional parameter "convert": Whether to convert
 // this file to the corresponding Google Docs format.
 func (c *FilesCopyCall) Convert(convert bool) *FilesCopyCall {
-	c.urlParams_.Set("convert", fmt.Sprintf("%v", convert))
+	c.urlParams_.Set("convert", fmt.Sprint(convert))
 	return c
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesCopyCall) Ocr(ocr bool) *FilesCopyCall {
-	c.urlParams_.Set("ocr", fmt.Sprintf("%v", ocr))
+	c.urlParams_.Set("ocr", fmt.Sprint(ocr))
 	return c
 }
 
@@ -4601,7 +4601,7 @@ func (c *FilesCopyCall) OcrLanguage(ocrLanguage string) *FilesCopyCall {
 // revision of the new copy. A file can have a maximum of 200 pinned
 // revisions.
 func (c *FilesCopyCall) Pinned(pinned bool) *FilesCopyCall {
-	c.urlParams_.Set("pinned", fmt.Sprintf("%v", pinned))
+	c.urlParams_.Set("pinned", fmt.Sprint(pinned))
 	return c
 }
 
@@ -4956,7 +4956,7 @@ func (r *FilesService) GenerateIds() *FilesGenerateIdsCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of IDs to return.
 func (c *FilesGenerateIdsCall) MaxResults(maxResults int64) *FilesGenerateIdsCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5101,7 +5101,7 @@ func (r *FilesService) Get(fileId string) *FilesGetCall {
 // Whether the user is acknowledging the risk of downloading known
 // malware or other abusive files.
 func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
-	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprintf("%v", acknowledgeAbuse))
+	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprint(acknowledgeAbuse))
 	return c
 }
 
@@ -5128,7 +5128,7 @@ func (c *FilesGetCall) RevisionId(revisionId string) *FilesGetCall {
 // Deprecated: Use files.update with modifiedDateBehavior=noChange,
 // updateViewedDate=true and an empty request body.
 func (c *FilesGetCall) UpdateViewedDate(updateViewedDate bool) *FilesGetCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
 	return c
 }
 
@@ -5316,14 +5316,14 @@ func (r *FilesService) Insert(file *File) *FilesInsertCall {
 // Convert sets the optional parameter "convert": Whether to convert
 // this file to the corresponding Google Docs format.
 func (c *FilesInsertCall) Convert(convert bool) *FilesInsertCall {
-	c.urlParams_.Set("convert", fmt.Sprintf("%v", convert))
+	c.urlParams_.Set("convert", fmt.Sprint(convert))
 	return c
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesInsertCall) Ocr(ocr bool) *FilesInsertCall {
-	c.urlParams_.Set("ocr", fmt.Sprintf("%v", ocr))
+	c.urlParams_.Set("ocr", fmt.Sprint(ocr))
 	return c
 }
 
@@ -5338,7 +5338,7 @@ func (c *FilesInsertCall) OcrLanguage(ocrLanguage string) *FilesInsertCall {
 // revision of the uploaded file. A file can have a maximum of 200
 // pinned revisions.
 func (c *FilesInsertCall) Pinned(pinned bool) *FilesInsertCall {
-	c.urlParams_.Set("pinned", fmt.Sprintf("%v", pinned))
+	c.urlParams_.Set("pinned", fmt.Sprint(pinned))
 	return c
 }
 
@@ -5360,7 +5360,7 @@ func (c *FilesInsertCall) TimedTextTrackName(timedTextTrackName string) *FilesIn
 // "useContentAsIndexableText": Whether to use the content as indexable
 // text.
 func (c *FilesInsertCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesInsertCall {
-	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprintf("%v", useContentAsIndexableText))
+	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprint(useContentAsIndexableText))
 	return c
 }
 
@@ -5639,7 +5639,7 @@ func (c *FilesListCall) Corpus(corpus string) *FilesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of files to return.
 func (c *FilesListCall) MaxResults(maxResults int64) *FilesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5874,7 +5874,7 @@ func (c *FilesPatchCall) AddParents(addParents string) *FilesPatchCall {
 // Convert sets the optional parameter "convert": This parameter is
 // deprecated and has no function.
 func (c *FilesPatchCall) Convert(convert bool) *FilesPatchCall {
-	c.urlParams_.Set("convert", fmt.Sprintf("%v", convert))
+	c.urlParams_.Set("convert", fmt.Sprint(convert))
 	return c
 }
 
@@ -5907,14 +5907,14 @@ func (c *FilesPatchCall) ModifiedDateBehavior(modifiedDateBehavior string) *File
 // revisions. For details on how revisions are retained, see the Drive
 // Help Center.
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
-	c.urlParams_.Set("newRevision", fmt.Sprintf("%v", newRevision))
+	c.urlParams_.Set("newRevision", fmt.Sprint(newRevision))
 	return c
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesPatchCall) Ocr(ocr bool) *FilesPatchCall {
-	c.urlParams_.Set("ocr", fmt.Sprintf("%v", ocr))
+	c.urlParams_.Set("ocr", fmt.Sprint(ocr))
 	return c
 }
 
@@ -5928,7 +5928,7 @@ func (c *FilesPatchCall) OcrLanguage(ocrLanguage string) *FilesPatchCall {
 // Pinned sets the optional parameter "pinned": Whether to pin the new
 // revision. A file can have a maximum of 200 pinned revisions.
 func (c *FilesPatchCall) Pinned(pinned bool) *FilesPatchCall {
-	c.urlParams_.Set("pinned", fmt.Sprintf("%v", pinned))
+	c.urlParams_.Set("pinned", fmt.Sprint(pinned))
 	return c
 }
 
@@ -5942,7 +5942,7 @@ func (c *FilesPatchCall) RemoveParents(removeParents string) *FilesPatchCall {
 // SetModifiedDate sets the optional parameter "setModifiedDate":
 // Whether to set the modified date with the supplied modified date.
 func (c *FilesPatchCall) SetModifiedDate(setModifiedDate bool) *FilesPatchCall {
-	c.urlParams_.Set("setModifiedDate", fmt.Sprintf("%v", setModifiedDate))
+	c.urlParams_.Set("setModifiedDate", fmt.Sprint(setModifiedDate))
 	return c
 }
 
@@ -5963,7 +5963,7 @@ func (c *FilesPatchCall) TimedTextTrackName(timedTextTrackName string) *FilesPat
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
 // Whether to update the view date after successfully updating the file.
 func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
 	return c
 }
 
@@ -5971,7 +5971,7 @@ func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall
 // "useContentAsIndexableText": Whether to use the content as indexable
 // text.
 func (c *FilesPatchCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesPatchCall {
-	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprintf("%v", useContentAsIndexableText))
+	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprint(useContentAsIndexableText))
 	return c
 }
 
@@ -6541,7 +6541,7 @@ func (c *FilesUpdateCall) AddParents(addParents string) *FilesUpdateCall {
 // Convert sets the optional parameter "convert": This parameter is
 // deprecated and has no function.
 func (c *FilesUpdateCall) Convert(convert bool) *FilesUpdateCall {
-	c.urlParams_.Set("convert", fmt.Sprintf("%v", convert))
+	c.urlParams_.Set("convert", fmt.Sprint(convert))
 	return c
 }
 
@@ -6574,14 +6574,14 @@ func (c *FilesUpdateCall) ModifiedDateBehavior(modifiedDateBehavior string) *Fil
 // revisions. For details on how revisions are retained, see the Drive
 // Help Center.
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
-	c.urlParams_.Set("newRevision", fmt.Sprintf("%v", newRevision))
+	c.urlParams_.Set("newRevision", fmt.Sprint(newRevision))
 	return c
 }
 
 // Ocr sets the optional parameter "ocr": Whether to attempt OCR on
 // .jpg, .png, .gif, or .pdf uploads.
 func (c *FilesUpdateCall) Ocr(ocr bool) *FilesUpdateCall {
-	c.urlParams_.Set("ocr", fmt.Sprintf("%v", ocr))
+	c.urlParams_.Set("ocr", fmt.Sprint(ocr))
 	return c
 }
 
@@ -6595,7 +6595,7 @@ func (c *FilesUpdateCall) OcrLanguage(ocrLanguage string) *FilesUpdateCall {
 // Pinned sets the optional parameter "pinned": Whether to pin the new
 // revision. A file can have a maximum of 200 pinned revisions.
 func (c *FilesUpdateCall) Pinned(pinned bool) *FilesUpdateCall {
-	c.urlParams_.Set("pinned", fmt.Sprintf("%v", pinned))
+	c.urlParams_.Set("pinned", fmt.Sprint(pinned))
 	return c
 }
 
@@ -6609,7 +6609,7 @@ func (c *FilesUpdateCall) RemoveParents(removeParents string) *FilesUpdateCall {
 // SetModifiedDate sets the optional parameter "setModifiedDate":
 // Whether to set the modified date with the supplied modified date.
 func (c *FilesUpdateCall) SetModifiedDate(setModifiedDate bool) *FilesUpdateCall {
-	c.urlParams_.Set("setModifiedDate", fmt.Sprintf("%v", setModifiedDate))
+	c.urlParams_.Set("setModifiedDate", fmt.Sprint(setModifiedDate))
 	return c
 }
 
@@ -6630,7 +6630,7 @@ func (c *FilesUpdateCall) TimedTextTrackName(timedTextTrackName string) *FilesUp
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
 // Whether to update the view date after successfully updating the file.
 func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
 	return c
 }
 
@@ -6638,7 +6638,7 @@ func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCa
 // "useContentAsIndexableText": Whether to use the content as indexable
 // text.
 func (c *FilesUpdateCall) UseContentAsIndexableText(useContentAsIndexableText bool) *FilesUpdateCall {
-	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprintf("%v", useContentAsIndexableText))
+	c.urlParams_.Set("useContentAsIndexableText", fmt.Sprint(useContentAsIndexableText))
 	return c
 }
 
@@ -6945,7 +6945,7 @@ func (r *FilesService) Watch(fileId string, channel *Channel) *FilesWatchCall {
 // Whether the user is acknowledging the risk of downloading known
 // malware or other abusive files.
 func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall {
-	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprintf("%v", acknowledgeAbuse))
+	c.urlParams_.Set("acknowledgeAbuse", fmt.Sprint(acknowledgeAbuse))
 	return c
 }
 
@@ -6972,7 +6972,7 @@ func (c *FilesWatchCall) RevisionId(revisionId string) *FilesWatchCall {
 // Deprecated: Use files.update with modifiedDateBehavior=noChange,
 // updateViewedDate=true and an empty request body.
 func (c *FilesWatchCall) UpdateViewedDate(updateViewedDate bool) *FilesWatchCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
 	return c
 }
 
@@ -8007,7 +8007,7 @@ func (c *PermissionsInsertCall) EmailMessage(emailMessage string) *PermissionsIn
 // sharing to users or groups. This parameter is ignored and an email is
 // sent if the role is owner.
 func (c *PermissionsInsertCall) SendNotificationEmails(sendNotificationEmails bool) *PermissionsInsertCall {
-	c.urlParams_.Set("sendNotificationEmails", fmt.Sprintf("%v", sendNotificationEmails))
+	c.urlParams_.Set("sendNotificationEmails", fmt.Sprint(sendNotificationEmails))
 	return c
 }
 
@@ -8277,7 +8277,7 @@ func (r *PermissionsService) Patch(fileId string, permissionId string, permissio
 // Whether changing a role to 'owner' downgrades the current owners to
 // writers. Does nothing if the specified role is not 'owner'.
 func (c *PermissionsPatchCall) TransferOwnership(transferOwnership bool) *PermissionsPatchCall {
-	c.urlParams_.Set("transferOwnership", fmt.Sprintf("%v", transferOwnership))
+	c.urlParams_.Set("transferOwnership", fmt.Sprint(transferOwnership))
 	return c
 }
 
@@ -8422,7 +8422,7 @@ func (r *PermissionsService) Update(fileId string, permissionId string, permissi
 // Whether changing a role to 'owner' downgrades the current owners to
 // writers. Does nothing if the specified role is not 'owner'.
 func (c *PermissionsUpdateCall) TransferOwnership(transferOwnership bool) *PermissionsUpdateCall {
-	c.urlParams_.Set("transferOwnership", fmt.Sprintf("%v", transferOwnership))
+	c.urlParams_.Set("transferOwnership", fmt.Sprint(transferOwnership))
 	return c
 }
 
@@ -9370,7 +9370,7 @@ func (r *RealtimeService) Get(fileId string) *RealtimeGetCall {
 // empty data model) and are incremented with each change. If this
 // parameter is excluded, the most recent data model will be returned.
 func (c *RealtimeGetCall) Revision(revision int64) *RealtimeGetCall {
-	c.urlParams_.Set("revision", fmt.Sprintf("%v", revision))
+	c.urlParams_.Set("revision", fmt.Sprint(revision))
 	return c
 }
 
@@ -9799,7 +9799,7 @@ func (r *RepliesService) Get(fileId string, commentId string, replyId string) *R
 // IncludeDeleted sets the optional parameter "includeDeleted": If set,
 // this will succeed when retrieving a deleted reply.
 func (c *RepliesGetCall) IncludeDeleted(includeDeleted bool) *RepliesGetCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
@@ -10087,14 +10087,14 @@ func (r *RepliesService) List(fileId string, commentId string) *RepliesListCall 
 // all replies, including deleted replies (with content stripped) will
 // be returned.
 func (c *RepliesListCall) IncludeDeleted(includeDeleted bool) *RepliesListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of replies to include in the response, used for paging.
 func (c *RepliesListCall) MaxResults(maxResults int64) *RepliesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

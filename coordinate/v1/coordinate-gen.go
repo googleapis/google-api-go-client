@@ -969,8 +969,8 @@ func (r *JobsService) Insert(teamId string, address string, lat float64, lng flo
 	c := &JobsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamId = teamId
 	c.urlParams_.Set("address", address)
-	c.urlParams_.Set("lat", fmt.Sprintf("%v", lat))
-	c.urlParams_.Set("lng", fmt.Sprintf("%v", lng))
+	c.urlParams_.Set("lat", fmt.Sprint(lat))
+	c.urlParams_.Set("lng", fmt.Sprint(lng))
 	c.urlParams_.Set("title", title)
 	c.job = job
 	return c
@@ -990,7 +990,7 @@ func (c *JobsInsertCall) Assignee(assignee string) *JobsInsertCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsInsertCall) CustomField(customField []string) *JobsInsertCall {
+func (c *JobsInsertCall) CustomField(customField ...string) *JobsInsertCall {
 	c.urlParams_.SetMulti("customField", append([]string{}, customField...))
 	return c
 }
@@ -1194,7 +1194,7 @@ func (r *JobsService) List(teamId string) *JobsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return in one page.
 func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1202,14 +1202,14 @@ func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
 // "minModifiedTimestampMs": Minimum time a job was modified in
 // milliseconds since epoch.
 func (c *JobsListCall) MinModifiedTimestampMs(minModifiedTimestampMs uint64) *JobsListCall {
-	c.urlParams_.Set("minModifiedTimestampMs", fmt.Sprintf("%v", minModifiedTimestampMs))
+	c.urlParams_.Set("minModifiedTimestampMs", fmt.Sprint(minModifiedTimestampMs))
 	return c
 }
 
 // OmitJobChanges sets the optional parameter "omitJobChanges": Whether
 // to omit detail job history information.
 func (c *JobsListCall) OmitJobChanges(omitJobChanges bool) *JobsListCall {
-	c.urlParams_.Set("omitJobChanges", fmt.Sprintf("%v", omitJobChanges))
+	c.urlParams_.Set("omitJobChanges", fmt.Sprint(omitJobChanges))
 	return c
 }
 
@@ -1390,7 +1390,7 @@ func (c *JobsPatchCall) Assignee(assignee string) *JobsPatchCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsPatchCall) CustomField(customField []string) *JobsPatchCall {
+func (c *JobsPatchCall) CustomField(customField ...string) *JobsPatchCall {
 	c.urlParams_.SetMulti("customField", append([]string{}, customField...))
 	return c
 }
@@ -1412,14 +1412,14 @@ func (c *JobsPatchCall) CustomerPhoneNumber(customerPhoneNumber string) *JobsPat
 // Lat sets the optional parameter "lat": The latitude coordinate of
 // this job's location.
 func (c *JobsPatchCall) Lat(lat float64) *JobsPatchCall {
-	c.urlParams_.Set("lat", fmt.Sprintf("%v", lat))
+	c.urlParams_.Set("lat", fmt.Sprint(lat))
 	return c
 }
 
 // Lng sets the optional parameter "lng": The longitude coordinate of
 // this job's location.
 func (c *JobsPatchCall) Lng(lng float64) *JobsPatchCall {
-	c.urlParams_.Set("lng", fmt.Sprintf("%v", lng))
+	c.urlParams_.Set("lng", fmt.Sprint(lng))
 	return c
 }
 
@@ -1669,7 +1669,7 @@ func (c *JobsUpdateCall) Assignee(assignee string) *JobsUpdateCall {
 // Repeat the parameter for each custom field. Note that '=' cannot
 // appear in the parameter value. Specifying an invalid, or inactive
 // enum field will result in an error 500.
-func (c *JobsUpdateCall) CustomField(customField []string) *JobsUpdateCall {
+func (c *JobsUpdateCall) CustomField(customField ...string) *JobsUpdateCall {
 	c.urlParams_.SetMulti("customField", append([]string{}, customField...))
 	return c
 }
@@ -1691,14 +1691,14 @@ func (c *JobsUpdateCall) CustomerPhoneNumber(customerPhoneNumber string) *JobsUp
 // Lat sets the optional parameter "lat": The latitude coordinate of
 // this job's location.
 func (c *JobsUpdateCall) Lat(lat float64) *JobsUpdateCall {
-	c.urlParams_.Set("lat", fmt.Sprintf("%v", lat))
+	c.urlParams_.Set("lat", fmt.Sprint(lat))
 	return c
 }
 
 // Lng sets the optional parameter "lng": The longitude coordinate of
 // this job's location.
 func (c *JobsUpdateCall) Lng(lng float64) *JobsUpdateCall {
-	c.urlParams_.Set("lng", fmt.Sprintf("%v", lng))
+	c.urlParams_.Set("lng", fmt.Sprint(lng))
 	return c
 }
 
@@ -1922,14 +1922,14 @@ func (r *LocationService) List(teamId string, workerEmail string, startTimestamp
 	c := &LocationListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamId = teamId
 	c.workerEmail = workerEmail
-	c.urlParams_.Set("startTimestampMs", fmt.Sprintf("%v", startTimestampMs))
+	c.urlParams_.Set("startTimestampMs", fmt.Sprint(startTimestampMs))
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return in one page.
 func (c *LocationListCall) MaxResults(maxResults int64) *LocationListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2233,28 +2233,28 @@ func (r *ScheduleService) Patch(teamId string, jobId uint64, schedule *Schedule)
 // scheduled for the whole day. Time of day in start/end times is
 // ignored if this is true.
 func (c *SchedulePatchCall) AllDay(allDay bool) *SchedulePatchCall {
-	c.urlParams_.Set("allDay", fmt.Sprintf("%v", allDay))
+	c.urlParams_.Set("allDay", fmt.Sprint(allDay))
 	return c
 }
 
 // Duration sets the optional parameter "duration": Job duration in
 // milliseconds.
 func (c *SchedulePatchCall) Duration(duration uint64) *SchedulePatchCall {
-	c.urlParams_.Set("duration", fmt.Sprintf("%v", duration))
+	c.urlParams_.Set("duration", fmt.Sprint(duration))
 	return c
 }
 
 // EndTime sets the optional parameter "endTime": Scheduled end time in
 // milliseconds since epoch.
 func (c *SchedulePatchCall) EndTime(endTime uint64) *SchedulePatchCall {
-	c.urlParams_.Set("endTime", fmt.Sprintf("%v", endTime))
+	c.urlParams_.Set("endTime", fmt.Sprint(endTime))
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": Scheduled start
 // time in milliseconds since epoch.
 func (c *SchedulePatchCall) StartTime(startTime uint64) *SchedulePatchCall {
-	c.urlParams_.Set("startTime", fmt.Sprintf("%v", startTime))
+	c.urlParams_.Set("startTime", fmt.Sprint(startTime))
 	return c
 }
 
@@ -2416,28 +2416,28 @@ func (r *ScheduleService) Update(teamId string, jobId uint64, schedule *Schedule
 // scheduled for the whole day. Time of day in start/end times is
 // ignored if this is true.
 func (c *ScheduleUpdateCall) AllDay(allDay bool) *ScheduleUpdateCall {
-	c.urlParams_.Set("allDay", fmt.Sprintf("%v", allDay))
+	c.urlParams_.Set("allDay", fmt.Sprint(allDay))
 	return c
 }
 
 // Duration sets the optional parameter "duration": Job duration in
 // milliseconds.
 func (c *ScheduleUpdateCall) Duration(duration uint64) *ScheduleUpdateCall {
-	c.urlParams_.Set("duration", fmt.Sprintf("%v", duration))
+	c.urlParams_.Set("duration", fmt.Sprint(duration))
 	return c
 }
 
 // EndTime sets the optional parameter "endTime": Scheduled end time in
 // milliseconds since epoch.
 func (c *ScheduleUpdateCall) EndTime(endTime uint64) *ScheduleUpdateCall {
-	c.urlParams_.Set("endTime", fmt.Sprintf("%v", endTime))
+	c.urlParams_.Set("endTime", fmt.Sprint(endTime))
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": Scheduled start
 // time in milliseconds since epoch.
 func (c *ScheduleUpdateCall) StartTime(startTime uint64) *ScheduleUpdateCall {
-	c.urlParams_.Set("startTime", fmt.Sprintf("%v", startTime))
+	c.urlParams_.Set("startTime", fmt.Sprint(startTime))
 	return c
 }
 
@@ -2593,21 +2593,21 @@ func (r *TeamService) List() *TeamListCall {
 // Admin sets the optional parameter "admin": Whether to include teams
 // for which the user has the Admin role.
 func (c *TeamListCall) Admin(admin bool) *TeamListCall {
-	c.urlParams_.Set("admin", fmt.Sprintf("%v", admin))
+	c.urlParams_.Set("admin", fmt.Sprint(admin))
 	return c
 }
 
 // Dispatcher sets the optional parameter "dispatcher": Whether to
 // include teams for which the user has the Dispatcher role.
 func (c *TeamListCall) Dispatcher(dispatcher bool) *TeamListCall {
-	c.urlParams_.Set("dispatcher", fmt.Sprintf("%v", dispatcher))
+	c.urlParams_.Set("dispatcher", fmt.Sprint(dispatcher))
 	return c
 }
 
 // Worker sets the optional parameter "worker": Whether to include teams
 // for which the user has the Worker role.
 func (c *TeamListCall) Worker(worker bool) *TeamListCall {
-	c.urlParams_.Set("worker", fmt.Sprintf("%v", worker))
+	c.urlParams_.Set("worker", fmt.Sprint(worker))
 	return c
 }
 

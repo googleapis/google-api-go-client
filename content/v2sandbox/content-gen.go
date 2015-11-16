@@ -3022,7 +3022,7 @@ func (r *OrdersService) List(merchantId uint64) *OrdersListCall {
 // We recommend using this filter set to false, in conjunction with the
 // acknowledge call, such that only un-acknowledged orders are returned.
 func (c *OrdersListCall) Acknowledged(acknowledged bool) *OrdersListCall {
-	c.urlParams_.Set("acknowledged", fmt.Sprintf("%v", acknowledged))
+	c.urlParams_.Set("acknowledged", fmt.Sprint(acknowledged))
 	return c
 }
 
@@ -3033,7 +3033,7 @@ func (c *OrdersListCall) Acknowledged(acknowledged bool) *OrdersListCall {
 // Known issue: All List calls will return all Orders without limit
 // regardless of the value of this field.
 func (c *OrdersListCall) MaxResults(maxResults int64) *OrdersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3094,7 +3094,7 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 //   "pendingShipment"
 //   "returned"
 //   "shipped"
-func (c *OrdersListCall) Statuses(statuses []string) *OrdersListCall {
+func (c *OrdersListCall) Statuses(statuses ...string) *OrdersListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
 	return c
 }

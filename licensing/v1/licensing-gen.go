@@ -579,7 +579,7 @@ func (r *LicenseAssignmentsService) ListForProduct(productId string, customerId 
 // of campaigns to return at one time. Must be positive.  Default value
 // is 100.
 func (c *LicenseAssignmentsListForProductCall) MaxResults(maxResults int64) *LicenseAssignmentsListForProductCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -743,7 +743,7 @@ func (r *LicenseAssignmentsService) ListForProductAndSku(productId string, skuId
 // of campaigns to return at one time. Must be positive.  Default value
 // is 100.
 func (c *LicenseAssignmentsListForProductAndSkuCall) MaxResults(maxResults int64) *LicenseAssignmentsListForProductAndSkuCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

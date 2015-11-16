@@ -321,7 +321,7 @@ func (r *TaskqueuesService) Get(project string, taskqueue string) *TaskqueuesGet
 // GetStats sets the optional parameter "getStats": Whether to get
 // stats.
 func (c *TaskqueuesGetCall) GetStats(getStats bool) *TaskqueuesGetCall {
-	c.urlParams_.Set("getStats", fmt.Sprintf("%v", getStats))
+	c.urlParams_.Set("getStats", fmt.Sprint(getStats))
 	return c
 }
 
@@ -838,15 +838,15 @@ func (r *TasksService) Lease(project string, taskqueue string, numTasks int64, l
 	c := &TasksLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.taskqueue = taskqueue
-	c.urlParams_.Set("numTasks", fmt.Sprintf("%v", numTasks))
-	c.urlParams_.Set("leaseSecs", fmt.Sprintf("%v", leaseSecs))
+	c.urlParams_.Set("numTasks", fmt.Sprint(numTasks))
+	c.urlParams_.Set("leaseSecs", fmt.Sprint(leaseSecs))
 	return c
 }
 
 // GroupByTag sets the optional parameter "groupByTag": When true, all
 // returned tasks will have the same tag
 func (c *TasksLeaseCall) GroupByTag(groupByTag bool) *TasksLeaseCall {
-	c.urlParams_.Set("groupByTag", fmt.Sprintf("%v", groupByTag))
+	c.urlParams_.Set("groupByTag", fmt.Sprint(groupByTag))
 	return c
 }
 
@@ -1140,7 +1140,7 @@ func (r *TasksService) Patch(project string, taskqueue string, task string, newL
 	c.project = project
 	c.taskqueue = taskqueue
 	c.task = task
-	c.urlParams_.Set("newLeaseSeconds", fmt.Sprintf("%v", newLeaseSeconds))
+	c.urlParams_.Set("newLeaseSeconds", fmt.Sprint(newLeaseSeconds))
 	c.task2 = task2
 	return c
 }
@@ -1288,7 +1288,7 @@ func (r *TasksService) Update(project string, taskqueue string, task string, new
 	c.project = project
 	c.taskqueue = taskqueue
 	c.task = task
-	c.urlParams_.Set("newLeaseSeconds", fmt.Sprintf("%v", newLeaseSeconds))
+	c.urlParams_.Set("newLeaseSeconds", fmt.Sprint(newLeaseSeconds))
 	c.task2 = task2
 	return c
 }

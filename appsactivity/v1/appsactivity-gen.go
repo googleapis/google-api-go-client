@@ -506,7 +506,7 @@ func (c *ActivitiesListCall) GroupingStrategy(groupingStrategy string) *Activiti
 // of events to return on a page. The response includes a continuation
 // token if there are more events.
 func (c *ActivitiesListCall) PageSize(pageSize int64) *ActivitiesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

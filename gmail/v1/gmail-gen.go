@@ -1715,7 +1715,7 @@ func (r *UsersDraftsService) List(userId string) *UsersDraftsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of drafts to return.
 func (c *UsersDraftsListCall) MaxResults(maxResults int64) *UsersDraftsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2315,7 +2315,7 @@ func (c *UsersHistoryListCall) LabelId(labelId string) *UsersHistoryListCall {
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of history records to return.
 func (c *UsersHistoryListCall) MaxResults(maxResults int64) *UsersHistoryListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2339,7 +2339,7 @@ func (c *UsersHistoryListCall) PageToken(pageToken string) *UsersHistoryListCall
 // no nextPageToken in the response, there are no updates to retrieve
 // and you can store the returned historyId for a future request.
 func (c *UsersHistoryListCall) StartHistoryId(startHistoryId uint64) *UsersHistoryListCall {
-	c.urlParams_.Set("startHistoryId", fmt.Sprintf("%v", startHistoryId))
+	c.urlParams_.Set("startHistoryId", fmt.Sprint(startHistoryId))
 	return c
 }
 
@@ -3353,7 +3353,7 @@ func (c *UsersMessagesGetCall) Format(format string) *UsersMessagesGetCall {
 
 // MetadataHeaders sets the optional parameter "metadataHeaders": When
 // given and format is METADATA, only include headers specified.
-func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders []string) *UsersMessagesGetCall {
+func (c *UsersMessagesGetCall) MetadataHeaders(metadataHeaders ...string) *UsersMessagesGetCall {
 	c.urlParams_.SetMulti("metadataHeaders", append([]string{}, metadataHeaders...))
 	return c
 }
@@ -3529,7 +3529,7 @@ func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMes
 // to a Vault administrator. Only used for Google Apps for Work
 // accounts.
 func (c *UsersMessagesImportCall) Deleted(deleted bool) *UsersMessagesImportCall {
-	c.urlParams_.Set("deleted", fmt.Sprintf("%v", deleted))
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
 	return c
 }
 
@@ -3548,7 +3548,7 @@ func (c *UsersMessagesImportCall) InternalDateSource(internalDateSource string) 
 // Gmail spam classifier decision and never mark this email as SPAM in
 // the mailbox.
 func (c *UsersMessagesImportCall) NeverMarkSpam(neverMarkSpam bool) *UsersMessagesImportCall {
-	c.urlParams_.Set("neverMarkSpam", fmt.Sprintf("%v", neverMarkSpam))
+	c.urlParams_.Set("neverMarkSpam", fmt.Sprint(neverMarkSpam))
 	return c
 }
 
@@ -3556,7 +3556,7 @@ func (c *UsersMessagesImportCall) NeverMarkSpam(neverMarkSpam bool) *UsersMessag
 // Process calendar invites in the email and add any extracted meetings
 // to the Google Calendar for this user.
 func (c *UsersMessagesImportCall) ProcessForCalendar(processForCalendar bool) *UsersMessagesImportCall {
-	c.urlParams_.Set("processForCalendar", fmt.Sprintf("%v", processForCalendar))
+	c.urlParams_.Set("processForCalendar", fmt.Sprint(processForCalendar))
 	return c
 }
 
@@ -3813,7 +3813,7 @@ func (r *UsersMessagesService) Insert(userId string, message *Message) *UsersMes
 // to a Vault administrator. Only used for Google Apps for Work
 // accounts.
 func (c *UsersMessagesInsertCall) Deleted(deleted bool) *UsersMessagesInsertCall {
-	c.urlParams_.Set("deleted", fmt.Sprintf("%v", deleted))
+	c.urlParams_.Set("deleted", fmt.Sprint(deleted))
 	return c
 }
 
@@ -4059,13 +4059,13 @@ func (r *UsersMessagesService) List(userId string) *UsersMessagesListCall {
 // IncludeSpamTrash sets the optional parameter "includeSpamTrash":
 // Include messages from SPAM and TRASH in the results.
 func (c *UsersMessagesListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersMessagesListCall {
-	c.urlParams_.Set("includeSpamTrash", fmt.Sprintf("%v", includeSpamTrash))
+	c.urlParams_.Set("includeSpamTrash", fmt.Sprint(includeSpamTrash))
 	return c
 }
 
 // LabelIds sets the optional parameter "labelIds": Only return messages
 // with labels that match all of the specified label IDs.
-func (c *UsersMessagesListCall) LabelIds(labelIds []string) *UsersMessagesListCall {
+func (c *UsersMessagesListCall) LabelIds(labelIds ...string) *UsersMessagesListCall {
 	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
 	return c
 }
@@ -4073,7 +4073,7 @@ func (c *UsersMessagesListCall) LabelIds(labelIds []string) *UsersMessagesListCa
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of messages to return.
 func (c *UsersMessagesListCall) MaxResults(maxResults int64) *UsersMessagesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5093,7 +5093,7 @@ func (c *UsersThreadsGetCall) Format(format string) *UsersThreadsGetCall {
 
 // MetadataHeaders sets the optional parameter "metadataHeaders": When
 // given and format is METADATA, only include headers specified.
-func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders []string) *UsersThreadsGetCall {
+func (c *UsersThreadsGetCall) MetadataHeaders(metadataHeaders ...string) *UsersThreadsGetCall {
 	c.urlParams_.SetMulti("metadataHeaders", append([]string{}, metadataHeaders...))
 	return c
 }
@@ -5257,13 +5257,13 @@ func (r *UsersThreadsService) List(userId string) *UsersThreadsListCall {
 // IncludeSpamTrash sets the optional parameter "includeSpamTrash":
 // Include threads from SPAM and TRASH in the results.
 func (c *UsersThreadsListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersThreadsListCall {
-	c.urlParams_.Set("includeSpamTrash", fmt.Sprintf("%v", includeSpamTrash))
+	c.urlParams_.Set("includeSpamTrash", fmt.Sprint(includeSpamTrash))
 	return c
 }
 
 // LabelIds sets the optional parameter "labelIds": Only return threads
 // with labels that match all of the specified label IDs.
-func (c *UsersThreadsListCall) LabelIds(labelIds []string) *UsersThreadsListCall {
+func (c *UsersThreadsListCall) LabelIds(labelIds ...string) *UsersThreadsListCall {
 	c.urlParams_.SetMulti("labelIds", append([]string{}, labelIds...))
 	return c
 }
@@ -5271,7 +5271,7 @@ func (c *UsersThreadsListCall) LabelIds(labelIds []string) *UsersThreadsListCall
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of threads to return.
 func (c *UsersThreadsListCall) MaxResults(maxResults int64) *UsersThreadsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

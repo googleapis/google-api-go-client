@@ -311,7 +311,7 @@ func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 // Whether to update the view date after successfully retrieving the
 // file.
 func (c *FilesGetCall) UpdateViewedDate(updateViewedDate bool) *FilesGetCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
 	return c
 }
 
@@ -664,7 +664,7 @@ func (r *FilesService) Patch(id string, file *File) *FilesPatchCall {
 // indefinitely, using additional storage quota, up to a maximum of 200
 // revisions.
 func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
-	c.urlParams_.Set("newRevision", fmt.Sprintf("%v", newRevision))
+	c.urlParams_.Set("newRevision", fmt.Sprint(newRevision))
 	return c
 }
 
@@ -675,14 +675,14 @@ func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
 // will only be updated to the current time if other changes are also
 // being made (changing the title, for example).
 func (c *FilesPatchCall) UpdateModifiedDate(updateModifiedDate bool) *FilesPatchCall {
-	c.urlParams_.Set("updateModifiedDate", fmt.Sprintf("%v", updateModifiedDate))
+	c.urlParams_.Set("updateModifiedDate", fmt.Sprint(updateModifiedDate))
 	return c
 }
 
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
 // Whether to update the view date after successfully updating the file.
 func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
 	return c
 }
 
@@ -837,7 +837,7 @@ func (r *FilesService) Update(id string, file *File) *FilesUpdateCall {
 // indefinitely, using additional storage quota, up to a maximum of 200
 // revisions.
 func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
-	c.urlParams_.Set("newRevision", fmt.Sprintf("%v", newRevision))
+	c.urlParams_.Set("newRevision", fmt.Sprint(newRevision))
 	return c
 }
 
@@ -848,14 +848,14 @@ func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
 // will only be updated to the current time if other changes are also
 // being made (changing the title, for example).
 func (c *FilesUpdateCall) UpdateModifiedDate(updateModifiedDate bool) *FilesUpdateCall {
-	c.urlParams_.Set("updateModifiedDate", fmt.Sprintf("%v", updateModifiedDate))
+	c.urlParams_.Set("updateModifiedDate", fmt.Sprint(updateModifiedDate))
 	return c
 }
 
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
 // Whether to update the view date after successfully updating the file.
 func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCall {
-	c.urlParams_.Set("updateViewedDate", fmt.Sprintf("%v", updateViewedDate))
+	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
 	return c
 }
 

@@ -1380,7 +1380,7 @@ func (r *DebuggerDebuggeesService) List() *DebuggerDebuggeesListCall {
 // set to true the result includes all debuggees, otherwise only
 // debugees that are active.
 func (c *DebuggerDebuggeesListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesListCall {
-	c.urlParams_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
+	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
@@ -1785,7 +1785,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) ActionValue(actionValue string) *
 // set to true the response includes the list of breakpoints set by any
 // user, otherwise only breakpoints set by the caller.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeAllUsers(includeAllUsers bool) *DebuggerDebuggeesBreakpointsListCall {
-	c.urlParams_.Set("includeAllUsers", fmt.Sprintf("%v", includeAllUsers))
+	c.urlParams_.Set("includeAllUsers", fmt.Sprint(includeAllUsers))
 	return c
 }
 
@@ -1793,7 +1793,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) IncludeAllUsers(includeAllUsers b
 // set to true the response includes active and inactive breakpoints,
 // otherwise only active breakpoints are returned.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesBreakpointsListCall {
-	c.urlParams_.Set("includeInactive", fmt.Sprintf("%v", includeInactive))
+	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
@@ -1801,7 +1801,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) IncludeInactive(includeInactive b
 // true the response breakpoints will be stripped of the results fields:
 // stack_frames, evaluated_expressions and variable_table.
 func (c *DebuggerDebuggeesBreakpointsListCall) StripResults(stripResults bool) *DebuggerDebuggeesBreakpointsListCall {
-	c.urlParams_.Set("stripResults", fmt.Sprintf("%v", stripResults))
+	c.urlParams_.Set("stripResults", fmt.Sprint(stripResults))
 	return c
 }
 

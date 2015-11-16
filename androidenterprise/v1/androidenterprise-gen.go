@@ -4674,7 +4674,7 @@ func (r *EntitlementsService) Patch(enterpriseId string, userId string, entitlem
 // from returning successfully, as long as the entitlement was
 // successfully assigned to the user.
 func (c *EntitlementsPatchCall) Install(install bool) *EntitlementsPatchCall {
-	c.urlParams_.Set("install", fmt.Sprintf("%v", install))
+	c.urlParams_.Set("install", fmt.Sprint(install))
 	return c
 }
 
@@ -4829,7 +4829,7 @@ func (r *EntitlementsService) Update(enterpriseId string, userId string, entitle
 // from returning successfully, as long as the entitlement was
 // successfully assigned to the user.
 func (c *EntitlementsUpdateCall) Install(install bool) *EntitlementsUpdateCall {
-	c.urlParams_.Set("install", fmt.Sprintf("%v", install))
+	c.urlParams_.Set("install", fmt.Sprint(install))
 	return c
 }
 

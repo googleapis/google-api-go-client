@@ -2272,7 +2272,7 @@ func (r *ActivitiesService) List(userId string, collection string) *ActivitiesLi
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2449,7 +2449,7 @@ func (c *ActivitiesSearchCall) Language(language string) *ActivitiesSearchCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *ActivitiesSearchCall) MaxResults(maxResults int64) *ActivitiesSearchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2761,7 +2761,7 @@ func (r *CommentsService) List(activityId string) *CommentsListCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *CommentsListCall) MaxResults(maxResults int64) *CommentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2944,7 +2944,7 @@ func (r *MomentsService) Insert(userId string, collection string, moment *Moment
 // Debug sets the optional parameter "debug": Return the moment as
 // written. Should be used only for debugging.
 func (c *MomentsInsertCall) Debug(debug bool) *MomentsInsertCall {
-	c.urlParams_.Set("debug", fmt.Sprintf("%v", debug))
+	c.urlParams_.Set("debug", fmt.Sprint(debug))
 	return c
 }
 
@@ -3094,7 +3094,7 @@ func (r *MomentsService) List(userId string, collection string) *MomentsListCall
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *MomentsListCall) MaxResults(maxResults int64) *MomentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3418,7 +3418,7 @@ func (r *PeopleService) List(userId string, collection string) *PeopleListCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleListCall) MaxResults(maxResults int64) *PeopleListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3617,7 +3617,7 @@ func (r *PeopleService) ListByActivity(activityId string, collection string) *Pe
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleListByActivityCall) MaxResults(maxResults int64) *PeopleListByActivityCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3796,7 +3796,7 @@ func (c *PeopleSearchCall) Language(language string) *PeopleSearchCall {
 // paging. For any response, the actual number returned might be less
 // than the specified maxResults.
 func (c *PeopleSearchCall) MaxResults(maxResults int64) *PeopleSearchCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

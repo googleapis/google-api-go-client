@@ -768,7 +768,7 @@ func (r *ChangesService) List(project string, managedZone string) *ChangesListCa
 // of results to be returned. If unspecified, the server will decide how
 // many results to return.
 func (c *ChangesListCall) MaxResults(maxResults int64) *ChangesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1321,7 +1321,7 @@ func (c *ManagedZonesListCall) DnsName(dnsName string) *ManagedZonesListCall {
 // of results to be returned. If unspecified, the server will decide how
 // many results to return.
 func (c *ManagedZonesListCall) MaxResults(maxResults int64) *ManagedZonesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1608,7 +1608,7 @@ func (r *ResourceRecordSetsService) List(project string, managedZone string) *Re
 // of results to be returned. If unspecified, the server will decide how
 // many results to return.
 func (c *ResourceRecordSetsListCall) MaxResults(maxResults int64) *ResourceRecordSetsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

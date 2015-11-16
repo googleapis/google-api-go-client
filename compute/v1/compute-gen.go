@@ -8077,7 +8077,7 @@ func (c *AddressesAggregatedListCall) Filter(filter string) *AddressesAggregated
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *AddressesAggregatedListCall) MaxResults(maxResults int64) *AddressesAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8680,7 +8680,7 @@ func (c *AddressesListCall) Filter(filter string) *AddressesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *AddressesListCall) MaxResults(maxResults int64) *AddressesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8870,7 +8870,7 @@ func (c *AutoscalersAggregatedListCall) Filter(filter string) *AutoscalersAggreg
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *AutoscalersAggregatedListCall) MaxResults(maxResults int64) *AutoscalersAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -9469,7 +9469,7 @@ func (c *AutoscalersListCall) Filter(filter string) *AutoscalersListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *AutoscalersListCall) MaxResults(maxResults int64) *AutoscalersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10472,7 +10472,7 @@ func (c *BackendServicesListCall) Filter(filter string) *BackendServicesListCall
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *BackendServicesListCall) MaxResults(maxResults int64) *BackendServicesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10924,7 +10924,7 @@ func (c *DiskTypesAggregatedListCall) Filter(filter string) *DiskTypesAggregated
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *DiskTypesAggregatedListCall) MaxResults(maxResults int64) *DiskTypesAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -11258,7 +11258,7 @@ func (c *DiskTypesListCall) Filter(filter string) *DiskTypesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *DiskTypesListCall) MaxResults(maxResults int64) *DiskTypesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -11449,7 +11449,7 @@ func (c *DisksAggregatedListCall) Filter(filter string) *DisksAggregatedListCall
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *DisksAggregatedListCall) MaxResults(maxResults int64) *DisksAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -12212,7 +12212,7 @@ func (c *DisksListCall) Filter(filter string) *DisksListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *DisksListCall) MaxResults(maxResults int64) *DisksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -12789,7 +12789,7 @@ func (c *FirewallsListCall) Filter(filter string) *FirewallsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *FirewallsListCall) MaxResults(maxResults int64) *FirewallsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -13242,7 +13242,7 @@ func (c *ForwardingRulesAggregatedListCall) Filter(filter string) *ForwardingRul
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ForwardingRulesAggregatedListCall) MaxResults(maxResults int64) *ForwardingRulesAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -13845,7 +13845,7 @@ func (c *ForwardingRulesListCall) Filter(filter string) *ForwardingRulesListCall
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ForwardingRulesListCall) MaxResults(maxResults int64) *ForwardingRulesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -14567,7 +14567,7 @@ func (c *GlobalAddressesListCall) Filter(filter string) *GlobalAddressesListCall
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *GlobalAddressesListCall) MaxResults(maxResults int64) *GlobalAddressesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -15135,7 +15135,7 @@ func (c *GlobalForwardingRulesListCall) Filter(filter string) *GlobalForwardingR
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *GlobalForwardingRulesListCall) MaxResults(maxResults int64) *GlobalForwardingRulesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -15453,7 +15453,7 @@ func (c *GlobalOperationsAggregatedListCall) Filter(filter string) *GlobalOperat
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *GlobalOperationsAggregatedListCall) MaxResults(maxResults int64) *GlobalOperationsAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -15870,7 +15870,7 @@ func (c *GlobalOperationsListCall) Filter(filter string) *GlobalOperationsListCa
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *GlobalOperationsListCall) MaxResults(maxResults int64) *GlobalOperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -16438,7 +16438,7 @@ func (c *HttpHealthChecksListCall) Filter(filter string) *HttpHealthChecksListCa
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *HttpHealthChecksListCall) MaxResults(maxResults int64) *HttpHealthChecksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -17273,7 +17273,7 @@ func (c *HttpsHealthChecksListCall) Filter(filter string) *HttpsHealthChecksList
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *HttpsHealthChecksListCall) MaxResults(maxResults int64) *HttpsHealthChecksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -18257,7 +18257,7 @@ func (c *ImagesListCall) Filter(filter string) *ImagesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ImagesListCall) MaxResults(maxResults int64) *ImagesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -18589,7 +18589,7 @@ func (c *InstanceGroupManagersAggregatedListCall) Filter(filter string) *Instanc
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *InstanceGroupManagersAggregatedListCall) MaxResults(maxResults int64) *InstanceGroupManagersAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -19340,7 +19340,7 @@ func (c *InstanceGroupManagersListCall) Filter(filter string) *InstanceGroupMana
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *InstanceGroupManagersListCall) MaxResults(maxResults int64) *InstanceGroupManagersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -19799,7 +19799,7 @@ func (r *InstanceGroupManagersService) Resize(project string, zone string, insta
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
-	c.urlParams_.Set("size", fmt.Sprintf("%v", size))
+	c.urlParams_.Set("size", fmt.Sprint(size))
 	return c
 }
 
@@ -20399,7 +20399,7 @@ func (c *InstanceGroupsAggregatedListCall) Filter(filter string) *InstanceGroups
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *InstanceGroupsAggregatedListCall) MaxResults(maxResults int64) *InstanceGroupsAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -20994,7 +20994,7 @@ func (c *InstanceGroupsListCall) Filter(filter string) *InstanceGroupsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *InstanceGroupsListCall) MaxResults(maxResults int64) *InstanceGroupsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -21188,7 +21188,7 @@ func (c *InstanceGroupsListInstancesCall) Filter(filter string) *InstanceGroupsL
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *InstanceGroupsListInstancesCall) MaxResults(maxResults int64) *InstanceGroupsListInstancesCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -22053,7 +22053,7 @@ func (c *InstanceTemplatesListCall) Filter(filter string) *InstanceTemplatesList
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *InstanceTemplatesListCall) MaxResults(maxResults int64) *InstanceTemplatesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -22389,7 +22389,7 @@ func (c *InstancesAggregatedListCall) Filter(filter string) *InstancesAggregated
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *InstancesAggregatedListCall) MaxResults(maxResults int64) *InstancesAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -23279,7 +23279,7 @@ func (r *InstancesService) GetSerialPortOutput(project string, zone string, inst
 // Port sets the optional parameter "port": Specifies which COM or
 // serial port to retrieve data from.
 func (c *InstancesGetSerialPortOutputCall) Port(port int64) *InstancesGetSerialPortOutputCall {
-	c.urlParams_.Set("port", fmt.Sprintf("%v", port))
+	c.urlParams_.Set("port", fmt.Sprint(port))
 	return c
 }
 
@@ -23598,7 +23598,7 @@ func (c *InstancesListCall) Filter(filter string) *InstancesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *InstancesListCall) MaxResults(maxResults int64) *InstancesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -23901,7 +23901,7 @@ func (r *InstancesService) SetDiskAutoDelete(project string, zone string, instan
 	c.project = project
 	c.zone = zone
 	c.instance = instance
-	c.urlParams_.Set("autoDelete", fmt.Sprintf("%v", autoDelete))
+	c.urlParams_.Set("autoDelete", fmt.Sprint(autoDelete))
 	c.urlParams_.Set("deviceName", deviceName)
 	return c
 }
@@ -24927,7 +24927,7 @@ func (c *MachineTypesAggregatedListCall) Filter(filter string) *MachineTypesAggr
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *MachineTypesAggregatedListCall) MaxResults(maxResults int64) *MachineTypesAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -25261,7 +25261,7 @@ func (c *MachineTypesListCall) Filter(filter string) *MachineTypesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *MachineTypesListCall) MaxResults(maxResults int64) *MachineTypesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -25838,7 +25838,7 @@ func (c *NetworksListCall) Filter(filter string) *NetworksListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *NetworksListCall) MaxResults(maxResults int64) *NetworksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -26904,7 +26904,7 @@ func (c *RegionOperationsListCall) Filter(filter string) *RegionOperationsListCa
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *RegionOperationsListCall) MaxResults(maxResults int64) *RegionOperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -27234,7 +27234,7 @@ func (c *RegionsListCall) Filter(filter string) *RegionsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *RegionsListCall) MaxResults(maxResults int64) *RegionsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -27802,7 +27802,7 @@ func (c *RoutesListCall) Filter(filter string) *RoutesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *RoutesListCall) MaxResults(maxResults int64) *RoutesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -28252,7 +28252,7 @@ func (c *SnapshotsListCall) Filter(filter string) *SnapshotsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -28816,7 +28816,7 @@ func (c *SslCertificatesListCall) Filter(filter string) *SslCertificatesListCall
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *SslCertificatesListCall) MaxResults(maxResults int64) *SslCertificatesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -29384,7 +29384,7 @@ func (c *TargetHttpProxiesListCall) Filter(filter string) *TargetHttpProxiesList
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TargetHttpProxiesListCall) MaxResults(maxResults int64) *TargetHttpProxiesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -30082,7 +30082,7 @@ func (c *TargetHttpsProxiesListCall) Filter(filter string) *TargetHttpsProxiesLi
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TargetHttpsProxiesListCall) MaxResults(maxResults int64) *TargetHttpsProxiesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -30531,7 +30531,7 @@ func (c *TargetInstancesAggregatedListCall) Filter(filter string) *TargetInstanc
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TargetInstancesAggregatedListCall) MaxResults(maxResults int64) *TargetInstancesAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -31134,7 +31134,7 @@ func (c *TargetInstancesListCall) Filter(filter string) *TargetInstancesListCall
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TargetInstancesListCall) MaxResults(maxResults int64) *TargetInstancesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -31613,7 +31613,7 @@ func (c *TargetPoolsAggregatedListCall) Filter(filter string) *TargetPoolsAggreg
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TargetPoolsAggregatedListCall) MaxResults(maxResults int64) *TargetPoolsAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -32362,7 +32362,7 @@ func (c *TargetPoolsListCall) Filter(filter string) *TargetPoolsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TargetPoolsListCall) MaxResults(maxResults int64) *TargetPoolsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -32826,7 +32826,7 @@ func (r *TargetPoolsService) SetBackup(project string, region string, targetPool
 // FailoverRatio sets the optional parameter "failoverRatio": New
 // failoverRatio value for the containing target pool.
 func (c *TargetPoolsSetBackupCall) FailoverRatio(failoverRatio float64) *TargetPoolsSetBackupCall {
-	c.urlParams_.Set("failoverRatio", fmt.Sprintf("%v", failoverRatio))
+	c.urlParams_.Set("failoverRatio", fmt.Sprint(failoverRatio))
 	return c
 }
 
@@ -32999,7 +32999,7 @@ func (c *TargetVpnGatewaysAggregatedListCall) Filter(filter string) *TargetVpnGa
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TargetVpnGatewaysAggregatedListCall) MaxResults(maxResults int64) *TargetVpnGatewaysAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -33598,7 +33598,7 @@ func (c *TargetVpnGatewaysListCall) Filter(filter string) *TargetVpnGatewaysList
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TargetVpnGatewaysListCall) MaxResults(maxResults int64) *TargetVpnGatewaysListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -34175,7 +34175,7 @@ func (c *UrlMapsListCall) Filter(filter string) *UrlMapsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *UrlMapsListCall) MaxResults(maxResults int64) *UrlMapsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -34761,7 +34761,7 @@ func (c *VpnTunnelsAggregatedListCall) Filter(filter string) *VpnTunnelsAggregat
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *VpnTunnelsAggregatedListCall) MaxResults(maxResults int64) *VpnTunnelsAggregatedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -35360,7 +35360,7 @@ func (c *VpnTunnelsListCall) Filter(filter string) *VpnTunnelsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *VpnTunnelsListCall) MaxResults(maxResults int64) *VpnTunnelsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -35810,7 +35810,7 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -36140,7 +36140,7 @@ func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

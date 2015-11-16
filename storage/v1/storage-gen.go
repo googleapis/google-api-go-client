@@ -1868,7 +1868,7 @@ func (r *BucketsService) Delete(bucket string) *BucketsDeleteCall {
 // "ifMetagenerationMatch": If set, only deletes the bucket if its
 // metageneration matches this value.
 func (c *BucketsDeleteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *BucketsDeleteCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -1876,7 +1876,7 @@ func (c *BucketsDeleteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *
 // "ifMetagenerationNotMatch": If set, only deletes the bucket if its
 // metageneration does not match this value.
 func (c *BucketsDeleteCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *BucketsDeleteCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -1982,7 +1982,7 @@ func (r *BucketsService) Get(bucket string) *BucketsGetCall {
 // conditional on whether the bucket's current metageneration matches
 // the given value.
 func (c *BucketsGetCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *BucketsGetCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -1991,7 +1991,7 @@ func (c *BucketsGetCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *Buc
 // conditional on whether the bucket's current metageneration does not
 // match the given value.
 func (c *BucketsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *BucketsGetCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -2384,7 +2384,7 @@ func (r *BucketsService) List(projectid string) *BucketsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of buckets to return.
 func (c *BucketsListCall) MaxResults(maxResults int64) *BucketsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2575,7 +2575,7 @@ func (r *BucketsService) Patch(bucket string, bucket2 *Bucket) *BucketsPatchCall
 // conditional on whether the bucket's current metageneration matches
 // the given value.
 func (c *BucketsPatchCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *BucketsPatchCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -2584,7 +2584,7 @@ func (c *BucketsPatchCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *B
 // conditional on whether the bucket's current metageneration does not
 // match the given value.
 func (c *BucketsPatchCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *BucketsPatchCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -2830,7 +2830,7 @@ func (r *BucketsService) Update(bucket string, bucket2 *Bucket) *BucketsUpdateCa
 // conditional on whether the bucket's current metageneration matches
 // the given value.
 func (c *BucketsUpdateCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *BucketsUpdateCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -2839,7 +2839,7 @@ func (c *BucketsUpdateCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *
 // conditional on whether the bucket's current metageneration does not
 // match the given value.
 func (c *BucketsUpdateCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *BucketsUpdateCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -3514,7 +3514,7 @@ func (r *DefaultObjectAccessControlsService) List(bucket string) *DefaultObjectA
 // "ifMetagenerationMatch": If present, only return default ACL listing
 // if the bucket's current metageneration matches this value.
 func (c *DefaultObjectAccessControlsListCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *DefaultObjectAccessControlsListCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -3523,7 +3523,7 @@ func (c *DefaultObjectAccessControlsListCall) IfMetagenerationMatch(ifMetagenera
 // listing if the bucket's current metageneration does not match the
 // given value.
 func (c *DefaultObjectAccessControlsListCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *DefaultObjectAccessControlsListCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -3931,7 +3931,7 @@ func (r *ObjectAccessControlsService) Delete(bucket string, object string, entit
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectAccessControlsDeleteCall) Generation(generation int64) *ObjectAccessControlsDeleteCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -4049,7 +4049,7 @@ func (r *ObjectAccessControlsService) Get(bucket string, object string, entity s
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectAccessControlsGetCall) Generation(generation int64) *ObjectAccessControlsGetCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -4205,7 +4205,7 @@ func (r *ObjectAccessControlsService) Insert(bucket string, object string, objec
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectAccessControlsInsertCall) Generation(generation int64) *ObjectAccessControlsInsertCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -4348,7 +4348,7 @@ func (r *ObjectAccessControlsService) List(bucket string, object string) *Object
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectAccessControlsListCall) Generation(generation int64) *ObjectAccessControlsListCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -4499,7 +4499,7 @@ func (r *ObjectAccessControlsService) Patch(bucket string, object string, entity
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectAccessControlsPatchCall) Generation(generation int64) *ObjectAccessControlsPatchCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -4653,7 +4653,7 @@ func (r *ObjectAccessControlsService) Update(bucket string, object string, entit
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectAccessControlsUpdateCall) Generation(generation int64) *ObjectAccessControlsUpdateCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -4827,7 +4827,7 @@ func (c *ObjectsComposeCall) DestinationPredefinedAcl(destinationPredefinedAcl s
 // Makes the operation conditional on whether the object's current
 // generation matches the given value.
 func (c *ObjectsComposeCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsComposeCall {
-	c.urlParams_.Set("ifGenerationMatch", fmt.Sprintf("%v", ifGenerationMatch))
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
 	return c
 }
 
@@ -4835,7 +4835,7 @@ func (c *ObjectsComposeCall) IfGenerationMatch(ifGenerationMatch int64) *Objects
 // "ifMetagenerationMatch": Makes the operation conditional on whether
 // the object's current metageneration matches the given value.
 func (c *ObjectsComposeCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsComposeCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -5050,7 +5050,7 @@ func (c *ObjectsCopyCall) DestinationPredefinedAcl(destinationPredefinedAcl stri
 // Makes the operation conditional on whether the destination object's
 // current generation matches the given value.
 func (c *ObjectsCopyCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsCopyCall {
-	c.urlParams_.Set("ifGenerationMatch", fmt.Sprintf("%v", ifGenerationMatch))
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
 	return c
 }
 
@@ -5059,7 +5059,7 @@ func (c *ObjectsCopyCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsCop
 // the destination object's current generation does not match the given
 // value.
 func (c *ObjectsCopyCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsCopyCall {
-	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprintf("%v", ifGenerationNotMatch))
+	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprint(ifGenerationNotMatch))
 	return c
 }
 
@@ -5068,7 +5068,7 @@ func (c *ObjectsCopyCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *Obje
 // the destination object's current metageneration matches the given
 // value.
 func (c *ObjectsCopyCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsCopyCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -5077,7 +5077,7 @@ func (c *ObjectsCopyCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *Ob
 // whether the destination object's current metageneration does not
 // match the given value.
 func (c *ObjectsCopyCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsCopyCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -5085,7 +5085,7 @@ func (c *ObjectsCopyCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int6
 // "ifSourceGenerationMatch": Makes the operation conditional on whether
 // the source object's generation matches the given value.
 func (c *ObjectsCopyCall) IfSourceGenerationMatch(ifSourceGenerationMatch int64) *ObjectsCopyCall {
-	c.urlParams_.Set("ifSourceGenerationMatch", fmt.Sprintf("%v", ifSourceGenerationMatch))
+	c.urlParams_.Set("ifSourceGenerationMatch", fmt.Sprint(ifSourceGenerationMatch))
 	return c
 }
 
@@ -5094,7 +5094,7 @@ func (c *ObjectsCopyCall) IfSourceGenerationMatch(ifSourceGenerationMatch int64)
 // whether the source object's generation does not match the given
 // value.
 func (c *ObjectsCopyCall) IfSourceGenerationNotMatch(ifSourceGenerationNotMatch int64) *ObjectsCopyCall {
-	c.urlParams_.Set("ifSourceGenerationNotMatch", fmt.Sprintf("%v", ifSourceGenerationNotMatch))
+	c.urlParams_.Set("ifSourceGenerationNotMatch", fmt.Sprint(ifSourceGenerationNotMatch))
 	return c
 }
 
@@ -5103,7 +5103,7 @@ func (c *ObjectsCopyCall) IfSourceGenerationNotMatch(ifSourceGenerationNotMatch 
 // whether the source object's current metageneration matches the given
 // value.
 func (c *ObjectsCopyCall) IfSourceMetagenerationMatch(ifSourceMetagenerationMatch int64) *ObjectsCopyCall {
-	c.urlParams_.Set("ifSourceMetagenerationMatch", fmt.Sprintf("%v", ifSourceMetagenerationMatch))
+	c.urlParams_.Set("ifSourceMetagenerationMatch", fmt.Sprint(ifSourceMetagenerationMatch))
 	return c
 }
 
@@ -5112,7 +5112,7 @@ func (c *ObjectsCopyCall) IfSourceMetagenerationMatch(ifSourceMetagenerationMatc
 // whether the source object's current metageneration does not match the
 // given value.
 func (c *ObjectsCopyCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerationNotMatch int64) *ObjectsCopyCall {
-	c.urlParams_.Set("ifSourceMetagenerationNotMatch", fmt.Sprintf("%v", ifSourceMetagenerationNotMatch))
+	c.urlParams_.Set("ifSourceMetagenerationNotMatch", fmt.Sprint(ifSourceMetagenerationNotMatch))
 	return c
 }
 
@@ -5132,7 +5132,7 @@ func (c *ObjectsCopyCall) Projection(projection string) *ObjectsCopyCall {
 // present, selects a specific revision of the source object (as opposed
 // to the latest version, the default).
 func (c *ObjectsCopyCall) SourceGeneration(sourceGeneration int64) *ObjectsCopyCall {
-	c.urlParams_.Set("sourceGeneration", fmt.Sprintf("%v", sourceGeneration))
+	c.urlParams_.Set("sourceGeneration", fmt.Sprint(sourceGeneration))
 	return c
 }
 
@@ -5392,7 +5392,7 @@ func (r *ObjectsService) Delete(bucket string, object string) *ObjectsDeleteCall
 // permanently deletes a specific revision of this object (as opposed to
 // the latest version, the default).
 func (c *ObjectsDeleteCall) Generation(generation int64) *ObjectsDeleteCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -5400,7 +5400,7 @@ func (c *ObjectsDeleteCall) Generation(generation int64) *ObjectsDeleteCall {
 // Makes the operation conditional on whether the object's current
 // generation matches the given value.
 func (c *ObjectsDeleteCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsDeleteCall {
-	c.urlParams_.Set("ifGenerationMatch", fmt.Sprintf("%v", ifGenerationMatch))
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
 	return c
 }
 
@@ -5408,7 +5408,7 @@ func (c *ObjectsDeleteCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsD
 // "ifGenerationNotMatch": Makes the operation conditional on whether
 // the object's current generation does not match the given value.
 func (c *ObjectsDeleteCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsDeleteCall {
-	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprintf("%v", ifGenerationNotMatch))
+	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprint(ifGenerationNotMatch))
 	return c
 }
 
@@ -5416,7 +5416,7 @@ func (c *ObjectsDeleteCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *Ob
 // "ifMetagenerationMatch": Makes the operation conditional on whether
 // the object's current metageneration matches the given value.
 func (c *ObjectsDeleteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsDeleteCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -5425,7 +5425,7 @@ func (c *ObjectsDeleteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *
 // whether the object's current metageneration does not match the given
 // value.
 func (c *ObjectsDeleteCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsDeleteCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -5558,7 +5558,7 @@ func (r *ObjectsService) Get(bucket string, object string) *ObjectsGetCall {
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectsGetCall) Generation(generation int64) *ObjectsGetCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -5566,7 +5566,7 @@ func (c *ObjectsGetCall) Generation(generation int64) *ObjectsGetCall {
 // Makes the operation conditional on whether the object's generation
 // matches the given value.
 func (c *ObjectsGetCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsGetCall {
-	c.urlParams_.Set("ifGenerationMatch", fmt.Sprintf("%v", ifGenerationMatch))
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
 	return c
 }
 
@@ -5574,7 +5574,7 @@ func (c *ObjectsGetCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsGetC
 // "ifGenerationNotMatch": Makes the operation conditional on whether
 // the object's generation does not match the given value.
 func (c *ObjectsGetCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsGetCall {
-	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprintf("%v", ifGenerationNotMatch))
+	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprint(ifGenerationNotMatch))
 	return c
 }
 
@@ -5582,7 +5582,7 @@ func (c *ObjectsGetCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *Objec
 // "ifMetagenerationMatch": Makes the operation conditional on whether
 // the object's current metageneration matches the given value.
 func (c *ObjectsGetCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsGetCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -5591,7 +5591,7 @@ func (c *ObjectsGetCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *Obj
 // whether the object's current metageneration does not match the given
 // value.
 func (c *ObjectsGetCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsGetCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -5821,7 +5821,7 @@ func (c *ObjectsInsertCall) ContentEncoding(contentEncoding string) *ObjectsInse
 // Makes the operation conditional on whether the object's current
 // generation matches the given value.
 func (c *ObjectsInsertCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsInsertCall {
-	c.urlParams_.Set("ifGenerationMatch", fmt.Sprintf("%v", ifGenerationMatch))
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
 	return c
 }
 
@@ -5829,7 +5829,7 @@ func (c *ObjectsInsertCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsI
 // "ifGenerationNotMatch": Makes the operation conditional on whether
 // the object's current generation does not match the given value.
 func (c *ObjectsInsertCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsInsertCall {
-	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprintf("%v", ifGenerationNotMatch))
+	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprint(ifGenerationNotMatch))
 	return c
 }
 
@@ -5837,7 +5837,7 @@ func (c *ObjectsInsertCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *Ob
 // "ifMetagenerationMatch": Makes the operation conditional on whether
 // the object's current metageneration matches the given value.
 func (c *ObjectsInsertCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsInsertCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -5846,7 +5846,7 @@ func (c *ObjectsInsertCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *
 // whether the object's current metageneration does not match the given
 // value.
 func (c *ObjectsInsertCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsInsertCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -6182,7 +6182,7 @@ func (c *ObjectsListCall) Delimiter(delimiter string) *ObjectsListCall {
 // fewer total results may be returned than requested. The default value
 // of this parameter is 1,000 items.
 func (c *ObjectsListCall) MaxResults(maxResults int64) *ObjectsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6216,7 +6216,7 @@ func (c *ObjectsListCall) Projection(projection string) *ObjectsListCall {
 // versions of an object as distinct results. The default is false. For
 // more information, see Object Versioning.
 func (c *ObjectsListCall) Versions(versions bool) *ObjectsListCall {
-	c.urlParams_.Set("versions", fmt.Sprintf("%v", versions))
+	c.urlParams_.Set("versions", fmt.Sprint(versions))
 	return c
 }
 
@@ -6396,7 +6396,7 @@ func (r *ObjectsService) Patch(bucket string, object string, object2 *Object) *O
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectsPatchCall) Generation(generation int64) *ObjectsPatchCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -6404,7 +6404,7 @@ func (c *ObjectsPatchCall) Generation(generation int64) *ObjectsPatchCall {
 // Makes the operation conditional on whether the object's current
 // generation matches the given value.
 func (c *ObjectsPatchCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsPatchCall {
-	c.urlParams_.Set("ifGenerationMatch", fmt.Sprintf("%v", ifGenerationMatch))
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
 	return c
 }
 
@@ -6412,7 +6412,7 @@ func (c *ObjectsPatchCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsPa
 // "ifGenerationNotMatch": Makes the operation conditional on whether
 // the object's current generation does not match the given value.
 func (c *ObjectsPatchCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsPatchCall {
-	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprintf("%v", ifGenerationNotMatch))
+	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprint(ifGenerationNotMatch))
 	return c
 }
 
@@ -6420,7 +6420,7 @@ func (c *ObjectsPatchCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *Obj
 // "ifMetagenerationMatch": Makes the operation conditional on whether
 // the object's current metageneration matches the given value.
 func (c *ObjectsPatchCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsPatchCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -6429,7 +6429,7 @@ func (c *ObjectsPatchCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *O
 // whether the object's current metageneration does not match the given
 // value.
 func (c *ObjectsPatchCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsPatchCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -6690,7 +6690,7 @@ func (c *ObjectsRewriteCall) DestinationPredefinedAcl(destinationPredefinedAcl s
 // Makes the operation conditional on whether the destination object's
 // current generation matches the given value.
 func (c *ObjectsRewriteCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("ifGenerationMatch", fmt.Sprintf("%v", ifGenerationMatch))
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
 	return c
 }
 
@@ -6699,7 +6699,7 @@ func (c *ObjectsRewriteCall) IfGenerationMatch(ifGenerationMatch int64) *Objects
 // the destination object's current generation does not match the given
 // value.
 func (c *ObjectsRewriteCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprintf("%v", ifGenerationNotMatch))
+	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprint(ifGenerationNotMatch))
 	return c
 }
 
@@ -6708,7 +6708,7 @@ func (c *ObjectsRewriteCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *O
 // the destination object's current metageneration matches the given
 // value.
 func (c *ObjectsRewriteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -6717,7 +6717,7 @@ func (c *ObjectsRewriteCall) IfMetagenerationMatch(ifMetagenerationMatch int64) 
 // whether the destination object's current metageneration does not
 // match the given value.
 func (c *ObjectsRewriteCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -6725,7 +6725,7 @@ func (c *ObjectsRewriteCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch i
 // "ifSourceGenerationMatch": Makes the operation conditional on whether
 // the source object's generation matches the given value.
 func (c *ObjectsRewriteCall) IfSourceGenerationMatch(ifSourceGenerationMatch int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("ifSourceGenerationMatch", fmt.Sprintf("%v", ifSourceGenerationMatch))
+	c.urlParams_.Set("ifSourceGenerationMatch", fmt.Sprint(ifSourceGenerationMatch))
 	return c
 }
 
@@ -6734,7 +6734,7 @@ func (c *ObjectsRewriteCall) IfSourceGenerationMatch(ifSourceGenerationMatch int
 // whether the source object's generation does not match the given
 // value.
 func (c *ObjectsRewriteCall) IfSourceGenerationNotMatch(ifSourceGenerationNotMatch int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("ifSourceGenerationNotMatch", fmt.Sprintf("%v", ifSourceGenerationNotMatch))
+	c.urlParams_.Set("ifSourceGenerationNotMatch", fmt.Sprint(ifSourceGenerationNotMatch))
 	return c
 }
 
@@ -6743,7 +6743,7 @@ func (c *ObjectsRewriteCall) IfSourceGenerationNotMatch(ifSourceGenerationNotMat
 // whether the source object's current metageneration matches the given
 // value.
 func (c *ObjectsRewriteCall) IfSourceMetagenerationMatch(ifSourceMetagenerationMatch int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("ifSourceMetagenerationMatch", fmt.Sprintf("%v", ifSourceMetagenerationMatch))
+	c.urlParams_.Set("ifSourceMetagenerationMatch", fmt.Sprint(ifSourceMetagenerationMatch))
 	return c
 }
 
@@ -6752,7 +6752,7 @@ func (c *ObjectsRewriteCall) IfSourceMetagenerationMatch(ifSourceMetagenerationM
 // whether the source object's current metageneration does not match the
 // given value.
 func (c *ObjectsRewriteCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerationNotMatch int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("ifSourceMetagenerationNotMatch", fmt.Sprintf("%v", ifSourceMetagenerationNotMatch))
+	c.urlParams_.Set("ifSourceMetagenerationNotMatch", fmt.Sprint(ifSourceMetagenerationNotMatch))
 	return c
 }
 
@@ -6766,7 +6766,7 @@ func (c *ObjectsRewriteCall) IfSourceMetagenerationNotMatch(ifSourceMetagenerati
 // change across rewrite calls else you'll get an error that the
 // rewriteToken is invalid.
 func (c *ObjectsRewriteCall) MaxBytesRewrittenPerCall(maxBytesRewrittenPerCall int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("maxBytesRewrittenPerCall", fmt.Sprintf("%v", maxBytesRewrittenPerCall))
+	c.urlParams_.Set("maxBytesRewrittenPerCall", fmt.Sprint(maxBytesRewrittenPerCall))
 	return c
 }
 
@@ -6797,7 +6797,7 @@ func (c *ObjectsRewriteCall) RewriteToken(rewriteToken string) *ObjectsRewriteCa
 // present, selects a specific revision of the source object (as opposed
 // to the latest version, the default).
 func (c *ObjectsRewriteCall) SourceGeneration(sourceGeneration int64) *ObjectsRewriteCall {
-	c.urlParams_.Set("sourceGeneration", fmt.Sprintf("%v", sourceGeneration))
+	c.urlParams_.Set("sourceGeneration", fmt.Sprint(sourceGeneration))
 	return c
 }
 
@@ -7052,7 +7052,7 @@ func (r *ObjectsService) Update(bucket string, object string, object2 *Object) *
 // selects a specific revision of this object (as opposed to the latest
 // version, the default).
 func (c *ObjectsUpdateCall) Generation(generation int64) *ObjectsUpdateCall {
-	c.urlParams_.Set("generation", fmt.Sprintf("%v", generation))
+	c.urlParams_.Set("generation", fmt.Sprint(generation))
 	return c
 }
 
@@ -7060,7 +7060,7 @@ func (c *ObjectsUpdateCall) Generation(generation int64) *ObjectsUpdateCall {
 // Makes the operation conditional on whether the object's current
 // generation matches the given value.
 func (c *ObjectsUpdateCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsUpdateCall {
-	c.urlParams_.Set("ifGenerationMatch", fmt.Sprintf("%v", ifGenerationMatch))
+	c.urlParams_.Set("ifGenerationMatch", fmt.Sprint(ifGenerationMatch))
 	return c
 }
 
@@ -7068,7 +7068,7 @@ func (c *ObjectsUpdateCall) IfGenerationMatch(ifGenerationMatch int64) *ObjectsU
 // "ifGenerationNotMatch": Makes the operation conditional on whether
 // the object's current generation does not match the given value.
 func (c *ObjectsUpdateCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *ObjectsUpdateCall {
-	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprintf("%v", ifGenerationNotMatch))
+	c.urlParams_.Set("ifGenerationNotMatch", fmt.Sprint(ifGenerationNotMatch))
 	return c
 }
 
@@ -7076,7 +7076,7 @@ func (c *ObjectsUpdateCall) IfGenerationNotMatch(ifGenerationNotMatch int64) *Ob
 // "ifMetagenerationMatch": Makes the operation conditional on whether
 // the object's current metageneration matches the given value.
 func (c *ObjectsUpdateCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *ObjectsUpdateCall {
-	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprintf("%v", ifMetagenerationMatch))
+	c.urlParams_.Set("ifMetagenerationMatch", fmt.Sprint(ifMetagenerationMatch))
 	return c
 }
 
@@ -7085,7 +7085,7 @@ func (c *ObjectsUpdateCall) IfMetagenerationMatch(ifMetagenerationMatch int64) *
 // whether the object's current metageneration does not match the given
 // value.
 func (c *ObjectsUpdateCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch int64) *ObjectsUpdateCall {
-	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprintf("%v", ifMetagenerationNotMatch))
+	c.urlParams_.Set("ifMetagenerationNotMatch", fmt.Sprint(ifMetagenerationNotMatch))
 	return c
 }
 
@@ -7346,7 +7346,7 @@ func (c *ObjectsWatchAllCall) Delimiter(delimiter string) *ObjectsWatchAllCall {
 // fewer total results may be returned than requested. The default value
 // of this parameter is 1,000 items.
 func (c *ObjectsWatchAllCall) MaxResults(maxResults int64) *ObjectsWatchAllCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7380,7 +7380,7 @@ func (c *ObjectsWatchAllCall) Projection(projection string) *ObjectsWatchAllCall
 // versions of an object as distinct results. The default is false. For
 // more information, see Object Versioning.
 func (c *ObjectsWatchAllCall) Versions(versions bool) *ObjectsWatchAllCall {
-	c.urlParams_.Set("versions", fmt.Sprintf("%v", versions))
+	c.urlParams_.Set("versions", fmt.Sprint(versions))
 	return c
 }
 

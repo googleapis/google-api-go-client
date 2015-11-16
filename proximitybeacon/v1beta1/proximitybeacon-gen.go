@@ -1332,7 +1332,7 @@ func (r *BeaconsService) List() *BeaconsListCall {
 // of records to return for this request, up to a server-defined upper
 // limit.
 func (c *BeaconsListCall) PageSize(pageSize int64) *BeaconsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -2269,7 +2269,7 @@ func (c *BeaconsDiagnosticsListCall) AlertFilter(alertFilter string) *BeaconsDia
 // PageSize sets the optional parameter "pageSize": Specifies the
 // maximum number of results to return. Defaults to 10. Maximum 1000.
 func (c *BeaconsDiagnosticsListCall) PageSize(pageSize int64) *BeaconsDiagnosticsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

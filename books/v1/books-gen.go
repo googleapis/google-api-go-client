@@ -3679,14 +3679,14 @@ func (r *BookshelvesVolumesService) List(userId string, shelf string) *Bookshelv
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *BookshelvesVolumesListCall) MaxResults(maxResults int64) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *BookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("showPreorders", fmt.Sprintf("%v", showPreorders))
+	c.urlParams_.Set("showPreorders", fmt.Sprint(showPreorders))
 	return c
 }
 
@@ -3700,7 +3700,7 @@ func (c *BookshelvesVolumesListCall) Source(source string) *BookshelvesVolumesLi
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first element to return (starts at 0)
 func (c *BookshelvesVolumesListCall) StartIndex(startIndex int64) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -4473,7 +4473,7 @@ func (c *LayersListCall) ContentVersion(contentVersion string) *LayersListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *LayersListCall) MaxResults(maxResults int64) *LayersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4646,14 +4646,14 @@ func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annot
 // "allowWebDefinitions": For the dictionary layer. Whether or not to
 // allow web definitions.
 func (c *LayersAnnotationDataGetCall) AllowWebDefinitions(allowWebDefinitions bool) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("allowWebDefinitions", fmt.Sprintf("%v", allowWebDefinitions))
+	c.urlParams_.Set("allowWebDefinitions", fmt.Sprint(allowWebDefinitions))
 	return c
 }
 
 // H sets the optional parameter "h": The requested pixel height for any
 // images. If height is provided width must also be provided.
 func (c *LayersAnnotationDataGetCall) H(h int64) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("h", fmt.Sprintf("%v", h))
+	c.urlParams_.Set("h", fmt.Sprint(h))
 	return c
 }
 
@@ -4668,7 +4668,7 @@ func (c *LayersAnnotationDataGetCall) Locale(locale string) *LayersAnnotationDat
 // Scale sets the optional parameter "scale": The requested scale for
 // the image.
 func (c *LayersAnnotationDataGetCall) Scale(scale int64) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("scale", fmt.Sprintf("%v", scale))
+	c.urlParams_.Set("scale", fmt.Sprint(scale))
 	return c
 }
 
@@ -4682,7 +4682,7 @@ func (c *LayersAnnotationDataGetCall) Source(source string) *LayersAnnotationDat
 // W sets the optional parameter "w": The requested pixel width for any
 // images. If width is provided height must also be provided.
 func (c *LayersAnnotationDataGetCall) W(w int64) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("w", fmt.Sprintf("%v", w))
+	c.urlParams_.Set("w", fmt.Sprint(w))
 	return c
 }
 
@@ -4872,7 +4872,7 @@ func (r *LayersAnnotationDataService) List(volumeId string, layerId string, cont
 // AnnotationDataId sets the optional parameter "annotationDataId": The
 // list of Annotation Data Ids to retrieve. Pagination is ignored if
 // this is set.
-func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId []string) *LayersAnnotationDataListCall {
+func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId ...string) *LayersAnnotationDataListCall {
 	c.urlParams_.SetMulti("annotationDataId", append([]string{}, annotationDataId...))
 	return c
 }
@@ -4880,7 +4880,7 @@ func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId []strin
 // H sets the optional parameter "h": The requested pixel height for any
 // images. If height is provided width must also be provided.
 func (c *LayersAnnotationDataListCall) H(h int64) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("h", fmt.Sprintf("%v", h))
+	c.urlParams_.Set("h", fmt.Sprint(h))
 	return c
 }
 
@@ -4895,7 +4895,7 @@ func (c *LayersAnnotationDataListCall) Locale(locale string) *LayersAnnotationDa
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *LayersAnnotationDataListCall) MaxResults(maxResults int64) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4909,7 +4909,7 @@ func (c *LayersAnnotationDataListCall) PageToken(pageToken string) *LayersAnnota
 // Scale sets the optional parameter "scale": The requested scale for
 // the image.
 func (c *LayersAnnotationDataListCall) Scale(scale int64) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("scale", fmt.Sprintf("%v", scale))
+	c.urlParams_.Set("scale", fmt.Sprint(scale))
 	return c
 }
 
@@ -4939,7 +4939,7 @@ func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnno
 // W sets the optional parameter "w": The requested pixel width for any
 // images. If width is provided height must also be provided.
 func (c *LayersAnnotationDataListCall) W(w int64) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("w", fmt.Sprintf("%v", w))
+	c.urlParams_.Set("w", fmt.Sprint(w))
 	return c
 }
 
@@ -5335,7 +5335,7 @@ func (c *LayersVolumeAnnotationsListCall) Locale(locale string) *LayersVolumeAnn
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *LayersVolumeAnnotationsListCall) MaxResults(maxResults int64) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5350,7 +5350,7 @@ func (c *LayersVolumeAnnotationsListCall) PageToken(pageToken string) *LayersVol
 // return deleted annotations. updatedMin must be in the request to use
 // this. Defaults to false.
 func (c *LayersVolumeAnnotationsListCall) ShowDeleted(showDeleted bool) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -6022,7 +6022,7 @@ func (r *MyconfigService) SyncVolumeLicenses(source string, nonce string, cpksve
 //
 // Possible values:
 //   "RENTALS" - Client supports rentals.
-func (c *MyconfigSyncVolumeLicensesCall) Features(features []string) *MyconfigSyncVolumeLicensesCall {
+func (c *MyconfigSyncVolumeLicensesCall) Features(features ...string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.SetMulti("features", append([]string{}, features...))
 	return c
 }
@@ -6037,13 +6037,13 @@ func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolu
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.Set("showPreorders", fmt.Sprintf("%v", showPreorders))
+	c.urlParams_.Set("showPreorders", fmt.Sprint(showPreorders))
 	return c
 }
 
 // VolumeIds sets the optional parameter "volumeIds": The volume(s) to
 // request download restrictions for.
-func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds []string) *MyconfigSyncVolumeLicensesCall {
+func (c *MyconfigSyncVolumeLicensesCall) VolumeIds(volumeIds ...string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
 	return c
 }
@@ -6409,7 +6409,7 @@ func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnot
 // "showOnlySummaryInResponse": Requests that only the summary of the
 // specified layer be provided in the response.
 func (c *MylibraryAnnotationsInsertCall) ShowOnlySummaryInResponse(showOnlySummaryInResponse bool) *MylibraryAnnotationsInsertCall {
-	c.urlParams_.Set("showOnlySummaryInResponse", fmt.Sprintf("%v", showOnlySummaryInResponse))
+	c.urlParams_.Set("showOnlySummaryInResponse", fmt.Sprint(showOnlySummaryInResponse))
 	return c
 }
 
@@ -6557,7 +6557,7 @@ func (c *MylibraryAnnotationsListCall) LayerId(layerId string) *MylibraryAnnotat
 
 // LayerIds sets the optional parameter "layerIds": The layer ID(s) to
 // limit annotation by.
-func (c *MylibraryAnnotationsListCall) LayerIds(layerIds []string) *MylibraryAnnotationsListCall {
+func (c *MylibraryAnnotationsListCall) LayerIds(layerIds ...string) *MylibraryAnnotationsListCall {
 	c.urlParams_.SetMulti("layerIds", append([]string{}, layerIds...))
 	return c
 }
@@ -6565,7 +6565,7 @@ func (c *MylibraryAnnotationsListCall) LayerIds(layerIds []string) *MylibraryAnn
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *MylibraryAnnotationsListCall) MaxResults(maxResults int64) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6580,7 +6580,7 @@ func (c *MylibraryAnnotationsListCall) PageToken(pageToken string) *MylibraryAnn
 // return deleted annotations. updatedMin must be in the request to use
 // this. Defaults to false.
 func (c *MylibraryAnnotationsListCall) ShowDeleted(showDeleted bool) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("showDeleted", fmt.Sprintf("%v", showDeleted))
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -7506,7 +7506,7 @@ func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, 
 	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
 	c.urlParams_.Set("volumeId", volumeId)
-	c.urlParams_.Set("volumePosition", fmt.Sprintf("%v", volumePosition))
+	c.urlParams_.Set("volumePosition", fmt.Sprint(volumePosition))
 	return c
 }
 
@@ -7753,7 +7753,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Country(country string) *Mylibrary
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return
 func (c *MylibraryBookshelvesVolumesListCall) MaxResults(maxResults int64) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -7778,7 +7778,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Q(q string) *MylibraryBookshelvesV
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MylibraryBookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("showPreorders", fmt.Sprintf("%v", showPreorders))
+	c.urlParams_.Set("showPreorders", fmt.Sprint(showPreorders))
 	return c
 }
 
@@ -7792,7 +7792,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Source(source string) *MylibraryBo
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first element to return (starts at 0)
 func (c *MylibraryBookshelvesVolumesListCall) StartIndex(startIndex int64) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -8551,7 +8551,7 @@ func (r *OnboardingService) ListCategoryVolumes() *OnboardingListCategoryVolumes
 
 // CategoryId sets the optional parameter "categoryId": List of category
 // ids requested.
-func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId []string) *OnboardingListCategoryVolumesCall {
+func (c *OnboardingListCategoryVolumesCall) CategoryId(categoryId ...string) *OnboardingListCategoryVolumesCall {
 	c.urlParams_.SetMulti("categoryId", append([]string{}, categoryId...))
 	return c
 }
@@ -8579,7 +8579,7 @@ func (c *OnboardingListCategoryVolumesCall) MaxAllowedMaturityRating(maxAllowedM
 // PageSize sets the optional parameter "pageSize": Number of maximum
 // results per page to be included in the response.
 func (c *OnboardingListCategoryVolumesCall) PageSize(pageSize int64) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -9503,7 +9503,7 @@ func (r *SeriesMembershipService) Get(seriesId string) *SeriesMembershipGetCall 
 // PageSize sets the optional parameter "page_size": Number of maximum
 // results per page to be included in the response.
 func (c *SeriesMembershipGetCall) PageSize(pageSize int64) *SeriesMembershipGetCall {
-	c.urlParams_.Set("page_size", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("page_size", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -9681,7 +9681,7 @@ func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 // UserLibraryConsistentRead sets the optional parameter
 // "user_library_consistent_read":
 func (c *VolumesGetCall) UserLibraryConsistentRead(userLibraryConsistentRead bool) *VolumesGetCall {
-	c.urlParams_.Set("user_library_consistent_read", fmt.Sprintf("%v", userLibraryConsistentRead))
+	c.urlParams_.Set("user_library_consistent_read", fmt.Sprint(userLibraryConsistentRead))
 	return c
 }
 
@@ -9883,7 +9883,7 @@ func (c *VolumesListCall) LibraryRestrict(libraryRestrict string) *VolumesListCa
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *VolumesListCall) MaxResults(maxResults int64) *VolumesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -9930,7 +9930,7 @@ func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show books available for preorder. Defaults to false.
 func (c *VolumesListCall) ShowPreorders(showPreorders bool) *VolumesListCall {
-	c.urlParams_.Set("showPreorders", fmt.Sprintf("%v", showPreorders))
+	c.urlParams_.Set("showPreorders", fmt.Sprint(showPreorders))
 	return c
 }
 
@@ -9944,7 +9944,7 @@ func (c *VolumesListCall) Source(source string) *VolumesListCall {
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first result to return (starts at 0)
 func (c *VolumesListCall) StartIndex(startIndex int64) *VolumesListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -10398,7 +10398,7 @@ func (r *VolumesMybooksService) List() *VolumesMybooksListCall {
 //   "RENTED" - User-rented books
 //   "SAMPLE" - Sample books
 //   "UPLOADED" - User uploaded books
-func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod []string) *VolumesMybooksListCall {
+func (c *VolumesMybooksListCall) AcquireMethod(acquireMethod ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("acquireMethod", append([]string{}, acquireMethod...))
 	return c
 }
@@ -10414,7 +10414,7 @@ func (c *VolumesMybooksListCall) Locale(locale string) *VolumesMybooksListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10426,7 +10426,7 @@ func (c *VolumesMybooksListCall) MaxResults(maxResults int64) *VolumesMybooksLis
 //   "COMPLETED_FAILED" - The volume processing hase failed.
 //   "COMPLETED_SUCCESS" - The volume processing was completed.
 //   "RUNNING" - The volume processing is not completed.
-func (c *VolumesMybooksListCall) ProcessingState(processingState []string) *VolumesMybooksListCall {
+func (c *VolumesMybooksListCall) ProcessingState(processingState ...string) *VolumesMybooksListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
 }
@@ -10441,7 +10441,7 @@ func (c *VolumesMybooksListCall) Source(source string) *VolumesMybooksListCall {
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first result to return (starts at 0)
 func (c *VolumesMybooksListCall) StartIndex(startIndex int64) *VolumesMybooksListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
@@ -10940,7 +10940,7 @@ func (c *VolumesUseruploadedListCall) Locale(locale string) *VolumesUseruploaded
 // MaxResults sets the optional parameter "maxResults": Maximum number
 // of results to return.
 func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10951,7 +10951,7 @@ func (c *VolumesUseruploadedListCall) MaxResults(maxResults int64) *VolumesUseru
 //   "COMPLETED_FAILED" - The volume processing hase failed.
 //   "COMPLETED_SUCCESS" - The volume processing was completed.
 //   "RUNNING" - The volume processing is not completed.
-func (c *VolumesUseruploadedListCall) ProcessingState(processingState []string) *VolumesUseruploadedListCall {
+func (c *VolumesUseruploadedListCall) ProcessingState(processingState ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("processingState", append([]string{}, processingState...))
 	return c
 }
@@ -10966,14 +10966,14 @@ func (c *VolumesUseruploadedListCall) Source(source string) *VolumesUseruploaded
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first result to return (starts at 0)
 func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("startIndex", fmt.Sprintf("%v", startIndex))
+	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
 // VolumeId sets the optional parameter "volumeId": The ids of the
 // volumes to be returned. If not specified all that match the
 // processingState are returned.
-func (c *VolumesUseruploadedListCall) VolumeId(volumeId []string) *VolumesUseruploadedListCall {
+func (c *VolumesUseruploadedListCall) VolumeId(volumeId ...string) *VolumesUseruploadedListCall {
 	c.urlParams_.SetMulti("volumeId", append([]string{}, volumeId...))
 	return c
 }

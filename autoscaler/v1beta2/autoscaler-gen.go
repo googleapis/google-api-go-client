@@ -1053,7 +1053,7 @@ func (c *AutoscalersListCall) Filter(filter string) *AutoscalersListCall {
 
 // MaxResults sets the optional parameter "maxResults":
 func (c *AutoscalersListCall) MaxResults(maxResults int64) *AutoscalersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1749,7 +1749,7 @@ func (c *ZoneOperationsListCall) Filter(filter string) *ZoneOperationsListCall {
 
 // MaxResults sets the optional parameter "maxResults":
 func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -1915,7 +1915,7 @@ func (c *ZonesListCall) Filter(filter string) *ZonesListCall {
 
 // MaxResults sets the optional parameter "maxResults":
 func (c *ZonesListCall) MaxResults(maxResults int64) *ZonesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

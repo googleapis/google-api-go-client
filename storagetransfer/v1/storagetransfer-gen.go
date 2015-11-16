@@ -1406,7 +1406,7 @@ func (c *TransferJobsListCall) Filter(filter string) *TransferJobsListCall {
 // PageSize sets the optional parameter "pageSize": The list page size.
 // The max allowed value is 256.
 func (c *TransferJobsListCall) PageSize(pageSize int64) *TransferJobsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -2031,7 +2031,7 @@ func (c *TransferOperationsListCall) Filter(filter string) *TransferOperationsLi
 // PageSize sets the optional parameter "pageSize": The standard list
 // page size.
 func (c *TransferOperationsListCall) PageSize(pageSize int64) *TransferOperationsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 

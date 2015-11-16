@@ -4155,7 +4155,7 @@ func (c *AchievementDefinitionsListCall) Language(language string) *AchievementD
 // paging. For any response, the actual number of achievement resources
 // returned may be less than the specified maxResults.
 func (c *AchievementDefinitionsListCall) MaxResults(maxResults int64) *AchievementDefinitionsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4295,7 +4295,7 @@ type AchievementsIncrementCall struct {
 func (r *AchievementsService) Increment(achievementId string, stepsToIncrement int64) *AchievementsIncrementCall {
 	c := &AchievementsIncrementCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
-	c.urlParams_.Set("stepsToIncrement", fmt.Sprintf("%v", stepsToIncrement))
+	c.urlParams_.Set("stepsToIncrement", fmt.Sprint(stepsToIncrement))
 	return c
 }
 
@@ -4304,7 +4304,7 @@ func (r *AchievementsService) Increment(achievementId string, stepsToIncrement i
 // number is used at the server to ensure that the request is handled
 // correctly across retries.
 func (c *AchievementsIncrementCall) RequestId(requestId int64) *AchievementsIncrementCall {
-	c.urlParams_.Set("requestId", fmt.Sprintf("%v", requestId))
+	c.urlParams_.Set("requestId", fmt.Sprint(requestId))
 	return c
 }
 
@@ -4447,7 +4447,7 @@ func (c *AchievementsListCall) Language(language string) *AchievementsListCall {
 // paging. For any response, the actual number of achievement resources
 // returned may be less than the specified maxResults.
 func (c *AchievementsListCall) MaxResults(maxResults int64) *AchievementsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -4741,7 +4741,7 @@ type AchievementsSetStepsAtLeastCall struct {
 func (r *AchievementsService) SetStepsAtLeast(achievementId string, steps int64) *AchievementsSetStepsAtLeastCall {
 	c := &AchievementsSetStepsAtLeastCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
-	c.urlParams_.Set("steps", fmt.Sprintf("%v", steps))
+	c.urlParams_.Set("steps", fmt.Sprint(steps))
 	return c
 }
 
@@ -5332,7 +5332,7 @@ func (c *EventsListByPlayerCall) Language(language string) *EventsListByPlayerCa
 // response, the actual number of events to return may be less than the
 // specified maxResults.
 func (c *EventsListByPlayerCall) MaxResults(maxResults int64) *EventsListByPlayerCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5485,7 +5485,7 @@ func (c *EventsListDefinitionsCall) Language(language string) *EventsListDefinit
 // paging. For any response, the actual number of event definitions to
 // return may be less than the specified maxResults.
 func (c *EventsListDefinitionsCall) MaxResults(maxResults int64) *EventsListDefinitionsCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -5894,7 +5894,7 @@ func (c *LeaderboardsListCall) Language(language string) *LeaderboardsListCall {
 // the actual number of leaderboards returned may be less than the
 // specified maxResults.
 func (c *LeaderboardsListCall) MaxResults(maxResults int64) *LeaderboardsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6161,7 +6161,7 @@ func (c *MetagameListCategoriesByPlayerCall) Language(language string) *Metagame
 // paging. For any response, the actual number of category resources
 // returned may be less than the specified maxResults.
 func (c *MetagameListCategoriesByPlayerCall) MaxResults(maxResults int64) *MetagameListCategoriesByPlayerCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6478,7 +6478,7 @@ func (c *PlayersListCall) Language(language string) *PlayersListCall {
 // paging. For any response, the actual number of player resources
 // returned may be less than the specified maxResults.
 func (c *PlayersListCall) MaxResults(maxResults int64) *PlayersListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -6800,7 +6800,7 @@ func (r *QuestMilestonesService) Claim(questId string, milestoneId string, reque
 	c := &QuestMilestonesClaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.questId = questId
 	c.milestoneId = milestoneId
-	c.urlParams_.Set("requestId", fmt.Sprintf("%v", requestId))
+	c.urlParams_.Set("requestId", fmt.Sprint(requestId))
 	return c
 }
 
@@ -7041,7 +7041,7 @@ func (c *QuestsListCall) Language(language string) *QuestsListCall {
 // be less than the specified maxResults. Acceptable values are 1 to 50,
 // inclusive. (Default: 50).
 func (c *QuestsListCall) MaxResults(maxResults int64) *QuestsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8057,7 +8057,7 @@ func (c *RoomsListCall) Language(language string) *RoomsListCall {
 // response, the actual number of rooms to return may be less than the
 // specified maxResults.
 func (c *RoomsListCall) MaxResults(maxResults int64) *RoomsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8369,7 +8369,7 @@ func (c *ScoresGetCall) Language(language string) *ScoresGetCall {
 // response, the actual number of leaderboard scores returned may be
 // less than the specified maxResults.
 func (c *ScoresGetCall) MaxResults(maxResults int64) *ScoresGetCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8581,7 +8581,7 @@ func (c *ScoresListCall) Language(language string) *ScoresListCall {
 // response, the actual number of leaderboard scores returned may be
 // less than the specified maxResults.
 func (c *ScoresListCall) MaxResults(maxResults int64) *ScoresListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8783,7 +8783,7 @@ func (c *ScoresListWindowCall) Language(language string) *ScoresListWindowCall {
 // response, the actual number of leaderboard scores returned may be
 // less than the specified maxResults.
 func (c *ScoresListWindowCall) MaxResults(maxResults int64) *ScoresListWindowCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -8800,7 +8800,7 @@ func (c *ScoresListWindowCall) PageToken(pageToken string) *ScoresListWindowCall
 // leaderboard; fewer may be returned if the player is at the top. Must
 // be less than or equal to maxResults.
 func (c *ScoresListWindowCall) ResultsAbove(resultsAbove int64) *ScoresListWindowCall {
-	c.urlParams_.Set("resultsAbove", fmt.Sprintf("%v", resultsAbove))
+	c.urlParams_.Set("resultsAbove", fmt.Sprint(resultsAbove))
 	return c
 }
 
@@ -8808,7 +8808,7 @@ func (c *ScoresListWindowCall) ResultsAbove(resultsAbove int64) *ScoresListWindo
 // True if the top scores should be returned when the player is not in
 // the leaderboard. Defaults to true.
 func (c *ScoresListWindowCall) ReturnTopIfAbsent(returnTopIfAbsent bool) *ScoresListWindowCall {
-	c.urlParams_.Set("returnTopIfAbsent", fmt.Sprintf("%v", returnTopIfAbsent))
+	c.urlParams_.Set("returnTopIfAbsent", fmt.Sprint(returnTopIfAbsent))
 	return c
 }
 
@@ -8994,7 +8994,7 @@ type ScoresSubmitCall struct {
 func (r *ScoresService) Submit(leaderboardId string, score int64) *ScoresSubmitCall {
 	c := &ScoresSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
-	c.urlParams_.Set("score", fmt.Sprintf("%v", score))
+	c.urlParams_.Set("score", fmt.Sprint(score))
 	return c
 }
 
@@ -9414,7 +9414,7 @@ func (c *SnapshotsListCall) Language(language string) *SnapshotsListCall {
 // paging. For any response, the actual number of snapshot resources
 // returned may be less than the specified maxResults.
 func (c *SnapshotsListCall) MaxResults(maxResults int64) *SnapshotsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10116,7 +10116,7 @@ func (r *TurnBasedMatchesService) Get(matchId string) *TurnBasedMatchesGetCall {
 // IncludeMatchData sets the optional parameter "includeMatchData": Get
 // match data along with metadata.
 func (c *TurnBasedMatchesGetCall) IncludeMatchData(includeMatchData bool) *TurnBasedMatchesGetCall {
-	c.urlParams_.Set("includeMatchData", fmt.Sprintf("%v", includeMatchData))
+	c.urlParams_.Set("includeMatchData", fmt.Sprint(includeMatchData))
 	return c
 }
 
@@ -10503,7 +10503,7 @@ type TurnBasedMatchesLeaveTurnCall struct {
 func (r *TurnBasedMatchesService) LeaveTurn(matchId string, matchVersion int64) *TurnBasedMatchesLeaveTurnCall {
 	c := &TurnBasedMatchesLeaveTurnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.matchId = matchId
-	c.urlParams_.Set("matchVersion", fmt.Sprintf("%v", matchVersion))
+	c.urlParams_.Set("matchVersion", fmt.Sprint(matchVersion))
 	return c
 }
 
@@ -10658,7 +10658,7 @@ func (r *TurnBasedMatchesService) List() *TurnBasedMatchesListCall {
 // limit download size for the client. The remainder of the data for
 // these matches will be retrievable on request.
 func (c *TurnBasedMatchesListCall) IncludeMatchData(includeMatchData bool) *TurnBasedMatchesListCall {
-	c.urlParams_.Set("includeMatchData", fmt.Sprintf("%v", includeMatchData))
+	c.urlParams_.Set("includeMatchData", fmt.Sprint(includeMatchData))
 	return c
 }
 
@@ -10674,7 +10674,7 @@ func (c *TurnBasedMatchesListCall) Language(language string) *TurnBasedMatchesLi
 // matches to return in the response. If not set, all matches returned
 // could be completed or canceled.
 func (c *TurnBasedMatchesListCall) MaxCompletedMatches(maxCompletedMatches int64) *TurnBasedMatchesListCall {
-	c.urlParams_.Set("maxCompletedMatches", fmt.Sprintf("%v", maxCompletedMatches))
+	c.urlParams_.Set("maxCompletedMatches", fmt.Sprint(maxCompletedMatches))
 	return c
 }
 
@@ -10683,7 +10683,7 @@ func (c *TurnBasedMatchesListCall) MaxCompletedMatches(maxCompletedMatches int64
 // response, the actual number of matches to return may be less than the
 // specified maxResults.
 func (c *TurnBasedMatchesListCall) MaxResults(maxResults int64) *TurnBasedMatchesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -10852,7 +10852,7 @@ func (c *TurnBasedMatchesRematchCall) Language(language string) *TurnBasedMatche
 // number is used at the server to ensure that the request is handled
 // correctly across retries.
 func (c *TurnBasedMatchesRematchCall) RequestId(requestId int64) *TurnBasedMatchesRematchCall {
-	c.urlParams_.Set("requestId", fmt.Sprintf("%v", requestId))
+	c.urlParams_.Set("requestId", fmt.Sprint(requestId))
 	return c
 }
 
@@ -10986,7 +10986,7 @@ func (r *TurnBasedMatchesService) Sync() *TurnBasedMatchesSyncCall {
 // limit download size for the client. The remainder of the data for
 // these matches will be retrievable on request.
 func (c *TurnBasedMatchesSyncCall) IncludeMatchData(includeMatchData bool) *TurnBasedMatchesSyncCall {
-	c.urlParams_.Set("includeMatchData", fmt.Sprintf("%v", includeMatchData))
+	c.urlParams_.Set("includeMatchData", fmt.Sprint(includeMatchData))
 	return c
 }
 
@@ -11002,7 +11002,7 @@ func (c *TurnBasedMatchesSyncCall) Language(language string) *TurnBasedMatchesSy
 // matches to return in the response. If not set, all matches returned
 // could be completed or canceled.
 func (c *TurnBasedMatchesSyncCall) MaxCompletedMatches(maxCompletedMatches int64) *TurnBasedMatchesSyncCall {
-	c.urlParams_.Set("maxCompletedMatches", fmt.Sprintf("%v", maxCompletedMatches))
+	c.urlParams_.Set("maxCompletedMatches", fmt.Sprint(maxCompletedMatches))
 	return c
 }
 
@@ -11011,7 +11011,7 @@ func (c *TurnBasedMatchesSyncCall) MaxCompletedMatches(maxCompletedMatches int64
 // response, the actual number of matches to return may be less than the
 // specified maxResults.
 func (c *TurnBasedMatchesSyncCall) MaxResults(maxResults int64) *TurnBasedMatchesSyncCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

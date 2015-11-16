@@ -505,7 +505,7 @@ func (r *TranslationsService) List(q []string, target string) *TranslationsListC
 
 // Cid sets the optional parameter "cid": The customization id for
 // translate
-func (c *TranslationsListCall) Cid(cid []string) *TranslationsListCall {
+func (c *TranslationsListCall) Cid(cid ...string) *TranslationsListCall {
 	c.urlParams_.SetMulti("cid", append([]string{}, cid...))
 	return c
 }

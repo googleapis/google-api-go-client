@@ -314,7 +314,7 @@ func (r *TaskqueuesService) Get(project string, taskqueue string) *TaskqueuesGet
 // GetStats sets the optional parameter "getStats": Whether to get
 // stats.
 func (c *TaskqueuesGetCall) GetStats(getStats bool) *TaskqueuesGetCall {
-	c.urlParams_.Set("getStats", fmt.Sprintf("%v", getStats))
+	c.urlParams_.Set("getStats", fmt.Sprint(getStats))
 	return c
 }
 
@@ -700,8 +700,8 @@ func (r *TasksService) Lease(project string, taskqueue string, numTasks int64, l
 	c := &TasksLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.taskqueue = taskqueue
-	c.urlParams_.Set("numTasks", fmt.Sprintf("%v", numTasks))
-	c.urlParams_.Set("leaseSecs", fmt.Sprintf("%v", leaseSecs))
+	c.urlParams_.Set("numTasks", fmt.Sprint(numTasks))
+	c.urlParams_.Set("leaseSecs", fmt.Sprint(leaseSecs))
 	return c
 }
 

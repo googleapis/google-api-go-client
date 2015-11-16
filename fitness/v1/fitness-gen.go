@@ -1375,7 +1375,7 @@ func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall 
 // DataTypeName sets the optional parameter "dataTypeName": The names of
 // data types to include in the list. If not specified, all data sources
 // will be returned.
-func (c *UsersDataSourcesListCall) DataTypeName(dataTypeName []string) *UsersDataSourcesListCall {
+func (c *UsersDataSourcesListCall) DataTypeName(dataTypeName ...string) *UsersDataSourcesListCall {
 	c.urlParams_.SetMulti("dataTypeName", append([]string{}, dataTypeName...))
 	return c
 }
@@ -1803,14 +1803,14 @@ func (r *UsersDataSourcesDatasetsService) Delete(userId string, dataSourceId str
 // CurrentTimeMillis sets the optional parameter "currentTimeMillis":
 // The client's current time in milliseconds since epoch.
 func (c *UsersDataSourcesDatasetsDeleteCall) CurrentTimeMillis(currentTimeMillis int64) *UsersDataSourcesDatasetsDeleteCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprintf("%v", currentTimeMillis))
+	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
 	return c
 }
 
 // ModifiedTimeMillis sets the optional parameter "modifiedTimeMillis":
 // When the operation was performed on the client.
 func (c *UsersDataSourcesDatasetsDeleteCall) ModifiedTimeMillis(modifiedTimeMillis int64) *UsersDataSourcesDatasetsDeleteCall {
-	c.urlParams_.Set("modifiedTimeMillis", fmt.Sprintf("%v", modifiedTimeMillis))
+	c.urlParams_.Set("modifiedTimeMillis", fmt.Sprint(modifiedTimeMillis))
 	return c
 }
 
@@ -1940,7 +1940,7 @@ func (r *UsersDataSourcesDatasetsService) Get(userId string, dataSourceId string
 // are more data points in the dataset, nextPageToken will be set in the
 // dataset response.
 func (c *UsersDataSourcesDatasetsGetCall) Limit(limit int64) *UsersDataSourcesDatasetsGetCall {
-	c.urlParams_.Set("limit", fmt.Sprintf("%v", limit))
+	c.urlParams_.Set("limit", fmt.Sprint(limit))
 	return c
 }
 
@@ -2124,7 +2124,7 @@ func (r *UsersDataSourcesDatasetsService) Patch(userId string, dataSourceId stri
 // minStartTimeNs and maxEndTimeNs properties in the request body are in
 // nanoseconds instead of milliseconds.
 func (c *UsersDataSourcesDatasetsPatchCall) CurrentTimeMillis(currentTimeMillis int64) *UsersDataSourcesDatasetsPatchCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprintf("%v", currentTimeMillis))
+	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
 	return c
 }
 
@@ -2403,7 +2403,7 @@ func (r *UsersSessionsService) Delete(userId string, sessionId string) *UsersSes
 // CurrentTimeMillis sets the optional parameter "currentTimeMillis":
 // The client's current time in milliseconds since epoch.
 func (c *UsersSessionsDeleteCall) CurrentTimeMillis(currentTimeMillis int64) *UsersSessionsDeleteCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprintf("%v", currentTimeMillis))
+	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
 	return c
 }
 
@@ -2517,7 +2517,7 @@ func (c *UsersSessionsListCall) EndTime(endTime string) *UsersSessionsListCall {
 // returned in this response will only have an ID and will not have any
 // other fields.
 func (c *UsersSessionsListCall) IncludeDeleted(includeDeleted bool) *UsersSessionsListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
@@ -2692,7 +2692,7 @@ func (r *UsersSessionsService) Update(userId string, sessionId string, session *
 // CurrentTimeMillis sets the optional parameter "currentTimeMillis":
 // The client's current time in milliseconds since epoch.
 func (c *UsersSessionsUpdateCall) CurrentTimeMillis(currentTimeMillis int64) *UsersSessionsUpdateCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprintf("%v", currentTimeMillis))
+	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
 	return c
 }
 

@@ -1268,7 +1268,7 @@ func (c *DeploymentsListCall) Filter(filter string) *DeploymentsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2019,7 +2019,7 @@ func (c *ManifestsListCall) Filter(filter string) *ManifestsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ManifestsListCall) MaxResults(maxResults int64) *ManifestsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2347,7 +2347,7 @@ func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2679,7 +2679,7 @@ func (c *ResourcesListCall) Filter(filter string) *ResourcesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *ResourcesListCall) MaxResults(maxResults int64) *ResourcesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -2870,7 +2870,7 @@ func (c *TypesListCall) Filter(filter string) *TypesListCall {
 // MaxResults sets the optional parameter "maxResults": Maximum count of
 // results to be returned.
 func (c *TypesListCall) MaxResults(maxResults int64) *TypesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 

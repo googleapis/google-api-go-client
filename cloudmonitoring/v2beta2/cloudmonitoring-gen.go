@@ -1004,7 +1004,7 @@ func (r *MetricDescriptorsService) List(project string, listmetricdescriptorsreq
 // descriptors per page. Used for pagination. If not specified, count =
 // 100.
 func (c *MetricDescriptorsListCall) Count(count int64) *MetricDescriptorsListCall {
-	c.urlParams_.Set("count", fmt.Sprintf("%v", count))
+	c.urlParams_.Set("count", fmt.Sprint(count))
 	return c
 }
 
@@ -1201,7 +1201,7 @@ func (c *TimeseriesListCall) Aggregator(aggregator string) *TimeseriesListCall {
 // Count sets the optional parameter "count": Maximum number of data
 // points per page, which is used for pagination of results.
 func (c *TimeseriesListCall) Count(count int64) *TimeseriesListCall {
-	c.urlParams_.Set("count", fmt.Sprintf("%v", count))
+	c.urlParams_.Set("count", fmt.Sprint(count))
 	return c
 }
 
@@ -1215,7 +1215,7 @@ func (c *TimeseriesListCall) Count(count int64) *TimeseriesListCall {
 // you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
-func (c *TimeseriesListCall) Labels(labels []string) *TimeseriesListCall {
+func (c *TimeseriesListCall) Labels(labels ...string) *TimeseriesListCall {
 	c.urlParams_.SetMulti("labels", append([]string{}, labels...))
 	return c
 }
@@ -1623,7 +1623,7 @@ func (c *TimeseriesDescriptorsListCall) Aggregator(aggregator string) *Timeserie
 // series descriptors per page. Used for pagination. If not specified,
 // count = 100.
 func (c *TimeseriesDescriptorsListCall) Count(count int64) *TimeseriesDescriptorsListCall {
-	c.urlParams_.Set("count", fmt.Sprintf("%v", count))
+	c.urlParams_.Set("count", fmt.Sprint(count))
 	return c
 }
 
@@ -1637,7 +1637,7 @@ func (c *TimeseriesDescriptorsListCall) Count(count int64) *TimeseriesDescriptor
 // you could
 // specify:
 // label=cloud.googleapis.com%2Flocation=~us-central1.*
-func (c *TimeseriesDescriptorsListCall) Labels(labels []string) *TimeseriesDescriptorsListCall {
+func (c *TimeseriesDescriptorsListCall) Labels(labels ...string) *TimeseriesDescriptorsListCall {
 	c.urlParams_.SetMulti("labels", append([]string{}, labels...))
 	return c
 }

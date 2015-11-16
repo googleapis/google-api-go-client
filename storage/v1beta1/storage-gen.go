@@ -1726,14 +1726,14 @@ type BucketsListCall struct {
 // List: Retrieves a list of buckets for a given project.
 func (r *BucketsService) List(projectId uint64) *BucketsListCall {
 	c := &BucketsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("projectId", fmt.Sprintf("%v", projectId))
+	c.urlParams_.Set("projectId", fmt.Sprint(projectId))
 	return c
 }
 
 // MaxResults sets the optional parameter "max-results": Maximum number
 // of buckets to return.
 func (c *BucketsListCall) MaxResults(maxResults int64) *BucketsListCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
@@ -3519,7 +3519,7 @@ func (c *ObjectsListCall) Delimiter(delimiter string) *ObjectsListCall {
 // of items plus prefixes to return. As duplicate prefixes are omitted,
 // fewer total results may be returned than requested.
 func (c *ObjectsListCall) MaxResults(maxResults int64) *ObjectsListCall {
-	c.urlParams_.Set("max-results", fmt.Sprintf("%v", maxResults))
+	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 

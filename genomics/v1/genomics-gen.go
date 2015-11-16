@@ -3432,7 +3432,7 @@ func (r *DatasetsService) List() *DatasetsListCall {
 // of results returned by this request. If unspecified, defaults to 50.
 // The maximum value is 1024.
 func (c *DatasetsListCall) PageSize(pageSize int64) *DatasetsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -4469,7 +4469,7 @@ func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 // of results to return. If unspecified, defaults to 256. The maximum
 // value is 2048.
 func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -5358,7 +5358,7 @@ func (r *ReadgroupsetsCoveragebucketsService) List(readGroupSetId string) *Readg
 // must also be specified. If unset or 0, defaults to the length of the
 // reference.
 func (c *ReadgroupsetsCoveragebucketsListCall) End(end int64) *ReadgroupsetsCoveragebucketsListCall {
-	c.urlParams_.Set("end", fmt.Sprintf("%v", end))
+	c.urlParams_.Set("end", fmt.Sprint(end))
 	return c
 }
 
@@ -5366,7 +5366,7 @@ func (c *ReadgroupsetsCoveragebucketsListCall) End(end int64) *ReadgroupsetsCove
 // of results to return in a single page. If unspecified, defaults to
 // 1024. The maximum value is 2048.
 func (c *ReadgroupsetsCoveragebucketsListCall) PageSize(pageSize int64) *ReadgroupsetsCoveragebucketsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -5391,7 +5391,7 @@ func (c *ReadgroupsetsCoveragebucketsListCall) ReferenceName(referenceName strin
 // range on the reference, 0-based inclusive. If specified,
 // `referenceName` must also be specified. Defaults to 0.
 func (c *ReadgroupsetsCoveragebucketsListCall) Start(start int64) *ReadgroupsetsCoveragebucketsListCall {
-	c.urlParams_.Set("start", fmt.Sprintf("%v", start))
+	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c
 }
 
@@ -5404,7 +5404,7 @@ func (c *ReadgroupsetsCoveragebucketsListCall) Start(start int64) *Readgroupsets
 // precomputed `bucketWidth` is currently 2048 base pairs; this is
 // subject to change.
 func (c *ReadgroupsetsCoveragebucketsListCall) TargetBucketWidth(targetBucketWidth int64) *ReadgroupsetsCoveragebucketsListCall {
-	c.urlParams_.Set("targetBucketWidth", fmt.Sprintf("%v", targetBucketWidth))
+	c.urlParams_.Set("targetBucketWidth", fmt.Sprint(targetBucketWidth))
 	return c
 }
 
@@ -5929,14 +5929,14 @@ func (r *ReferencesBasesService) List(referenceId string) *ReferencesBasesListCa
 // End sets the optional parameter "end": The end position (0-based,
 // exclusive) of this query. Defaults to the length of this reference.
 func (c *ReferencesBasesListCall) End(end int64) *ReferencesBasesListCall {
-	c.urlParams_.Set("end", fmt.Sprintf("%v", end))
+	c.urlParams_.Set("end", fmt.Sprint(end))
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Specifies the
 // maximum number of bases to return in a single page.
 func (c *ReferencesBasesListCall) PageSize(pageSize int64) *ReferencesBasesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprintf("%v", pageSize))
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
@@ -5952,7 +5952,7 @@ func (c *ReferencesBasesListCall) PageToken(pageToken string) *ReferencesBasesLi
 // Start sets the optional parameter "start": The start position
 // (0-based) of this query. Defaults to 0.
 func (c *ReferencesBasesListCall) Start(start int64) *ReferencesBasesListCall {
-	c.urlParams_.Set("start", fmt.Sprintf("%v", start))
+	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c
 }
 

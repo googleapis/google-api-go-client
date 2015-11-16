@@ -3269,21 +3269,21 @@ func (r *AccountsContainersMoveFoldersService) Update(accountId string, containe
 
 // TagId sets the optional parameter "tagId": The tags to be moved to
 // the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) TagId(tagId []string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) TagId(tagId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("tagId", append([]string{}, tagId...))
 	return c
 }
 
 // TriggerId sets the optional parameter "triggerId": The triggers to be
 // moved to the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) TriggerId(triggerId []string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) TriggerId(triggerId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("triggerId", append([]string{}, triggerId...))
 	return c
 }
 
 // VariableId sets the optional parameter "variableId": The variables to
 // be moved to the folder.
-func (c *AccountsContainersMoveFoldersUpdateCall) VariableId(variableId []string) *AccountsContainersMoveFoldersUpdateCall {
+func (c *AccountsContainersMoveFoldersUpdateCall) VariableId(variableId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("variableId", append([]string{}, variableId...))
 	return c
 }
@@ -5772,14 +5772,14 @@ func (r *AccountsContainersVersionsService) List(accountId string, containerId s
 // Headers sets the optional parameter "headers": Retrieve headers only
 // when true.
 func (c *AccountsContainersVersionsListCall) Headers(headers bool) *AccountsContainersVersionsListCall {
-	c.urlParams_.Set("headers", fmt.Sprintf("%v", headers))
+	c.urlParams_.Set("headers", fmt.Sprint(headers))
 	return c
 }
 
 // IncludeDeleted sets the optional parameter "includeDeleted": Also
 // retrieve deleted (archived) versions when true.
 func (c *AccountsContainersVersionsListCall) IncludeDeleted(includeDeleted bool) *AccountsContainersVersionsListCall {
-	c.urlParams_.Set("includeDeleted", fmt.Sprintf("%v", includeDeleted))
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 

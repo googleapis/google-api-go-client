@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_JLuoqmCom34HYgPe5CD4tx2tWU\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/lsOq_ElluQnSDxPEdnbMLys6csA\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20151111",
+ "revision": "20151116",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -3320,7 +3320,7 @@
    "properties": {
     "machineType": {
      "type": "string",
-     "description": "Full or partial URL of the machine type resource. See Instance.machine_type."
+     "description": "Full or partial URL of the machine type resource. See Machine Types for a full list of machine types. For example: zones/us-central1-f/machineTypes/n1-standard-1"
     }
    }
   },
@@ -3725,6 +3725,10 @@
      "description": "The range of internal addresses that are legal on this network. This range is a CIDR specification, for example: 192.168.0.0/16. Provided by the client when the network is created.",
      "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}/[0-9]{1,2}"
     },
+    "autoCreateSubnetworks": {
+     "type": "boolean",
+     "description": "When set to true, the subnetwork is created in \"auto subnet mode\". When set to false, the subnetwork is in \"custom subnet mode\".\n\nIn \"auto subnet mode\", a newly created network is assigned the default CIDR of 10.128.0.0/9 and it automatically creates one subnetwork per region."
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "[Output Only] Creation timestamp in RFC3339 text format."
@@ -3761,6 +3765,13 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    },
+    "subnetworks": {
+     "type": "array",
+     "description": "[Output Only] Server-defined fully-qualified URLs for all subnetworks in this network.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -3792,6 +3803,10 @@
     "networkIP": {
      "type": "string",
      "description": "[Output Only] An optional IPV4 internal network address assigned to the instance for this network interface."
+    },
+    "subnetwork": {
+     "type": "string",
+     "description": "URL of the subnetwork resource for this instance. This should not be provided if the network resource is in legacy mode. If the network is in auto subnet mode, providing the subnetwork is optional. If the network is in custom subnet mode then the field should be specified. If you specify this property, you can specify the subnetwork as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/subnetworks/subnetwork \n- projects/project/zones/zone/networks/network"
     }
    }
   },
@@ -4290,6 +4305,7 @@
       "SSD_TOTAL_GB",
       "SSL_CERTIFICATES",
       "STATIC_ADDRESSES",
+      "SUBNETWORKS",
       "TARGET_HTTPS_PROXIES",
       "TARGET_HTTP_PROXIES",
       "TARGET_INSTANCES",
@@ -4299,6 +4315,7 @@
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -4897,6 +4914,194 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "Subnetwork": {
+   "id": "Subnetwork",
+   "type": "object",
+   "description": "A Subnetwork resource.",
+   "properties": {
+    "creationTimestamp": {
+     "type": "string",
+     "description": "[Output Only] Creation timestamp in RFC3339 text format."
+    },
+    "description": {
+     "type": "string",
+     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+    },
+    "gatewayAddress": {
+     "type": "string",
+     "description": "[Output Only] Gateway address for default routes to addresses outside this Subnetwork."
+    },
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+     "format": "uint64"
+    },
+    "ipCidrRange": {
+     "type": "string",
+     "description": "The range of internal addresses that are owned by this Subnetwork; provided by the client when the Subnetwork is created."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of the resource.",
+     "default": "compute#subnetwork"
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "network": {
+     "type": "string",
+     "description": "URL of the network to which this Subnetwork belongs; provided by the client when the Subnetwork is created. Only networks that are in the distributed mode can have Subnetworks."
+    },
+    "region": {
+     "type": "string",
+     "description": "[Output Only] URL of the region where the Subnetwork resides."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "SubnetworkAggregatedList": {
+   "id": "SubnetworkAggregatedList",
+   "type": "object",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+    },
+    "items": {
+     "type": "object",
+     "description": "A map of scoped Subnetwork lists.",
+     "additionalProperties": {
+      "$ref": "SubnetworksScopedList",
+      "description": "Name of the scope containing this set of Subnetworks."
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#subnetworkAggregatedList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "SubnetworkList": {
+   "id": "SubnetworkList",
+   "type": "object",
+   "description": "Contains a list of Subnetwork resources.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+    },
+    "items": {
+     "type": "array",
+     "description": "The Subnetwork resources.",
+     "items": {
+      "$ref": "Subnetwork"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Type of resource.",
+     "default": "compute#subnetworkList"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "[Output Only] A token used to continue a truncated list request."
+    },
+    "selfLink": {
+     "type": "string",
+     "description": "[Output Only] Server-defined URL for this resource."
+    }
+   }
+  },
+  "SubnetworksScopedList": {
+   "id": "SubnetworksScopedList",
+   "type": "object",
+   "properties": {
+    "subnetworks": {
+     "type": "array",
+     "description": "List of Subnetworks contained in this scope.",
+     "items": {
+      "$ref": "Subnetwork"
+     }
+    },
+    "warning": {
+     "type": "object",
+     "description": "Informational warning which replaces the list of addresses when the list is empty.",
+     "properties": {
+      "code": {
+       "type": "string",
+       "description": "[Output Only] The warning type identifier for this warning.",
+       "enum": [
+        "DEPRECATED_RESOURCE_USED",
+        "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+        "INJECTED_KERNELS_DEPRECATED",
+        "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+        "NEXT_HOP_CANNOT_IP_FORWARD",
+        "NEXT_HOP_INSTANCE_NOT_FOUND",
+        "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+        "NEXT_HOP_NOT_RUNNING",
+        "NOT_CRITICAL_ERROR",
+        "NO_RESULTS_ON_PAGE",
+        "REQUIRED_TOS_AGREEMENT",
+        "RESOURCE_NOT_DELETED",
+        "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+        "UNREACHABLE"
+       ],
+       "enumDescriptions": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+       ]
+      },
+      "data": {
+       "type": "array",
+       "description": "[Output Only] Metadata for this warning in key: value format.",
+       "items": {
+        "type": "object",
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "[Output Only] A key for the warning data."
+         },
+         "value": {
+          "type": "string",
+          "description": "[Output Only] A warning data value corresponding to the key."
+         }
+        }
+       }
+      },
+      "message": {
+       "type": "string",
+       "description": "[Output Only] Optional human-readable details for this warning."
+      }
+     }
     }
    }
   },
@@ -6003,6 +6208,13 @@
      "type": "string",
      "description": "[Output Only] Unique identifier for the resource. Defined by the server.",
      "format": "uint64"
+    },
+    "ikeNetworks": {
+     "type": "array",
+     "description": "IKE networks to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint.",
+     "items": {
+      "type": "string"
+     }
     },
     "ikeVersion": {
      "type": "integer",
@@ -10956,7 +11168,7 @@
      "id": "compute.instances.setMachineType",
      "path": "{project}/zones/{zone}/instances/{instance}/setMachineType",
      "httpMethod": "POST",
-     "description": "Sets machine type for the specified instances to the data included in the request.",
+     "description": "Changes the machine type for a stopped instance to the machine type specified in the request.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -12321,6 +12533,237 @@
     }
    }
   },
+  "subnetworks": {
+   "methods": {
+    "aggregatedList": {
+     "id": "compute.subnetworks.aggregatedList",
+     "path": "{project}/aggregated/subnetworks",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of Subnetworks grouped by scope.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum count of results to be returned.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project"
+     ],
+     "response": {
+      "$ref": "SubnetworkAggregatedList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "delete": {
+     "id": "compute.subnetworks.delete",
+     "path": "{project}/regions/{region}/subnetworks/{subnetwork}",
+     "httpMethod": "DELETE",
+     "description": "Deletes the specified Subnetwork resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "subnetwork": {
+       "type": "string",
+       "description": "Name of the Subnetwork resource to delete.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "subnetwork"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "get": {
+     "id": "compute.subnetworks.get",
+     "path": "{project}/regions/{region}/subnetworks/{subnetwork}",
+     "httpMethod": "GET",
+     "description": "Returns the specified Subnetwork resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "subnetwork": {
+       "type": "string",
+       "description": "Name of the Subnetwork resource to return.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "subnetwork"
+     ],
+     "response": {
+      "$ref": "Subnetwork"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "insert": {
+     "id": "compute.subnetworks.insert",
+     "path": "{project}/regions/{region}/subnetworks",
+     "httpMethod": "POST",
+     "description": "Creates a Subnetwork resource in the specified project using the data included in the request.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "request": {
+      "$ref": "Subnetwork"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "list": {
+     "id": "compute.subnetworks.list",
+     "path": "{project}/regions/{region}/subnetworks",
+     "httpMethod": "GET",
+     "description": "Retrieves the list of Subnetwork resources available to the specified project.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "Sets a filter expression for filtering listed resources, in the form filter={expression}. Your {expression} must be in the format: FIELD_NAME COMPARISON_STRING LITERAL_STRING.\n\nThe FIELD_NAME is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The COMPARISON_STRING must be either eq (equals) or ne (not equals). The LITERAL_STRING is the string value to filter to. The literal value must be valid for the type of field (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, filter=name ne example-instance.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "Maximum count of results to be returned.",
+       "default": "500",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "500",
+       "location": "query"
+      },
+      "orderBy": {
+       "type": "string",
+       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "Specifies a page token to use. Use this parameter if you want to list the next page of results. Set pageToken to the nextPageToken returned by a previous list request.",
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Name of the project scoping this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "Name of the region scoping this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region"
+     ],
+     "response": {
+      "$ref": "SubnetworkList"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "targetHttpProxies": {
    "methods": {
     "delete": {
@@ -12668,7 +13111,7 @@
       },
       "targetHttpsProxy": {
        "type": "string",
-       "description": "Name of the TargetHttpsProxy resource whose URL map is to be set.",
+       "description": "Name of the TargetHttpsProxy resource whose SSLCertificate is to be set.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"

@@ -274,7 +274,7 @@
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
    },
-   "documentationLink": "https://developers.google.com/play/enterprise",
+   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
    "preferred": true
   },
   {
@@ -1185,7 +1185,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
-   "documentationLink": "https://developers.google.com/appengine/",
+   "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
    "preferred": true
   },
   {
@@ -1325,22 +1325,6 @@
    "description": "The Google Cloud Logging API lets you write log entries and manage your logs, log sinks and logs-based metrics.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/logging/v1beta3/rest",
    "discoveryLink": "./apis/logging/v1beta3/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://cloud.google.com/logging/docs/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "logging:v2beta1",
-   "name": "logging",
-   "version": "v2beta1",
-   "title": "Google Cloud Logging API",
-   "description": "The Google Cloud Logging API lets you write log entries and manage your logs, log sinks and logs-based metrics.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/logging/v2beta1/rest",
-   "discoveryLink": "./apis/logging/v2beta1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"

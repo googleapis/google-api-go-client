@@ -3239,6 +3239,19 @@ type VariantSet struct {
 	// variant set with associated coordinate upper bounds for each one.
 	ReferenceBounds []*ReferenceBound `json:"referenceBounds,omitempty"`
 
+	// ReferenceSetId: The reference set to which the variant set is mapped.
+	// The reference set describes the alignment provenance of the variant
+	// set, while the referenceBounds describe the shape of the actual
+	// variant data. The reference set's reference names are a superset of
+	// those found in the referenceBounds.
+	//
+	// For example, given a variant set that is mapped to the GRCh38
+	// reference set and contains a single variant on reference 'X',
+	// referenceBounds would contain only an entry for 'X', while the
+	// associated reference set enumerates all possible references: '1',
+	// '2', 'X', 'Y', 'MT', etc.
+	ReferenceSetId string `json:"referenceSetId,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/r3Yw5MfzaLpocptE3LE-pmOG6uY\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/aAZOfptPMiuQT3XrEnBy4sQ-rAk\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1beta2",
  "name": "genomics",
  "version": "v1beta2",
- "revision": "20150812",
+ "revision": "20151123",
  "title": "Genomics API",
  "description": "Provides access to Genomics data.",
  "ownerDomain": "google.com",
@@ -2410,6 +2410,10 @@
      "items": {
       "$ref": "ReferenceBound"
      }
+    },
+    "referenceSetId": {
+     "type": "string",
+     "description": "The reference set to which the variant set is mapped. The reference set describes the alignment provenance of the variant set, while the referenceBounds describe the shape of the actual variant data. The reference set's reference names are a superset of those found in the referenceBounds.\n\nFor example, given a variant set that is mapped to the GRCh38 reference set and contains a single variant on reference 'X', referenceBounds would contain only an entry for 'X', while the associated reference set enumerates all possible references: '1', '2', 'X', 'Y', 'MT', etc."
     }
    }
   }

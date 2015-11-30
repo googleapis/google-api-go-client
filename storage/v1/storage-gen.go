@@ -803,6 +803,10 @@ type Object struct {
 	// Practices.
 	Crc32c string `json:"crc32c,omitempty"`
 
+	// CustomerEncryption: Metadata of customer-supplied encryption key, if
+	// the object is encrypted by such a key.
+	CustomerEncryption *ObjectCustomerEncryption `json:"customerEncryption,omitempty"`
+
 	// Etag: HTTP 1.1 Entity tag for the object.
 	Etag string `json:"etag,omitempty"`
 
@@ -878,6 +882,30 @@ type Object struct {
 
 func (s *Object) MarshalJSON() ([]byte, error) {
 	type noMethod Object
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ObjectCustomerEncryption: Metadata of customer-supplied encryption
+// key, if the object is encrypted by such a key.
+type ObjectCustomerEncryption struct {
+	// EncryptionAlgorithm: The encryption algorithm.
+	EncryptionAlgorithm string `json:"encryptionAlgorithm,omitempty"`
+
+	// KeySha256: SHA256 hash value of the encryption key.
+	KeySha256 string `json:"keySha256,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EncryptionAlgorithm")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ObjectCustomerEncryption) MarshalJSON() ([]byte, error) {
+	type noMethod ObjectCustomerEncryption
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }

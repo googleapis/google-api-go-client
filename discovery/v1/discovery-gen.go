@@ -440,6 +440,8 @@ type RestDescription struct {
 	// Version: The version of this API.
 	Version string `json:"version,omitempty"`
 
+	VersionModule bool `json:"version_module,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

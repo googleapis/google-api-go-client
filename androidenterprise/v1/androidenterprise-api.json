@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/k50i1jH6d5mxm7o5MPctHqUGfAg\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Dhm95NFcR0E5y6PPQV-hHJ9dqK0\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20150910",
+ "revision": "20151127",
  "title": "Google Play EMM API",
  "description": "Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -15,7 +15,7 @@
   "x16": "https://www.google.com/images/icons/product/android-16.png",
   "x32": "https://www.google.com/images/icons/product/android-32.png"
  },
- "documentationLink": "https://developers.google.com/play/enterprise",
+ "documentationLink": "https://developers.google.com/android/work/play/emm-api",
  "protocol": "rest",
  "baseUrl": "https://www.googleapis.com/androidenterprise/v1/",
  "basePath": "/androidenterprise/v1/",

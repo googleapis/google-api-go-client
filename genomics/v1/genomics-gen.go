@@ -253,7 +253,10 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 // CallSet: A call set is a collection of variant calls, typically for
-// one sample. It belongs to a variant set.
+// one sample. It belongs to a variant set. For more genomics resource
+// definitions, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 type CallSet struct {
 	// Created: The date this call set was created in milliseconds from the
 	// epoch.
@@ -375,7 +378,10 @@ func (s *CoverageBucket) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Dataset: A Dataset is a collection of genomic data.
+// Dataset: A Dataset is a collection of genomic data. For more genomics
+// resource definitions, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 type Dataset struct {
 	// CreateTime: The time this dataset was created, in seconds from the
 	// epoch.
@@ -950,11 +956,16 @@ type Policy struct {
 	// help prevent simultaneous updates of a policy from overwriting each
 	// other. It is strongly suggested that systems make use of the etag in
 	// the read-modify-write cycle to perform policy updates in order to
-	// avoid race conditions. If no etag is provided in the call to
-	// SetIamPolicy, then the existing policy is overwritten blindly.
+	// avoid race conditions: Etags are returned in the response to
+	// GetIamPolicy, and systems are expected to put that etag in the
+	// request to SetIamPolicy to ensure that their change will be applied
+	// to the same version of the policy. If no etag is provided in the call
+	// to SetIamPolicy, then the existing policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0.
+	// Version: Version of the `Policy`. The default version is 0. 0 =
+	// resourcemanager_projects only support legacy roles. 1 = supports
+	// non-legacy roles 2 = supports AuditConfig
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1075,9 +1086,12 @@ func (s *Range) MarshalJSON() ([]byte, error) {
 // fragment (the molecule of DNA sequenced) and the read (the bases
 // which were read by the sequencer). A read is equivalent to a line in
 // a SAM file. A read belongs to exactly one read group and exactly one
-// read group set. ### Generating a reference-aligned sequence string
-// When interacting with mapped reads, it's often useful to produce a
-// string representing the local alignment of the read to reference. The
+// read group set. For more genomics resource definitions, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) ### Generating a reference-aligned sequence string When
+// interacting with mapped reads, it's often useful to produce a string
+// representing the local alignment of the read to reference. The
 // following pseudocode demonstrates one way of doing this: out = ""
 // offset = 0 for c in read.alignment.cigar { switch c.operation { case
 // "ALIGNMENT_MATCH", "SEQUENCE_MATCH", "SEQUENCE_MISMATCH": out +=
@@ -1280,7 +1294,10 @@ type ReadGroupInfo struct {
 // read group set typically models reads corresponding to one sample,
 // sequenced one way, and aligned one way. * A read group set belongs to
 // one dataset. * A read group belongs to one read group set. * A read
-// belongs to one read group.
+// belongs to one read group. For more genomics resource definitions,
+// see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 type ReadGroupSet struct {
 	// DatasetId: The dataset ID.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -1335,7 +1352,10 @@ type ReadGroupSetInfo struct {
 // intended to act as a reference coordinate space for other genomic
 // annotations. A single reference might represent the human chromosome
 // 1 or mitochandrial DNA, for instance. A reference belongs to one or
-// more reference sets.
+// more reference sets. For more genomics resource definitions, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 type Reference struct {
 	// Id: The server-generated reference ID, unique across all references.
 	Id string `json:"id,omitempty"`
@@ -1412,7 +1432,10 @@ func (s *ReferenceBound) MarshalJSON() ([]byte, error) {
 // comprise a reference assembly for a species, such as `GRCh38` which
 // is representative of the human genome. A reference set defines a
 // common coordinate space for comparing reference-aligned experimental
-// data. A reference set contains 1 or more references.
+// data. A reference set contains 1 or more references. For more
+// genomics resource definitions, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 type ReferenceSet struct {
 	// AssemblyId: Public id of this reference set, such as `GRCh37`.
 	AssemblyId string `json:"assemblyId,omitempty"`
@@ -2118,12 +2141,14 @@ type UndeleteDatasetRequest struct {
 
 // Variant: A variant represents a change in DNA sequence relative to a
 // reference sequence. For example, a variant could represent a SNP or
-// an insertion. Variants belong to a variant set. Each of the calls on
-// a variant represent a determination of genotype with respect to that
-// variant. For example, a call might assign probability of 0.32 to the
-// occurrence of a SNP named rs1234 in a sample named NA12345. A call
-// belongs to a call set, which contains related calls typically from
-// one sample.
+// an insertion. Variants belong to a variant set. For more genomics
+// resource definitions, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Each of the calls on a variant represent a determination of
+// genotype with respect to that variant. For example, a call might
+// assign probability of 0.32 to the occurrence of a SNP named rs1234 in
+// a sample named NA12345. A call belongs to a call set, which contains
+// related calls typically from one sample.
 type Variant struct {
 	// AlternateBases: The bases that appear instead of the reference bases.
 	AlternateBases []string `json:"alternateBases,omitempty"`
@@ -2268,7 +2293,10 @@ type VariantCallInfo struct {
 
 // VariantSet: A variant set is a collection of call sets and variants.
 // It contains summary statistics of those contents. A variant set
-// belongs to a dataset.
+// belongs to a dataset. For more genomics resource definitions, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 type VariantSet struct {
 	// DatasetId: The dataset to which this variant set belongs.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -2283,6 +2311,17 @@ type VariantSet struct {
 	// ReferenceBounds: A list of all references used by the variants in a
 	// variant set with associated coordinate upper bounds for each one.
 	ReferenceBounds []*ReferenceBound `json:"referenceBounds,omitempty"`
+
+	// ReferenceSetId: The reference set to which the variant set is mapped.
+	// The reference set describes the alignment provenance of the variant
+	// set, while the `referenceBounds` describe the shape of the actual
+	// variant data. The reference set's reference names are a superset of
+	// those found in the `referenceBounds`. For example, given a variant
+	// set that is mapped to the GRCh38 reference set and contains a single
+	// variant on reference 'X', `referenceBounds` would contain only an
+	// entry for 'X', while the associated reference set enumerates all
+	// possible references: '1', '2', 'X', 'Y', 'MT', etc.
+	ReferenceSetId string `json:"referenceSetId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2372,7 +2411,10 @@ type CallsetsCreateCall struct {
 	ctx_       context.Context
 }
 
-// Create: Creates a new call set.
+// Create: Creates a new call set. For the definitions of call sets and
+// other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *CallsetsService) Create(callset *CallSet) *CallsetsCreateCall {
 	c := &CallsetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.callset = callset
@@ -2451,7 +2493,7 @@ func (c *CallsetsCreateCall) Do() (*CallSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new call set.",
+	//   "description": "Creates a new call set. For the definitions of call sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.callsets.create",
 	//   "path": "v1/callsets",
@@ -2478,7 +2520,10 @@ type CallsetsDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes a call set.
+// Delete: Deletes a call set. For the definitions of call sets and
+// other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *CallsetsService) Delete(callSetId string) *CallsetsDeleteCall {
 	c := &CallsetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.callSetId = callSetId
@@ -2553,7 +2598,7 @@ func (c *CallsetsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a call set.",
+	//   "description": "Deletes a call set. For the definitions of call sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.callsets.delete",
 	//   "parameterOrder": [
@@ -2589,7 +2634,10 @@ type CallsetsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets a call set by ID.
+// Get: Gets a call set by ID. For the definitions of call sets and
+// other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *CallsetsService) Get(callSetId string) *CallsetsGetCall {
 	c := &CallsetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.callSetId = callSetId
@@ -2677,7 +2725,7 @@ func (c *CallsetsGetCall) Do() (*CallSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a call set by ID.",
+	//   "description": "Gets a call set by ID. For the definitions of call sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.callsets.get",
 	//   "parameterOrder": [
@@ -2714,7 +2762,10 @@ type CallsetsPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates a call set. This method supports patch semantics.
+// Patch: Updates a call set. For the definitions of call sets and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) This method supports patch semantics.
 func (r *CallsetsService) Patch(callSetId string, callset *CallSet) *CallsetsPatchCall {
 	c := &CallsetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.callSetId = callSetId
@@ -2805,7 +2856,7 @@ func (c *CallsetsPatchCall) Do() (*CallSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a call set. This method supports patch semantics.",
+	//   "description": "Updates a call set. For the definitions of call sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "genomics.callsets.patch",
 	//   "parameterOrder": [
@@ -2848,7 +2899,11 @@ type CallsetsSearchCall struct {
 	ctx_                  context.Context
 }
 
-// Search: Gets a list of call sets matching the criteria. Implements
+// Search: Gets a list of call sets matching the criteria. For the
+// definitions of call sets and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.searchCallSets](https://github.com/ga4gh/schemas/bl
 // ob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L178).
 func (r *CallsetsService) Search(searchcallsetsrequest *SearchCallSetsRequest) *CallsetsSearchCall {
@@ -2929,7 +2984,7 @@ func (c *CallsetsSearchCall) Do() (*SearchCallSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of call sets matching the criteria. Implements [GlobalAllianceApi.searchCallSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L178).",
+	//   "description": "Gets a list of call sets matching the criteria. For the definitions of call sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.searchCallSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L178).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.callsets.search",
 	//   "path": "v1/callsets/search",
@@ -2957,7 +3012,10 @@ type DatasetsCreateCall struct {
 	ctx_       context.Context
 }
 
-// Create: Creates a new dataset.
+// Create: Creates a new dataset. For the definitions of datasets and
+// other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *DatasetsService) Create(dataset *Dataset) *DatasetsCreateCall {
 	c := &DatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dataset = dataset
@@ -3036,7 +3094,7 @@ func (c *DatasetsCreateCall) Do() (*Dataset, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new dataset.",
+	//   "description": "Creates a new dataset. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.create",
 	//   "path": "v1/datasets",
@@ -3063,7 +3121,10 @@ type DatasetsDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes a dataset.
+// Delete: Deletes a dataset. For the definitions of datasets and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *DatasetsService) Delete(datasetId string) *DatasetsDeleteCall {
 	c := &DatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
@@ -3138,7 +3199,7 @@ func (c *DatasetsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a dataset.",
+	//   "description": "Deletes a dataset. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.datasets.delete",
 	//   "parameterOrder": [
@@ -3174,7 +3235,10 @@ type DatasetsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets a dataset by ID.
+// Get: Gets a dataset by ID. For the definitions of datasets and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *DatasetsService) Get(datasetId string) *DatasetsGetCall {
 	c := &DatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
@@ -3262,7 +3326,7 @@ func (c *DatasetsGetCall) Do() (*Dataset, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a dataset by ID.",
+	//   "description": "Gets a dataset by ID. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.datasets.get",
 	//   "parameterOrder": [
@@ -3299,9 +3363,12 @@ type DatasetsGetIamPolicyCall struct {
 	ctx_                context.Context
 }
 
-// GetIamPolicy: Gets the access control policy for the dataset. Is
-// empty if the policy or the resource does not exist. See Getting a
-// Policy for more information.
+// GetIamPolicy: Gets the access control policy for the dataset. For the
+// definitions of datasets and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Is empty if the policy or the resource does not exist. See
+// Getting a Policy for more information.
 func (r *DatasetsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *DatasetsGetIamPolicyCall {
 	c := &DatasetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3383,7 +3450,7 @@ func (c *DatasetsGetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for the dataset. Is empty if the policy or the resource does not exist. See Getting a Policy for more information.",
+	//   "description": "Gets the access control policy for the dataset. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Is empty if the policy or the resource does not exist. See Getting a Policy for more information.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.getIamPolicy",
 	//   "parameterOrder": [
@@ -3422,7 +3489,10 @@ type DatasetsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Lists datasets within a project.
+// List: Lists datasets within a project. For the definitions of
+// datasets and other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *DatasetsService) List() *DatasetsListCall {
 	c := &DatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -3531,7 +3601,7 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists datasets within a project.",
+	//   "description": "Lists datasets within a project. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.datasets.list",
 	//   "parameters": {
@@ -3575,7 +3645,10 @@ type DatasetsPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates a dataset. This method supports patch semantics.
+// Patch: Updates a dataset. For the definitions of datasets and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) This method supports patch semantics.
 func (r *DatasetsService) Patch(datasetId string, dataset *Dataset) *DatasetsPatchCall {
 	c := &DatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
@@ -3666,7 +3739,7 @@ func (c *DatasetsPatchCall) Do() (*Dataset, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a dataset. This method supports patch semantics.",
+	//   "description": "Updates a dataset. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "genomics.datasets.patch",
 	//   "parameterOrder": [
@@ -3711,8 +3784,10 @@ type DatasetsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
-// dataset. Replaces any existing policy. See Setting a Policy for more
-// information.
+// dataset. Replaces any existing policy. For the definitions of
+// datasets and other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) See Setting a Policy for more information.
 func (r *DatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *DatasetsSetIamPolicyCall {
 	c := &DatasetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3794,7 +3869,7 @@ func (c *DatasetsSetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on the specified dataset. Replaces any existing policy. See Setting a Policy for more information.",
+	//   "description": "Sets the access control policy on the specified dataset. Replaces any existing policy. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) See Setting a Policy for more information.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.setIamPolicy",
 	//   "parameterOrder": [
@@ -3835,7 +3910,10 @@ type DatasetsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. See Testing Permissions for more information.
+// specified resource. For the definitions of datasets and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) See Testing Permissions for more information.
 func (r *DatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *DatasetsTestIamPermissionsCall {
 	c := &DatasetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3917,7 +3995,7 @@ func (c *DatasetsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. See Testing Permissions for more information.",
+	//   "description": "Returns permissions that a caller has on the specified resource. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) See Testing Permissions for more information.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.testIamPermissions",
 	//   "parameterOrder": [
@@ -3958,8 +4036,11 @@ type DatasetsUndeleteCall struct {
 }
 
 // Undelete: Undeletes a dataset by restoring a dataset which was
-// deleted via this API. This operation is only possible for a week
-// after the deletion occurred.
+// deleted via this API. For the definitions of datasets and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) This operation is only possible for a week after the deletion
+// occurred.
 func (r *DatasetsService) Undelete(datasetId string, undeletedatasetrequest *UndeleteDatasetRequest) *DatasetsUndeleteCall {
 	c := &DatasetsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
@@ -4041,7 +4122,7 @@ func (c *DatasetsUndeleteCall) Do() (*Dataset, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Undeletes a dataset by restoring a dataset which was deleted via this API. This operation is only possible for a week after the deletion occurred.",
+	//   "description": "Undeletes a dataset by restoring a dataset which was deleted via this API. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) This operation is only possible for a week after the deletion occurred.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.undelete",
 	//   "parameterOrder": [
@@ -4613,7 +4694,10 @@ type ReadgroupsetsDeleteCall struct {
 	ctx_           context.Context
 }
 
-// Delete: Deletes a read group set.
+// Delete: Deletes a read group set. For the definitions of read group
+// sets and other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *ReadgroupsetsService) Delete(readGroupSetId string) *ReadgroupsetsDeleteCall {
 	c := &ReadgroupsetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.readGroupSetId = readGroupSetId
@@ -4688,7 +4772,7 @@ func (c *ReadgroupsetsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a read group set.",
+	//   "description": "Deletes a read group set. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.readgroupsets.delete",
 	//   "parameterOrder": [
@@ -4725,7 +4809,10 @@ type ReadgroupsetsExportCall struct {
 }
 
 // Export: Exports a read group set to a BAM file in Google Cloud
-// Storage. Note that currently there may be some differences between
+// Storage. For the definitions of read group sets and other genomics
+// resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Note that currently there may be some differences between
 // exported BAM files and the original BAM file at the time of import.
 // See
 // [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroup
@@ -4811,7 +4898,7 @@ func (c *ReadgroupsetsExportCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports a read group set to a BAM file in Google Cloud Storage. Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroupSets) for caveats.",
+	//   "description": "Exports a read group set to a BAM file in Google Cloud Storage. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Note that currently there may be some differences between exported BAM files and the original BAM file at the time of import. See [ImportReadGroupSets](google.genomics.v1.ReadServiceV1.ImportReadGroupSets) for caveats.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.export",
 	//   "parameterOrder": [
@@ -4851,7 +4938,10 @@ type ReadgroupsetsGetCall struct {
 	ctx_           context.Context
 }
 
-// Get: Gets a read group set by ID.
+// Get: Gets a read group set by ID. For the definitions of read group
+// sets and other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *ReadgroupsetsService) Get(readGroupSetId string) *ReadgroupsetsGetCall {
 	c := &ReadgroupsetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.readGroupSetId = readGroupSetId
@@ -4939,7 +5029,7 @@ func (c *ReadgroupsetsGetCall) Do() (*ReadGroupSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a read group set by ID.",
+	//   "description": "Gets a read group set by ID. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.readgroupsets.get",
 	//   "parameterOrder": [
@@ -4976,13 +5066,15 @@ type ReadgroupsetsImportCall struct {
 }
 
 // Import: Creates read group sets by asynchronously importing the
-// provided information. The caller must have WRITE permissions to the
-// dataset. ## Notes on
-// [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import - Tags
-// will be converted to strings - tag types are not preserved - Comments
-// (`@CO`) in the input file header will not be preserved - Original
-// header order of references (`@SQ`) will not be preserved - Any
-// reverse stranded unmapped reads will be reverse complemented, and
+// provided information. For the definitions of read group sets and
+// other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) The caller must have WRITE permissions to the dataset. ##
+// Notes on [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import
+// - Tags will be converted to strings - tag types are not preserved -
+// Comments (`@CO`) in the input file header will not be preserved -
+// Original header order of references (`@SQ`) will not be preserved -
+// Any reverse stranded unmapped reads will be reverse complemented, and
 // their qualities (and "BQ" tag, if any) will be reversed - Unmapped
 // reads will be stripped of positional information (reference name and
 // position)
@@ -5064,7 +5156,7 @@ func (c *ReadgroupsetsImportCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates read group sets by asynchronously importing the provided information. The caller must have WRITE permissions to the dataset. ## Notes on [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import - Tags will be converted to strings - tag types are not preserved - Comments (`@CO`) in the input file header will not be preserved - Original header order of references (`@SQ`) will not be preserved - Any reverse stranded unmapped reads will be reverse complemented, and their qualities (and \"BQ\" tag, if any) will be reversed - Unmapped reads will be stripped of positional information (reference name and position)",
+	//   "description": "Creates read group sets by asynchronously importing the provided information. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) The caller must have WRITE permissions to the dataset. ## Notes on [BAM](https://samtools.github.io/hts-specs/SAMv1.pdf) import - Tags will be converted to strings - tag types are not preserved - Comments (`@CO`) in the input file header will not be preserved - Original header order of references (`@SQ`) will not be preserved - Any reverse stranded unmapped reads will be reverse complemented, and their qualities (and \"BQ\" tag, if any) will be reversed - Unmapped reads will be stripped of positional information (reference name and position)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.import",
 	//   "path": "v1/readgroupsets:import",
@@ -5093,8 +5185,10 @@ type ReadgroupsetsPatchCall struct {
 	ctx_           context.Context
 }
 
-// Patch: Updates a read group set. This method supports patch
-// semantics.
+// Patch: Updates a read group set. For the definitions of read group
+// sets and other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) This method supports patch semantics.
 func (r *ReadgroupsetsService) Patch(readGroupSetId string, readgroupset *ReadGroupSet) *ReadgroupsetsPatchCall {
 	c := &ReadgroupsetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.readGroupSetId = readGroupSetId
@@ -5185,7 +5279,7 @@ func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a read group set. This method supports patch semantics.",
+	//   "description": "Updates a read group set. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "genomics.readgroupsets.patch",
 	//   "parameterOrder": [
@@ -5228,8 +5322,11 @@ type ReadgroupsetsSearchCall struct {
 	ctx_                       context.Context
 }
 
-// Search: Searches for read group sets matching the criteria.
-// Implements
+// Search: Searches for read group sets matching the criteria. For the
+// definitions of read group sets and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.searchReadGroupSets](https://github.com/ga4gh/schem
 // as/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L135).
 func (r *ReadgroupsetsService) Search(searchreadgroupsetsrequest *SearchReadGroupSetsRequest) *ReadgroupsetsSearchCall {
@@ -5310,7 +5407,7 @@ func (c *ReadgroupsetsSearchCall) Do() (*SearchReadGroupSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for read group sets matching the criteria. Implements [GlobalAllianceApi.searchReadGroupSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L135).",
+	//   "description": "Searches for read group sets matching the criteria. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.searchReadGroupSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L135).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.search",
 	//   "path": "v1/readgroupsets/search",
@@ -5342,7 +5439,10 @@ type ReadgroupsetsCoveragebucketsListCall struct {
 // List: Lists fixed width coverage buckets for a read group set, each
 // of which correspond to a range of a reference sequence. Each bucket
 // summarizes coverage information across its corresponding genomic
-// range. Coverage is defined as the number of reads which are aligned
+// range. For the definitions of read group sets and other genomics
+// resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Coverage is defined as the number of reads which are aligned
 // to a given base in the reference sequence. Coverage buckets are
 // available at several precomputed bucket widths, enabling retrieval of
 // various coverage 'zoom levels'. The caller must have READ permissions
@@ -5489,7 +5589,7 @@ func (c *ReadgroupsetsCoveragebucketsListCall) Do() (*ListCoverageBucketsRespons
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists fixed width coverage buckets for a read group set, each of which correspond to a range of a reference sequence. Each bucket summarizes coverage information across its corresponding genomic range. Coverage is defined as the number of reads which are aligned to a given base in the reference sequence. Coverage buckets are available at several precomputed bucket widths, enabling retrieval of various coverage 'zoom levels'. The caller must have READ permissions for the target read group set.",
+	//   "description": "Lists fixed width coverage buckets for a read group set, each of which correspond to a range of a reference sequence. Each bucket summarizes coverage information across its corresponding genomic range. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Coverage is defined as the number of reads which are aligned to a given base in the reference sequence. Coverage buckets are available at several precomputed bucket widths, enabling retrieval of various coverage 'zoom levels'. The caller must have READ permissions for the target read group set.",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.readgroupsets.coveragebuckets.list",
 	//   "parameterOrder": [
@@ -5559,17 +5659,20 @@ type ReadsSearchCall struct {
 	ctx_               context.Context
 }
 
-// Search: Gets a list of reads for one or more read group sets. Reads
-// search operates over a genomic coordinate space of reference sequence
-// & position defined over the reference sequences to which the
-// requested read group sets are aligned. If a target positional range
-// is specified, search returns all reads whose alignment to the
-// reference genome overlap the range. A query which specifies only read
-// group set IDs yields all reads in those read group sets, including
-// unmapped reads. All reads returned (including reads on subsequent
-// pages) are ordered by genomic coordinate (reference sequence &
-// position). Reads with equivalent genomic coordinates are returned in
-// a deterministic order. Implements
+// Search: Gets a list of reads for one or more read group sets. For the
+// definitions of read group sets and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Reads search operates over a genomic coordinate space of
+// reference sequence & position defined over the reference sequences to
+// which the requested read group sets are aligned. If a target
+// positional range is specified, search returns all reads whose
+// alignment to the reference genome overlap the range. A query which
+// specifies only read group set IDs yields all reads in those read
+// group sets, including unmapped reads. All reads returned (including
+// reads on subsequent pages) are ordered by genomic coordinate
+// (reference sequence & position). Reads with equivalent genomic
+// coordinates are returned in a deterministic order. Implements
 // [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/
 // v0.5.1/src/main/resources/avro/readmethods.avdl#L85).
 func (r *ReadsService) Search(searchreadsrequest *SearchReadsRequest) *ReadsSearchCall {
@@ -5650,7 +5753,7 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of reads for one or more read group sets. Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence \u0026 position). Reads with equivalent genomic coordinates are returned in a deterministic order. Implements [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L85).",
+	//   "description": "Gets a list of reads for one or more read group sets. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence \u0026 position). Reads with equivalent genomic coordinates are returned in a deterministic order. Implements [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L85).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.reads.search",
 	//   "path": "v1/reads/search",
@@ -5679,7 +5782,10 @@ type ReferencesGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets a reference. Implements
+// Get: Gets a reference. For the definitions of references and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.getReference](https://github.com/ga4gh/schemas/blob
 // /v0.5.1/src/main/resources/avro/referencemethods.avdl#L158).
 func (r *ReferencesService) Get(referenceId string) *ReferencesGetCall {
@@ -5769,7 +5875,7 @@ func (c *ReferencesGetCall) Do() (*Reference, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a reference. Implements [GlobalAllianceApi.getReference](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L158).",
+	//   "description": "Gets a reference. For the definitions of references and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.getReference](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L158).",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.references.get",
 	//   "parameterOrder": [
@@ -5805,8 +5911,11 @@ type ReferencesSearchCall struct {
 	ctx_                    context.Context
 }
 
-// Search: Searches for references which match the given criteria.
-// Implements
+// Search: Searches for references which match the given criteria. For
+// the definitions of references and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.searchReferences](https://github.com/ga4gh/schemas/
 // blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L146).
 func (r *ReferencesService) Search(searchreferencesrequest *SearchReferencesRequest) *ReferencesSearchCall {
@@ -5887,7 +5996,7 @@ func (c *ReferencesSearchCall) Do() (*SearchReferencesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for references which match the given criteria. Implements [GlobalAllianceApi.searchReferences](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L146).",
+	//   "description": "Searches for references which match the given criteria. For the definitions of references and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.searchReferences](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L146).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.references.search",
 	//   "path": "v1/references/search",
@@ -5917,7 +6026,10 @@ type ReferencesBasesListCall struct {
 }
 
 // List: Lists the bases in a reference, optionally restricted to a
-// range. Implements
+// range. For the definitions of references and other genomics
+// resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.getReferenceBases](https://github.com/ga4gh/schemas
 // /blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L221).
 func (r *ReferencesBasesService) List(referenceId string) *ReferencesBasesListCall {
@@ -6037,7 +6149,7 @@ func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the bases in a reference, optionally restricted to a range. Implements [GlobalAllianceApi.getReferenceBases](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L221).",
+	//   "description": "Lists the bases in a reference, optionally restricted to a range. For the definitions of references and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.getReferenceBases](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L221).",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.references.bases.list",
 	//   "parameterOrder": [
@@ -6097,7 +6209,10 @@ type ReferencesetsGetCall struct {
 	ctx_           context.Context
 }
 
-// Get: Gets a reference set. Implements
+// Get: Gets a reference set. For the definitions of references and
+// other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.getReferenceSet](https://github.com/ga4gh/schemas/b
 // lob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L83).
 func (r *ReferencesetsService) Get(referenceSetId string) *ReferencesetsGetCall {
@@ -6187,7 +6302,7 @@ func (c *ReferencesetsGetCall) Do() (*ReferenceSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a reference set. Implements [GlobalAllianceApi.getReferenceSet](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L83).",
+	//   "description": "Gets a reference set. For the definitions of references and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.getReferenceSet](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L83).",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.referencesets.get",
 	//   "parameterOrder": [
@@ -6224,7 +6339,10 @@ type ReferencesetsSearchCall struct {
 }
 
 // Search: Searches for reference sets which match the given criteria.
-// Implements
+// For the definitions of references and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation
 // /api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).
 func (r *ReferencesetsService) Search(searchreferencesetsrequest *SearchReferenceSetsRequest) *ReferencesetsSearchCall {
@@ -6305,7 +6423,7 @@ func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for reference sets which match the given criteria. Implements [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).",
+	//   "description": "Searches for reference sets which match the given criteria. For the definitions of references and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.referencesets.search",
 	//   "path": "v1/referencesets/search",
@@ -6333,7 +6451,10 @@ type VariantsCreateCall struct {
 	ctx_       context.Context
 }
 
-// Create: Creates a new variant.
+// Create: Creates a new variant. For the definitions of variants and
+// other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *VariantsService) Create(variant *Variant) *VariantsCreateCall {
 	c := &VariantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variant = variant
@@ -6412,7 +6533,7 @@ func (c *VariantsCreateCall) Do() (*Variant, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new variant.",
+	//   "description": "Creates a new variant. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.create",
 	//   "path": "v1/variants",
@@ -6439,7 +6560,10 @@ type VariantsDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Deletes a variant.
+// Delete: Deletes a variant. For the definitions of variants and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *VariantsService) Delete(variantId string) *VariantsDeleteCall {
 	c := &VariantsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantId = variantId
@@ -6514,7 +6638,7 @@ func (c *VariantsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a variant.",
+	//   "description": "Deletes a variant. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.variants.delete",
 	//   "parameterOrder": [
@@ -6550,7 +6674,10 @@ type VariantsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets a variant by ID.
+// Get: Gets a variant by ID. For the definitions of variants and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *VariantsService) Get(variantId string) *VariantsGetCall {
 	c := &VariantsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantId = variantId
@@ -6638,7 +6765,7 @@ func (c *VariantsGetCall) Do() (*Variant, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a variant by ID.",
+	//   "description": "Gets a variant by ID. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.variants.get",
 	//   "parameterOrder": [
@@ -6675,7 +6802,10 @@ type VariantsImportCall struct {
 }
 
 // Import: Creates variant data by asynchronously importing the provided
-// information. The variants for import will be merged with any existing
+// information. For the definitions of variant sets and other genomics
+// resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) The variants for import will be merged with any existing
 // variant that matches its reference sequence, start, end, reference
 // bases, and alternative bases. If no such variant exists, a new one
 // will be created. When variants are merged, the call information from
@@ -6764,7 +6894,7 @@ func (c *VariantsImportCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates variant data by asynchronously importing the provided information. The variants for import will be merged with any existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
+	//   "description": "Creates variant data by asynchronously importing the provided information. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) The variants for import will be merged with any existing variant that matches its reference sequence, start, end, reference bases, and alternative bases. If no such variant exists, a new one will be created. When variants are merged, the call information from the new variant is added to the existing variant, and other fields (such as key/value pairs) are discarded. In particular, this means for merged VCF variants that have conflicting INFO fields, some data will be arbitrarily discarded. As a special case, for single-sample VCF files, QUAL and FILTER fields will be moved to the call level; these are sometimes interpreted in a call-specific context. Imported VCF headers are appended to the metadata already in a variant set.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.import",
 	//   "path": "v1/variants:import",
@@ -6793,8 +6923,11 @@ type VariantsPatchCall struct {
 	ctx_       context.Context
 }
 
-// Patch: Updates a variant. This method supports patch semantics.
-// Returns the modified variant without its calls.
+// Patch: Updates a variant. For the definitions of variants and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) This method supports patch semantics. Returns the modified
+// variant without its calls.
 func (r *VariantsService) Patch(variantId string, variant *Variant) *VariantsPatchCall {
 	c := &VariantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantId = variantId
@@ -6885,7 +7018,7 @@ func (c *VariantsPatchCall) Do() (*Variant, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a variant. This method supports patch semantics. Returns the modified variant without its calls.",
+	//   "description": "Updates a variant. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) This method supports patch semantics. Returns the modified variant without its calls.",
 	//   "httpMethod": "PATCH",
 	//   "id": "genomics.variants.patch",
 	//   "parameterOrder": [
@@ -6928,7 +7061,11 @@ type VariantsSearchCall struct {
 	ctx_                  context.Context
 }
 
-// Search: Gets a list of variants matching the criteria. Implements
+// Search: Gets a list of variants matching the criteria. For the
+// definitions of variants and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.searchVariants](https://github.com/ga4gh/schemas/bl
 // ob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L126).
 func (r *VariantsService) Search(searchvariantsrequest *SearchVariantsRequest) *VariantsSearchCall {
@@ -7009,7 +7146,7 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of variants matching the criteria. Implements [GlobalAllianceApi.searchVariants](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L126).",
+	//   "description": "Gets a list of variants matching the criteria. For the definitions of variants and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.searchVariants](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L126).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variants.search",
 	//   "path": "v1/variants/search",
@@ -7037,9 +7174,12 @@ type VariantsetsCreateCall struct {
 	ctx_       context.Context
 }
 
-// Create: Creates a new variant set. The provided variant set must have
-// a valid `datasetId` set - all other fields are optional. Note that
-// the `id` field will be ignored, as this is assigned by the server.
+// Create: Creates a new variant set. For the definitions of variant
+// sets and other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) The provided variant set must have a valid `datasetId` set -
+// all other fields are optional. Note that the `id` field will be
+// ignored, as this is assigned by the server.
 func (r *VariantsetsService) Create(variantset *VariantSet) *VariantsetsCreateCall {
 	c := &VariantsetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantset = variantset
@@ -7118,7 +7258,7 @@ func (c *VariantsetsCreateCall) Do() (*VariantSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new variant set. The provided variant set must have a valid `datasetId` set - all other fields are optional. Note that the `id` field will be ignored, as this is assigned by the server.",
+	//   "description": "Creates a new variant set. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) The provided variant set must have a valid `datasetId` set - all other fields are optional. Note that the `id` field will be ignored, as this is assigned by the server.",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.create",
 	//   "path": "v1/variantsets",
@@ -7146,7 +7286,10 @@ type VariantsetsDeleteCall struct {
 }
 
 // Delete: Deletes the contents of a variant set. The variant set object
-// is not deleted.
+// is not deleted. For the definitions of variant sets and other
+// genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *VariantsetsService) Delete(variantSetId string) *VariantsetsDeleteCall {
 	c := &VariantsetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
@@ -7221,7 +7364,7 @@ func (c *VariantsetsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the contents of a variant set. The variant set object is not deleted.",
+	//   "description": "Deletes the contents of a variant set. The variant set object is not deleted. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "DELETE",
 	//   "id": "genomics.variantsets.delete",
 	//   "parameterOrder": [
@@ -7257,7 +7400,11 @@ type VariantsetsExportCall struct {
 	ctx_                    context.Context
 }
 
-// Export: Exports variant set data to an external destination.
+// Export: Exports variant set data to an external destination. For the
+// definitions of variant sets and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *VariantsetsService) Export(variantSetId string, exportvariantsetrequest *ExportVariantSetRequest) *VariantsetsExportCall {
 	c := &VariantsetsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
@@ -7339,7 +7486,7 @@ func (c *VariantsetsExportCall) Do() (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports variant set data to an external destination.",
+	//   "description": "Exports variant set data to an external destination. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.export",
 	//   "parameterOrder": [
@@ -7379,7 +7526,10 @@ type VariantsetsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets a variant set by ID.
+// Get: Gets a variant set by ID. For the definitions of variant sets
+// and other genomics resources, see [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *VariantsetsService) Get(variantSetId string) *VariantsetsGetCall {
 	c := &VariantsetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
@@ -7467,7 +7617,7 @@ func (c *VariantsetsGetCall) Do() (*VariantSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a variant set by ID.",
+	//   "description": "Gets a variant set by ID. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.variantsets.get",
 	//   "parameterOrder": [
@@ -7504,7 +7654,11 @@ type VariantsetsPatchCall struct {
 	ctx_         context.Context
 }
 
-// Patch: Updates a variant set. This method supports patch semantics.
+// Patch: Updates a variant set using patch semantics. For the
+// definitions of variant sets and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics)
 func (r *VariantsetsService) Patch(variantSetId string, variantset *VariantSet) *VariantsetsPatchCall {
 	c := &VariantsetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
@@ -7513,9 +7667,9 @@ func (r *VariantsetsService) Patch(variantSetId string, variantset *VariantSet) 
 }
 
 // UpdateMask sets the optional parameter "updateMask": An optional mask
-// specifying which fields to update. At this time, the only mutable
-// field is metadata. The only acceptable value is "metadata". If
-// unspecified, all mutable fields will be updated.
+// specifying which fields to update. Supported fields: * metadata.
+// Leaving `updateMask` unset is equivalent to specifying all mutable
+// fields.
 func (c *VariantsetsPatchCall) UpdateMask(updateMask string) *VariantsetsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7595,7 +7749,7 @@ func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a variant set. This method supports patch semantics.",
+	//   "description": "Updates a variant set using patch semantics. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "PATCH",
 	//   "id": "genomics.variantsets.patch",
 	//   "parameterOrder": [
@@ -7603,7 +7757,7 @@ func (c *VariantsetsPatchCall) Do() (*VariantSet, error) {
 	//   ],
 	//   "parameters": {
 	//     "updateMask": {
-	//       "description": "An optional mask specifying which fields to update. At this time, the only mutable field is metadata. The only acceptable value is \"metadata\". If unspecified, all mutable fields will be updated.",
+	//       "description": "An optional mask specifying which fields to update. Supported fields: * metadata. Leaving `updateMask` unset is equivalent to specifying all mutable fields.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7639,7 +7793,10 @@ type VariantsetsSearchCall struct {
 }
 
 // Search: Returns a list of all variant sets matching search criteria.
-// Implements
+// For the definitions of variant sets and other genomics resources, see
+// [Fundamentals of Google
+// Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
+// omics) Implements
 // [GlobalAllianceApi.searchVariantSets](https://github.com/ga4gh/schemas
 // /blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L49).
 func (r *VariantsetsService) Search(searchvariantsetsrequest *SearchVariantSetsRequest) *VariantsetsSearchCall {
@@ -7720,7 +7877,7 @@ func (c *VariantsetsSearchCall) Do() (*SearchVariantSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a list of all variant sets matching search criteria. Implements [GlobalAllianceApi.searchVariantSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L49).",
+	//   "description": "Returns a list of all variant sets matching search criteria. For the definitions of variant sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.searchVariantSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/variantmethods.avdl#L49).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.variantsets.search",
 	//   "path": "v1/variantsets/search",

@@ -461,6 +461,92 @@ func (s *ErrorProto) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type ExplainQueryStage struct {
+	// ComputeRatioAvg: Relative amount of time the average shard spent on
+	// CPU-bound tasks.
+	ComputeRatioAvg float64 `json:"computeRatioAvg,omitempty"`
+
+	// ComputeRatioMax: Relative amount of time the slowest shard spent on
+	// CPU-bound tasks.
+	ComputeRatioMax float64 `json:"computeRatioMax,omitempty"`
+
+	// Id: Unique ID for stage within plan.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: Human-readable name for stage.
+	Name string `json:"name,omitempty"`
+
+	// ReadRatioAvg: Relative amount of time the average shard spent reading
+	// input.
+	ReadRatioAvg float64 `json:"readRatioAvg,omitempty"`
+
+	// ReadRatioMax: Relative amount of time the slowest shard spent reading
+	// input.
+	ReadRatioMax float64 `json:"readRatioMax,omitempty"`
+
+	// RecordsRead: Number of records read into the stage.
+	RecordsRead int64 `json:"recordsRead,omitempty,string"`
+
+	// RecordsWritten: Number of records written by the stage.
+	RecordsWritten int64 `json:"recordsWritten,omitempty,string"`
+
+	// Steps: List of operations within the stage in dependency order
+	// (approximately chronological).
+	Steps []*ExplainQueryStep `json:"steps,omitempty"`
+
+	// WaitRatioAvg: Relative amount of time the average shard spent waiting
+	// to be scheduled.
+	WaitRatioAvg float64 `json:"waitRatioAvg,omitempty"`
+
+	// WaitRatioMax: Relative amount of time the slowest shard spent waiting
+	// to be scheduled.
+	WaitRatioMax float64 `json:"waitRatioMax,omitempty"`
+
+	// WriteRatioAvg: Relative amount of time the average shard spent on
+	// writing output.
+	WriteRatioAvg float64 `json:"writeRatioAvg,omitempty"`
+
+	// WriteRatioMax: Relative amount of time the slowest shard spent on
+	// writing output.
+	WriteRatioMax float64 `json:"writeRatioMax,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComputeRatioAvg") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ExplainQueryStage) MarshalJSON() ([]byte, error) {
+	type noMethod ExplainQueryStage
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ExplainQueryStep struct {
+	// Kind: Machine-readable operation type.
+	Kind string `json:"kind,omitempty"`
+
+	// Substeps: Human-readable stage descriptions.
+	Substeps []string `json:"substeps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ExplainQueryStep) MarshalJSON() ([]byte, error) {
+	type noMethod ExplainQueryStep
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type ExternalDataConfiguration struct {
 	// Compression: [Optional] The compression type of the data source.
 	// Possible values include GZIP and NONE. The default value is NONE.
@@ -1223,6 +1309,10 @@ type JobStatistics2 struct {
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
+	// QueryPlan: [Output-only, Experimental] Describes execution plan for
+	// the query as a list of stages.
+	QueryPlan []*ExplainQueryStage `json:"queryPlan,omitempty"`
+
 	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
 	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
 
@@ -1698,6 +1788,12 @@ type TableDataInsertAllRequest struct {
 	// if invalid rows exist. The default value is false, which causes the
 	// entire request to fail if any invalid rows exist.
 	SkipInvalidRows bool `json:"skipInvalidRows,omitempty"`
+
+	// TemplateSuffix: [Experimental] If specified, treats the destination
+	// table as a base template, and inserts the rows into an instance table
+	// named "". BigQuery will manage creation of the instance table, using
+	// the schema of the base template table.
+	TemplateSuffix string `json:"templateSuffix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IgnoreUnknownValues")
 	// to unconditionally include in API requests. By default, fields with

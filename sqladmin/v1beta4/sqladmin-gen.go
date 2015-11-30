@@ -470,6 +470,10 @@ type DatabaseInstance struct {
 	// Etag: HTTP 1.1 Entity tag for the resource.
 	Etag string `json:"etag,omitempty"`
 
+	// FailoverReplica: The name and status of the failover replica. Only
+	// applies to Second Generation instances.
+	FailoverReplica *DatabaseInstanceFailoverReplica `json:"failoverReplica,omitempty"`
+
 	// InstanceType: The instance type. This can be one of the
 	// following.
 	// CLOUD_SQL_INSTANCE: A Cloud SQL instance that is not replicating from
@@ -560,6 +564,28 @@ type DatabaseInstance struct {
 
 func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
 	type noMethod DatabaseInstance
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// DatabaseInstanceFailoverReplica: The name and status of the failover
+// replica. Only applies to Second Generation instances.
+type DatabaseInstanceFailoverReplica struct {
+	Available bool `json:"available,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Available") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DatabaseInstanceFailoverReplica) MarshalJSON() ([]byte, error) {
+	type noMethod DatabaseInstanceFailoverReplica
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -728,6 +754,10 @@ type Flag struct {
 	// Name: This is the name of the flag. Flag names always use
 	// underscores, not hyphens, e.g. max_allowed_packet
 	Name string `json:"name,omitempty"`
+
+	// RequiresRestart: Indicates whether changing this flag will trigger a
+	// database restart. Only applicable to Second Generation instances.
+	RequiresRestart bool `json:"requiresRestart,omitempty"`
 
 	// Type: The type of the flag. Flags are typed to being BOOLEAN, STRING,
 	// INTEGER or NONE. NONE is used for flags which do not take a value,
@@ -1431,6 +1461,10 @@ type Settings struct {
 	// DataDiskSizeGb: The size of data disk, in GB. Only supported for 2nd
 	// Generation instances. The data disk size minimum is 10GB.
 	DataDiskSizeGb int64 `json:"dataDiskSizeGb,omitempty,string"`
+
+	// DataDiskType: The type of data disk. Only supported for 2nd
+	// Generation instances. The default type is SSD.
+	DataDiskType string `json:"dataDiskType,omitempty"`
 
 	// DatabaseFlags: The database flags passed to the instance at startup.
 	DatabaseFlags []*DatabaseFlags `json:"databaseFlags,omitempty"`

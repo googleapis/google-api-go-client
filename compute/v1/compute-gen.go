@@ -3383,6 +3383,10 @@ type InstanceGroupManager struct {
 	// characters long, and comply with RFC1035.
 	Name string `json:"name,omitempty"`
 
+	// NamedPorts: Named ports configured for the Instance Groups
+	// complementary to this Instance Group Manager.
+	NamedPorts []*NamedPort `json:"namedPorts,omitempty"`
+
 	// SelfLink: [Output Only] The URL for this managed instance group. The
 	// server defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -30334,7 +30338,7 @@ func (c *TargetHttpsProxiesSetSslCertificatesCall) Do() (*Operation, error) {
 	//       "type": "string"
 	//     },
 	//     "targetHttpsProxy": {
-	//       "description": "Name of the TargetHttpsProxy resource whose URL map is to be set.",
+	//       "description": "Name of the TargetHttpsProxy resource whose SSLCertificate is to be set.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,

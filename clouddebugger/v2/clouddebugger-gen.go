@@ -150,42 +150,73 @@ type DebuggerDebuggeesBreakpointsService struct {
 	s *Service
 }
 
+// AliasContext: An alias to a repo revision.
+type AliasContext struct {
+	// Kind: The alias kind.
+	//
+	// Possible values:
+	//   "ANY"
+	//   "FIXED"
+	//   "MOVABLE"
+	//   "OTHER"
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The alias name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *AliasContext) MarshalJSON() ([]byte, error) {
+	type noMethod AliasContext
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Breakpoint: Represents the breakpoint specification, status and
 // results.
 type Breakpoint struct {
-	// Action: Defines what to do when the breakpoint hits.
+	// Action: Action that the agent should perform when the code at the
+	// breakpoint location is hit.
 	//
 	// Possible values:
 	//   "CAPTURE"
 	//   "LOG"
 	Action string `json:"action,omitempty"`
 
-	// Condition: A condition to trigger the breakpoint. The condition is a
+	// Condition: Condition that triggers the breakpoint. The condition is a
 	// compound boolean expression composed using expressions in a
 	// programming language at the source location.
 	Condition string `json:"condition,omitempty"`
 
-	// CreateTime: The time this breakpoint was created by the server. The
-	// value is in seconds resolution.
+	// CreateTime: Time this breakpoint was created by the server in seconds
+	// resolution.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// EvaluatedExpressions: The evaluated expressions' values at breakpoint
+	// EvaluatedExpressions: Values of evaluated expressions at breakpoint
 	// time. The evaluated expressions appear in exactly the same order they
-	// are listed in the 'expressions' field. The 'name' field holds the
-	// original expression text, the 'value'/'members' field holds the
-	// result of the evaluated expression. If the expression can not be
-	// evaluated, an error text is placed in the value field.
+	// are listed in the `expressions` field. The `name` field holds the
+	// original expression text, the `value` or `members` field holds the
+	// result of the evaluated expression. If the expression cannot be
+	// evaluated, the `status` inside the `Variable` will indicate an error
+	// and contain the error text.
 	EvaluatedExpressions []*Variable `json:"evaluatedExpressions,omitempty"`
 
-	// Expressions: A list of read-only expressions to evaluate at the
+	// Expressions: List of read-only expressions to evaluate at the
 	// breakpoint location. The expressions are composed using expressions
 	// in the programming language at the source location. If the breakpoint
-	// action is "LOG", the evaluated expressions are included in log
+	// action is `LOG`, the evaluated expressions are included in log
 	// statements.
 	Expressions []string `json:"expressions,omitempty"`
 
-	// FinalTime: The time this breakpoint was finalized as seen by the
-	// server. The value is in seconds resolution.
+	// FinalTime: Time this breakpoint was finalized as seen by the server
+	// in seconds resolution.
 	FinalTime string `json:"finalTime,omitempty"`
 
 	// Id: Breakpoint identifier, unique in the scope of the debuggee.
@@ -195,11 +226,11 @@ type Breakpoint struct {
 	// the breakpoint state will not change from here on.
 	IsFinalState bool `json:"isFinalState,omitempty"`
 
-	// Location: The breakpoint source location.
+	// Location: Breakpoint source location.
 	Location *SourceLocation `json:"location,omitempty"`
 
 	// LogLevel: Indicates the severity of the log. Only relevant when
-	// action is "LOG".
+	// action is `LOG`.
 	//
 	// Possible values:
 	//   "INFO"
@@ -207,42 +238,42 @@ type Breakpoint struct {
 	//   "ERROR"
 	LogLevel string `json:"logLevel,omitempty"`
 
-	// LogMessageFormat: Only relevant when action is "LOG". Defines the
+	// LogMessageFormat: Only relevant when action is `LOG`. Defines the
 	// message to log when the breakpoint hits. The message may include
-	// parameter placeholders "$0", "$1", etc. These placeholders will be
+	// parameter placeholders `$0`, `$1`, etc. These placeholders are
 	// replaced with the evaluated value of the appropriate expression.
-	// Expressions not referenced in "log_message_format" will not be
-	// logged. Example: "Poisonous message received, id = $0, count = $1"
-	// with expressions = [ "message.id", "message.count" ].
+	// Expressions not referenced in `log_message_format` are not logged.
+	// Example: `Message received, id = $0, count = $1` with `expressions` =
+	// `[ message.id, message.count ]`.
 	LogMessageFormat string `json:"logMessageFormat,omitempty"`
 
 	// StackFrames: The stack at breakpoint time.
 	StackFrames []*StackFrame `json:"stackFrames,omitempty"`
 
 	// Status: Breakpoint status. The status includes an error flag and a
-	// human readable message. This field will usually stay unset. The
-	// message can be either informational or error. Nevertheless, clients
+	// human readable message. This field is usually unset. The message can
+	// be either informational or an error message. Regardless, clients
 	// should always display the text message back to the user. Error status
-	// of a breakpoint indicates complete failure. Example (non-final
-	// state): 'Still loading symbols...' Examples (final state): 'Failed to
-	// insert breakpoint' referring to breakpoint, 'Field f not found in
-	// class C' referring to condition, ...
+	// indicates complete failure of the breakpoint. Example (non-final
+	// state): `Still loading symbols...` Examples (final state): * `Invalid
+	// line number` referring to location * `Field f not found in class C`
+	// referring to condition
 	Status *StatusMessage `json:"status,omitempty"`
 
-	// UserEmail: The e-mail of the user that created this breakpoint
+	// UserEmail: E-mail address of the user that created this breakpoint
 	UserEmail string `json:"userEmail,omitempty"`
 
-	// VariableTable: The variable_table exists to aid with computation,
+	// VariableTable: The `variable_table` exists to aid with computation,
 	// memory and network traffic optimization. It enables storing a
 	// variable once and reference it from multiple variables, including
-	// variables stored in the variable_table itself. For example, the
-	// object 'this', which may appear at many levels of the stack, can have
-	// all of it's data stored once in this table. The stack frame variables
-	// then would hold only a reference to it. The variable var_index field
-	// is an index into this repeated field. The stored objects are nameless
-	// and get their name from the referencing variable. The effective
-	// variable is a merge of the referencing veariable and the referenced
-	// variable.
+	// variables stored in the `variable_table` itself. For example, the
+	// same `this` object, which may appear at many levels of the stack, can
+	// have all of its data stored once in this table. The stack frame
+	// variables then would hold only a reference to it. The variable
+	// `var_table_index` field is an index into this repeated field. The
+	// stored objects are nameless and get their name from the referencing
+	// variable. The effective variable is a merge of the referencing
+	// veariable and the referenced variable.
 	VariableTable []*Variable `json:"variableTable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -264,6 +295,9 @@ func (s *Breakpoint) MarshalJSON() ([]byte, error) {
 // revision in a cloud repo (a repo hosted by the Google Cloud
 // Platform).
 type CloudRepoSourceContext struct {
+	// AliasContext: An alias, which may be a branch or tag.
+	AliasContext *AliasContext `json:"aliasContext,omitempty"`
+
 	// AliasName: The name of an alias (branch, tag, etc.).
 	AliasName string `json:"aliasName,omitempty"`
 
@@ -273,7 +307,7 @@ type CloudRepoSourceContext struct {
 	// RevisionId: A revision ID.
 	RevisionId string `json:"revisionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AliasName") to
+	// ForceSendFields is a list of field names (e.g. "AliasContext") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -343,51 +377,61 @@ func (s *CloudWorkspaceSourceContext) MarshalJSON() ([]byte, error) {
 // include one or more replicated processes executing the same code.
 // Each of these processes is attached with a debugger agent, carrying
 // out the debugging commands. The agents attached to the same debuggee
-// are identified by using exactly the same fields' values when
+// are identified by using exactly the same field values when
 // registering.
 type Debuggee struct {
 	// AgentVersion: Version ID of the agent release. The version ID is
-	// structured as following: "domain/type/vmajor.minor" (for example
-	// "google.com/gcp-java/v1.1").
+	// structured as following: `domain/type/vmajor.minor` (for example
+	// `google.com/gcp-java/v1.1`).
 	AgentVersion string `json:"agentVersion,omitempty"`
 
-	// Description: A human readable description of the debuggee.
-	// Recommended to include human readable project name, environment name,
-	// and version information .
+	// Description: Human readable description of the debuggee. Including a
+	// human-readable project name, environment name and version information
+	// is recommended.
 	Description string `json:"description,omitempty"`
 
-	// Id: Debuggee unique identifer generated by the server.
+	// ExtSourceContexts: References to the locations and revisions of the
+	// source code used in the deployed application. Contexts describing a
+	// remote repo related to the source code have a `category` label of
+	// `remote_repo`. Source snapshot source contexts have a `category` of
+	// `snapshot`.
+	ExtSourceContexts []*ExtendedSourceContext `json:"extSourceContexts,omitempty"`
+
+	// Id: Unique identifier for the debuggee generated by the controller
+	// service.
 	Id string `json:"id,omitempty"`
 
-	// IsDisabled: If set to true, indicates that the agent should disable
+	// IsDisabled: If set to `true`, indicates that the agent should disable
 	// itself and detach from the debuggee.
 	IsDisabled bool `json:"isDisabled,omitempty"`
 
-	// IsInactive: If set to true indicates that the debuggee has not been
-	// seen by the Controller service in the last active time period
-	// (defined by the server).
+	// IsInactive: If set to `true`, indicates that the debuggee is
+	// considered as inactive by the Controller service.
 	IsInactive bool `json:"isInactive,omitempty"`
 
 	// Labels: A set of custom debuggee properties, populated by the agent,
 	// to be displayed to the user.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Project: The project the debuggee is associated with. Use the project
+	// Project: Project the debuggee is associated with. Use the project
 	// number when registering a Google Cloud Platform project.
 	Project string `json:"project,omitempty"`
 
-	// SourceContexts: Repository snapshots containing the source code of
-	// the project.
+	// SourceContexts: References to the locations and revisions of the
+	// source code used in the deployed application. NOTE: This field is
+	// deprecated. Consumers should use `ext_source_contexts` if it is not
+	// empty. Debug agents should populate both this field and
+	// `ext_source_contexts`.
 	SourceContexts []*SourceContext `json:"sourceContexts,omitempty"`
 
 	// Status: Human readable message to be displayed to the user about this
-	// debuggee. Absense of this field indicates no message. The message can
-	// be either informational or error.
+	// debuggee. Absence of this field indicates no status. The message can
+	// be either informational or an error status.
 	Status *StatusMessage `json:"status,omitempty"`
 
-	// Uniquifier: The debuggee uniqifier within the project. Any string
-	// that id the application within the project can be used. Recomended to
-	// include environement and version or build id's.
+	// Uniquifier: Debuggee uniquifier within the project. Any string that
+	// identifies the application within the project can be used. Including
+	// environment and version or build IDs is recommended.
 	Uniquifier string `json:"uniquifier,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentVersion") to
@@ -417,13 +461,37 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExtendedSourceContext: An ExtendedSourceContext is a SourceContext
+// combined with additional details describing the context.
+type ExtendedSourceContext struct {
+	// Context: Any source context.
+	Context *SourceContext `json:"context,omitempty"`
+
+	// Labels: Labels with user defined metadata.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Context") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ExtendedSourceContext) MarshalJSON() ([]byte, error) {
+	type noMethod ExtendedSourceContext
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // FormatMessage: Represents a message with parameters.
 type FormatMessage struct {
-	// Format: Format template of the message. The "format" uses
-	// placeholders "$0", "$1", etc. to reference parameters. "$$" can be
-	// used to denote the '$' character. Examples: "Failed to load '$0'
+	// Format: Format template for the message. The `format` uses
+	// placeholders `$0`, `$1`, etc. to reference parameters. `$$` can be
+	// used to denote the `$` character. Examples: * `Failed to load '$0'
 	// which helps debug $1 the first time it is loaded. Again, $0 is very
-	// important." "Please pay $$10 to use $0 instead of $1."
+	// important.` * `Please pay $$10 to use $0 instead of $1.`
 	Format string `json:"format,omitempty"`
 
 	// Parameters: Optional parameters to be embedded into the message.
@@ -446,6 +514,9 @@ func (s *FormatMessage) MarshalJSON() ([]byte, error) {
 
 // GerritSourceContext: A SourceContext referring to a Gerrit project.
 type GerritSourceContext struct {
+	// AliasContext: An alias, which may be a branch or tag.
+	AliasContext *AliasContext `json:"aliasContext,omitempty"`
+
 	// AliasName: The name of an alias (branch, tag, etc.).
 	AliasName string `json:"aliasName,omitempty"`
 
@@ -460,7 +531,7 @@ type GerritSourceContext struct {
 	// RevisionId: A revision (commit) ID.
 	RevisionId string `json:"revisionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AliasName") to
+	// ForceSendFields is a list of field names (e.g. "AliasContext") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -475,11 +546,10 @@ func (s *GerritSourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// GetBreakpointResponse: The response of getting breakpoint
-// information.
+// GetBreakpointResponse: Response for getting breakpoint information.
 type GetBreakpointResponse struct {
-	// Breakpoint: The complete breakpoint state. The fields 'id' and
-	// 'location' are guranteed to be set.
+	// Breakpoint: Complete breakpoint state. The fields `id` and `location`
+	// are guaranteed to be set.
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -525,16 +595,21 @@ func (s *GitSourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListActiveBreakpointsResponse: The response of listing active
+// ListActiveBreakpointsResponse: Response for listing active
 // breakpoints.
 type ListActiveBreakpointsResponse struct {
-	// Breakpoints: List of all active breakpoints. The fields 'id' and
-	// 'location' are guranteed to be set on each breakpoint.
+	// Breakpoints: List of all active breakpoints. The fields `id` and
+	// `location` are guaranteed to be set on each breakpoint.
 	Breakpoints []*Breakpoint `json:"breakpoints,omitempty"`
 
 	// NextWaitToken: A wait token that can be used in the next method call
 	// to block until the list of breakpoints changes.
 	NextWaitToken string `json:"nextWaitToken,omitempty"`
+
+	// WaitExpired: The `wait_expired` field is set to true by the server
+	// when the request times out and the field `success_on_timeout` is set
+	// to true.
+	WaitExpired bool `json:"waitExpired,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -555,14 +630,15 @@ func (s *ListActiveBreakpointsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListBreakpointsResponse: The response of listing breakpoints.
+// ListBreakpointsResponse: Response for listing breakpoints.
 type ListBreakpointsResponse struct {
 	// Breakpoints: List of all breakpoints with complete state. The fields
-	// 'id' and 'location' are guranteed to be set on each breakpoint.
+	// `id` and `location` are guaranteed to be set on each breakpoint.
 	Breakpoints []*Breakpoint `json:"breakpoints,omitempty"`
 
 	// NextWaitToken: A wait token that can be used in the next call to
-	// ListBreakpoints to block until the list of breakpoints has changes.
+	// `list` (REST) or `ListBreakpoints` (RPC) to block until the list of
+	// breakpoints has changes.
 	NextWaitToken string `json:"nextWaitToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -584,12 +660,12 @@ func (s *ListBreakpointsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// ListDebuggeesResponse: The response of listing debuggees.
+// ListDebuggeesResponse: Response for listing debuggees.
 type ListDebuggeesResponse struct {
-	// Debuggees: The list of debuggees accessible to the calling user. Note
-	// that the description field is the only human readable field that
-	// should be displayed to the user. The fields 'debuggee.id' and
-	// 'description' are guranteed to be set on each debuggee.
+	// Debuggees: List of debuggees accessible to the calling user. Note
+	// that the `description` field is the only human readable field that
+	// should be displayed to the user. The fields `debuggee.id` and
+	// `description` fields are guaranteed to be set on each debuggee.
 	Debuggees []*Debuggee `json:"debuggees,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -635,10 +711,10 @@ func (s *ProjectRepoId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// RegisterDebuggeeRequest: The request to register a debuggee.
+// RegisterDebuggeeRequest: Request to register a debuggee.
 type RegisterDebuggeeRequest struct {
-	// Debuggee: The debuggee information to register. The fields 'project',
-	// 'uniquifier', 'description' and 'agent_version' of the debuggee must
+	// Debuggee: Debuggee information to register. The fields `project`,
+	// `uniquifier`, `description` and `agent_version` of the debuggee must
 	// be set.
 	Debuggee *Debuggee `json:"debuggee,omitempty"`
 
@@ -657,10 +733,10 @@ func (s *RegisterDebuggeeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// RegisterDebuggeeResponse: The response of registering a debuggee.
+// RegisterDebuggeeResponse: Response for registering a debuggee.
 type RegisterDebuggeeResponse struct {
-	// Debuggee: The debuggee resource. The field 'id' is guranteed to be
-	// set (in addition to the echoed fields).
+	// Debuggee: Debuggee resource. The field `id` is guranteed to be set
+	// (in addition to the echoed fields).
 	Debuggee *Debuggee `json:"debuggee,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -705,10 +781,10 @@ func (s *RepoId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// SetBreakpointResponse: The response of setting a breakpoint.
+// SetBreakpointResponse: Response for setting a breakpoint.
 type SetBreakpointResponse struct {
-	// Breakpoint: The breakpoint resource. The field 'id' is guranteed to
-	// be set (in addition to the echoed fileds).
+	// Breakpoint: Breakpoint resource. The field `id` is guaranteed to be
+	// set (in addition to the echoed fileds).
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -765,11 +841,12 @@ func (s *SourceContext) MarshalJSON() ([]byte, error) {
 
 // SourceLocation: Represents a location in the source code.
 type SourceLocation struct {
-	// Line: The line inside the file (first line value is '1').
+	// Line: Line inside the file. The first line in the file has the value
+	// `1`.
 	Line int64 `json:"line,omitempty"`
 
-	// Path: A path to the source file within the source context of the
-	// target binary.
+	// Path: Path to the source file within the source context of the target
+	// binary.
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Line") to
@@ -789,18 +866,18 @@ func (s *SourceLocation) MarshalJSON() ([]byte, error) {
 
 // StackFrame: Represents a stack frame context.
 type StackFrame struct {
-	// Arguments: The set of arguments passed to this function Note that
-	// this might not be populated for all stack frames.
+	// Arguments: Set of arguments passed to this function. Note that this
+	// might not be populated for all stack frames.
 	Arguments []*Variable `json:"arguments,omitempty"`
 
-	// Function: The unmangled function name at the call site.
+	// Function: Demangled function name at the call site.
 	Function string `json:"function,omitempty"`
 
-	// Locals: The set of local variables at the stack frame location. Note
-	// that this might not be populated for all stack frames.
+	// Locals: Set of local variables at the stack frame location. Note that
+	// this might not be populated for all stack frames.
 	Locals []*Variable `json:"locals,omitempty"`
 
-	// Location: The source location of the call site.
+	// Location: Source location of the call site.
 	Location *SourceLocation `json:"location,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Arguments") to
@@ -820,9 +897,9 @@ func (s *StackFrame) MarshalJSON() ([]byte, error) {
 
 // StatusMessage: Represents a contextual status message. The message
 // can indicate an error or informational status, and refer to specific
-// parts of the containing object. For example, the Breakpoint.status
+// parts of the containing object. For example, the `Breakpoint.status`
 // field can indicate an error referring to the
-// BREAKPOINT_SOURCE_LOCATION with the message "Location not found".
+// `BREAKPOINT_SOURCE_LOCATION` with the message `Location not found`.
 type StatusMessage struct {
 	// Description: Status message text.
 	Description *FormatMessage `json:"description,omitempty"`
@@ -856,11 +933,11 @@ func (s *StatusMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// UpdateActiveBreakpointRequest: The request to update an active
+// UpdateActiveBreakpointRequest: Request to update an active
 // breakpoint.
 type UpdateActiveBreakpointRequest struct {
-	// Breakpoint: The updated breakpoint information. The field 'id' must
-	// be set.
+	// Breakpoint: Updated breakpoint information. The field 'id' must be
+	// set.
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Breakpoint") to
@@ -878,7 +955,7 @@ func (s *UpdateActiveBreakpointRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// UpdateActiveBreakpointResponse: The response of updating an active
+// UpdateActiveBreakpointResponse: Response for updating an active
 // breakpoint. The message is defined to allow future extensions.
 type UpdateActiveBreakpointResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
@@ -887,42 +964,48 @@ type UpdateActiveBreakpointResponse struct {
 }
 
 // Variable: Represents a variable or an argument possibly of a compound
-// object type. 1. A simple variable such as, int x = 5 is represented
-// as: { name: "x", value: "5" } 2. A compound object such as, struct T
-// { int m1; int m2; }; T x = { 3, 7 }; is represented as: { name: "x",
-// members { name: "m1", value: "3" }, members { name: "m2", value: "7"
-// } } 3. A pointer where the pointee was captured such as, T x = { 3, 7
-// }; T* p = &x; is represented as: { name: "p", value: "0x00500500",
-// members { name: "m1", value: "3" }, members { name: "m2", value: "7"
-// } } 4. A pointer where the pointee was not captured or is
-// inaccessible such as, T* p = new T; is represented as: { name: "p",
-// value: "0x00400400", members { value: "" } } the value text should
-// decribe the reason for the missing value. such as , ,
-// . note that a null pointer should not have members. 5. An unnamed
-// value such as, int* p = new int(7); is represented as, { name: "p",
-// value: "0x00500500", members { value: "7" } } 6. An unnamed pointer
-// where the pointee was not captured such as, int* p = new int(7);
-// int** pp = &p; is represented as: { name: "pp", value: "0x00500500",
-// members { value: "0x00400400", members { value: "" } } } To optimize
-// computation, memory and network traffic, variables that repeat in the
-// output multiple times can be stored once in a shared variable table
-// and be referenced using the var_index field. The variables stored in
-// the shared table are nameless and are essentially a partition of the
-// complete variable. To reconstruct the complete variable merge the
-// referencing variable with the referenced variable. When using the
-// shared variable table, variables can be represented as: T x = { 3, 7
-// }; T* p = &x; T& r = x; are represented as, { name: "x", var_index: 3
-// } { name: "p", value "0x00500500", var_index: 3 } { name: "r",
-// var_index: 3 } with shared variable table entry #3: { members { name:
-// "m1", value: "3" }, members { name: "m2", value: "7" } } Note that
-// the pointer address is stored with the referencing variable and not
-// with the referenced variable, to allow the referenced variable to be
-// shared between pointer and references.
+// object type. Note how the following variables are represented: 1) A
+// simple variable: int x = 5 { name: "x", value: "5", type: "int" } //
+// Captured variable 2) A compound object: struct T { int m1; int m2; };
+// T x = { 3, 7 }; { // Captured variable name: "x", type: "T", members
+// { name: "m1", value: "3", type: "int" }, members { name: "m2", value:
+// "7", type: "int" } } 3) A pointer where the pointee was captured: T x
+// = { 3, 7 }; T* p = &x; { // Captured variable name: "p", type: "T*",
+// value: "0x00500500", members { name: "m1", value: "3", type: "int" },
+// members { name: "m2", value: "7", type: "int" } } 4) A pointer where
+// the pointee was not captured: T* p = new T; { // Captured variable
+// name: "p", type: "T*", value: "0x00400400" status { is_error: true,
+// description { format: "unavailable" } } } The status should describe
+// the reason for the missing value, such as ``, ``, `
+// `. Note that a null pointer should not have members. 5) An unnamed
+// value: int* p = new int(7); { // Captured variable name: "p", value:
+// "0x00500500", type: "int*", members { value: "7", type: "int" } } 6)
+// An unnamed pointer where the pointee was not captured: int* p = new
+// int(7); int** pp = &p; { // Captured variable name: "pp", value:
+// "0x00500500", type: "int**", members { value: "0x00400400", type:
+// "int*" status { is_error: true, description: { format: "unavailable"
+// } } } } } To optimize computation, memory and network traffic,
+// variables that repeat in the output multiple times can be stored once
+// in a shared variable table and be referenced using the
+// `var_table_index` field. The variables stored in the shared table are
+// nameless and are essentially a partition of the complete variable. To
+// reconstruct the complete variable, merge the referencing variable
+// with the referenced variable. When using the shared variable table,
+// the following variables: T x = { 3, 7 }; T* p = &x; T& r = x; { name:
+// "x", var_table_index: 3, type: "T" } // Captured variables { name:
+// "p", value "0x00500500", type="T*", var_table_index: 3 } { name: "r",
+// type="T&", var_table_index: 3 } { // Shared variable table entry #3:
+// members { name: "m1", value: "3", type: "int" }, members { name:
+// "m2", value: "7", type: "int" } } Note that the pointer address is
+// stored with the referencing variable and not with the referenced
+// variable. This allows the referenced variable to be shared between
+// pointers and references. The type field is optional. The debugger
+// agent may or may not support it.
 type Variable struct {
-	// Members: The members contained or pointed to by the variable.
+	// Members: Members contained or pointed to by the variable.
 	Members []*Variable `json:"members,omitempty"`
 
-	// Name: The name of the variable, if any.
+	// Name: Name of the variable, if any.
 	Name string `json:"name,omitempty"`
 
 	// Status: Status associated with the variable. This field will usually
@@ -930,22 +1013,28 @@ type Variable struct {
 	// variable or expression. The rest of breakpoint data still remains
 	// valid. Variables might be reported in error state even when
 	// breakpoint is not in final state. The message may refer to variable
-	// name with "refers_to" set to "VARIABLE_NAME". Alternatively
-	// "refers_to" will be set to "VARIABLE_VALUE". In either case variable
+	// name with `refers_to` set to `VARIABLE_NAME`. Alternatively
+	// `refers_to` will be set to `VARIABLE_VALUE`. In either case variable
 	// value and members will be unset. Example of error message applied to
-	// name: "Invalid expression syntax". Example of information message
-	// applied to value: "Not captured". Examples of error message applied
-	// to value: "Malformed string", "Field f not found in class C", "Null
-	// pointer dereference".
+	// name: `Invalid expression syntax`. Example of information message
+	// applied to value: `Not captured`. Examples of error message applied
+	// to value: * `Malformed string`, * `Field f not found in class C` *
+	// `Null pointer dereference`
 	Status *StatusMessage `json:"status,omitempty"`
 
-	// Value: The simple value of the variable.
+	// Type: Variable type (e.g. `MyClass`). If the variable is split with
+	// `var_table_index`, `type` goes next to `value`. The interpretation of
+	// a type is agent specific. It is recommended to include the dynamic
+	// type rather than a static type of an object.
+	Type string `json:"type,omitempty"`
+
+	// Value: Simple value of the variable.
 	Value string `json:"value,omitempty"`
 
-	// VarTableIndex: This is a reference to a variable in the shared
-	// variable table. More than one variable can reference the same
-	// variable in the table. The var_index field is an index into
-	// variable_table in Breakpoint.
+	// VarTableIndex: Reference to a variable in the shared variable table.
+	// More than one variable can reference the same variable in the table.
+	// The `var_table_index` field is an index into `variable_table` in
+	// Breakpoint.
 	VarTableIndex int64 `json:"varTableIndex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Members") to
@@ -972,13 +1061,14 @@ type ControllerDebuggeesRegisterCall struct {
 	ctx_                    context.Context
 }
 
-// Register: Registers the debuggee with the controller. All agents
-// should call this API with the same request content to get back the
-// same stable 'debuggee_id'. Agents should call this API again whenever
-// ListActiveBreakpoints or UpdateActiveBreakpoint return the error
-// google.rpc.Code.NOT_FOUND. It allows the server to disable the agent
-// or recover from any registration loss. If the debuggee is disabled
-// server, the response will have is_disabled' set to true.
+// Register: Registers the debuggee with the controller service. All
+// agents attached to the same application should call this method with
+// the same request content to get back the same stable `debuggee_id`.
+// Agents should call this method again whenever
+// `google.rpc.Code.NOT_FOUND` is returned from any controller method.
+// This allows the controller service to disable the agent or recover
+// from any data loss. If the debuggee is disabled by the server, the
+// response will have `is_disabled` set to `true`.
 func (r *ControllerDebuggeesService) Register(registerdebuggeerequest *RegisterDebuggeeRequest) *ControllerDebuggeesRegisterCall {
 	c := &ControllerDebuggeesRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registerdebuggeerequest = registerdebuggeerequest
@@ -1057,7 +1147,7 @@ func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Registers the debuggee with the controller. All agents should call this API with the same request content to get back the same stable 'debuggee_id'. Agents should call this API again whenever ListActiveBreakpoints or UpdateActiveBreakpoint return the error google.rpc.Code.NOT_FOUND. It allows the server to disable the agent or recover from any registration loss. If the debuggee is disabled server, the response will have is_disabled' set to true.",
+	//   "description": "Registers the debuggee with the controller service. All agents attached to the same application should call this method with the same request content to get back the same stable `debuggee_id`. Agents should call this method again whenever `google.rpc.Code.NOT_FOUND` is returned from any controller method. This allows the controller service to disable the agent or recover from any data loss. If the debuggee is disabled by the server, the response will have `is_disabled` set to `true`.",
 	//   "httpMethod": "POST",
 	//   "id": "clouddebugger.controller.debuggees.register",
 	//   "path": "v2/controller/debuggees/register",
@@ -1085,28 +1175,38 @@ type ControllerDebuggeesBreakpointsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Returns the list of all active breakpoints for the specified
-// debuggee. The breakpoint specification (location, condition, and
-// expression fields) is semantically immutable, although the field
-// values may change. For example, an agent may update the location line
-// number to reflect the actual line the breakpoint was set to, but that
-// doesn't change the breakpoint semantics. Thus, an agent does not need
-// to check if a breakpoint has changed when it encounters the same
-// breakpoint on a successive call. Moreover, an agent should remember
-// breakpoints that are complete until the controller removes them from
-// the active list to avoid setting those breakpoints again.
+// List: Returns the list of all active breakpoints for the debuggee.
+// The breakpoint specification (location, condition, and expression
+// fields) is semantically immutable, although the field values may
+// change. For example, an agent may update the location line number to
+// reflect the actual line where the breakpoint was set, but this
+// doesn't change the breakpoint semantics. This means that an agent
+// does not need to check if a breakpoint has changed when it encounters
+// the same breakpoint on a successive call. Moreover, an agent should
+// remember the breakpoints that are completed until the controller
+// removes them from the active list to avoid setting those breakpoints
+// again.
 func (r *ControllerDebuggeesBreakpointsService) List(debuggeeId string) *ControllerDebuggeesBreakpointsListCall {
 	c := &ControllerDebuggeesBreakpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
 	return c
 }
 
+// SuccessOnTimeout sets the optional parameter "successOnTimeout": If
+// set to `true`, returns `google.rpc.Code.OK` status and sets the
+// `wait_expired` response field to `true` when the server-selected
+// timeout has expired (recommended). If set to `false`, returns
+// `google.rpc.Code.ABORTED` status when the server-selected timeout has
+// expired (deprecated).
+func (c *ControllerDebuggeesBreakpointsListCall) SuccessOnTimeout(successOnTimeout bool) *ControllerDebuggeesBreakpointsListCall {
+	c.urlParams_.Set("successOnTimeout", fmt.Sprint(successOnTimeout))
+	return c
+}
+
 // WaitToken sets the optional parameter "waitToken": A wait token that,
 // if specified, blocks the method call until the list of active
 // breakpoints has changed, or a server selected timeout has expired.
-// The value should be set from the last returned response. The error
-// code google.rpc.Code.ABORTED is returned on wait timeout (which does
-// not require the agent to re-register with the server)
+// The value should be set from the last returned response.
 func (c *ControllerDebuggeesBreakpointsListCall) WaitToken(waitToken string) *ControllerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("waitToken", waitToken)
 	return c
@@ -1193,7 +1293,7 @@ func (c *ControllerDebuggeesBreakpointsListCall) Do() (*ListActiveBreakpointsRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the list of all active breakpoints for the specified debuggee. The breakpoint specification (location, condition, and expression fields) is semantically immutable, although the field values may change. For example, an agent may update the location line number to reflect the actual line the breakpoint was set to, but that doesn't change the breakpoint semantics. Thus, an agent does not need to check if a breakpoint has changed when it encounters the same breakpoint on a successive call. Moreover, an agent should remember breakpoints that are complete until the controller removes them from the active list to avoid setting those breakpoints again.",
+	//   "description": "Returns the list of all active breakpoints for the debuggee. The breakpoint specification (location, condition, and expression fields) is semantically immutable, although the field values may change. For example, an agent may update the location line number to reflect the actual line where the breakpoint was set, but this doesn't change the breakpoint semantics. This means that an agent does not need to check if a breakpoint has changed when it encounters the same breakpoint on a successive call. Moreover, an agent should remember the breakpoints that are completed until the controller removes them from the active list to avoid setting those breakpoints again.",
 	//   "httpMethod": "GET",
 	//   "id": "clouddebugger.controller.debuggees.breakpoints.list",
 	//   "parameterOrder": [
@@ -1206,8 +1306,13 @@ func (c *ControllerDebuggeesBreakpointsListCall) Do() (*ListActiveBreakpointsRes
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "successOnTimeout": {
+	//       "description": "If set to `true`, returns `google.rpc.Code.OK` status and sets the `wait_expired` response field to `true` when the server-selected timeout has expired (recommended). If set to `false`, returns `google.rpc.Code.ABORTED` status when the server-selected timeout has expired (deprecated).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "waitToken": {
-	//       "description": "A wait token that, if specified, blocks the method call until the list of active breakpoints has changed, or a server selected timeout has expired. The value should be set from the last returned response. The error code google.rpc.Code.ABORTED is returned on wait timeout (which does not require the agent to re-register with the server)",
+	//       "description": "A wait token that, if specified, blocks the method call until the list of active breakpoints has changed, or a server selected timeout has expired. The value should be set from the last returned response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1236,12 +1341,13 @@ type ControllerDebuggeesBreakpointsUpdateCall struct {
 }
 
 // Update: Updates the breakpoint state or mutable fields. The entire
-// Breakpoint protobuf must be sent back to the controller. Updates to
-// active breakpoint fields are only allowed if the new value does not
-// change the breakpoint specification. Updates to the 'location',
-// 'condition' and 'expression' fields should not alter the breakpoint
-// semantics. They are restricted to changes such as canonicalizing a
-// value or snapping the location to the correct line of code.
+// Breakpoint message must be sent back to the controller service.
+// Updates to active breakpoint fields are only allowed if the new value
+// does not change the breakpoint specification. Updates to the
+// `location`, `condition` and `expression` fields should not alter the
+// breakpoint semantics. These may only make changes such as
+// canonicalizing a value or snapping the location to the correct line
+// of code.
 func (r *ControllerDebuggeesBreakpointsService) Update(debuggeeId string, id string, updateactivebreakpointrequest *UpdateActiveBreakpointRequest) *ControllerDebuggeesBreakpointsUpdateCall {
 	c := &ControllerDebuggeesBreakpointsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
@@ -1325,7 +1431,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpoint
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the breakpoint state or mutable fields. The entire Breakpoint protobuf must be sent back to the controller. Updates to active breakpoint fields are only allowed if the new value does not change the breakpoint specification. Updates to the 'location', 'condition' and 'expression' fields should not alter the breakpoint semantics. They are restricted to changes such as canonicalizing a value or snapping the location to the correct line of code.",
+	//   "description": "Updates the breakpoint state or mutable fields. The entire Breakpoint message must be sent back to the controller service. Updates to active breakpoint fields are only allowed if the new value does not change the breakpoint specification. Updates to the `location`, `condition` and `expression` fields should not alter the breakpoint semantics. These may only make changes such as canonicalizing a value or snapping the location to the correct line of code.",
 	//   "httpMethod": "PUT",
 	//   "id": "clouddebugger.controller.debuggees.breakpoints.update",
 	//   "parameterOrder": [
@@ -1377,16 +1483,15 @@ func (r *DebuggerDebuggeesService) List() *DebuggerDebuggeesListCall {
 }
 
 // IncludeInactive sets the optional parameter "includeInactive": When
-// set to true the result includes all debuggees, otherwise only
-// debugees that are active.
+// set to `true`, the result includes all debuggees. Otherwise, the
+// result includes only debuggees that are active.
 func (c *DebuggerDebuggeesListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesListCall {
 	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
-// Project sets the optional parameter "project": Set to the project
-// number of the Google Cloud Platform to list the debuggees that are
-// part of that project.
+// Project sets the optional parameter "project": Project number of a
+// Google Cloud project whose debuggees to list.
 func (c *DebuggerDebuggeesListCall) Project(project string) *DebuggerDebuggeesListCall {
 	c.urlParams_.Set("project", project)
 	return c
@@ -1476,12 +1581,12 @@ func (c *DebuggerDebuggeesListCall) Do() (*ListDebuggeesResponse, error) {
 	//   "id": "clouddebugger.debugger.debuggees.list",
 	//   "parameters": {
 	//     "includeInactive": {
-	//       "description": "When set to true the result includes all debuggees, otherwise only debugees that are active.",
+	//       "description": "When set to `true`, the result includes all debuggees. Otherwise, the result includes only debuggees that are active.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "project": {
-	//       "description": "Set to the project number of the Google Cloud Platform to list the debuggees that are part of that project.",
+	//       "description": "Project number of a Google Cloud project whose debuggees to list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1594,13 +1699,13 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do() (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "breakpointId": {
-	//       "description": "The breakpoint to delete.",
+	//       "description": "ID of the breakpoint to delete.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "debuggeeId": {
-	//       "description": "The debuggee id to delete the breakpoint from.",
+	//       "description": "ID of the debuggee whose breakpoint to delete.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1728,13 +1833,13 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Do() (*GetBreakpointResponse, erro
 	//   ],
 	//   "parameters": {
 	//     "breakpointId": {
-	//       "description": "The breakpoint to get.",
+	//       "description": "ID of the breakpoint to get.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "debuggeeId": {
-	//       "description": "The debuggee id to get the breakpoint from.",
+	//       "description": "ID of the debuggee whose breakpoint to get.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1762,8 +1867,7 @@ type DebuggerDebuggeesBreakpointsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Lists all breakpoints of the debuggee that the user has access
-// to.
+// List: Lists all breakpoints for the debuggee.
 func (r *DebuggerDebuggeesBreakpointsService) List(debuggeeId string) *DebuggerDebuggeesBreakpointsListCall {
 	c := &DebuggerDebuggeesBreakpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
@@ -1782,24 +1886,24 @@ func (c *DebuggerDebuggeesBreakpointsListCall) ActionValue(actionValue string) *
 }
 
 // IncludeAllUsers sets the optional parameter "includeAllUsers": When
-// set to true the response includes the list of breakpoints set by any
-// user, otherwise only breakpoints set by the caller.
+// set to `true`, the response includes the list of breakpoints set by
+// any user. Otherwise, it includes only breakpoints set by the caller.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeAllUsers(includeAllUsers bool) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("includeAllUsers", fmt.Sprint(includeAllUsers))
 	return c
 }
 
 // IncludeInactive sets the optional parameter "includeInactive": When
-// set to true the response includes active and inactive breakpoints,
-// otherwise only active breakpoints are returned.
+// set to `true`, the response includes active and inactive breakpoints.
+// Otherwise, it includes only active breakpoints.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
 // StripResults sets the optional parameter "stripResults": When set to
-// true the response breakpoints will be stripped of the results fields:
-// stack_frames, evaluated_expressions and variable_table.
+// `true`, the response breakpoints are stripped of the results fields:
+// `stack_frames`, `evaluated_expressions` and `variable_table`.
 func (c *DebuggerDebuggeesBreakpointsListCall) StripResults(stripResults bool) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("stripResults", fmt.Sprint(stripResults))
 	return c
@@ -1808,9 +1912,9 @@ func (c *DebuggerDebuggeesBreakpointsListCall) StripResults(stripResults bool) *
 // WaitToken sets the optional parameter "waitToken": A wait token that,
 // if specified, blocks the call until the breakpoints list has changed,
 // or a server selected timeout has expired. The value should be set
-// from the last response to ListBreakpoints. The error code ABORTED is
-// returned on wait timeout, which should be called again with the same
-// wait_token.
+// from the last response. The error code `google.rpc.Code.ABORTED`
+// (RPC) is returned on wait timeout, which should be called again with
+// the same `wait_token`.
 func (c *DebuggerDebuggeesBreakpointsListCall) WaitToken(waitToken string) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("waitToken", waitToken)
 	return c
@@ -1897,7 +2001,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Do() (*ListBreakpointsResponse, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all breakpoints of the debuggee that the user has access to.",
+	//   "description": "Lists all breakpoints for the debuggee.",
 	//   "httpMethod": "GET",
 	//   "id": "clouddebugger.debugger.debuggees.breakpoints.list",
 	//   "parameterOrder": [
@@ -1914,28 +2018,28 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Do() (*ListBreakpointsResponse, e
 	//       "type": "string"
 	//     },
 	//     "debuggeeId": {
-	//       "description": "The debuggee id to list breakpoint from.",
+	//       "description": "ID of the debuggee whose breakpoints to list.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "includeAllUsers": {
-	//       "description": "When set to true the response includes the list of breakpoints set by any user, otherwise only breakpoints set by the caller.",
+	//       "description": "When set to `true`, the response includes the list of breakpoints set by any user. Otherwise, it includes only breakpoints set by the caller.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "includeInactive": {
-	//       "description": "When set to true the response includes active and inactive breakpoints, otherwise only active breakpoints are returned.",
+	//       "description": "When set to `true`, the response includes active and inactive breakpoints. Otherwise, it includes only active breakpoints.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "stripResults": {
-	//       "description": "When set to true the response breakpoints will be stripped of the results fields: stack_frames, evaluated_expressions and variable_table.",
+	//       "description": "When set to `true`, the response breakpoints are stripped of the results fields: `stack_frames`, `evaluated_expressions` and `variable_table`.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "waitToken": {
-	//       "description": "A wait token that, if specified, blocks the call until the breakpoints list has changed, or a server selected timeout has expired. The value should be set from the last response to ListBreakpoints. The error code ABORTED is returned on wait timeout, which should be called again with the same wait_token.",
+	//       "description": "A wait token that, if specified, blocks the call until the breakpoints list has changed, or a server selected timeout has expired. The value should be set from the last response. The error code `google.rpc.Code.ABORTED` (RPC) is returned on wait timeout, which should be called again with the same `wait_token`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2052,7 +2156,7 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Do() (*SetBreakpointResponse, erro
 	//   ],
 	//   "parameters": {
 	//     "debuggeeId": {
-	//       "description": "The debuggee id to set the breakpoint to.",
+	//       "description": "ID of the debuggee where the breakpoint is to be set.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

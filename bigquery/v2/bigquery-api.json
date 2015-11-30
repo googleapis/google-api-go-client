@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/giz6jQ7p7ru6wGszobTL0QcnA5Y\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hVDCl-9ESst1gd4-rcx-OJNX4DE\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20151112",
+ "revision": "20151116",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -304,6 +304,95 @@
     "reason": {
      "type": "string",
      "description": "A short error code that summarizes the error."
+    }
+   }
+  },
+  "ExplainQueryStage": {
+   "id": "ExplainQueryStage",
+   "type": "object",
+   "properties": {
+    "computeRatioAvg": {
+     "type": "number",
+     "description": "Relative amount of time the average shard spent on CPU-bound tasks.",
+     "format": "double"
+    },
+    "computeRatioMax": {
+     "type": "number",
+     "description": "Relative amount of time the slowest shard spent on CPU-bound tasks.",
+     "format": "double"
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique ID for stage within plan.",
+     "format": "int64"
+    },
+    "name": {
+     "type": "string",
+     "description": "Human-readable name for stage."
+    },
+    "readRatioAvg": {
+     "type": "number",
+     "description": "Relative amount of time the average shard spent reading input.",
+     "format": "double"
+    },
+    "readRatioMax": {
+     "type": "number",
+     "description": "Relative amount of time the slowest shard spent reading input.",
+     "format": "double"
+    },
+    "recordsRead": {
+     "type": "string",
+     "description": "Number of records read into the stage.",
+     "format": "int64"
+    },
+    "recordsWritten": {
+     "type": "string",
+     "description": "Number of records written by the stage.",
+     "format": "int64"
+    },
+    "steps": {
+     "type": "array",
+     "description": "List of operations within the stage in dependency order (approximately chronological).",
+     "items": {
+      "$ref": "ExplainQueryStep"
+     }
+    },
+    "waitRatioAvg": {
+     "type": "number",
+     "description": "Relative amount of time the average shard spent waiting to be scheduled.",
+     "format": "double"
+    },
+    "waitRatioMax": {
+     "type": "number",
+     "description": "Relative amount of time the slowest shard spent waiting to be scheduled.",
+     "format": "double"
+    },
+    "writeRatioAvg": {
+     "type": "number",
+     "description": "Relative amount of time the average shard spent on writing output.",
+     "format": "double"
+    },
+    "writeRatioMax": {
+     "type": "number",
+     "description": "Relative amount of time the slowest shard spent on writing output.",
+     "format": "double"
+    }
+   }
+  },
+  "ExplainQueryStep": {
+   "id": "ExplainQueryStep",
+   "type": "object",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Machine-readable operation type."
+    },
+    "substeps": {
+     "type": "array",
+     "description": "Human-readable stage descriptions.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -870,6 +959,13 @@
      "type": "boolean",
      "description": "[Output-only] Whether the query result was fetched from the query cache."
     },
+    "queryPlan": {
+     "type": "array",
+     "description": "[Output-only, Experimental] Describes execution plan for the query as a list of stages.",
+     "items": {
+      "$ref": "ExplainQueryStage"
+     }
+    },
     "totalBytesBilled": {
      "type": "string",
      "description": "[Output-only] Total bytes billed for the job.",
@@ -1269,6 +1365,10 @@
     "skipInvalidRows": {
      "type": "boolean",
      "description": "[Optional] Insert all valid rows of a request, even if invalid rows exist. The default value is false, which causes the entire request to fail if any invalid rows exist."
+    },
+    "templateSuffix": {
+     "type": "string",
+     "description": "[Experimental] If specified, treats the destination table as a base template, and inserts the rows into an instance table named \"\". BigQuery will manage creation of the instance table, using the schema of the base template table."
     }
    }
   },

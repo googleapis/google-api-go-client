@@ -49,6 +49,9 @@ const basePath = "https://cloudresourcemanager.googleapis.com/"
 const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// View your data across Google Cloud Platform services
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -185,9 +188,8 @@ func (s *ListOrganizationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListProjectsResponse: A page of the response received from the
-// [ListProjects][google.cloudresourcemanager.projects.v1beta1.DeveloperP
-// rojects.ListProjects] method. A paginated response where more pages
-// are available has `next_page_token` set. This token can be used in a
+// ListProjects method. A paginated response where more pages are
+// available has `next_page_token` set. This token can be used in a
 // subsequent request to retrieve the next request page.
 type ListProjectsResponse struct {
 	// NextPageToken: Pagination token. If the result set is too large to
@@ -196,8 +198,7 @@ type ListProjectsResponse struct {
 	// list request with the `page_token` parameter gives the next page of
 	// the results. When `next_page_token` is not filled in, there is no
 	// next page and the list returned is the last page in the result set.
-	// Pagination tokens have a limited lifetime. Note: pagination is not
-	// yet supported; the server will not set this field.
+	// Pagination tokens have a limited lifetime.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Projects: The list of projects that matched the list filter. This
@@ -226,6 +227,10 @@ func (s *ListProjectsResponse) MarshalJSON() ([]byte, error) {
 // Organization: The root node in the resource hierarchy to which a
 // particular entity's (e.g., company) resources belong.
 type Organization struct {
+	// CreationTime: Timestamp when the Organization was created. Assigned
+	// by the server. @OutputOnly
+	CreationTime string `json:"creationTime,omitempty"`
+
 	// DisplayName: A friendly string to be used to refer to the
 	// Organization in the UI. This field is required.
 	DisplayName string `json:"displayName,omitempty"`
@@ -244,7 +249,7 @@ type Organization struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -288,24 +293,30 @@ func (s *OrganizationOwner) MarshalJSON() ([]byte, error) {
 // A `Policy` consists of a list of `bindings`. A `Binding` binds a list
 // of `members` to a `role`, where the members can be user accounts,
 // Google groups, Google domains, and service accounts. A `role` is a
-// named list of permissions defined by IAM. **Example** ``` {
-// "bindings": [ { "role": "roles/owner", "members": [
-// "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
+// named list of permissions defined by IAM. **Example** { "bindings": [
+// { "role": "roles/owner", "members": [ "user:mike@example.com",
+// "group:admins@example.com", "domain:google.com",
 // "serviceAccount:my-other-app@appspot.gserviceaccount.com"] }, {
 // "role": "roles/viewer", "members": ["user:sean@example.com"] } ] }
-// ``` For a description of IAM and its features, see the [IAM
-// developer's guide][https://cloud.google.com/iam].
+// For a description of IAM and its features, see the [IAM developer's
+// guide](https://cloud.google.com/iam).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Multiple
 	// `bindings` must not be specified for the same `role`. `bindings` with
 	// no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
-	// Etag: Can be used to perform a read-modify-write.
+	// Etag: The etag is used for optimistic concurrency control as a way to
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the etag in
+	// the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions. If no etag is provided in the call to
+	// SetIamPolicy, then the existing policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0.
+	// Version: Version of the `Policy`. The default version is 0. 0 =
+	// resourcemanager_projects only support legacy roles. 1 = supports
+	// non-legacy roles 2 = supports AuditConfig
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -612,7 +623,8 @@ func (c *OrganizationsGetCall) Do() (*Organization, error) {
 	//     "$ref": "Organization"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -719,7 +731,7 @@ func (c *OrganizationsGetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective GetIamPolicy rpc.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -733,7 +745,8 @@ func (c *OrganizationsGetIamPolicyCall) Do() (*Policy, error) {
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -889,7 +902,8 @@ func (c *OrganizationsListCall) Do() (*ListOrganizationsResponse, error) {
 	//     "$ref": "ListOrganizationsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -996,7 +1010,7 @@ func (c *OrganizationsSetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`.",
+	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective SetIamPolicy rpc.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1117,7 +1131,7 @@ func (c *OrganizationsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse,
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective TestIamPermissions rpc.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1131,7 +1145,8 @@ func (c *OrganizationsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse,
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -1379,27 +1394,15 @@ type ProjectsDeleteCall struct {
 // (for example, `my-project-123`) for deletion. This method will only
 // affect the project if the following criteria are met: + The project
 // does not have a billing account associated with it. + The project has
-// a lifecycle state of
-// [ACTIVE][google.cloudresourcemanager.projects.v1beta1.LifecycleState.A
-// CTIVE]. This method changes the project's lifecycle state from
-// [ACTIVE][google.cloudresourcemanager.projects.v1beta1.LifecycleState.A
-// CTIVE] to [DELETE_REQUESTED]
-// [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_RE
-// QUESTED]. The deletion starts at an unspecified time, at which point
-// the lifecycle state changes to [DELETE_IN_PROGRESS]
-// [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_IN
-// _PROGRESS]. Until the deletion completes, you can check the lifecycle
-// state checked by retrieving the project with [GetProject]
-// [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.GetPro
-// ject], and the project remains visible to [ListProjects]
-// [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.ListPr
-// ojects]. However, you cannot update the project. After the deletion
-// completes, the project is not retrievable by the [GetProject]
-// [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.GetPro
-// ject] and [ListProjects]
-// [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.ListPr
-// ojects] methods. The caller must have modify permissions for this
-// project.
+// a lifecycle state of ACTIVE. This method changes the project's
+// lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts
+// at an unspecified time, at which point the lifecycle state changes to
+// DELETE_IN_PROGRESS. Until the deletion completes, you can check the
+// lifecycle state checked by retrieving the project with GetProject,
+// and the project remains visible to ListProjects. However, you cannot
+// update the project. After the deletion completes, the project is not
+// retrievable by the GetProject and ListProjects methods. The caller
+// must have modify permissions for this project.
 func (r *ProjectsService) Delete(projectId string) *ProjectsDeleteCall {
 	c := &ProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1474,7 +1477,7 @@ func (c *ProjectsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the project identified by the specified `project_id` (for example, `my-project-123`) for deletion. This method will only affect the project if the following criteria are met: + The project does not have a billing account associated with it. + The project has a lifecycle state of [ACTIVE][google.cloudresourcemanager.projects.v1beta1.LifecycleState.ACTIVE]. This method changes the project's lifecycle state from [ACTIVE][google.cloudresourcemanager.projects.v1beta1.LifecycleState.ACTIVE] to [DELETE_REQUESTED] [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_REQUESTED]. The deletion starts at an unspecified time, at which point the lifecycle state changes to [DELETE_IN_PROGRESS] [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_IN_PROGRESS]. Until the deletion completes, you can check the lifecycle state checked by retrieving the project with [GetProject] [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.GetProject], and the project remains visible to [ListProjects] [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.ListProjects]. However, you cannot update the project. After the deletion completes, the project is not retrievable by the [GetProject] [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.GetProject] and [ListProjects] [google.cloudresourcemanager.projects.v1beta1.DeveloperProjects.ListProjects] methods. The caller must have modify permissions for this project.",
+	//   "description": "Marks the project identified by the specified `project_id` (for example, `my-project-123`) for deletion. This method will only affect the project if the following criteria are met: + The project does not have a billing account associated with it. + The project has a lifecycle state of ACTIVE. This method changes the project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the lifecycle state changes to DELETE_IN_PROGRESS. Until the deletion completes, you can check the lifecycle state checked by retrieving the project with GetProject, and the project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the project is not retrievable by the GetProject and ListProjects methods. The caller must have modify permissions for this project.",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudresourcemanager.projects.delete",
 	//   "parameterOrder": [
@@ -1618,7 +1621,8 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	//     "$ref": "Project"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -1725,7 +1729,7 @@ func (c *ProjectsGetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being requested. Resource is usually specified as a path, such as, `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective GetIamPolicy rpc.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1739,7 +1743,8 @@ func (c *ProjectsGetIamPolicyCall) Do() (*Policy, error) {
 	//     "$ref": "Policy"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -1781,8 +1786,7 @@ func (c *ProjectsListCall) Filter(filter string) *ProjectsListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of Projects to return in the response. The server can return fewer
 // projects than requested. If unspecified, server picks an appropriate
-// default. Note: pagination is not yet supported; the server ignores
-// this field.
+// default.
 func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1790,8 +1794,7 @@ func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
 
 // PageToken sets the optional parameter "pageToken": A pagination token
 // returned from a previous call to ListProject that indicates from
-// where listing should continue. Note: pagination is not yet supported;
-// the server ignores this field.
+// where listing should continue.
 func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1886,13 +1889,13 @@ func (c *ProjectsListCall) Do() (*ListProjectsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of Projects to return in the response. The server can return fewer projects than requested. If unspecified, server picks an appropriate default. Note: pagination is not yet supported; the server ignores this field. Optional.",
+	//       "description": "The maximum number of Projects to return in the response. The server can return fewer projects than requested. If unspecified, server picks an appropriate default. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListProject that indicates from where listing should continue. Note: pagination is not yet supported; the server ignores this field. Optional.",
+	//       "description": "A pagination token returned from a previous call to ListProject that indicates from where listing should continue. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1902,7 +1905,8 @@ func (c *ProjectsListCall) Do() (*ListProjectsResponse, error) {
 	//     "$ref": "ListProjectsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2011,7 +2015,7 @@ func (c *ProjectsSetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`.",
+	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective SetIamPolicy rpc.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2132,7 +2136,7 @@ func (c *ProjectsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}`.",
+	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective TestIamPermissions rpc.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2146,7 +2150,8 @@ func (c *ProjectsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
 	//   ]
 	// }
 
@@ -2163,13 +2168,10 @@ type ProjectsUndeleteCall struct {
 
 // Undelete: Restores the project identified by the specified
 // `project_id` (for example, `my-project-123`). You can only use this
-// method for a project that has a lifecycle state of [DELETE_REQUESTED]
-// [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_RE
-// QUESTED]. After deletion starts, as indicated by a lifecycle state of
-// [DELETE_IN_PROGRESS]
-// [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_IN
-// _PROGRESS], the project cannot be restored. The caller must have
-// modify permissions for this project.
+// method for a project that has a lifecycle state of DELETE_REQUESTED.
+// After deletion starts, as indicated by a lifecycle state of
+// DELETE_IN_PROGRESS, the project cannot be restored. The caller must
+// have modify permissions for this project.
 func (r *ProjectsService) Undelete(projectId string) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2244,7 +2246,7 @@ func (c *ProjectsUndeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the project identified by the specified `project_id` (for example, `my-project-123`). You can only use this method for a project that has a lifecycle state of [DELETE_REQUESTED] [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_REQUESTED]. After deletion starts, as indicated by a lifecycle state of [DELETE_IN_PROGRESS] [google.cloudresourcemanager.projects.v1beta1.LifecycleState.DELETE_IN_PROGRESS], the project cannot be restored. The caller must have modify permissions for this project.",
+	//   "description": "Restores the project identified by the specified `project_id` (for example, `my-project-123`). You can only use this method for a project that has a lifecycle state of DELETE_REQUESTED. After deletion starts, as indicated by a lifecycle state of DELETE_IN_PROGRESS, the project cannot be restored. The caller must have modify permissions for this project.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.undelete",
 	//   "parameterOrder": [

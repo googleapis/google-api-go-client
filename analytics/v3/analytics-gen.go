@@ -4359,6 +4359,14 @@ func (c *DataGaGetCall) Filters(filters string) *DataGaGetCall {
 	return c
 }
 
+// IncludeEmptyRows sets the optional parameter "include-empty-rows":
+// The response will include empty rows if this parameter is set to
+// true, the default is true
+func (c *DataGaGetCall) IncludeEmptyRows(includeEmptyRows bool) *DataGaGetCall {
+	c.urlParams_.Set("include-empty-rows", fmt.Sprint(includeEmptyRows))
+	return c
+}
+
 // MaxResults sets the optional parameter "max-results": The maximum
 // number of entries to include in this feed.
 func (c *DataGaGetCall) MaxResults(maxResults int64) *DataGaGetCall {
@@ -4529,6 +4537,11 @@ func (c *DataGaGetCall) Do() (*GaData, error) {
 	//       "pattern": "ga:[0-9]+",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "include-empty-rows": {
+	//       "description": "The response will include empty rows if this parameter is set to true, the default is true",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "max-results": {
 	//       "description": "The maximum number of entries to include in this feed.",

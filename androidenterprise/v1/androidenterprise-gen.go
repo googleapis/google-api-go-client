@@ -1,6 +1,6 @@
 // Package androidenterprise provides access to the Google Play EMM API.
 //
-// See https://developers.google.com/play/enterprise
+// See https://developers.google.com/android/work/play/emm-api
 //
 // Usage example:
 //

@@ -2020,13 +2020,43 @@ func (s *Errors) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type Installment struct {
+	// Amount: The amount the buyer has to pay per month.
+	Amount *Price `json:"amount,omitempty"`
+
+	// Months: The number of installments the buyer has to pay.
+	Months int64 `json:"months,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Amount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Installment) MarshalJSON() ([]byte, error) {
+	type noMethod Installment
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type Inventory struct {
 	// Availability: The availability of the product.
 	Availability string `json:"availability,omitempty"`
 
+	// Installment: Number and amount of installments to pay for an item.
+	// Brazil only.
+	Installment *Installment `json:"installment,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#inventory".
 	Kind string `json:"kind,omitempty"`
+
+	// LoyaltyPoints: Loyalty points that users receive after purchasing the
+	// item. Japan only.
+	LoyaltyPoints *LoyaltyPoints `json:"loyaltyPoints,omitempty"`
 
 	// Price: The price of the product.
 	Price *Price `json:"price,omitempty"`
@@ -2176,6 +2206,14 @@ func (s *InventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 type InventorySetRequest struct {
 	// Availability: The availability of the product.
 	Availability string `json:"availability,omitempty"`
+
+	// Installment: Number and amount of installments to pay for an item.
+	// Brazil only.
+	Installment *Installment `json:"installment,omitempty"`
+
+	// LoyaltyPoints: Loyalty points that users receive after purchasing the
+	// item. Japan only.
+	LoyaltyPoints *LoyaltyPoints `json:"loyaltyPoints,omitempty"`
 
 	// Price: The price of the product.
 	Price *Price `json:"price,omitempty"`
@@ -3913,7 +3951,7 @@ type Product struct {
 
 	// Installment: Number and amount of installments to pay for an item.
 	// Brazil only.
-	Installment *ProductInstallment `json:"installment,omitempty"`
+	Installment *Installment `json:"installment,omitempty"`
 
 	// IsBundle: Whether the item is a merchant-defined bundle. A bundle is
 	// a custom grouping of different products sold by a merchant for a
@@ -4145,28 +4183,6 @@ type ProductDestination struct {
 
 func (s *ProductDestination) MarshalJSON() ([]byte, error) {
 	type noMethod ProductDestination
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
-type ProductInstallment struct {
-	// Amount: The amount the buyer has to pay per month.
-	Amount *Price `json:"amount,omitempty"`
-
-	// Months: The number of installments the buyer has to pay.
-	Months int64 `json:"months,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Amount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *ProductInstallment) MarshalJSON() ([]byte, error) {
-	type noMethod ProductInstallment
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -11972,6 +11988,15 @@ func (r *ProductsService) List(merchantId uint64) *ProductsListCall {
 	return c
 }
 
+// IncludeInvalidInsertedItems sets the optional parameter
+// "includeInvalidInsertedItems": Flag to include the invalid inserted
+// items in the result of the list request. By default the invalid items
+// are not shown (the default value is false).
+func (c *ProductsListCall) IncludeInvalidInsertedItems(includeInvalidInsertedItems bool) *ProductsListCall {
+	c.urlParams_.Set("includeInvalidInsertedItems", fmt.Sprint(includeInvalidInsertedItems))
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of products to return in the response, used for paging.
 func (c *ProductsListCall) MaxResults(maxResults int64) *ProductsListCall {
@@ -12074,6 +12099,11 @@ func (c *ProductsListCall) Do() (*ProductsListResponse, error) {
 	//     "merchantId"
 	//   ],
 	//   "parameters": {
+	//     "includeInvalidInsertedItems": {
+	//       "description": "Flag to include the invalid inserted items in the result of the list request. By default the invalid items are not shown (the default value is false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "maxResults": {
 	//       "description": "The maximum number of products to return in the response, used for paging.",
 	//       "format": "uint32",
@@ -12363,6 +12393,15 @@ func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCal
 	return c
 }
 
+// IncludeInvalidInsertedItems sets the optional parameter
+// "includeInvalidInsertedItems": Flag to include the invalid inserted
+// items in the result of the list request. By default the invalid items
+// are not shown (the default value is false).
+func (c *ProductstatusesListCall) IncludeInvalidInsertedItems(includeInvalidInsertedItems bool) *ProductstatusesListCall {
+	c.urlParams_.Set("includeInvalidInsertedItems", fmt.Sprint(includeInvalidInsertedItems))
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": The maximum
 // number of product statuses to return in the response, used for
 // paging.
@@ -12466,6 +12505,11 @@ func (c *ProductstatusesListCall) Do() (*ProductstatusesListResponse, error) {
 	//     "merchantId"
 	//   ],
 	//   "parameters": {
+	//     "includeInvalidInsertedItems": {
+	//       "description": "Flag to include the invalid inserted items in the result of the list request. By default the invalid items are not shown (the default value is false).",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "maxResults": {
 	//       "description": "The maximum number of product statuses to return in the response, used for paging.",
 	//       "format": "uint32",

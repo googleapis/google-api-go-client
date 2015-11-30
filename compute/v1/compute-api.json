@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hSx28Nr9JtRTbPKprjxvGcypH5Y\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/3BsBUTzKr01XX9_2lObSs_YRVaA\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20151111",
+ "revision": "20151116",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -2443,6 +2443,13 @@
       "required": [
        "compute.instanceGroupManagers.insert"
       ]
+     }
+    },
+    "namedPorts": {
+     "type": "array",
+     "description": "Named ports configured for the Instance Groups complementary to this Instance Group Manager.",
+     "items": {
+      "$ref": "NamedPort"
      }
     },
     "selfLink": {
@@ -12268,7 +12275,7 @@
       },
       "targetHttpsProxy": {
        "type": "string",
-       "description": "Name of the TargetHttpsProxy resource whose URL map is to be set.",
+       "description": "Name of the TargetHttpsProxy resource whose SSLCertificate is to be set.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"

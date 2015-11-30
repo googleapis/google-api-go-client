@@ -1,6 +1,6 @@
 // Package appengine provides access to the Google App Engine Admin API.
 //
-// See https://developers.google.com/appengine/
+// See https://cloud.google.com/appengine/docs/admin-api/
 //
 // Usage example:
 //
@@ -257,6 +257,9 @@ type AutomaticScaling struct {
 	// CpuUtilization: Target scaling by CPU usage.
 	CpuUtilization *CpuUtilization `json:"cpuUtilization,omitempty"`
 
+	// DiskUtilization: Target scaling by disk usage.
+	DiskUtilization *DiskUtilization `json:"diskUtilization,omitempty"`
+
 	// MaxConcurrentRequests: The number of concurrent requests an automatic
 	// scaling instance can accept before the scheduler spawns a new
 	// instance. Default value is chosen based on the runtime.
@@ -289,6 +292,12 @@ type AutomaticScaling struct {
 	// MinTotalInstances: Minimum number of instances that App Engine should
 	// maintain.
 	MinTotalInstances int64 `json:"minTotalInstances,omitempty"`
+
+	// NetworkUtilization: Target scaling by network usage.
+	NetworkUtilization *NetworkUtilization `json:"networkUtilization,omitempty"`
+
+	// RequestUtilization: Target scaling by request utilization.
+	RequestUtilization *RequestUtilization `json:"requestUtilization,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CoolDownPeriod") to
 	// unconditionally include in API requests. By default, fields with
@@ -415,6 +424,36 @@ func (s *Deployment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// DiskUtilization: Target scaling by disk usage (for VM runtimes only).
+type DiskUtilization struct {
+	// TargetReadBytesPerSec: Target bytes per second read.
+	TargetReadBytesPerSec int64 `json:"targetReadBytesPerSec,omitempty"`
+
+	// TargetReadOpsPerSec: Target ops per second read.
+	TargetReadOpsPerSec int64 `json:"targetReadOpsPerSec,omitempty"`
+
+	// TargetWriteBytesPerSec: Target bytes per second written.
+	TargetWriteBytesPerSec int64 `json:"targetWriteBytesPerSec,omitempty"`
+
+	// TargetWriteOpsPerSec: Target ops per second written.
+	TargetWriteOpsPerSec int64 `json:"targetWriteOpsPerSec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TargetReadBytesPerSec") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *DiskUtilization) MarshalJSON() ([]byte, error) {
+	type noMethod DiskUtilization
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // ErrorHandler: A custom static error page to be served when an error
 // occurs.
 type ErrorHandler struct {
@@ -460,7 +499,8 @@ type FileInfo struct {
 	Sha1Sum string `json:"sha1Sum,omitempty"`
 
 	// SourceUrl: The URL source to use to fetch this file. Must be a URL to
-	// a resource in Google Cloud Storage.
+	// a resource in Google Cloud Storage in the form
+	// 'http(s)://storage.googleapis.com/\/\'.
 	SourceUrl string `json:"sourceUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
@@ -577,8 +617,7 @@ func (s *ListModulesResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListOperationsResponse: The response message for
-// [Operations.ListOperations][google.longrunning.Operations.ListOperatio
-// ns].
+// Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
@@ -725,6 +764,37 @@ func (s *Network) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// NetworkUtilization: Target scaling by network usage (for VM runtimes
+// only).
+type NetworkUtilization struct {
+	// TargetReceivedBytesPerSec: Target bytes per second received.
+	TargetReceivedBytesPerSec int64 `json:"targetReceivedBytesPerSec,omitempty"`
+
+	// TargetReceivedPacketsPerSec: Target packets per second received.
+	TargetReceivedPacketsPerSec int64 `json:"targetReceivedPacketsPerSec,omitempty"`
+
+	// TargetSentBytesPerSec: Target bytes per second sent.
+	TargetSentBytesPerSec int64 `json:"targetSentBytesPerSec,omitempty"`
+
+	// TargetSentPacketsPerSec: Target packets per second sent.
+	TargetSentPacketsPerSec int64 `json:"targetSentPacketsPerSec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TargetReceivedBytesPerSec") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *NetworkUtilization) MarshalJSON() ([]byte, error) {
+	type noMethod NetworkUtilization
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -783,7 +853,7 @@ type OperationMetadata interface{}
 type OperationResponse interface{}
 
 // OperationMetadata1: Metadata for the given
-// [google.longrunning.Operation][google.longrunning.Operation].
+// google.longrunning.Operation.
 type OperationMetadata1 struct {
 	// EndTime: Timestamp that this operation was completed. (Not present if
 	// the operation is still in progress.) @OutputOnly
@@ -818,6 +888,31 @@ type OperationMetadata1 struct {
 
 func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadata1
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// RequestUtilization: Target scaling by request utilization (for VM
+// runtimes only).
+type RequestUtilization struct {
+	// TargetConcurrentRequests: Target number of concurrent requests.
+	TargetConcurrentRequests int64 `json:"targetConcurrentRequests,omitempty"`
+
+	// TargetRequestCountPerSec: Target requests per second.
+	TargetRequestCountPerSec int64 `json:"targetRequestCountPerSec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TargetConcurrentRequests") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *RequestUtilization) MarshalJSON() ([]byte, error) {
+	type noMethod RequestUtilization
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -981,12 +1076,10 @@ type StaticFilesHandler struct {
 	// groupings in the URL pattern.
 	Path string `json:"path,omitempty"`
 
-	// RequireMatchingFile: If true, this
-	// [UrlMap][google.appengine.v1beta4.UrlMap] entry does not match the
+	// RequireMatchingFile: If true, this UrlMap entry does not match the
 	// request unless the file referenced by the handler also exists. If no
-	// such file exists, processing will continue with the next
-	// [UrlMap][google.appengine.v1beta4.UrlMap] that matches the requested
-	// URL.
+	// such file exists, processing will continue with the next UrlMap that
+	// matches the requested URL.
 	RequireMatchingFile bool `json:"requireMatchingFile,omitempty"`
 
 	// UploadPathRegex: A regular expression that matches the file paths for
@@ -1015,39 +1108,38 @@ func (s *StaticFilesHandler) MarshalJSON() ([]byte, error) {
 // most users - Flexible enough to meet unexpected needs # Overview The
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. The error code should be an enum value of
-// [google.rpc.Code][google.rpc.Code], but it may accept additional
-// error codes if needed. The error message should be a developer-facing
-// English message that helps developers *understand* and *resolve* the
-// error. If a localized user-facing error message is needed, put the
-// localized message in the error details or localize it in the client.
-// The optional error details may contain arbitrary information about
-// the error. There is a predefined set of error detail types in the
-// package `google.rpc` which can be used for common error conditions. #
-// Language mapping The `Status` message is the logical representation
-// of the error model, but it is not necessarily the actual wire format.
-// When the `Status` message is exposed in different client libraries
-// and different wire protocols, it can be mapped differently. For
-// example, it will likely be mapped to some exceptions in Java, but
-// more likely mapped to some error codes in C. # Other uses The error
-// model and the `Status` message can be used in a variety of
-// environments, either with or without APIs, to provide a consistent
-// developer experience across different environments. Example uses of
-// this error model include: - Partial errors. If a service needs to
-// return partial errors to the client, it may embed the `Status` in the
-// normal response to indicate the partial errors. - Workflow errors. A
-// typical workflow has multiple steps. Each step may have a `Status`
-// message for error reporting purpose. - Batch operations. If a client
-// uses batch request and batch response, the `Status` message should be
-// used directly inside batch response, one for each error sub-response.
-// - Asynchronous operations. If an API call embeds asynchronous
-// operation results in its response, the status of those operations
-// should be represented directly using the `Status` message. - Logging.
-// If some API errors are stored in logs, the message `Status` could be
-// used directly after any stripping needed for security/privacy
-// reasons.
+// google.rpc.Code, but it may accept additional error codes if needed.
+// The error message should be a developer-facing English message that
+// helps developers *understand* and *resolve* the error. If a localized
+// user-facing error message is needed, put the localized message in the
+// error details or localize it in the client. The optional error
+// details may contain arbitrary information about the error. There is a
+// predefined set of error detail types in the package `google.rpc`
+// which can be used for common error conditions. # Language mapping The
+// `Status` message is the logical representation of the error model,
+// but it is not necessarily the actual wire format. When the `Status`
+// message is exposed in different client libraries and different wire
+// protocols, it can be mapped differently. For example, it will likely
+// be mapped to some exceptions in Java, but more likely mapped to some
+// error codes in C. # Other uses The error model and the `Status`
+// message can be used in a variety of environments, either with or
+// without APIs, to provide a consistent developer experience across
+// different environments. Example uses of this error model include: -
+// Partial errors. If a service needs to return partial errors to the
+// client, it may embed the `Status` in the normal response to indicate
+// the partial errors. - Workflow errors. A typical workflow has
+// multiple steps. Each step may have a `Status` message for error
+// reporting purpose. - Batch operations. If a client uses batch request
+// and batch response, the `Status` message should be used directly
+// inside batch response, one for each error sub-response. -
+// Asynchronous operations. If an API call embeds asynchronous operation
+// results in its response, the status of those operations should be
+// represented directly using the `Status` message. - Logging. If some
+// API errors are stored in logs, the message `Status` could be used
+// directly after any stripping needed for security/privacy reasons.
 type Status struct {
 	// Code: The status code, which should be an enum value of
-	// [google.rpc.Code][google.rpc.Code].
+	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
 	// Details: A list of messages that carry the error details. There will
@@ -1056,8 +1148,7 @@ type Status struct {
 
 	// Message: A developer-facing error message, which should be in
 	// English. Any user-facing error message should be localized and sent
-	// in the [google.rpc.Status.details][google.rpc.Status.details] field,
-	// or localized by the client.
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -1393,8 +1484,7 @@ type Version struct {
 	// at once.
 	Threadsafe bool `json:"threadsafe,omitempty"`
 
-	// Vm: Whether to deploy this app in a VM container (deprecated, use
-	// "env":"2").
+	// Vm: Whether to deploy this app in a VM container.
 	Vm bool `json:"vm,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

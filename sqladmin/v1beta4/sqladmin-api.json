@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/K22CvhoLMtMx3qHuSsow6H1rRp4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/CCmkz9wJbxqIZMDlSyPUsI6BFWQ\"",
  "discoveryVersion": "v1",
  "id": "sqladmin:v1beta4",
  "name": "sqladmin",
  "canonicalName": "SQL Admin",
  "version": "v1beta4",
- "revision": "20151030",
+ "revision": "20151117",
  "title": "Cloud SQL Administration API",
  "description": "API for Cloud SQL database instance management.",
  "ownerDomain": "google.com",
@@ -334,6 +334,18 @@
      "type": "string",
      "description": "HTTP 1.1 Entity tag for the resource."
     },
+    "failoverReplica": {
+     "type": "object",
+     "description": "The name and status of the failover replica. Only applies to Second Generation instances.",
+     "properties": {
+      "available": {
+       "type": "boolean"
+      },
+      "name": {
+       "type": "string"
+      }
+     }
+    },
     "instanceType": {
      "type": "string",
      "description": "The instance type. This can be one of the following.\nCLOUD_SQL_INSTANCE: A Cloud SQL instance that is not replicating from a master.\nON_PREMISES_INSTANCE: An instance running on the customer's premises.\nREAD_REPLICA_INSTANCE: A Cloud SQL instance configured as a read-replica."
@@ -550,6 +562,10 @@
     "name": {
      "type": "string",
      "description": "This is the name of the flag. Flag names always use underscores, not hyphens, e.g. max_allowed_packet"
+    },
+    "requiresRestart": {
+     "type": "boolean",
+     "description": "Indicates whether changing this flag will trigger a database restart. Only applicable to Second Generation instances."
     },
     "type": {
      "type": "string",
@@ -1055,6 +1071,10 @@
      "type": "string",
      "description": "The size of data disk, in GB. Only supported for 2nd Generation instances. The data disk size minimum is 10GB.",
      "format": "int64"
+    },
+    "dataDiskType": {
+     "type": "string",
+     "description": "The type of data disk. Only supported for 2nd Generation instances. The default type is SSD."
     },
     "databaseFlags": {
      "type": "array",

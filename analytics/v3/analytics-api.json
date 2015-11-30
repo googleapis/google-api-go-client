@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/tkvvUCeQm-DiyKpCr0Y-A0UaVuo\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fvFbWC4d-F2dNIv25oDe8GZrlTA\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20150814",
+ "revision": "20151030",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "ownerDomain": "google.com",
@@ -3332,6 +3332,11 @@
          "description": "Unique table ID for retrieving Analytics data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID.",
          "required": true,
          "pattern": "ga:[0-9]+",
+         "location": "query"
+        },
+        "include-empty-rows": {
+         "type": "boolean",
+         "description": "The response will include empty rows if this parameter is set to true, the default is true",
          "location": "query"
         },
         "max-results": {

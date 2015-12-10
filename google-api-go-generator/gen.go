@@ -1747,7 +1747,7 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn("var body io.Reader = nil")
-	hasContentType := false
+	hasContentType := false // Whether ctype has been set.  It is always set in conjunction with body.
 	if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
 		style := "WithoutDataWrapper"
 		if a.needsDataWrapper() {
@@ -1772,7 +1772,7 @@ func (meth *Method) generateCode() {
 	}
 	pn("urls += \"?\" + c.urlParams_.Encode()")
 	if meth.supportsMediaUpload() && httpMethod != "GET" {
-		if !hasContentType { // Support mediaUpload but no ctype set.
+		if !hasContentType {
 			pn("body = new(bytes.Buffer)")
 			pn(`ctype := "application/json"`)
 			hasContentType = true
@@ -1800,18 +1800,17 @@ func (meth *Method) generateCode() {
 
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
-		pn(" req.ContentLength = 0")
 		pn(` if c.mediaType_ == "" {`)
 		pn("  c.mediaType_ = googleapi.DetectMediaType(c.resumable_)")
 		pn(" }")
 		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
-		pn(" req.Body = nil")
-		pn("} else {")
-		pn(` req.Header.Set("Content-Type", ctype)`)
 		pn("}")
-	} else if hasContentType {
+	}
+
+	if hasContentType {
 		pn(`req.Header.Set("Content-Type", ctype)`)
 	}
+
 	pn(`req.Header.Set("User-Agent", c.s.userAgent())`)
 	if httpMethod == "GET" {
 		pn(`if c.ifNoneMatch_ != "" {`)

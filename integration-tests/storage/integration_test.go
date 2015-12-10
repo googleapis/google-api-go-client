@@ -23,7 +23,7 @@ var (
 	projectID  string
 	bucket     string
 	contents   = make(map[string]string)
-	objects    = []string{"obj1", "obj2", "obj/with/slashes"}
+	objects    = []string{"obj1", "obj2", "obj/with/slashes", "resumable"}
 	aclObjects = []string{"acl1", "acl2"}
 	copyObj    = "copy-object"
 )
@@ -72,6 +72,48 @@ func tokenSource(ctx context.Context, scopes ...string) (oauth2.TokenSource, err
 	return conf.TokenSource(ctx), nil
 }
 
+const defaultType = "text/plain; charset=utf-8"
+
+// writeObject writes some data and default metadata to the specified object.
+// Reusmable upload is used if resumable is true.
+// The written data is returned.
+func writeObject(s *storage.Service, bucket, obj string, resumable bool) (string, error) {
+	o := &storage.Object{
+		Bucket:          bucket,
+		Name:            obj,
+		ContentType:     defaultType,
+		ContentEncoding: "utf-8",
+		ContentLanguage: "en",
+		Metadata:        map[string]string{"foo": "bar"},
+	}
+	c := testContents
+	f := strings.NewReader(c)
+	insert := s.Objects.Insert(bucket, o)
+	if resumable {
+		insert.ResumableMedia(context.Background(), f, int64(len(c)), defaultType)
+	} else {
+		insert.Media(f)
+	}
+	_, err := insert.Do()
+	return c, err
+}
+
+func checkMetadata(t *testing.T, s *storage.Service, bucket, obj string) {
+	o, err := s.Objects.Get(bucket, obj).Do()
+	if err != nil {
+		t.Error(err)
+	}
+	if got, want := o.Name, obj; got != want {
+		t.Errorf("name of %q = %q; want %q", obj, got, want)
+	}
+	if got, want := o.ContentType, defaultType; got != want {
+		t.Errorf("contentType of %q = %q; want %q", obj, got, want)
+	}
+	if got, want := o.Metadata["foo"], "bar"; got != want {
+		t.Errorf("metadata entry foo of %q = %q; want %q", obj, got, want)
+	}
+}
+
 func TestFunctions(t *testing.T) {
 	if projectID = os.Getenv(envProject); projectID == "" {
 		t.Fatalf("no project ID specified")
@@ -79,8 +121,6 @@ func TestFunctions(t *testing.T) {
 	if bucket = os.Getenv(envBucket); bucket == "" {
 		t.Fatalf("no bucket specified")
 	}
-
-	const defaultType = "text/plain; charset=utf-8"
 
 	ctx := context.Background()
 	ts, err := tokenSource(ctx, storage.DevstorageFullControlScope)
@@ -119,16 +159,7 @@ func TestFunctions(t *testing.T) {
 
 	for _, obj := range objects {
 		t.Logf("Writing %q", obj)
-		o := &storage.Object{
-			Bucket:          bucket,
-			Name:            obj,
-			ContentType:     defaultType,
-			ContentEncoding: "utf-8",
-			ContentLanguage: "en",
-		}
-		c := testContents
-		f := strings.NewReader(c)
-		_, err := s.Objects.Insert(bucket, o).Media(f).Do()
+		c, err := writeObject(s, bucket, obj, obj == "resumable")
 		if err != nil {
 			t.Fatalf("unable to insert object %q: %v", obj, err)
 		}
@@ -158,19 +189,13 @@ func TestFunctions(t *testing.T) {
 		t.Log("Successfully tested StatusNotFound.")
 	}
 
-	name = objects[0]
+	for _, obj := range objects {
+		t.Logf("Checking %q metadata", obj)
+		checkMetadata(t, s, bucket, obj)
+	}
+	t.Error("fail")
 
-	t.Logf("Checking %q metadata", name)
-	obj, err := s.Objects.Get(bucket, name).Do()
-	if err != nil {
-		t.Error(err)
-	}
-	if got, want := obj.Name, name; got != want {
-		t.Errorf("name of %q = %q; want %q", name, got, want)
-	}
-	if got, want := obj.ContentType, defaultType; got != want {
-		t.Errorf("contentType of %q = %q; want %q", name, got, want)
-	}
+	name = objects[0]
 
 	t.Logf("Rewriting %q to %q", name, copyObj)
 	copy, err := s.Objects.Rewrite(bucket, name, bucket, copyObj, nil).Do()
@@ -189,7 +214,7 @@ func TestFunctions(t *testing.T) {
 	// See https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance#patch-semantics
 	// for more details.
 	t.Logf("Updating attributes of %q", name)
-	obj, err = s.Objects.Get(bucket, name).Projection("full").Fields("acl").Do()
+	obj, err := s.Objects.Get(bucket, name).Projection("full").Fields("acl").Do()
 	if err != nil {
 		t.Errorf("Objects.Get(%q, %q): %v", bucket, name, err)
 	}

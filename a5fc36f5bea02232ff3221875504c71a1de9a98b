@@ -1,0 +1,7 @@
+Code-Review+1: Dave Day <djd@golang.org>
+Code-Review+2: Brad Fitzpatrick <bradfitz@golang.org>
+Submitted-by: Dave Day <djd@golang.org>
+Submitted-at: Thu, 10 Dec 2015 23:42:30 +0000
+Reviewed-on: https://code-review.googlesource.com/3701
+Project: google-api-go-client
+Branch: refs/heads/master

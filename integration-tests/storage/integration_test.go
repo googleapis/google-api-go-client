@@ -193,7 +193,6 @@ func TestFunctions(t *testing.T) {
 		t.Logf("Checking %q metadata", obj)
 		checkMetadata(t, s, bucket, obj)
 	}
-	t.Error("fail")
 
 	name = objects[0]
 

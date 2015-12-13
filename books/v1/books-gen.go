@@ -10648,6 +10648,17 @@ func (c *VolumesRecommendedListCall) Source(source string) *VolumesRecommendedLi
 	return c
 }
 
+// TargetIds sets the optional parameter "targetIds": List of target ids
+// used for experiments or user segments
+func (c *VolumesRecommendedListCall) TargetIds(targetIds ...int64) *VolumesRecommendedListCall {
+	var targetIds_ []string
+	for _, v := range targetIds {
+		targetIds_ = append(targetIds_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("targetIds", targetIds_)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10752,6 +10763,13 @@ func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetIds": {
+	//       "description": "List of target ids used for experiments or user segments",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },

@@ -123,18 +123,16 @@ type ProjectsJobsWorkItemsService struct {
 	s *Service
 }
 
-// ApproximateProgress: A progress measurement of a WorkItem by a
-// worker.
+// ApproximateProgress: Obsolete in favor of ApproximateReportedProgress
+// and ApproximateSplitRequest.
 type ApproximateProgress struct {
-	// PercentComplete: Completion as percentage of the work, from 0.0
-	// (beginning, nothing complete), to 1.0 (end of the work range, entire
-	// WorkItem complete).
+	// PercentComplete: Obsolete.
 	PercentComplete float64 `json:"percentComplete,omitempty"`
 
-	// Position: A Position within the work to represent a progress.
+	// Position: Obsolete.
 	Position *Position `json:"position,omitempty"`
 
-	// RemainingTime: Completion as an estimated time remaining.
+	// RemainingTime: Obsolete.
 	RemainingTime string `json:"remainingTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PercentComplete") to
@@ -148,6 +146,57 @@ type ApproximateProgress struct {
 
 func (s *ApproximateProgress) MarshalJSON() ([]byte, error) {
 	type noMethod ApproximateProgress
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ApproximateReportedProgress: A progress measurement of a WorkItem by
+// a worker.
+type ApproximateReportedProgress struct {
+	// FractionConsumed: Completion as fraction of the input consumed, from
+	// 0.0 (beginning, nothing consumed), to 1.0 (end of the input, entire
+	// input consumed).
+	FractionConsumed float64 `json:"fractionConsumed,omitempty"`
+
+	// Position: A Position within the work to represent a progress.
+	Position *Position `json:"position,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FractionConsumed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ApproximateReportedProgress) MarshalJSON() ([]byte, error) {
+	type noMethod ApproximateReportedProgress
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// ApproximateSplitRequest: A suggestion by the service to the worker to
+// dynamically split the WorkItem.
+type ApproximateSplitRequest struct {
+	// FractionConsumed: A fraction at which to split the work item, from
+	// 0.0 (beginning of the input) to 1.0 (end of the input).
+	FractionConsumed float64 `json:"fractionConsumed,omitempty"`
+
+	// Position: A Position at which to split the work item.
+	Position *Position `json:"position,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FractionConsumed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ApproximateSplitRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ApproximateSplitRequest
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -1457,6 +1506,52 @@ func (s *ReportWorkItemStatusResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// SendWorkerMessagesRequest: A request for sending worker messages to
+// the service.
+type SendWorkerMessagesRequest struct {
+	// WorkerMessages: The WorkerMessages to send.
+	WorkerMessages []*WorkerMessage `json:"workerMessages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WorkerMessages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SendWorkerMessagesRequest) MarshalJSON() ([]byte, error) {
+	type noMethod SendWorkerMessagesRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// SendWorkerMessagesResponse: The response to the worker messages.
+type SendWorkerMessagesResponse struct {
+	// WorkerMessageResponses: The servers response to the worker messages.
+	WorkerMessageResponses []*WorkerMessageResponse `json:"workerMessageResponses,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "WorkerMessageResponses") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SendWorkerMessagesResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SendWorkerMessagesResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // SeqMapTask: Describes a particular function to invoke.
 type SeqMapTask struct {
 	// Inputs: Information about each of the inputs.
@@ -2453,8 +2548,11 @@ type WorkItemServiceState struct {
 	// ReportStatusInterval: New recommended reporting interval.
 	ReportStatusInterval string `json:"reportStatusInterval,omitempty"`
 
-	// SuggestedStopPoint: The progress point in the WorkItem where the
-	// Dataflow service suggests that the worker truncate the task.
+	// SplitRequest: The progress point in the WorkItem where the Dataflow
+	// service suggests that the worker truncate the task.
+	SplitRequest *ApproximateSplitRequest `json:"splitRequest,omitempty"`
+
+	// SuggestedStopPoint: DEPRECATED in favor of split_request.
 	SuggestedStopPoint *ApproximateProgress `json:"suggestedStopPoint,omitempty"`
 
 	// SuggestedStopPosition: Obsolete, always empty.
@@ -2495,7 +2593,7 @@ type WorkItemStatus struct {
 	// MetricUpdates: Worker output metrics (counters) for this WorkItem.
 	MetricUpdates []*MetricUpdate `json:"metricUpdates,omitempty"`
 
-	// Progress: The WorkItem's approximate progress.
+	// Progress: DEPRECATED in favor of reported_progress.
 	Progress *ApproximateProgress `json:"progress,omitempty"`
 
 	// ReportIndex: The report index. When a WorkItem is leased, the lease
@@ -2510,6 +2608,9 @@ type WorkItemStatus struct {
 	// the response for the previous report had been received from the
 	// service.
 	ReportIndex int64 `json:"reportIndex,omitempty,string"`
+
+	// ReportedProgress: The worker's progress through this WorkItem.
+	ReportedProgress *ApproximateReportedProgress `json:"reportedProgress,omitempty"`
 
 	// RequestedLeaseDuration: Amount of time the worker requests for its
 	// lease.
@@ -2564,6 +2665,115 @@ type WorkItemStatus struct {
 
 func (s *WorkItemStatus) MarshalJSON() ([]byte, error) {
 	type noMethod WorkItemStatus
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// WorkerHealthReport: WorkerHealthReport contains information about the
+// health of a worker. The VM should be identified by the labels
+// attached to the WorkerMessage that this health ping belongs to.
+type WorkerHealthReport struct {
+	// ReportInterval: The interval at which the worker is sending health
+	// reports. The default value of 0 should be interpreted as the field is
+	// not being explicitly set by the worker.
+	ReportInterval string `json:"reportInterval,omitempty"`
+
+	// VmIsHealthy: Whether the VM is healthy.
+	VmIsHealthy bool `json:"vmIsHealthy,omitempty"`
+
+	// VmStartupTime: The time the VM was booted.
+	VmStartupTime string `json:"vmStartupTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReportInterval") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *WorkerHealthReport) MarshalJSON() ([]byte, error) {
+	type noMethod WorkerHealthReport
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// WorkerHealthReportResponse: WorkerHealthReportResponse contains
+// information returned to the worker in response to a health ping.
+type WorkerHealthReportResponse struct {
+	// ReportInterval: A positive value indicates the worker should change
+	// its reporting interval to the specified value. The default value of
+	// zero means no change in report rate is requested by the server.
+	ReportInterval string `json:"reportInterval,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReportInterval") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *WorkerHealthReportResponse) MarshalJSON() ([]byte, error) {
+	type noMethod WorkerHealthReportResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// WorkerMessage: WorkerMessage provides information to the backend
+// about a worker.
+type WorkerMessage struct {
+	// Labels: Labels are used to group WorkerMessages. For example, a
+	// worker_message about a particular container might have the labels: {
+	// "JOB_ID": "2015-04-22", "WORKER_ID": "wordcount-vm-2015…"
+	// "CONTAINER_TYPE": "worker", "CONTAINER_ID": "ac1234def"} Label tags
+	// typically correspond to Label enum values. However, for ease of
+	// development other strings can be used as tags. LABEL_UNSPECIFIED
+	// should not be used here.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Time: The timestamp of the worker_message.
+	Time string `json:"time,omitempty"`
+
+	// WorkerHealthReport: The health of a worker.
+	WorkerHealthReport *WorkerHealthReport `json:"workerHealthReport,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *WorkerMessage) MarshalJSON() ([]byte, error) {
+	type noMethod WorkerMessage
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// WorkerMessageResponse: A worker_message response allows the server to
+// pass information to the sender.
+type WorkerMessageResponse struct {
+	// WorkerHealthReportResponse: The service's response to a worker's
+	// health report.
+	WorkerHealthReportResponse *WorkerHealthReportResponse `json:"workerHealthReportResponse,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "WorkerHealthReportResponse") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *WorkerMessageResponse) MarshalJSON() ([]byte, error) {
+	type noMethod WorkerMessageResponse
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -2657,7 +2867,7 @@ type WorkerPool struct {
 	//   "TEARDOWN_NEVER"
 	TeardownPolicy string `json:"teardownPolicy,omitempty"`
 
-	// Zone: Zone to run the worker pools in (e.g. "us-central1-b"). If
+	// Zone: Zone to run the worker pools in (e.g. "us-central1-a"). If
 	// empty or unspecified, the service will attempt to choose a reasonable
 	// default.
 	Zone string `json:"zone,omitempty"`
@@ -2746,6 +2956,127 @@ func (s *WriteInstruction) MarshalJSON() ([]byte, error) {
 	type noMethod WriteInstruction
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// method id "dataflow.projects.workerMessages":
+
+type ProjectsWorkerMessagesCall struct {
+	s                         *Service
+	projectId                 string
+	sendworkermessagesrequest *SendWorkerMessagesRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+}
+
+// WorkerMessages: Send a worker_message to the service.
+func (r *ProjectsService) WorkerMessages(projectId string, sendworkermessagesrequest *SendWorkerMessagesRequest) *ProjectsWorkerMessagesCall {
+	c := &ProjectsWorkerMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.sendworkermessagesrequest = sendworkermessagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsWorkerMessagesCall) Fields(s ...googleapi.Field) *ProjectsWorkerMessagesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsWorkerMessagesCall) Context(ctx context.Context) *ProjectsWorkerMessagesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ProjectsWorkerMessagesCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sendworkermessagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/WorkerMessages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "dataflow.projects.workerMessages" call.
+// Exactly one of *SendWorkerMessagesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *SendWorkerMessagesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsWorkerMessagesCall) Do() (*SendWorkerMessagesResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SendWorkerMessagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Send a worker_message to the service.",
+	//   "httpMethod": "POST",
+	//   "id": "dataflow.projects.workerMessages",
+	//   "parameterOrder": [
+	//     "projectId"
+	//   ],
+	//   "parameters": {
+	//     "projectId": {
+	//       "description": "The project to send the WorkerMessages to.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/WorkerMessages",
+	//   "request": {
+	//     "$ref": "SendWorkerMessagesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SendWorkerMessagesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
 }
 
 // method id "dataflow.projects.jobs.create":

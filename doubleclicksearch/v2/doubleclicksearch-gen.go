@@ -177,12 +177,11 @@ type Conversion struct {
 	// ClickId: DS click ID for the conversion.
 	ClickId string `json:"clickId,omitempty"`
 
-	// ConversionId: For offline conversions, this is an ID provided by
-	// advertisers. Advertisers can use this property to specify an ID that
-	// is meaningful to them. If an advertiser doesn't specify a
-	// conversionId, DoubleClick Search generates one. For online
-	// conversions, DS copies the dsConversionId or floodlightOrderId into
-	// this property depending on the advertiser's Floodlight instructions.
+	// ConversionId: For offline conversions, this is an ID that advertisers
+	// are required to provide. Advertisers can specify any ID that is
+	// meaningful to them. For online conversions, DS copies the
+	// dsConversionId or floodlightOrderId into this property depending on
+	// the advertiser's Floodlight instructions.
 	ConversionId string `json:"conversionId,omitempty"`
 
 	// ConversionModifiedTimestamp: The time at which the conversion was
@@ -491,8 +490,12 @@ type ReportApiColumnSpec struct {
 	// custom dimension. Acceptable values are "floodlight".
 	PlatformSource string `json:"platformSource,omitempty"`
 
-	// ProductReportPerspective: Provide different source for product items.
-	// Acceptable values are "advertised" and "sold".
+	// ProductReportPerspective: Returns metrics only for a specific type of
+	// product activity. Accepted values are:
+	// - "sold": returns metrics only for products that were sold
+	// - "advertised": returns metrics only for products that were
+	// advertised in a Shopping campaign, and that might or might not have
+	// been sold
 	ProductReportPerspective string `json:"productReportPerspective,omitempty"`
 
 	// SavedColumnName: Name of a saved column to include in the report. The

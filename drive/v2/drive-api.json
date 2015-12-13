@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/j3Wwh3EWBgWZwRehTCtXuS9oPH4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KtqCKKlfySHCYvaa1N2v5uwbP6M\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20151008",
+ "revision": "20151209",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -682,7 +682,7 @@
   "Comment": {
    "id": "Comment",
    "type": "object",
-   "description": "A JSON representation of a comment on a file in Google Drive.",
+   "description": "A comment on a file in Google Drive.",
    "properties": {
     "anchor": {
      "type": "string",
@@ -771,7 +771,7 @@
   "CommentList": {
    "id": "CommentList",
    "type": "object",
-   "description": "A JSON representation of a list of comments on a file in Google Drive.",
+   "description": "A list of comments on a file in Google Drive.",
    "properties": {
     "items": {
      "type": "array",
@@ -802,7 +802,7 @@
   "CommentReply": {
    "id": "CommentReply",
    "type": "object",
-   "description": "A JSON representation of a reply to a comment on a file in Google Drive.",
+   "description": "A comment on a file in Google Drive.",
    "properties": {
     "author": {
      "$ref": "User",
@@ -853,7 +853,7 @@
   "CommentReplyList": {
    "id": "CommentReplyList",
    "type": "object",
-   "description": "A JSON representation of a list of replies to a comment on a file in Google Drive.",
+   "description": "A list of replies to a comment on a file in Google Drive.",
    "properties": {
     "items": {
      "type": "array",
@@ -1728,7 +1728,7 @@
   "User": {
    "id": "User",
    "type": "object",
-   "description": "The JSON template for a user.",
+   "description": "Information about a Drive user.",
    "properties": {
     "displayName": {
      "type": "string",

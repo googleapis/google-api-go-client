@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Z1nmsuc2gxaV27NJqs9zfvCGGNA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/8py9qKhxb4LYQLK5oJhQXM10qCw\"",
  "discoveryVersion": "v1",
  "id": "adexchangebuyer:v1.4",
  "name": "adexchangebuyer",
  "canonicalName": "Ad Exchange Buyer",
  "version": "v1.4",
- "revision": "20151102",
+ "revision": "20151209",
  "title": "Ad Exchange Buyer API",
  "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
  "ownerDomain": "google.com",
@@ -883,6 +883,9 @@
    "id": "DeliveryControl",
    "type": "object",
    "properties": {
+    "creativeBlockingLevel": {
+     "type": "string"
+    },
     "deliveryRateType": {
      "type": "string"
     },
@@ -1015,6 +1018,10 @@
      "type": "string",
      "description": "The time (ms since epoch) of the deal creation. (readonly)",
      "format": "int64"
+    },
+    "creativePreApprovalPolicy": {
+     "type": "string",
+     "description": "Specifies the creative pre-approval policy (buyer-readonly)"
     },
     "dealId": {
      "type": "string",
@@ -1205,6 +1212,10 @@
      "type": "boolean",
      "description": "If the creator has already signed off on the offer, then the buyer can finalize the deal by accepting the offer as is. When copying to an order, if any of the terms are changed, then auto_finalize is automatically set to false."
     },
+    "inventorySource": {
+     "type": "string",
+     "description": "What exchange will provide this inventory (readonly, except on create)."
+    },
     "kind": {
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"adexchangebuyer#marketplaceOffer\".",
@@ -1294,6 +1305,10 @@
     "hasSellerSignedOff": {
      "type": "boolean",
      "description": "When an order is in an accepted state, indicates whether the buyer has signed off Once both sides have signed off on a deal, the order can be finalized by the seller. (buyer-readonly)"
+    },
+    "inventorySource": {
+     "type": "string",
+     "description": "What exchange will provide this inventory (readonly, except on create)."
     },
     "isRenegotiating": {
      "type": "boolean",
@@ -1699,6 +1714,29 @@
      "items": {
       "type": "string",
       "format": "int64"
+     }
+    },
+    "videoPlayerSizes": {
+     "type": "array",
+     "description": "Video requests satisfying any of these player size constraints will match.",
+     "items": {
+      "type": "object",
+      "properties": {
+       "aspectRatio": {
+        "type": "string",
+        "description": "The type of aspect ratio. Leave this field blank to match all aspect ratios."
+       },
+       "minHeight": {
+        "type": "string",
+        "description": "The minimum player height in pixels. Leave this field blank to match any player height.",
+        "format": "int64"
+       },
+       "minWidth": {
+        "type": "string",
+        "description": "The minimum player width in pixels. Leave this field blank to match any player width.",
+        "format": "int64"
+       }
+      }
      }
     }
    }
@@ -2150,6 +2188,42 @@
   },
   "creatives": {
    "methods": {
+    "addDeal": {
+     "id": "adexchangebuyer.creatives.addDeal",
+     "path": "creatives/{accountId}/{buyerCreativeId}/addDeal/{dealId}",
+     "httpMethod": "POST",
+     "description": "Add a deal id association for the creative.",
+     "parameters": {
+      "accountId": {
+       "type": "integer",
+       "description": "The id for the account that will serve this creative.",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      },
+      "buyerCreativeId": {
+       "type": "string",
+       "description": "The buyer-specific id for this creative.",
+       "required": true,
+       "location": "path"
+      },
+      "dealId": {
+       "type": "string",
+       "description": "The id of the deal id to associate with this creative.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId",
+      "buyerCreativeId",
+      "dealId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
     "get": {
      "id": "adexchangebuyer.creatives.get",
      "path": "creatives/{accountId}/{buyerCreativeId}",
@@ -2217,7 +2291,7 @@
       },
       "dealsStatusFilter": {
        "type": "string",
-       "description": "When specified, only creatives having the given direct deals status are returned.",
+       "description": "When specified, only creatives having the given deals status are returned.",
        "enum": [
         "approved",
         "conditionally_approved",
@@ -2225,10 +2299,10 @@
         "not_checked"
        ],
        "enumDescriptions": [
-        "Creatives which have been approved for serving on direct deals.",
-        "Creatives which have been conditionally approved for serving on direct deals.",
-        "Creatives which have been disapproved for serving on direct deals.",
-        "Creatives whose direct deals status is not yet checked."
+        "Creatives which have been approved for serving on deals.",
+        "Creatives which have been conditionally approved for serving on deals.",
+        "Creatives which have been disapproved for serving on deals.",
+        "Creatives whose deals status is not yet checked."
        ],
        "location": "query"
       },
@@ -2266,6 +2340,42 @@
      "response": {
       "$ref": "CreativesList"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/adexchange.buyer"
+     ]
+    },
+    "removeDeal": {
+     "id": "adexchangebuyer.creatives.removeDeal",
+     "path": "creatives/{accountId}/{buyerCreativeId}/removeDeal/{dealId}",
+     "httpMethod": "POST",
+     "description": "Remove a deal id associated with the creative.",
+     "parameters": {
+      "accountId": {
+       "type": "integer",
+       "description": "The id for the account that will serve this creative.",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      },
+      "buyerCreativeId": {
+       "type": "string",
+       "description": "The buyer-specific id for this creative.",
+       "required": true,
+       "location": "path"
+      },
+      "dealId": {
+       "type": "string",
+       "description": "The id of the deal id to disassociate with this creative.",
+       "required": true,
+       "format": "int64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "accountId",
+      "buyerCreativeId",
+      "dealId"
+     ],
      "scopes": [
       "https://www.googleapis.com/auth/adexchange.buyer"
      ]

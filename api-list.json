@@ -899,22 +899,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "dns:v1beta1",
-   "name": "dns",
-   "version": "v1beta1",
-   "title": "Google Cloud DNS API",
-   "description": "The Google Cloud DNS API provides services for configuring and serving authoritative DNS records.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dns/v1beta1/rest",
-   "discoveryLink": "./apis/dns/v1beta1/rest",
-   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/cloud-dns",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "doubleclickbidmanager:v1",
    "name": "doubleclickbidmanager",
    "version": "v1",
@@ -973,6 +957,22 @@
    "description": "The API to interact with Drive.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/drive/v2/rest",
    "discoveryLink": "./apis/drive/v2/rest",
+   "icons": {
+    "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
+    "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
+   },
+   "documentationLink": "https://developers.google.com/drive/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "drive:v3",
+   "name": "drive",
+   "version": "v3",
+   "title": "Drive API",
+   "description": "The API to interact with Drive.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest",
+   "discoveryLink": "./apis/drive/v3/rest",
    "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -1258,7 +1258,7 @@
    "name": "cloudtrace",
    "version": "v1",
    "title": "Google Cloud Trace API",
-   "description": "The Google Cloud Trace API provides services for reading and writing runtime trace data for Cloud applications.",
+   "description": "The Cloud Trace API allows you to send traces to and retrieve traces from Google Cloud Trace.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudtrace/v1/rest",
    "discoveryLink": "./apis/cloudtrace/v1/rest",
    "icons": {
@@ -1302,11 +1302,59 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "dataproc:v1alpha1",
+   "name": "dataproc",
+   "version": "v1alpha1",
+   "title": "Google Cloud Dataproc API",
+   "description": "An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataproc/v1alpha1/rest",
+   "discoveryLink": "./apis/dataproc/v1alpha1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/dataproc/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dataproc:v1",
+   "name": "dataproc",
+   "version": "v1",
+   "title": "Google Cloud Dataproc API",
+   "description": "An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataproc/v1/rest",
+   "discoveryLink": "./apis/dataproc/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/dataproc/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dataproc:v1beta1",
+   "name": "dataproc",
+   "version": "v1beta1",
+   "title": "Google Cloud Dataproc API",
+   "description": "An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dataproc/v1beta1/rest",
+   "discoveryLink": "./apis/dataproc/v1beta1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://cloud.google.com/dataproc/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "genomics:v1",
    "name": "genomics",
    "version": "v1",
    "title": "Genomics API",
-   "description": "An API to store, process, explore, and share DNA sequence reads, reference-based alignments, and variant calls.",
+   "description": "An API to store, process, explore, and share genomic data. It supports reference-based alignements, genetic variants, and reference genomes. This API provides an implementation of the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/genomics/v1/rest",
    "discoveryLink": "./apis/genomics/v1/rest",
    "icons": {
@@ -1318,13 +1366,13 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "logging:v1beta3",
+   "id": "logging:v2beta1",
    "name": "logging",
-   "version": "v1beta3",
+   "version": "v2beta1",
    "title": "Google Cloud Logging API",
    "description": "The Google Cloud Logging API lets you write log entries and manage your logs, log sinks and logs-based metrics.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/logging/v1beta3/rest",
-   "discoveryLink": "./apis/logging/v1beta3/rest",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/logging/v2beta1/rest",
+   "discoveryLink": "./apis/logging/v2beta1/rest",
    "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"

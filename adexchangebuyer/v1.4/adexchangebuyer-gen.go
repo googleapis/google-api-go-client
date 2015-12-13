@@ -1199,16 +1199,19 @@ func (s *DeleteOrderDealsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type DeliveryControl struct {
+	CreativeBlockingLevel string `json:"creativeBlockingLevel,omitempty"`
+
 	DeliveryRateType string `json:"deliveryRateType,omitempty"`
 
 	FrequencyCaps []*DeliveryControlFrequencyCap `json:"frequencyCaps,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DeliveryRateType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CreativeBlockingLevel") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 }
 
@@ -1405,6 +1408,10 @@ type MarketplaceDeal struct {
 	// CreationTimeMs: The time (ms since epoch) of the deal creation.
 	// (readonly)
 	CreationTimeMs int64 `json:"creationTimeMs,omitempty,string"`
+
+	// CreativePreApprovalPolicy: Specifies the creative pre-approval policy
+	// (buyer-readonly)
+	CreativePreApprovalPolicy string `json:"creativePreApprovalPolicy,omitempty"`
 
 	// DealId: A unique deal=id for the deal (readonly).
 	DealId string `json:"dealId,omitempty"`
@@ -1618,6 +1625,10 @@ type MarketplaceOffer struct {
 	// auto_finalize is automatically set to false.
 	HasCreatorSignedOff bool `json:"hasCreatorSignedOff,omitempty"`
 
+	// InventorySource: What exchange will provide this inventory (readonly,
+	// except on create).
+	InventorySource string `json:"inventorySource,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "adexchangebuyer#marketplaceOffer".
 	Kind string `json:"kind,omitempty"`
@@ -1713,6 +1724,10 @@ type MarketplaceOrder struct {
 	// whether the buyer has signed off Once both sides have signed off on a
 	// deal, the order can be finalized by the seller. (buyer-readonly)
 	HasSellerSignedOff bool `json:"hasSellerSignedOff,omitempty"`
+
+	// InventorySource: What exchange will provide this inventory (readonly,
+	// except on create).
+	InventorySource string `json:"inventorySource,omitempty"`
 
 	// IsRenegotiating: True if the order is being renegotiated (readonly).
 	IsRenegotiating bool `json:"isRenegotiating,omitempty"`
@@ -2011,6 +2026,10 @@ type PretargetingConfig struct {
 	// Verticals: Requests containing any of these vertical ids will match.
 	Verticals googleapi.Int64s `json:"verticals,omitempty"`
 
+	// VideoPlayerSizes: Video requests satisfying any of these player size
+	// constraints will match.
+	VideoPlayerSizes []*PretargetingConfigVideoPlayerSizes `json:"videoPlayerSizes,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2096,6 +2115,34 @@ type PretargetingConfigPlacements struct {
 
 func (s *PretargetingConfigPlacements) MarshalJSON() ([]byte, error) {
 	type noMethod PretargetingConfigPlacements
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type PretargetingConfigVideoPlayerSizes struct {
+	// AspectRatio: The type of aspect ratio. Leave this field blank to
+	// match all aspect ratios.
+	AspectRatio string `json:"aspectRatio,omitempty"`
+
+	// MinHeight: The minimum player height in pixels. Leave this field
+	// blank to match any player height.
+	MinHeight int64 `json:"minHeight,omitempty,string"`
+
+	// MinWidth: The minimum player width in pixels. Leave this field blank
+	// to match any player width.
+	MinWidth int64 `json:"minWidth,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *PretargetingConfigVideoPlayerSizes) MarshalJSON() ([]byte, error) {
+	type noMethod PretargetingConfigVideoPlayerSizes
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -3486,6 +3533,110 @@ func (c *BudgetUpdateCall) Do() (*Budget, error) {
 
 }
 
+// method id "adexchangebuyer.creatives.addDeal":
+
+type CreativesAddDealCall struct {
+	s               *Service
+	accountId       int64
+	buyerCreativeId string
+	dealId          int64
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+}
+
+// AddDeal: Add a deal id association for the creative.
+func (r *CreativesService) AddDeal(accountId int64, buyerCreativeId string, dealId int64) *CreativesAddDealCall {
+	c := &CreativesAddDealCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.buyerCreativeId = buyerCreativeId
+	c.dealId = dealId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CreativesAddDealCall) Fields(s ...googleapi.Field) *CreativesAddDealCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CreativesAddDealCall) Context(ctx context.Context) *CreativesAddDealCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CreativesAddDealCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives/{accountId}/{buyerCreativeId}/addDeal/{dealId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":       strconv.FormatInt(c.accountId, 10),
+		"buyerCreativeId": c.buyerCreativeId,
+		"dealId":          strconv.FormatInt(c.dealId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.creatives.addDeal" call.
+func (c *CreativesAddDealCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Add a deal id association for the creative.",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.creatives.addDeal",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "buyerCreativeId",
+	//     "dealId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The id for the account that will serve this creative.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "buyerCreativeId": {
+	//       "description": "The buyer-specific id for this creative.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "dealId": {
+	//       "description": "The id of the deal id to associate with this creative.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "creatives/{accountId}/{buyerCreativeId}/addDeal/{dealId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
 // method id "adexchangebuyer.creatives.get":
 
 type CreativesGetCall struct {
@@ -3762,18 +3913,17 @@ func (c *CreativesListCall) BuyerCreativeId(buyerCreativeId ...string) *Creative
 }
 
 // DealsStatusFilter sets the optional parameter "dealsStatusFilter":
-// When specified, only creatives having the given direct deals status
-// are returned.
+// When specified, only creatives having the given deals status are
+// returned.
 //
 // Possible values:
 //   "approved" - Creatives which have been approved for serving on
-// direct deals.
+// deals.
 //   "conditionally_approved" - Creatives which have been conditionally
-// approved for serving on direct deals.
+// approved for serving on deals.
 //   "disapproved" - Creatives which have been disapproved for serving
-// on direct deals.
-//   "not_checked" - Creatives whose direct deals status is not yet
-// checked.
+// on deals.
+//   "not_checked" - Creatives whose deals status is not yet checked.
 func (c *CreativesListCall) DealsStatusFilter(dealsStatusFilter string) *CreativesListCall {
 	c.urlParams_.Set("dealsStatusFilter", dealsStatusFilter)
 	return c
@@ -3911,7 +4061,7 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	//       "type": "string"
 	//     },
 	//     "dealsStatusFilter": {
-	//       "description": "When specified, only creatives having the given direct deals status are returned.",
+	//       "description": "When specified, only creatives having the given deals status are returned.",
 	//       "enum": [
 	//         "approved",
 	//         "conditionally_approved",
@@ -3919,10 +4069,10 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	//         "not_checked"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Creatives which have been approved for serving on direct deals.",
-	//         "Creatives which have been conditionally approved for serving on direct deals.",
-	//         "Creatives which have been disapproved for serving on direct deals.",
-	//         "Creatives whose direct deals status is not yet checked."
+	//         "Creatives which have been approved for serving on deals.",
+	//         "Creatives which have been conditionally approved for serving on deals.",
+	//         "Creatives which have been disapproved for serving on deals.",
+	//         "Creatives whose deals status is not yet checked."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -3962,6 +4112,110 @@ func (c *CreativesListCall) Do() (*CreativesList, error) {
 	//   "response": {
 	//     "$ref": "CreativesList"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer.creatives.removeDeal":
+
+type CreativesRemoveDealCall struct {
+	s               *Service
+	accountId       int64
+	buyerCreativeId string
+	dealId          int64
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+}
+
+// RemoveDeal: Remove a deal id associated with the creative.
+func (r *CreativesService) RemoveDeal(accountId int64, buyerCreativeId string, dealId int64) *CreativesRemoveDealCall {
+	c := &CreativesRemoveDealCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.buyerCreativeId = buyerCreativeId
+	c.dealId = dealId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CreativesRemoveDealCall) Fields(s ...googleapi.Field) *CreativesRemoveDealCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CreativesRemoveDealCall) Context(ctx context.Context) *CreativesRemoveDealCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *CreativesRemoveDealCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "creatives/{accountId}/{buyerCreativeId}/removeDeal/{dealId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":       strconv.FormatInt(c.accountId, 10),
+		"buyerCreativeId": c.buyerCreativeId,
+		"dealId":          strconv.FormatInt(c.dealId, 10),
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "adexchangebuyer.creatives.removeDeal" call.
+func (c *CreativesRemoveDealCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Remove a deal id associated with the creative.",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer.creatives.removeDeal",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "buyerCreativeId",
+	//     "dealId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "The id for the account that will serve this creative.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "buyerCreativeId": {
+	//       "description": "The buyer-specific id for this creative.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "dealId": {
+	//       "description": "The id of the deal id to disassociate with this creative.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "creatives/{accountId}/{buyerCreativeId}/removeDeal/{dealId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"
 	//   ]

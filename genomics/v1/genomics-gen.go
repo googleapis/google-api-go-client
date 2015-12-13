@@ -430,17 +430,18 @@ type Empty struct {
 
 type Experiment struct {
 	// InstrumentModel: The instrument model used as part of this
-	// experiment. This maps to sequencing technology in BAM.
+	// experiment. This maps to sequencing technology in the SAM spec.
 	InstrumentModel string `json:"instrumentModel,omitempty"`
 
-	// LibraryId: The library used as part of this experiment. Note: This is
-	// not an actual ID within this repository, but rather an identifier for
-	// a library which may be meaningful to some external system.
+	// LibraryId: A client-supplied library identifier; a library is a
+	// collection of DNA fragments which have been prepared for sequencing
+	// from a sample. This field is important for quality control as error
+	// or bias can be introduced during sample preparation.
 	LibraryId string `json:"libraryId,omitempty"`
 
-	// PlatformUnit: The platform unit used as part of this experiment e.g.
-	// flowcell-barcode.lane for Illumina or slide for SOLiD. Corresponds to
-	// the @RG PU field in the SAM spec.
+	// PlatformUnit: The platform unit used as part of this experiment, for
+	// example flowcell-barcode.lane for Illumina or slide for SOLiD.
+	// Corresponds to the @RG PU field in the SAM spec.
 	PlatformUnit string `json:"platformUnit,omitempty"`
 
 	// SequencingCenter: The sequencing center used as part of this
@@ -470,7 +471,7 @@ type ExportReadGroupSetRequest struct {
 	ExportUri string `json:"exportUri,omitempty"`
 
 	// ProjectId: Required. The Google Developers Console project ID that
-	// owns this export.
+	// owns this export. The caller must have WRITE access to this project.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ReferenceNames: The reference names to export. If this is not
@@ -650,7 +651,7 @@ func (s *ImportVariantsRequest) MarshalJSON() ([]byte, error) {
 
 // ImportVariantsResponse: The variant data import response.
 type ImportVariantsResponse struct {
-	// CallSetIds: IDs of the call sets that were created.
+	// CallSetIds: IDs of the call sets created during the import.
 	CallSetIds []string `json:"callSetIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallSetIds") to
@@ -678,6 +679,8 @@ type LinearAlignment struct {
 
 	// MappingQuality: The mapping quality of this alignment. Represents how
 	// likely the read maps to this position as opposed to other locations.
+	// Specifically, this is -10 log10 Pr(mapping position is wrong),
+	// rounded to the nearest integer.
 	MappingQuality int64 `json:"mappingQuality,omitempty"`
 
 	// Position: The position of this alignment.
@@ -1027,7 +1030,8 @@ type Program struct {
 	// with `prevProgramId` to define an ordering between programs.
 	Id string `json:"id,omitempty"`
 
-	// Name: The name of the program.
+	// Name: The display name of the program. This is typically the
+	// colloquial name of the tool used, for example 'bwa' or 'picard'.
 	Name string `json:"name,omitempty"`
 
 	// PrevProgramId: The ID of the program run before this one.
@@ -1089,12 +1093,28 @@ func (s *Range) MarshalJSON() ([]byte, error) {
 // read group set. For more genomics resource definitions, see
 // [Fundamentals of Google
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
-// omics) ### Generating a reference-aligned sequence string When
-// interacting with mapped reads, it's often useful to produce a string
-// representing the local alignment of the read to reference. The
-// following pseudocode demonstrates one way of doing this: out = ""
-// offset = 0 for c in read.alignment.cigar { switch c.operation { case
-// "ALIGNMENT_MATCH", "SEQUENCE_MATCH", "SEQUENCE_MISMATCH": out +=
+// omics) ### Reverse-stranded reads Mapped reads (reads having a
+// non-null `alignment`) can be aligned to either the forward or the
+// reverse strand of their associated reference. Strandedness of a
+// mapped read is encoded by `alignment.position.reverseStrand`. If we
+// consider the reference to be a forward-stranded coordinate space of
+// `[0, reference.length)` with `0` as the left-most position and
+// `reference.length` as the right-most position, reads are always
+// aligned left to right. That is, `alignment.position.position` always
+// refers to the left-most reference coordinate and `alignment.cigar`
+// describes the alignment of this read to the reference from left to
+// right. All per-base fields such as `alignedSequence` and
+// `alignedQuality` share this same left-to-right orientation; this is
+// true of reads which are aligned to either strand. For
+// reverse-stranded reads, this means that `alignedSequence` is the
+// reverse complement of the bases that were originally reported by the
+// sequencing machine. ### Generating a reference-aligned sequence
+// string When interacting with mapped reads, it's often useful to
+// produce a string representing the local alignment of the read to
+// reference. The following pseudocode demonstrates one way of doing
+// this: out = "" offset = 0 for c in read.alignment.cigar { switch
+// c.operation { case "ALIGNMENT_MATCH", "SEQUENCE_MATCH",
+// "SEQUENCE_MISMATCH": out +=
 // read.alignedSequence[offset:offset+c.operationLength] offset +=
 // c.operationLength break case "CLIP_SOFT", "INSERT": offset +=
 // c.operationLength break case "PAD": out += repeat("*",
@@ -1111,32 +1131,34 @@ func (s *Range) MarshalJSON() ([]byte, error) {
 // cigarMap[c.operation] } return cigarStr
 type Read struct {
 	// AlignedQuality: The quality of the read sequence contained in this
-	// alignment record. `alignedSequence` and `alignedQuality` may be
-	// shorter than the full read sequence and quality. This will occur if
-	// the alignment is part of a chimeric alignment, or if the read was
-	// trimmed. When this occurs, the CIGAR for this read will begin/end
-	// with a hard clip operator that will indicate the length of the
-	// excised sequence.
+	// alignment record (equivalent to QUAL in SAM). `alignedSequence` and
+	// `alignedQuality` may be shorter than the full read sequence and
+	// quality. This will occur if the alignment is part of a chimeric
+	// alignment, or if the read was trimmed. When this occurs, the CIGAR
+	// for this read will begin/end with a hard clip operator that will
+	// indicate the length of the excised sequence.
 	AlignedQuality []int64 `json:"alignedQuality,omitempty"`
 
 	// AlignedSequence: The bases of the read sequence contained in this
-	// alignment record, *without CIGAR operations applied*.
-	// `alignedSequence` and `alignedQuality` may be shorter than the full
-	// read sequence and quality. This will occur if the alignment is part
-	// of a chimeric alignment, or if the read was trimmed. When this
-	// occurs, the CIGAR for this read will begin/end with a hard clip
-	// operator that will indicate the length of the excised sequence.
+	// alignment record, **without CIGAR operations applied** (equivalent to
+	// SEQ in SAM). `alignedSequence` and `alignedQuality` may be shorter
+	// than the full read sequence and quality. This will occur if the
+	// alignment is part of a chimeric alignment, or if the read was
+	// trimmed. When this occurs, the CIGAR for this read will begin/end
+	// with a hard clip operator that will indicate the length of the
+	// excised sequence.
 	AlignedSequence string `json:"alignedSequence,omitempty"`
 
 	// Alignment: The linear alignment for this alignment record. This field
-	// will be null if the read is unmapped.
+	// is null for unmapped reads.
 	Alignment *LinearAlignment `json:"alignment,omitempty"`
 
 	// DuplicateFragment: The fragment is a PCR or optical duplicate (SAM
-	// flag 0x400)
+	// flag 0x400).
 	DuplicateFragment bool `json:"duplicateFragment,omitempty"`
 
-	// FailedVendorQualityChecks: SAM flag 0x200
+	// FailedVendorQualityChecks: Whether this read did not pass filters,
+	// such as platform or vendor quality controls (SAM flag 0x200).
 	FailedVendorQualityChecks bool `json:"failedVendorQualityChecks,omitempty"`
 
 	// FragmentLength: The observed length of the fragment, equivalent to
@@ -1166,15 +1188,17 @@ type Read struct {
 
 	// ProperPlacement: The orientation and the distance between reads from
 	// the fragment are consistent with the sequencing protocol (SAM flag
-	// 0x2)
+	// 0x2).
 	ProperPlacement bool `json:"properPlacement,omitempty"`
 
-	// ReadGroupId: The ID of the read group this read belongs to. (Every
-	// read must belong to exactly one read group.)
+	// ReadGroupId: The ID of the read group this read belongs to. A read
+	// belongs to exactly one read group. This is a server-generated ID
+	// which is distinct from SAM's RG tag (for that value, see
+	// ReadGroup.name).
 	ReadGroupId string `json:"readGroupId,omitempty"`
 
-	// ReadGroupSetId: The ID of the read group set this read belongs to.
-	// (Every read must belong to exactly one read group set.)
+	// ReadGroupSetId: The ID of the read group set this read belongs to. A
+	// read belongs to exactly one read group set.
 	ReadGroupSetId string `json:"readGroupSetId,omitempty"`
 
 	// ReadNumber: The read number in sequencing. 0-based and less than
@@ -1226,7 +1250,7 @@ type ReadInfo struct {
 // ReadGroup: A read group is all the data that's processed the same way
 // by the sequencer.
 type ReadGroup struct {
-	// DatasetId: The ID of the dataset this read group belongs to.
+	// DatasetId: The dataset to which this read group belongs.
 	DatasetId string `json:"datasetId,omitempty"`
 
 	// Description: A free-form text description of this read group.
@@ -1236,8 +1260,8 @@ type ReadGroup struct {
 	Experiment *Experiment `json:"experiment,omitempty"`
 
 	// Id: The server-generated read group ID, unique for all read groups.
-	// Note: This is different than the `@RG ID` field in the SAM spec. For
-	// that value, see the `name` field.
+	// Note: This is different than the @RG ID field in the SAM spec. For
+	// that value, see name.
 	Id string `json:"id,omitempty"`
 
 	// Info: A map of additional read group information. This must be of the
@@ -1260,13 +1284,11 @@ type ReadGroup struct {
 	Programs []*Program `json:"programs,omitempty"`
 
 	// ReferenceSetId: The reference set the reads in this read group are
-	// aligned to. Required if there are any read alignments.
+	// aligned to.
 	ReferenceSetId string `json:"referenceSetId,omitempty"`
 
-	// SampleId: The sample this read group's data was generated from. Note:
-	// This is not an actual ID within this repository, but rather an
-	// identifier for a sample which may be meaningful to some external
-	// system.
+	// SampleId: A client-supplied sample identifier for the reads in this
+	// read group.
 	SampleId string `json:"sampleId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetId") to
@@ -1299,7 +1321,7 @@ type ReadGroupInfo struct {
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
 // omics)
 type ReadGroupSet struct {
-	// DatasetId: The dataset ID.
+	// DatasetId: The dataset to which this read group set belongs.
 	DatasetId string `json:"datasetId,omitempty"`
 
 	// Filename: The filename of the original source file for this read
@@ -1321,8 +1343,8 @@ type ReadGroupSet struct {
 	// read groups in a read group set.
 	ReadGroups []*ReadGroup `json:"readGroups,omitempty"`
 
-	// ReferenceSetId: The reference set the reads in this read group set
-	// are aligned to.
+	// ReferenceSetId: The reference set to which the reads in this read
+	// group set are aligned.
 	ReferenceSetId string `json:"referenceSetId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1371,8 +1393,8 @@ type Reference struct {
 	// Name: The name of this reference, for example `22`.
 	Name string `json:"name,omitempty"`
 
-	// NcbiTaxonId: ID from http://www.ncbi.nlm.nih.gov/taxonomy (e.g.
-	// 9606->human) if not specified by the containing reference set.
+	// NcbiTaxonId: ID from http://www.ncbi.nlm.nih.gov/taxonomy. For
+	// example, 9606 for human.
 	NcbiTaxonId int64 `json:"ncbiTaxonId,omitempty"`
 
 	// SourceAccessions: All known corresponding accession IDs in INSDC
@@ -1380,8 +1402,8 @@ type Reference struct {
 	// `GCF_000001405.26`.
 	SourceAccessions []string `json:"sourceAccessions,omitempty"`
 
-	// SourceUri: The URI from which the sequence was obtained. Specifies a
-	// FASTA format file/string with one name, sequence pair.
+	// SourceUri: The URI from which the sequence was obtained. Typically
+	// specifies a FASTA format file.
 	SourceUri string `json:"sourceUri,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1406,7 +1428,8 @@ func (s *Reference) MarshalJSON() ([]byte, error) {
 // ReferenceBound: ReferenceBound records an upper bound for the
 // starting coordinate of variants in a particular reference.
 type ReferenceBound struct {
-	// ReferenceName: The reference the bound is associate with.
+	// ReferenceName: The name of the reference associated with this
+	// ReferenceBound.
 	ReferenceName string `json:"referenceName,omitempty"`
 
 	// UpperBound: An upper bound (inclusive) on the starting coordinate of
@@ -1455,12 +1478,12 @@ type ReferenceSet struct {
 	// hexadecimal format.
 	Md5checksum string `json:"md5checksum,omitempty"`
 
-	// NcbiTaxonId: ID from http://www.ncbi.nlm.nih.gov/taxonomy (e.g.
-	// 9606->human) indicating the species which this assembly is intended
-	// to model. Note that contained references may specify a different
-	// `ncbiTaxonId`, as assemblies may contain reference sequences which do
-	// not belong to the modeled species, e.g. EBV in a human reference
-	// genome.
+	// NcbiTaxonId: ID from http://www.ncbi.nlm.nih.gov/taxonomy (for
+	// example, 9606 for human) indicating the species which this reference
+	// set is intended to model. Note that contained references may specify
+	// a different `ncbiTaxonId`, as assemblies may contain reference
+	// sequences which do not belong to the modeled species, for example EBV
+	// in a human reference genome.
 	NcbiTaxonId int64 `json:"ncbiTaxonId,omitempty"`
 
 	// ReferenceIds: The IDs of the reference objects that are part of this
@@ -1500,8 +1523,8 @@ type SearchCallSetsRequest struct {
 	// this string.
 	Name string `json:"name,omitempty"`
 
-	// PageSize: The maximum number of call sets to return. If unspecified,
-	// defaults to 1000.
+	// PageSize: The maximum number of results to return in a single page.
+	// If unspecified, defaults to 1024.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The continuation token, which is used to page through
@@ -1568,8 +1591,8 @@ type SearchReadGroupSetsRequest struct {
 	// matches this string.
 	Name string `json:"name,omitempty"`
 
-	// PageSize: Specifies number of results to return in a single page. If
-	// unspecified, it will default to 256. The maximum value is 1024.
+	// PageSize: The maximum number of results to return in a single page.
+	// If unspecified, defaults to 256. The maximum value is 1024.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The continuation token, which is used to page through
@@ -1628,8 +1651,8 @@ type SearchReadsRequest struct {
 	// exclusive. If specified, `referenceName` must also be specified.
 	End int64 `json:"end,omitempty,string"`
 
-	// PageSize: Specifies number of results to return in a single page. If
-	// unspecified, it will default to 256. The maximum value is 2048.
+	// PageSize: The maximum number of results to return in a single page.
+	// If unspecified, defaults to 256. The maximum value is 2048.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The continuation token, which is used to page through
@@ -1650,7 +1673,8 @@ type SearchReadsRequest struct {
 	ReadGroupSetIds []string `json:"readGroupSetIds,omitempty"`
 
 	// ReferenceName: The reference sequence name, for example `chr1`, `1`,
-	// or `chrX`. If set to *, only unmapped reads are returned.
+	// or `chrX`. If set to `*`, only unmapped reads are returned. If
+	// unspecified, all reads (mapped and unmapped) are returned.
 	ReferenceName string `json:"referenceName,omitempty"`
 
 	// Start: The start position of the range on the reference, 0-based
@@ -1706,24 +1730,22 @@ func (s *SearchReadsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type SearchReferenceSetsRequest struct {
-	// Accessions: If present, return references for which the accession
-	// matches any of these strings. Best to give a version number, for
-	// example `GCF_000001405.26`. If only the main accession number is
-	// given then all records with that main accession will be returned,
-	// whichever version. Note that different versions will have different
-	// sequences.
+	// Accessions: If present, return reference sets for which a prefix of
+	// any of sourceAccessions match any of these strings. Accession numbers
+	// typically have a main number and a version, for example
+	// `NC_000001.11`.
 	Accessions []string `json:"accessions,omitempty"`
 
 	// AssemblyId: If present, return reference sets for which a substring
 	// of their `assemblyId` matches this string (case insensitive).
 	AssemblyId string `json:"assemblyId,omitempty"`
 
-	// Md5checksums: If present, return references for which the
-	// `md5checksum` matches. See `ReferenceSet.md5checksum` for details.
+	// Md5checksums: If present, return reference sets for which the
+	// md5checksum matches exactly.
 	Md5checksums []string `json:"md5checksums,omitempty"`
 
-	// PageSize: Specifies the maximum number of results to return in a
-	// single page.
+	// PageSize: The maximum number of results to return in a single page.
+	// If unspecified, defaults to 1024. The maximum value is 4096.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The continuation token, which is used to page through
@@ -1776,20 +1798,18 @@ func (s *SearchReferenceSetsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type SearchReferencesRequest struct {
-	// Accessions: If present, return references for which the accession
-	// matches this string. Best to give a version number, for example
-	// `GCF_000001405.26`. If only the main accession number is given then
-	// all records with that main accession will be returned, whichever
-	// version. Note that different versions will have different sequences.
+	// Accessions: If present, return references for which a prefix of any
+	// of sourceAccessions match any of these strings. Accession numbers
+	// typically have a main number and a version, for example
+	// `GCF_000001405.26`.
 	Accessions []string `json:"accessions,omitempty"`
 
-	// Md5checksums: If present, return references for which the
-	// `md5checksum` matches. See `Reference.md5checksum` for construction
-	// details.
+	// Md5checksums: If present, return references for which the md5checksum
+	// matches exactly.
 	Md5checksums []string `json:"md5checksums,omitempty"`
 
-	// PageSize: Specifies the maximum number of results to return in a
-	// single page.
+	// PageSize: The maximum number of results to return in a single page.
+	// If unspecified, defaults to 1024. The maximum value is 4096.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The continuation token, which is used to page through
@@ -1851,7 +1871,8 @@ type SearchVariantSetsRequest struct {
 	// variant sets which belong to this dataset will be returned.
 	DatasetIds []string `json:"datasetIds,omitempty"`
 
-	// PageSize: The maximum number of variant sets to return in a request.
+	// PageSize: The maximum number of results to return in a single page.
+	// If unspecified, defaults to 1024.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The continuation token, which is used to page through
@@ -1917,13 +1938,14 @@ type SearchVariantsRequest struct {
 	// defaults to the length of the reference.
 	End int64 `json:"end,omitempty,string"`
 
-	// MaxCalls: The maximum number of calls to return. However, at least
-	// one variant will always be returned, even if it has more calls than
-	// this limit. If unspecified, defaults to 5000.
+	// MaxCalls: The maximum number of calls to return in a single page.
+	// Note that this limit may be exceeded; at least one variant is always
+	// returned per page, even if it has more calls than this limit. If
+	// unspecified, defaults to 5000. The maximum value is 10000.
 	MaxCalls int64 `json:"maxCalls,omitempty"`
 
-	// PageSize: The maximum number of variants to return. If unspecified,
-	// defaults to 5000.
+	// PageSize: The maximum number of variants to return in a single page.
+	// If unspecified, defaults to 5000. The maximum value is 10000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: The continuation token, which is used to page through
@@ -2082,6 +2104,129 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 type StatusDetails interface{}
+
+// StreamReadsRequest: The stream reads request.
+type StreamReadsRequest struct {
+	// End: The end position of the range on the reference, 0-based
+	// exclusive. If specified, `referenceName` must also be specified.
+	End int64 `json:"end,omitempty,string"`
+
+	// ProjectId: The Google Developers Console project ID or number which
+	// will be billed for this access. The caller must have WRITE access to
+	// this project. Required.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ReadGroupSetId: The ID of the read group set from which to stream
+	// reads.
+	ReadGroupSetId string `json:"readGroupSetId,omitempty"`
+
+	// ReferenceName: The reference sequence name, for example `chr1`, `1`,
+	// or `chrX`. If set to *, only unmapped reads are returned.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// Start: The start position of the range on the reference, 0-based
+	// inclusive. If specified, `referenceName` must also be specified.
+	Start int64 `json:"start,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StreamReadsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod StreamReadsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type StreamReadsResponse struct {
+	Alignments []*Read `json:"alignments,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Alignments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StreamReadsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod StreamReadsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// StreamVariantsRequest: The stream variants request.
+type StreamVariantsRequest struct {
+	// CallSetIds: Only return variant calls which belong to call sets with
+	// these IDs. Leaving this blank returns all variant calls.
+	CallSetIds []string `json:"callSetIds,omitempty"`
+
+	// End: The end of the window (0-based, exclusive) for which overlapping
+	// variants should be returned.
+	End int64 `json:"end,omitempty,string"`
+
+	// ProjectId: The Google Developers Console project ID or number which
+	// will be billed for this access. The caller must have WRITE access to
+	// this project. Required.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ReferenceName: Required. Only return variants in this reference
+	// sequence.
+	ReferenceName string `json:"referenceName,omitempty"`
+
+	// Start: The beginning of the window (0-based, inclusive) for which
+	// overlapping variants should be returned.
+	Start int64 `json:"start,omitempty,string"`
+
+	// VariantSetId: The variant set ID from which to stream variants.
+	VariantSetId string `json:"variantSetId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CallSetIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StreamVariantsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod StreamVariantsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type StreamVariantsResponse struct {
+	Variants []*Variant `json:"variants,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Variants") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StreamVariantsResponse) MarshalJSON() ([]byte, error) {
+	type noMethod StreamVariantsResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
 // method.
@@ -3363,12 +3508,12 @@ type DatasetsGetIamPolicyCall struct {
 	ctx_                context.Context
 }
 
-// GetIamPolicy: Gets the access control policy for the dataset. For the
-// definitions of datasets and other genomics resources, see
-// [Fundamentals of Google
+// GetIamPolicy: Gets the access control policy for the dataset. This is
+// empty if the policy or resource does not exist. See Getting a Policy
+// for more information. For the definitions of datasets and other
+// genomics resources, see [Fundamentals of Google
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
-// omics) Is empty if the policy or the resource does not exist. See
-// Getting a Policy for more information.
+// omics)
 func (r *DatasetsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *DatasetsGetIamPolicyCall {
 	c := &DatasetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3450,7 +3595,7 @@ func (c *DatasetsGetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for the dataset. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Is empty if the policy or the resource does not exist. See Getting a Policy for more information.",
+	//   "description": "Gets the access control policy for the dataset. This is empty if the policy or resource does not exist. See Getting a Policy for more information. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.getIamPolicy",
 	//   "parameterOrder": [
@@ -3499,8 +3644,8 @@ func (r *DatasetsService) List() *DatasetsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results returned by this request. If unspecified, defaults to 50.
-// The maximum value is 1024.
+// of results to return in a single page. If unspecified, defaults to
+// 50. The maximum value is 1024.
 func (c *DatasetsListCall) PageSize(pageSize int64) *DatasetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3606,7 +3751,7 @@ func (c *DatasetsListCall) Do() (*ListDatasetsResponse, error) {
 	//   "id": "genomics.datasets.list",
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of results returned by this request. If unspecified, defaults to 50. The maximum value is 1024.",
+	//       "description": "The maximum number of results to return in a single page. If unspecified, defaults to 50. The maximum value is 1024.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3910,10 +4055,11 @@ type DatasetsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. For the definitions of datasets and other
-// genomics resources, see [Fundamentals of Google
+// specified resource. See Testing Permissions for more information. For
+// the definitions of datasets and other genomics resources, see
+// [Fundamentals of Google
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
-// omics) See Testing Permissions for more information.
+// omics)
 func (r *DatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *DatasetsTestIamPermissionsCall {
 	c := &DatasetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3995,7 +4141,7 @@ func (c *DatasetsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) See Testing Permissions for more information.",
+	//   "description": "Returns permissions that a caller has on the specified resource. See Testing Permissions for more information. For the definitions of datasets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.datasets.testIamPermissions",
 	//   "parameterOrder": [
@@ -4906,7 +5052,7 @@ func (c *ReadgroupsetsExportCall) Do() (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "readGroupSetId": {
-	//       "description": "Required. The ID of the read group set to export.",
+	//       "description": "Required. The ID of the read group set to export. The caller must have READ access to this read group set.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -5197,9 +5343,9 @@ func (r *ReadgroupsetsService) Patch(readGroupSetId string, readgroupset *ReadGr
 }
 
 // UpdateMask sets the optional parameter "updateMask": An optional mask
-// specifying which fields to update. At this time, mutable fields are
-// referenceSetId and name. Acceptable values are "referenceSetId" and
-// "name". If unspecified, all mutable fields will be updated.
+// specifying which fields to update. Supported fields: * name. *
+// referenceSetId. Leaving `updateMask` unset is equivalent to
+// specifying all mutable fields.
 func (c *ReadgroupsetsPatchCall) UpdateMask(updateMask string) *ReadgroupsetsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5293,7 +5439,7 @@ func (c *ReadgroupsetsPatchCall) Do() (*ReadGroupSet, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "An optional mask specifying which fields to update. At this time, mutable fields are referenceSetId and name. Acceptable values are \"referenceSetId\" and \"name\". If unspecified, all mutable fields will be updated.",
+	//       "description": "An optional mask specifying which fields to update. Supported fields: * name. * referenceSetId. Leaving `updateMask` unset is equivalent to specifying all mutable fields.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5670,9 +5816,12 @@ type ReadsSearchCall struct {
 // alignment to the reference genome overlap the range. A query which
 // specifies only read group set IDs yields all reads in those read
 // group sets, including unmapped reads. All reads returned (including
-// reads on subsequent pages) are ordered by genomic coordinate
-// (reference sequence & position). Reads with equivalent genomic
-// coordinates are returned in a deterministic order. Implements
+// reads on subsequent pages) are ordered by genomic coordinate (by
+// reference sequence, then position). Reads with equivalent genomic
+// coordinates are returned in an unspecified order. This order is
+// consistent, such that two queries for the same content (regardless of
+// page size) yield reads in the same order across their respective
+// streams of paginated responses. Implements
 // [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/
 // v0.5.1/src/main/resources/avro/readmethods.avdl#L85).
 func (r *ReadsService) Search(searchreadsrequest *SearchReadsRequest) *ReadsSearchCall {
@@ -5753,7 +5902,7 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a list of reads for one or more read group sets. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (reference sequence \u0026 position). Reads with equivalent genomic coordinates are returned in a deterministic order. Implements [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L85).",
+	//   "description": "Gets a list of reads for one or more read group sets. For the definitions of read group sets and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Reads search operates over a genomic coordinate space of reference sequence \u0026 position defined over the reference sequences to which the requested read group sets are aligned. If a target positional range is specified, search returns all reads whose alignment to the reference genome overlap the range. A query which specifies only read group set IDs yields all reads in those read group sets, including unmapped reads. All reads returned (including reads on subsequent pages) are ordered by genomic coordinate (by reference sequence, then position). Reads with equivalent genomic coordinates are returned in an unspecified order. This order is consistent, such that two queries for the same content (regardless of page size) yield reads in the same order across their respective streams of paginated responses. Implements [GlobalAllianceApi.searchReads](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/readmethods.avdl#L85).",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.reads.search",
 	//   "path": "v1/reads/search",
@@ -5767,6 +5916,113 @@ func (c *ReadsSearchCall) Do() (*SearchReadsResponse, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.reads.stream":
+
+type ReadsStreamCall struct {
+	s                  *Service
+	streamreadsrequest *StreamReadsRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+}
+
+// Stream: Returns a stream of all the reads matching the search
+// request, ordered by reference name, position, and ID.
+func (r *ReadsService) Stream(streamreadsrequest *StreamReadsRequest) *ReadsStreamCall {
+	c := &ReadsStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.streamreadsrequest = streamreadsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReadsStreamCall) Fields(s ...googleapi.Field) *ReadsStreamCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReadsStreamCall) Context(ctx context.Context) *ReadsStreamCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ReadsStreamCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.streamreadsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/reads:stream")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.reads.stream" call.
+// Exactly one of *StreamReadsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *StreamReadsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ReadsStreamCall) Do() (*StreamReadsResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StreamReadsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a stream of all the reads matching the search request, ordered by reference name, position, and ID.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.reads.stream",
+	//   "path": "v1/reads:stream",
+	//   "request": {
+	//     "$ref": "StreamReadsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "StreamReadsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
 
@@ -6045,8 +6301,10 @@ func (c *ReferencesBasesListCall) End(end int64) *ReferencesBasesListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Specifies the
-// maximum number of bases to return in a single page.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of bases to return in a single page. If unspecified, defaults to
+// 200Kbp (kilo base pairs). The maximum value is 10Mbp (mega base
+// pairs).
 func (c *ReferencesBasesListCall) PageSize(pageSize int64) *ReferencesBasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6163,7 +6421,7 @@ func (c *ReferencesBasesListCall) Do() (*ListBasesResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Specifies the maximum number of bases to return in a single page.",
+	//       "description": "The maximum number of bases to return in a single page. If unspecified, defaults to 200Kbp (kilo base pairs). The maximum value is 10Mbp (mega base pairs).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6343,8 +6601,8 @@ type ReferencesetsSearchCall struct {
 // [Fundamentals of Google
 // Genomics](https://cloud.google.com/genomics/fundamentals-of-google-gen
 // omics) Implements
-// [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation
-// /api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).
+// [GlobalAllianceApi.searchReferenceSets](https://github.com/ga4gh/schem
+// as/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L71)
 func (r *ReferencesetsService) Search(searchreferencesetsrequest *SearchReferenceSetsRequest) *ReferencesetsSearchCall {
 	c := &ReferencesetsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchreferencesetsrequest = searchreferencesetsrequest
@@ -6423,7 +6681,7 @@ func (c *ReferencesetsSearchCall) Do() (*SearchReferenceSetsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for reference sets which match the given criteria. For the definitions of references and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.searchReferenceSets](http://ga4gh.org/documentation/api/v0.5.1/ga4gh_api.html#/schema/org.ga4gh.searchReferenceSets).",
+	//   "description": "Searches for reference sets which match the given criteria. For the definitions of references and other genomics resources, see [Fundamentals of Google Genomics](https://cloud.google.com/genomics/fundamentals-of-google-genomics) Implements [GlobalAllianceApi.searchReferenceSets](https://github.com/ga4gh/schemas/blob/v0.5.1/src/main/resources/avro/referencemethods.avdl#L71)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.referencesets.search",
 	//   "path": "v1/referencesets/search",
@@ -7160,6 +7418,113 @@ func (c *VariantsSearchCall) Do() (*SearchVariantsResponse, error) {
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/genomics",
 	//     "https://www.googleapis.com/auth/genomics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "genomics.variants.stream":
+
+type VariantsStreamCall struct {
+	s                     *Service
+	streamvariantsrequest *StreamVariantsRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+}
+
+// Stream: Returns a stream of all the variants matching the search
+// request, ordered by reference name, position, and ID.
+func (r *VariantsService) Stream(streamvariantsrequest *StreamVariantsRequest) *VariantsStreamCall {
+	c := &VariantsStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.streamvariantsrequest = streamvariantsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *VariantsStreamCall) Fields(s ...googleapi.Field) *VariantsStreamCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *VariantsStreamCall) Context(ctx context.Context) *VariantsStreamCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *VariantsStreamCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.streamvariantsrequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/variants:stream")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "genomics.variants.stream" call.
+// Exactly one of *StreamVariantsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *StreamVariantsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *VariantsStreamCall) Do() (*StreamVariantsResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StreamVariantsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a stream of all the variants matching the search request, ordered by reference name, position, and ID.",
+	//   "httpMethod": "POST",
+	//   "id": "genomics.variants.stream",
+	//   "path": "v1/variants:stream",
+	//   "request": {
+	//     "$ref": "StreamVariantsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "StreamVariantsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/genomics"
 	//   ]
 	// }
 

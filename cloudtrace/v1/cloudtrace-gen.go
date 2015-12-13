@@ -57,7 +57,6 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Projects = NewProjectsService(s)
-	s.V1 = NewV1Service(s)
 	return s, nil
 }
 
@@ -67,8 +66,6 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Projects *ProjectsService
-
-	V1 *V1Service
 }
 
 func (s *Service) userAgent() string {
@@ -99,15 +96,6 @@ type ProjectsTracesService struct {
 	s *Service
 }
 
-func NewV1Service(s *Service) *V1Service {
-	rs := &V1Service{s: s}
-	return rs
-}
-
-type V1Service struct {
-	s *Service
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -120,14 +108,14 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ListTracesResponse: The response message for the ListTraces method.
+// ListTracesResponse: The response message for the `ListTraces` method.
 type ListTracesResponse struct {
-	// NextPageToken: If defined, indicates that there are more topics that
-	// match the request, and this value should be passed to the next
-	// ListTopicsRequest to continue.
+	// NextPageToken: If defined, indicates that there are more traces that
+	// match the request and that this value should be passed to the next
+	// request to continue retrieving additional traces.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Traces: The list of trace records returned.
+	// Traces: List of trace records returned.
 	Traces []*Trace `json:"traces,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -149,19 +137,19 @@ func (s *ListTracesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Trace: A Trace is a collection of spans describing the execution
-// timings of a single operation.
+// Trace: A trace describes how long it takes for an application to
+// perform an operation. It consists of a set of spans, each of which
+// represent a single timed event within the operation.
 type Trace struct {
-	// ProjectId: The Project ID of the Google Cloud project.
+	// ProjectId: Project ID of the Cloud project where the trace data is
+	// stored.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// Spans: The collection of span records within this trace. Spans that
-	// appear in calls to PatchTraces may be incomplete or partial.
+	// Spans: Collection of spans in the trace.
 	Spans []*TraceSpan `json:"spans,omitempty"`
 
-	// TraceId: A 128-bit numeric value, formatted as a 32-byte hex string,
-	// that represents a trace. Each trace should have an identifier that is
-	// globally unique.
+	// TraceId: Globally unique identifier for the trace. This identifier is
+	// a 128-bit numeric value formatted as a 32-byte hex string.
 	TraceId string `json:"traceId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -183,15 +171,19 @@ func (s *Trace) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// TraceSpan: A span is the data recorded with a single span.
+// TraceSpan: A span represents a single timed event within a trace.
+// Spans can be nested and form a trace tree. Often, a trace contains a
+// root span that describes the end-to-end latency of an operation and,
+// optionally, one or more subspans for its suboperations. Spans do not
+// need to be contiguous. There may be gaps between spans in a trace.
 type TraceSpan struct {
-	// EndTime: The end time of the span in nanoseconds from the UNIX epoch.
+	// EndTime: End time of the span in nanoseconds from the UNIX epoch.
 	EndTime string `json:"endTime,omitempty"`
 
-	// Kind: SpanKind distinguishes spans generated in a particular context.
-	// For example, two spans with the same name, one with the kind
-	// RPC_CLIENT, and the other with RPC_SERVER can indicate the queueing
-	// latency associated with the span.
+	// Kind: Distinguishes between spans generated in a particular context.
+	// For example, two spans with the same name may be distinguished using
+	// `RPC_CLIENT` and `RPC_SERVER` to identify queueing latency associated
+	// with the span.
 	//
 	// Possible values:
 	//   "SPAN_KIND_UNSPECIFIED"
@@ -199,25 +191,25 @@ type TraceSpan struct {
 	//   "RPC_CLIENT"
 	Kind string `json:"kind,omitempty"`
 
-	// Labels: Annotations via labels.
+	// Labels: Collection of labels associated with the span.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The name of the trace. This is sanitized and displayed on the
-	// UI. This may be a method name or some other per-callsite name. For
-	// the same binary and the same call point, it is a good practice to
-	// choose a consistent name in order to correlate cross-trace spans.
+	// Name: Name of the trace. The trace name is sanitized and displayed in
+	// the Cloud Trace tool in the Google Developers Console. The name may
+	// be a method name or some other per-call site name. For the same
+	// executable and the same call point, a best practice is to use a
+	// consistent name, which makes it easier to correlate cross-trace
+	// spans.
 	Name string `json:"name,omitempty"`
 
-	// ParentSpanId: Identifies the parent of the current span. May be
-	// missing. Serialized bytes representation of SpanId.
+	// ParentSpanId: ID of the parent span, if any. Optional.
 	ParentSpanId uint64 `json:"parentSpanId,omitempty,string"`
 
-	// SpanId: Identifier of the span within the trace. Each span should
-	// have an identifier that is unique per trace.
+	// SpanId: Identifier for the span. This identifier must be unique
+	// within a trace.
 	SpanId uint64 `json:"spanId,omitempty,string"`
 
-	// StartTime: The start time of the span in nanoseconds from the UNIX
-	// epoch.
+	// StartTime: Start time of the span in nanoseconds from the UNIX epoch.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -235,9 +227,9 @@ func (s *TraceSpan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Traces: A list of traces for the PatchTraces method.
+// Traces: List of new or updated traces.
 type Traces struct {
-	// Traces: A list of traces.
+	// Traces: List of traces.
 	Traces []*Trace `json:"traces,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Traces") to
@@ -265,11 +257,12 @@ type ProjectsPatchTracesCall struct {
 	ctx_       context.Context
 }
 
-// PatchTraces: Updates the existing traces specified by
-// PatchTracesRequest and inserts the new traces. Any existing trace or
-// span fields included in an update are overwritten by the update, and
-// any additional fields in an update are merged with the existing trace
-// data.
+// PatchTraces: Sends new traces to Cloud Trace or updates existing
+// traces. If the ID of a trace that you send matches that of an
+// existing trace, any fields in the existing trace and its spans are
+// overwritten by the provided values, and any new fields provided are
+// merged with the existing trace data. If the ID does not match, a new
+// trace is created.
 func (r *ProjectsService) PatchTraces(projectId string, traces *Traces) *ProjectsPatchTracesCall {
 	c := &ProjectsPatchTracesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -351,7 +344,7 @@ func (c *ProjectsPatchTracesCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the existing traces specified by PatchTracesRequest and inserts the new traces. Any existing trace or span fields included in an update are overwritten by the update, and any additional fields in an update are merged with the existing trace data.",
+	//   "description": "Sends new traces to Cloud Trace or updates existing traces. If the ID of a trace that you send matches that of an existing trace, any fields in the existing trace and its spans are overwritten by the provided values, and any new fields provided are merged with the existing trace data. If the ID does not match, a new trace is created.",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtrace.projects.patchTraces",
 	//   "parameterOrder": [
@@ -359,7 +352,7 @@ func (c *ProjectsPatchTracesCall) Do() (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The project id of the trace to patch.",
+	//       "description": "ID of the Cloud project where the trace data is stored.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -390,7 +383,7 @@ type ProjectsTracesGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Gets one trace by id.
+// Get: Gets a single trace by its ID.
 func (r *ProjectsTracesService) Get(projectId string, traceId string) *ProjectsTracesGetCall {
 	c := &ProjectsTracesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -480,7 +473,7 @@ func (c *ProjectsTracesGetCall) Do() (*Trace, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets one trace by id.",
+	//   "description": "Gets a single trace by its ID.",
 	//   "httpMethod": "GET",
 	//   "id": "cloudtrace.projects.traces.get",
 	//   "parameterOrder": [
@@ -489,13 +482,13 @@ func (c *ProjectsTracesGetCall) Do() (*Trace, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The project id of the trace to return.",
+	//       "description": "ID of the Cloud project where the trace data is stored.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "traceId": {
-	//       "description": "The trace id of the trace to return.",
+	//       "description": "ID of the trace to return.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -522,7 +515,8 @@ type ProjectsTracesListCall struct {
 	ctx_         context.Context
 }
 
-// List: List traces matching the filter expression.
+// List: Returns of a list of traces that match the specified filter
+// conditions.
 func (r *ProjectsTracesService) List(projectId string) *ProjectsTracesListCall {
 	c := &ProjectsTracesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -530,7 +524,8 @@ func (r *ProjectsTracesService) List(projectId string) *ProjectsTracesListCall {
 }
 
 // EndTime sets the optional parameter "endTime": Start of the time
-// interval (exclusive).
+// interval (inclusive) during which the trace data was collected from
+// the application.
 func (c *ProjectsTracesListCall) EndTime(endTime string) *ProjectsTracesListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -543,45 +538,45 @@ func (c *ProjectsTracesListCall) Filter(filter string) *ProjectsTracesListCall {
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The trace field used
-// to establish the order of traces returned by the ListTraces method.
-// Possible options are: trace_id name (name field of root span)
-// duration (different between end_time and start_time fields of root
-// span) start (start_time field of root span) Descending order can be
-// specified by appending "desc" to the sort field: name desc Only one
-// sort field is permitted, though this may change in the future.
+// OrderBy sets the optional parameter "orderBy": Field used to sort the
+// returned traces.  Can be one of the following: * `trace_id` * `name`
+// (`name` field of root span in the trace) * `duration` (difference
+// between `end_time` and `start_time` fields of the root span) *
+// `start` (`start_time` field of the root span) Descending order can be
+// specified by appending `desc` to the sort field (for example, `name
+// desc`). Only one sort field is permitted.
 func (c *ProjectsTracesListCall) OrderBy(orderBy string) *ProjectsTracesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// topics to return. If not specified or <= 0, the implementation will
-// select a reasonable value. The implemenation may always return fewer
-// than the requested page_size.
+// traces to return. If not specified or <= 0, the implementation
+// selects a reasonable value. The implementation may return fewer
+// traces than the requested page size.
 func (c *ProjectsTracesListCall) PageSize(pageSize int64) *ProjectsTracesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token
-// identifying the page of results to return from the ListTraces method.
-// If present, this value is should be taken from the next_page_token
-// field of a previous ListTracesResponse.
+// PageToken sets the optional parameter "pageToken": Token identifying
+// the page of results to return. If provided, use the value of the
+// `next_page_token` field from a previous request.
 func (c *ProjectsTracesListCall) PageToken(pageToken string) *ProjectsTracesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // StartTime sets the optional parameter "startTime": End of the time
-// interval (inclusive).
+// interval (inclusive) during which the trace data was collected from
+// the application.
 func (c *ProjectsTracesListCall) StartTime(startTime string) *ProjectsTracesListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
-// View sets the optional parameter "view": ViewType specifies the
-// projection of the result.
+// View sets the optional parameter "view": Type of data returned for
+// traces in the list.  Default is `MINIMAL`.
 //
 // Possible values:
 //   "VIEW_TYPE_UNSPECIFIED"
@@ -674,7 +669,7 @@ func (c *ProjectsTracesListCall) Do() (*ListTracesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "List traces matching the filter expression.",
+	//   "description": "Returns of a list of traces that match the specified filter conditions.",
 	//   "httpMethod": "GET",
 	//   "id": "cloudtrace.projects.traces.list",
 	//   "parameterOrder": [
@@ -682,7 +677,7 @@ func (c *ProjectsTracesListCall) Do() (*ListTracesResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "endTime": {
-	//       "description": "Start of the time interval (exclusive).",
+	//       "description": "Start of the time interval (inclusive) during which the trace data was collected from the application.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -692,34 +687,34 @@ func (c *ProjectsTracesListCall) Do() (*ListTracesResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "The trace field used to establish the order of traces returned by the ListTraces method. Possible options are: trace_id name (name field of root span) duration (different between end_time and start_time fields of root span) start (start_time field of root span) Descending order can be specified by appending \"desc\" to the sort field: name desc Only one sort field is permitted, though this may change in the future.",
+	//       "description": "Field used to sort the returned traces. Optional. Can be one of the following: * `trace_id` * `name` (`name` field of root span in the trace) * `duration` (difference between `end_time` and `start_time` fields of the root span) * `start` (`start_time` field of the root span) Descending order can be specified by appending `desc` to the sort field (for example, `name desc`). Only one sort field is permitted.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of topics to return. If not specified or \u003c= 0, the implementation will select a reasonable value. The implemenation may always return fewer than the requested page_size.",
+	//       "description": "Maximum number of traces to return. If not specified or \u003c= 0, the implementation selects a reasonable value. The implementation may return fewer traces than the requested page size. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token identifying the page of results to return from the ListTraces method. If present, this value is should be taken from the next_page_token field of a previous ListTracesResponse.",
+	//       "description": "Token identifying the page of results to return. If provided, use the value of the `next_page_token` field from a previous request. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The stringified-version of the project id.",
+	//       "description": "ID of the Cloud project where the trace data is stored.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "End of the time interval (inclusive).",
+	//       "description": "End of the time interval (inclusive) during which the trace data was collected from the application.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "ViewType specifies the projection of the result.",
+	//       "description": "Type of data returned for traces in the list. Optional. Default is `MINIMAL`.",
 	//       "enum": [
 	//         "VIEW_TYPE_UNSPECIFIED",
 	//         "MINIMAL",
@@ -737,137 +732,6 @@ func (c *ProjectsTracesListCall) Do() (*ListTracesResponse, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
-	// }
-
-}
-
-// method id "cloudtrace.getDiscovery":
-
-type V1GetDiscoveryCall struct {
-	s            *Service
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-}
-
-// GetDiscovery: Returns a discovery document in the specified `format`.
-// The typeurl in the returned google.protobuf.Any value depends on the
-// requested format.
-func (r *V1Service) GetDiscovery() *V1GetDiscoveryCall {
-	c := &V1GetDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Args sets the optional parameter "args": Any additional arguments.
-func (c *V1GetDiscoveryCall) Args(args ...string) *V1GetDiscoveryCall {
-	c.urlParams_.SetMulti("args", append([]string{}, args...))
-	return c
-}
-
-// Format sets the optional parameter "format": The format requested for
-// discovery.
-func (c *V1GetDiscoveryCall) Format(format string) *V1GetDiscoveryCall {
-	c.urlParams_.Set("format", format)
-	return c
-}
-
-// Labels sets the optional parameter "labels": A list of labels (like
-// visibility) influencing the scope of the requested doc.
-func (c *V1GetDiscoveryCall) Labels(labels ...string) *V1GetDiscoveryCall {
-	c.urlParams_.SetMulti("labels", append([]string{}, labels...))
-	return c
-}
-
-// Version sets the optional parameter "version": The API version of the
-// requested discovery doc.
-func (c *V1GetDiscoveryCall) Version(version string) *V1GetDiscoveryCall {
-	c.urlParams_.Set("version", version)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *V1GetDiscoveryCall) Fields(s ...googleapi.Field) *V1GetDiscoveryCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *V1GetDiscoveryCall) IfNoneMatch(entityTag string) *V1GetDiscoveryCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *V1GetDiscoveryCall) Context(ctx context.Context) *V1GetDiscoveryCall {
-	c.ctx_ = ctx
-	return c
-}
-
-func (c *V1GetDiscoveryCall) doRequest(alt string) (*http.Response, error) {
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/discovery")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	googleapi.SetOpaque(req.URL)
-	req.Header.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		req.Header.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	if c.ctx_ != nil {
-		return ctxhttp.Do(c.ctx_, c.s.client, req)
-	}
-	return c.s.client.Do(req)
-}
-
-// Do executes the "cloudtrace.getDiscovery" call.
-func (c *V1GetDiscoveryCall) Do() error {
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Returns a discovery document in the specified `format`. The typeurl in the returned google.protobuf.Any value depends on the requested format.",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtrace.getDiscovery",
-	//   "parameters": {
-	//     "args": {
-	//       "description": "Any additional arguments.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "format": {
-	//       "description": "The format requested for discovery.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "labels": {
-	//       "description": "A list of labels (like visibility) influencing the scope of the requested doc.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "version": {
-	//       "description": "The API version of the requested discovery doc.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/discovery"
 	// }
 
 }

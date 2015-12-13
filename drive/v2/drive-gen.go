@@ -907,8 +907,7 @@ func (s *ChildReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// Comment: A JSON representation of a comment on a file in Google
-// Drive.
+// Comment: A comment on a file in Google Drive.
 type Comment struct {
 	// Anchor: A region of the document represented as a JSON string. See
 	// anchor documentation for details on how to define and interpret
@@ -1009,8 +1008,7 @@ func (s *CommentContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// CommentList: A JSON representation of a list of comments on a file in
-// Google Drive.
+// CommentList: A list of comments on a file in Google Drive.
 type CommentList struct {
 	// Items: List of comments.
 	Items []*Comment `json:"items,omitempty"`
@@ -1046,8 +1044,7 @@ func (s *CommentList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// CommentReply: A JSON representation of a reply to a comment on a file
-// in Google Drive.
+// CommentReply: A comment on a file in Google Drive.
 type CommentReply struct {
 	// Author: The user who wrote this reply.
 	Author *User `json:"author,omitempty"`
@@ -1104,8 +1101,8 @@ func (s *CommentReply) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// CommentReplyList: A JSON representation of a list of replies to a
-// comment on a file in Google Drive.
+// CommentReplyList: A list of replies to a comment on a file in Google
+// Drive.
 type CommentReplyList struct {
 	// Items: List of reply.
 	Items []*CommentReply `json:"items,omitempty"`
@@ -2093,7 +2090,7 @@ func (s *RevisionList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// User: The JSON template for a user.
+// User: Information about a Drive user.
 type User struct {
 	// DisplayName: A plain text displayable name for this user.
 	DisplayName string `json:"displayName,omitempty"`

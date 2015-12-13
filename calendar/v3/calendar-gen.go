@@ -685,8 +685,9 @@ func (s *Error) MarshalJSON() ([]byte, error) {
 }
 
 type Event struct {
-	// AnyoneCanAddSelf: Whether anyone can invite themselves to the event.
-	// Optional. The default is False.
+	// AnyoneCanAddSelf: Whether anyone can invite themselves to the event
+	// (currently works for Google+ events only). Optional. The default is
+	// False.
 	AnyoneCanAddSelf bool `json:"anyoneCanAddSelf,omitempty"`
 
 	// Attachments: File attachments for the event. Currently only Google

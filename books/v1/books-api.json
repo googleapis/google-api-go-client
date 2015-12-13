@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/dRgfGk7DF17Jm0ty3Xvqoes1c_4\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Sd6TkNfEPQyYlkSQMdb5D7dH98E\"",
  "discoveryVersion": "v1",
  "id": "books:v1",
  "name": "books",
  "version": "v1",
- "revision": "20151105",
+ "revision": "20151106",
  "title": "Books API",
  "description": "Lets you search for books and manage your Google Books library.",
  "ownerDomain": "google.com",
@@ -4346,6 +4346,13 @@
         "source": {
          "type": "string",
          "description": "String to identify the originator of this request.",
+         "location": "query"
+        },
+        "targetIds": {
+         "type": "string",
+         "description": "List of target ids used for experiments or user segments",
+         "format": "int64",
+         "repeated": true,
          "location": "query"
         }
        },

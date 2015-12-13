@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/tCYT3REWG_WbTQWvK-166jnCJhE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/73GJPN3P2kptICUph8Z5MgNGZxg\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20151110",
+ "revision": "20151202",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -482,6 +482,22 @@
     "secondary": {
      "type": "string",
      "description": "The secondary category."
+    }
+   }
+  },
+  "ApplicationVerifyResponse": {
+   "id": "ApplicationVerifyResponse",
+   "type": "object",
+   "description": "This is a JSON template for a third party application verification response resource.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Uniquely identifies the type of this resource. Value is always the fixed string games#applicationVerifyResponse.",
+     "default": "games#applicationVerifyResponse"
+    },
+    "player_id": {
+     "type": "string",
+     "description": "The ID of the player that was issued the auth token used in this request."
     }
    }
   },
@@ -3267,6 +3283,30 @@
      "path": "applications/played",
      "httpMethod": "POST",
      "description": "Indicate that the the currently authenticated user is playing your application.",
+     "scopes": [
+      "https://www.googleapis.com/auth/games",
+      "https://www.googleapis.com/auth/plus.login"
+     ]
+    },
+    "verify": {
+     "id": "games.applications.verify",
+     "path": "applications/{applicationId}/verify",
+     "httpMethod": "GET",
+     "description": "Verifies the auth token provided with this request is for the application with the specified ID, and returns the ID of the player it was granted for.",
+     "parameters": {
+      "applicationId": {
+       "type": "string",
+       "description": "The application ID from the Google Play developer console.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "applicationId"
+     ],
+     "response": {
+      "$ref": "ApplicationVerifyResponse"
+     },
      "scopes": [
       "https://www.googleapis.com/auth/games",
       "https://www.googleapis.com/auth/plus.login"

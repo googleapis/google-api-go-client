@@ -1581,6 +1581,23 @@ func (r *AclService) Delete(calendarId string, ruleId string) *AclDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AclDeleteCall) QuotaUser(quotaUser string) *AclDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AclDeleteCall) UserIP(userIP string) *AclDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1671,6 +1688,23 @@ func (r *AclService) Get(calendarId string, ruleId string) *AclGetCall {
 	c := &AclGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
 	c.ruleId = ruleId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AclGetCall) QuotaUser(quotaUser string) *AclGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AclGetCall) UserIP(userIP string) *AclGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1804,6 +1838,23 @@ func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall 
 	c := &AclInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
 	c.aclrule = aclrule
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AclInsertCall) QuotaUser(quotaUser string) *AclInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AclInsertCall) UserIP(userIP string) *AclInsertCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1941,6 +1992,15 @@ func (c *AclListCall) PageToken(pageToken string) *AclListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AclListCall) QuotaUser(quotaUser string) *AclListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
 // include deleted ACLs in the result. Deleted ACLs are represented by
 // role equal to "none". Deleted ACLs will always be included if
@@ -1963,6 +2023,14 @@ func (c *AclListCall) ShowDeleted(showDeleted bool) *AclListCall {
 //  The default is to return all entries.
 func (c *AclListCall) SyncToken(syncToken string) *AclListCall {
 	c.urlParams_.Set("syncToken", syncToken)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AclListCall) UserIP(userIP string) *AclListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2116,6 +2184,23 @@ func (r *AclService) Patch(calendarId string, ruleId string, aclrule *AclRule) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AclPatchCall) QuotaUser(quotaUser string) *AclPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AclPatchCall) UserIP(userIP string) *AclPatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2243,6 +2328,23 @@ func (r *AclService) Update(calendarId string, ruleId string, aclrule *AclRule) 
 	c.calendarId = calendarId
 	c.ruleId = ruleId
 	c.aclrule = aclrule
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AclUpdateCall) QuotaUser(quotaUser string) *AclUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AclUpdateCall) UserIP(userIP string) *AclUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2389,6 +2491,15 @@ func (c *AclWatchCall) PageToken(pageToken string) *AclWatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AclWatchCall) QuotaUser(quotaUser string) *AclWatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
 // include deleted ACLs in the result. Deleted ACLs are represented by
 // role equal to "none". Deleted ACLs will always be included if
@@ -2411,6 +2522,14 @@ func (c *AclWatchCall) ShowDeleted(showDeleted bool) *AclWatchCall {
 //  The default is to return all entries.
 func (c *AclWatchCall) SyncToken(syncToken string) *AclWatchCall {
 	c.urlParams_.Set("syncToken", syncToken)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AclWatchCall) UserIP(userIP string) *AclWatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2556,6 +2675,23 @@ func (r *CalendarListService) Delete(calendarId string) *CalendarListDeleteCall 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarListDeleteCall) QuotaUser(quotaUser string) *CalendarListDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarListDeleteCall) UserIP(userIP string) *CalendarListDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2636,6 +2772,23 @@ type CalendarListGetCall struct {
 func (r *CalendarListService) Get(calendarId string) *CalendarListGetCall {
 	c := &CalendarListGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarListGetCall) QuotaUser(quotaUser string) *CalendarListGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarListGetCall) UserIP(userIP string) *CalendarListGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2769,6 +2922,23 @@ func (r *CalendarListService) Insert(calendarlistentry *CalendarListEntry) *Cale
 // The default is False.
 func (c *CalendarListInsertCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListInsertCall {
 	c.urlParams_.Set("colorRgbFormat", fmt.Sprint(colorRgbFormat))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarListInsertCall) QuotaUser(quotaUser string) *CalendarListInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarListInsertCall) UserIP(userIP string) *CalendarListInsertCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2913,6 +3083,15 @@ func (c *CalendarListListCall) PageToken(pageToken string) *CalendarListListCall
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarListListCall) QuotaUser(quotaUser string) *CalendarListListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
 // include deleted calendar list entries in the result.  The default is
 // False.
@@ -2945,6 +3124,14 @@ func (c *CalendarListListCall) ShowHidden(showHidden bool) *CalendarListListCall
 //  The default is to return all entries.
 func (c *CalendarListListCall) SyncToken(syncToken string) *CalendarListListCall {
 	c.urlParams_.Set("syncToken", syncToken)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarListListCall) UserIP(userIP string) *CalendarListListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3118,6 +3305,23 @@ func (c *CalendarListPatchCall) ColorRgbFormat(colorRgbFormat bool) *CalendarLis
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarListPatchCall) QuotaUser(quotaUser string) *CalendarListPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarListPatchCall) UserIP(userIP string) *CalendarListPatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3250,6 +3454,23 @@ func (r *CalendarListService) Update(calendarId string, calendarlistentry *Calen
 // The default is False.
 func (c *CalendarListUpdateCall) ColorRgbFormat(colorRgbFormat bool) *CalendarListUpdateCall {
 	c.urlParams_.Set("colorRgbFormat", fmt.Sprint(colorRgbFormat))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarListUpdateCall) QuotaUser(quotaUser string) *CalendarListUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarListUpdateCall) UserIP(userIP string) *CalendarListUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3406,6 +3627,15 @@ func (c *CalendarListWatchCall) PageToken(pageToken string) *CalendarListWatchCa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarListWatchCall) QuotaUser(quotaUser string) *CalendarListWatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
 // include deleted calendar list entries in the result.  The default is
 // False.
@@ -3438,6 +3668,14 @@ func (c *CalendarListWatchCall) ShowHidden(showHidden bool) *CalendarListWatchCa
 //  The default is to return all entries.
 func (c *CalendarListWatchCall) SyncToken(syncToken string) *CalendarListWatchCall {
 	c.urlParams_.Set("syncToken", syncToken)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarListWatchCall) UserIP(userIP string) *CalendarListWatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3596,6 +3834,23 @@ func (r *CalendarsService) Clear(calendarId string) *CalendarsClearCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarsClearCall) QuotaUser(quotaUser string) *CalendarsClearCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarsClearCall) UserIP(userIP string) *CalendarsClearCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3679,6 +3934,23 @@ func (r *CalendarsService) Delete(calendarId string) *CalendarsDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarsDeleteCall) QuotaUser(quotaUser string) *CalendarsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarsDeleteCall) UserIP(userIP string) *CalendarsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3759,6 +4031,23 @@ type CalendarsGetCall struct {
 func (r *CalendarsService) Get(calendarId string) *CalendarsGetCall {
 	c := &CalendarsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarsGetCall) QuotaUser(quotaUser string) *CalendarsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarsGetCall) UserIP(userIP string) *CalendarsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3885,6 +4174,23 @@ func (r *CalendarsService) Insert(calendar *Calendar) *CalendarsInsertCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarsInsertCall) QuotaUser(quotaUser string) *CalendarsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarsInsertCall) UserIP(userIP string) *CalendarsInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3990,6 +4296,23 @@ func (r *CalendarsService) Patch(calendarId string, calendar *Calendar) *Calenda
 	c := &CalendarsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
 	c.calendar = calendar
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarsPatchCall) QuotaUser(quotaUser string) *CalendarsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarsPatchCall) UserIP(userIP string) *CalendarsPatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4113,6 +4436,23 @@ func (r *CalendarsService) Update(calendarId string, calendar *Calendar) *Calend
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CalendarsUpdateCall) QuotaUser(quotaUser string) *CalendarsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CalendarsUpdateCall) UserIP(userIP string) *CalendarsUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4231,6 +4571,23 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelsStopCall) QuotaUser(quotaUser string) *ChannelsStopCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelsStopCall) UserIP(userIP string) *ChannelsStopCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4307,6 +4664,23 @@ type ColorsGetCall struct {
 // Get: Returns the color definitions for calendars and events.
 func (r *ColorsService) Get() *ColorsGetCall {
 	c := &ColorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ColorsGetCall) QuotaUser(quotaUser string) *ColorsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ColorsGetCall) UserIP(userIP string) *ColorsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4422,11 +4796,28 @@ func (r *EventsService) Delete(calendarId string, eventId string) *EventsDeleteC
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsDeleteCall) QuotaUser(quotaUser string) *EventsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the deletion of the event.  The
 // default is False.
 func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDeleteCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsDeleteCall) UserIP(userIP string) *EventsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4549,10 +4940,27 @@ func (c *EventsGetCall) MaxAttendees(maxAttendees int64) *EventsGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsGetCall) QuotaUser(quotaUser string) *EventsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // TimeZone sets the optional parameter "timeZone": Time zone used in
 // the response.  The default is the time zone of the calendar.
 func (c *EventsGetCall) TimeZone(timeZone string) *EventsGetCall {
 	c.urlParams_.Set("timeZone", timeZone)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsGetCall) UserIP(userIP string) *EventsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4707,11 +5115,28 @@ func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCal
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsImportCall) QuotaUser(quotaUser string) *EventsImportCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SupportsAttachments sets the optional parameter
 // "supportsAttachments": Whether API client performing operation
 // supports event attachments.  The default is False.
 func (c *EventsImportCall) SupportsAttachments(supportsAttachments bool) *EventsImportCall {
 	c.urlParams_.Set("supportsAttachments", fmt.Sprint(supportsAttachments))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsImportCall) UserIP(userIP string) *EventsImportCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4849,6 +5274,15 @@ func (c *EventsInsertCall) MaxAttendees(maxAttendees int64) *EventsInsertCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsInsertCall) QuotaUser(quotaUser string) *EventsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the creation of the new event.
 // The default is False.
@@ -4862,6 +5296,14 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 // supports event attachments.  The default is False.
 func (c *EventsInsertCall) SupportsAttachments(supportsAttachments bool) *EventsInsertCall {
 	c.urlParams_.Set("supportsAttachments", fmt.Sprint(supportsAttachments))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsInsertCall) UserIP(userIP string) *EventsInsertCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5046,6 +5488,15 @@ func (c *EventsInstancesCall) PageToken(pageToken string) *EventsInstancesCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsInstancesCall) QuotaUser(quotaUser string) *EventsInstancesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowDeleted sets the optional parameter "showDeleted": Whether to
 // include deleted events (with status equals "cancelled") in the
 // result. Cancelled instances of recurring events will still be
@@ -5077,6 +5528,14 @@ func (c *EventsInstancesCall) TimeMin(timeMin string) *EventsInstancesCall {
 // the response.  The default is the time zone of the calendar.
 func (c *EventsInstancesCall) TimeZone(timeZone string) *EventsInstancesCall {
 	c.urlParams_.Set("timeZone", timeZone)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsInstancesCall) UserIP(userIP string) *EventsInstancesCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5339,6 +5798,15 @@ func (c *EventsListCall) Q(q string) *EventsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsListCall) QuotaUser(quotaUser string) *EventsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SharedExtendedProperty sets the optional parameter
 // "sharedExtendedProperty": Extended properties constraint specified as
 // propertyName=value. Matches only shared properties. This parameter
@@ -5441,6 +5909,14 @@ func (c *EventsListCall) TimeZone(timeZone string) *EventsListCall {
 // last modification time.
 func (c *EventsListCall) UpdatedMin(updatedMin string) *EventsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsListCall) UserIP(userIP string) *EventsListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5674,11 +6150,28 @@ func (r *EventsService) Move(calendarId string, eventId string, destinationid st
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsMoveCall) QuotaUser(quotaUser string) *EventsMoveCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the change of the event's
 // organizer.  The default is False.
 func (c *EventsMoveCall) SendNotifications(sendNotifications bool) *EventsMoveCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsMoveCall) UserIP(userIP string) *EventsMoveCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5836,6 +6329,15 @@ func (c *EventsPatchCall) MaxAttendees(maxAttendees int64) *EventsPatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsPatchCall) QuotaUser(quotaUser string) *EventsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the event update (e.g. attendee's
 // responses, title changes, etc.).  The default is False.
@@ -5849,6 +6351,14 @@ func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatch
 // supports event attachments.  The default is False.
 func (c *EventsPatchCall) SupportsAttachments(supportsAttachments bool) *EventsPatchCall {
 	c.urlParams_.Set("supportsAttachments", fmt.Sprint(supportsAttachments))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsPatchCall) UserIP(userIP string) *EventsPatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6001,11 +6511,28 @@ func (r *EventsService) QuickAdd(calendarId string, text string) *EventsQuickAdd
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsQuickAddCall) QuotaUser(quotaUser string) *EventsQuickAddCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the creation of the event.  The
 // default is False.
 func (c *EventsQuickAddCall) SendNotifications(sendNotifications bool) *EventsQuickAddCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsQuickAddCall) UserIP(userIP string) *EventsQuickAddCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6155,6 +6682,15 @@ func (c *EventsUpdateCall) MaxAttendees(maxAttendees int64) *EventsUpdateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsUpdateCall) QuotaUser(quotaUser string) *EventsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SendNotifications sets the optional parameter "sendNotifications":
 // Whether to send notifications about the event update (e.g. attendee's
 // responses, title changes, etc.).  The default is False.
@@ -6168,6 +6704,14 @@ func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpda
 // supports event attachments.  The default is False.
 func (c *EventsUpdateCall) SupportsAttachments(supportsAttachments bool) *EventsUpdateCall {
 	c.urlParams_.Set("supportsAttachments", fmt.Sprint(supportsAttachments))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsUpdateCall) UserIP(userIP string) *EventsUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6396,6 +6940,15 @@ func (c *EventsWatchCall) Q(q string) *EventsWatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsWatchCall) QuotaUser(quotaUser string) *EventsWatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SharedExtendedProperty sets the optional parameter
 // "sharedExtendedProperty": Extended properties constraint specified as
 // propertyName=value. Matches only shared properties. This parameter
@@ -6498,6 +7051,14 @@ func (c *EventsWatchCall) TimeZone(timeZone string) *EventsWatchCall {
 // last modification time.
 func (c *EventsWatchCall) UpdatedMin(updatedMin string) *EventsWatchCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsWatchCall) UserIP(userIP string) *EventsWatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6724,6 +7285,23 @@ func (r *FreebusyService) Query(freebusyrequest *FreeBusyRequest) *FreebusyQuery
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *FreebusyQueryCall) QuotaUser(quotaUser string) *FreebusyQueryCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *FreebusyQueryCall) UserIP(userIP string) *FreebusyQueryCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6828,6 +7406,23 @@ type SettingsGetCall struct {
 func (r *SettingsService) Get(setting string) *SettingsGetCall {
 	c := &SettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.setting = setting
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SettingsGetCall) QuotaUser(quotaUser string) *SettingsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SettingsGetCall) UserIP(userIP string) *SettingsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6968,6 +7563,15 @@ func (c *SettingsListCall) PageToken(pageToken string) *SettingsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SettingsListCall) QuotaUser(quotaUser string) *SettingsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SyncToken sets the optional parameter "syncToken": Token obtained
 // from the nextSyncToken field returned on the last page of results
 // from the previous list request. It makes the result of this list
@@ -6979,6 +7583,14 @@ func (c *SettingsListCall) PageToken(pageToken string) *SettingsListCall {
 //  The default is to return all entries.
 func (c *SettingsListCall) SyncToken(syncToken string) *SettingsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SettingsListCall) UserIP(userIP string) *SettingsListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -7127,6 +7739,15 @@ func (c *SettingsWatchCall) PageToken(pageToken string) *SettingsWatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SettingsWatchCall) QuotaUser(quotaUser string) *SettingsWatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SyncToken sets the optional parameter "syncToken": Token obtained
 // from the nextSyncToken field returned on the last page of results
 // from the previous list request. It makes the result of this list
@@ -7138,6 +7759,14 @@ func (c *SettingsWatchCall) PageToken(pageToken string) *SettingsWatchCall {
 //  The default is to return all entries.
 func (c *SettingsWatchCall) SyncToken(syncToken string) *SettingsWatchCall {
 	c.urlParams_.Set("syncToken", syncToken)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SettingsWatchCall) UserIP(userIP string) *SettingsWatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

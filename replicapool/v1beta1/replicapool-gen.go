@@ -898,6 +898,23 @@ func (r *PoolsService) Delete(projectName string, zone string, poolName string, 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PoolsDeleteCall) QuotaUser(quotaUser string) *PoolsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PoolsDeleteCall) UserIP(userIP string) *PoolsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1009,6 +1026,23 @@ func (r *PoolsService) Get(projectName string, zone string, poolName string) *Po
 	c.projectName = projectName
 	c.zone = zone
 	c.poolName = poolName
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PoolsGetCall) QuotaUser(quotaUser string) *PoolsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PoolsGetCall) UserIP(userIP string) *PoolsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1159,6 +1193,23 @@ func (r *PoolsService) Insert(projectName string, zone string, pool *Pool) *Pool
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PoolsInsertCall) QuotaUser(quotaUser string) *PoolsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PoolsInsertCall) UserIP(userIP string) *PoolsInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1303,6 +1354,23 @@ func (c *PoolsListCall) MaxResults(maxResults int64) *PoolsListCall {
 // next page of results from the previous list request.
 func (c *PoolsListCall) PageToken(pageToken string) *PoolsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PoolsListCall) QuotaUser(quotaUser string) *PoolsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PoolsListCall) UserIP(userIP string) *PoolsListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1470,6 +1538,23 @@ func (c *PoolsResizeCall) NumReplicas(numReplicas int64) *PoolsResizeCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PoolsResizeCall) QuotaUser(quotaUser string) *PoolsResizeCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PoolsResizeCall) UserIP(userIP string) *PoolsResizeCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1609,6 +1694,23 @@ func (r *PoolsService) Updatetemplate(projectName string, zone string, poolName 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PoolsUpdatetemplateCall) QuotaUser(quotaUser string) *PoolsUpdatetemplateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PoolsUpdatetemplateCall) UserIP(userIP string) *PoolsUpdatetemplateCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1723,6 +1825,23 @@ func (r *ReplicasService) Delete(projectName string, zone string, poolName strin
 	c.poolName = poolName
 	c.replicaName = replicaName
 	c.replicasdeleterequest = replicasdeleterequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ReplicasDeleteCall) QuotaUser(quotaUser string) *ReplicasDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ReplicasDeleteCall) UserIP(userIP string) *ReplicasDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1874,6 +1993,23 @@ func (r *ReplicasService) Get(projectName string, zone string, poolName string, 
 	c.zone = zone
 	c.poolName = poolName
 	c.replicaName = replicaName
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ReplicasGetCall) QuotaUser(quotaUser string) *ReplicasGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ReplicasGetCall) UserIP(userIP string) *ReplicasGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2049,6 +2185,23 @@ func (c *ReplicasListCall) PageToken(pageToken string) *ReplicasListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ReplicasListCall) QuotaUser(quotaUser string) *ReplicasListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ReplicasListCall) UserIP(userIP string) *ReplicasListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2209,6 +2362,23 @@ func (r *ReplicasService) Restart(projectName string, zone string, poolName stri
 	c.zone = zone
 	c.poolName = poolName
 	c.replicaName = replicaName
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ReplicasRestartCall) QuotaUser(quotaUser string) *ReplicasRestartCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ReplicasRestartCall) UserIP(userIP string) *ReplicasRestartCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

@@ -1534,6 +1534,14 @@ func (c *AppsGetCall) EnsureResourcesExist(ensureResourcesExist bool) *AppsGetCa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsGetCall) QuotaUser(quotaUser string) *AppsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1663,6 +1671,14 @@ func (r *AppsModulesService) Delete(appsId string, modulesId string) *AppsModule
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsModulesDeleteCall) QuotaUser(quotaUser string) *AppsModulesDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1780,6 +1796,14 @@ func (r *AppsModulesService) Get(appsId string, modulesId string) *AppsModulesGe
 	c := &AppsModulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
 	c.modulesId = modulesId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsModulesGetCall) QuotaUser(quotaUser string) *AppsModulesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1925,6 +1949,14 @@ func (c *AppsModulesListCall) PageSize(pageSize int64) *AppsModulesListCall {
 // for fetching the next page of results.
 func (c *AppsModulesListCall) PageToken(pageToken string) *AppsModulesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsModulesListCall) QuotaUser(quotaUser string) *AppsModulesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2080,6 +2112,14 @@ func (c *AppsModulesPatchCall) MigrateTraffic(migrateTraffic bool) *AppsModulesP
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsModulesPatchCall) QuotaUser(quotaUser string) *AppsModulesPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2220,6 +2260,14 @@ func (r *AppsModulesVersionsService) Create(appsId string, modulesId string, ver
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsModulesVersionsCreateCall) QuotaUser(quotaUser string) *AppsModulesVersionsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2350,6 +2398,14 @@ func (r *AppsModulesVersionsService) Delete(appsId string, modulesId string, ver
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsModulesVersionsDeleteCall) QuotaUser(quotaUser string) *AppsModulesVersionsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2477,6 +2533,14 @@ func (r *AppsModulesVersionsService) Get(appsId string, modulesId string, versio
 	c.appsId = appsId
 	c.modulesId = modulesId
 	c.versionsId = versionsId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsModulesVersionsGetCall) QuotaUser(quotaUser string) *AppsModulesVersionsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2655,6 +2719,14 @@ func (c *AppsModulesVersionsListCall) PageToken(pageToken string) *AppsModulesVe
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsModulesVersionsListCall) QuotaUser(quotaUser string) *AppsModulesVersionsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // View sets the optional parameter "view": Controls the set of fields
 // returned in the `List` response.
 //
@@ -2821,6 +2893,14 @@ func (r *AppsOperationsService) Get(appsId string, operationsId string) *AppsOpe
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsOperationsGetCall) QuotaUser(quotaUser string) *AppsOperationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2974,6 +3054,14 @@ func (c *AppsOperationsListCall) PageSize(pageSize int64) *AppsOperationsListCal
 // page token.
 func (c *AppsOperationsListCall) PageToken(pageToken string) *AppsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AppsOperationsListCall) QuotaUser(quotaUser string) *AppsOperationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

@@ -1125,6 +1125,23 @@ func (r *RelyingpartyService) CreateAuthUri(identitytoolkitrelyingpartycreateaut
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyCreateAuthUriCall) QuotaUser(quotaUser string) *RelyingpartyCreateAuthUriCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyCreateAuthUriCall) UserIP(userIP string) *RelyingpartyCreateAuthUriCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1224,6 +1241,23 @@ type RelyingpartyDeleteAccountCall struct {
 func (r *RelyingpartyService) DeleteAccount(identitytoolkitrelyingpartydeleteaccountrequest *IdentitytoolkitRelyingpartyDeleteAccountRequest) *RelyingpartyDeleteAccountCall {
 	c := &RelyingpartyDeleteAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.identitytoolkitrelyingpartydeleteaccountrequest = identitytoolkitrelyingpartydeleteaccountrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyDeleteAccountCall) QuotaUser(quotaUser string) *RelyingpartyDeleteAccountCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyDeleteAccountCall) UserIP(userIP string) *RelyingpartyDeleteAccountCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1329,6 +1363,23 @@ func (r *RelyingpartyService) DownloadAccount(identitytoolkitrelyingpartydownloa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyDownloadAccountCall) QuotaUser(quotaUser string) *RelyingpartyDownloadAccountCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyDownloadAccountCall) UserIP(userIP string) *RelyingpartyDownloadAccountCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1428,6 +1479,23 @@ type RelyingpartyGetAccountInfoCall struct {
 func (r *RelyingpartyService) GetAccountInfo(identitytoolkitrelyingpartygetaccountinforequest *IdentitytoolkitRelyingpartyGetAccountInfoRequest) *RelyingpartyGetAccountInfoCall {
 	c := &RelyingpartyGetAccountInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.identitytoolkitrelyingpartygetaccountinforequest = identitytoolkitrelyingpartygetaccountinforequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyGetAccountInfoCall) QuotaUser(quotaUser string) *RelyingpartyGetAccountInfoCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyGetAccountInfoCall) UserIP(userIP string) *RelyingpartyGetAccountInfoCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1533,6 +1601,23 @@ func (r *RelyingpartyService) GetOobConfirmationCode(relyingparty *Relyingparty)
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyGetOobConfirmationCodeCall) QuotaUser(quotaUser string) *RelyingpartyGetOobConfirmationCodeCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyGetOobConfirmationCodeCall) UserIP(userIP string) *RelyingpartyGetOobConfirmationCodeCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1631,6 +1716,23 @@ type RelyingpartyGetProjectConfigCall struct {
 // GetProjectConfig: Get project configuration.
 func (r *RelyingpartyService) GetProjectConfig() *RelyingpartyGetProjectConfigCall {
 	c := &RelyingpartyGetProjectConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyGetProjectConfigCall) QuotaUser(quotaUser string) *RelyingpartyGetProjectConfigCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyGetProjectConfigCall) UserIP(userIP string) *RelyingpartyGetProjectConfigCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1741,6 +1843,23 @@ func (r *RelyingpartyService) GetPublicKeys() *RelyingpartyGetPublicKeysCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyGetPublicKeysCall) QuotaUser(quotaUser string) *RelyingpartyGetPublicKeysCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyGetPublicKeysCall) UserIP(userIP string) *RelyingpartyGetPublicKeysCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1823,6 +1942,23 @@ type RelyingpartyGetRecaptchaParamCall struct {
 // GetRecaptchaParam: Get recaptcha secure param.
 func (r *RelyingpartyService) GetRecaptchaParam() *RelyingpartyGetRecaptchaParamCall {
 	c := &RelyingpartyGetRecaptchaParamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyGetRecaptchaParamCall) QuotaUser(quotaUser string) *RelyingpartyGetRecaptchaParamCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyGetRecaptchaParamCall) UserIP(userIP string) *RelyingpartyGetRecaptchaParamCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1932,6 +2068,23 @@ func (r *RelyingpartyService) ResetPassword(identitytoolkitrelyingpartyresetpass
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyResetPasswordCall) QuotaUser(quotaUser string) *RelyingpartyResetPasswordCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyResetPasswordCall) UserIP(userIP string) *RelyingpartyResetPasswordCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2031,6 +2184,23 @@ type RelyingpartySetAccountInfoCall struct {
 func (r *RelyingpartyService) SetAccountInfo(identitytoolkitrelyingpartysetaccountinforequest *IdentitytoolkitRelyingpartySetAccountInfoRequest) *RelyingpartySetAccountInfoCall {
 	c := &RelyingpartySetAccountInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.identitytoolkitrelyingpartysetaccountinforequest = identitytoolkitrelyingpartysetaccountinforequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartySetAccountInfoCall) QuotaUser(quotaUser string) *RelyingpartySetAccountInfoCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartySetAccountInfoCall) UserIP(userIP string) *RelyingpartySetAccountInfoCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2136,6 +2306,23 @@ func (r *RelyingpartyService) UploadAccount(identitytoolkitrelyingpartyuploadacc
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyUploadAccountCall) QuotaUser(quotaUser string) *RelyingpartyUploadAccountCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyUploadAccountCall) UserIP(userIP string) *RelyingpartyUploadAccountCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2238,6 +2425,23 @@ func (r *RelyingpartyService) VerifyAssertion(identitytoolkitrelyingpartyverifya
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyVerifyAssertionCall) QuotaUser(quotaUser string) *RelyingpartyVerifyAssertionCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyVerifyAssertionCall) UserIP(userIP string) *RelyingpartyVerifyAssertionCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2337,6 +2541,23 @@ type RelyingpartyVerifyPasswordCall struct {
 func (r *RelyingpartyService) VerifyPassword(identitytoolkitrelyingpartyverifypasswordrequest *IdentitytoolkitRelyingpartyVerifyPasswordRequest) *RelyingpartyVerifyPasswordCall {
 	c := &RelyingpartyVerifyPasswordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.identitytoolkitrelyingpartyverifypasswordrequest = identitytoolkitrelyingpartyverifypasswordrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RelyingpartyVerifyPasswordCall) QuotaUser(quotaUser string) *RelyingpartyVerifyPasswordCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RelyingpartyVerifyPasswordCall) UserIP(userIP string) *RelyingpartyVerifyPasswordCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

@@ -1123,6 +1123,23 @@ func (r *DatasetsService) AllocateIds(datasetId string, allocateidsrequest *Allo
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DatasetsAllocateIdsCall) QuotaUser(quotaUser string) *DatasetsAllocateIdsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DatasetsAllocateIdsCall) UserIP(userIP string) *DatasetsAllocateIdsCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1242,6 +1259,23 @@ func (r *DatasetsService) BeginTransaction(datasetId string, begintransactionreq
 	c := &DatasetsBeginTransactionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
 	c.begintransactionrequest = begintransactionrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DatasetsBeginTransactionCall) QuotaUser(quotaUser string) *DatasetsBeginTransactionCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DatasetsBeginTransactionCall) UserIP(userIP string) *DatasetsBeginTransactionCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1368,6 +1402,23 @@ func (r *DatasetsService) BlindWrite(datasetId string, blindwriterequest *BlindW
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DatasetsBlindWriteCall) QuotaUser(quotaUser string) *DatasetsBlindWriteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DatasetsBlindWriteCall) UserIP(userIP string) *DatasetsBlindWriteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1488,6 +1539,23 @@ func (r *DatasetsService) Commit(datasetId string, commitrequest *CommitRequest)
 	c := &DatasetsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
 	c.commitrequest = commitrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DatasetsCommitCall) QuotaUser(quotaUser string) *DatasetsCommitCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DatasetsCommitCall) UserIP(userIP string) *DatasetsCommitCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1613,6 +1681,23 @@ func (r *DatasetsService) Lookup(datasetId string, lookuprequest *LookupRequest)
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DatasetsLookupCall) QuotaUser(quotaUser string) *DatasetsLookupCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DatasetsLookupCall) UserIP(userIP string) *DatasetsLookupCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1735,6 +1820,23 @@ func (r *DatasetsService) Rollback(datasetId string, rollbackrequest *RollbackRe
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DatasetsRollbackCall) QuotaUser(quotaUser string) *DatasetsRollbackCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DatasetsRollbackCall) UserIP(userIP string) *DatasetsRollbackCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1854,6 +1956,23 @@ func (r *DatasetsService) RunQuery(datasetId string, runqueryrequest *RunQueryRe
 	c := &DatasetsRunQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
 	c.runqueryrequest = runqueryrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DatasetsRunQueryCall) QuotaUser(quotaUser string) *DatasetsRunQueryCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DatasetsRunQueryCall) UserIP(userIP string) *DatasetsRunQueryCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

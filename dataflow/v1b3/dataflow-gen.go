@@ -2976,6 +2976,14 @@ func (r *ProjectsService) WorkerMessages(projectId string, sendworkermessagesreq
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsWorkerMessagesCall) QuotaUser(quotaUser string) *ProjectsWorkerMessagesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3094,6 +3102,14 @@ func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCr
 	c := &ProjectsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.job = job
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsJobsCreateCall) QuotaUser(quotaUser string) *ProjectsJobsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3253,6 +3269,14 @@ func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsG
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsJobsGetCall) QuotaUser(quotaUser string) *ProjectsJobsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // View sets the optional parameter "view": Level of information
 // requested in response.
 //
@@ -3406,6 +3430,14 @@ func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *Projec
 	c := &ProjectsJobsGetMetricsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsJobsGetMetricsCall) QuotaUser(quotaUser string) *ProjectsJobsGetMetricsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3571,6 +3603,14 @@ func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsJobsListCall) QuotaUser(quotaUser string) *ProjectsJobsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // View sets the optional parameter "view": Level of information
 // requested in response. Default is SUMMARY.
 //
@@ -3728,6 +3768,14 @@ func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *
 	c.projectId = projectId
 	c.jobId = jobId
 	c.job = job
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsJobsUpdateCall) QuotaUser(quotaUser string) *ProjectsJobsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3898,6 +3946,14 @@ func (c *ProjectsJobsMessagesListCall) PageSize(pageSize int64) *ProjectsJobsMes
 // This will cause the next page of results to be returned.
 func (c *ProjectsJobsMessagesListCall) PageToken(pageToken string) *ProjectsJobsMessagesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsJobsMessagesListCall) QuotaUser(quotaUser string) *ProjectsJobsMessagesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -4078,6 +4134,14 @@ func (r *ProjectsJobsWorkItemsService) Lease(projectId string, jobId string, lea
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsJobsWorkItemsLeaseCall) QuotaUser(quotaUser string) *ProjectsJobsWorkItemsLeaseCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4207,6 +4271,14 @@ func (r *ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId stri
 	c.projectId = projectId
 	c.jobId = jobId
 	c.reportworkitemstatusrequest = reportworkitemstatusrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsJobsWorkItemsReportStatusCall) QuotaUser(quotaUser string) *ProjectsJobsWorkItemsReportStatusCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

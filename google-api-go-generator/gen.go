@@ -50,6 +50,18 @@ var (
 	googleapiPkg   = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
 )
 
+// commonParamsWhitelist is the list of common API parameters that should be exposed to users via method Call objects.
+var commonParamsWhitelist = []string{"quotaUser", "userIp"}
+
+func commonParamWhitelisted(name string) bool {
+	for _, whitelisted := range commonParamsWhitelist {
+		if name == whitelisted {
+			return true
+		}
+	}
+	return false
+}
+
 // API represents an API to generate, as well as its state while it's
 // generating.
 type API struct {
@@ -1488,7 +1500,30 @@ func (m *Method) supportsMediaDownload() bool {
 
 func (m *Method) Params() []*Param {
 	if m.params == nil {
-		paramMap := jobj(m.m, "parameters")
+		parameters := jobj(m.m, "parameters")
+		// We construct the list of Method parameters as the union of
+		// * the method parameters from the JSON config, and
+		// * a set of parameters that are common across all the methods in the API.
+		// We first make a copy of parameters, so that the original method-specific
+		// parameter list is left untouched.
+		paramMap := make(map[string]interface{})
+		for k, v := range parameters {
+			paramMap[k] = v
+		}
+
+		commonParams := jobj(m.api.m, "parameters")
+		for ck, cv := range commonParams {
+			if !commonParamWhitelisted(ck) {
+				continue
+			}
+			if _, ok := paramMap[ck]; ok {
+				msgTemplate := "parameter %q of method %q in api %q conflicts with common API parameter of the same name."
+				log.Printf(msgTemplate, ck, m.name, m.api.ID)
+			} else {
+				paramMap[ck] = cv
+			}
+		}
+
 		for _, name := range sortedKeys(paramMap) {
 			mi := paramMap[name]
 			pm := mi.(map[string]interface{})
@@ -1545,6 +1580,15 @@ func convertMultiParams(a *API, param string) string {
 	a.pn("  %v_ = append(%v_, fmt.Sprint(v))", param, param)
 	a.pn(" }")
 	return param + "_"
+}
+
+// overrideParameterName transforms a hard-coded list of non-idiomatic-Go names into idiomatic Go names.
+func overrideParameterName(name string) string {
+	// TODO(mcgreevy): make this more general.
+	if name == "userIp" {
+		return "userIP"
+	}
+	return name
 }
 
 func (meth *Method) generateCode() {
@@ -1639,7 +1683,7 @@ func (meth *Method) generateCode() {
 		if opt.Location() != "query" {
 			panicf("optional parameter has unsupported location %q", opt.Location())
 		}
-		setter := initialCap(opt.name)
+		setter := initialCap(overrideParameterName(opt.name))
 		des := jstr(opt.m, "description")
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
@@ -1647,7 +1691,7 @@ func (meth *Method) generateCode() {
 		addFieldValueComments(p, opt, "", true)
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
-		paramName := np.Get(validGoIdentifer(opt.name))
+		paramName := np.Get(validGoIdentifer(overrideParameterName(opt.name)))
 		typePrefix := ""
 		if opt.IsRepeated() {
 			typePrefix = "..."
@@ -2331,6 +2375,7 @@ func sortedKeys(m map[string]interface{}) (keys []string) {
 	return
 }
 
+// jobj looks up the JSON object indexed by key in m.
 func jobj(m map[string]interface{}, key string) map[string]interface{} {
 	if m, ok := m[key].(map[string]interface{}); ok {
 		return m
@@ -2338,6 +2383,7 @@ func jobj(m map[string]interface{}, key string) map[string]interface{} {
 	return nil
 }
 
+// jobj looks up the list of JSON objects indexed by key in m.
 func jobjlist(m map[string]interface{}, key string) []map[string]interface{} {
 	si, ok := m[key].([]interface{})
 	if !ok {

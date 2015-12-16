@@ -246,6 +246,14 @@ func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *MediaDownloadCall) QuotaUser(quotaUser string) *MediaDownloadCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -393,6 +401,14 @@ func (r *MediaService) Upload(resourceName string, media *Media) *MediaUploadCal
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
 	c.media = media
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *MediaUploadCall) QuotaUser(quotaUser string) *MediaUploadCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

@@ -2566,6 +2566,14 @@ func (r *CallsetsService) Create(callset *CallSet) *CallsetsCreateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CallsetsCreateCall) QuotaUser(quotaUser string) *CallsetsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2672,6 +2680,14 @@ type CallsetsDeleteCall struct {
 func (r *CallsetsService) Delete(callSetId string) *CallsetsDeleteCall {
 	c := &CallsetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.callSetId = callSetId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CallsetsDeleteCall) QuotaUser(quotaUser string) *CallsetsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2786,6 +2802,14 @@ type CallsetsGetCall struct {
 func (r *CallsetsService) Get(callSetId string) *CallsetsGetCall {
 	c := &CallsetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.callSetId = callSetId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CallsetsGetCall) QuotaUser(quotaUser string) *CallsetsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2915,6 +2939,14 @@ func (r *CallsetsService) Patch(callSetId string, callset *CallSet) *CallsetsPat
 	c := &CallsetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.callSetId = callSetId
 	c.callset = callset
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CallsetsPatchCall) QuotaUser(quotaUser string) *CallsetsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3057,6 +3089,14 @@ func (r *CallsetsService) Search(searchcallsetsrequest *SearchCallSetsRequest) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CallsetsSearchCall) QuotaUser(quotaUser string) *CallsetsSearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3167,6 +3207,14 @@ func (r *DatasetsService) Create(dataset *Dataset) *DatasetsCreateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsCreateCall) QuotaUser(quotaUser string) *DatasetsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3273,6 +3321,14 @@ type DatasetsDeleteCall struct {
 func (r *DatasetsService) Delete(datasetId string) *DatasetsDeleteCall {
 	c := &DatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsDeleteCall) QuotaUser(quotaUser string) *DatasetsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3387,6 +3443,14 @@ type DatasetsGetCall struct {
 func (r *DatasetsService) Get(datasetId string) *DatasetsGetCall {
 	c := &DatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsGetCall) QuotaUser(quotaUser string) *DatasetsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3518,6 +3582,14 @@ func (r *DatasetsService) GetIamPolicy(resource string, getiampolicyrequest *Get
 	c := &DatasetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsGetIamPolicyCall) QuotaUser(quotaUser string) *DatasetsGetIamPolicyCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3667,6 +3739,14 @@ func (c *DatasetsListCall) ProjectId(projectId string) *DatasetsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsListCall) QuotaUser(quotaUser string) *DatasetsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3798,6 +3878,14 @@ func (r *DatasetsService) Patch(datasetId string, dataset *Dataset) *DatasetsPat
 	c := &DatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasetId = datasetId
 	c.dataset = dataset
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsPatchCall) QuotaUser(quotaUser string) *DatasetsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3940,6 +4028,14 @@ func (r *DatasetsService) SetIamPolicy(resource string, setiampolicyrequest *Set
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsSetIamPolicyCall) QuotaUser(quotaUser string) *DatasetsSetIamPolicyCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4064,6 +4160,14 @@ func (r *DatasetsService) TestIamPermissions(resource string, testiampermissions
 	c := &DatasetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsTestIamPermissionsCall) QuotaUser(quotaUser string) *DatasetsTestIamPermissionsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -4194,6 +4298,14 @@ func (r *DatasetsService) Undelete(datasetId string, undeletedatasetrequest *Und
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DatasetsUndeleteCall) QuotaUser(quotaUser string) *DatasetsUndeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4319,6 +4431,14 @@ func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOp
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *OperationsCancelCall) QuotaUser(quotaUser string) *OperationsCancelCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4440,6 +4560,14 @@ func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *OperationsDeleteCall) QuotaUser(quotaUser string) *OperationsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4551,6 +4679,14 @@ type OperationsGetCall struct {
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *OperationsGetCall) QuotaUser(quotaUser string) *OperationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -4707,6 +4843,14 @@ func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *OperationsListCall) QuotaUser(quotaUser string) *OperationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4850,6 +4994,14 @@ func (r *ReadgroupsetsService) Delete(readGroupSetId string) *ReadgroupsetsDelet
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadgroupsetsDeleteCall) QuotaUser(quotaUser string) *ReadgroupsetsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4967,6 +5119,14 @@ func (r *ReadgroupsetsService) Export(readGroupSetId string, exportreadgroupsetr
 	c := &ReadgroupsetsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.readGroupSetId = readGroupSetId
 	c.exportreadgroupsetrequest = exportreadgroupsetrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadgroupsetsExportCall) QuotaUser(quotaUser string) *ReadgroupsetsExportCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -5091,6 +5251,14 @@ type ReadgroupsetsGetCall struct {
 func (r *ReadgroupsetsService) Get(readGroupSetId string) *ReadgroupsetsGetCall {
 	c := &ReadgroupsetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.readGroupSetId = readGroupSetId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadgroupsetsGetCall) QuotaUser(quotaUser string) *ReadgroupsetsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -5230,6 +5398,14 @@ func (r *ReadgroupsetsService) Import(importreadgroupsetsrequest *ImportReadGrou
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadgroupsetsImportCall) QuotaUser(quotaUser string) *ReadgroupsetsImportCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5339,6 +5515,14 @@ func (r *ReadgroupsetsService) Patch(readGroupSetId string, readgroupset *ReadGr
 	c := &ReadgroupsetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.readGroupSetId = readGroupSetId
 	c.readgroupset = readgroupset
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadgroupsetsPatchCall) QuotaUser(quotaUser string) *ReadgroupsetsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -5478,6 +5662,14 @@ type ReadgroupsetsSearchCall struct {
 func (r *ReadgroupsetsService) Search(searchreadgroupsetsrequest *SearchReadGroupSetsRequest) *ReadgroupsetsSearchCall {
 	c := &ReadgroupsetsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchreadgroupsetsrequest = searchreadgroupsetsrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadgroupsetsSearchCall) QuotaUser(quotaUser string) *ReadgroupsetsSearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -5622,6 +5814,14 @@ func (c *ReadgroupsetsCoveragebucketsListCall) PageSize(pageSize int64) *Readgro
 // `nextPageToken` from the previous response.
 func (c *ReadgroupsetsCoveragebucketsListCall) PageToken(pageToken string) *ReadgroupsetsCoveragebucketsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadgroupsetsCoveragebucketsListCall) QuotaUser(quotaUser string) *ReadgroupsetsCoveragebucketsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -5830,6 +6030,14 @@ func (r *ReadsService) Search(searchreadsrequest *SearchReadsRequest) *ReadsSear
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadsSearchCall) QuotaUser(quotaUser string) *ReadsSearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5935,6 +6143,14 @@ type ReadsStreamCall struct {
 func (r *ReadsService) Stream(streamreadsrequest *StreamReadsRequest) *ReadsStreamCall {
 	c := &ReadsStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.streamreadsrequest = streamreadsrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReadsStreamCall) QuotaUser(quotaUser string) *ReadsStreamCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -6047,6 +6263,14 @@ type ReferencesGetCall struct {
 func (r *ReferencesService) Get(referenceId string) *ReferencesGetCall {
 	c := &ReferencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.referenceId = referenceId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReferencesGetCall) QuotaUser(quotaUser string) *ReferencesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -6177,6 +6401,14 @@ type ReferencesSearchCall struct {
 func (r *ReferencesService) Search(searchreferencesrequest *SearchReferencesRequest) *ReferencesSearchCall {
 	c := &ReferencesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchreferencesrequest = searchreferencesrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReferencesSearchCall) QuotaUser(quotaUser string) *ReferencesSearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -6316,6 +6548,14 @@ func (c *ReferencesBasesListCall) PageSize(pageSize int64) *ReferencesBasesListC
 // `nextPageToken` from the previous response.
 func (c *ReferencesBasesListCall) PageToken(pageToken string) *ReferencesBasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReferencesBasesListCall) QuotaUser(quotaUser string) *ReferencesBasesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -6479,6 +6719,14 @@ func (r *ReferencesetsService) Get(referenceSetId string) *ReferencesetsGetCall 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReferencesetsGetCall) QuotaUser(quotaUser string) *ReferencesetsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6609,6 +6857,14 @@ func (r *ReferencesetsService) Search(searchreferencesetsrequest *SearchReferenc
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReferencesetsSearchCall) QuotaUser(quotaUser string) *ReferencesetsSearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6719,6 +6975,14 @@ func (r *VariantsService) Create(variant *Variant) *VariantsCreateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsCreateCall) QuotaUser(quotaUser string) *VariantsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6825,6 +7089,14 @@ type VariantsDeleteCall struct {
 func (r *VariantsService) Delete(variantId string) *VariantsDeleteCall {
 	c := &VariantsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantId = variantId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsDeleteCall) QuotaUser(quotaUser string) *VariantsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -6939,6 +7211,14 @@ type VariantsGetCall struct {
 func (r *VariantsService) Get(variantId string) *VariantsGetCall {
 	c := &VariantsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantId = variantId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsGetCall) QuotaUser(quotaUser string) *VariantsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -7080,6 +7360,14 @@ func (r *VariantsService) Import(importvariantsrequest *ImportVariantsRequest) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsImportCall) QuotaUser(quotaUser string) *VariantsImportCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7190,6 +7478,14 @@ func (r *VariantsService) Patch(variantId string, variant *Variant) *VariantsPat
 	c := &VariantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantId = variantId
 	c.variant = variant
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsPatchCall) QuotaUser(quotaUser string) *VariantsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -7332,6 +7628,14 @@ func (r *VariantsService) Search(searchvariantsrequest *SearchVariantsRequest) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsSearchCall) QuotaUser(quotaUser string) *VariantsSearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7437,6 +7741,14 @@ type VariantsStreamCall struct {
 func (r *VariantsService) Stream(streamvariantsrequest *StreamVariantsRequest) *VariantsStreamCall {
 	c := &VariantsStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.streamvariantsrequest = streamvariantsrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsStreamCall) QuotaUser(quotaUser string) *VariantsStreamCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -7551,6 +7863,14 @@ func (r *VariantsetsService) Create(variantset *VariantSet) *VariantsetsCreateCa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsetsCreateCall) QuotaUser(quotaUser string) *VariantsetsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7658,6 +7978,14 @@ type VariantsetsDeleteCall struct {
 func (r *VariantsetsService) Delete(variantSetId string) *VariantsetsDeleteCall {
 	c := &VariantsetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsetsDeleteCall) QuotaUser(quotaUser string) *VariantsetsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -7774,6 +8102,14 @@ func (r *VariantsetsService) Export(variantSetId string, exportvariantsetrequest
 	c := &VariantsetsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
 	c.exportvariantsetrequest = exportvariantsetrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsetsExportCall) QuotaUser(quotaUser string) *VariantsetsExportCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -7898,6 +8234,14 @@ type VariantsetsGetCall struct {
 func (r *VariantsetsService) Get(variantSetId string) *VariantsetsGetCall {
 	c := &VariantsetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsetsGetCall) QuotaUser(quotaUser string) *VariantsetsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -8028,6 +8372,14 @@ func (r *VariantsetsService) Patch(variantSetId string, variantset *VariantSet) 
 	c := &VariantsetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.variantSetId = variantSetId
 	c.variantset = variantset
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsetsPatchCall) QuotaUser(quotaUser string) *VariantsetsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -8167,6 +8519,14 @@ type VariantsetsSearchCall struct {
 func (r *VariantsetsService) Search(searchvariantsetsrequest *SearchVariantSetsRequest) *VariantsetsSearchCall {
 	c := &VariantsetsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchvariantsetsrequest = searchvariantsetsrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *VariantsetsSearchCall) QuotaUser(quotaUser string) *VariantsetsSearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

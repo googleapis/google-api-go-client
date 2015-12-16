@@ -517,6 +517,15 @@ func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ActivitiesListCall) QuotaUser(quotaUser string) *ActivitiesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": The Google service from
 // which to return activities. Possible values of source are:
 // - drive.google.com
@@ -530,6 +539,14 @@ func (c *ActivitiesListCall) Source(source string) *ActivitiesListCall {
 // currently authenticated user.
 func (c *ActivitiesListCall) UserId(userId string) *ActivitiesListCall {
 	c.urlParams_.Set("userId", userId)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ActivitiesListCall) UserIP(userIP string) *ActivitiesListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

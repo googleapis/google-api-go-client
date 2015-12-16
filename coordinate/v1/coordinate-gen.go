@@ -711,6 +711,23 @@ func (r *CustomFieldDefService) List(teamId string) *CustomFieldDefListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CustomFieldDefListCall) QuotaUser(quotaUser string) *CustomFieldDefListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CustomFieldDefListCall) UserIP(userIP string) *CustomFieldDefListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -834,6 +851,23 @@ func (r *JobsService) Get(teamId string, jobId uint64) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamId = teamId
 	c.jobId = jobId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *JobsGetCall) QuotaUser(quotaUser string) *JobsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *JobsGetCall) UserIP(userIP string) *JobsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1013,6 +1047,23 @@ func (c *JobsInsertCall) CustomerPhoneNumber(customerPhoneNumber string) *JobsIn
 // separated string
 func (c *JobsInsertCall) Note(note string) *JobsInsertCall {
 	c.urlParams_.Set("note", note)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *JobsInsertCall) QuotaUser(quotaUser string) *JobsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *JobsInsertCall) UserIP(userIP string) *JobsInsertCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1216,6 +1267,23 @@ func (c *JobsListCall) OmitJobChanges(omitJobChanges bool) *JobsListCall {
 // PageToken sets the optional parameter "pageToken": Continuation token
 func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *JobsListCall) QuotaUser(quotaUser string) *JobsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *JobsListCall) UserIP(userIP string) *JobsListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1443,9 +1511,26 @@ func (c *JobsPatchCall) Progress(progress string) *JobsPatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *JobsPatchCall) QuotaUser(quotaUser string) *JobsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Title sets the optional parameter "title": Job title
 func (c *JobsPatchCall) Title(title string) *JobsPatchCall {
 	c.urlParams_.Set("title", title)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *JobsPatchCall) UserIP(userIP string) *JobsPatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1722,9 +1807,26 @@ func (c *JobsUpdateCall) Progress(progress string) *JobsUpdateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *JobsUpdateCall) QuotaUser(quotaUser string) *JobsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Title sets the optional parameter "title": Job title
 func (c *JobsUpdateCall) Title(title string) *JobsUpdateCall {
 	c.urlParams_.Set("title", title)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *JobsUpdateCall) UserIP(userIP string) *JobsUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1939,6 +2041,23 @@ func (c *LocationListCall) PageToken(pageToken string) *LocationListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LocationListCall) QuotaUser(quotaUser string) *LocationListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LocationListCall) UserIP(userIP string) *LocationListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2089,6 +2208,23 @@ func (r *ScheduleService) Get(teamId string, jobId uint64) *ScheduleGetCall {
 	c := &ScheduleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamId = teamId
 	c.jobId = jobId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ScheduleGetCall) QuotaUser(quotaUser string) *ScheduleGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ScheduleGetCall) UserIP(userIP string) *ScheduleGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2251,10 +2387,27 @@ func (c *SchedulePatchCall) EndTime(endTime uint64) *SchedulePatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SchedulePatchCall) QuotaUser(quotaUser string) *SchedulePatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartTime sets the optional parameter "startTime": Scheduled start
 // time in milliseconds since epoch.
 func (c *SchedulePatchCall) StartTime(startTime uint64) *SchedulePatchCall {
 	c.urlParams_.Set("startTime", fmt.Sprint(startTime))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SchedulePatchCall) UserIP(userIP string) *SchedulePatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2434,10 +2587,27 @@ func (c *ScheduleUpdateCall) EndTime(endTime uint64) *ScheduleUpdateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ScheduleUpdateCall) QuotaUser(quotaUser string) *ScheduleUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartTime sets the optional parameter "startTime": Scheduled start
 // time in milliseconds since epoch.
 func (c *ScheduleUpdateCall) StartTime(startTime uint64) *ScheduleUpdateCall {
 	c.urlParams_.Set("startTime", fmt.Sprint(startTime))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ScheduleUpdateCall) UserIP(userIP string) *ScheduleUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2604,6 +2774,23 @@ func (c *TeamListCall) Dispatcher(dispatcher bool) *TeamListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TeamListCall) QuotaUser(quotaUser string) *TeamListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TeamListCall) UserIP(userIP string) *TeamListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Worker sets the optional parameter "worker": Whether to include teams
 // for which the user has the Worker role.
 func (c *TeamListCall) Worker(worker bool) *TeamListCall {
@@ -2736,6 +2923,23 @@ type WorkerListCall struct {
 func (r *WorkerService) List(teamId string) *WorkerListCall {
 	c := &WorkerListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamId = teamId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WorkerListCall) QuotaUser(quotaUser string) *WorkerListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WorkerListCall) UserIP(userIP string) *WorkerListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

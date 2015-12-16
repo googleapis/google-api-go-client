@@ -326,6 +326,23 @@ func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasklistsDeleteCall) QuotaUser(quotaUser string) *TasklistsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasklistsDeleteCall) UserIP(userIP string) *TasklistsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -406,6 +423,23 @@ type TasklistsGetCall struct {
 func (r *TasklistsService) Get(tasklistid string) *TasklistsGetCall {
 	c := &TasklistsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasklistsGetCall) QuotaUser(quotaUser string) *TasklistsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasklistsGetCall) UserIP(userIP string) *TasklistsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -533,6 +567,23 @@ func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasklistsInsertCall) QuotaUser(quotaUser string) *TasklistsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasklistsInsertCall) UserIP(userIP string) *TasklistsInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -648,6 +699,23 @@ func (c *TasklistsListCall) MaxResults(maxResults int64) *TasklistsListCall {
 // the result page to return.
 func (c *TasklistsListCall) PageToken(pageToken string) *TasklistsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasklistsListCall) QuotaUser(quotaUser string) *TasklistsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasklistsListCall) UserIP(userIP string) *TasklistsListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -777,6 +845,23 @@ func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *Tasklis
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasklistsPatchCall) QuotaUser(quotaUser string) *TasklistsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasklistsPatchCall) UserIP(userIP string) *TasklistsPatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -894,6 +979,23 @@ func (r *TasklistsService) Update(tasklistid string, tasklist *TaskList) *Taskli
 	c := &TasklistsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
 	c.tasklist = tasklist
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasklistsUpdateCall) QuotaUser(quotaUser string) *TasklistsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasklistsUpdateCall) UserIP(userIP string) *TasklistsUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1017,6 +1119,23 @@ func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasksClearCall) QuotaUser(quotaUser string) *TasksClearCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasksClearCall) UserIP(userIP string) *TasksClearCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1098,6 +1217,23 @@ func (r *TasksService) Delete(tasklistid string, taskid string) *TasksDeleteCall
 	c := &TasksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
 	c.taskid = taskid
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasksDeleteCall) QuotaUser(quotaUser string) *TasksDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasksDeleteCall) UserIP(userIP string) *TasksDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1191,6 +1327,23 @@ func (r *TasksService) Get(tasklistid string, taskid string) *TasksGetCall {
 	c := &TasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
 	c.taskid = taskid
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasksGetCall) QuotaUser(quotaUser string) *TasksGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasksGetCall) UserIP(userIP string) *TasksGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1339,6 +1492,23 @@ func (c *TasksInsertCall) Parent(parent string) *TasksInsertCall {
 // its siblings, this parameter is omitted.
 func (c *TasksInsertCall) Previous(previous string) *TasksInsertCall {
 	c.urlParams_.Set("previous", previous)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasksInsertCall) QuotaUser(quotaUser string) *TasksInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasksInsertCall) UserIP(userIP string) *TasksInsertCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1517,6 +1687,15 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasksListCall) QuotaUser(quotaUser string) *TasksListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowCompleted sets the optional parameter "showCompleted": Flag
 // indicating whether completed tasks are returned in the result.  The
 // default is True.
@@ -1546,6 +1725,14 @@ func (c *TasksListCall) ShowHidden(showHidden bool) *TasksListCall {
 // by.  The default is not to filter by last modification time.
 func (c *TasksListCall) UpdatedMin(updatedMin string) *TasksListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasksListCall) UserIP(userIP string) *TasksListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1743,6 +1930,23 @@ func (c *TasksMoveCall) Previous(previous string) *TasksMoveCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasksMoveCall) QuotaUser(quotaUser string) *TasksMoveCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasksMoveCall) UserIP(userIP string) *TasksMoveCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1875,6 +2079,23 @@ func (r *TasksService) Patch(tasklistid string, taskid string, task *Task) *Task
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasksPatchCall) QuotaUser(quotaUser string) *TasksPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasksPatchCall) UserIP(userIP string) *TasksPatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2002,6 +2223,23 @@ func (r *TasksService) Update(tasklistid string, taskid string, task *Task) *Tas
 	c.tasklistid = tasklistid
 	c.taskid = taskid
 	c.task = task
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TasksUpdateCall) QuotaUser(quotaUser string) *TasksUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TasksUpdateCall) UserIP(userIP string) *TasksUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

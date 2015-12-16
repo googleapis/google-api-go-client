@@ -666,6 +666,14 @@ func (r *SubscriptionsService) Acknowledge(acknowledgerequest *AcknowledgeReques
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsAcknowledgeCall) QuotaUser(quotaUser string) *SubscriptionsAcknowledgeCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -777,6 +785,14 @@ func (r *SubscriptionsService) Create(subscription *Subscription) *Subscriptions
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsCreateCall) QuotaUser(quotaUser string) *SubscriptionsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -882,6 +898,14 @@ type SubscriptionsDeleteCall struct {
 func (r *SubscriptionsService) Delete(subscription string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsDeleteCall) QuotaUser(quotaUser string) *SubscriptionsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -994,6 +1018,14 @@ type SubscriptionsGetCall struct {
 func (r *SubscriptionsService) Get(subscription string) *SubscriptionsGetCall {
 	c := &SubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsGetCall) QuotaUser(quotaUser string) *SubscriptionsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1141,6 +1173,14 @@ func (c *SubscriptionsListCall) Query(query string) *SubscriptionsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsListCall) QuotaUser(quotaUser string) *SubscriptionsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1270,6 +1310,14 @@ func (r *SubscriptionsService) ModifyAckDeadline(modifyackdeadlinerequest *Modif
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsModifyAckDeadlineCall) QuotaUser(quotaUser string) *SubscriptionsModifyAckDeadlineCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1377,6 +1425,14 @@ type SubscriptionsModifyPushConfigCall struct {
 func (r *SubscriptionsService) ModifyPushConfig(modifypushconfigrequest *ModifyPushConfigRequest) *SubscriptionsModifyPushConfigCall {
 	c := &SubscriptionsModifyPushConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.modifypushconfigrequest = modifypushconfigrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsModifyPushConfigCall) QuotaUser(quotaUser string) *SubscriptionsModifyPushConfigCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1490,6 +1546,14 @@ func (r *SubscriptionsService) Pull(pullrequest *PullRequest) *SubscriptionsPull
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsPullCall) QuotaUser(quotaUser string) *SubscriptionsPullCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1599,6 +1663,14 @@ func (r *SubscriptionsService) PullBatch(pullbatchrequest *PullBatchRequest) *Su
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *SubscriptionsPullBatchCall) QuotaUser(quotaUser string) *SubscriptionsPullBatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1702,6 +1774,14 @@ type TopicsCreateCall struct {
 func (r *TopicsService) Create(topic *Topic) *TopicsCreateCall {
 	c := &TopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *TopicsCreateCall) QuotaUser(quotaUser string) *TopicsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1810,6 +1890,14 @@ type TopicsDeleteCall struct {
 func (r *TopicsService) Delete(topic string) *TopicsDeleteCall {
 	c := &TopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *TopicsDeleteCall) QuotaUser(quotaUser string) *TopicsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1925,6 +2013,14 @@ type TopicsGetCall struct {
 func (r *TopicsService) Get(topic string) *TopicsGetCall {
 	c := &TopicsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *TopicsGetCall) QuotaUser(quotaUser string) *TopicsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2072,6 +2168,14 @@ func (c *TopicsListCall) Query(query string) *TopicsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *TopicsListCall) QuotaUser(quotaUser string) *TopicsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2201,6 +2305,14 @@ func (r *TopicsService) Publish(publishrequest *PublishRequest) *TopicsPublishCa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *TopicsPublishCall) QuotaUser(quotaUser string) *TopicsPublishCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2305,6 +2417,14 @@ type TopicsPublishBatchCall struct {
 func (r *TopicsService) PublishBatch(publishbatchrequest *PublishBatchRequest) *TopicsPublishBatchCall {
 	c := &TopicsPublishBatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.publishbatchrequest = publishbatchrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *TopicsPublishBatchCall) QuotaUser(quotaUser string) *TopicsPublishBatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

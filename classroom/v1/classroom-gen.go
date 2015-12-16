@@ -662,6 +662,14 @@ func (r *CoursesService) Create(course *Course) *CoursesCreateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesCreateCall) QuotaUser(quotaUser string) *CoursesCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -767,6 +775,14 @@ type CoursesDeleteCall struct {
 func (r *CoursesService) Delete(id string) *CoursesDeleteCall {
 	c := &CoursesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesDeleteCall) QuotaUser(quotaUser string) *CoursesDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -880,6 +896,14 @@ type CoursesGetCall struct {
 func (r *CoursesService) Get(id string) *CoursesGetCall {
 	c := &CoursesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesGetCall) QuotaUser(quotaUser string) *CoursesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1025,6 +1049,14 @@ func (c *CoursesListCall) PageSize(pageSize int64) *CoursesListCall {
 // be otherwise identical to the one that resulted in this token.
 func (c *CoursesListCall) PageToken(pageToken string) *CoursesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesListCall) QuotaUser(quotaUser string) *CoursesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1189,6 +1221,14 @@ func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesPatchCall) QuotaUser(quotaUser string) *CoursesPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // UpdateMask sets the optional parameter "updateMask": Mask that
 // identifies which fields on the course to update. This field is
 // required to do an update. The update will fail if invalid fields are
@@ -1330,6 +1370,14 @@ func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesUpdateCall) QuotaUser(quotaUser string) *CoursesUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1454,6 +1502,14 @@ func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesAliasesCreateCall) QuotaUser(quotaUser string) *CoursesAliasesCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1574,6 +1630,14 @@ func (r *CoursesAliasesService) Delete(courseId string, aliasid string) *Courses
 	c := &CoursesAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
 	c.aliasid = aliasid
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesAliasesDeleteCall) QuotaUser(quotaUser string) *CoursesAliasesDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1713,6 +1777,14 @@ func (c *CoursesAliasesListCall) PageSize(pageSize int64) *CoursesAliasesListCal
 // be otherwise identical to the one that resulted in this token.
 func (c *CoursesAliasesListCall) PageToken(pageToken string) *CoursesAliasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesAliasesListCall) QuotaUser(quotaUser string) *CoursesAliasesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1870,6 +1942,14 @@ func (c *CoursesStudentsCreateCall) EnrollmentCode(enrollmentCode string) *Cours
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesStudentsCreateCall) QuotaUser(quotaUser string) *CoursesStudentsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2001,6 +2081,14 @@ func (r *CoursesStudentsService) Delete(courseId string, userId string) *Courses
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesStudentsDeleteCall) QuotaUser(quotaUser string) *CoursesStudentsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2122,6 +2210,14 @@ func (r *CoursesStudentsService) Get(courseId string, userId string) *CoursesStu
 	c := &CoursesStudentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
 	c.userId = userId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesStudentsGetCall) QuotaUser(quotaUser string) *CoursesStudentsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2279,6 +2375,14 @@ func (c *CoursesStudentsListCall) PageToken(pageToken string) *CoursesStudentsLi
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesStudentsListCall) QuotaUser(quotaUser string) *CoursesStudentsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2425,6 +2529,14 @@ func (r *CoursesTeachersService) Create(courseId string, teacher *Teacher) *Cour
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesTeachersCreateCall) QuotaUser(quotaUser string) *CoursesTeachersCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2552,6 +2664,14 @@ func (r *CoursesTeachersService) Delete(courseId string, userId string) *Courses
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesTeachersDeleteCall) QuotaUser(quotaUser string) *CoursesTeachersDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2673,6 +2793,14 @@ func (r *CoursesTeachersService) Get(courseId string, userId string) *CoursesTea
 	c := &CoursesTeachersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
 	c.userId = userId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesTeachersGetCall) QuotaUser(quotaUser string) *CoursesTeachersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2830,6 +2958,14 @@ func (c *CoursesTeachersListCall) PageToken(pageToken string) *CoursesTeachersLi
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CoursesTeachersListCall) QuotaUser(quotaUser string) *CoursesTeachersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2974,6 +3110,14 @@ func (r *InvitationsService) Accept(id string) *InvitationsAcceptCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *InvitationsAcceptCall) QuotaUser(quotaUser string) *InvitationsAcceptCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3091,6 +3235,14 @@ func (r *InvitationsService) Create(invitation *Invitation) *InvitationsCreateCa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *InvitationsCreateCall) QuotaUser(quotaUser string) *InvitationsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3196,6 +3348,14 @@ type InvitationsDeleteCall struct {
 func (r *InvitationsService) Delete(id string) *InvitationsDeleteCall {
 	c := &InvitationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *InvitationsDeleteCall) QuotaUser(quotaUser string) *InvitationsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3309,6 +3469,14 @@ type InvitationsGetCall struct {
 func (r *InvitationsService) Get(id string) *InvitationsGetCall {
 	c := &InvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *InvitationsGetCall) QuotaUser(quotaUser string) *InvitationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3462,6 +3630,14 @@ func (c *InvitationsListCall) PageToken(pageToken string) *InvitationsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *InvitationsListCall) QuotaUser(quotaUser string) *InvitationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // UserId sets the optional parameter "userId": Restricts returned
 // invitations to those for a specific user. The identifier can be one
 // of the following: * the numeric identifier for the user * the email
@@ -3606,6 +3782,14 @@ type UserProfilesGetCall struct {
 func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
 	c := &UserProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *UserProfilesGetCall) QuotaUser(quotaUser string) *UserProfilesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

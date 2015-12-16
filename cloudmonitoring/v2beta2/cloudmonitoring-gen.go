@@ -754,6 +754,23 @@ func (r *MetricDescriptorsService) Create(project string, metricdescriptor *Metr
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MetricDescriptorsCreateCall) QuotaUser(quotaUser string) *MetricDescriptorsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MetricDescriptorsCreateCall) UserIP(userIP string) *MetricDescriptorsCreateCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -872,6 +889,23 @@ func (r *MetricDescriptorsService) Delete(project string, metric string) *Metric
 	c := &MetricDescriptorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.metric = metric
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MetricDescriptorsDeleteCall) QuotaUser(quotaUser string) *MetricDescriptorsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MetricDescriptorsDeleteCall) UserIP(userIP string) *MetricDescriptorsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1025,6 +1059,23 @@ func (c *MetricDescriptorsListCall) PageToken(pageToken string) *MetricDescripto
 // are returned.
 func (c *MetricDescriptorsListCall) Query(query string) *MetricDescriptorsListCall {
 	c.urlParams_.Set("query", query)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MetricDescriptorsListCall) QuotaUser(quotaUser string) *MetricDescriptorsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MetricDescriptorsListCall) UserIP(userIP string) *MetricDescriptorsListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1238,6 +1289,15 @@ func (c *TimeseriesListCall) PageToken(pageToken string) *TimeseriesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TimeseriesListCall) QuotaUser(quotaUser string) *TimeseriesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Timespan sets the optional parameter "timespan": Length of the time
 // interval to query, which is an alternative way to declare the
 // interval: (youngest - timespan, youngest]. The timespan and oldest
@@ -1253,6 +1313,14 @@ func (c *TimeseriesListCall) PageToken(pageToken string) *TimeseriesListCall {
 // interval will be (youngest - 4 hours, youngest].
 func (c *TimeseriesListCall) Timespan(timespan string) *TimeseriesListCall {
 	c.urlParams_.Set("timespan", timespan)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TimeseriesListCall) UserIP(userIP string) *TimeseriesListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1475,6 +1543,23 @@ func (r *TimeseriesService) Write(project string, writetimeseriesrequest *WriteT
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TimeseriesWriteCall) QuotaUser(quotaUser string) *TimeseriesWriteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TimeseriesWriteCall) UserIP(userIP string) *TimeseriesWriteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1660,6 +1745,15 @@ func (c *TimeseriesDescriptorsListCall) PageToken(pageToken string) *TimeseriesD
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TimeseriesDescriptorsListCall) QuotaUser(quotaUser string) *TimeseriesDescriptorsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Timespan sets the optional parameter "timespan": Length of the time
 // interval to query, which is an alternative way to declare the
 // interval: (youngest - timespan, youngest]. The timespan and oldest
@@ -1675,6 +1769,14 @@ func (c *TimeseriesDescriptorsListCall) PageToken(pageToken string) *TimeseriesD
 // interval will be (youngest - 4 hours, youngest].
 func (c *TimeseriesDescriptorsListCall) Timespan(timespan string) *TimeseriesDescriptorsListCall {
 	c.urlParams_.Set("timespan", timespan)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TimeseriesDescriptorsListCall) UserIP(userIP string) *TimeseriesDescriptorsListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

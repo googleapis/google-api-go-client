@@ -376,6 +376,14 @@ func (c *JobsCreateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *JobsCreateCall) QuotaUser(quotaUser string) *JobsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -495,6 +503,14 @@ func (r *JobsService) Delete(jobId string) *JobsDeleteCall {
 // himself (his own channel).
 func (c *JobsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsDeleteCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *JobsDeleteCall) QuotaUser(quotaUser string) *JobsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -620,6 +636,14 @@ func (r *JobsService) Get(jobId string) *JobsGetCall {
 // himself (his own channel).
 func (c *JobsGetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsGetCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *JobsGetCall) QuotaUser(quotaUser string) *JobsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -776,6 +800,14 @@ func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *JobsListCall) QuotaUser(quotaUser string) *JobsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -913,6 +945,14 @@ func (r *JobsReportsService) Get(jobId string, reportId string) *JobsReportsGetC
 // himself (his own channel).
 func (c *JobsReportsGetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *JobsReportsGetCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *JobsReportsGetCall) QuotaUser(quotaUser string) *JobsReportsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1087,6 +1127,14 @@ func (c *JobsReportsListCall) PageToken(pageToken string) *JobsReportsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *JobsReportsListCall) QuotaUser(quotaUser string) *JobsReportsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1230,6 +1278,14 @@ type MediaDownloadCall struct {
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *MediaDownloadCall) QuotaUser(quotaUser string) *MediaDownloadCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1395,6 +1451,14 @@ func (c *ReportTypesListCall) PageSize(pageSize int64) *ReportTypesListCall {
 // in response to the previous call to the `ListReportTypes` method.
 func (c *ReportTypesListCall) PageToken(pageToken string) *ReportTypesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ReportTypesListCall) QuotaUser(quotaUser string) *ReportTypesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

@@ -1230,6 +1230,14 @@ func (r *ClientMessagesService) Log(logmessagerequest *LogMessageRequest) *Clien
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ClientMessagesLogCall) QuotaUser(quotaUser string) *ClientMessagesLogCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1357,6 +1365,14 @@ func (c *CompaniesGetCall) CurrencyCode(currencyCode string) *CompaniesGetCall {
 // given address respectively.
 func (c *CompaniesGetCall) OrderBy(orderBy string) *CompaniesGetCall {
 	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CompaniesGetCall) QuotaUser(quotaUser string) *CompaniesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1745,6 +1761,14 @@ func (c *CompaniesListCall) PageToken(pageToken string) *CompaniesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CompaniesListCall) QuotaUser(quotaUser string) *CompaniesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
@@ -2105,6 +2129,14 @@ func (r *CompaniesLeadsService) Create(companyId string, createleadrequest *Crea
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *CompaniesLeadsCreateCall) QuotaUser(quotaUser string) *CompaniesLeadsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2220,6 +2252,14 @@ func (r *UserEventsService) Log(logusereventrequest *LogUserEventRequest) *UserE
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *UserEventsLogCall) QuotaUser(quotaUser string) *UserEventsLogCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2318,6 +2358,14 @@ type UserStatesListCall struct {
 // List: Lists states for current user.
 func (r *UserStatesService) List() *UserStatesListCall {
 	c := &UserStatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *UserStatesListCall) QuotaUser(quotaUser string) *UserStatesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

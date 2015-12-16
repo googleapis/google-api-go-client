@@ -268,6 +268,23 @@ func (c *ReconcileCall) Prop(prop ...string) *ReconcileCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ReconcileCall) QuotaUser(quotaUser string) *ReconcileCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ReconcileCall) UserIP(userIP string) *ReconcileCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -557,6 +574,15 @@ func (c *SearchCall) Query(query string) *SearchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SearchCall) QuotaUser(quotaUser string) *SearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Scoring sets the optional parameter "scoring": Relevance scoring
 // algorithm to use.
 //
@@ -594,6 +620,14 @@ func (c *SearchCall) Stemmed(stemmed bool) *SearchCall {
 // Freebase type id.
 func (c *SearchCall) Type(type_ ...string) *SearchCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SearchCall) UserIP(userIP string) *SearchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

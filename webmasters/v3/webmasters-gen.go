@@ -652,6 +652,23 @@ func (r *SearchanalyticsService) Query(siteUrl string, searchanalyticsqueryreque
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SearchanalyticsQueryCall) QuotaUser(quotaUser string) *SearchanalyticsQueryCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SearchanalyticsQueryCall) UserIP(userIP string) *SearchanalyticsQueryCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -773,6 +790,23 @@ func (r *SitemapsService) Delete(siteUrl string, feedpath string) *SitemapsDelet
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SitemapsDeleteCall) QuotaUser(quotaUser string) *SitemapsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SitemapsDeleteCall) UserIP(userIP string) *SitemapsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -863,6 +897,23 @@ func (r *SitemapsService) Get(siteUrl string, feedpath string) *SitemapsGetCall 
 	c := &SitemapsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
 	c.feedpath = feedpath
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SitemapsGetCall) QuotaUser(quotaUser string) *SitemapsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SitemapsGetCall) UserIP(userIP string) *SitemapsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1000,11 +1051,28 @@ func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SitemapsListCall) QuotaUser(quotaUser string) *SitemapsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SitemapIndex sets the optional parameter "sitemapIndex": A URL of a
 // site's sitemap index. For example:
 // http://www.example.com/sitemapindex.xml
 func (c *SitemapsListCall) SitemapIndex(sitemapIndex string) *SitemapsListCall {
 	c.urlParams_.Set("sitemapIndex", sitemapIndex)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SitemapsListCall) UserIP(userIP string) *SitemapsListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1138,6 +1206,23 @@ func (r *SitemapsService) Submit(siteUrl string, feedpath string) *SitemapsSubmi
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SitemapsSubmitCall) QuotaUser(quotaUser string) *SitemapsSubmitCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SitemapsSubmitCall) UserIP(userIP string) *SitemapsSubmitCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1228,6 +1313,23 @@ func (r *SitesService) Add(siteUrl string) *SitesAddCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SitesAddCall) QuotaUser(quotaUser string) *SitesAddCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SitesAddCall) UserIP(userIP string) *SitesAddCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1311,6 +1413,23 @@ func (r *SitesService) Delete(siteUrl string) *SitesDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SitesDeleteCall) QuotaUser(quotaUser string) *SitesDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SitesDeleteCall) UserIP(userIP string) *SitesDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1391,6 +1510,23 @@ type SitesGetCall struct {
 func (r *SitesService) Get(siteUrl string) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SitesGetCall) QuotaUser(quotaUser string) *SitesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SitesGetCall) UserIP(userIP string) *SitesGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1513,6 +1649,23 @@ type SitesListCall struct {
 // List: Lists the user's Search Console sites.
 func (r *SitesService) List() *SitesListCall {
 	c := &SitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SitesListCall) QuotaUser(quotaUser string) *SitesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SitesListCall) UserIP(userIP string) *SitesListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1663,6 +1816,23 @@ func (c *UrlcrawlerrorscountsQueryCall) LatestCountsOnly(latestCountsOnly bool) 
 //   "web"
 func (c *UrlcrawlerrorscountsQueryCall) Platform(platform string) *UrlcrawlerrorscountsQueryCall {
 	c.urlParams_.Set("platform", platform)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *UrlcrawlerrorscountsQueryCall) QuotaUser(quotaUser string) *UrlcrawlerrorscountsQueryCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *UrlcrawlerrorscountsQueryCall) UserIP(userIP string) *UrlcrawlerrorscountsQueryCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1838,6 +2008,23 @@ func (r *UrlcrawlerrorssamplesService) Get(siteUrl string, url string, category 
 	c.url = url
 	c.urlParams_.Set("category", category)
 	c.urlParams_.Set("platform", platform)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *UrlcrawlerrorssamplesGetCall) QuotaUser(quotaUser string) *UrlcrawlerrorssamplesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *UrlcrawlerrorssamplesGetCall) UserIP(userIP string) *UrlcrawlerrorssamplesGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2020,6 +2207,23 @@ func (r *UrlcrawlerrorssamplesService) List(siteUrl string, category string, pla
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *UrlcrawlerrorssamplesListCall) QuotaUser(quotaUser string) *UrlcrawlerrorssamplesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *UrlcrawlerrorssamplesListCall) UserIP(userIP string) *UrlcrawlerrorssamplesListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2190,6 +2394,23 @@ func (r *UrlcrawlerrorssamplesService) MarkAsFixed(siteUrl string, url string, c
 	c.url = url
 	c.urlParams_.Set("category", category)
 	c.urlParams_.Set("platform", platform)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *UrlcrawlerrorssamplesMarkAsFixedCall) QuotaUser(quotaUser string) *UrlcrawlerrorssamplesMarkAsFixedCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *UrlcrawlerrorssamplesMarkAsFixedCall) UserIP(userIP string) *UrlcrawlerrorssamplesMarkAsFixedCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

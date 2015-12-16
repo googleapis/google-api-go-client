@@ -278,6 +278,14 @@ func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BillingAccountsGetCall) QuotaUser(quotaUser string) *BillingAccountsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -415,6 +423,14 @@ func (c *BillingAccountsListCall) PageSize(pageSize int64) *BillingAccountsListC
 // is returned.
 func (c *BillingAccountsListCall) PageToken(pageToken string) *BillingAccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BillingAccountsListCall) QuotaUser(quotaUser string) *BillingAccountsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -560,6 +576,14 @@ func (c *BillingAccountsProjectsListCall) PageToken(pageToken string) *BillingAc
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BillingAccountsProjectsListCall) QuotaUser(quotaUser string) *BillingAccountsProjectsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -695,6 +719,14 @@ type ProjectsGetBillingInfoCall struct {
 func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCall {
 	c := &ProjectsGetBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsGetBillingInfoCall) QuotaUser(quotaUser string) *ProjectsGetBillingInfoCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -847,6 +879,14 @@ func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *Pro
 	c := &ProjectsUpdateBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.projectbillinginfo = projectbillinginfo
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsUpdateBillingInfoCall) QuotaUser(quotaUser string) *ProjectsUpdateBillingInfoCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

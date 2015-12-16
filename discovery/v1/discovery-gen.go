@@ -786,6 +786,23 @@ func (r *ApisService) GetRest(api string, version string) *ApisGetRestCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ApisGetRestCall) QuotaUser(quotaUser string) *ApisGetRestCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ApisGetRestCall) UserIP(userIP string) *ApisGetRestCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -923,6 +940,23 @@ func (c *ApisListCall) Name(name string) *ApisListCall {
 // preferred version of an API.
 func (c *ApisListCall) Preferred(preferred bool) *ApisListCall {
 	c.urlParams_.Set("preferred", fmt.Sprint(preferred))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ApisListCall) QuotaUser(quotaUser string) *ApisListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ApisListCall) UserIP(userIP string) *ApisListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

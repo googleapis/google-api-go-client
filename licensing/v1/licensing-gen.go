@@ -200,6 +200,23 @@ func (r *LicenseAssignmentsService) Delete(productId string, skuId string, userI
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LicenseAssignmentsDeleteCall) QuotaUser(quotaUser string) *LicenseAssignmentsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LicenseAssignmentsDeleteCall) UserIP(userIP string) *LicenseAssignmentsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -301,6 +318,23 @@ func (r *LicenseAssignmentsService) Get(productId string, skuId string, userId s
 	c.productId = productId
 	c.skuId = skuId
 	c.userId = userId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LicenseAssignmentsGetCall) QuotaUser(quotaUser string) *LicenseAssignmentsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LicenseAssignmentsGetCall) UserIP(userIP string) *LicenseAssignmentsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -446,6 +480,23 @@ func (r *LicenseAssignmentsService) Insert(productId string, skuId string, licen
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LicenseAssignmentsInsertCall) QuotaUser(quotaUser string) *LicenseAssignmentsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LicenseAssignmentsInsertCall) UserIP(userIP string) *LicenseAssignmentsInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -587,6 +638,23 @@ func (c *LicenseAssignmentsListForProductCall) MaxResults(maxResults int64) *Lic
 // next page. By default server will return first page
 func (c *LicenseAssignmentsListForProductCall) PageToken(pageToken string) *LicenseAssignmentsListForProductCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LicenseAssignmentsListForProductCall) QuotaUser(quotaUser string) *LicenseAssignmentsListForProductCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LicenseAssignmentsListForProductCall) UserIP(userIP string) *LicenseAssignmentsListForProductCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -754,6 +822,23 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) PageToken(pageToken string)
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LicenseAssignmentsListForProductAndSkuCall) QuotaUser(quotaUser string) *LicenseAssignmentsListForProductAndSkuCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LicenseAssignmentsListForProductAndSkuCall) UserIP(userIP string) *LicenseAssignmentsListForProductAndSkuCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -912,6 +997,23 @@ func (r *LicenseAssignmentsService) Patch(productId string, skuId string, userId
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LicenseAssignmentsPatchCall) QuotaUser(quotaUser string) *LicenseAssignmentsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LicenseAssignmentsPatchCall) UserIP(userIP string) *LicenseAssignmentsPatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1049,6 +1151,23 @@ func (r *LicenseAssignmentsService) Update(productId string, skuId string, userI
 	c.skuId = skuId
 	c.userId = userId
 	c.licenseassignment = licenseassignment
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LicenseAssignmentsUpdateCall) QuotaUser(quotaUser string) *LicenseAssignmentsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LicenseAssignmentsUpdateCall) UserIP(userIP string) *LicenseAssignmentsUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

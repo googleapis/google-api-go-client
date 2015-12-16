@@ -1035,6 +1035,23 @@ func (r *ColumnService) Delete(tableId string, columnId string) *ColumnDeleteCal
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ColumnDeleteCall) QuotaUser(quotaUser string) *ColumnDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ColumnDeleteCall) UserIP(userIP string) *ColumnDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1125,6 +1142,23 @@ func (r *ColumnService) Get(tableId string, columnId string) *ColumnGetCall {
 	c := &ColumnGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	c.columnId = columnId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ColumnGetCall) QuotaUser(quotaUser string) *ColumnGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ColumnGetCall) UserIP(userIP string) *ColumnGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1261,6 +1295,23 @@ func (r *ColumnService) Insert(tableId string, column *Column) *ColumnInsertCall
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ColumnInsertCall) QuotaUser(quotaUser string) *ColumnInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ColumnInsertCall) UserIP(userIP string) *ColumnInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1391,6 +1442,23 @@ func (c *ColumnListCall) MaxResults(maxResults int64) *ColumnListCall {
 // specifying which result page to return.
 func (c *ColumnListCall) PageToken(pageToken string) *ColumnListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ColumnListCall) QuotaUser(quotaUser string) *ColumnListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ColumnListCall) UserIP(userIP string) *ColumnListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1534,6 +1602,23 @@ func (r *ColumnService) Patch(tableId string, columnId string, column *Column) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ColumnPatchCall) QuotaUser(quotaUser string) *ColumnPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ColumnPatchCall) UserIP(userIP string) *ColumnPatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1661,6 +1746,23 @@ func (r *ColumnService) Update(tableId string, columnId string, column *Column) 
 	c.tableId = tableId
 	c.columnId = columnId
 	c.column = column
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ColumnUpdateCall) QuotaUser(quotaUser string) *ColumnUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ColumnUpdateCall) UserIP(userIP string) *ColumnUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1803,11 +1905,28 @@ func (c *QuerySqlCall) Hdrs(hdrs bool) *QuerySqlCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *QuerySqlCall) QuotaUser(quotaUser string) *QuerySqlCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Typed sets the optional parameter "typed": Whether typed values are
 // returned in the (JSON) response: numbers for numeric values and
 // parsed geometries for KML values. Default is true.
 func (c *QuerySqlCall) Typed(typed bool) *QuerySqlCall {
 	c.urlParams_.Set("typed", fmt.Sprint(typed))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *QuerySqlCall) UserIP(userIP string) *QuerySqlCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1955,11 +2074,28 @@ func (c *QuerySqlGetCall) Hdrs(hdrs bool) *QuerySqlGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *QuerySqlGetCall) QuotaUser(quotaUser string) *QuerySqlGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Typed sets the optional parameter "typed": Whether typed values are
 // returned in the (JSON) response: numbers for numeric values and
 // parsed geometries for KML values. Default is true.
 func (c *QuerySqlGetCall) Typed(typed bool) *QuerySqlGetCall {
 	c.urlParams_.Set("typed", fmt.Sprint(typed))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *QuerySqlGetCall) UserIP(userIP string) *QuerySqlGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2112,6 +2248,23 @@ func (r *StyleService) Delete(tableId string, styleId int64) *StyleDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StyleDeleteCall) QuotaUser(quotaUser string) *StyleDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StyleDeleteCall) UserIP(userIP string) *StyleDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2203,6 +2356,23 @@ func (r *StyleService) Get(tableId string, styleId int64) *StyleGetCall {
 	c := &StyleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	c.styleId = styleId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StyleGetCall) QuotaUser(quotaUser string) *StyleGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StyleGetCall) UserIP(userIP string) *StyleGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2340,6 +2510,23 @@ func (r *StyleService) Insert(tableId string, stylesetting *StyleSetting) *Style
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StyleInsertCall) QuotaUser(quotaUser string) *StyleInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StyleInsertCall) UserIP(userIP string) *StyleInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2470,6 +2657,23 @@ func (c *StyleListCall) MaxResults(maxResults int64) *StyleListCall {
 // specifying which result page to return.
 func (c *StyleListCall) PageToken(pageToken string) *StyleListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StyleListCall) QuotaUser(quotaUser string) *StyleListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StyleListCall) UserIP(userIP string) *StyleListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2613,6 +2817,23 @@ func (r *StyleService) Patch(tableId string, styleId int64, stylesetting *StyleS
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StylePatchCall) QuotaUser(quotaUser string) *StylePatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StylePatchCall) UserIP(userIP string) *StylePatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2741,6 +2962,23 @@ func (r *StyleService) Update(tableId string, styleId int64, stylesetting *Style
 	c.tableId = tableId
 	c.styleId = styleId
 	c.stylesetting = stylesetting
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StyleUpdateCall) QuotaUser(quotaUser string) *StyleUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StyleUpdateCall) UserIP(userIP string) *StyleUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2878,6 +3116,23 @@ func (c *TableCopyCall) CopyPresentation(copyPresentation bool) *TableCopyCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableCopyCall) QuotaUser(quotaUser string) *TableCopyCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableCopyCall) UserIP(userIP string) *TableCopyCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2993,6 +3248,23 @@ func (r *TableService) Delete(tableId string) *TableDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableDeleteCall) QuotaUser(quotaUser string) *TableDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableDeleteCall) UserIP(userIP string) *TableDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3073,6 +3345,23 @@ type TableGetCall struct {
 func (r *TableService) Get(tableId string) *TableGetCall {
 	c := &TableGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableGetCall) QuotaUser(quotaUser string) *TableGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableGetCall) UserIP(userIP string) *TableGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3237,10 +3526,27 @@ func (c *TableImportRowsCall) IsStrict(isStrict bool) *TableImportRowsCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableImportRowsCall) QuotaUser(quotaUser string) *TableImportRowsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartLine sets the optional parameter "startLine": The index of the
 // first line from which to start importing, inclusive. Default is 0.
 func (c *TableImportRowsCall) StartLine(startLine int64) *TableImportRowsCall {
 	c.urlParams_.Set("startLine", fmt.Sprint(startLine))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableImportRowsCall) UserIP(userIP string) *TableImportRowsCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3487,6 +3793,23 @@ func (c *TableImportTableCall) Encoding(encoding string) *TableImportTableCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableImportTableCall) QuotaUser(quotaUser string) *TableImportTableCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableImportTableCall) UserIP(userIP string) *TableImportTableCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
 func (c *TableImportTableCall) Media(r io.Reader) *TableImportTableCall {
@@ -3691,6 +4014,23 @@ func (r *TableService) Insert(table *Table) *TableInsertCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableInsertCall) QuotaUser(quotaUser string) *TableInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableInsertCall) UserIP(userIP string) *TableInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3806,6 +4146,23 @@ func (c *TableListCall) MaxResults(maxResults int64) *TableListCall {
 // specifying which result page to return.
 func (c *TableListCall) PageToken(pageToken string) *TableListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableListCall) QuotaUser(quotaUser string) *TableListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableListCall) UserIP(userIP string) *TableListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3937,12 +4294,29 @@ func (r *TableService) Patch(tableId string, table *Table) *TablePatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TablePatchCall) QuotaUser(quotaUser string) *TablePatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ReplaceViewDefinition sets the optional parameter
 // "replaceViewDefinition": Whether the view definition is also updated.
 // The specified view definition replaces the existing one. Only a view
 // can be updated with a new definition.
 func (c *TablePatchCall) ReplaceViewDefinition(replaceViewDefinition bool) *TablePatchCall {
 	c.urlParams_.Set("replaceViewDefinition", fmt.Sprint(replaceViewDefinition))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TablePatchCall) UserIP(userIP string) *TablePatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4110,10 +4484,27 @@ func (c *TableReplaceRowsCall) IsStrict(isStrict bool) *TableReplaceRowsCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableReplaceRowsCall) QuotaUser(quotaUser string) *TableReplaceRowsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartLine sets the optional parameter "startLine": The index of the
 // first line from which to start importing, inclusive. Default is 0.
 func (c *TableReplaceRowsCall) StartLine(startLine int64) *TableReplaceRowsCall {
 	c.urlParams_.Set("startLine", fmt.Sprint(startLine))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableReplaceRowsCall) UserIP(userIP string) *TableReplaceRowsCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4343,12 +4734,29 @@ func (r *TableService) Update(tableId string, table *Table) *TableUpdateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TableUpdateCall) QuotaUser(quotaUser string) *TableUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ReplaceViewDefinition sets the optional parameter
 // "replaceViewDefinition": Whether the view definition is also updated.
 // The specified view definition replaces the existing one. Only a view
 // can be updated with a new definition.
 func (c *TableUpdateCall) ReplaceViewDefinition(replaceViewDefinition bool) *TableUpdateCall {
 	c.urlParams_.Set("replaceViewDefinition", fmt.Sprint(replaceViewDefinition))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TableUpdateCall) UserIP(userIP string) *TableUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4478,6 +4886,23 @@ func (r *TaskService) Delete(tableId string, taskId string) *TaskDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TaskDeleteCall) QuotaUser(quotaUser string) *TaskDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TaskDeleteCall) UserIP(userIP string) *TaskDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4568,6 +4993,23 @@ func (r *TaskService) Get(tableId string, taskId string) *TaskGetCall {
 	c := &TaskGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	c.taskId = taskId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TaskGetCall) QuotaUser(quotaUser string) *TaskGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TaskGetCall) UserIP(userIP string) *TaskGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4717,10 +5159,27 @@ func (c *TaskListCall) PageToken(pageToken string) *TaskListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TaskListCall) QuotaUser(quotaUser string) *TaskListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first result returned in the current page.
 func (c *TaskListCall) StartIndex(startIndex int64) *TaskListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TaskListCall) UserIP(userIP string) *TaskListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4867,6 +5326,23 @@ func (r *TemplateService) Delete(tableId string, templateId int64) *TemplateDele
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TemplateDeleteCall) QuotaUser(quotaUser string) *TemplateDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TemplateDeleteCall) UserIP(userIP string) *TemplateDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4958,6 +5434,23 @@ func (r *TemplateService) Get(tableId string, templateId int64) *TemplateGetCall
 	c := &TemplateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	c.templateId = templateId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TemplateGetCall) QuotaUser(quotaUser string) *TemplateGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TemplateGetCall) UserIP(userIP string) *TemplateGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5095,6 +5588,23 @@ func (r *TemplateService) Insert(tableId string, template *Template) *TemplateIn
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TemplateInsertCall) QuotaUser(quotaUser string) *TemplateInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TemplateInsertCall) UserIP(userIP string) *TemplateInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5225,6 +5735,23 @@ func (c *TemplateListCall) MaxResults(maxResults int64) *TemplateListCall {
 // specifying which results page to return.
 func (c *TemplateListCall) PageToken(pageToken string) *TemplateListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TemplateListCall) QuotaUser(quotaUser string) *TemplateListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TemplateListCall) UserIP(userIP string) *TemplateListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5368,6 +5895,23 @@ func (r *TemplateService) Patch(tableId string, templateId int64, template *Temp
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TemplatePatchCall) QuotaUser(quotaUser string) *TemplatePatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TemplatePatchCall) UserIP(userIP string) *TemplatePatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5496,6 +6040,23 @@ func (r *TemplateService) Update(tableId string, templateId int64, template *Tem
 	c.tableId = tableId
 	c.templateId = templateId
 	c.template = template
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TemplateUpdateCall) QuotaUser(quotaUser string) *TemplateUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TemplateUpdateCall) UserIP(userIP string) *TemplateUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

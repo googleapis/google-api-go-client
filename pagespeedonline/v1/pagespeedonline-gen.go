@@ -323,6 +323,15 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PagespeedapiRunpagespeedCall) QuotaUser(quotaUser string) *PagespeedapiRunpagespeedCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Rule sets the optional parameter "rule": A PageSpeed rule to run; if
 // none are given, all rules are run
 func (c *PagespeedapiRunpagespeedCall) Rule(rule ...string) *PagespeedapiRunpagespeedCall {
@@ -345,6 +354,14 @@ func (c *PagespeedapiRunpagespeedCall) Screenshot(screenshot bool) *Pagespeedapi
 //   "mobile" - Fetch and analyze the URL for mobile devices
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.Set("strategy", strategy)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PagespeedapiRunpagespeedCall) UserIp(userIp string) *PagespeedapiRunpagespeedCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

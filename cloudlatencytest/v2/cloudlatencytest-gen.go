@@ -244,6 +244,23 @@ func (r *StatscollectionService) Updateaggregatedstats(aggregatedstats *Aggregat
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StatscollectionUpdateaggregatedstatsCall) QuotaUser(quotaUser string) *StatscollectionUpdateaggregatedstatsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StatscollectionUpdateaggregatedstatsCall) UserIp(userIp string) *StatscollectionUpdateaggregatedstatsCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -346,6 +363,23 @@ type StatscollectionUpdatestatsCall struct {
 func (r *StatscollectionService) Updatestats(stats *Stats) *StatscollectionUpdatestatsCall {
 	c := &StatscollectionUpdatestatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.stats = stats
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StatscollectionUpdatestatsCall) QuotaUser(quotaUser string) *StatscollectionUpdatestatsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StatscollectionUpdatestatsCall) UserIp(userIp string) *StatscollectionUpdatestatsCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

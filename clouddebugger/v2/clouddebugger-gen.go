@@ -1075,6 +1075,14 @@ func (r *ControllerDebuggeesService) Register(registerdebuggeerequest *RegisterD
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ControllerDebuggeesRegisterCall) QuotaUser(quotaUser string) *ControllerDebuggeesRegisterCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1189,6 +1197,14 @@ type ControllerDebuggeesBreakpointsListCall struct {
 func (r *ControllerDebuggeesBreakpointsService) List(debuggeeId string) *ControllerDebuggeesBreakpointsListCall {
 	c := &ControllerDebuggeesBreakpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ControllerDebuggeesBreakpointsListCall) QuotaUser(quotaUser string) *ControllerDebuggeesBreakpointsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1356,6 +1372,14 @@ func (r *ControllerDebuggeesBreakpointsService) Update(debuggeeId string, id str
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ControllerDebuggeesBreakpointsUpdateCall) QuotaUser(quotaUser string) *ControllerDebuggeesBreakpointsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1497,6 +1521,14 @@ func (c *DebuggerDebuggeesListCall) Project(project string) *DebuggerDebuggeesLi
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DebuggerDebuggeesListCall) QuotaUser(quotaUser string) *DebuggerDebuggeesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1621,6 +1653,14 @@ func (r *DebuggerDebuggeesBreakpointsService) Delete(debuggeeId string, breakpoi
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DebuggerDebuggeesBreakpointsDeleteCall) QuotaUser(quotaUser string) *DebuggerDebuggeesBreakpointsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1739,6 +1779,14 @@ func (r *DebuggerDebuggeesBreakpointsService) Get(debuggeeId string, breakpointI
 	c := &DebuggerDebuggeesBreakpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
 	c.breakpointId = breakpointId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DebuggerDebuggeesBreakpointsGetCall) QuotaUser(quotaUser string) *DebuggerDebuggeesBreakpointsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1898,6 +1946,14 @@ func (c *DebuggerDebuggeesBreakpointsListCall) IncludeAllUsers(includeAllUsers b
 // Otherwise, it includes only active breakpoints.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DebuggerDebuggeesBreakpointsListCall) QuotaUser(quotaUser string) *DebuggerDebuggeesBreakpointsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2071,6 +2127,14 @@ func (r *DebuggerDebuggeesBreakpointsService) Set(debuggeeId string, breakpoint 
 	c := &DebuggerDebuggeesBreakpointsSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
 	c.breakpoint = breakpoint
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *DebuggerDebuggeesBreakpointsSetCall) QuotaUser(quotaUser string) *DebuggerDebuggeesBreakpointsSetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

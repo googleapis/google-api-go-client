@@ -1568,6 +1568,23 @@ func (r *PawsService) GetSpectrum(pawsgetspectrumrequest *PawsGetSpectrumRequest
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PawsGetSpectrumCall) QuotaUser(quotaUser string) *PawsGetSpectrumCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PawsGetSpectrumCall) UserIp(userIp string) *PawsGetSpectrumCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1671,6 +1688,23 @@ func (r *PawsService) GetSpectrumBatch(pawsgetspectrumbatchrequest *PawsGetSpect
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PawsGetSpectrumBatchCall) QuotaUser(quotaUser string) *PawsGetSpectrumBatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PawsGetSpectrumBatchCall) UserIp(userIp string) *PawsGetSpectrumBatchCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1771,6 +1805,23 @@ type PawsInitCall struct {
 func (r *PawsService) Init(pawsinitrequest *PawsInitRequest) *PawsInitCall {
 	c := &PawsInitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pawsinitrequest = pawsinitrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PawsInitCall) QuotaUser(quotaUser string) *PawsInitCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PawsInitCall) UserIp(userIp string) *PawsInitCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1880,6 +1931,23 @@ func (r *PawsService) NotifySpectrumUse(pawsnotifyspectrumuserequest *PawsNotify
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PawsNotifySpectrumUseCall) QuotaUser(quotaUser string) *PawsNotifySpectrumUseCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PawsNotifySpectrumUseCall) UserIp(userIp string) *PawsNotifySpectrumUseCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1981,6 +2049,23 @@ type PawsRegisterCall struct {
 func (r *PawsService) Register(pawsregisterrequest *PawsRegisterRequest) *PawsRegisterCall {
 	c := &PawsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pawsregisterrequest = pawsregisterrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PawsRegisterCall) QuotaUser(quotaUser string) *PawsRegisterCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PawsRegisterCall) UserIp(userIp string) *PawsRegisterCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2086,6 +2171,23 @@ type PawsVerifyDeviceCall struct {
 func (r *PawsService) VerifyDevice(pawsverifydevicerequest *PawsVerifyDeviceRequest) *PawsVerifyDeviceCall {
 	c := &PawsVerifyDeviceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pawsverifydevicerequest = pawsverifydevicerequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PawsVerifyDeviceCall) QuotaUser(quotaUser string) *PawsVerifyDeviceCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PawsVerifyDeviceCall) UserIp(userIp string) *PawsVerifyDeviceCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

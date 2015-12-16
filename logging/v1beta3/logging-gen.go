@@ -1139,6 +1139,14 @@ func (c *ProjectsLogServicesListCall) PageToken(pageToken string) *ProjectsLogSe
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogServicesListCall) QuotaUser(quotaUser string) *ProjectsLogServicesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1326,6 +1334,14 @@ func (c *ProjectsLogServicesIndexesListCall) PageToken(pageToken string) *Projec
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogServicesIndexesListCall) QuotaUser(quotaUser string) *ProjectsLogServicesIndexesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1486,6 +1502,14 @@ func (r *ProjectsLogServicesSinksService) Create(projectsId string, logServicesI
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogServicesSinksCreateCall) QuotaUser(quotaUser string) *ProjectsLogServicesSinksCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1618,6 +1642,14 @@ func (r *ProjectsLogServicesSinksService) Delete(projectsId string, logServicesI
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogServicesSinksDeleteCall) QuotaUser(quotaUser string) *ProjectsLogServicesSinksDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1746,6 +1778,14 @@ func (r *ProjectsLogServicesSinksService) Get(projectsId string, logServicesId s
 	c.projectsId = projectsId
 	c.logServicesId = logServicesId
 	c.sinksId = sinksId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogServicesSinksGetCall) QuotaUser(quotaUser string) *ProjectsLogServicesSinksGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1893,6 +1933,14 @@ func (r *ProjectsLogServicesSinksService) List(projectsId string, logServicesId 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogServicesSinksListCall) QuotaUser(quotaUser string) *ProjectsLogServicesSinksListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2030,6 +2078,14 @@ func (r *ProjectsLogServicesSinksService) Update(projectsId string, logServicesI
 	c.logServicesId = logServicesId
 	c.sinksId = sinksId
 	c.logsink = logsink
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogServicesSinksUpdateCall) QuotaUser(quotaUser string) *ProjectsLogServicesSinksUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2171,6 +2227,14 @@ func (r *ProjectsLogsService) Delete(projectsId string, logsId string) *Projects
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogsDeleteCall) QuotaUser(quotaUser string) *ProjectsLogsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2304,6 +2368,14 @@ func (c *ProjectsLogsListCall) PageSize(pageSize int64) *ProjectsLogsListCall {
 // ignored, and instead the previous `ListLogs` operation is continued.
 func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogsListCall) QuotaUser(quotaUser string) *ProjectsLogsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2485,6 +2557,14 @@ func (r *ProjectsLogsEntriesService) Write(projectsId string, logsId string, wri
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogsEntriesWriteCall) QuotaUser(quotaUser string) *ProjectsLogsEntriesWriteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2615,6 +2695,14 @@ func (r *ProjectsLogsSinksService) Create(projectsId string, logsId string, logs
 	c.projectsId = projectsId
 	c.logsId = logsId
 	c.logsink = logsink
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogsSinksCreateCall) QuotaUser(quotaUser string) *ProjectsLogsSinksCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2750,6 +2838,14 @@ func (r *ProjectsLogsSinksService) Delete(projectsId string, logsId string, sink
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogsSinksDeleteCall) QuotaUser(quotaUser string) *ProjectsLogsSinksDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2878,6 +2974,14 @@ func (r *ProjectsLogsSinksService) Get(projectsId string, logsId string, sinksId
 	c.projectsId = projectsId
 	c.logsId = logsId
 	c.sinksId = sinksId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogsSinksGetCall) QuotaUser(quotaUser string) *ProjectsLogsSinksGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3025,6 +3129,14 @@ func (r *ProjectsLogsSinksService) List(projectsId string, logsId string) *Proje
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogsSinksListCall) QuotaUser(quotaUser string) *ProjectsLogsSinksListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3165,6 +3277,14 @@ func (r *ProjectsLogsSinksService) Update(projectsId string, logsId string, sink
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsLogsSinksUpdateCall) QuotaUser(quotaUser string) *ProjectsLogsSinksUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3302,6 +3422,14 @@ func (r *ProjectsMetricsService) Create(projectsId string, logmetric *LogMetric)
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsMetricsCreateCall) QuotaUser(quotaUser string) *ProjectsMetricsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3424,6 +3552,14 @@ func (r *ProjectsMetricsService) Delete(projectsId string, metricsId string) *Pr
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsMetricsDeleteCall) QuotaUser(quotaUser string) *ProjectsMetricsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3543,6 +3679,14 @@ func (r *ProjectsMetricsService) Get(projectsId string, metricsId string) *Proje
 	c := &ProjectsMetricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
 	c.metricsId = metricsId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsMetricsGetCall) QuotaUser(quotaUser string) *ProjectsMetricsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -3697,6 +3841,14 @@ func (c *ProjectsMetricsListCall) PageToken(pageToken string) *ProjectsMetricsLi
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsMetricsListCall) QuotaUser(quotaUser string) *ProjectsMetricsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3837,6 +3989,14 @@ func (r *ProjectsMetricsService) Update(projectsId string, metricsId string, log
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsMetricsUpdateCall) QuotaUser(quotaUser string) *ProjectsMetricsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3968,6 +4128,14 @@ func (r *ProjectsSinksService) Create(projectsId string, logsink *LogSink) *Proj
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsSinksCreateCall) QuotaUser(quotaUser string) *ProjectsSinksCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4090,6 +4258,14 @@ func (r *ProjectsSinksService) Delete(projectsId string, sinksId string) *Projec
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsSinksDeleteCall) QuotaUser(quotaUser string) *ProjectsSinksDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4208,6 +4384,14 @@ func (r *ProjectsSinksService) Get(projectsId string, sinksId string) *ProjectsS
 	c := &ProjectsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
 	c.sinksId = sinksId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsSinksGetCall) QuotaUser(quotaUser string) *ProjectsSinksGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -4345,6 +4529,14 @@ func (r *ProjectsSinksService) List(projectsId string) *ProjectsSinksListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsSinksListCall) QuotaUser(quotaUser string) *ProjectsSinksListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4472,6 +4664,14 @@ func (r *ProjectsSinksService) Update(projectsId string, sinksId string, logsink
 	c.projectsId = projectsId
 	c.sinksId = sinksId
 	c.logsink = logsink
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsSinksUpdateCall) QuotaUser(quotaUser string) *ProjectsSinksUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

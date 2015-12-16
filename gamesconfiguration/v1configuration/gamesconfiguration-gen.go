@@ -541,6 +541,23 @@ func (r *AchievementConfigurationsService) Delete(achievementId string) *Achieve
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AchievementConfigurationsDeleteCall) QuotaUser(quotaUser string) *AchievementConfigurationsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AchievementConfigurationsDeleteCall) UserIp(userIp string) *AchievementConfigurationsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -622,6 +639,23 @@ type AchievementConfigurationsGetCall struct {
 func (r *AchievementConfigurationsService) Get(achievementId string) *AchievementConfigurationsGetCall {
 	c := &AchievementConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AchievementConfigurationsGetCall) QuotaUser(quotaUser string) *AchievementConfigurationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AchievementConfigurationsGetCall) UserIp(userIp string) *AchievementConfigurationsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -746,6 +780,23 @@ func (r *AchievementConfigurationsService) Insert(applicationId string, achievem
 	c := &AchievementConfigurationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
 	c.achievementconfiguration = achievementconfiguration
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AchievementConfigurationsInsertCall) QuotaUser(quotaUser string) *AchievementConfigurationsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AchievementConfigurationsInsertCall) UserIp(userIp string) *AchievementConfigurationsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -882,6 +933,23 @@ func (c *AchievementConfigurationsListCall) MaxResults(maxResults int64) *Achiev
 // by the previous request.
 func (c *AchievementConfigurationsListCall) PageToken(pageToken string) *AchievementConfigurationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AchievementConfigurationsListCall) QuotaUser(quotaUser string) *AchievementConfigurationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AchievementConfigurationsListCall) UserIp(userIp string) *AchievementConfigurationsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1024,6 +1092,23 @@ func (r *AchievementConfigurationsService) Patch(achievementId string, achieveme
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AchievementConfigurationsPatchCall) QuotaUser(quotaUser string) *AchievementConfigurationsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AchievementConfigurationsPatchCall) UserIp(userIp string) *AchievementConfigurationsPatchCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1142,6 +1227,23 @@ func (r *AchievementConfigurationsService) Update(achievementId string, achievem
 	c := &AchievementConfigurationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
 	c.achievementconfiguration = achievementconfiguration
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AchievementConfigurationsUpdateCall) QuotaUser(quotaUser string) *AchievementConfigurationsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AchievementConfigurationsUpdateCall) UserIp(userIp string) *AchievementConfigurationsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1268,6 +1370,23 @@ func (r *ImageConfigurationsService) Upload(resourceId string, imageType string)
 	c := &ImageConfigurationsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceId = resourceId
 	c.imageType = imageType
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ImageConfigurationsUploadCall) QuotaUser(quotaUser string) *ImageConfigurationsUploadCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ImageConfigurationsUploadCall) UserIp(userIp string) *ImageConfigurationsUploadCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1483,6 +1602,23 @@ func (r *LeaderboardConfigurationsService) Delete(leaderboardId string) *Leaderb
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LeaderboardConfigurationsDeleteCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LeaderboardConfigurationsDeleteCall) UserIp(userIp string) *LeaderboardConfigurationsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1564,6 +1700,23 @@ type LeaderboardConfigurationsGetCall struct {
 func (r *LeaderboardConfigurationsService) Get(leaderboardId string) *LeaderboardConfigurationsGetCall {
 	c := &LeaderboardConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LeaderboardConfigurationsGetCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LeaderboardConfigurationsGetCall) UserIp(userIp string) *LeaderboardConfigurationsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1688,6 +1841,23 @@ func (r *LeaderboardConfigurationsService) Insert(applicationId string, leaderbo
 	c := &LeaderboardConfigurationsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.applicationId = applicationId
 	c.leaderboardconfiguration = leaderboardconfiguration
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LeaderboardConfigurationsInsertCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LeaderboardConfigurationsInsertCall) UserIp(userIp string) *LeaderboardConfigurationsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1824,6 +1994,23 @@ func (c *LeaderboardConfigurationsListCall) MaxResults(maxResults int64) *Leader
 // by the previous request.
 func (c *LeaderboardConfigurationsListCall) PageToken(pageToken string) *LeaderboardConfigurationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LeaderboardConfigurationsListCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LeaderboardConfigurationsListCall) UserIp(userIp string) *LeaderboardConfigurationsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1966,6 +2153,23 @@ func (r *LeaderboardConfigurationsService) Patch(leaderboardId string, leaderboa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LeaderboardConfigurationsPatchCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LeaderboardConfigurationsPatchCall) UserIp(userIp string) *LeaderboardConfigurationsPatchCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2084,6 +2288,23 @@ func (r *LeaderboardConfigurationsService) Update(leaderboardId string, leaderbo
 	c := &LeaderboardConfigurationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
 	c.leaderboardconfiguration = leaderboardconfiguration
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LeaderboardConfigurationsUpdateCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LeaderboardConfigurationsUpdateCall) UserIp(userIp string) *LeaderboardConfigurationsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

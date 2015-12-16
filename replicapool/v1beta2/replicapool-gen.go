@@ -657,6 +657,23 @@ func (r *InstanceGroupManagersService) AbandonInstances(project string, zone str
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersAbandonInstancesCall) QuotaUser(quotaUser string) *InstanceGroupManagersAbandonInstancesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersAbandonInstancesCall) UserIp(userIp string) *InstanceGroupManagersAbandonInstancesCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -802,6 +819,23 @@ func (r *InstanceGroupManagersService) Delete(project string, zone string, insta
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersDeleteCall) QuotaUser(quotaUser string) *InstanceGroupManagersDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersDeleteCall) UserIp(userIp string) *InstanceGroupManagersDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -937,6 +971,23 @@ func (r *InstanceGroupManagersService) DeleteInstances(project string, zone stri
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagersdeleteinstancesrequest = instancegroupmanagersdeleteinstancesrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersDeleteInstancesCall) QuotaUser(quotaUser string) *InstanceGroupManagersDeleteInstancesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersDeleteInstancesCall) UserIp(userIp string) *InstanceGroupManagersDeleteInstancesCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1080,6 +1131,23 @@ func (r *InstanceGroupManagersService) Get(project string, zone string, instance
 	c.project = project
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersGetCall) QuotaUser(quotaUser string) *InstanceGroupManagersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersGetCall) UserIp(userIp string) *InstanceGroupManagersGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1230,6 +1298,23 @@ func (r *InstanceGroupManagersService) Insert(project string, zone string, size 
 	c.zone = zone
 	c.urlParams_.Set("size", fmt.Sprint(size))
 	c.instancegroupmanager = instancegroupmanager
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersInsertCall) QuotaUser(quotaUser string) *InstanceGroupManagersInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersInsertCall) UserIp(userIp string) *InstanceGroupManagersInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1398,6 +1483,23 @@ func (c *InstanceGroupManagersListCall) PageToken(pageToken string) *InstanceGro
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersListCall) QuotaUser(quotaUser string) *InstanceGroupManagersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersListCall) UserIp(userIp string) *InstanceGroupManagersListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1560,6 +1662,23 @@ func (r *InstanceGroupManagersService) RecreateInstances(project string, zone st
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersRecreateInstancesCall) QuotaUser(quotaUser string) *InstanceGroupManagersRecreateInstancesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersRecreateInstancesCall) UserIp(userIp string) *InstanceGroupManagersRecreateInstancesCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1706,6 +1825,23 @@ func (r *InstanceGroupManagersService) Resize(project string, zone string, insta
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersResizeCall) QuotaUser(quotaUser string) *InstanceGroupManagersResizeCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersResizeCall) UserIp(userIp string) *InstanceGroupManagersResizeCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1848,6 +1984,23 @@ func (r *InstanceGroupManagersService) SetInstanceTemplate(project string, zone 
 	c.zone = zone
 	c.instanceGroupManager = instanceGroupManager
 	c.instancegroupmanagerssetinstancetemplaterequest = instancegroupmanagerssetinstancetemplaterequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersSetInstanceTemplateCall) QuotaUser(quotaUser string) *InstanceGroupManagersSetInstanceTemplateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersSetInstanceTemplateCall) UserIp(userIp string) *InstanceGroupManagersSetInstanceTemplateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1997,6 +2150,23 @@ func (r *InstanceGroupManagersService) SetTargetPools(project string, zone strin
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *InstanceGroupManagersSetTargetPoolsCall) QuotaUser(quotaUser string) *InstanceGroupManagersSetTargetPoolsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *InstanceGroupManagersSetTargetPoolsCall) UserIp(userIp string) *InstanceGroupManagersSetTargetPoolsCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2137,6 +2307,23 @@ func (r *ZoneOperationsService) Get(project string, zone string, operation strin
 	c.project = project
 	c.zone = zone
 	c.operation = operation
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneOperationsGetCall) QuotaUser(quotaUser string) *ZoneOperationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneOperationsGetCall) UserIp(userIp string) *ZoneOperationsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2306,6 +2493,23 @@ func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsLis
 // previous list request.
 func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneOperationsListCall) QuotaUser(quotaUser string) *ZoneOperationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneOperationsListCall) UserIp(userIp string) *ZoneOperationsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

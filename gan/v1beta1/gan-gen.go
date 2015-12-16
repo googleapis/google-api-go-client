@@ -1160,6 +1160,23 @@ func (c *AdvertisersGetCall) AdvertiserId(advertiserId string) *AdvertisersGetCa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AdvertisersGetCall) QuotaUser(quotaUser string) *AdvertisersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AdvertisersGetCall) UserIp(userIp string) *AdvertisersGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1355,6 +1372,15 @@ func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AdvertisersListCall) QuotaUser(quotaUser string) *AdvertisersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RelationshipStatus sets the optional parameter "relationshipStatus":
 // Filters out all advertisers for which do not have the given
 // relationship status with the requesting publisher.
@@ -1371,6 +1397,14 @@ func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 // but they haven't yet decided to approve or decline your application.
 func (c *AdvertisersListCall) RelationshipStatus(relationshipStatus string) *AdvertisersListCall {
 	c.urlParams_.Set("relationshipStatus", relationshipStatus)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AdvertisersListCall) UserIp(userIp string) *AdvertisersListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1584,6 +1618,23 @@ func (c *CcOffersListCall) Advertiser(advertiser ...string) *CcOffersListCall {
 // offer.
 func (c *CcOffersListCall) Projection(projection string) *CcOffersListCall {
 	c.urlParams_.Set("projection", projection)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CcOffersListCall) QuotaUser(quotaUser string) *CcOffersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CcOffersListCall) UserIp(userIp string) *CcOffersListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1848,6 +1899,15 @@ func (c *EventsListCall) PublisherId(publisherId string) *EventsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EventsListCall) QuotaUser(quotaUser string) *EventsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Sku sets the optional parameter "sku": Caret(^) delimited list of
 // SKUs. Filters out all events that do not reference one of the given
 // SKU.
@@ -1883,6 +1943,14 @@ func (c *EventsListCall) Status(status string) *EventsListCall {
 // of events, such as magazine subscriptions.
 func (c *EventsListCall) Type(type_ string) *EventsListCall {
 	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EventsListCall) UserIp(userIp string) *EventsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2146,6 +2214,23 @@ func (r *LinksService) Get(role string, roleId string, linkId int64) *LinksGetCa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LinksGetCall) QuotaUser(quotaUser string) *LinksGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LinksGetCall) UserIp(userIp string) *LinksGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2291,6 +2376,23 @@ func (r *LinksService) Insert(role string, roleId string, link *Link) *LinksInse
 	c.role = role
 	c.roleId = roleId
 	c.link = link
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LinksInsertCall) QuotaUser(quotaUser string) *LinksInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LinksInsertCall) UserIp(userIp string) *LinksInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2510,6 +2612,15 @@ func (c *LinksListCall) PromotionType(promotionType ...string) *LinksListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LinksListCall) QuotaUser(quotaUser string) *LinksListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RelationshipStatus sets the optional parameter "relationshipStatus":
 // The status of the relationship.
 //
@@ -2540,6 +2651,14 @@ func (c *LinksListCall) StartDateMax(startDateMax string) *LinksListCall {
 // beginning of the start date range.
 func (c *LinksListCall) StartDateMin(startDateMin string) *LinksListCall {
 	c.urlParams_.Set("startDateMin", startDateMin)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LinksListCall) UserIp(userIp string) *LinksListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2801,6 +2920,23 @@ func (c *PublishersGetCall) PublisherId(publisherId string) *PublishersGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PublishersGetCall) QuotaUser(quotaUser string) *PublishersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PublishersGetCall) UserIp(userIp string) *PublishersGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2997,6 +3133,15 @@ func (c *PublishersListCall) PublisherCategory(publisherCategory string) *Publis
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PublishersListCall) QuotaUser(quotaUser string) *PublishersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RelationshipStatus sets the optional parameter "relationshipStatus":
 // Filters out all publishers for which do not have the given
 // relationship status with the requesting publisher.
@@ -3013,6 +3158,14 @@ func (c *PublishersListCall) PublisherCategory(publisherCategory string) *Publis
 // basis.
 func (c *PublishersListCall) RelationshipStatus(relationshipStatus string) *PublishersListCall {
 	c.urlParams_.Set("relationshipStatus", relationshipStatus)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PublishersListCall) UserIp(userIp string) *PublishersListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3276,6 +3429,15 @@ func (c *ReportsGetCall) PublisherId(publisherId ...string) *ReportsGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ReportsGetCall) QuotaUser(quotaUser string) *ReportsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartDate sets the optional parameter "startDate": The start date
 // (inclusive), in RFC 3339 format, for the report data to be returned.
 // Defaults to one day before endDate, if that is given, or yesterday.
@@ -3301,6 +3463,14 @@ func (c *ReportsGetCall) StartIndex(startIndex int64) *ReportsGetCall {
 //   "invalid" - Event is currently invalid.
 func (c *ReportsGetCall) Status(status string) *ReportsGetCall {
 	c.urlParams_.Set("status", status)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ReportsGetCall) UserIp(userIp string) *ReportsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

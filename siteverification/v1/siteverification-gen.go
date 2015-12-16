@@ -267,6 +267,23 @@ func (r *WebResourceService) Delete(id string) *WebResourceDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WebResourceDeleteCall) QuotaUser(quotaUser string) *WebResourceDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WebResourceDeleteCall) UserIp(userIp string) *WebResourceDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -347,6 +364,23 @@ type WebResourceGetCall struct {
 func (r *WebResourceService) Get(id string) *WebResourceGetCall {
 	c := &WebResourceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WebResourceGetCall) QuotaUser(quotaUser string) *WebResourceGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WebResourceGetCall) UserIp(userIp string) *WebResourceGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -474,6 +508,23 @@ func (r *WebResourceService) GetToken(siteverificationwebresourcegettokenrequest
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WebResourceGetTokenCall) QuotaUser(quotaUser string) *WebResourceGetTokenCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WebResourceGetTokenCall) UserIp(userIp string) *WebResourceGetTokenCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -580,6 +631,23 @@ func (r *WebResourceService) Insert(verificationMethod string, siteverificationw
 	c := &WebResourceInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("verificationMethod", verificationMethod)
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WebResourceInsertCall) QuotaUser(quotaUser string) *WebResourceInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WebResourceInsertCall) UserIp(userIp string) *WebResourceInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -700,6 +768,23 @@ func (r *WebResourceService) List() *WebResourceListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WebResourceListCall) QuotaUser(quotaUser string) *WebResourceListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WebResourceListCall) UserIp(userIp string) *WebResourceListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -810,6 +895,23 @@ func (r *WebResourceService) Patch(id string, siteverificationwebresourceresourc
 	c := &WebResourcePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WebResourcePatchCall) QuotaUser(quotaUser string) *WebResourcePatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WebResourcePatchCall) UserIp(userIp string) *WebResourcePatchCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -931,6 +1033,23 @@ func (r *WebResourceService) Update(id string, siteverificationwebresourceresour
 	c := &WebResourceUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
 	c.siteverificationwebresourceresource = siteverificationwebresourceresource
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WebResourceUpdateCall) QuotaUser(quotaUser string) *WebResourceUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WebResourceUpdateCall) UserIp(userIp string) *WebResourceUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

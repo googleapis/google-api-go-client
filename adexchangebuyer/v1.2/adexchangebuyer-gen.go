@@ -467,6 +467,23 @@ func (r *AccountsService) Get(id int64) *AccountsGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AccountsGetCall) QuotaUser(quotaUser string) *AccountsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AccountsGetCall) UserIp(userIp string) *AccountsGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -589,6 +606,23 @@ func (r *AccountsService) List() *AccountsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AccountsListCall) QuotaUser(quotaUser string) *AccountsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AccountsListCall) UserIp(userIp string) *AccountsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -698,6 +732,23 @@ func (r *AccountsService) Patch(id int64, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
 	c.account = account
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AccountsPatchCall) QuotaUser(quotaUser string) *AccountsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AccountsPatchCall) UserIp(userIp string) *AccountsPatchCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -822,6 +873,23 @@ func (r *AccountsService) Update(id int64, account *Account) *AccountsUpdateCall
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AccountsUpdateCall) QuotaUser(quotaUser string) *AccountsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AccountsUpdateCall) UserIp(userIp string) *AccountsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -942,6 +1010,23 @@ func (r *CreativesService) Get(accountId int64, buyerCreativeId string) *Creativ
 	c := &CreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
 	c.buyerCreativeId = buyerCreativeId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CreativesGetCall) QuotaUser(quotaUser string) *CreativesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CreativesGetCall) UserIp(userIp string) *CreativesGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1076,6 +1161,23 @@ func (r *CreativesService) Insert(creative *Creative) *CreativesInsertCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CreativesInsertCall) QuotaUser(quotaUser string) *CreativesInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CreativesInsertCall) UserIp(userIp string) *CreativesInsertCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1198,6 +1300,15 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CreativesListCall) QuotaUser(quotaUser string) *CreativesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StatusFilter sets the optional parameter "statusFilter": When
 // specified, only creatives having the given status are returned.
 //
@@ -1207,6 +1318,14 @@ func (c *CreativesListCall) PageToken(pageToken string) *CreativesListCall {
 //   "not_checked" - Creatives whose status is not yet checked.
 func (c *CreativesListCall) StatusFilter(statusFilter string) *CreativesListCall {
 	c.urlParams_.Set("statusFilter", statusFilter)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CreativesListCall) UserIp(userIp string) *CreativesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

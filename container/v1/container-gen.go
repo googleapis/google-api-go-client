@@ -553,6 +553,14 @@ func (r *ProjectsZonesService) GetServerconfig(projectId string, zone string) *P
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsZonesGetServerconfigCall) QuotaUser(quotaUser string) *ProjectsZonesGetServerconfigCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -695,6 +703,14 @@ func (r *ProjectsZonesClustersService) Create(projectId string, zone string, cre
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsZonesClustersCreateCall) QuotaUser(quotaUser string) *ProjectsZonesClustersCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -827,6 +843,14 @@ func (r *ProjectsZonesClustersService) Delete(projectId string, zone string, clu
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsZonesClustersDeleteCall) QuotaUser(quotaUser string) *ProjectsZonesClustersDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -954,6 +978,14 @@ func (r *ProjectsZonesClustersService) Get(projectId string, zone string, cluste
 	c.projectId = projectId
 	c.zone = zone
 	c.clusterId = clusterId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsZonesClustersGetCall) QuotaUser(quotaUser string) *ProjectsZonesClustersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1099,6 +1131,14 @@ func (r *ProjectsZonesClustersService) List(projectId string, zone string) *Proj
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsZonesClustersListCall) QuotaUser(quotaUser string) *ProjectsZonesClustersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1232,6 +1272,14 @@ func (r *ProjectsZonesClustersService) Update(projectId string, zone string, clu
 	c.zone = zone
 	c.clusterId = clusterId
 	c.updateclusterrequest = updateclusterrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsZonesClustersUpdateCall) QuotaUser(quotaUser string) *ProjectsZonesClustersUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1374,6 +1422,14 @@ func (r *ProjectsZonesOperationsService) Get(projectId string, zone string, oper
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsZonesOperationsGetCall) QuotaUser(quotaUser string) *ProjectsZonesOperationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1513,6 +1569,14 @@ func (r *ProjectsZonesOperationsService) List(projectId string, zone string) *Pr
 	c := &ProjectsZonesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.zone = zone
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsZonesOperationsListCall) QuotaUser(quotaUser string) *ProjectsZonesOperationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

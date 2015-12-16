@@ -363,6 +363,23 @@ func (r *HostedmodelsService) Predict(hostedModelName string, input *Input) *Hos
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *HostedmodelsPredictCall) QuotaUser(quotaUser string) *HostedmodelsPredictCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *HostedmodelsPredictCall) UserIp(userIp string) *HostedmodelsPredictCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -481,6 +498,23 @@ func (r *TrainingService) Delete(data string) *TrainingDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TrainingDeleteCall) QuotaUser(quotaUser string) *TrainingDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TrainingDeleteCall) UserIp(userIp string) *TrainingDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -561,6 +595,23 @@ type TrainingGetCall struct {
 func (r *TrainingService) Get(data string) *TrainingGetCall {
 	c := &TrainingGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.data = data
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TrainingGetCall) QuotaUser(quotaUser string) *TrainingGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TrainingGetCall) UserIp(userIp string) *TrainingGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -686,6 +737,23 @@ func (r *TrainingService) Insert(training *Training) *TrainingInsertCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TrainingInsertCall) QuotaUser(quotaUser string) *TrainingInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TrainingInsertCall) UserIp(userIp string) *TrainingInsertCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -793,6 +861,23 @@ func (r *TrainingService) Predict(data string, input *Input) *TrainingPredictCal
 	c := &TrainingPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.data = data
 	c.input = input
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TrainingPredictCall) QuotaUser(quotaUser string) *TrainingPredictCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TrainingPredictCall) UserIp(userIp string) *TrainingPredictCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -913,6 +998,23 @@ func (r *TrainingService) Update(data string, update *Update) *TrainingUpdateCal
 	c := &TrainingUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.data = data
 	c.update = update
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TrainingUpdateCall) QuotaUser(quotaUser string) *TrainingUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TrainingUpdateCall) UserIp(userIp string) *TrainingUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

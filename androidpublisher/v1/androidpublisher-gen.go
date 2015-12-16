@@ -143,6 +143,23 @@ func (r *PurchasesService) Cancel(packageName string, subscriptionId string, tok
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PurchasesCancelCall) QuotaUser(quotaUser string) *PurchasesCancelCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PurchasesCancelCall) UserIp(userIp string) *PurchasesCancelCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -244,6 +261,23 @@ func (r *PurchasesService) Get(packageName string, subscriptionId string, token 
 	c.packageName = packageName
 	c.subscriptionId = subscriptionId
 	c.token = token
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PurchasesGetCall) QuotaUser(quotaUser string) *PurchasesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PurchasesGetCall) UserIp(userIp string) *PurchasesGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

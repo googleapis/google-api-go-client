@@ -874,6 +874,14 @@ func (c *AccountsAvailsListCall) PphNames(pphNames ...string) *AccountsAvailsLis
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AccountsAvailsListCall) QuotaUser(quotaUser string) *AccountsAvailsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
 func (c *AccountsAvailsListCall) StudioNames(studioNames ...string) *AccountsAvailsListCall {
@@ -1075,6 +1083,14 @@ func (r *AccountsExperienceLocalesService) Get(accountId string, elId string) *A
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AccountsExperienceLocalesGetCall) QuotaUser(quotaUser string) *AccountsExperienceLocalesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1249,6 +1265,14 @@ func (c *AccountsExperienceLocalesListCall) PageToken(pageToken string) *Account
 // rules_ for info about this field.
 func (c *AccountsExperienceLocalesListCall) PphNames(pphNames ...string) *AccountsExperienceLocalesListCall {
 	c.urlParams_.SetMulti("pphNames", append([]string{}, pphNames...))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AccountsExperienceLocalesListCall) QuotaUser(quotaUser string) *AccountsExperienceLocalesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1465,6 +1489,14 @@ func (r *AccountsOrdersService) Get(accountId string, orderId string) *AccountsO
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AccountsOrdersGetCall) QuotaUser(quotaUser string) *AccountsOrdersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1630,6 +1662,14 @@ func (c *AccountsOrdersListCall) PageToken(pageToken string) *AccountsOrdersList
 // rules_ for info about this field.
 func (c *AccountsOrdersListCall) PphNames(pphNames ...string) *AccountsOrdersListCall {
 	c.urlParams_.SetMulti("pphNames", append([]string{}, pphNames...))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AccountsOrdersListCall) QuotaUser(quotaUser string) *AccountsOrdersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1863,6 +1903,14 @@ func (c *AccountsStoreInfosListCall) PphNames(pphNames ...string) *AccountsStore
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AccountsStoreInfosListCall) QuotaUser(quotaUser string) *AccountsStoreInfosListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StudioNames sets the optional parameter "studioNames": See _List
 // methods rules_ for info about this field.
 func (c *AccountsStoreInfosListCall) StudioNames(studioNames ...string) *AccountsStoreInfosListCall {
@@ -2056,6 +2104,14 @@ func (r *AccountsStoreInfosCountryService) Get(accountId string, videoId string,
 	c.accountId = accountId
 	c.videoId = videoId
 	c.country = country
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *AccountsStoreInfosCountryGetCall) QuotaUser(quotaUser string) *AccountsStoreInfosCountryGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

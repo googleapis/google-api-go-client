@@ -270,6 +270,14 @@ func (r *ProjectsService) PatchTraces(projectId string, traces *Traces) *Project
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsPatchTracesCall) QuotaUser(quotaUser string) *ProjectsPatchTracesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -388,6 +396,14 @@ func (r *ProjectsTracesService) Get(projectId string, traceId string) *ProjectsT
 	c := &ProjectsTracesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.traceId = traceId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsTracesGetCall) QuotaUser(quotaUser string) *ProjectsTracesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -564,6 +580,14 @@ func (c *ProjectsTracesListCall) PageSize(pageSize int64) *ProjectsTracesListCal
 // `next_page_token` field from a previous request.
 func (c *ProjectsTracesListCall) PageToken(pageToken string) *ProjectsTracesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *ProjectsTracesListCall) QuotaUser(quotaUser string) *ProjectsTracesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

@@ -454,6 +454,23 @@ func (r *RegionViewsService) Addresources(projectName string, region string, res
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RegionViewsAddresourcesCall) QuotaUser(quotaUser string) *RegionViewsAddresourcesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RegionViewsAddresourcesCall) UserIp(userIp string) *RegionViewsAddresourcesCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -567,6 +584,23 @@ func (r *RegionViewsService) Delete(projectName string, region string, resourceV
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RegionViewsDeleteCall) QuotaUser(quotaUser string) *RegionViewsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RegionViewsDeleteCall) UserIp(userIp string) *RegionViewsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -669,6 +703,23 @@ func (r *RegionViewsService) Get(projectName string, region string, resourceView
 	c.projectName = projectName
 	c.region = region
 	c.resourceViewName = resourceViewName
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RegionViewsGetCall) QuotaUser(quotaUser string) *RegionViewsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RegionViewsGetCall) UserIp(userIp string) *RegionViewsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -819,6 +870,23 @@ func (r *RegionViewsService) Insert(projectName string, region string, resourcev
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RegionViewsInsertCall) QuotaUser(quotaUser string) *RegionViewsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RegionViewsInsertCall) UserIp(userIp string) *RegionViewsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -964,6 +1032,23 @@ func (c *RegionViewsListCall) MaxResults(maxResults int64) *RegionViewsListCall 
 // request.
 func (c *RegionViewsListCall) PageToken(pageToken string) *RegionViewsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RegionViewsListCall) QuotaUser(quotaUser string) *RegionViewsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RegionViewsListCall) UserIp(userIp string) *RegionViewsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1137,6 +1222,23 @@ func (c *RegionViewsListresourcesCall) PageToken(pageToken string) *RegionViewsL
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RegionViewsListresourcesCall) QuotaUser(quotaUser string) *RegionViewsListresourcesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RegionViewsListresourcesCall) UserIp(userIp string) *RegionViewsListresourcesCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1287,6 +1389,23 @@ func (r *RegionViewsService) Removeresources(projectName string, region string, 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RegionViewsRemoveresourcesCall) QuotaUser(quotaUser string) *RegionViewsRemoveresourcesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RegionViewsRemoveresourcesCall) UserIp(userIp string) *RegionViewsRemoveresourcesCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1399,6 +1518,23 @@ func (r *ZoneViewsService) Addresources(projectName string, zone string, resourc
 	c.zone = zone
 	c.resourceViewName = resourceViewName
 	c.zoneviewsaddresourcesrequest = zoneviewsaddresourcesrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneViewsAddresourcesCall) QuotaUser(quotaUser string) *ZoneViewsAddresourcesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneViewsAddresourcesCall) UserIp(userIp string) *ZoneViewsAddresourcesCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1515,6 +1651,23 @@ func (r *ZoneViewsService) Delete(projectName string, zone string, resourceViewN
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneViewsDeleteCall) QuotaUser(quotaUser string) *ZoneViewsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneViewsDeleteCall) UserIp(userIp string) *ZoneViewsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1617,6 +1770,23 @@ func (r *ZoneViewsService) Get(projectName string, zone string, resourceViewName
 	c.projectName = projectName
 	c.zone = zone
 	c.resourceViewName = resourceViewName
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneViewsGetCall) QuotaUser(quotaUser string) *ZoneViewsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneViewsGetCall) UserIp(userIp string) *ZoneViewsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1767,6 +1937,23 @@ func (r *ZoneViewsService) Insert(projectName string, zone string, resourceview 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneViewsInsertCall) QuotaUser(quotaUser string) *ZoneViewsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneViewsInsertCall) UserIp(userIp string) *ZoneViewsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1912,6 +2099,23 @@ func (c *ZoneViewsListCall) MaxResults(maxResults int64) *ZoneViewsListCall {
 // request.
 func (c *ZoneViewsListCall) PageToken(pageToken string) *ZoneViewsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneViewsListCall) QuotaUser(quotaUser string) *ZoneViewsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneViewsListCall) UserIp(userIp string) *ZoneViewsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2085,6 +2289,23 @@ func (c *ZoneViewsListresourcesCall) PageToken(pageToken string) *ZoneViewsListr
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneViewsListresourcesCall) QuotaUser(quotaUser string) *ZoneViewsListresourcesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneViewsListresourcesCall) UserIp(userIp string) *ZoneViewsListresourcesCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2232,6 +2453,23 @@ func (r *ZoneViewsService) Removeresources(projectName string, zone string, reso
 	c.zone = zone
 	c.resourceViewName = resourceViewName
 	c.zoneviewsremoveresourcesrequest = zoneviewsremoveresourcesrequest
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneViewsRemoveresourcesCall) QuotaUser(quotaUser string) *ZoneViewsRemoveresourcesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneViewsRemoveresourcesCall) UserIp(userIp string) *ZoneViewsRemoveresourcesCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

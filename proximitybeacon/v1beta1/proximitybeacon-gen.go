@@ -772,6 +772,14 @@ func (r *BeaconinfoService) Getforobserved(getinfoforobservedbeaconsrequest *Get
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconinfoGetforobservedCall) QuotaUser(quotaUser string) *BeaconinfoGetforobservedCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -875,6 +883,14 @@ type BeaconsActivateCall struct {
 func (r *BeaconsService) Activate(beaconName string) *BeaconsActivateCall {
 	c := &BeaconsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsActivateCall) QuotaUser(quotaUser string) *BeaconsActivateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -989,6 +1005,14 @@ func (r *BeaconsService) Deactivate(beaconName string) *BeaconsDeactivateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsDeactivateCall) QuotaUser(quotaUser string) *BeaconsDeactivateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1099,6 +1123,14 @@ func (r *BeaconsService) Decommission(beaconName string) *BeaconsDecommissionCal
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsDecommissionCall) QuotaUser(quotaUser string) *BeaconsDecommissionCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1204,6 +1236,14 @@ type BeaconsGetCall struct {
 func (r *BeaconsService) Get(beaconName string) *BeaconsGetCall {
 	c := &BeaconsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsGetCall) QuotaUser(quotaUser string) *BeaconsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1395,6 +1435,14 @@ func (c *BeaconsListCall) Q(q string) *BeaconsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsListCall) QuotaUser(quotaUser string) *BeaconsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1521,6 +1569,14 @@ func (r *BeaconsService) Register(beacon *Beacon) *BeaconsRegisterCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsRegisterCall) QuotaUser(quotaUser string) *BeaconsRegisterCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1628,6 +1684,14 @@ func (r *BeaconsService) Update(beaconName string, beacon *Beacon) *BeaconsUpdat
 	c := &BeaconsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
 	c.beacon = beacon
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsUpdateCall) QuotaUser(quotaUser string) *BeaconsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1761,6 +1825,14 @@ func (c *BeaconsAttachmentsBatchDeleteCall) NamespacedType(namespacedType string
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsAttachmentsBatchDeleteCall) QuotaUser(quotaUser string) *BeaconsAttachmentsBatchDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1880,6 +1952,14 @@ func (r *BeaconsAttachmentsService) Create(beaconName string, beaconattachment *
 	c := &BeaconsAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.beaconName = beaconName
 	c.beaconattachment = beaconattachment
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsAttachmentsCreateCall) QuotaUser(quotaUser string) *BeaconsAttachmentsCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2003,6 +2083,14 @@ func (r *BeaconsAttachmentsService) Delete(attachmentName string) *BeaconsAttach
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsAttachmentsDeleteCall) QuotaUser(quotaUser string) *BeaconsAttachmentsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2122,6 +2210,14 @@ func (r *BeaconsAttachmentsService) List(beaconName string) *BeaconsAttachmentsL
 // namespaces".
 func (c *BeaconsAttachmentsListCall) NamespacedType(namespacedType string) *BeaconsAttachmentsListCall {
 	c.urlParams_.Set("namespacedType", namespacedType)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsAttachmentsListCall) QuotaUser(quotaUser string) *BeaconsAttachmentsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2281,6 +2377,14 @@ func (c *BeaconsDiagnosticsListCall) PageToken(pageToken string) *BeaconsDiagnos
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *BeaconsDiagnosticsListCall) QuotaUser(quotaUser string) *BeaconsDiagnosticsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2421,6 +2525,14 @@ type NamespacesListCall struct {
 // project.
 func (r *NamespacesService) List() *NamespacesListCall {
 	c := &NamespacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+func (c *NamespacesListCall) QuotaUser(quotaUser string) *NamespacesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 

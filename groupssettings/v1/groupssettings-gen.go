@@ -229,6 +229,23 @@ func (r *GroupsService) Get(groupUniqueId string) *GroupsGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GroupsGetCall) QuotaUser(quotaUser string) *GroupsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GroupsGetCall) UserIp(userIp string) *GroupsGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -354,6 +371,23 @@ func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatch
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GroupsPatchCall) QuotaUser(quotaUser string) *GroupsPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GroupsPatchCall) UserIp(userIp string) *GroupsPatchCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -471,6 +505,23 @@ func (r *GroupsService) Update(groupUniqueId string, groups *Groups) *GroupsUpda
 	c := &GroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
 	c.groups = groups
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GroupsUpdateCall) QuotaUser(quotaUser string) *GroupsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GroupsUpdateCall) UserIp(userIp string) *GroupsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

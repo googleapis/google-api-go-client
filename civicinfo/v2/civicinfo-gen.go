@@ -998,6 +998,23 @@ func (c *DivisionsSearchCall) Query(query string) *DivisionsSearchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DivisionsSearchCall) QuotaUser(quotaUser string) *DivisionsSearchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DivisionsSearchCall) UserIp(userIp string) *DivisionsSearchCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1107,6 +1124,23 @@ type ElectionsElectionQueryCall struct {
 // ElectionQuery: List of available elections to query.
 func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
 	c := &ElectionsElectionQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ElectionsElectionQueryCall) QuotaUser(quotaUser string) *ElectionsElectionQueryCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ElectionsElectionQueryCall) UserIp(userIp string) *ElectionsElectionQueryCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1229,6 +1263,23 @@ func (c *ElectionsVoterInfoQueryCall) ElectionId(electionId int64) *ElectionsVot
 // true, only data from official state sources will be returned.
 func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *ElectionsVoterInfoQueryCall {
 	c.urlParams_.Set("officialOnly", fmt.Sprint(officialOnly))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ElectionsVoterInfoQueryCall) QuotaUser(quotaUser string) *ElectionsVoterInfoQueryCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ElectionsVoterInfoQueryCall) UserIp(userIp string) *ElectionsVoterInfoQueryCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1397,6 +1448,15 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RepresentativesRepresentativeInfoByAddressCall) QuotaUser(quotaUser string) *RepresentativesRepresentativeInfoByAddressCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Roles sets the optional parameter "roles": A list of office roles to
 // filter by. Only offices fulfilling one of these roles will be
 // returned. Divisions that don't contain a matching office will not be
@@ -1416,6 +1476,14 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string
 //   "specialPurposeOfficer"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RepresentativesRepresentativeInfoByAddressCall) UserIp(userIp string) *RepresentativesRepresentativeInfoByAddressCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1620,6 +1688,15 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels ...strin
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RepresentativesRepresentativeInfoByDivisionCall) QuotaUser(quotaUser string) *RepresentativesRepresentativeInfoByDivisionCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Recursive sets the optional parameter "recursive": If true,
 // information about all divisions contained in the division requested
 // will be included as well. For example, if querying
@@ -1649,6 +1726,14 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 //   "specialPurposeOfficer"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RepresentativesRepresentativeInfoByDivisionCall) UserIp(userIp string) *RepresentativesRepresentativeInfoByDivisionCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

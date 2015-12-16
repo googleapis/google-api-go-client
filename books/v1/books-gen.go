@@ -3395,10 +3395,27 @@ func (r *BookshelvesService) Get(userId string, shelf string) *BookshelvesGetCal
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *BookshelvesGetCall) QuotaUser(quotaUser string) *BookshelvesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *BookshelvesGetCall) Source(source string) *BookshelvesGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *BookshelvesGetCall) UserIp(userIp string) *BookshelvesGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3538,10 +3555,27 @@ func (r *BookshelvesService) List(userId string) *BookshelvesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *BookshelvesListCall) QuotaUser(quotaUser string) *BookshelvesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *BookshelvesListCall) Source(source string) *BookshelvesListCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *BookshelvesListCall) UserIp(userIp string) *BookshelvesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3683,6 +3717,15 @@ func (c *BookshelvesVolumesListCall) MaxResults(maxResults int64) *BookshelvesVo
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *BookshelvesVolumesListCall) QuotaUser(quotaUser string) *BookshelvesVolumesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *BookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *BookshelvesVolumesListCall {
@@ -3701,6 +3744,14 @@ func (c *BookshelvesVolumesListCall) Source(source string) *BookshelvesVolumesLi
 // first element to return (starts at 0)
 func (c *BookshelvesVolumesListCall) StartIndex(startIndex int64) *BookshelvesVolumesListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *BookshelvesVolumesListCall) UserIp(userIp string) *BookshelvesVolumesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3877,9 +3928,26 @@ func (c *CloudloadingAddBookCall) Name(name string) *CloudloadingAddBookCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CloudloadingAddBookCall) QuotaUser(quotaUser string) *CloudloadingAddBookCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // UploadClientToken sets the optional parameter "upload_client_token":
 func (c *CloudloadingAddBookCall) UploadClientToken(uploadClientToken string) *CloudloadingAddBookCall {
 	c.urlParams_.Set("upload_client_token", uploadClientToken)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CloudloadingAddBookCall) UserIp(userIp string) *CloudloadingAddBookCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3999,6 +4067,23 @@ func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBoo
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CloudloadingDeleteBookCall) QuotaUser(quotaUser string) *CloudloadingDeleteBookCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CloudloadingDeleteBookCall) UserIp(userIp string) *CloudloadingDeleteBookCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4076,6 +4161,23 @@ type CloudloadingUpdateBookCall struct {
 func (r *CloudloadingService) UpdateBook(bookscloudloadingresource *BooksCloudloadingResource) *CloudloadingUpdateBookCall {
 	c := &CloudloadingUpdateBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.bookscloudloadingresource = bookscloudloadingresource
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CloudloadingUpdateBookCall) QuotaUser(quotaUser string) *CloudloadingUpdateBookCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CloudloadingUpdateBookCall) UserIp(userIp string) *CloudloadingUpdateBookCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4182,6 +4284,23 @@ type DictionaryListOfflineMetadataCall struct {
 func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListOfflineMetadataCall {
 	c := &DictionaryListOfflineMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("cpksver", cpksver)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DictionaryListOfflineMetadataCall) QuotaUser(quotaUser string) *DictionaryListOfflineMetadataCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DictionaryListOfflineMetadataCall) UserIp(userIp string) *DictionaryListOfflineMetadataCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4315,10 +4434,27 @@ func (c *LayersGetCall) ContentVersion(contentVersion string) *LayersGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LayersGetCall) QuotaUser(quotaUser string) *LayersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersGetCall) Source(source string) *LayersGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LayersGetCall) UserIp(userIp string) *LayersGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4484,10 +4620,27 @@ func (c *LayersListCall) PageToken(pageToken string) *LayersListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LayersListCall) QuotaUser(quotaUser string) *LayersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersListCall) Source(source string) *LayersListCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LayersListCall) UserIp(userIp string) *LayersListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4665,6 +4818,15 @@ func (c *LayersAnnotationDataGetCall) Locale(locale string) *LayersAnnotationDat
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LayersAnnotationDataGetCall) QuotaUser(quotaUser string) *LayersAnnotationDataGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Scale sets the optional parameter "scale": The requested scale for
 // the image.
 func (c *LayersAnnotationDataGetCall) Scale(scale int64) *LayersAnnotationDataGetCall {
@@ -4676,6 +4838,14 @@ func (c *LayersAnnotationDataGetCall) Scale(scale int64) *LayersAnnotationDataGe
 // originator of this request.
 func (c *LayersAnnotationDataGetCall) Source(source string) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LayersAnnotationDataGetCall) UserIp(userIp string) *LayersAnnotationDataGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4906,6 +5076,15 @@ func (c *LayersAnnotationDataListCall) PageToken(pageToken string) *LayersAnnota
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LayersAnnotationDataListCall) QuotaUser(quotaUser string) *LayersAnnotationDataListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Scale sets the optional parameter "scale": The requested scale for
 // the image.
 func (c *LayersAnnotationDataListCall) Scale(scale int64) *LayersAnnotationDataListCall {
@@ -4933,6 +5112,14 @@ func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnno
 // (inclusive).
 func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LayersAnnotationDataListCall) UserIp(userIp string) *LayersAnnotationDataListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -5151,10 +5338,27 @@ func (c *LayersVolumeAnnotationsGetCall) Locale(locale string) *LayersVolumeAnno
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LayersVolumeAnnotationsGetCall) QuotaUser(quotaUser string) *LayersVolumeAnnotationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersVolumeAnnotationsGetCall) Source(source string) *LayersVolumeAnnotationsGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LayersVolumeAnnotationsGetCall) UserIp(userIp string) *LayersVolumeAnnotationsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -5346,6 +5550,15 @@ func (c *LayersVolumeAnnotationsListCall) PageToken(pageToken string) *LayersVol
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LayersVolumeAnnotationsListCall) QuotaUser(quotaUser string) *LayersVolumeAnnotationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowDeleted sets the optional parameter "showDeleted": Set to true to
 // return deleted annotations. updatedMin must be in the request to use
 // this. Defaults to false.
@@ -5388,6 +5601,14 @@ func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersV
 // (inclusive).
 func (c *LayersVolumeAnnotationsListCall) UpdatedMin(updatedMin string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LayersVolumeAnnotationsListCall) UserIp(userIp string) *LayersVolumeAnnotationsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -5598,6 +5819,23 @@ func (r *MyconfigService) GetUserSettings() *MyconfigGetUserSettingsCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MyconfigGetUserSettingsCall) QuotaUser(quotaUser string) *MyconfigGetUserSettingsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MyconfigGetUserSettingsCall) UserIp(userIp string) *MyconfigGetUserSettingsCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5714,10 +5952,27 @@ func (c *MyconfigReleaseDownloadAccessCall) Locale(locale string) *MyconfigRelea
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MyconfigReleaseDownloadAccessCall) QuotaUser(quotaUser string) *MyconfigReleaseDownloadAccessCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigReleaseDownloadAccessCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MyconfigReleaseDownloadAccessCall) UserIp(userIp string) *MyconfigReleaseDownloadAccessCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -5864,6 +6119,23 @@ func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigR
 // codes for message localization, i.e. en_US.
 func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("locale", locale)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MyconfigRequestAccessCall) QuotaUser(quotaUser string) *MyconfigRequestAccessCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MyconfigRequestAccessCall) UserIp(userIp string) *MyconfigRequestAccessCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -6034,10 +6306,27 @@ func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolu
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MyconfigSyncVolumeLicensesCall) QuotaUser(quotaUser string) *MyconfigSyncVolumeLicensesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.Set("showPreorders", fmt.Sprint(showPreorders))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MyconfigSyncVolumeLicensesCall) UserIp(userIp string) *MyconfigSyncVolumeLicensesCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -6199,6 +6488,23 @@ func (r *MyconfigService) UpdateUserSettings(usersettings *Usersettings) *Myconf
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MyconfigUpdateUserSettingsCall) QuotaUser(quotaUser string) *MyconfigUpdateUserSettingsCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MyconfigUpdateUserSettingsCall) UserIp(userIp string) *MyconfigUpdateUserSettingsCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6304,10 +6610,27 @@ func (r *MylibraryAnnotationsService) Delete(annotationId string) *MylibraryAnno
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryAnnotationsDeleteCall) QuotaUser(quotaUser string) *MylibraryAnnotationsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsDeleteCall) Source(source string) *MylibraryAnnotationsDeleteCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryAnnotationsDeleteCall) UserIp(userIp string) *MylibraryAnnotationsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -6405,6 +6728,15 @@ func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnot
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryAnnotationsInsertCall) QuotaUser(quotaUser string) *MylibraryAnnotationsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowOnlySummaryInResponse sets the optional parameter
 // "showOnlySummaryInResponse": Requests that only the summary of the
 // specified layer be provided in the response.
@@ -6417,6 +6749,14 @@ func (c *MylibraryAnnotationsInsertCall) ShowOnlySummaryInResponse(showOnlySumma
 // originator of this request.
 func (c *MylibraryAnnotationsInsertCall) Source(source string) *MylibraryAnnotationsInsertCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryAnnotationsInsertCall) UserIp(userIp string) *MylibraryAnnotationsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -6576,6 +6916,15 @@ func (c *MylibraryAnnotationsListCall) PageToken(pageToken string) *MylibraryAnn
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryAnnotationsListCall) QuotaUser(quotaUser string) *MylibraryAnnotationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowDeleted sets the optional parameter "showDeleted": Set to true to
 // return deleted annotations. updatedMin must be in the request to use
 // this. Defaults to false.
@@ -6604,6 +6953,14 @@ func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryA
 // (inclusive).
 func (c *MylibraryAnnotationsListCall) UpdatedMin(updatedMin string) *MylibraryAnnotationsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryAnnotationsListCall) UserIp(userIp string) *MylibraryAnnotationsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -6779,6 +7136,23 @@ func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryAnnotationsSummaryCall) QuotaUser(quotaUser string) *MylibraryAnnotationsSummaryCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryAnnotationsSummaryCall) UserIp(userIp string) *MylibraryAnnotationsSummaryCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6896,10 +7270,27 @@ func (r *MylibraryAnnotationsService) Update(annotationId string, annotation *An
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryAnnotationsUpdateCall) QuotaUser(quotaUser string) *MylibraryAnnotationsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsUpdateCall) Source(source string) *MylibraryAnnotationsUpdateCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryAnnotationsUpdateCall) UserIp(userIp string) *MylibraryAnnotationsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7027,6 +7418,15 @@ func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryBookshelvesAddVolumeCall) QuotaUser(quotaUser string) *MylibraryBookshelvesAddVolumeCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Reason sets the optional parameter "reason": The reason for which the
 // book is added to the library.
 //
@@ -7043,6 +7443,14 @@ func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBook
 // originator of this request.
 func (c *MylibraryBookshelvesAddVolumeCall) Source(source string) *MylibraryBookshelvesAddVolumeCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryBookshelvesAddVolumeCall) UserIp(userIp string) *MylibraryBookshelvesAddVolumeCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7155,10 +7563,27 @@ func (r *MylibraryBookshelvesService) ClearVolumes(shelf string) *MylibraryBooks
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryBookshelvesClearVolumesCall) QuotaUser(quotaUser string) *MylibraryBookshelvesClearVolumesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesClearVolumesCall) Source(source string) *MylibraryBookshelvesClearVolumesCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryBookshelvesClearVolumesCall) UserIp(userIp string) *MylibraryBookshelvesClearVolumesCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7251,10 +7676,27 @@ func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGet
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryBookshelvesGetCall) QuotaUser(quotaUser string) *MylibraryBookshelvesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesGetCall) Source(source string) *MylibraryBookshelvesGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryBookshelvesGetCall) UserIp(userIp string) *MylibraryBookshelvesGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7385,10 +7827,27 @@ func (r *MylibraryBookshelvesService) List() *MylibraryBookshelvesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryBookshelvesListCall) QuotaUser(quotaUser string) *MylibraryBookshelvesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesListCall) Source(source string) *MylibraryBookshelvesListCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryBookshelvesListCall) UserIp(userIp string) *MylibraryBookshelvesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7510,10 +7969,27 @@ func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryBookshelvesMoveVolumeCall) QuotaUser(quotaUser string) *MylibraryBookshelvesMoveVolumeCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesMoveVolumeCall) Source(source string) *MylibraryBookshelvesMoveVolumeCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryBookshelvesMoveVolumeCall) UserIp(userIp string) *MylibraryBookshelvesMoveVolumeCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7620,6 +8096,15 @@ func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryBookshelvesRemoveVolumeCall) QuotaUser(quotaUser string) *MylibraryBookshelvesRemoveVolumeCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Reason sets the optional parameter "reason": The reason for which the
 // book is removed from the library.
 //
@@ -7634,6 +8119,14 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryB
 // originator of this request.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryBookshelvesRemoveVolumeCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryBookshelvesRemoveVolumeCall) UserIp(userIp string) *MylibraryBookshelvesRemoveVolumeCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7775,6 +8268,15 @@ func (c *MylibraryBookshelvesVolumesListCall) Q(q string) *MylibraryBookshelvesV
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryBookshelvesVolumesListCall) QuotaUser(quotaUser string) *MylibraryBookshelvesVolumesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MylibraryBookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *MylibraryBookshelvesVolumesListCall {
@@ -7793,6 +8295,14 @@ func (c *MylibraryBookshelvesVolumesListCall) Source(source string) *MylibraryBo
 // first element to return (starts at 0)
 func (c *MylibraryBookshelvesVolumesListCall) StartIndex(startIndex int64) *MylibraryBookshelvesVolumesListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryBookshelvesVolumesListCall) UserIp(userIp string) *MylibraryBookshelvesVolumesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7973,10 +8483,27 @@ func (c *MylibraryReadingpositionsGetCall) ContentVersion(contentVersion string)
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryReadingpositionsGetCall) QuotaUser(quotaUser string) *MylibraryReadingpositionsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryReadingpositionsGetCall) Source(source string) *MylibraryReadingpositionsGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryReadingpositionsGetCall) UserIp(userIp string) *MylibraryReadingpositionsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -8143,10 +8670,27 @@ func (c *MylibraryReadingpositionsSetPositionCall) DeviceCookie(deviceCookie str
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MylibraryReadingpositionsSetPositionCall) QuotaUser(quotaUser string) *MylibraryReadingpositionsSetPositionCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryReadingpositionsSetPositionCall) Source(source string) *MylibraryReadingpositionsSetPositionCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MylibraryReadingpositionsSetPositionCall) UserIp(userIp string) *MylibraryReadingpositionsSetPositionCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -8290,10 +8834,27 @@ func (c *NotificationGetCall) Locale(locale string) *NotificationGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *NotificationGetCall) QuotaUser(quotaUser string) *NotificationGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *NotificationGetCall) Source(source string) *NotificationGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *NotificationGetCall) UserIp(userIp string) *NotificationGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -8430,6 +8991,23 @@ func (r *OnboardingService) ListCategories() *OnboardingListCategoriesCall {
 // ISO-3166-1 country code. Default is en-US if unset.
 func (c *OnboardingListCategoriesCall) Locale(locale string) *OnboardingListCategoriesCall {
 	c.urlParams_.Set("locale", locale)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *OnboardingListCategoriesCall) QuotaUser(quotaUser string) *OnboardingListCategoriesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *OnboardingListCategoriesCall) UserIp(userIp string) *OnboardingListCategoriesCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -8587,6 +9165,23 @@ func (c *OnboardingListCategoryVolumesCall) PageSize(pageSize int64) *Onboarding
 // nextToken from the previous page.
 func (c *OnboardingListCategoryVolumesCall) PageToken(pageToken string) *OnboardingListCategoryVolumesCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *OnboardingListCategoryVolumesCall) QuotaUser(quotaUser string) *OnboardingListCategoryVolumesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *OnboardingListCategoryVolumesCall) UserIp(userIp string) *OnboardingListCategoryVolumesCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -8756,10 +9351,27 @@ func (c *PersonalizedstreamGetCall) MaxAllowedMaturityRating(maxAllowedMaturityR
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PersonalizedstreamGetCall) QuotaUser(quotaUser string) *PersonalizedstreamGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *PersonalizedstreamGetCall) Source(source string) *PersonalizedstreamGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PersonalizedstreamGetCall) UserIp(userIp string) *PersonalizedstreamGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -8932,9 +9544,26 @@ func (c *PromoofferAcceptCall) Product(product string) *PromoofferAcceptCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PromoofferAcceptCall) QuotaUser(quotaUser string) *PromoofferAcceptCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferAcceptCall) Serial(serial string) *PromoofferAcceptCall {
 	c.urlParams_.Set("serial", serial)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PromoofferAcceptCall) UserIp(userIp string) *PromoofferAcceptCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -9090,9 +9719,26 @@ func (c *PromoofferDismissCall) Product(product string) *PromoofferDismissCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PromoofferDismissCall) QuotaUser(quotaUser string) *PromoofferDismissCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferDismissCall) Serial(serial string) *PromoofferDismissCall {
 	c.urlParams_.Set("serial", serial)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PromoofferDismissCall) UserIp(userIp string) *PromoofferDismissCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -9232,9 +9878,26 @@ func (c *PromoofferGetCall) Product(product string) *PromoofferGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PromoofferGetCall) QuotaUser(quotaUser string) *PromoofferGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferGetCall) Serial(serial string) *PromoofferGetCall {
 	c.urlParams_.Set("serial", serial)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PromoofferGetCall) UserIp(userIp string) *PromoofferGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -9379,6 +10042,23 @@ func (r *SeriesService) Get(seriesId []string) *SeriesGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SeriesGetCall) QuotaUser(quotaUser string) *SeriesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SeriesGetCall) UserIp(userIp string) *SeriesGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9511,6 +10191,23 @@ func (c *SeriesMembershipGetCall) PageSize(pageSize int64) *SeriesMembershipGetC
 // nextToken from the previous page.
 func (c *SeriesMembershipGetCall) PageToken(pageToken string) *SeriesMembershipGetCall {
 	c.urlParams_.Set("page_token", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SeriesMembershipGetCall) QuotaUser(quotaUser string) *SeriesMembershipGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SeriesMembershipGetCall) UserIp(userIp string) *SeriesMembershipGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -9671,10 +10368,27 @@ func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VolumesGetCall) QuotaUser(quotaUser string) *VolumesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VolumesGetCall) UserIp(userIp string) *VolumesGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -9927,6 +10641,15 @@ func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VolumesListCall) QuotaUser(quotaUser string) *VolumesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show books available for preorder. Defaults to false.
 func (c *VolumesListCall) ShowPreorders(showPreorders bool) *VolumesListCall {
@@ -9945,6 +10668,14 @@ func (c *VolumesListCall) Source(source string) *VolumesListCall {
 // first result to return (starts at 0)
 func (c *VolumesListCall) StartIndex(startIndex int64) *VolumesListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VolumesListCall) UserIp(userIp string) *VolumesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10221,10 +10952,27 @@ func (c *VolumesAssociatedListCall) MaxAllowedMaturityRating(maxAllowedMaturityR
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VolumesAssociatedListCall) QuotaUser(quotaUser string) *VolumesAssociatedListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesAssociatedListCall) Source(source string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VolumesAssociatedListCall) UserIp(userIp string) *VolumesAssociatedListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10431,6 +11179,15 @@ func (c *VolumesMybooksListCall) ProcessingState(processingState ...string) *Vol
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VolumesMybooksListCall) QuotaUser(quotaUser string) *VolumesMybooksListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesMybooksListCall) Source(source string) *VolumesMybooksListCall {
@@ -10442,6 +11199,14 @@ func (c *VolumesMybooksListCall) Source(source string) *VolumesMybooksListCall {
 // first result to return (starts at 0)
 func (c *VolumesMybooksListCall) StartIndex(startIndex int64) *VolumesMybooksListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VolumesMybooksListCall) UserIp(userIp string) *VolumesMybooksListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10641,6 +11406,15 @@ func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturity
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VolumesRecommendedListCall) QuotaUser(quotaUser string) *VolumesRecommendedListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesRecommendedListCall) Source(source string) *VolumesRecommendedListCall {
@@ -10656,6 +11430,14 @@ func (c *VolumesRecommendedListCall) TargetIds(targetIds ...int64) *VolumesRecom
 		targetIds_ = append(targetIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("targetIds", targetIds_)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VolumesRecommendedListCall) UserIp(userIp string) *VolumesRecommendedListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10808,10 +11590,27 @@ func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VolumesRecommendedRateCall) QuotaUser(quotaUser string) *VolumesRecommendedRateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesRecommendedRateCall) Source(source string) *VolumesRecommendedRateCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VolumesRecommendedRateCall) UserIp(userIp string) *VolumesRecommendedRateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10974,6 +11773,15 @@ func (c *VolumesUseruploadedListCall) ProcessingState(processingState ...string)
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VolumesUseruploadedListCall) QuotaUser(quotaUser string) *VolumesUseruploadedListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesUseruploadedListCall) Source(source string) *VolumesUseruploadedListCall {
@@ -10985,6 +11793,14 @@ func (c *VolumesUseruploadedListCall) Source(source string) *VolumesUseruploaded
 // first result to return (starts at 0)
 func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseruploadedListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VolumesUseruploadedListCall) UserIp(userIp string) *VolumesUseruploadedListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

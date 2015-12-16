@@ -200,6 +200,15 @@ func (c *DataGetCall) MaxResults(maxResults int64) *DataGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *DataGetCall) QuotaUser(quotaUser string) *DataGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Segment sets the optional parameter "segment": An Analytics advanced
 // segment to be applied to the report data.
 func (c *DataGetCall) Segment(segment string) *DataGetCall {
@@ -220,6 +229,14 @@ func (c *DataGetCall) Sort(sort string) *DataGetCall {
 // mechanism along with the max-results parameter.
 func (c *DataGetCall) StartIndex(startIndex int64) *DataGetCall {
 	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *DataGetCall) UserIp(userIp string) *DataGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -384,11 +401,28 @@ func (c *ManagementAccountsListCall) MaxResults(maxResults int64) *ManagementAcc
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagementAccountsListCall) QuotaUser(quotaUser string) *ManagementAccountsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartIndex sets the optional parameter "start-index": An index of the
 // first account to retrieve. Use this parameter as a pagination
 // mechanism along with the max-results parameter.
 func (c *ManagementAccountsListCall) StartIndex(startIndex int64) *ManagementAccountsListCall {
 	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagementAccountsListCall) UserIp(userIp string) *ManagementAccountsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -502,11 +536,28 @@ func (c *ManagementGoalsListCall) MaxResults(maxResults int64) *ManagementGoalsL
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagementGoalsListCall) QuotaUser(quotaUser string) *ManagementGoalsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartIndex sets the optional parameter "start-index": An index of the
 // first goal to retrieve. Use this parameter as a pagination mechanism
 // along with the max-results parameter.
 func (c *ManagementGoalsListCall) StartIndex(startIndex int64) *ManagementGoalsListCall {
 	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagementGoalsListCall) UserIp(userIp string) *ManagementGoalsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -645,11 +696,28 @@ func (c *ManagementProfilesListCall) MaxResults(maxResults int64) *ManagementPro
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagementProfilesListCall) QuotaUser(quotaUser string) *ManagementProfilesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartIndex sets the optional parameter "start-index": An index of the
 // first entity to retrieve. Use this parameter as a pagination
 // mechanism along with the max-results parameter.
 func (c *ManagementProfilesListCall) StartIndex(startIndex int64) *ManagementProfilesListCall {
 	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagementProfilesListCall) UserIp(userIp string) *ManagementProfilesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -776,11 +844,28 @@ func (c *ManagementSegmentsListCall) MaxResults(maxResults int64) *ManagementSeg
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagementSegmentsListCall) QuotaUser(quotaUser string) *ManagementSegmentsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartIndex sets the optional parameter "start-index": An index of the
 // first advanced segment to retrieve. Use this parameter as a
 // pagination mechanism along with the max-results parameter.
 func (c *ManagementSegmentsListCall) StartIndex(startIndex int64) *ManagementSegmentsListCall {
 	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagementSegmentsListCall) UserIp(userIp string) *ManagementSegmentsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -890,11 +975,28 @@ func (c *ManagementWebpropertiesListCall) MaxResults(maxResults int64) *Manageme
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagementWebpropertiesListCall) QuotaUser(quotaUser string) *ManagementWebpropertiesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartIndex sets the optional parameter "start-index": An index of the
 // first entity to retrieve. Use this parameter as a pagination
 // mechanism along with the max-results parameter.
 func (c *ManagementWebpropertiesListCall) StartIndex(startIndex int64) *ManagementWebpropertiesListCall {
 	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagementWebpropertiesListCall) UserIp(userIp string) *ManagementWebpropertiesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

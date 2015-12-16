@@ -7158,6 +7158,23 @@ func (r *ActivitiesService) Insert(part string, activity *Activity) *ActivitiesI
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ActivitiesInsertCall) QuotaUser(quotaUser string) *ActivitiesInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ActivitiesInsertCall) UserIp(userIp string) *ActivitiesInsertCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7343,6 +7360,15 @@ func (c *ActivitiesListCall) PublishedBefore(publishedBefore string) *Activities
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ActivitiesListCall) QuotaUser(quotaUser string) *ActivitiesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RegionCode sets the optional parameter "regionCode": The regionCode
 // parameter instructs the API to return results for the specified
 // country. The parameter value is an ISO 3166-1 alpha-2 country code.
@@ -7351,6 +7377,14 @@ func (c *ActivitiesListCall) PublishedBefore(publishedBefore string) *Activities
 // activity feed.
 func (c *ActivitiesListCall) RegionCode(regionCode string) *ActivitiesListCall {
 	c.urlParams_.Set("regionCode", regionCode)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ActivitiesListCall) UserIp(userIp string) *ActivitiesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7547,6 +7581,23 @@ func (c *CaptionsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CaptionsDeleteCall) QuotaUser(quotaUser string) *CaptionsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CaptionsDeleteCall) UserIp(userIp string) *CaptionsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7668,6 +7719,15 @@ func (c *CaptionsDownloadCall) OnBehalfOfContentOwner(onBehalfOfContentOwner str
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CaptionsDownloadCall) QuotaUser(quotaUser string) *CaptionsDownloadCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Tfmt sets the optional parameter "tfmt": The tfmt parameter specifies
 // that the caption track should be returned in a specific format. If
 // the parameter is not included in the request, the track is returned
@@ -7692,6 +7752,14 @@ func (c *CaptionsDownloadCall) Tfmt(tfmt string) *CaptionsDownloadCall {
 // such as Google Translate.
 func (c *CaptionsDownloadCall) Tlang(tlang string) *CaptionsDownloadCall {
 	c.urlParams_.Set("tlang", tlang)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CaptionsDownloadCall) UserIp(userIp string) *CaptionsDownloadCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -7873,6 +7941,15 @@ func (c *CaptionsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CaptionsInsertCall) QuotaUser(quotaUser string) *CaptionsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Sync sets the optional parameter "sync": The sync parameter indicates
 // whether YouTube should automatically synchronize the caption file
 // with the audio track of the video. If you set the value to true,
@@ -7884,6 +7961,14 @@ func (c *CaptionsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 // in your file are incorrect and want YouTube to try to fix them.
 func (c *CaptionsInsertCall) Sync(sync bool) *CaptionsInsertCall {
 	c.urlParams_.Set("sync", fmt.Sprint(sync))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CaptionsInsertCall) UserIp(userIp string) *CaptionsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -8144,6 +8229,23 @@ func (c *CaptionsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CaptionsListCall) QuotaUser(quotaUser string) *CaptionsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CaptionsListCall) UserIp(userIp string) *CaptionsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8321,6 +8423,15 @@ func (c *CaptionsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CaptionsUpdateCall) QuotaUser(quotaUser string) *CaptionsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Sync sets the optional parameter "sync": Note: The API server only
 // processes the parameter value if the request contains an updated
 // caption file.
@@ -8331,6 +8442,14 @@ func (c *CaptionsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 // caption track with the audio track.
 func (c *CaptionsUpdateCall) Sync(sync bool) *CaptionsUpdateCall {
 	c.urlParams_.Set("sync", fmt.Sprint(sync))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CaptionsUpdateCall) UserIp(userIp string) *CaptionsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -8586,6 +8705,23 @@ func (c *ChannelBannersInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelBannersInsertCall) QuotaUser(quotaUser string) *ChannelBannersInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelBannersInsertCall) UserIp(userIp string) *ChannelBannersInsertCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
 func (c *ChannelBannersInsertCall) Media(r io.Reader) *ChannelBannersInsertCall {
@@ -8803,6 +8939,23 @@ func (c *ChannelSectionsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwne
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelSectionsDeleteCall) QuotaUser(quotaUser string) *ChannelSectionsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelSectionsDeleteCall) UserIp(userIp string) *ChannelSectionsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8932,6 +9085,23 @@ func (c *ChannelSectionsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwne
 // authentication credentials for each separate channel.
 func (c *ChannelSectionsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *ChannelSectionsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelSectionsInsertCall) QuotaUser(quotaUser string) *ChannelSectionsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelSectionsInsertCall) UserIp(userIp string) *ChannelSectionsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -9120,6 +9290,23 @@ func (c *ChannelSectionsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner 
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelSectionsListCall) QuotaUser(quotaUser string) *ChannelSectionsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelSectionsListCall) UserIp(userIp string) *ChannelSectionsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9284,6 +9471,23 @@ func (r *ChannelSectionsService) Update(part string, channelsection *ChannelSect
 // must be linked to the specified YouTube content owner.
 func (c *ChannelSectionsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ChannelSectionsUpdateCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelSectionsUpdateCall) QuotaUser(quotaUser string) *ChannelSectionsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelSectionsUpdateCall) UserIp(userIp string) *ChannelSectionsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -9508,6 +9712,23 @@ func (c *ChannelsListCall) PageToken(pageToken string) *ChannelsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelsListCall) QuotaUser(quotaUser string) *ChannelsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelsListCall) UserIp(userIp string) *ChannelsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9704,6 +9925,23 @@ func (c *ChannelsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner strin
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelsUpdateCall) QuotaUser(quotaUser string) *ChannelsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelsUpdateCall) UserIp(userIp string) *ChannelsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9826,6 +10064,23 @@ func (r *CommentThreadsService) Insert(part string, commentthread *CommentThread
 	c := &CommentThreadsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("part", part)
 	c.commentthread = commentthread
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentThreadsInsertCall) QuotaUser(quotaUser string) *CommentThreadsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentThreadsInsertCall) UserIp(userIp string) *CommentThreadsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10037,6 +10292,15 @@ func (c *CommentThreadsListCall) PageToken(pageToken string) *CommentThreadsList
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentThreadsListCall) QuotaUser(quotaUser string) *CommentThreadsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SearchTerms sets the optional parameter "searchTerms": The
 // searchTerms parameter instructs the API to limit the API response to
 // only contain comments that contain the specified search terms.
@@ -10058,6 +10322,14 @@ func (c *CommentThreadsListCall) SearchTerms(searchTerms string) *CommentThreads
 //   "plainText" - Returns the comments in plain text format.
 func (c *CommentThreadsListCall) TextFormat(textFormat string) *CommentThreadsListCall {
 	c.urlParams_.Set("textFormat", textFormat)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentThreadsListCall) UserIp(userIp string) *CommentThreadsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10273,6 +10545,23 @@ func (r *CommentThreadsService) Update(part string, commentthread *CommentThread
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentThreadsUpdateCall) QuotaUser(quotaUser string) *CommentThreadsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentThreadsUpdateCall) UserIp(userIp string) *CommentThreadsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10388,6 +10677,23 @@ func (r *CommentsService) Delete(id string) *CommentsDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsDeleteCall) QuotaUser(quotaUser string) *CommentsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsDeleteCall) UserIp(userIp string) *CommentsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10467,6 +10773,23 @@ func (r *CommentsService) Insert(part string, comment *Comment) *CommentsInsertC
 	c := &CommentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("part", part)
 	c.comment = comment
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsInsertCall) QuotaUser(quotaUser string) *CommentsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsInsertCall) UserIp(userIp string) *CommentsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10630,6 +10953,15 @@ func (c *CommentsListCall) ParentId(parentId string) *CommentsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsListCall) QuotaUser(quotaUser string) *CommentsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // TextFormat sets the optional parameter "textFormat": This parameter
 // indicates whether the API should return comments formatted as HTML or
 // as plain text.
@@ -10640,6 +10972,14 @@ func (c *CommentsListCall) ParentId(parentId string) *CommentsListCall {
 //   "plainText" - Returns the comments in plain text format.
 func (c *CommentsListCall) TextFormat(textFormat string) *CommentsListCall {
 	c.urlParams_.Set("textFormat", textFormat)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsListCall) UserIp(userIp string) *CommentsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10801,6 +11141,23 @@ func (r *CommentsService) MarkAsSpam(id string) *CommentsMarkAsSpamCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsMarkAsSpamCall) QuotaUser(quotaUser string) *CommentsMarkAsSpamCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsMarkAsSpamCall) UserIp(userIp string) *CommentsMarkAsSpamCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10892,6 +11249,23 @@ func (r *CommentsService) SetModerationStatus(id string, moderationStatus string
 // is also set to rejected.
 func (c *CommentsSetModerationStatusCall) BanAuthor(banAuthor bool) *CommentsSetModerationStatusCall {
 	c.urlParams_.Set("banAuthor", fmt.Sprint(banAuthor))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsSetModerationStatusCall) QuotaUser(quotaUser string) *CommentsSetModerationStatusCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsSetModerationStatusCall) UserIp(userIp string) *CommentsSetModerationStatusCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -10996,6 +11370,23 @@ func (r *CommentsService) Update(part string, comment *Comment) *CommentsUpdateC
 	c := &CommentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("part", part)
 	c.comment = comment
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsUpdateCall) QuotaUser(quotaUser string) *CommentsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsUpdateCall) UserIp(userIp string) *CommentsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -11132,12 +11523,29 @@ func (c *GuideCategoriesListCall) Id(id string) *GuideCategoriesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GuideCategoriesListCall) QuotaUser(quotaUser string) *GuideCategoriesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RegionCode sets the optional parameter "regionCode": The regionCode
 // parameter instructs the API to return the list of guide categories
 // available in the specified country. The parameter value is an ISO
 // 3166-1 alpha-2 country code.
 func (c *GuideCategoriesListCall) RegionCode(regionCode string) *GuideCategoriesListCall {
 	c.urlParams_.Set("regionCode", regionCode)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GuideCategoriesListCall) UserIp(userIp string) *GuideCategoriesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -11288,6 +11696,23 @@ func (c *I18nLanguagesListCall) Hl(hl string) *I18nLanguagesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *I18nLanguagesListCall) QuotaUser(quotaUser string) *I18nLanguagesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *I18nLanguagesListCall) UserIp(userIp string) *I18nLanguagesListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11422,6 +11847,23 @@ func (r *I18nRegionsService) List(part string) *I18nRegionsListCall {
 // language that should be used for text values in the API response.
 func (c *I18nRegionsListCall) Hl(hl string) *I18nRegionsListCall {
 	c.urlParams_.Set("hl", hl)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *I18nRegionsListCall) QuotaUser(quotaUser string) *I18nRegionsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *I18nRegionsListCall) UserIp(userIp string) *I18nRegionsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -11601,12 +12043,29 @@ func (c *LiveBroadcastsBindCall) OnBehalfOfContentOwnerChannel(onBehalfOfContent
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveBroadcastsBindCall) QuotaUser(quotaUser string) *LiveBroadcastsBindCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StreamId sets the optional parameter "streamId": The streamId
 // parameter specifies the unique ID of the video stream that is being
 // bound to a broadcast. If this parameter is omitted, the API will
 // remove any existing binding between the broadcast and a video stream.
 func (c *LiveBroadcastsBindCall) StreamId(streamId string) *LiveBroadcastsBindCall {
 	c.urlParams_.Set("streamId", streamId)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveBroadcastsBindCall) UserIp(userIp string) *LiveBroadcastsBindCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -11813,6 +12272,23 @@ func (c *LiveBroadcastsControlCall) OnBehalfOfContentOwnerChannel(onBehalfOfCont
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveBroadcastsControlCall) QuotaUser(quotaUser string) *LiveBroadcastsControlCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveBroadcastsControlCall) UserIp(userIp string) *LiveBroadcastsControlCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Walltime sets the optional parameter "walltime": The walltime
 // parameter specifies the wall clock time at which the specified slate
 // change will occur. The value is specified in ISO 8601
@@ -12007,6 +12483,23 @@ func (c *LiveBroadcastsDeleteCall) OnBehalfOfContentOwnerChannel(onBehalfOfConte
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveBroadcastsDeleteCall) QuotaUser(quotaUser string) *LiveBroadcastsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveBroadcastsDeleteCall) UserIp(userIp string) *LiveBroadcastsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12140,6 +12633,23 @@ func (c *LiveBroadcastsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner
 // authentication credentials for each separate channel.
 func (c *LiveBroadcastsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveBroadcastsInsertCall) QuotaUser(quotaUser string) *LiveBroadcastsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveBroadcastsInsertCall) UserIp(userIp string) *LiveBroadcastsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -12361,6 +12871,23 @@ func (c *LiveBroadcastsListCall) OnBehalfOfContentOwnerChannel(onBehalfOfContent
 // properties identify other pages that could be retrieved.
 func (c *LiveBroadcastsListCall) PageToken(pageToken string) *LiveBroadcastsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveBroadcastsListCall) QuotaUser(quotaUser string) *LiveBroadcastsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveBroadcastsListCall) UserIp(userIp string) *LiveBroadcastsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -12588,6 +13115,23 @@ func (c *LiveBroadcastsTransitionCall) OnBehalfOfContentOwnerChannel(onBehalfOfC
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveBroadcastsTransitionCall) QuotaUser(quotaUser string) *LiveBroadcastsTransitionCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveBroadcastsTransitionCall) UserIp(userIp string) *LiveBroadcastsTransitionCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12777,6 +13321,23 @@ func (c *LiveBroadcastsUpdateCall) OnBehalfOfContentOwnerChannel(onBehalfOfConte
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveBroadcastsUpdateCall) QuotaUser(quotaUser string) *LiveBroadcastsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveBroadcastsUpdateCall) UserIp(userIp string) *LiveBroadcastsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12947,6 +13508,23 @@ func (c *LiveStreamsDeleteCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentO
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveStreamsDeleteCall) QuotaUser(quotaUser string) *LiveStreamsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveStreamsDeleteCall) UserIp(userIp string) *LiveStreamsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13082,6 +13660,23 @@ func (c *LiveStreamsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner st
 // authentication credentials for each separate channel.
 func (c *LiveStreamsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveStreamsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveStreamsInsertCall) QuotaUser(quotaUser string) *LiveStreamsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveStreamsInsertCall) UserIp(userIp string) *LiveStreamsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -13292,6 +13887,23 @@ func (c *LiveStreamsListCall) PageToken(pageToken string) *LiveStreamsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveStreamsListCall) QuotaUser(quotaUser string) *LiveStreamsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveStreamsListCall) UserIp(userIp string) *LiveStreamsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13495,6 +14107,23 @@ func (c *LiveStreamsUpdateCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentO
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveStreamsUpdateCall) QuotaUser(quotaUser string) *LiveStreamsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveStreamsUpdateCall) UserIp(userIp string) *LiveStreamsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13621,6 +14250,23 @@ func (r *PlaylistItemsService) Delete(id string) *PlaylistItemsDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PlaylistItemsDeleteCall) QuotaUser(quotaUser string) *PlaylistItemsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PlaylistItemsDeleteCall) UserIp(userIp string) *PlaylistItemsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13719,6 +14365,23 @@ func (r *PlaylistItemsService) Insert(part string, playlistitem *PlaylistItem) *
 // must be linked to the specified YouTube content owner.
 func (c *PlaylistItemsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistItemsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PlaylistItemsInsertCall) QuotaUser(quotaUser string) *PlaylistItemsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PlaylistItemsInsertCall) UserIp(userIp string) *PlaylistItemsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -13900,6 +14563,23 @@ func (c *PlaylistItemsListCall) PlaylistId(playlistId string) *PlaylistItemsList
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PlaylistItemsListCall) QuotaUser(quotaUser string) *PlaylistItemsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PlaylistItemsListCall) UserIp(userIp string) *PlaylistItemsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // VideoId sets the optional parameter "videoId": The videoId parameter
 // specifies that the request should return only the playlist items that
 // contain the specified video.
@@ -14068,6 +14748,23 @@ func (r *PlaylistItemsService) Update(part string, playlistitem *PlaylistItem) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PlaylistItemsUpdateCall) QuotaUser(quotaUser string) *PlaylistItemsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PlaylistItemsUpdateCall) UserIp(userIp string) *PlaylistItemsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -14203,6 +14900,23 @@ func (c *PlaylistsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PlaylistsDeleteCall) QuotaUser(quotaUser string) *PlaylistsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PlaylistsDeleteCall) UserIp(userIp string) *PlaylistsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -14332,6 +15046,23 @@ func (c *PlaylistsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 // authentication credentials for each separate channel.
 func (c *PlaylistsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *PlaylistsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PlaylistsInsertCall) QuotaUser(quotaUser string) *PlaylistsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PlaylistsInsertCall) UserIp(userIp string) *PlaylistsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -14560,6 +15291,23 @@ func (c *PlaylistsListCall) PageToken(pageToken string) *PlaylistsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PlaylistsListCall) QuotaUser(quotaUser string) *PlaylistsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PlaylistsListCall) UserIp(userIp string) *PlaylistsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -14744,6 +15492,23 @@ func (r *PlaylistsService) Update(part string, playlist *Playlist) *PlaylistsUpd
 // must be linked to the specified YouTube content owner.
 func (c *PlaylistsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *PlaylistsUpdateCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PlaylistsUpdateCall) QuotaUser(quotaUser string) *PlaylistsUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PlaylistsUpdateCall) UserIp(userIp string) *PlaylistsUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -15070,6 +15835,15 @@ func (c *SearchListCall) Q(q string) *SearchListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SearchListCall) QuotaUser(quotaUser string) *SearchListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RegionCode sets the optional parameter "regionCode": The regionCode
 // parameter instructs the API to return search results for the
 // specified country. The parameter value is an ISO 3166-1 alpha-2
@@ -15135,6 +15909,14 @@ func (c *SearchListCall) TopicId(topicId string) *SearchListCall {
 // value is a comma-separated list of resource types.
 func (c *SearchListCall) Type(type_ string) *SearchListCall {
 	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SearchListCall) UserIp(userIp string) *SearchListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -15675,6 +16457,23 @@ func (r *SubscriptionsService) Delete(id string) *SubscriptionsDeleteCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SubscriptionsDeleteCall) QuotaUser(quotaUser string) *SubscriptionsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SubscriptionsDeleteCall) UserIp(userIp string) *SubscriptionsDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -15755,6 +16554,23 @@ func (r *SubscriptionsService) Insert(part string, subscription *Subscription) *
 	c := &SubscriptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("part", part)
 	c.subscription = subscription
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SubscriptionsInsertCall) QuotaUser(quotaUser string) *SubscriptionsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SubscriptionsInsertCall) UserIp(userIp string) *SubscriptionsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -15992,6 +16808,23 @@ func (c *SubscriptionsListCall) PageToken(pageToken string) *SubscriptionsListCa
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SubscriptionsListCall) QuotaUser(quotaUser string) *SubscriptionsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SubscriptionsListCall) UserIp(userIp string) *SubscriptionsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -16201,6 +17034,23 @@ func (r *ThumbnailsService) Set(videoId string) *ThumbnailsSetCall {
 // owner.
 func (c *ThumbnailsSetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ThumbnailsSetCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ThumbnailsSetCall) QuotaUser(quotaUser string) *ThumbnailsSetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ThumbnailsSetCall) UserIp(userIp string) *ThumbnailsSetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -16416,6 +17266,23 @@ func (c *VideoAbuseReportReasonsListCall) Hl(hl string) *VideoAbuseReportReasons
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideoAbuseReportReasonsListCall) QuotaUser(quotaUser string) *VideoAbuseReportReasonsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideoAbuseReportReasonsListCall) UserIp(userIp string) *VideoAbuseReportReasonsListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -16561,12 +17428,29 @@ func (c *VideoCategoriesListCall) Id(id string) *VideoCategoriesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideoCategoriesListCall) QuotaUser(quotaUser string) *VideoCategoriesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RegionCode sets the optional parameter "regionCode": The regionCode
 // parameter instructs the API to return the list of video categories
 // available in the specified country. The parameter value is an ISO
 // 3166-1 alpha-2 country code.
 func (c *VideoCategoriesListCall) RegionCode(regionCode string) *VideoCategoriesListCall {
 	c.urlParams_.Set("regionCode", regionCode)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideoCategoriesListCall) UserIp(userIp string) *VideoCategoriesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -16727,6 +17611,23 @@ func (c *VideosDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideosDeleteCall) QuotaUser(quotaUser string) *VideosDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideosDeleteCall) UserIp(userIp string) *VideosDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -16830,6 +17731,23 @@ func (r *VideosService) GetRating(id string) *VideosGetRatingCall {
 // must be linked to the specified YouTube content owner.
 func (c *VideosGetRatingCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *VideosGetRatingCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideosGetRatingCall) QuotaUser(quotaUser string) *VideosGetRatingCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideosGetRatingCall) UserIp(userIp string) *VideosGetRatingCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -17032,11 +17950,28 @@ func (c *VideosInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerC
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideosInsertCall) QuotaUser(quotaUser string) *VideosInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Stabilize sets the optional parameter "stabilize": The stabilize
 // parameter indicates whether YouTube should adjust the video to remove
 // shaky camera motions.
 func (c *VideosInsertCall) Stabilize(stabilize bool) *VideosInsertCall {
 	c.urlParams_.Set("stabilize", fmt.Sprint(stabilize))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideosInsertCall) UserIp(userIp string) *VideosInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -17367,6 +18302,15 @@ func (c *VideosListCall) PageToken(pageToken string) *VideosListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideosListCall) QuotaUser(quotaUser string) *VideosListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RegionCode sets the optional parameter "regionCode": The regionCode
 // parameter instructs the API to select a video chart available in the
 // specified region. This parameter can only be used in conjunction with
@@ -17374,6 +18318,14 @@ func (c *VideosListCall) PageToken(pageToken string) *VideosListCall {
 // country code.
 func (c *VideosListCall) RegionCode(regionCode string) *VideosListCall {
 	c.urlParams_.Set("regionCode", regionCode)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideosListCall) UserIp(userIp string) *VideosListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -17580,6 +18532,23 @@ func (r *VideosService) Rate(id string, rating string) *VideosRateCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideosRateCall) QuotaUser(quotaUser string) *VideosRateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideosRateCall) UserIp(userIp string) *VideosRateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -17697,6 +18666,23 @@ func (c *VideosReportAbuseCall) OnBehalfOfContentOwner(onBehalfOfContentOwner st
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideosReportAbuseCall) QuotaUser(quotaUser string) *VideosReportAbuseCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideosReportAbuseCall) UserIp(userIp string) *VideosReportAbuseCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -17801,6 +18787,23 @@ func (r *VideosService) Update(part string, video *Video) *VideosUpdateCall {
 // owner.
 func (c *VideosUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *VideosUpdateCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *VideosUpdateCall) QuotaUser(quotaUser string) *VideosUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *VideosUpdateCall) UserIp(userIp string) *VideosUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -17948,6 +18951,23 @@ func (r *WatermarksService) Set(channelId string, invideobranding *InvideoBrandi
 // must be linked to the specified YouTube content owner.
 func (c *WatermarksSetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *WatermarksSetCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WatermarksSetCall) QuotaUser(quotaUser string) *WatermarksSetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WatermarksSetCall) UserIp(userIp string) *WatermarksSetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -18148,6 +19168,23 @@ func (r *WatermarksService) Unset(channelId string) *WatermarksUnsetCall {
 // must be linked to the specified YouTube content owner.
 func (c *WatermarksUnsetCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *WatermarksUnsetCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *WatermarksUnsetCall) QuotaUser(quotaUser string) *WatermarksUnsetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *WatermarksUnsetCall) UserIp(userIp string) *WatermarksUnsetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

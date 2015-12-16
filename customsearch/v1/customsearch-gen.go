@@ -741,6 +741,15 @@ func (c *CseListCall) OrTerms(orTerms string) *CseListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CseListCall) QuotaUser(quotaUser string) *CseListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // RelatedSite sets the optional parameter "relatedSite": Specifies that
 // all search results should be pages that are related to the specified
 // URL
@@ -809,6 +818,14 @@ func (c *CseListCall) Sort(sort string) *CseListCall {
 // result to return
 func (c *CseListCall) Start(start int64) *CseListCall {
 	c.urlParams_.Set("start", fmt.Sprint(start))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CseListCall) UserIp(userIp string) *CseListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

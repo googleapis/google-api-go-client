@@ -349,6 +349,23 @@ func (s *Service) GetCertForOpenIdConnect() *GetCertForOpenIdConnectCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GetCertForOpenIdConnectCall) QuotaUser(quotaUser string) *GetCertForOpenIdConnectCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GetCertForOpenIdConnectCall) UserIp(userIp string) *GetCertForOpenIdConnectCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -430,6 +447,23 @@ type GetCertForOpenIdConnectRawCall struct {
 // GetCertForOpenIdConnectRaw:
 func (s *Service) GetCertForOpenIdConnectRaw() *GetCertForOpenIdConnectRawCall {
 	c := &GetCertForOpenIdConnectRawCall{s: s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GetCertForOpenIdConnectRawCall) QuotaUser(quotaUser string) *GetCertForOpenIdConnectRawCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GetCertForOpenIdConnectRawCall) UserIp(userIp string) *GetCertForOpenIdConnectRawCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -536,6 +570,23 @@ type GetRobotJwkCall struct {
 func (s *Service) GetRobotJwk(robotEmail string) *GetRobotJwkCall {
 	c := &GetRobotJwkCall{s: s, urlParams_: make(gensupport.URLParams)}
 	c.robotEmail = robotEmail
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GetRobotJwkCall) QuotaUser(quotaUser string) *GetRobotJwkCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GetRobotJwkCall) UserIp(userIp string) *GetRobotJwkCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -658,6 +709,23 @@ func (s *Service) GetRobotMetadataRaw(robotEmail string) *GetRobotMetadataRawCal
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GetRobotMetadataRawCall) QuotaUser(quotaUser string) *GetRobotMetadataRawCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GetRobotMetadataRawCall) UserIp(userIp string) *GetRobotMetadataRawCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -777,6 +845,23 @@ func (s *Service) GetRobotMetadataX509(robotEmail string) *GetRobotMetadataX509C
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *GetRobotMetadataX509Call) QuotaUser(quotaUser string) *GetRobotMetadataX509Call {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *GetRobotMetadataX509Call) UserIp(userIp string) *GetRobotMetadataX509Call {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -886,6 +971,23 @@ func (c *TokeninfoCall) IdToken(idToken string) *TokeninfoCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TokeninfoCall) QuotaUser(quotaUser string) *TokeninfoCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TokeninfoCall) UserIp(userIp string) *TokeninfoCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -987,6 +1089,23 @@ type UserinfoGetCall struct {
 // Get: Get user info
 func (r *UserinfoService) Get() *UserinfoGetCall {
 	c := &UserinfoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *UserinfoGetCall) QuotaUser(quotaUser string) *UserinfoGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *UserinfoGetCall) UserIp(userIp string) *UserinfoGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1098,6 +1217,23 @@ type UserinfoV2MeGetCall struct {
 // Get: Get user info
 func (r *UserinfoV2MeService) Get() *UserinfoV2MeGetCall {
 	c := &UserinfoV2MeGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *UserinfoV2MeGetCall) QuotaUser(quotaUser string) *UserinfoV2MeGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *UserinfoV2MeGetCall) UserIp(userIp string) *UserinfoV2MeGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

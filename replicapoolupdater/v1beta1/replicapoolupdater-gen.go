@@ -696,6 +696,23 @@ func (r *RollingUpdatesService) Cancel(project string, zone string, rollingUpdat
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RollingUpdatesCancelCall) QuotaUser(quotaUser string) *RollingUpdatesCancelCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RollingUpdatesCancelCall) UserIp(userIp string) *RollingUpdatesCancelCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -826,6 +843,23 @@ func (r *RollingUpdatesService) Get(project string, zone string, rollingUpdate s
 	c.project = project
 	c.zone = zone
 	c.rollingUpdate = rollingUpdate
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RollingUpdatesGetCall) QuotaUser(quotaUser string) *RollingUpdatesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RollingUpdatesGetCall) UserIp(userIp string) *RollingUpdatesGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -973,6 +1007,23 @@ func (r *RollingUpdatesService) Insert(project string, zone string, rollingupdat
 	c.project = project
 	c.zone = zone
 	c.rollingupdate = rollingupdate
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RollingUpdatesInsertCall) QuotaUser(quotaUser string) *RollingUpdatesInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RollingUpdatesInsertCall) UserIp(userIp string) *RollingUpdatesInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1129,6 +1180,23 @@ func (c *RollingUpdatesListCall) MaxResults(maxResults int64) *RollingUpdatesLis
 // previous list request.
 func (c *RollingUpdatesListCall) PageToken(pageToken string) *RollingUpdatesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RollingUpdatesListCall) QuotaUser(quotaUser string) *RollingUpdatesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RollingUpdatesListCall) UserIp(userIp string) *RollingUpdatesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1315,6 +1383,23 @@ func (c *RollingUpdatesListInstanceUpdatesCall) PageToken(pageToken string) *Rol
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RollingUpdatesListInstanceUpdatesCall) QuotaUser(quotaUser string) *RollingUpdatesListInstanceUpdatesCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RollingUpdatesListInstanceUpdatesCall) UserIp(userIp string) *RollingUpdatesListInstanceUpdatesCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1483,6 +1568,23 @@ func (r *RollingUpdatesService) Pause(project string, zone string, rollingUpdate
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RollingUpdatesPauseCall) QuotaUser(quotaUser string) *RollingUpdatesPauseCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RollingUpdatesPauseCall) UserIp(userIp string) *RollingUpdatesPauseCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1613,6 +1715,23 @@ func (r *RollingUpdatesService) Resume(project string, zone string, rollingUpdat
 	c.project = project
 	c.zone = zone
 	c.rollingUpdate = rollingUpdate
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RollingUpdatesResumeCall) QuotaUser(quotaUser string) *RollingUpdatesResumeCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RollingUpdatesResumeCall) UserIp(userIp string) *RollingUpdatesResumeCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1750,6 +1869,23 @@ func (r *RollingUpdatesService) Rollback(project string, zone string, rollingUpd
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *RollingUpdatesRollbackCall) QuotaUser(quotaUser string) *RollingUpdatesRollbackCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *RollingUpdatesRollbackCall) UserIp(userIp string) *RollingUpdatesRollbackCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1879,6 +2015,23 @@ func (r *ZoneOperationsService) Get(project string, zone string, operation strin
 	c.project = project
 	c.zone = zone
 	c.operation = operation
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneOperationsGetCall) QuotaUser(quotaUser string) *ZoneOperationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneOperationsGetCall) UserIp(userIp string) *ZoneOperationsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2046,6 +2199,23 @@ func (c *ZoneOperationsListCall) MaxResults(maxResults int64) *ZoneOperationsLis
 // previous list request.
 func (c *ZoneOperationsListCall) PageToken(pageToken string) *ZoneOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ZoneOperationsListCall) QuotaUser(quotaUser string) *ZoneOperationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ZoneOperationsListCall) UserIp(userIp string) *ZoneOperationsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

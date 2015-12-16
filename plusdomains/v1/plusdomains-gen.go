@@ -2262,6 +2262,23 @@ func (r *ActivitiesService) Get(activityId string) *ActivitiesGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ActivitiesGetCall) QuotaUser(quotaUser string) *ActivitiesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ActivitiesGetCall) UserIp(userIp string) *ActivitiesGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2394,6 +2411,23 @@ func (r *ActivitiesService) Insert(userId string, activity *Activity) *Activitie
 // based on the content of the page.
 func (c *ActivitiesInsertCall) Preview(preview bool) *ActivitiesInsertCall {
 	c.urlParams_.Set("preview", fmt.Sprint(preview))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ActivitiesInsertCall) QuotaUser(quotaUser string) *ActivitiesInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ActivitiesInsertCall) UserIp(userIp string) *ActivitiesInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2541,6 +2575,23 @@ func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 // "nextPageToken" from the previous response.
 func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ActivitiesListCall) QuotaUser(quotaUser string) *ActivitiesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ActivitiesListCall) UserIp(userIp string) *ActivitiesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2715,6 +2766,23 @@ func (c *AudiencesListCall) PageToken(pageToken string) *AudiencesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *AudiencesListCall) QuotaUser(quotaUser string) *AudiencesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *AudiencesListCall) UserIp(userIp string) *AudiencesListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2861,10 +2929,27 @@ func (c *CirclesAddPeopleCall) Email(email ...string) *CirclesAddPeopleCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CirclesAddPeopleCall) QuotaUser(quotaUser string) *CirclesAddPeopleCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // UserId sets the optional parameter "userId": IDs of the people to add
 // to the circle. Optional, can be repeated.
 func (c *CirclesAddPeopleCall) UserId(userId ...string) *CirclesAddPeopleCall {
 	c.urlParams_.SetMulti("userId", append([]string{}, userId...))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CirclesAddPeopleCall) UserIp(userIp string) *CirclesAddPeopleCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -2991,6 +3076,23 @@ func (r *CirclesService) Get(circleId string) *CirclesGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CirclesGetCall) QuotaUser(quotaUser string) *CirclesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CirclesGetCall) UserIp(userIp string) *CirclesGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3113,6 +3215,23 @@ func (r *CirclesService) Insert(userId string, circle *Circle) *CirclesInsertCal
 	c := &CirclesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
 	c.circle = circle
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CirclesInsertCall) QuotaUser(quotaUser string) *CirclesInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CirclesInsertCall) UserIp(userIp string) *CirclesInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3252,6 +3371,23 @@ func (c *CirclesListCall) MaxResults(maxResults int64) *CirclesListCall {
 // "nextPageToken" from the previous response.
 func (c *CirclesListCall) PageToken(pageToken string) *CirclesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CirclesListCall) QuotaUser(quotaUser string) *CirclesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CirclesListCall) UserIp(userIp string) *CirclesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3396,6 +3532,23 @@ func (r *CirclesService) Patch(circleId string, circle *Circle) *CirclesPatchCal
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CirclesPatchCall) QuotaUser(quotaUser string) *CirclesPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CirclesPatchCall) UserIp(userIp string) *CirclesPatchCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3515,6 +3668,23 @@ func (r *CirclesService) Remove(circleId string) *CirclesRemoveCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CirclesRemoveCall) QuotaUser(quotaUser string) *CirclesRemoveCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CirclesRemoveCall) UserIp(userIp string) *CirclesRemoveCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3605,10 +3775,27 @@ func (c *CirclesRemovePeopleCall) Email(email ...string) *CirclesRemovePeopleCal
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CirclesRemovePeopleCall) QuotaUser(quotaUser string) *CirclesRemovePeopleCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // UserId sets the optional parameter "userId": IDs of the people to
 // remove from the circle. Optional, can be repeated.
 func (c *CirclesRemovePeopleCall) UserId(userId ...string) *CirclesRemovePeopleCall {
 	c.urlParams_.SetMulti("userId", append([]string{}, userId...))
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CirclesRemovePeopleCall) UserIp(userIp string) *CirclesRemovePeopleCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3706,6 +3893,23 @@ func (r *CirclesService) Update(circleId string, circle *Circle) *CirclesUpdateC
 	c := &CirclesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.circleId = circleId
 	c.circle = circle
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CirclesUpdateCall) QuotaUser(quotaUser string) *CirclesUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CirclesUpdateCall) UserIp(userIp string) *CirclesUpdateCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3826,6 +4030,23 @@ type CommentsGetCall struct {
 func (r *CommentsService) Get(commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.commentId = commentId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsGetCall) QuotaUser(quotaUser string) *CommentsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsGetCall) UserIp(userIp string) *CommentsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -3951,6 +4172,23 @@ func (r *CommentsService) Insert(activityId string, comment *Comment) *CommentsI
 	c := &CommentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
 	c.comment = comment
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsInsertCall) QuotaUser(quotaUser string) *CommentsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsInsertCall) UserIp(userIp string) *CommentsInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4092,6 +4330,15 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CommentsListCall) QuotaUser(quotaUser string) *CommentsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SortOrder sets the optional parameter "sortOrder": The order in which
 // to sort the list of comments.
 //
@@ -4100,6 +4347,14 @@ func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
 //   "descending" - Sort newest comments first.
 func (c *CommentsListCall) SortOrder(sortOrder string) *CommentsListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CommentsListCall) UserIp(userIp string) *CommentsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4263,6 +4518,23 @@ func (r *MediaService) Insert(userId string, collection string, media *Media) *M
 	c.userId = userId
 	c.collection = collection
 	c.media = media
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MediaInsertCall) QuotaUser(quotaUser string) *MediaInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MediaInsertCall) UserIp(userIp string) *MediaInsertCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4484,6 +4756,23 @@ func (r *PeopleService) Get(userId string) *PeopleGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PeopleGetCall) QuotaUser(quotaUser string) *PeopleGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PeopleGetCall) UserIp(userIp string) *PeopleGetCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4639,6 +4928,23 @@ func (c *PeopleListCall) OrderBy(orderBy string) *PeopleListCall {
 // "nextPageToken" from the previous response.
 func (c *PeopleListCall) PageToken(pageToken string) *PeopleListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PeopleListCall) QuotaUser(quotaUser string) *PeopleListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PeopleListCall) UserIp(userIp string) *PeopleListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -4829,6 +5135,23 @@ func (c *PeopleListByActivityCall) PageToken(pageToken string) *PeopleListByActi
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PeopleListByActivityCall) QuotaUser(quotaUser string) *PeopleListByActivityCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PeopleListByActivityCall) UserIp(userIp string) *PeopleListByActivityCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5000,6 +5323,23 @@ func (c *PeopleListByCircleCall) MaxResults(maxResults int64) *PeopleListByCircl
 // "nextPageToken" from the previous response.
 func (c *PeopleListByCircleCall) PageToken(pageToken string) *PeopleListByCircleCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *PeopleListByCircleCall) QuotaUser(quotaUser string) *PeopleListByCircleCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *PeopleListByCircleCall) UserIp(userIp string) *PeopleListByCircleCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

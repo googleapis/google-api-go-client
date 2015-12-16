@@ -492,6 +492,23 @@ func (r *ChangesService) Create(project string, managedZone string, change *Chan
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChangesCreateCall) QuotaUser(quotaUser string) *ChangesCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChangesCreateCall) UserIp(userIp string) *ChangesCreateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -621,6 +638,23 @@ func (r *ChangesService) Get(project string, managedZone string, changeId string
 	c.project = project
 	c.managedZone = managedZone
 	c.changeId = changeId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChangesGetCall) QuotaUser(quotaUser string) *ChangesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChangesGetCall) UserIp(userIp string) *ChangesGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -784,6 +818,15 @@ func (c *ChangesListCall) PageToken(pageToken string) *ChangesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChangesListCall) QuotaUser(quotaUser string) *ChangesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // SortBy sets the optional parameter "sortBy": Sorting criterion. The
 // only supported value is change sequence.
 //
@@ -798,6 +841,14 @@ func (c *ChangesListCall) SortBy(sortBy string) *ChangesListCall {
 // direction: 'ascending' or 'descending'.
 func (c *ChangesListCall) SortOrder(sortOrder string) *ChangesListCall {
 	c.urlParams_.Set("sortOrder", sortOrder)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChangesListCall) UserIp(userIp string) *ChangesListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -964,6 +1015,23 @@ func (r *ManagedZonesService) Create(project string, managedzone *ManagedZone) *
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagedZonesCreateCall) QuotaUser(quotaUser string) *ManagedZonesCreateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagedZonesCreateCall) UserIp(userIp string) *ManagedZonesCreateCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1085,6 +1153,23 @@ func (r *ManagedZonesService) Delete(project string, managedZone string) *Manage
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagedZonesDeleteCall) QuotaUser(quotaUser string) *ManagedZonesDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagedZonesDeleteCall) UserIp(userIp string) *ManagedZonesDeleteCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1176,6 +1261,23 @@ func (r *ManagedZonesService) Get(project string, managedZone string) *ManagedZo
 	c := &ManagedZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.managedZone = managedZone
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagedZonesGetCall) QuotaUser(quotaUser string) *ManagedZonesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagedZonesGetCall) UserIp(userIp string) *ManagedZonesGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1337,6 +1439,23 @@ func (c *ManagedZonesListCall) PageToken(pageToken string) *ManagedZonesListCall
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagedZonesListCall) QuotaUser(quotaUser string) *ManagedZonesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagedZonesListCall) UserIp(userIp string) *ManagedZonesListCall {
+	c.urlParams_.Set("userIp", userIp)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1476,6 +1595,23 @@ type ProjectsGetCall struct {
 func (r *ProjectsService) Get(project string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ProjectsGetCall) QuotaUser(quotaUser string) *ProjectsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ProjectsGetCall) UserIp(userIp string) *ProjectsGetCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 
@@ -1631,11 +1767,28 @@ func (c *ResourceRecordSetsListCall) PageToken(pageToken string) *ResourceRecord
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ResourceRecordSetsListCall) QuotaUser(quotaUser string) *ResourceRecordSetsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Type sets the optional parameter "type": Restricts the list to return
 // only records of this type. If present, the "name" parameter must also
 // be present.
 func (c *ResourceRecordSetsListCall) Type(type_ string) *ResourceRecordSetsListCall {
 	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// UserIp sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ResourceRecordSetsListCall) UserIp(userIp string) *ResourceRecordSetsListCall {
+	c.urlParams_.Set("userIp", userIp)
 	return c
 }
 

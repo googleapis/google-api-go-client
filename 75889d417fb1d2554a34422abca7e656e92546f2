@@ -16,6 +16,24 @@
       "revId": "75889d417fb1d2554a34422abca7e656e92546f2",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65a20e13_aec45769",
+        "filename": "adexchangebuyer/v1.2/adexchangebuyer-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-12-17T00:19:24Z",
+      "side": 1,
+      "message": "OK.  I\u0027ve done a minimal change that hard codes this rewrite without cluttering up the code too much. It\u0027s very specific to this parameter name, but at least it gets us the right name from the beginning, and we can generalize it later if we need to.",
+      "parentUuid": "459d0ad3_f0be3ecf",
+      "revId": "75889d417fb1d2554a34422abca7e656e92546f2",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

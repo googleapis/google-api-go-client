@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4ef783_85e302ef",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2015-12-18T04:34:06Z",
+      "side": 1,
+      "message": "Let\u0027s make this a proper ...Option thing before committing.",
+      "range": {
+        "startLine": 334,
+        "startChar": 5,
+        "endLine": 334,
+        "endChar": 17
+      },
+      "revId": "6d480120545900e387a442a037f5831c5cf63cf9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a4ef783_c5d9fa48",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2015-12-18T04:34:06Z",
+      "side": 1,
+      "message": "And what a hack!\n\nThis will de-ref a nil pointer, so this needs to be\nreturn \u0026http.Response{StatusCode: http.StatusRequestTimeout}, ctx.Err()\n\nThough since we\u0027re already returning ctx.Err(), surely you could just return nil?",
+      "range": {
+        "startLine": 392,
+        "startChar": 3,
+        "endLine": 392,
+        "endChar": 25
+      },
+      "revId": "6d480120545900e387a442a037f5831c5cf63cf9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a4ef783_a5e6fefe",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2015-12-18T04:34:06Z",
+      "side": 1,
+      "message": "I\u0027m not following the path which leads to rx.buf not being reset. AFAICT, if the previous upload attempt failed then the loop will break?",
+      "range": {
+        "startLine": 397,
+        "startChar": 5,
+        "endLine": 397,
+        "endChar": 28
+      },
+      "revId": "6d480120545900e387a442a037f5831c5cf63cf9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -3126,7 +3126,7 @@ type TimelineInsertCall struct {
 	timelineitem     *TimelineItem
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -3157,11 +3157,23 @@ func (c *TimelineInsertCall) UserIP(userIP string) *TimelineInsertCall {
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
-func (c *TimelineInsertCall) Media(r io.Reader) *TimelineInsertCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+// Media specifies the media to upload. r may explicitly indicate its
+// media type by implementing googleapi.ContentTyper. Otherwise, an
+// attempt will be made to automatically determine its media type.
+// Caveat: If opt indicates that a resumable upload should be used, the
+// media type will not be automatically determined.At most one of Media
+// and ResumableMedia may be set.
+func (c *TimelineInsertCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *TimelineInsertCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -3230,9 +3242,6 @@ func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -3276,10 +3285,14 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.Background()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -3707,7 +3720,7 @@ type TimelineUpdateCall struct {
 	timelineitem     *TimelineItem
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -3739,11 +3752,23 @@ func (c *TimelineUpdateCall) UserIP(userIP string) *TimelineUpdateCall {
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
-func (c *TimelineUpdateCall) Media(r io.Reader) *TimelineUpdateCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+// Media specifies the media to upload. r may explicitly indicate its
+// media type by implementing googleapi.ContentTyper. Otherwise, an
+// attempt will be made to automatically determine its media type.
+// Caveat: If opt indicates that a resumable upload should be used, the
+// media type will not be automatically determined.At most one of Media
+// and ResumableMedia may be set.
+func (c *TimelineUpdateCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *TimelineUpdateCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -3814,9 +3839,6 @@ func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -3860,10 +3882,14 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.Background()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -4211,7 +4237,7 @@ type TimelineAttachmentsInsertCall struct {
 	itemId           string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -4242,11 +4268,23 @@ func (c *TimelineAttachmentsInsertCall) UserIP(userIP string) *TimelineAttachmen
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
-func (c *TimelineAttachmentsInsertCall) Media(r io.Reader) *TimelineAttachmentsInsertCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+// Media specifies the media to upload. r may explicitly indicate its
+// media type by implementing googleapi.ContentTyper. Otherwise, an
+// attempt will be made to automatically determine its media type.
+// Caveat: If opt indicates that a resumable upload should be used, the
+// media type will not be automatically determined.At most one of Media
+// and ResumableMedia may be set.
+func (c *TimelineAttachmentsInsertCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *TimelineAttachmentsInsertCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -4314,9 +4352,6 @@ func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, e
 		"itemId": c.itemId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -4360,10 +4395,14 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.Background()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return nil, err
 		}

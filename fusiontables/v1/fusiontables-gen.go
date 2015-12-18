@@ -3413,7 +3413,7 @@ type TableImportRowsCall struct {
 	tableId          string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -3489,11 +3489,23 @@ func (c *TableImportRowsCall) UserIP(userIP string) *TableImportRowsCall {
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
-func (c *TableImportRowsCall) Media(r io.Reader) *TableImportRowsCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+// Media specifies the media to upload. r may explicitly indicate its
+// media type by implementing googleapi.ContentTyper. Otherwise, an
+// attempt will be made to automatically determine its media type.
+// Caveat: If opt indicates that a resumable upload should be used, the
+// media type will not be automatically determined.At most one of Media
+// and ResumableMedia may be set.
+func (c *TableImportRowsCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *TableImportRowsCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -3561,9 +3573,6 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -3607,10 +3616,14 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.Background()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -3702,7 +3715,7 @@ type TableImportTableCall struct {
 	s                *Service
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -3749,11 +3762,23 @@ func (c *TableImportTableCall) UserIP(userIP string) *TableImportTableCall {
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
-func (c *TableImportTableCall) Media(r io.Reader) *TableImportTableCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+// Media specifies the media to upload. r may explicitly indicate its
+// media type by implementing googleapi.ContentTyper. Otherwise, an
+// attempt will be made to automatically determine its media type.
+// Caveat: If opt indicates that a resumable upload should be used, the
+// media type will not be automatically determined.At most one of Media
+// and ResumableMedia may be set.
+func (c *TableImportTableCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *TableImportTableCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -3819,9 +3844,6 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -3865,10 +3887,14 @@ func (c *TableImportTableCall) Do() (*Table, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.Background()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return nil, err
 		}

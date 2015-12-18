@@ -118,7 +118,8 @@ type ArchiveInsertCall struct {
 	groupId          string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
+	resumableSize_   int64 // num bytes in resumable_, if known.
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -149,11 +150,23 @@ func (c *ArchiveInsertCall) UserIP(userIP string) *ArchiveInsertCall {
 	return c
 }
 
-// Media specifies the media to upload in a single chunk. At most one of
-// Media and ResumableMedia may be set.
-func (c *ArchiveInsertCall) Media(r io.Reader) *ArchiveInsertCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+// Media specifies the media to upload. r may explicitly indicate its
+// media type by implementing googleapi.ContentTyper. Otherwise, an
+// attempt will be made to automatically determine its media type.
+// Caveat: If opt indicates that a resumable upload should be used, the
+// media type will not be automatically determined.At most one of Media
+// and ResumableMedia may be set.
+func (c *ArchiveInsertCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *ArchiveInsertCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -166,6 +179,7 @@ func (c *ArchiveInsertCall) Media(r io.Reader) *ArchiveInsertCall {
 func (c *ArchiveInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ArchiveInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
+	c.resumableSize_ = size
 	c.mediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
@@ -221,9 +235,6 @@ func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 		"groupId": c.groupId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -267,10 +278,14 @@ func (c *ArchiveInsertCall) Do() (*Groups, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: c.resumableSize_,
 			Callback:      c.progressUpdater_,
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.Background()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return nil, err
 		}

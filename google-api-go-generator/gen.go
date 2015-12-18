@@ -1626,7 +1626,8 @@ func (meth *Method) generateCode() {
 	}
 	if meth.supportsMediaUpload() {
 		pn(" media_     io.Reader")
-		pn(" resumable_ googleapi.SizeReaderAt")
+		pn(" resumable_ io.Reader")
+		pn(" resumableSize_ int64 // num bytes in resumable_, if known.")
 		pn(" mediaType_ string")
 		pn(" protocol_  string")
 		pn(" progressUpdater_  googleapi.ProgressUpdater")
@@ -1716,13 +1717,25 @@ func (meth *Method) generateCode() {
 	}
 
 	if meth.supportsMediaUpload() {
-		comment := "Media specifies the media to upload in a single chunk. " +
+		comment := "Media specifies the media to upload. " +
+			"r may explicitly indicate its media type by implementing googleapi.ContentTyper. " +
+			"Otherwise, an attempt will be made to automatically determine its media type. " +
+			"Caveat: If opt indicates that a resumable upload should be used, the media type will not be automatically determined." +
 			"At most one of Media and ResumableMedia may be set."
+		// TODO(mcgreevy): implement content sniffing for resumable uploads. Can probably use googelapi.getMediaType.
 		p("\n%s", asComment("", comment))
-		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
-		pn("c.media_ = r")
-		pn(`c.protocol_ = "multipart"`)
-		pn("return c")
+		pn("func (c *%s) Media(r io.Reader, opt ...googleapi.MediaOptions) *%s {", callName, callName)
+		pn("  if len(opt) > 0 && opt[0].Resumable{")
+		pn("    c.resumable_ = r")
+		pn(`    c.protocol_ = "resumable"`)
+		pn("    if typer, ok := r.(googleapi.ContentTyper); ok {")
+		pn("      c.mediaType_ = typer.ContentType()")
+		pn("    }")
+		pn("  } else {")
+		pn("    c.media_ = r")
+		pn(`    c.protocol_ = "multipart"`)
+		pn("  }")
+		pn("  return c")
 		pn("}")
 		comment = "ResumableMedia specifies the media to upload in chunks and can be canceled with ctx. " +
 			"At most one of Media and ResumableMedia may be set. " +
@@ -1734,6 +1747,7 @@ func (meth *Method) generateCode() {
 		pn("func (c *%s) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *%s {", callName, callName)
 		pn("c.ctx_ = ctx")
 		pn("c.resumable_ = io.NewSectionReader(r, 0, size)")
+		pn("c.resumableSize_ = size")
 		pn("c.mediaType_ = mediaType")
 		pn(`c.protocol_ = "resumable"`)
 		pn("return c")
@@ -1844,9 +1858,11 @@ func (meth *Method) generateCode() {
 
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
+		/*  TODO: support auto-detecting mediaType.
 		pn(` if c.mediaType_ == "" {`)
 		pn("  c.mediaType_ = googleapi.DetectMediaType(c.resumable_)")
 		pn(" }")
+		*/
 		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
 		pn("}")
 	}
@@ -1921,10 +1937,14 @@ func (meth *Method) generateCode() {
 		pn("  URI:           loc,")
 		pn("  Media:         c.resumable_,")
 		pn("  MediaType:     c.mediaType_,")
-		pn("  ContentLength: c.resumable_.Size(),")
+		pn("  ContentLength: c.resumableSize_,")
 		pn("  Callback:      c.progressUpdater_,")
 		pn(" }")
-		pn(" res, err = rx.Upload(c.ctx_)")
+		pn(" ctx := c.ctx_")
+		pn(" if ctx == nil {") // TODO(mcgreevy): consider how best to encourage callers to provide a context.
+		pn("   ctx = context.Background()")
+		pn(" }")
+		pn(" res, err = rx.Upload(ctx)")
 		pn(" if err != nil { return %serr }", nilRet)
 		pn(" defer res.Body.Close()")
 		pn("}")

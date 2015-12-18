@@ -1276,7 +1276,7 @@ type UsersDraftsCreateCall struct {
 	draft            *Draft
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -1310,9 +1310,17 @@ func (c *UsersDraftsCreateCall) UserIP(userIP string) *UsersDraftsCreateCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *UsersDraftsCreateCall) Media(r io.Reader) *UsersDraftsCreateCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *UsersDraftsCreateCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *UsersDraftsCreateCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -1383,9 +1391,6 @@ func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -1429,7 +1434,7 @@ func (c *UsersDraftsCreateCall) Do() (*Draft, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -1973,7 +1978,7 @@ type UsersDraftsSendCall struct {
 	draft            *Draft
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -2008,9 +2013,17 @@ func (c *UsersDraftsSendCall) UserIP(userIP string) *UsersDraftsSendCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *UsersDraftsSendCall) Media(r io.Reader) *UsersDraftsSendCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *UsersDraftsSendCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *UsersDraftsSendCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -2081,9 +2094,6 @@ func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -2127,7 +2137,7 @@ func (c *UsersDraftsSendCall) Do() (*Message, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -2204,7 +2214,7 @@ type UsersDraftsUpdateCall struct {
 	draft            *Draft
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -2239,9 +2249,17 @@ func (c *UsersDraftsUpdateCall) UserIP(userIP string) *UsersDraftsUpdateCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *UsersDraftsUpdateCall) Media(r io.Reader) *UsersDraftsUpdateCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *UsersDraftsUpdateCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *UsersDraftsUpdateCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -2313,9 +2331,6 @@ func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"id":     c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -2359,7 +2374,7 @@ func (c *UsersDraftsUpdateCall) Do() (*Draft, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -3807,7 +3822,7 @@ type UsersMessagesImportCall struct {
 	message          *Message
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -3879,9 +3894,17 @@ func (c *UsersMessagesImportCall) UserIP(userIP string) *UsersMessagesImportCall
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *UsersMessagesImportCall) Media(r io.Reader) *UsersMessagesImportCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *UsersMessagesImportCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *UsersMessagesImportCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -3952,9 +3975,6 @@ func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) 
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -3998,7 +4018,7 @@ func (c *UsersMessagesImportCall) Do() (*Message, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -4106,7 +4126,7 @@ type UsersMessagesInsertCall struct {
 	message          *Message
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -4162,9 +4182,17 @@ func (c *UsersMessagesInsertCall) UserIP(userIP string) *UsersMessagesInsertCall
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *UsersMessagesInsertCall) Media(r io.Reader) *UsersMessagesInsertCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *UsersMessagesInsertCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *UsersMessagesInsertCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -4235,9 +4263,6 @@ func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) 
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -4281,7 +4306,7 @@ func (c *UsersMessagesInsertCall) Do() (*Message, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -4734,7 +4759,7 @@ type UsersMessagesSendCall struct {
 	message          *Message
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -4769,9 +4794,17 @@ func (c *UsersMessagesSendCall) UserIP(userIP string) *UsersMessagesSendCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *UsersMessagesSendCall) Media(r io.Reader) *UsersMessagesSendCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *UsersMessagesSendCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *UsersMessagesSendCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -4842,9 +4875,6 @@ func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 		"userId": c.userId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -4888,7 +4918,7 @@ func (c *UsersMessagesSendCall) Do() (*Message, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)

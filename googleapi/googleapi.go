@@ -18,7 +18,6 @@ import (
 	"net/textproto"
 	"net/url"
 	"regexp"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -332,6 +331,10 @@ var errAborted = errors.New("googleapi: upload aborted")
 // The remaining usable pieces of resumable uploads is exposed in each auto-generated API.
 type ProgressUpdater func(current, total int64)
 
+type MediaOptions struct {
+	Resumable bool
+}
+
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
 // It is not used by developers directly.
 type ResumableUpload struct {
@@ -339,11 +342,13 @@ type ResumableUpload struct {
 	// URI is the resumable resource destination provided by the server after specifying "&uploadType=resumable".
 	URI       string
 	UserAgent string // User-Agent for header of the request
-	// Media is the object being uploaded.
-	Media io.ReaderAt
+
+	// Media is the object being uploaded.  // TODO convert supplied ReaderAt to a Reader.
+	Media io.Reader
+
 	// MediaType defines the media type, e.g. "image/jpeg".
 	MediaType string
-	// ContentLength is the full size of the object being uploaded.
+	// ContentLength is the full size of the object being uploaded.  This is only used by the ProgressUpdater.
 	ContentLength int64
 
 	mu       sync.Mutex // guards progress
@@ -351,6 +356,9 @@ type ResumableUpload struct {
 
 	// Callback is an optional function that will be called upon every progress update.
 	Callback ProgressUpdater
+
+	buf   []byte
+	start int64
 }
 
 var (
@@ -368,71 +376,61 @@ func (rx *ResumableUpload) Progress() int64 {
 	return rx.progress
 }
 
-func (rx *ResumableUpload) transferStatus(ctx context.Context) (int64, *http.Response, error) {
-	req, _ := http.NewRequest("POST", rx.URI, nil)
-	req.ContentLength = 0
-	req.Header.Set("User-Agent", rx.UserAgent)
-	req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.ContentLength))
-	res, err := ctxhttp.Do(ctx, rx.Client, req)
-	if err != nil || res.StatusCode != statusResumeIncomplete {
-		return 0, res, err
-	}
-	var start int64
-	if m := rangeRE.FindStringSubmatch(res.Header.Get("Range")); len(m) == 2 {
-		start, err = strconv.ParseInt(m[1], 10, 64)
-		if err != nil {
-			return 0, nil, fmt.Errorf("unable to parse range size %v", m[1])
-		}
-		start += 1 // Start at the next byte
-	}
-	return start, res, nil
-}
-
-type chunk struct {
-	body io.Reader
-	size int64
-	err  error
-}
-
 func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, error) {
-	start, res, err := rx.transferStatus(ctx)
-	if err != nil || res.StatusCode != statusResumeIncomplete {
-		if err == context.Canceled {
-			return &http.Response{StatusCode: http.StatusRequestTimeout}, err
-		}
-		return res, err
+	if rx.buf == nil {
+		rx.buf = make([]byte, 0, chunkSize)
 	}
 
+	var res *http.Response
+	var err error
 	for {
 		select { // Check for cancellation
 		case <-ctx.Done():
+			// HACK: this is a bit ugly, but we don't have a http.Response to return.  We
+			// probably shouldn't be signalling this timeout via the http.Response in the
+			// first place.
+			var res *http.Response
 			res.StatusCode = http.StatusRequestTimeout
 			return res, ctx.Err()
 		default:
 		}
-		reqSize := rx.ContentLength - start
-		if reqSize > chunkSize {
-			reqSize = chunkSize
+		// If there is data in buf, then a previous upload attempt failed.  Retry it.
+		// Otherwise, try to read chunkSize from rx.Media
+		if len(rx.buf) == 0 {
+			rx.buf = rx.buf[:cap(rx.buf)]
+			n, _ := io.ReadFull(rx.Media, rx.buf)
+			rx.buf = rx.buf[:n]
 		}
-		r := io.NewSectionReader(rx.Media, start, reqSize)
-		req, _ := http.NewRequest("POST", rx.URI, r)
+		reqSize := int64(len(rx.buf))
+		done := reqSize < chunkSize
+
+		req, _ := http.NewRequest("POST", rx.URI, bytes.NewReader(rx.buf))
 		req.ContentLength = reqSize
-		req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, start+reqSize-1, rx.ContentLength))
+		if done {
+			if reqSize == 0 {
+				req.Header.Set("Content-Range", fmt.Sprintf("bytes */%v", rx.start+reqSize))
+			} else {
+				req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", rx.start, rx.start+reqSize-1, rx.start+reqSize))
+			}
+		} else {
+			req.Header.Set("Content-Range", fmt.Sprintf("bytes %v-%v/*", rx.start, rx.start+reqSize-1))
+		}
 		req.Header.Set("Content-Type", rx.MediaType)
 		req.Header.Set("User-Agent", rx.UserAgent)
 		res, err = ctxhttp.Do(ctx, rx.Client, req)
-		start += reqSize
 		if err == nil && (res.StatusCode == statusResumeIncomplete || res.StatusCode == http.StatusOK) {
 			rx.mu.Lock()
-			rx.progress = start // keep track of number of bytes sent so far
+			rx.progress = rx.start // keep track of number of bytes sent so far
 			rx.mu.Unlock()
 			if rx.Callback != nil {
-				rx.Callback(start, rx.ContentLength)
+				rx.Callback(rx.start, rx.ContentLength)
 			}
 		}
 		if err != nil || res.StatusCode != statusResumeIncomplete {
 			break
 		}
+		rx.start += reqSize
+		rx.buf = rx.buf[0:0]
 	}
 	return res, err
 }

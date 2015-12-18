@@ -19673,7 +19673,7 @@ type CreativeAssetsInsertCall struct {
 	creativeassetmetadata *CreativeAssetMetadata
 	urlParams_            gensupport.URLParams
 	media_                io.Reader
-	resumable_            googleapi.SizeReaderAt
+	resumable_            io.Reader
 	mediaType_            string
 	protocol_             string
 	progressUpdater_      googleapi.ProgressUpdater
@@ -19708,9 +19708,17 @@ func (c *CreativeAssetsInsertCall) UserIP(userIP string) *CreativeAssetsInsertCa
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *CreativeAssetsInsertCall) Media(r io.Reader) *CreativeAssetsInsertCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *CreativeAssetsInsertCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *CreativeAssetsInsertCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -19782,9 +19790,6 @@ func (c *CreativeAssetsInsertCall) doRequest(alt string) (*http.Response, error)
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -19828,7 +19833,7 @@ func (c *CreativeAssetsInsertCall) Do() (*CreativeAssetMetadata, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)

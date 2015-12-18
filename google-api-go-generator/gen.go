@@ -1626,7 +1626,7 @@ func (meth *Method) generateCode() {
 	}
 	if meth.supportsMediaUpload() {
 		pn(" media_     io.Reader")
-		pn(" resumable_ googleapi.SizeReaderAt")
+		pn(" resumable_ io.Reader")
 		pn(" mediaType_ string")
 		pn(" protocol_  string")
 		pn(" progressUpdater_  googleapi.ProgressUpdater")
@@ -1719,10 +1719,19 @@ func (meth *Method) generateCode() {
 		comment := "Media specifies the media to upload in a single chunk. " +
 			"At most one of Media and ResumableMedia may be set."
 		p("\n%s", asComment("", comment))
-		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
-		pn("c.media_ = r")
-		pn(`c.protocol_ = "multipart"`)
-		pn("return c")
+		pn("func (c *%s) Media(r io.Reader, opt ...googleapi.MediaOptions) *%s {", callName, callName)
+		pn("  if len(opt) > 0 && opt[0].Resumable{")
+		pn("    c.resumable_ = r")
+		pn(`    c.protocol_ = "resumable"`)
+		pn("    if typer, ok := r.(googleapi.ContentTyper); ok {")
+		pn("      c.mediaType_ = typer.ContentType()")
+		pn("    }")
+		// TODO: support detecting the content type without discarding initial bytes.  Like googleapi.getMediaType.
+		pn("  } else {")
+		pn("    c.media_ = r")
+		pn(`    c.protocol_ = "multipart"`)
+		pn("  }")
+		pn("  return c")
 		pn("}")
 		comment = "ResumableMedia specifies the media to upload in chunks and can be canceled with ctx. " +
 			"At most one of Media and ResumableMedia may be set. " +
@@ -1844,9 +1853,11 @@ func (meth *Method) generateCode() {
 
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
+		/*  TODO: support auto-detecting mediaType.
 		pn(` if c.mediaType_ == "" {`)
 		pn("  c.mediaType_ = googleapi.DetectMediaType(c.resumable_)")
 		pn(" }")
+		*/
 		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
 		pn("}")
 	}
@@ -1921,7 +1932,7 @@ func (meth *Method) generateCode() {
 		pn("  URI:           loc,")
 		pn("  Media:         c.resumable_,")
 		pn("  MediaType:     c.mediaType_,")
-		pn("  ContentLength: c.resumable_.Size(),")
+		pn("  ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),")
 		pn("  Callback:      c.progressUpdater_,")
 		pn(" }")
 		pn(" res, err = rx.Upload(c.ctx_)")

@@ -3362,7 +3362,7 @@ type EditsApksUploadCall struct {
 	editId           string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -3396,9 +3396,17 @@ func (c *EditsApksUploadCall) UserIP(userIP string) *EditsApksUploadCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *EditsApksUploadCall) Media(r io.Reader) *EditsApksUploadCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *EditsApksUploadCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *EditsApksUploadCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -3467,9 +3475,6 @@ func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -3513,7 +3518,7 @@ func (c *EditsApksUploadCall) Do() (*Apk, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -4570,7 +4575,7 @@ type EditsExpansionfilesUploadCall struct {
 	expansionFileType string
 	urlParams_        gensupport.URLParams
 	media_            io.Reader
-	resumable_        googleapi.SizeReaderAt
+	resumable_        io.Reader
 	mediaType_        string
 	protocol_         string
 	progressUpdater_  googleapi.ProgressUpdater
@@ -4607,9 +4612,17 @@ func (c *EditsExpansionfilesUploadCall) UserIP(userIP string) *EditsExpansionfil
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *EditsExpansionfilesUploadCall) Media(r io.Reader) *EditsExpansionfilesUploadCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *EditsExpansionfilesUploadCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *EditsExpansionfilesUploadCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -4680,9 +4693,6 @@ func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, e
 		"expansionFileType": c.expansionFileType,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -4726,7 +4736,7 @@ func (c *EditsExpansionfilesUploadCall) Do() (*ExpansionFilesUploadResponse, err
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -5356,7 +5366,7 @@ type EditsImagesUploadCall struct {
 	imageType        string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -5393,9 +5403,17 @@ func (c *EditsImagesUploadCall) UserIP(userIP string) *EditsImagesUploadCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *EditsImagesUploadCall) Media(r io.Reader) *EditsImagesUploadCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *EditsImagesUploadCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *EditsImagesUploadCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -5466,9 +5484,6 @@ func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 		"imageType":   c.imageType,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -5512,7 +5527,7 @@ func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)

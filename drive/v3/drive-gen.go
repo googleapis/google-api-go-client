@@ -3073,7 +3073,7 @@ type FilesCreateCall struct {
 	file             *File
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -3141,9 +3141,17 @@ func (c *FilesCreateCall) UserIP(userIP string) *FilesCreateCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *FilesCreateCall) Media(r io.Reader) *FilesCreateCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *FilesCreateCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *FilesCreateCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -3212,9 +3220,6 @@ func (c *FilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -3258,7 +3263,7 @@ func (c *FilesCreateCall) Do() (*File, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -4244,7 +4249,7 @@ type FilesUpdateCall struct {
 	file             *File
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -4317,9 +4322,17 @@ func (c *FilesUpdateCall) UserIP(userIP string) *FilesUpdateCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *FilesUpdateCall) Media(r io.Reader) *FilesUpdateCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *FilesUpdateCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *FilesUpdateCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -4390,9 +4403,6 @@ func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"fileId": c.fileId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -4436,7 +4446,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)

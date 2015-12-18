@@ -8042,7 +8042,7 @@ type ProjectsIconsCreateCall struct {
 	icon             *Icon
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -8076,9 +8076,17 @@ func (c *ProjectsIconsCreateCall) UserIP(userIP string) *ProjectsIconsCreateCall
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *ProjectsIconsCreateCall) Media(r io.Reader) *ProjectsIconsCreateCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *ProjectsIconsCreateCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *ProjectsIconsCreateCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -8149,9 +8157,6 @@ func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) 
 		"projectId": c.projectId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -8195,7 +8200,7 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -11771,7 +11776,7 @@ type RastersFilesInsertCall struct {
 	id               string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -11805,9 +11810,17 @@ func (c *RastersFilesInsertCall) UserIP(userIP string) *RastersFilesInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *RastersFilesInsertCall) Media(r io.Reader) *RastersFilesInsertCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *RastersFilesInsertCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *RastersFilesInsertCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -11875,9 +11888,6 @@ func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -11906,7 +11916,7 @@ func (c *RastersFilesInsertCall) Do() error {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)
@@ -14462,7 +14472,7 @@ type TablesFilesInsertCall struct {
 	id               string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
+	resumable_       io.Reader
 	mediaType_       string
 	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
@@ -14499,9 +14509,17 @@ func (c *TablesFilesInsertCall) UserIP(userIP string) *TablesFilesInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *TablesFilesInsertCall) Media(r io.Reader) *TablesFilesInsertCall {
-	c.media_ = r
-	c.protocol_ = "multipart"
+func (c *TablesFilesInsertCall) Media(r io.Reader, opt ...googleapi.MediaOptions) *TablesFilesInsertCall {
+	if len(opt) > 0 && opt[0].Resumable {
+		c.resumable_ = r
+		c.protocol_ = "resumable"
+		if typer, ok := r.(googleapi.ContentTyper); ok {
+			c.mediaType_ = typer.ContentType()
+		}
+	} else {
+		c.media_ = r
+		c.protocol_ = "multipart"
+	}
 	return c
 }
 
@@ -14569,9 +14587,6 @@ func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
-		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -14600,7 +14615,7 @@ func (c *TablesFilesInsertCall) Do() error {
 			URI:           loc,
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
-			ContentLength: c.resumable_.Size(),
+			ContentLength: 0, // TODO: restore this.   c.resumable_.Size(),
 			Callback:      c.progressUpdater_,
 		}
 		res, err = rx.Upload(c.ctx_)

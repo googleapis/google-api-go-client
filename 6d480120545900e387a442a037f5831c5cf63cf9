@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4a4ef783_858782f7",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-12-18T10:27:55Z",
+      "side": 1,
+      "message": "Yes, I didn\u0027t have time to check the chain of callers before, but yes, the httpResponse is eventually discard if err !\u003d nil, so we can return nil here.\n\nI\u0027ve made this nil, but also gone through and tried to ensure that http.Response.Body.Close() is called appropriately.  It looks like it was forgotten at the bottom of this main for loop before.  I would appreciate it if you can have a close look at that too to verify that I haven\u0027t missed anything.\n\nAs the responsibility for closing the Body is sprinkled throughout the code, it should really be cleaned up too.",
+      "parentUuid": "4a4ef783_c5d9fa48",
+      "range": {
+        "startLine": 392,
+        "startChar": 3,
+        "endLine": 392,
+        "endChar": 25
+      },
+      "revId": "6d480120545900e387a442a037f5831c5cf63cf9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a4ef783_a5e6fefe",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2015-12-18T04:34:06Z",
       "side": 1,
       "message": "I\u0027m not following the path which leads to rx.buf not being reset. AFAICT, if the previous upload attempt failed then the loop will break?",
+      "range": {
+        "startLine": 397,
+        "startChar": 5,
+        "endLine": 397,
+        "endChar": 28
+      },
+      "revId": "6d480120545900e387a442a037f5831c5cf63cf9",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a4ef783_256e8e06",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-12-18T10:27:55Z",
+      "side": 1,
+      "message": "Yes, the loop will break, and the function will return to Upload, which will then sleep and call transferChunks again.\n\nAt the top of transferChunks, rx.buf will be non-nil, and therefore left alone on line 380.\n\nI know it\u0027s not the cleanest code, but it\u0027s at least a fairly minimal change to the existing code.  It needs to be cleaned up before being committed.",
+      "parentUuid": "4a4ef783_a5e6fefe",
       "range": {
         "startLine": 397,
         "startChar": 5,

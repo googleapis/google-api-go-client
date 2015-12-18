@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4ef783_45d86a17",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1859,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2015-12-18T11:32:43Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be too much effort, but I haven\u0027t been able to get to it.\n\nNote that this commented out code means that code that uses ResumableMedia and relies on content sniffing will break.  This patch should not be used as-is by anyone who is using ResumableMedia and relying on content sniffing.",
+      "revId": "4b2d02bf790ca7f17809db41e6275cd4aa3afa20",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

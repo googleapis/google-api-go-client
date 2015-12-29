@@ -27,6 +27,7 @@ func TestAPIs(t *testing.T) {
 		"quotednum",
 		"repeated",
 		"resource-named-service", // blogger/v3/blogger-api.json + s/BlogUserInfo/Service/
+		"string_formats",
 		"unfortunatedefaults",
 		"variants",
 		"wrapnewlines",

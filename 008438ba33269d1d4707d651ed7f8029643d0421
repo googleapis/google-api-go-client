@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea27abf2_7e1299e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5201
+      },
+      "writtenOn": "2015-12-29T19:42:45Z",
+      "side": 1,
+      "message": "Proper github syntax to auto-close these is:\n\nFixes google/google-api-go-client#117\n\nSee https://help.github.com/articles/closing-issues-via-commit-messages/",
+      "revId": "008438ba33269d1d4707d651ed7f8029643d0421",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

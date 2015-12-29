@@ -2238,6 +2238,8 @@ func simpleTypeConvert(apiType, format string) (gotype string, ok bool) {
 		switch format {
 		case "int64", "uint64", "int32", "uint32":
 			gotype = format
+		case "byte":
+			gotype = "[]byte"
 		}
 	case "number":
 		gotype = "float64"

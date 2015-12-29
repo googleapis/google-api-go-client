@@ -1,0 +1,33 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"kEk3sFj6Ef5_yR1-f8vmMRoq9mI/3m5rB86FE5KuW1K3jAl88AxCreg\"",
+ "discoveryVersion": "v1",
+ "id": "string_formats:v1",
+ "name": "string_formats",
+ "version": "v1",
+ "title": "Example API",
+ "description": "The Example API demonstrates different string formats",
+ "ownerDomain": "google.com",
+ "ownerName": "Google",
+ "protocol": "rest",
+ "schemas": {
+  "StringFormats": {
+   "id": "StringFormats",
+   "type": "object",
+   "description": "Various exciting string formats",
+   "properties": {
+     "number": {
+       "type": "string",
+       "format": "int64"
+     },
+     "string": {
+       "type": "string"
+     },
+     "byte_string": {
+       "type": "string",
+       "format": "byte"
+     }
+   }
+  }
+ }
+}

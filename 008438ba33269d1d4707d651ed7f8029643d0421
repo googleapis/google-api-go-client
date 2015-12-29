@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea27abf2_de02a58e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5715
+      },
+      "writtenOn": "2015-12-29T19:44:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea27abf2_7e1299e7",
+      "revId": "008438ba33269d1d4707d651ed7f8029643d0421",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea27abf2_be0b71ae",
         "filename": "google-api-go-generator/testdata/string_formats.want",
         "patchSetId": 3

@@ -332,6 +332,9 @@ var errAborted = errors.New("googleapi: upload aborted")
 // The remaining usable pieces of resumable uploads is exposed in each auto-generated API.
 type ProgressUpdater func(current, total int64)
 
+// CurrentProgressUpdater is a wrapper which calls a ProgressUpdater with a fixed total.
+type CurrentProgressUpdater func(current int64)
+
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
 // It is not used by developers directly.
 type ResumableUpload struct {
@@ -350,7 +353,7 @@ type ResumableUpload struct {
 	progress int64      // number of bytes uploaded so far
 
 	// Callback is an optional function that will be called upon every progress update.
-	Callback ProgressUpdater
+	Callback CurrentProgressUpdater
 }
 
 var (
@@ -427,7 +430,7 @@ func (rx *ResumableUpload) transferChunks(ctx context.Context) (*http.Response, 
 			rx.progress = start // keep track of number of bytes sent so far
 			rx.mu.Unlock()
 			if rx.Callback != nil {
-				rx.Callback(start, rx.ContentLength)
+				rx.Callback(start)
 			}
 		}
 		if err != nil || res.StatusCode != statusResumeIncomplete {

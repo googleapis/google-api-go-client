@@ -151,6 +151,23 @@ func (r *MailService) Insert(userKey string, mailitem *MailItem) *MailInsertCall
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *MailInsertCall) QuotaUser(quotaUser string) *MailInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *MailInsertCall) UserIP(userIP string) *MailInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
 func (c *MailInsertCall) Media(r io.Reader) *MailInsertCall {
@@ -258,7 +275,11 @@ func (c *MailInsertCall) Do() error {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback: func(curr int64) {
+				if c.progressUpdater_ != nil {
+					c.progressUpdater_(curr, c.resumable_.Size())
+				}
+			},
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {

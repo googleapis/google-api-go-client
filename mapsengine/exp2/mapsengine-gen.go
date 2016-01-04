@@ -8196,7 +8196,11 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback: func(curr int64) {
+				if c.progressUpdater_ != nil {
+					c.progressUpdater_(curr, c.resumable_.Size())
+				}
+			},
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -11907,7 +11911,11 @@ func (c *RastersFilesInsertCall) Do() error {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback: func(curr int64) {
+				if c.progressUpdater_ != nil {
+					c.progressUpdater_(curr, c.resumable_.Size())
+				}
+			},
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {
@@ -14601,7 +14609,11 @@ func (c *TablesFilesInsertCall) Do() error {
 			Media:         c.resumable_,
 			MediaType:     c.mediaType_,
 			ContentLength: c.resumable_.Size(),
-			Callback:      c.progressUpdater_,
+			Callback: func(curr int64) {
+				if c.progressUpdater_ != nil {
+					c.progressUpdater_(curr, c.resumable_.Size())
+				}
+			},
 		}
 		res, err = rx.Upload(c.ctx_)
 		if err != nil {

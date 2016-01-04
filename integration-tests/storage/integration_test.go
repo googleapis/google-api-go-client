@@ -75,7 +75,7 @@ func tokenSource(ctx context.Context, scopes ...string) (oauth2.TokenSource, err
 const defaultType = "text/plain; charset=utf-8"
 
 // writeObject writes some data and default metadata to the specified object.
-// Reusmable upload is used if resumable is true.
+// Resumable upload is used if resumable is true.
 // The written data is returned.
 func writeObject(s *storage.Service, bucket, obj string, resumable bool) (string, error) {
 	o := &storage.Object{

@@ -3095,6 +3095,10 @@ type Profile struct {
 	// AccountId: Account ID to which this view (profile) belongs.
 	AccountId string `json:"accountId,omitempty"`
 
+	// BotFilteringEnabled: Indicates whether bot filtering is enabled for
+	// this view (profile).
+	BotFilteringEnabled bool `json:"botFilteringEnabled,omitempty"`
+
 	// ChildLink: Child link for this view (profile). Points to the list of
 	// goals for this view (profile).
 	ChildLink *ProfileChildLink `json:"childLink,omitempty"`
@@ -13284,6 +13288,135 @@ func (c *ManagementSegmentsListCall) Do() (*Segments, error) {
 	//     "https://www.googleapis.com/auth/analytics",
 	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analytics.management.unsampledReports.delete":
+
+type ManagementUnsampledReportsDeleteCall struct {
+	s                 *Service
+	accountId         string
+	webPropertyId     string
+	profileId         string
+	unsampledReportId string
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+}
+
+// Delete: Deletes an unsampled report.
+func (r *ManagementUnsampledReportsService) Delete(accountId string, webPropertyId string, profileId string, unsampledReportId string) *ManagementUnsampledReportsDeleteCall {
+	c := &ManagementUnsampledReportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.webPropertyId = webPropertyId
+	c.profileId = profileId
+	c.unsampledReportId = unsampledReportId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ManagementUnsampledReportsDeleteCall) QuotaUser(quotaUser string) *ManagementUnsampledReportsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ManagementUnsampledReportsDeleteCall) UserIP(userIP string) *ManagementUnsampledReportsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ManagementUnsampledReportsDeleteCall) Fields(s ...googleapi.Field) *ManagementUnsampledReportsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ManagementUnsampledReportsDeleteCall) Context(ctx context.Context) *ManagementUnsampledReportsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *ManagementUnsampledReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports/{unsampledReportId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":         c.accountId,
+		"webPropertyId":     c.webPropertyId,
+		"profileId":         c.profileId,
+		"unsampledReportId": c.unsampledReportId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "analytics.management.unsampledReports.delete" call.
+func (c *ManagementUnsampledReportsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an unsampled report.",
+	//   "httpMethod": "DELETE",
+	//   "id": "analytics.management.unsampledReports.delete",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "webPropertyId",
+	//     "profileId",
+	//     "unsampledReportId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID to delete the unsampled report for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "View (Profile) ID to delete the unsampled report for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "unsampledReportId": {
+	//       "description": "ID of the unsampled report to be deleted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webPropertyId": {
+	//       "description": "Web property ID to delete the unsampled reports for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports/{unsampledReportId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
 	//   ]
 	// }
 

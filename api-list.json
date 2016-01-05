@@ -1242,7 +1242,7 @@
    "name": "cloudresourcemanager",
    "version": "v1beta1",
    "title": "Google Cloud Resource Manager API",
-   "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating of project metadata.",
+   "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudresourcemanager/v1beta1/rest",
    "discoveryLink": "./apis/cloudresourcemanager/v1beta1/rest",
    "icons": {
@@ -1362,6 +1362,22 @@
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
    },
    "documentationLink": "",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "kgsearch:v1",
+   "name": "kgsearch",
+   "version": "v1",
+   "title": "Knowledge Graph Search API",
+   "description": "Knowledge Graph Search API allows developers to search the Google Knowledge Graph for entities.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/kgsearch/v1/rest",
+   "discoveryLink": "./apis/kgsearch/v1/rest",
+   "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+   },
+   "documentationLink": "https://developers.google.com/knowledge-graph/",
    "preferred": true
   },
   {

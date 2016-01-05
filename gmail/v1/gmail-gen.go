@@ -830,8 +830,8 @@ type WatchRequest struct {
 	// publish the events to. This topic name **must** already exist in
 	// Cloud Pub/Sub and you **must** have already granted gmail "publish"
 	// permission on it. For example,
-	// "projects/my-project-identifier/topics/my-topic-name" (using the new
-	// Cloud Pub/Sub "v1beta2" topic naming format).
+	// "projects/my-project-identifier/topics/my-topic-name" (using the
+	// Cloud Pub/Sub "v1" topic naming format).
 	//
 	// Note that the "my-project-identifier" portion must exactly match your
 	// Google developer project id (the one executing this watch request).

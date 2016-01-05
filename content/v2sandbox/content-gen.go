@@ -802,6 +802,12 @@ func (s *OrdersAdvanceTestOrderResponse) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersCancelLineItemRequest struct {
+	// Amount: Amount to refund for the cancelation. Optional. If not set,
+	// Google will calculate the default based on the price and tax of the
+	// items involved. The amount must not be larger than the net amount
+	// left on the order.
+	Amount *Price `json:"amount,omitempty"`
+
 	// LineItemId: The ID of the line item to cancel.
 	LineItemId string `json:"lineItemId,omitempty"`
 
@@ -818,7 +824,7 @@ type OrdersCancelLineItemRequest struct {
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LineItemId") to
+	// ForceSendFields is a list of field names (e.g. "Amount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1062,6 +1068,12 @@ func (s *OrdersCustomBatchRequestEntryCancel) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersCustomBatchRequestEntryCancelLineItem struct {
+	// Amount: Amount to refund for the cancelation. Optional. If not set,
+	// Google will calculate the default based on the price and tax of the
+	// items involved. The amount must not be larger than the net amount
+	// left on the order.
+	Amount *Price `json:"amount,omitempty"`
+
 	// LineItemId: The ID of the line item to cancel.
 	LineItemId string `json:"lineItemId,omitempty"`
 
@@ -1074,7 +1086,7 @@ type OrdersCustomBatchRequestEntryCancelLineItem struct {
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LineItemId") to
+	// ForceSendFields is a list of field names (e.g. "Amount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the

@@ -332,6 +332,23 @@ func (r *ApplicationsService) Get(applicationId int64) *ApplicationsGetCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ApplicationsGetCall) QuotaUser(quotaUser string) *ApplicationsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ApplicationsGetCall) UserIP(userIP string) *ApplicationsGetCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -477,6 +494,23 @@ func (c *ApplicationsListCall) PageToken(pageToken string) *ApplicationsListCall
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ApplicationsListCall) QuotaUser(quotaUser string) *ApplicationsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ApplicationsListCall) UserIP(userIP string) *ApplicationsListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -567,7 +601,7 @@ func (c *ApplicationsListCall) Do() (*ApplicationsListResponse, error) {
 	//     },
 	//     "maxResults": {
 	//       "description": "Maximum number of results to return. Default is 100.",
-	//       "format": "uint32",
+	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "500",
 	//       "minimum": "1",
@@ -605,6 +639,23 @@ type TransfersGetCall struct {
 func (r *TransfersService) Get(dataTransferId string) *TransfersGetCall {
 	c := &TransfersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dataTransferId = dataTransferId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TransfersGetCall) QuotaUser(quotaUser string) *TransfersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TransfersGetCall) UserIP(userIP string) *TransfersGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -728,6 +779,23 @@ type TransfersInsertCall struct {
 func (r *TransfersService) Insert(datatransfer *DataTransfer) *TransfersInsertCall {
 	c := &TransfersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datatransfer = datatransfer
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TransfersInsertCall) QuotaUser(quotaUser string) *TransfersInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TransfersInsertCall) UserIP(userIP string) *TransfersInsertCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -871,9 +939,26 @@ func (c *TransfersListCall) PageToken(pageToken string) *TransfersListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *TransfersListCall) QuotaUser(quotaUser string) *TransfersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // Status sets the optional parameter "status": Status of the transfer.
 func (c *TransfersListCall) Status(status string) *TransfersListCall {
 	c.urlParams_.Set("status", status)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *TransfersListCall) UserIP(userIP string) *TransfersListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

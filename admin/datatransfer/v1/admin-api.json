@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fIZK26KtD09fXt5m9JygrSOR194\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/BNuyD_NaVAV3W_hswlv4FqnMld8\"",
  "discoveryVersion": "v1",
  "id": "admin:datatransfer_v1",
  "name": "admin",
  "canonicalName": "DataTransfer",
  "version": "datatransfer_v1",
- "revision": "20150917",
+ "revision": "20151124",
  "title": "Admin Data Transfer API",
  "description": "Admin Data Transfer API lets you transfer user data from one user to another.",
  "ownerDomain": "google.com",
@@ -295,7 +295,7 @@
       "maxResults": {
        "type": "integer",
        "description": "Maximum number of results to return. Default is 100.",
-       "format": "uint32",
+       "format": "int32",
        "minimum": "1",
        "maximum": "500",
        "location": "query"

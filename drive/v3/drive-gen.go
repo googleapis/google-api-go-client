@@ -3203,11 +3203,8 @@ func (c *FilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
-		if cancel != nil {
-			defer cancel()
-		}
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
@@ -4383,11 +4380,8 @@ func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" {
-		var cancel func()
-		cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
-		if cancel != nil {
-			defer cancel()
-		}
+		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		defer cancel()
 	}
 	req, _ := http.NewRequest("PATCH", urls, body)
 	googleapi.Expand(req.URL, map[string]string{

@@ -79,14 +79,19 @@ func New(client *http.Client) (*Service, error) {
 	s.Channels = NewChannelsService(s)
 	s.CommentThreads = NewCommentThreadsService(s)
 	s.Comments = NewCommentsService(s)
+	s.FanFundingEvents = NewFanFundingEventsService(s)
 	s.GuideCategories = NewGuideCategoriesService(s)
 	s.I18nLanguages = NewI18nLanguagesService(s)
 	s.I18nRegions = NewI18nRegionsService(s)
 	s.LiveBroadcasts = NewLiveBroadcastsService(s)
+	s.LiveChatBans = NewLiveChatBansService(s)
+	s.LiveChatMessages = NewLiveChatMessagesService(s)
+	s.LiveChatModerators = NewLiveChatModeratorsService(s)
 	s.LiveStreams = NewLiveStreamsService(s)
 	s.PlaylistItems = NewPlaylistItemsService(s)
 	s.Playlists = NewPlaylistsService(s)
 	s.Search = NewSearchService(s)
+	s.Sponsors = NewSponsorsService(s)
 	s.Subscriptions = NewSubscriptionsService(s)
 	s.Thumbnails = NewThumbnailsService(s)
 	s.VideoAbuseReportReasons = NewVideoAbuseReportReasonsService(s)
@@ -115,6 +120,8 @@ type Service struct {
 
 	Comments *CommentsService
 
+	FanFundingEvents *FanFundingEventsService
+
 	GuideCategories *GuideCategoriesService
 
 	I18nLanguages *I18nLanguagesService
@@ -123,6 +130,12 @@ type Service struct {
 
 	LiveBroadcasts *LiveBroadcastsService
 
+	LiveChatBans *LiveChatBansService
+
+	LiveChatMessages *LiveChatMessagesService
+
+	LiveChatModerators *LiveChatModeratorsService
+
 	LiveStreams *LiveStreamsService
 
 	PlaylistItems *PlaylistItemsService
@@ -130,6 +143,8 @@ type Service struct {
 	Playlists *PlaylistsService
 
 	Search *SearchService
+
+	Sponsors *SponsorsService
 
 	Subscriptions *SubscriptionsService
 
@@ -214,6 +229,15 @@ type CommentsService struct {
 	s *Service
 }
 
+func NewFanFundingEventsService(s *Service) *FanFundingEventsService {
+	rs := &FanFundingEventsService{s: s}
+	return rs
+}
+
+type FanFundingEventsService struct {
+	s *Service
+}
+
 func NewGuideCategoriesService(s *Service) *GuideCategoriesService {
 	rs := &GuideCategoriesService{s: s}
 	return rs
@@ -250,6 +274,33 @@ type LiveBroadcastsService struct {
 	s *Service
 }
 
+func NewLiveChatBansService(s *Service) *LiveChatBansService {
+	rs := &LiveChatBansService{s: s}
+	return rs
+}
+
+type LiveChatBansService struct {
+	s *Service
+}
+
+func NewLiveChatMessagesService(s *Service) *LiveChatMessagesService {
+	rs := &LiveChatMessagesService{s: s}
+	return rs
+}
+
+type LiveChatMessagesService struct {
+	s *Service
+}
+
+func NewLiveChatModeratorsService(s *Service) *LiveChatModeratorsService {
+	rs := &LiveChatModeratorsService{s: s}
+	return rs
+}
+
+type LiveChatModeratorsService struct {
+	s *Service
+}
+
 func NewLiveStreamsService(s *Service) *LiveStreamsService {
 	rs := &LiveStreamsService{s: s}
 	return rs
@@ -283,6 +334,15 @@ func NewSearchService(s *Service) *SearchService {
 }
 
 type SearchService struct {
+	s *Service
+}
+
+func NewSponsorsService(s *Service) *SponsorsService {
+	rs := &SponsorsService{s: s}
+	return rs
+}
+
+type SponsorsService struct {
 	s *Service
 }
 
@@ -1539,6 +1599,34 @@ type ChannelLocalization struct {
 
 func (s *ChannelLocalization) MarshalJSON() ([]byte, error) {
 	type noMethod ChannelLocalization
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type ChannelProfileDetails struct {
+	// ChannelId: The YouTube channel ID.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// ChannelUrl: The channel's URL.
+	ChannelUrl string `json:"channelUrl,omitempty"`
+
+	// DisplayName: The channel's display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ProfileImageUrl: The channels's avatar URL.
+	ProfileImageUrl string `json:"profileImageUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *ChannelProfileDetails) MarshalJSON() ([]byte, error) {
+	type noMethod ChannelProfileDetails
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -3129,6 +3217,127 @@ func (s *ContentRating) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// FanFundingEvent: A fanFundingEvent resource represents a fan funding
+// event on a YouTube channel. Fan funding events occur when a user
+// gives one-time monetary support to the channel owner.
+type FanFundingEvent struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The ID that YouTube assigns to uniquely identify the fan funding
+	// event.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#fanFundingEvent".
+	Kind string `json:"kind,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the fan
+	// funding event.
+	Snippet *FanFundingEventSnippet `json:"snippet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FanFundingEvent) MarshalJSON() ([]byte, error) {
+	type noMethod FanFundingEvent
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type FanFundingEventListResponse struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
+	// Items: A list of fan funding events that match the request criteria.
+	Items []*FanFundingEvent `json:"items,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#fanFundingEventListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
+
+	// VisitorId: The visitorId identifies the visitor.
+	VisitorId string `json:"visitorId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FanFundingEventListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod FanFundingEventListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type FanFundingEventSnippet struct {
+	// AmountMicros: The amount of funding in micros of fund_currency. e.g.,
+	// 1 is represented
+	AmountMicros uint64 `json:"amountMicros,omitempty,string"`
+
+	// ChannelId: Channel id where the funding event occurred.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// CommentText: The text contents of the comment left by the user.
+	CommentText string `json:"commentText,omitempty"`
+
+	// CreatedAt: The date and time when the funding occurred. The value is
+	// specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	CreatedAt string `json:"createdAt,omitempty"`
+
+	// Currency: The currency in which the fund was made. ISO 4217.
+	Currency string `json:"currency,omitempty"`
+
+	// DisplayString: A rendered string that displays the fund amount and
+	// currency (e.g., "$1.00"). The string is rendered for the given
+	// language.
+	DisplayString string `json:"displayString,omitempty"`
+
+	// SupporterDetails: Details about the supporter. Only filled if the
+	// event was made public by the user.
+	SupporterDetails *ChannelProfileDetails `json:"supporterDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AmountMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *FanFundingEventSnippet) MarshalJSON() ([]byte, error) {
+	type noMethod FanFundingEventSnippet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // GeoPoint: Geographical coordinates of a point, in WGS84.
 type GeoPoint struct {
 	// Altitude: Altitude above the reference ellipsoid, in meters.
@@ -3817,9 +4026,18 @@ type LiveBroadcastContentDetails struct {
 	// to the broadcast.
 	BoundStreamId string `json:"boundStreamId,omitempty"`
 
-	// EnableClosedCaptions: This setting indicates whether closed
+	// Possible values:
+	//   "closedCaptionsDisabled"
+	//   "closedCaptionsEmbedded"
+	//   "closedCaptionsHttpPost"
+	ClosedCaptionsType string `json:"closedCaptionsType,omitempty"`
+
+	// EnableClosedCaptions: This setting indicates whether HTTP POST closed
 	// captioning is enabled for this broadcast. The ingestion URL of the
-	// closed captions is returned through the liveStreams API.
+	// closed captions is returned through the liveStreams API. This is
+	// mutually exclusive with using the closed_captions_type property, and
+	// is equivalent to setting closed_captions_type to
+	// CLOSED_CAPTIONS_HTTP_POST.
 	EnableClosedCaptions bool `json:"enableClosedCaptions,omitempty"`
 
 	// EnableContentEncryption: This setting indicates whether YouTube
@@ -4172,6 +4390,421 @@ type LiveBroadcastTopicSnippet struct {
 
 func (s *LiveBroadcastTopicSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod LiveBroadcastTopicSnippet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// LiveChatBan: A liveChatBan resource represents a ban for a YouTube
+// live chat.
+type LiveChatBan struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The ID that YouTube assigns to uniquely identify the ban.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#liveChatBan".
+	Kind string `json:"kind,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the ban.
+	Snippet *LiveChatBanSnippet `json:"snippet,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatBan) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatBan
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatBanSnippet struct {
+	// BanDurationSeconds: The duration of a ban, only filled if the ban has
+	// type TEMPORARY.
+	BanDurationSeconds uint64 `json:"banDurationSeconds,omitempty,string"`
+
+	BannedUserDetails *ChannelProfileDetails `json:"bannedUserDetails,omitempty"`
+
+	// LiveChatId: The chat this ban is pertinent to.
+	LiveChatId string `json:"liveChatId,omitempty"`
+
+	// Type: The type of ban.
+	//
+	// Possible values:
+	//   "permanent"
+	//   "temporary"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BanDurationSeconds")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatBanSnippet) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatBanSnippet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatFanFundingEventDetails struct {
+	// AmountDisplayString: A rendered string that displays the fund amount
+	// and currency to the user.
+	AmountDisplayString string `json:"amountDisplayString,omitempty"`
+
+	// AmountMicros: The amount of the fund.
+	AmountMicros uint64 `json:"amountMicros,omitempty,string"`
+
+	// Currency: The currency in which the fund was made.
+	Currency string `json:"currency,omitempty"`
+
+	// UserComment: The comment added by the user to this fan funding event.
+	UserComment string `json:"userComment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AmountDisplayString")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatFanFundingEventDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatFanFundingEventDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// LiveChatMessage: A liveChatMessage resource represents a chat message
+// in a YouTube Live Chat.
+type LiveChatMessage struct {
+	// AuthorDetails: The authorDetails object contains basic details about
+	// the user that posted this message.
+	AuthorDetails *LiveChatMessageAuthorDetails `json:"authorDetails,omitempty"`
+
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The ID that YouTube assigns to uniquely identify the message.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#liveChatMessage".
+	Kind string `json:"kind,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the message.
+	Snippet *LiveChatMessageSnippet `json:"snippet,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthorDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatMessage) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatMessage
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatMessageAuthorDetails struct {
+	// ChannelId: The YouTube channel ID.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// ChannelUrl: The channel's URL.
+	ChannelUrl string `json:"channelUrl,omitempty"`
+
+	// DisplayName: The channel's display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// IsChatModerator: Whether the author is a moderator of the live chat.
+	IsChatModerator bool `json:"isChatModerator,omitempty"`
+
+	// IsChatOwner: Whether the author is the owner of the live chat.
+	IsChatOwner bool `json:"isChatOwner,omitempty"`
+
+	// IsChatSponsor: Whether the author is a sponsor of the live chat.
+	IsChatSponsor bool `json:"isChatSponsor,omitempty"`
+
+	// IsVerified: Whether the author's identity has been verified by
+	// YouTube.
+	IsVerified bool `json:"isVerified,omitempty"`
+
+	// ProfileImageUrl: The channels's avatar URL.
+	ProfileImageUrl string `json:"profileImageUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatMessageAuthorDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatMessageAuthorDetails
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatMessageListResponse struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
+	// Items: A list of live chat messages.
+	Items []*LiveChatMessage `json:"items,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#liveChatMessageListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// OfflineAt: The date and time when the underlying stream went offline.
+	// The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	OfflineAt string `json:"offlineAt,omitempty"`
+
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	// PollingIntervalMillis: The amount of time the client should wait
+	// before polling again.
+	PollingIntervalMillis int64 `json:"pollingIntervalMillis,omitempty"`
+
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
+
+	// VisitorId: The visitorId identifies the visitor.
+	VisitorId string `json:"visitorId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatMessageListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatMessageListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatMessageSnippet struct {
+	// AuthorChannelId: The ID of the user that authored this message, this
+	// field is not always filled. textMessageEvent - the user that wrote
+	// the message fanFundingEvent - the user that funded the broadcast
+	// newSponsorEvent - the user that just became a sponsor
+	AuthorChannelId string `json:"authorChannelId,omitempty"`
+
+	// DisplayMessage: Contains a string that can be displayed to the user.
+	// If this field is not present the message is silent, at the moment
+	// only messages of type TOMBSTONE and CHAT_ENDED_EVENT are silent.
+	DisplayMessage string `json:"displayMessage,omitempty"`
+
+	// FanFundingEventDetails: Details about the funding event, this is only
+	// set if the type is 'fanFundingEvent'.
+	FanFundingEventDetails *LiveChatFanFundingEventDetails `json:"fanFundingEventDetails,omitempty"`
+
+	// HasDisplayContent: Whether the message has display content that
+	// should be displayed to users.
+	HasDisplayContent bool `json:"hasDisplayContent,omitempty"`
+
+	LiveChatId string `json:"liveChatId,omitempty"`
+
+	// PublishedAt: The date and time when the message was orignally
+	// published. The value is specified in ISO 8601
+	// (YYYY-MM-DDThh:mm:ss.sZ) format.
+	PublishedAt string `json:"publishedAt,omitempty"`
+
+	// TextMessageDetails: Details about the text message, this is only set
+	// if the type is 'textMessageEvent'.
+	TextMessageDetails *LiveChatTextMessageDetails `json:"textMessageDetails,omitempty"`
+
+	// Type: The type of message, this will always be present, it determines
+	// the contents of the message as well as which fields will be present.
+	//
+	// Possible values:
+	//   "chatEndedEvent"
+	//   "fanFundingEvent"
+	//   "newSponsorEvent"
+	//   "sponsorOnlyModeEndedEvent"
+	//   "sponsorOnlyModeStartedEvent"
+	//   "textMessageEvent"
+	//   "tombstone"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthorChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatMessageSnippet) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatMessageSnippet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// LiveChatModerator: A liveChatModerator resource represents a
+// moderator for a YouTube live chat. A chat moderator has the ability
+// to ban/unban users from a chat, remove message, etc.
+type LiveChatModerator struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The ID that YouTube assigns to uniquely identify the moderator.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#liveChatModerator".
+	Kind string `json:"kind,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the
+	// moderator.
+	Snippet *LiveChatModeratorSnippet `json:"snippet,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatModerator) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatModerator
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatModeratorListResponse struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
+	// Items: A list of moderators that match the request criteria.
+	Items []*LiveChatModerator `json:"items,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#liveChatModeratorListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	// PrevPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the previous page in the result set.
+	PrevPageToken string `json:"prevPageToken,omitempty"`
+
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
+
+	// VisitorId: The visitorId identifies the visitor.
+	VisitorId string `json:"visitorId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatModeratorListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatModeratorListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatModeratorSnippet struct {
+	// LiveChatId: The ID of the live chat this moderator can act on.
+	LiveChatId string `json:"liveChatId,omitempty"`
+
+	// ModeratorDetails: Details about the moderator.
+	ModeratorDetails *ChannelProfileDetails `json:"moderatorDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LiveChatId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatModeratorSnippet) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatModeratorSnippet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type LiveChatTextMessageDetails struct {
+	// MessageText: The user's message.
+	MessageText string `json:"messageText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MessageText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LiveChatTextMessageDetails) MarshalJSON() ([]byte, error) {
+	type noMethod LiveChatTextMessageDetails
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -5351,6 +5984,109 @@ type SearchResultSnippet struct {
 
 func (s *SearchResultSnippet) MarshalJSON() ([]byte, error) {
 	type noMethod SearchResultSnippet
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// Sponsor: A sponsor resource represents a sponsor for a YouTube
+// channel. A sponsor provides recurring monetary support to a creator
+// and receives special benefits.
+type Sponsor struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// Id: The ID that YouTube assigns to uniquely identify the sponsor.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#sponsor".
+	Kind string `json:"kind,omitempty"`
+
+	// Snippet: The snippet object contains basic details about the sponsor.
+	Snippet *SponsorSnippet `json:"snippet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Sponsor) MarshalJSON() ([]byte, error) {
+	type noMethod Sponsor
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SponsorListResponse struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
+	// Items: A list of sponsors that match the request criteria.
+	Items []*Sponsor `json:"items,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#sponsorListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The token that can be used as the value of the
+	// pageToken parameter to retrieve the next page in the result set.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	PageInfo *PageInfo `json:"pageInfo,omitempty"`
+
+	TokenPagination *TokenPagination `json:"tokenPagination,omitempty"`
+
+	// VisitorId: The visitorId identifies the visitor.
+	VisitorId string `json:"visitorId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SponsorListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod SponsorListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type SponsorSnippet struct {
+	// ChannelId: The id of the channel being sponsored.
+	ChannelId string `json:"channelId,omitempty"`
+
+	// SponsorDetails: Details about the sponsor.
+	SponsorDetails *ChannelProfileDetails `json:"sponsorDetails,omitempty"`
+
+	// SponsorSince: The date and time when the user became a sponsor. The
+	// value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
+	SponsorSince string `json:"sponsorSince,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *SponsorSnippet) MarshalJSON() ([]byte, error) {
+	type noMethod SponsorSnippet
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
@@ -11502,6 +12238,197 @@ func (c *CommentsUpdateCall) Do() (*Comment, error) {
 
 }
 
+// method id "youtube.fanFundingEvents.list":
+
+type FanFundingEventsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists fan funding events for a channel.
+func (r *FanFundingEventsService) List(part string) *FanFundingEventsListCall {
+	c := &FanFundingEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("part", part)
+	return c
+}
+
+// Hl sets the optional parameter "hl": The hl parameter instructs the
+// API to retrieve localized resource metadata for a specific
+// application language that the YouTube website supports. The parameter
+// value must be a language code included in the list returned by the
+// i18nLanguages.list method.
+//
+// If localized resource details are available in that language, the
+// resource's snippet.localized object will contain the localized
+// values. However, if localized details are not available, the
+// snippet.localized object will contain resource details in the
+// resource's default language.
+func (c *FanFundingEventsListCall) Hl(hl string) *FanFundingEventsListCall {
+	c.urlParams_.Set("hl", hl)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maxResults
+// parameter specifies the maximum number of items that should be
+// returned in the result set.
+func (c *FanFundingEventsListCall) MaxResults(maxResults int64) *FanFundingEventsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pageToken
+// parameter identifies a specific page in the result set that should be
+// returned. In an API response, the nextPageToken and prevPageToken
+// properties identify other pages that could be retrieved.
+func (c *FanFundingEventsListCall) PageToken(pageToken string) *FanFundingEventsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *FanFundingEventsListCall) QuotaUser(quotaUser string) *FanFundingEventsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *FanFundingEventsListCall) UserIP(userIP string) *FanFundingEventsListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FanFundingEventsListCall) Fields(s ...googleapi.Field) *FanFundingEventsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FanFundingEventsListCall) IfNoneMatch(entityTag string) *FanFundingEventsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FanFundingEventsListCall) Context(ctx context.Context) *FanFundingEventsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *FanFundingEventsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "fanFundingEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.fanFundingEvents.list" call.
+// Exactly one of *FanFundingEventListResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *FanFundingEventListResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FanFundingEventsListCall) Do() (*FanFundingEventListResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &FanFundingEventListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists fan funding events for a channel.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.fanFundingEvents.list",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "hl": {
+	//       "description": "The hl parameter instructs the API to retrieve localized resource metadata for a specific application language that the YouTube website supports. The parameter value must be a language code included in the list returned by the i18nLanguages.list method.\n\nIf localized resource details are available in that language, the resource's snippet.localized object will contain the localized values. However, if localized details are not available, the snippet.localized object will contain resource details in the resource's default language.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "5",
+	//       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "50",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The part parameter specifies the fanFundingEvent resource parts that the API response will include. Supported values are id and snippet.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "fanFundingEvents",
+	//   "response": {
+	//     "$ref": "FanFundingEventListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
+	//     "https://www.googleapis.com/auth/youtube.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "youtube.guideCategories.list":
 
 type GuideCategoriesListCall struct {
@@ -12807,6 +13734,20 @@ func (c *LiveBroadcastsListCall) BroadcastStatus(broadcastStatus string) *LiveBr
 	return c
 }
 
+// BroadcastType sets the optional parameter "broadcastType": The
+// broadcastType parameter filters the API response to only include
+// broadcasts with the specified type. This is only compatible with the
+// mine filter for now.
+//
+// Possible values:
+//   "all" - Return all broadcasts.
+//   "event" - Return only scheduled event broadcasts.
+//   "persistent" - Return only persistent broadcasts.
+func (c *LiveBroadcastsListCall) BroadcastType(broadcastType string) *LiveBroadcastsListCall {
+	c.urlParams_.Set("broadcastType", broadcastType)
+	return c
+}
+
 // Id sets the optional parameter "id": The id parameter specifies a
 // comma-separated list of YouTube broadcast IDs that identify the
 // broadcasts being retrieved. In a liveBroadcast resource, the id
@@ -13002,6 +13943,22 @@ func (c *LiveBroadcastsListCall) Do() (*LiveBroadcastListResponse, error) {
 	//         "Return all broadcasts.",
 	//         "Return broadcasts that have already ended.",
 	//         "Return broadcasts that have not yet started."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "broadcastType": {
+	//       "default": "BROADCAST_TYPE_FILTER_EVENT",
+	//       "description": "The broadcastType parameter filters the API response to only include broadcasts with the specified type. This is only compatible with the mine filter for now.",
+	//       "enum": [
+	//         "all",
+	//         "event",
+	//         "persistent"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Return all broadcasts.",
+	//         "Return only scheduled event broadcasts.",
+	//         "Return only persistent broadcasts."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -13456,6 +14413,1095 @@ func (c *LiveBroadcastsUpdateCall) Do() (*LiveBroadcast, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
 	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveChatBans.delete":
+
+type LiveChatBansDeleteCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Delete: Removes a chat ban.
+func (r *LiveChatBansService) Delete(id string) *LiveChatBansDeleteCall {
+	c := &LiveChatBansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("id", id)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveChatBansDeleteCall) QuotaUser(quotaUser string) *LiveChatBansDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveChatBansDeleteCall) UserIP(userIP string) *LiveChatBansDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveChatBansDeleteCall) Fields(s ...googleapi.Field) *LiveChatBansDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveChatBansDeleteCall) Context(ctx context.Context) *LiveChatBansDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LiveChatBansDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveChat/bans")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.liveChatBans.delete" call.
+func (c *LiveChatBansDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a chat ban.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.liveChatBans.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter identifies the chat ban to remove. The value uniquely identifies both the ban and the chat.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveChat/bans",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveChatBans.insert":
+
+type LiveChatBansInsertCall struct {
+	s           *Service
+	livechatban *LiveChatBan
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+}
+
+// Insert: Adds a new ban to the chat.
+func (r *LiveChatBansService) Insert(part string, livechatban *LiveChatBan) *LiveChatBansInsertCall {
+	c := &LiveChatBansInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("part", part)
+	c.livechatban = livechatban
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveChatBansInsertCall) QuotaUser(quotaUser string) *LiveChatBansInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveChatBansInsertCall) UserIP(userIP string) *LiveChatBansInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveChatBansInsertCall) Fields(s ...googleapi.Field) *LiveChatBansInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveChatBansInsertCall) Context(ctx context.Context) *LiveChatBansInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LiveChatBansInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livechatban)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveChat/bans")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.liveChatBans.insert" call.
+// Exactly one of *LiveChatBan or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LiveChatBan.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LiveChatBansInsertCall) Do() (*LiveChatBan, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LiveChatBan{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a new ban to the chat.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveChatBans.insert",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response returns. Set the parameter value to snippet.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveChat/bans",
+	//   "request": {
+	//     "$ref": "LiveChatBan"
+	//   },
+	//   "response": {
+	//     "$ref": "LiveChatBan"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveChatMessages.delete":
+
+type LiveChatMessagesDeleteCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Delete: Deletes a chat message.
+func (r *LiveChatMessagesService) Delete(id string) *LiveChatMessagesDeleteCall {
+	c := &LiveChatMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("id", id)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveChatMessagesDeleteCall) QuotaUser(quotaUser string) *LiveChatMessagesDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveChatMessagesDeleteCall) UserIP(userIP string) *LiveChatMessagesDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveChatMessagesDeleteCall) Fields(s ...googleapi.Field) *LiveChatMessagesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveChatMessagesDeleteCall) Context(ctx context.Context) *LiveChatMessagesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LiveChatMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveChat/messages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.liveChatMessages.delete" call.
+func (c *LiveChatMessagesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a chat message.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.liveChatMessages.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter specifies the YouTube chat message ID of the resource that is being deleted.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveChat/messages",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveChatMessages.insert":
+
+type LiveChatMessagesInsertCall struct {
+	s               *Service
+	livechatmessage *LiveChatMessage
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+}
+
+// Insert: Adds a message to a live chat.
+func (r *LiveChatMessagesService) Insert(part string, livechatmessage *LiveChatMessage) *LiveChatMessagesInsertCall {
+	c := &LiveChatMessagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("part", part)
+	c.livechatmessage = livechatmessage
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveChatMessagesInsertCall) QuotaUser(quotaUser string) *LiveChatMessagesInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveChatMessagesInsertCall) UserIP(userIP string) *LiveChatMessagesInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveChatMessagesInsertCall) Fields(s ...googleapi.Field) *LiveChatMessagesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveChatMessagesInsertCall) Context(ctx context.Context) *LiveChatMessagesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LiveChatMessagesInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livechatmessage)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveChat/messages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.liveChatMessages.insert" call.
+// Exactly one of *LiveChatMessage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LiveChatMessage.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LiveChatMessagesInsertCall) Do() (*LiveChatMessage, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LiveChatMessage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a message to a live chat.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveChatMessages.insert",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The part parameter serves two purposes. It identifies the properties that the write operation will set as well as the properties that the API response will include. Set the parameter value to snippet.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveChat/messages",
+	//   "request": {
+	//     "$ref": "LiveChatMessage"
+	//   },
+	//   "response": {
+	//     "$ref": "LiveChatMessage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveChatMessages.list":
+
+type LiveChatMessagesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists live chat messages for a specific chat.
+func (r *LiveChatMessagesService) List(liveChatId string, part string) *LiveChatMessagesListCall {
+	c := &LiveChatMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("liveChatId", liveChatId)
+	c.urlParams_.Set("part", part)
+	return c
+}
+
+// Hl sets the optional parameter "hl": The hl parameter instructs the
+// API to retrieve localized resource metadata for a specific
+// application language that the YouTube website supports. The parameter
+// value must be a language code included in the list returned by the
+// i18nLanguages.list method.
+//
+// If localized resource details are available in that language, the
+// resource's snippet.localized object will contain the localized
+// values. However, if localized details are not available, the
+// snippet.localized object will contain resource details in the
+// resource's default language.
+func (c *LiveChatMessagesListCall) Hl(hl string) *LiveChatMessagesListCall {
+	c.urlParams_.Set("hl", hl)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maxResults
+// parameter specifies the maximum number of messages that should be
+// returned in the result set.
+func (c *LiveChatMessagesListCall) MaxResults(maxResults int64) *LiveChatMessagesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pageToken
+// parameter identifies a specific page in the result set that should be
+// returned. In an API response, the nextPageToken property identify
+// other pages that could be retrieved.
+func (c *LiveChatMessagesListCall) PageToken(pageToken string) *LiveChatMessagesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ProfileImageSize sets the optional parameter "profileImageSize": The
+// profileImageSize parameter specifies the size of the user profile
+// pictures that should be returned in the result set. Default: 88.
+func (c *LiveChatMessagesListCall) ProfileImageSize(profileImageSize int64) *LiveChatMessagesListCall {
+	c.urlParams_.Set("profileImageSize", fmt.Sprint(profileImageSize))
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveChatMessagesListCall) QuotaUser(quotaUser string) *LiveChatMessagesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveChatMessagesListCall) UserIP(userIP string) *LiveChatMessagesListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveChatMessagesListCall) Fields(s ...googleapi.Field) *LiveChatMessagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LiveChatMessagesListCall) IfNoneMatch(entityTag string) *LiveChatMessagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveChatMessagesListCall) Context(ctx context.Context) *LiveChatMessagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LiveChatMessagesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveChat/messages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.liveChatMessages.list" call.
+// Exactly one of *LiveChatMessageListResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *LiveChatMessageListResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LiveChatMessagesListCall) Do() (*LiveChatMessageListResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LiveChatMessageListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists live chat messages for a specific chat.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.liveChatMessages.list",
+	//   "parameterOrder": [
+	//     "liveChatId",
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "hl": {
+	//       "description": "The hl parameter instructs the API to retrieve localized resource metadata for a specific application language that the YouTube website supports. The parameter value must be a language code included in the list returned by the i18nLanguages.list method.\n\nIf localized resource details are available in that language, the resource's snippet.localized object will contain the localized values. However, if localized details are not available, the snippet.localized object will contain resource details in the resource's default language.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "liveChatId": {
+	//       "description": "The liveChatId parameter specifies the ID of the chat whose messages will be returned.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "200",
+	//       "description": "The maxResults parameter specifies the maximum number of messages that should be returned in the result set.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "2000",
+	//       "minimum": "200",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken property identify other pages that could be retrieved.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The part parameter specifies the liveChatComment resource parts that the API response will include. Supported values are id and snippet.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileImageSize": {
+	//       "description": "The profileImageSize parameter specifies the size of the user profile pictures that should be returned in the result set. Default: 88.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "720",
+	//       "minimum": "16",
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "liveChat/messages",
+	//   "response": {
+	//     "$ref": "LiveChatMessageListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
+	//     "https://www.googleapis.com/auth/youtube.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveChatModerators.delete":
+
+type LiveChatModeratorsDeleteCall struct {
+	s          *Service
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+}
+
+// Delete: Removes a chat moderator.
+func (r *LiveChatModeratorsService) Delete(id string) *LiveChatModeratorsDeleteCall {
+	c := &LiveChatModeratorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("id", id)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveChatModeratorsDeleteCall) QuotaUser(quotaUser string) *LiveChatModeratorsDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveChatModeratorsDeleteCall) UserIP(userIP string) *LiveChatModeratorsDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveChatModeratorsDeleteCall) Fields(s ...googleapi.Field) *LiveChatModeratorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveChatModeratorsDeleteCall) Context(ctx context.Context) *LiveChatModeratorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LiveChatModeratorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveChat/moderators")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.liveChatModerators.delete" call.
+func (c *LiveChatModeratorsDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Removes a chat moderator.",
+	//   "httpMethod": "DELETE",
+	//   "id": "youtube.liveChatModerators.delete",
+	//   "parameterOrder": [
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "The id parameter identifies the chat moderator to remove. The value uniquely identifies both the moderator and the chat.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveChat/moderators",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveChatModerators.insert":
+
+type LiveChatModeratorsInsertCall struct {
+	s                 *Service
+	livechatmoderator *LiveChatModerator
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+}
+
+// Insert: Adds a new moderator for the chat.
+func (r *LiveChatModeratorsService) Insert(part string, livechatmoderator *LiveChatModerator) *LiveChatModeratorsInsertCall {
+	c := &LiveChatModeratorsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("part", part)
+	c.livechatmoderator = livechatmoderator
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveChatModeratorsInsertCall) QuotaUser(quotaUser string) *LiveChatModeratorsInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveChatModeratorsInsertCall) UserIP(userIP string) *LiveChatModeratorsInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveChatModeratorsInsertCall) Fields(s ...googleapi.Field) *LiveChatModeratorsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveChatModeratorsInsertCall) Context(ctx context.Context) *LiveChatModeratorsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LiveChatModeratorsInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.livechatmoderator)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveChat/moderators")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.liveChatModerators.insert" call.
+// Exactly one of *LiveChatModerator or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *LiveChatModerator.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LiveChatModeratorsInsertCall) Do() (*LiveChatModerator, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LiveChatModerator{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a new moderator for the chat.",
+	//   "httpMethod": "POST",
+	//   "id": "youtube.liveChatModerators.insert",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response returns. Set the parameter value to snippet.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveChat/moderators",
+	//   "request": {
+	//     "$ref": "LiveChatModerator"
+	//   },
+	//   "response": {
+	//     "$ref": "LiveChatModerator"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.liveChatModerators.list":
+
+type LiveChatModeratorsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists moderators for a live chat.
+func (r *LiveChatModeratorsService) List(liveChatId string, part string) *LiveChatModeratorsListCall {
+	c := &LiveChatModeratorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("liveChatId", liveChatId)
+	c.urlParams_.Set("part", part)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maxResults
+// parameter specifies the maximum number of items that should be
+// returned in the result set.
+func (c *LiveChatModeratorsListCall) MaxResults(maxResults int64) *LiveChatModeratorsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pageToken
+// parameter identifies a specific page in the result set that should be
+// returned. In an API response, the nextPageToken and prevPageToken
+// properties identify other pages that could be retrieved.
+func (c *LiveChatModeratorsListCall) PageToken(pageToken string) *LiveChatModeratorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *LiveChatModeratorsListCall) QuotaUser(quotaUser string) *LiveChatModeratorsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *LiveChatModeratorsListCall) UserIP(userIP string) *LiveChatModeratorsListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LiveChatModeratorsListCall) Fields(s ...googleapi.Field) *LiveChatModeratorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LiveChatModeratorsListCall) IfNoneMatch(entityTag string) *LiveChatModeratorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LiveChatModeratorsListCall) Context(ctx context.Context) *LiveChatModeratorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *LiveChatModeratorsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "liveChat/moderators")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.liveChatModerators.list" call.
+// Exactly one of *LiveChatModeratorListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *LiveChatModeratorListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LiveChatModeratorsListCall) Do() (*LiveChatModeratorListResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LiveChatModeratorListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists moderators for a live chat.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.liveChatModerators.list",
+	//   "parameterOrder": [
+	//     "liveChatId",
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "liveChatId": {
+	//       "description": "The liveChatId parameter specifies the YouTube live chat for which the API should return moderators.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "5",
+	//       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "50",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The part parameter specifies the liveChatModerator resource parts that the API response will include. Supported values are id and snippet.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "liveChat/moderators",
+	//   "response": {
+	//     "$ref": "LiveChatModeratorListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
+	//     "https://www.googleapis.com/auth/youtube.readonly"
 	//   ]
 	// }
 
@@ -16449,6 +18495,201 @@ func (c *SearchListCall) Do() (*SearchListResponse, error) {
 	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/youtubepartner"
+	//   ]
+	// }
+
+}
+
+// method id "youtube.sponsors.list":
+
+type SponsorsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Lists sponsors for a channel.
+func (r *SponsorsService) List(part string) *SponsorsListCall {
+	c := &SponsorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("part", part)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter parameter
+// specifies which channel sponsors to return.
+//
+// Possible values:
+//   "all" - Return all sponsors, from newest to oldest.
+//   "newest" - Return the most recent sponsors, from newest to oldest.
+func (c *SponsorsListCall) Filter(filter string) *SponsorsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maxResults
+// parameter specifies the maximum number of items that should be
+// returned in the result set.
+func (c *SponsorsListCall) MaxResults(maxResults int64) *SponsorsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pageToken
+// parameter identifies a specific page in the result set that should be
+// returned. In an API response, the nextPageToken and prevPageToken
+// properties identify other pages that could be retrieved.
+func (c *SponsorsListCall) PageToken(pageToken string) *SponsorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *SponsorsListCall) QuotaUser(quotaUser string) *SponsorsListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *SponsorsListCall) UserIP(userIP string) *SponsorsListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SponsorsListCall) Fields(s ...googleapi.Field) *SponsorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SponsorsListCall) IfNoneMatch(entityTag string) *SponsorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SponsorsListCall) Context(ctx context.Context) *SponsorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *SponsorsListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sponsors")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "youtube.sponsors.list" call.
+// Exactly one of *SponsorListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SponsorListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SponsorsListCall) Do() (*SponsorListResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SponsorListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists sponsors for a channel.",
+	//   "httpMethod": "GET",
+	//   "id": "youtube.sponsors.list",
+	//   "parameterOrder": [
+	//     "part"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "default": "POLL_NEWEST",
+	//       "description": "The filter parameter specifies which channel sponsors to return.",
+	//       "enum": [
+	//         "all",
+	//         "newest"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Return all sponsors, from newest to oldest.",
+	//         "Return the most recent sponsors, from newest to oldest."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "5",
+	//       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "50",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "part": {
+	//       "description": "The part parameter specifies the sponsor resource parts that the API response will include. Supported values are id and snippet.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "sponsors",
+	//   "response": {
+	//     "$ref": "SponsorListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.force-ssl",
+	//     "https://www.googleapis.com/auth/youtube.readonly"
 	//   ]
 	// }
 

@@ -492,6 +492,8 @@ type GroupListResponse struct {
 
 	Kind string `json:"kind,omitempty"`
 
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1625,6 +1627,15 @@ func (c *GroupsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *
 	return c
 }
 
+// PageToken sets the optional parameter "pageToken": The pageToken
+// parameter identifies a specific page in the result set that should be
+// returned. In an API response, the nextPageToken property identifies
+// the next page that can be retrieved.
+func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // QuotaUser sets the optional parameter "quotaUser": Available to use
 // for quota purposes for server-side applications. Can be any arbitrary
 // string assigned to a user, but should not exceed 40 characters.
@@ -1737,6 +1748,11 @@ func (c *GroupsListCall) Do() (*GroupListResponse, error) {
 	//     },
 	//     "onBehalfOfContentOwner": {
 	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken property identifies the next page that can be retrieved.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2160,6 +2176,8 @@ func (c *ReportsQueryCall) Do() (*ResultTable, error) {
 	//     "$ref": "ResultTable"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/youtube",
+	//     "https://www.googleapis.com/auth/youtube.readonly",
 	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
 	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
 	//   ]

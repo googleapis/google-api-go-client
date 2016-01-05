@@ -492,13 +492,13 @@ type Operation struct {
 
 	// Progress: [Output Only] An optional progress indicator that ranges
 	// from 0 to 100. There is no requirement that this be linear or support
-	// any granularity of operations. This should not be used to guess at
-	// when the operation will be complete. This number should monotonically
+	// any granularity of operations. This should not be used to guess when
+	// the operation will be complete. This number should monotonically
 	// increase as the operation progresses.
 	Progress int64 `json:"progress,omitempty"`
 
 	// Region: [Output Only] URL of the region where the operation resides.
-	// Only applicable for regional resources.
+	// Only available when performing regional operations.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -532,7 +532,8 @@ type Operation struct {
 	// processing of the operation, this field will be populated.
 	Warnings []*OperationWarnings `json:"warnings,omitempty"`
 
-	// Zone: [Output Only] URL of the zone where the operation resides.
+	// Zone: [Output Only] URL of the zone where the operation resides. Only
+	// available when performing per-zone operations.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

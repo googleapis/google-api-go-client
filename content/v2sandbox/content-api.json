@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/tvcbcjhYGF5BJi8y8RNxRBdwomM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/RIyGUuci620MgVanBsNgFU0lsdc\"",
  "discoveryVersion": "v1",
  "id": "content:v2sandbox",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2sandbox",
- "revision": "20150915",
+ "revision": "20151211",
  "title": "Content API for Shopping",
  "description": "Manage product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -750,6 +750,10 @@
    "id": "OrdersCancelLineItemRequest",
    "type": "object",
    "properties": {
+    "amount": {
+     "$ref": "Price",
+     "description": "Amount to refund for the cancelation. Optional. If not set, Google will calculate the default based on the price and tax of the items involved. The amount must not be larger than the net amount left on the order."
+    },
     "lineItemId": {
      "type": "string",
      "description": "The ID of the line item to cancel."
@@ -937,6 +941,10 @@
    "id": "OrdersCustomBatchRequestEntryCancelLineItem",
    "type": "object",
    "properties": {
+    "amount": {
+     "$ref": "Price",
+     "description": "Amount to refund for the cancelation. Optional. If not set, Google will calculate the default based on the price and tax of the items involved. The amount must not be larger than the net amount left on the order."
+    },
     "lineItemId": {
      "type": "string",
      "description": "The ID of the line item to cancel."

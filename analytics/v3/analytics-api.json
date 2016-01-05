@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fvFbWC4d-F2dNIv25oDe8GZrlTA\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/GqVUlUu85RUe9UX8p8cBrKyfzEc\"",
  "discoveryVersion": "v1",
  "id": "analytics:v3",
  "name": "analytics",
  "version": "v3",
- "revision": "20151030",
+ "revision": "20151215",
  "title": "Google Analytics API",
  "description": "View and manage your Google Analytics data",
  "ownerDomain": "google.com",
@@ -2241,6 +2241,10 @@
     "accountId": {
      "type": "string",
      "description": "Account ID to which this view (profile) belongs."
+    },
+    "botFilteringEnabled": {
+     "type": "boolean",
+     "description": "Indicates whether bot filtering is enabled for this view (profile)."
     },
     "childLink": {
      "type": "object",
@@ -5716,6 +5720,47 @@
     },
     "unsampledReports": {
      "methods": {
+      "delete": {
+       "id": "analytics.management.unsampledReports.delete",
+       "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports/{unsampledReportId}",
+       "httpMethod": "DELETE",
+       "description": "Deletes an unsampled report.",
+       "parameters": {
+        "accountId": {
+         "type": "string",
+         "description": "Account ID to delete the unsampled report for.",
+         "required": true,
+         "location": "path"
+        },
+        "profileId": {
+         "type": "string",
+         "description": "View (Profile) ID to delete the unsampled report for.",
+         "required": true,
+         "location": "path"
+        },
+        "unsampledReportId": {
+         "type": "string",
+         "description": "ID of the unsampled report to be deleted.",
+         "required": true,
+         "location": "path"
+        },
+        "webPropertyId": {
+         "type": "string",
+         "description": "Web property ID to delete the unsampled reports for.",
+         "required": true,
+         "location": "path"
+        }
+       },
+       "parameterOrder": [
+        "accountId",
+        "webPropertyId",
+        "profileId",
+        "unsampledReportId"
+       ],
+       "scopes": [
+        "https://www.googleapis.com/auth/analytics.edit"
+       ]
+      },
       "get": {
        "id": "analytics.management.unsampledReports.get",
        "path": "management/accounts/{accountId}/webproperties/{webPropertyId}/profiles/{profileId}/unsampledReports/{unsampledReportId}",

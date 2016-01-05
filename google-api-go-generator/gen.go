@@ -1822,9 +1822,8 @@ func (meth *Method) generateCode() {
 			hasContentType = true
 		}
 		pn(`if c.protocol_ != "resumable" {`)
-		pn(`  var cancel func()`)
-		pn("  cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
-		pn("  if cancel != nil { defer cancel() }")
+		pn("  cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
+		pn("  defer cancel()")
 		pn("}")
 	}
 	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)

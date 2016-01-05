@@ -273,10 +273,10 @@ func (w countingWriter) Write(p []byte) (int, error) {
 // content type of the bodyp, usually "application/json".  It's updated
 // to the "multipart/related" content type, with random boundary.
 //
-// The return value is the content-length of the entire multpart body.
-func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) (cancel func(), ok bool) {
+// The return value is a function that can be used to close the bodyp Reader with an error.
+func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) func() {
 	if media == nil {
-		return
+		return func() {}
 	}
 	// Get the media type, which might return a different reader instance.
 	var mediaType string
@@ -317,8 +317,7 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 		mpw.Close()
 		pw.Close()
 	}()
-	cancel = func() { pw.CloseWithError(errAborted) }
-	return cancel, true
+	return func() { pw.CloseWithError(errAborted) }
 }
 
 var errAborted = errors.New("googleapi: upload aborted")

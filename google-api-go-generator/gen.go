@@ -1718,6 +1718,8 @@ func (meth *Method) generateCode() {
 	if meth.supportsMediaUpload() {
 		comment := "Media specifies the media to upload in a single chunk. " +
 			"At most one of Media and ResumableMedia may be set."
+		// TODO(mcgreevy): Ensure that r is always closed before Do returns, and document this.
+		// See comments on https://code-review.googlesource.com/#/c/3970/
 		p("\n%s", asComment("", comment))
 		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
 		pn("c.media_ = r")
@@ -1822,9 +1824,8 @@ func (meth *Method) generateCode() {
 			hasContentType = true
 		}
 		pn(`if c.protocol_ != "resumable" {`)
-		pn(`  var cancel func()`)
-		pn("  cancel, _ = googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
-		pn("  if cancel != nil { defer cancel() }")
+		pn("  cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
+		pn("  defer cancel()")
 		pn("}")
 	}
 	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)

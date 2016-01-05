@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eacc0b7f_e85c4779",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-05T02:51:55Z",
+      "side": 1,
+      "message": "Gladly.",
+      "parentUuid": "eacc0b7f_4815338e",
+      "revId": "67896fa79d3dadae5bb9b31d014db2dbaa75312e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eacc0b7f_2810ef9e",
         "filename": "googleapi/googleapi_test.go",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2016-01-05T00:38:42Z",
       "side": 1,
       "message": "var w []int64\n\nMaybe rename to \"want\" while you\u0027re here",
+      "range": {
+        "startLine": 551,
+        "startChar": 1,
+        "endLine": 551,
+        "endChar": 15
+      },
+      "revId": "67896fa79d3dadae5bb9b31d014db2dbaa75312e",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eacc0b7f_085a4b7a",
+        "filename": "googleapi/googleapi_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-05T02:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eacc0b7f_2810ef9e",
       "range": {
         "startLine": 551,
         "startChar": 1,

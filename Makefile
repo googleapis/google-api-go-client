@@ -1,4 +1,4 @@
-API_JSON = $(wildcard */*/*-api.json)
+API_JSON = $(wildcard */*/*-api.json */*/*/*-api.json)
 
 # Download all API specifications and rebuild Go bindings.
 # All downloaded files are cached in $TMPDIR for reuse with 'cached' below.

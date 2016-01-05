@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/C3vQT4j_3dhMyf8QNzNOBvuZRuQ\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/4qR4DFQUu5eXlwibmRf9pu1L8H8\"",
  "discoveryVersion": "v1",
  "id": "youtubeAnalytics:v1",
  "name": "youtubeAnalytics",
  "canonicalName": "YouTube Analytics",
  "version": "v1",
- "revision": "20150304",
+ "revision": "20151211",
  "title": "YouTube Analytics API",
  "description": "Retrieve your YouTube Analytics reports.",
  "ownerDomain": "google.com",
@@ -327,6 +327,9 @@
     "kind": {
      "type": "string",
      "default": "youtube#groupListResponse"
+    },
+    "nextPageToken": {
+     "type": "string"
     }
    }
   },
@@ -593,6 +596,11 @@
        "type": "string",
        "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
        "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken property identifies the next page that can be retrieved.",
+       "location": "query"
       }
      },
      "response": {
@@ -714,6 +722,8 @@
       "$ref": "ResultTable"
      },
      "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.readonly",
       "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
       "https://www.googleapis.com/auth/yt-analytics.readonly"
      ]

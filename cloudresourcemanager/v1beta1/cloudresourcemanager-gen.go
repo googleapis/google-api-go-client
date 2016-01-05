@@ -102,7 +102,7 @@ type ProjectsService struct {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource. `members` can have the following formats: *
+	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
 	// `allAuthenticatedUsers`: A special identifier that represents anyone
@@ -154,7 +154,7 @@ type GetIamPolicyRequest struct {
 }
 
 // ListOrganizationsResponse: The response returned from the
-// ListOrganizations method.
+// `ListOrganizations` method.
 type ListOrganizationsResponse struct {
 	// NextPageToken: A pagination token to be used to retrieve the next
 	// page of results. If the result is too large to fit within the page
@@ -201,7 +201,7 @@ type ListProjectsResponse struct {
 	// Pagination tokens have a limited lifetime.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Projects: The list of projects that matched the list filter. This
+	// Projects: The list of Projects that matched the list filter. This
 	// list can be paginated.
 	Projects []*Project `json:"projects,omitempty"`
 
@@ -241,8 +241,7 @@ type Organization struct {
 	OrganizationId string `json:"organizationId,omitempty"`
 
 	// Owner: The owner of this Organization. The owner should be specified
-	// upon creation. Once set, it cannot be changed. This field is
-	// required.
+	// on creation. Once set, it cannot be changed. This field is required.
 	Owner *OrganizationOwner `json:"owner,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -266,7 +265,7 @@ func (s *Organization) MarshalJSON() ([]byte, error) {
 
 // OrganizationOwner: The entity that owns an Organization. The lifetime
 // of the Organization and all of its descendants are bound to the
-// OrganizationOwner. If the OrganizationOwner is deleted, the
+// `OrganizationOwner`. If the `OrganizationOwner` is deleted, the
 // Organization and all its descendants will be deleted.
 type OrganizationOwner struct {
 	// DirectoryCustomerId: The Google for Work customer id used in the
@@ -306,17 +305,19 @@ type Policy struct {
 	// no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
-	// Etag: The etag is used for optimistic concurrency control as a way to
+	// Etag: `etag` is used for optimistic concurrency control as a way to
 	// help prevent simultaneous updates of a policy from overwriting each
-	// other. It is strongly suggested that systems make use of the etag in
-	// the read-modify-write cycle to perform policy updates in order to
-	// avoid race conditions. If no etag is provided in the call to
-	// SetIamPolicy, then the existing policy is overwritten blindly.
+	// other. It is strongly suggested that systems make use of the `etag`
+	// in the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An `etag` is returned in the response to
+	// `getIamPolicy`, and systems are expected to put that etag in the
+	// request to `setIamPolicy` to ensure that their change will be applied
+	// to the same version of the policy. If no `etag` is provided in the
+	// call to `setIamPolicy`, then the existing policy is overwritten
+	// blindly.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0. 0 =
-	// resourcemanager_projects only support legacy roles. 1 = supports
-	// non-legacy roles 2 = supports AuditConfig
+	// Version: Version of the `Policy`. The default version is 0.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -345,7 +346,7 @@ type Project struct {
 	// CreateTime: Creation time. Read-only.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Labels: The labels associated with this project. Label keys must be
+	// Labels: The labels associated with this Project. Label keys must be
 	// between 1 and 63 characters long and must conform to the following
 	// regular expression: \[a-z\](\[-a-z0-9\]*\[a-z0-9\])?. Label values
 	// must be between 0 and 63 characters long and must conform to the
@@ -356,7 +357,7 @@ type Project struct {
 	// Read-write.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// LifecycleState: The project lifecycle state. Read-only.
+	// LifecycleState: The Project lifecycle state. Read-only.
 	//
 	// Possible values:
 	//   "LIFECYCLE_STATE_UNSPECIFIED"
@@ -365,7 +366,7 @@ type Project struct {
 	//   "DELETE_IN_PROGRESS"
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Name: The user-assigned name of the project. It must be 4 to 30
+	// Name: The user-assigned name of the Project. It must be 4 to 30
 	// characters. Allowed characters are: lowercase and uppercase letters,
 	// numbers, hyphen, single-quote, double-quote, space, and exclamation
 	// point. Example: My Project Read-write.
@@ -376,7 +377,7 @@ type Project struct {
 	// be modified. Read-write.
 	Parent *ResourceId `json:"parent,omitempty"`
 
-	// ProjectId: The unique, user-assigned ID of the project. It must be 6
+	// ProjectId: The unique, user-assigned ID of the Project. It must be 6
 	// to 30 lowercase letters, digits, or hyphens. It must start with a
 	// letter. Trailing hyphens are prohibited. Example: tokyo-rain-123
 	// Read-only after creation.
@@ -406,10 +407,10 @@ func (s *Project) MarshalJSON() ([]byte, error) {
 }
 
 // ResourceId: A container to reference an id for any resource type. A
-// 'resource' in Google Cloud Platform is a generic term for something
+// `resource` in Google Cloud Platform is a generic term for something
 // you (a developer) may want to interact with through one of our API's.
-// Some examples are an AppEngine app, a Compute Engine instance, Cloud
-// SQL database, ...
+// Some examples are an AppEngine app, a Compute Engine instance, a
+// Cloud SQL database, and so on.
 type ResourceId struct {
 	// Id: Required field for the type-specific id. This should correspond
 	// to the id used in the type-specific API's.
@@ -516,7 +517,8 @@ type OrganizationsGetCall struct {
 	ctx_           context.Context
 }
 
-// Get: Fetches an Organization resource by id.
+// Get: Fetches an Organization resource identified by the specified
+// `organization_id`.
 func (r *OrganizationsService) Get(organizationId string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.organizationId = organizationId
@@ -612,7 +614,7 @@ func (c *OrganizationsGetCall) Do() (*Organization, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Fetches an Organization resource by id.",
+	//   "description": "Fetches an Organization resource identified by the specified `organization_id`.",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.organizations.get",
 	//   "parameterOrder": [
@@ -648,7 +650,7 @@ type OrganizationsGetIamPolicyCall struct {
 	ctx_                context.Context
 }
 
-// GetIamPolicy: Gets the access control policy for a Organization
+// GetIamPolicy: Gets the access control policy for an Organization
 // resource. May be empty if no such policy or resource exists.
 func (r *OrganizationsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsGetIamPolicyCall {
 	c := &OrganizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -739,7 +741,7 @@ func (c *OrganizationsGetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a Organization resource. May be empty if no such policy or resource exists.",
+	//   "description": "Gets the access control policy for an Organization resource. May be empty if no such policy or resource exists.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.getIamPolicy",
 	//   "parameterOrder": [
@@ -747,7 +749,7 @@ func (c *OrganizationsGetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective GetIamPolicy rpc.",
+	//       "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -777,14 +779,17 @@ type OrganizationsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Query Organization resources.
+// List: Lists Organization resources that are visible to the user and
+// satisfy the specified filter. This method returns Organizations in an
+// unspecified order. New Organizations do not necessarily appear at the
+// end of the list.
 func (r *OrganizationsService) List() *OrganizationsListCall {
 	c := &OrganizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Filter sets the optional parameter "filter": An optional query string
-// used to filter the Organizations to be return in the response. Filter
+// used to filter the Organizations to return in the response. Filter
 // rules are case-insensitive. Organizations may be filtered by
 // `owner.directoryCustomerId` or by `domain`, where the domain is a
 // Google for Work domain, for example: |Filter|Description|
@@ -806,7 +811,7 @@ func (c *OrganizationsListCall) PageSize(pageSize int64) *OrganizationsListCall 
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListOrganizations that indicates
+// returned from a previous call to `ListOrganizations` that indicates
 // from where listing should continue. This field is optional.
 func (c *OrganizationsListCall) PageToken(pageToken string) *OrganizationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -900,12 +905,12 @@ func (c *OrganizationsListCall) Do() (*ListOrganizationsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Query Organization resources.",
+	//   "description": "Lists Organization resources that are visible to the user and satisfy the specified filter. This method returns Organizations in an unspecified order. New Organizations do not necessarily appear at the end of the list.",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.organizations.list",
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An optional query string used to filter the Organizations to be return in the response. Filter rules are case-insensitive. Organizations may be filtered by `owner.directoryCustomerId` or by `domain`, where the domain is a Google for Work domain, for example: |Filter|Description| |------|-----------| |owner.directorycustomerid:123456789|Organizations with `owner.directory_customer_id` equal to `123456789`.| |domain:google.com|Organizations corresponding to the domain `google.com`.| This field is optional.",
+	//       "description": "An optional query string used to filter the Organizations to return in the response. Filter rules are case-insensitive. Organizations may be filtered by `owner.directoryCustomerId` or by `domain`, where the domain is a Google for Work domain, for example: |Filter|Description| |------|-----------| |owner.directorycustomerid:123456789|Organizations with `owner.directory_customer_id` equal to `123456789`.| |domain:google.com|Organizations corresponding to the domain `google.com`.| This field is optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -916,7 +921,7 @@ func (c *OrganizationsListCall) Do() (*ListOrganizationsResponse, error) {
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListOrganizations that indicates from where listing should continue. This field is optional.",
+	//       "description": "A pagination token returned from a previous call to `ListOrganizations` that indicates from where listing should continue. This field is optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -943,7 +948,7 @@ type OrganizationsSetIamPolicyCall struct {
 	ctx_                context.Context
 }
 
-// SetIamPolicy: Sets the access control policy on a Organization
+// SetIamPolicy: Sets the access control policy on an Organization
 // resource. Replaces any existing policy.
 func (r *OrganizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSetIamPolicyCall {
 	c := &OrganizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1034,7 +1039,7 @@ func (c *OrganizationsSetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a Organization resource. Replaces any existing policy.",
+	//   "description": "Sets the access control policy on an Organization resource. Replaces any existing policy.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.organizations.setIamPolicy",
 	//   "parameterOrder": [
@@ -1042,7 +1047,7 @@ func (c *OrganizationsSetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective SetIamPolicy rpc.",
+	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1171,7 +1176,7 @@ func (c *OrganizationsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse,
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective TestIamPermissions rpc.",
+	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation. rpc.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1202,7 +1207,8 @@ type OrganizationsUpdateCall struct {
 	ctx_           context.Context
 }
 
-// Update: Updates an Organization resource.
+// Update: Updates an Organization resource identified by the specified
+// `organization_id`.
 func (r *OrganizationsService) Update(organizationId string, organization *Organization) *OrganizationsUpdateCall {
 	c := &OrganizationsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.organizationId = organizationId
@@ -1292,7 +1298,7 @@ func (c *OrganizationsUpdateCall) Do() (*Organization, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an Organization resource.",
+	//   "description": "Updates an Organization resource identified by the specified `organization_id`.",
 	//   "httpMethod": "PUT",
 	//   "id": "cloudresourcemanager.organizations.update",
 	//   "parameterOrder": [
@@ -1329,10 +1335,10 @@ type ProjectsCreateCall struct {
 	ctx_       context.Context
 }
 
-// Create: Creates a project resource. Initially, the project resource
+// Create: Creates a Project resource. Initially, the Project resource
 // is owned by its creator exclusively. The creator can later grant
-// permission to others to read or update the project. Several APIs are
-// activated automatically for the project, including Google Cloud
+// permission to others to read or update the Project. Several APIs are
+// activated automatically for the Project, including Google Cloud
 // Storage.
 func (r *ProjectsService) Create(project *Project) *ProjectsCreateCall {
 	c := &ProjectsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1420,7 +1426,7 @@ func (c *ProjectsCreateCall) Do() (*Project, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a project resource. Initially, the project resource is owned by its creator exclusively. The creator can later grant permission to others to read or update the project. Several APIs are activated automatically for the project, including Google Cloud Storage.",
+	//   "description": "Creates a Project resource. Initially, the Project resource is owned by its creator exclusively. The creator can later grant permission to others to read or update the Project. Several APIs are activated automatically for the Project, including Google Cloud Storage.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.create",
 	//   "path": "v1beta1/projects",
@@ -1446,19 +1452,19 @@ type ProjectsDeleteCall struct {
 	ctx_       context.Context
 }
 
-// Delete: Marks the project identified by the specified `project_id`
+// Delete: Marks the Project identified by the specified `project_id`
 // (for example, `my-project-123`) for deletion. This method will only
-// affect the project if the following criteria are met: + The project
-// does not have a billing account associated with it. + The project has
-// a lifecycle state of ACTIVE. This method changes the project's
+// affect the Project if the following criteria are met: + The Project
+// does not have a billing account associated with it. + The Project has
+// a lifecycle state of ACTIVE. This method changes the Project's
 // lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts
 // at an unspecified time, at which point the lifecycle state changes to
 // DELETE_IN_PROGRESS. Until the deletion completes, you can check the
-// lifecycle state checked by retrieving the project with GetProject,
-// and the project remains visible to ListProjects. However, you cannot
-// update the project. After the deletion completes, the project is not
+// lifecycle state checked by retrieving the Project with GetProject,
+// and the Project remains visible to ListProjects. However, you cannot
+// update the project. After the deletion completes, the Project is not
 // retrievable by the GetProject and ListProjects methods. The caller
-// must have modify permissions for this project.
+// must have modify permissions for this Project.
 func (r *ProjectsService) Delete(projectId string) *ProjectsDeleteCall {
 	c := &ProjectsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1541,7 +1547,7 @@ func (c *ProjectsDeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the project identified by the specified `project_id` (for example, `my-project-123`) for deletion. This method will only affect the project if the following criteria are met: + The project does not have a billing account associated with it. + The project has a lifecycle state of ACTIVE. This method changes the project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the lifecycle state changes to DELETE_IN_PROGRESS. Until the deletion completes, you can check the lifecycle state checked by retrieving the project with GetProject, and the project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the project is not retrievable by the GetProject and ListProjects methods. The caller must have modify permissions for this project.",
+	//   "description": "Marks the Project identified by the specified `project_id` (for example, `my-project-123`) for deletion. This method will only affect the Project if the following criteria are met: + The Project does not have a billing account associated with it. + The Project has a lifecycle state of ACTIVE. This method changes the Project's lifecycle state from ACTIVE to DELETE_REQUESTED. The deletion starts at an unspecified time, at which point the lifecycle state changes to DELETE_IN_PROGRESS. Until the deletion completes, you can check the lifecycle state checked by retrieving the Project with GetProject, and the Project remains visible to ListProjects. However, you cannot update the project. After the deletion completes, the Project is not retrievable by the GetProject and ListProjects methods. The caller must have modify permissions for this Project.",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudresourcemanager.projects.delete",
 	//   "parameterOrder": [
@@ -1549,7 +1555,7 @@ func (c *ProjectsDeleteCall) Do() (*Empty, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The project ID (for example, `foo-bar-123`). Required.",
+	//       "description": "The Project ID (for example, `foo-bar-123`). Required.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1576,9 +1582,9 @@ type ProjectsGetCall struct {
 	ctx_         context.Context
 }
 
-// Get: Retrieves the project identified by the specified `project_id`
+// Get: Retrieves the Project identified by the specified `project_id`
 // (for example, `my-project-123`). The caller must have read
-// permissions for this project.
+// permissions for this Project.
 func (r *ProjectsService) Get(projectId string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1674,7 +1680,7 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the project identified by the specified `project_id` (for example, `my-project-123`). The caller must have read permissions for this project.",
+	//   "description": "Retrieves the Project identified by the specified `project_id` (for example, `my-project-123`). The caller must have read permissions for this Project.",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.projects.get",
 	//   "parameterOrder": [
@@ -1682,7 +1688,7 @@ func (c *ProjectsGetCall) Do() (*Project, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The project ID (for example, `my-project-123`). Required.",
+	//       "description": "The Project ID (for example, `my-project-123`). Required.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1710,8 +1716,9 @@ type ProjectsGetIamPolicyCall struct {
 	ctx_                context.Context
 }
 
-// GetIamPolicy: Returns the IAM access control policy for specified
-// project.
+// GetIamPolicy: Returns the IAM access control policy for the specified
+// Project. Permission is denied if the policy or the resource does not
+// exist.
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
 	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1801,7 +1808,7 @@ func (c *ProjectsGetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the IAM access control policy for specified project.",
+	//   "description": "Returns the IAM access control policy for the specified Project. Permission is denied if the policy or the resource does not exist.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.getIamPolicy",
 	//   "parameterOrder": [
@@ -1809,7 +1816,7 @@ func (c *ProjectsGetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective GetIamPolicy rpc.",
+	//       "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1839,9 +1846,9 @@ type ProjectsListCall struct {
 	ctx_         context.Context
 }
 
-// List: Lists projects that are visible to the user and satisfy the
-// specified filter. This method returns projects in an unspecified
-// order. New projects do not necessarily appear at the end of the list.
+// List: Lists Projects that are visible to the user and satisfy the
+// specified filter. This method returns Projects in an unspecified
+// order. New Projects do not necessarily appear at the end of the list.
 func (r *ProjectsService) List() *ProjectsListCall {
 	c := &ProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1865,7 +1872,7 @@ func (c *ProjectsListCall) Filter(filter string) *ProjectsListCall {
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of Projects to return in the response. The server can return fewer
-// projects than requested. If unspecified, server picks an appropriate
+// Projects than requested. If unspecified, server picks an appropriate
 // default.
 func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -1873,7 +1880,7 @@ func (c *ProjectsListCall) PageSize(pageSize int64) *ProjectsListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListProject that indicates from
+// returned from a previous call to ListProjects that indicates from
 // where listing should continue.
 func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -1967,7 +1974,7 @@ func (c *ProjectsListCall) Do() (*ListProjectsResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists projects that are visible to the user and satisfy the specified filter. This method returns projects in an unspecified order. New projects do not necessarily appear at the end of the list.",
+	//   "description": "Lists Projects that are visible to the user and satisfy the specified filter. This method returns Projects in an unspecified order. New Projects do not necessarily appear at the end of the list.",
 	//   "httpMethod": "GET",
 	//   "id": "cloudresourcemanager.projects.list",
 	//   "parameters": {
@@ -1977,13 +1984,13 @@ func (c *ProjectsListCall) Do() (*ListProjectsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of Projects to return in the response. The server can return fewer projects than requested. If unspecified, server picks an appropriate default. Optional.",
+	//       "description": "The maximum number of Projects to return in the response. The server can return fewer Projects than requested. If unspecified, server picks an appropriate default. Optional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListProject that indicates from where listing should continue. Optional.",
+	//       "description": "A pagination token returned from a previous call to ListProjects that indicates from where listing should continue. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2011,9 +2018,20 @@ type ProjectsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the IAM access control policy for the specified
-// project. We do not currently support 'domain:' prefixed members in a
-// Binding of a Policy. Calling this method requires enabling the App
-// Engine Admin API.
+// Project. Replaces any existing policy. The following constraints
+// apply when using `setIamPolicy()`: + Project currently supports only
+// `user:{emailid}` and `serviceAccount:{emailid}` members in a
+// `Binding` of a `Policy`. + To be added as an `owner`, a user must be
+// invited via Cloud Platform console and must accept the invitation. +
+// Members cannot be added to more than one role in the same policy. +
+// There must be at least one owner who has accepted the Terms of
+// Service (ToS) agreement in the policy. Calling `setIamPolicy()` to to
+// remove the last ToS-accepted owner from the policy will fail. +
+// Calling this method requires enabling the App Engine Admin API. Note:
+// Removing service accounts from policies or changing their roles can
+// render services completely inoperable. It is important to understand
+// how the service account is being used before removing or updating its
+// roles.
 func (r *ProjectsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsSetIamPolicyCall {
 	c := &ProjectsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2103,7 +2121,7 @@ func (c *ProjectsSetIamPolicyCall) Do() (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the IAM access control policy for the specified project. We do not currently support 'domain:' prefixed members in a Binding of a Policy. Calling this method requires enabling the App Engine Admin API.",
+	//   "description": "Sets the IAM access control policy for the specified Project. Replaces any existing policy. The following constraints apply when using `setIamPolicy()`: + Project currently supports only `user:{emailid}` and `serviceAccount:{emailid}` members in a `Binding` of a `Policy`. + To be added as an `owner`, a user must be invited via Cloud Platform console and must accept the invitation. + Members cannot be added to more than one role in the same policy. + There must be at least one owner who has accepted the Terms of Service (ToS) agreement in the policy. Calling `setIamPolicy()` to to remove the last ToS-accepted owner from the policy will fail. + Calling this method requires enabling the App Engine Admin API. Note: Removing service accounts from policies or changing their roles can render services completely inoperable. It is important to understand how the service account is being used before removing or updating its roles.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.setIamPolicy",
 	//   "parameterOrder": [
@@ -2111,7 +2129,7 @@ func (c *ProjectsSetIamPolicyCall) Do() (*Policy, error) {
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective SetIamPolicy rpc.",
+	//       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2141,8 +2159,8 @@ type ProjectsTestIamPermissionsCall struct {
 	ctx_                      context.Context
 }
 
-// TestIamPermissions: Tests the specified permissions against the IAM
-// access control policy for the specified project.
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified Project.
 func (r *ProjectsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsTestIamPermissionsCall {
 	c := &ProjectsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2232,7 +2250,7 @@ func (c *ProjectsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Tests the specified permissions against the IAM access control policy for the specified project.",
+	//   "description": "Returns permissions that a caller has on the specified Project.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.testIamPermissions",
 	//   "parameterOrder": [
@@ -2240,7 +2258,7 @@ func (c *ProjectsTestIamPermissionsCall) Do() (*TestIamPermissionsResponse, erro
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the documentation for the respective TestIamPermissions rpc.",
+	//       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation. rpc.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2270,12 +2288,12 @@ type ProjectsUndeleteCall struct {
 	ctx_       context.Context
 }
 
-// Undelete: Restores the project identified by the specified
+// Undelete: Restores the Project identified by the specified
 // `project_id` (for example, `my-project-123`). You can only use this
-// method for a project that has a lifecycle state of DELETE_REQUESTED.
+// method for a Project that has a lifecycle state of DELETE_REQUESTED.
 // After deletion starts, as indicated by a lifecycle state of
-// DELETE_IN_PROGRESS, the project cannot be restored. The caller must
-// have modify permissions for this project.
+// DELETE_IN_PROGRESS, the Project cannot be restored. The caller must
+// have modify permissions for this Project.
 func (r *ProjectsService) Undelete(projectId string) *ProjectsUndeleteCall {
 	c := &ProjectsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2358,7 +2376,7 @@ func (c *ProjectsUndeleteCall) Do() (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the project identified by the specified `project_id` (for example, `my-project-123`). You can only use this method for a project that has a lifecycle state of DELETE_REQUESTED. After deletion starts, as indicated by a lifecycle state of DELETE_IN_PROGRESS, the project cannot be restored. The caller must have modify permissions for this project.",
+	//   "description": "Restores the Project identified by the specified `project_id` (for example, `my-project-123`). You can only use this method for a Project that has a lifecycle state of DELETE_REQUESTED. After deletion starts, as indicated by a lifecycle state of DELETE_IN_PROGRESS, the Project cannot be restored. The caller must have modify permissions for this Project.",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.undelete",
 	//   "parameterOrder": [
@@ -2393,9 +2411,9 @@ type ProjectsUpdateCall struct {
 	ctx_       context.Context
 }
 
-// Update: Updates the attributes of the project identified by the
+// Update: Updates the attributes of the Project identified by the
 // specified `project_id` (for example, `my-project-123`). The caller
-// must have modify permissions for this project.
+// must have modify permissions for this Project.
 func (r *ProjectsService) Update(projectId string, project *Project) *ProjectsUpdateCall {
 	c := &ProjectsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2485,7 +2503,7 @@ func (c *ProjectsUpdateCall) Do() (*Project, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the attributes of the project identified by the specified `project_id` (for example, `my-project-123`). The caller must have modify permissions for this project.",
+	//   "description": "Updates the attributes of the Project identified by the specified `project_id` (for example, `my-project-123`). The caller must have modify permissions for this Project.",
 	//   "httpMethod": "PUT",
 	//   "id": "cloudresourcemanager.projects.update",
 	//   "parameterOrder": [

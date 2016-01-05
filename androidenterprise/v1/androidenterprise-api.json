@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Dhm95NFcR0E5y6PPQV-hHJ9dqK0\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Is5ylelsw5UqvuGXXB6cSzQKB_A\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20151127",
+ "revision": "20151215",
  "title": "Google Play EMM API",
  "description": "Allows MDMs/EMMs and enterprises to manage the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -569,6 +569,21 @@
     }
    }
   },
+  "LocalizedText": {
+   "id": "LocalizedText",
+   "type": "object",
+   "description": "A localized string with its locale.",
+   "properties": {
+    "locale": {
+     "type": "string",
+     "description": "The BCP47 tag for a locale. (e.g. \"en-US\", \"de\")."
+    },
+    "text": {
+     "type": "string",
+     "description": "The text localized in the associated locale."
+    }
+   }
+  },
   "Permission": {
    "id": "Permission",
    "type": "object",
@@ -726,6 +741,124 @@
     }
    }
   },
+  "StoreCluster": {
+   "id": "StoreCluster",
+   "type": "object",
+   "description": "Definition of a Google Play for Work store cluster, a list of products displayed as part of a store page.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique ID of this cluster. Assigned by the server. Immutable once assigned."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storeCluster\".",
+     "default": "androidenterprise#storeCluster"
+    },
+    "name": {
+     "type": "array",
+     "description": "Ordered list of localized strings giving the name of this page. The text displayed is the one that best matches the user locale, or the first entry if there is no good match. There needs to be at least one entry.",
+     "items": {
+      "$ref": "LocalizedText"
+     }
+    },
+    "orderInPage": {
+     "type": "string",
+     "description": "String (US-ASCII only) used to determine order of this cluster within the parent page's elements. Page elements are sorted in lexicographic order of this field. Duplicated values are allowed, but ordering between elements with duplicate order is undefined.\n\nThe value of this field is never visible to a user, it is used solely for the purpose of defining an ordering. Maximum length is 20 characters."
+    },
+    "productId": {
+     "type": "array",
+     "description": "List of products in the order they are displayed in the cluster. There should not be duplicates within a cluster.",
+     "items": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "StoreLayout": {
+   "id": "StoreLayout",
+   "type": "object",
+   "description": "General setting for the Google Play for Work store layout, currently only specifying the page to display the first time the store is opened.",
+   "properties": {
+    "homepageId": {
+     "type": "string",
+     "description": "The ID of the store page to be used as the homepage. The homepage will be used as the first page shown in the Google Play for Work store.\n\nIf there is no homepage set, an empty store is shown. The homepage can be unset (by not specifying it) to empty the store.\n\nIf there exists at least one page, this field must be set to the ID of a valid page."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storeLayout\".",
+     "default": "androidenterprise#storeLayout"
+    }
+   }
+  },
+  "StoreLayoutClustersListResponse": {
+   "id": "StoreLayoutClustersListResponse",
+   "type": "object",
+   "description": "The store page resources for the enterprise.",
+   "properties": {
+    "cluster": {
+     "type": "array",
+     "description": "A store cluster of an enterprise.",
+     "items": {
+      "$ref": "StoreCluster"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storeLayoutClustersListResponse\".",
+     "default": "androidenterprise#storeLayoutClustersListResponse"
+    }
+   }
+  },
+  "StoreLayoutPagesListResponse": {
+   "id": "StoreLayoutPagesListResponse",
+   "type": "object",
+   "description": "The store page resources for the enterprise.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storeLayoutPagesListResponse\".",
+     "default": "androidenterprise#storeLayoutPagesListResponse"
+    },
+    "page": {
+     "type": "array",
+     "description": "A store page of an enterprise.",
+     "items": {
+      "$ref": "StorePage"
+     }
+    }
+   }
+  },
+  "StorePage": {
+   "id": "StorePage",
+   "type": "object",
+   "description": "Definition of a Google Play for Work store page, made of a localized name and links to other pages. A page also contains clusters defined as a subcollection.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Unique ID of this page. Assigned by the server. Immutable once assigned."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#storePage\".",
+     "default": "androidenterprise#storePage"
+    },
+    "link": {
+     "type": "array",
+     "description": "Ordered list of pages a user should be able to reach from this page. The pages must exist, must not be this page, and once a link is created the page linked to cannot be deleted until all links to it are removed. It is recommended that the basic pages are created first, before adding the links between pages.\n\nNo attempt is made to verify that all pages are reachable from the homepage.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "name": {
+     "type": "array",
+     "description": "Ordered list of localized strings giving the name of this page. The text displayed is the one that best matches the user locale, or the first entry if there is no good match. There needs to be at least one entry.",
+     "items": {
+      "$ref": "LocalizedText"
+     }
+    }
+   }
+  },
   "User": {
    "id": "User",
    "type": "object",
@@ -742,7 +875,7 @@
     },
     "primaryEmail": {
      "type": "string",
-     "description": "The user's primary email, e.g. \"jsmith@example.com\"."
+     "description": "The user's primary email, e.g. \"jsmith@example.com\". Will always be set for Google managed users and not set for EMM managed users."
     }
    }
   },
@@ -1367,6 +1500,29 @@
       "https://www.googleapis.com/auth/androidenterprise"
      ]
     },
+    "getStoreLayout": {
+     "id": "androidenterprise.enterprises.getStoreLayout",
+     "path": "enterprises/{enterpriseId}/storeLayout",
+     "httpMethod": "GET",
+     "description": "Returns the store layout resource.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "response": {
+      "$ref": "StoreLayout"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
     "insert": {
      "id": "androidenterprise.enterprises.insert",
      "path": "enterprises",
@@ -1460,6 +1616,32 @@
      },
      "response": {
       "$ref": "EnterpriseAccount"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "setStoreLayout": {
+     "id": "androidenterprise.enterprises.setStoreLayout",
+     "path": "enterprises/{enterpriseId}/storeLayout",
+     "httpMethod": "PUT",
+     "description": "Sets the store layout resource.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "request": {
+      "$ref": "StoreLayout"
+     },
+     "response": {
+      "$ref": "StoreLayout"
      },
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"
@@ -2227,6 +2409,400 @@
     }
    }
   },
+  "storelayoutclusters": {
+   "methods": {
+    "delete": {
+     "id": "androidenterprise.storelayoutclusters.delete",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a cluster.",
+     "parameters": {
+      "clusterId": {
+       "type": "string",
+       "description": "The ID of the cluster.",
+       "required": true,
+       "location": "path"
+      },
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId",
+      "clusterId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "get": {
+     "id": "androidenterprise.storelayoutclusters.get",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+     "httpMethod": "GET",
+     "description": "Retrieves details of a cluster.",
+     "parameters": {
+      "clusterId": {
+       "type": "string",
+       "description": "The ID of the cluster.",
+       "required": true,
+       "location": "path"
+      },
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId",
+      "clusterId"
+     ],
+     "response": {
+      "$ref": "StoreCluster"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "insert": {
+     "id": "androidenterprise.storelayoutclusters.insert",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
+     "httpMethod": "POST",
+     "description": "Inserts a new cluster in a page.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId"
+     ],
+     "request": {
+      "$ref": "StoreCluster"
+     },
+     "response": {
+      "$ref": "StoreCluster"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "list": {
+     "id": "androidenterprise.storelayoutclusters.list",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
+     "httpMethod": "GET",
+     "description": "Retrieves the details of all clusters on the specified page.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId"
+     ],
+     "response": {
+      "$ref": "StoreLayoutClustersListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "patch": {
+     "id": "androidenterprise.storelayoutclusters.patch",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+     "httpMethod": "PATCH",
+     "description": "Updates a cluster. This method supports patch semantics.",
+     "parameters": {
+      "clusterId": {
+       "type": "string",
+       "description": "The ID of the cluster.",
+       "required": true,
+       "location": "path"
+      },
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId",
+      "clusterId"
+     ],
+     "request": {
+      "$ref": "StoreCluster"
+     },
+     "response": {
+      "$ref": "StoreCluster"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "update": {
+     "id": "androidenterprise.storelayoutclusters.update",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+     "httpMethod": "PUT",
+     "description": "Updates a cluster.",
+     "parameters": {
+      "clusterId": {
+       "type": "string",
+       "description": "The ID of the cluster.",
+       "required": true,
+       "location": "path"
+      },
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId",
+      "clusterId"
+     ],
+     "request": {
+      "$ref": "StoreCluster"
+     },
+     "response": {
+      "$ref": "StoreCluster"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    }
+   }
+  },
+  "storelayoutpages": {
+   "methods": {
+    "delete": {
+     "id": "androidenterprise.storelayoutpages.delete",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+     "httpMethod": "DELETE",
+     "description": "Deletes a store page.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "get": {
+     "id": "androidenterprise.storelayoutpages.get",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+     "httpMethod": "GET",
+     "description": "Retrieves details of a store page.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId"
+     ],
+     "response": {
+      "$ref": "StorePage"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "insert": {
+     "id": "androidenterprise.storelayoutpages.insert",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages",
+     "httpMethod": "POST",
+     "description": "Inserts a new store page.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "request": {
+      "$ref": "StorePage"
+     },
+     "response": {
+      "$ref": "StorePage"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "list": {
+     "id": "androidenterprise.storelayoutpages.list",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages",
+     "httpMethod": "GET",
+     "description": "Retrieves the details of all pages in the store.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId"
+     ],
+     "response": {
+      "$ref": "StoreLayoutPagesListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "patch": {
+     "id": "androidenterprise.storelayoutpages.patch",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+     "httpMethod": "PATCH",
+     "description": "Updates the content of a store page. This method supports patch semantics.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId"
+     ],
+     "request": {
+      "$ref": "StorePage"
+     },
+     "response": {
+      "$ref": "StorePage"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "update": {
+     "id": "androidenterprise.storelayoutpages.update",
+     "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+     "httpMethod": "PUT",
+     "description": "Updates the content of a store page.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "pageId": {
+       "type": "string",
+       "description": "The ID of the page.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "pageId"
+     ],
+     "request": {
+      "$ref": "StorePage"
+     },
+     "response": {
+      "$ref": "StorePage"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    }
+   }
+  },
   "users": {
    "methods": {
     "generateToken": {
@@ -2323,7 +2899,7 @@
      "id": "androidenterprise.users.list",
      "path": "enterprises/{enterpriseId}/users",
      "httpMethod": "GET",
-     "description": "Looks up a user by email address.",
+     "description": "Looks up a user by email address. This only works for Google managed users.",
      "parameters": {
       "email": {
        "type": "string",

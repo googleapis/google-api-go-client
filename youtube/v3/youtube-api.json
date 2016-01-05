@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/jzIteugG3dUE34Q9UIJ3OOS1IIU\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/spk7xr6rzUEmvb04KWe62ZvWOpM\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20151110",
+ "revision": "20151216",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -1039,6 +1039,28 @@
     "title": {
      "type": "string",
      "description": "The localized strings for channel's title."
+    }
+   }
+  },
+  "ChannelProfileDetails": {
+   "id": "ChannelProfileDetails",
+   "type": "object",
+   "properties": {
+    "channelId": {
+     "type": "string",
+     "description": "The YouTube channel ID."
+    },
+    "channelUrl": {
+     "type": "string",
+     "description": "The channel's URL."
+    },
+    "displayName": {
+     "type": "string",
+     "description": "The channel's display name."
+    },
+    "profileImageUrl": {
+     "type": "string",
+     "description": "The channels's avatar URL."
     }
    }
   },
@@ -3118,6 +3140,106 @@
     }
    }
   },
+  "FanFundingEvent": {
+   "id": "FanFundingEvent",
+   "type": "object",
+   "description": "A fanFundingEvent resource represents a fan funding event on a YouTube channel. Fan funding events occur when a user gives one-time monetary support to the channel owner.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube assigns to uniquely identify the fan funding event."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#fanFundingEvent\".",
+     "default": "youtube#fanFundingEvent"
+    },
+    "snippet": {
+     "$ref": "FanFundingEventSnippet",
+     "description": "The snippet object contains basic details about the fan funding event."
+    }
+   }
+  },
+  "FanFundingEventListResponse": {
+   "id": "FanFundingEventListResponse",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of fan funding events that match the request criteria.",
+     "items": {
+      "$ref": "FanFundingEvent"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#fanFundingEventListResponse\".",
+     "default": "youtube#fanFundingEventListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
+    },
+    "pageInfo": {
+     "$ref": "PageInfo"
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
+    }
+   }
+  },
+  "FanFundingEventSnippet": {
+   "id": "FanFundingEventSnippet",
+   "type": "object",
+   "properties": {
+    "amountMicros": {
+     "type": "string",
+     "description": "The amount of funding in micros of fund_currency. e.g., 1 is represented",
+     "format": "uint64"
+    },
+    "channelId": {
+     "type": "string",
+     "description": "Channel id where the funding event occurred."
+    },
+    "commentText": {
+     "type": "string",
+     "description": "The text contents of the comment left by the user."
+    },
+    "createdAt": {
+     "type": "string",
+     "description": "The date and time when the funding occurred. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
+    },
+    "currency": {
+     "type": "string",
+     "description": "The currency in which the fund was made. ISO 4217."
+    },
+    "displayString": {
+     "type": "string",
+     "description": "A rendered string that displays the fund amount and currency (e.g., \"$1.00\"). The string is rendered for the given language."
+    },
+    "supporterDetails": {
+     "$ref": "ChannelProfileDetails",
+     "description": "Details about the supporter. Only filled if the event was made public by the user."
+    }
+   }
+  },
   "GeoPoint": {
    "id": "GeoPoint",
    "type": "object",
@@ -3647,9 +3769,22 @@
      "type": "string",
      "description": "This value uniquely identifies the live stream bound to the broadcast."
     },
+    "closedCaptionsType": {
+     "type": "string",
+     "enum": [
+      "closedCaptionsDisabled",
+      "closedCaptionsEmbedded",
+      "closedCaptionsHttpPost"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
+    },
     "enableClosedCaptions": {
      "type": "boolean",
-     "description": "This setting indicates whether closed captioning is enabled for this broadcast. The ingestion URL of the closed captions is returned through the liveStreams API."
+     "description": "This setting indicates whether HTTP POST closed captioning is enabled for this broadcast. The ingestion URL of the closed captions is returned through the liveStreams API. This is mutually exclusive with using the closed_captions_type property, and is equivalent to setting closed_captions_type to CLOSED_CAPTIONS_HTTP_POST."
     },
     "enableContentEncryption": {
      "type": "boolean",
@@ -3970,6 +4105,347 @@
     "releaseDate": {
      "type": "string",
      "description": "The date at which the topic was released. Filled for types: videoGame"
+    }
+   }
+  },
+  "LiveChatBan": {
+   "id": "LiveChatBan",
+   "type": "object",
+   "description": "A liveChatBan resource represents a ban for a YouTube live chat.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube assigns to uniquely identify the ban."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveChatBan\".",
+     "default": "youtube#liveChatBan"
+    },
+    "snippet": {
+     "$ref": "LiveChatBanSnippet",
+     "description": "The snippet object contains basic details about the ban."
+    }
+   }
+  },
+  "LiveChatBanSnippet": {
+   "id": "LiveChatBanSnippet",
+   "type": "object",
+   "properties": {
+    "banDurationSeconds": {
+     "type": "string",
+     "description": "The duration of a ban, only filled if the ban has type TEMPORARY.",
+     "format": "uint64"
+    },
+    "bannedUserDetails": {
+     "$ref": "ChannelProfileDetails"
+    },
+    "liveChatId": {
+     "type": "string",
+     "description": "The chat this ban is pertinent to."
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of ban.",
+     "enum": [
+      "permanent",
+      "temporary"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "LiveChatFanFundingEventDetails": {
+   "id": "LiveChatFanFundingEventDetails",
+   "type": "object",
+   "properties": {
+    "amountDisplayString": {
+     "type": "string",
+     "description": "A rendered string that displays the fund amount and currency to the user."
+    },
+    "amountMicros": {
+     "type": "string",
+     "description": "The amount of the fund.",
+     "format": "uint64"
+    },
+    "currency": {
+     "type": "string",
+     "description": "The currency in which the fund was made."
+    },
+    "userComment": {
+     "type": "string",
+     "description": "The comment added by the user to this fan funding event."
+    }
+   }
+  },
+  "LiveChatMessage": {
+   "id": "LiveChatMessage",
+   "type": "object",
+   "description": "A liveChatMessage resource represents a chat message in a YouTube Live Chat.",
+   "properties": {
+    "authorDetails": {
+     "$ref": "LiveChatMessageAuthorDetails",
+     "description": "The authorDetails object contains basic details about the user that posted this message."
+    },
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube assigns to uniquely identify the message."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveChatMessage\".",
+     "default": "youtube#liveChatMessage"
+    },
+    "snippet": {
+     "$ref": "LiveChatMessageSnippet",
+     "description": "The snippet object contains basic details about the message."
+    }
+   }
+  },
+  "LiveChatMessageAuthorDetails": {
+   "id": "LiveChatMessageAuthorDetails",
+   "type": "object",
+   "properties": {
+    "channelId": {
+     "type": "string",
+     "description": "The YouTube channel ID."
+    },
+    "channelUrl": {
+     "type": "string",
+     "description": "The channel's URL."
+    },
+    "displayName": {
+     "type": "string",
+     "description": "The channel's display name."
+    },
+    "isChatModerator": {
+     "type": "boolean",
+     "description": "Whether the author is a moderator of the live chat."
+    },
+    "isChatOwner": {
+     "type": "boolean",
+     "description": "Whether the author is the owner of the live chat."
+    },
+    "isChatSponsor": {
+     "type": "boolean",
+     "description": "Whether the author is a sponsor of the live chat."
+    },
+    "isVerified": {
+     "type": "boolean",
+     "description": "Whether the author's identity has been verified by YouTube."
+    },
+    "profileImageUrl": {
+     "type": "string",
+     "description": "The channels's avatar URL."
+    }
+   }
+  },
+  "LiveChatMessageListResponse": {
+   "id": "LiveChatMessageListResponse",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of live chat messages.",
+     "items": {
+      "$ref": "LiveChatMessage"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveChatMessageListResponse\".",
+     "default": "youtube#liveChatMessageListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
+    },
+    "offlineAt": {
+     "type": "string",
+     "description": "The date and time when the underlying stream went offline. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
+    },
+    "pageInfo": {
+     "$ref": "PageInfo"
+    },
+    "pollingIntervalMillis": {
+     "type": "integer",
+     "description": "The amount of time the client should wait before polling again.",
+     "format": "uint32"
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
+    }
+   }
+  },
+  "LiveChatMessageSnippet": {
+   "id": "LiveChatMessageSnippet",
+   "type": "object",
+   "properties": {
+    "authorChannelId": {
+     "type": "string",
+     "description": "The ID of the user that authored this message, this field is not always filled. textMessageEvent - the user that wrote the message fanFundingEvent - the user that funded the broadcast newSponsorEvent - the user that just became a sponsor"
+    },
+    "displayMessage": {
+     "type": "string",
+     "description": "Contains a string that can be displayed to the user. If this field is not present the message is silent, at the moment only messages of type TOMBSTONE and CHAT_ENDED_EVENT are silent."
+    },
+    "fanFundingEventDetails": {
+     "$ref": "LiveChatFanFundingEventDetails",
+     "description": "Details about the funding event, this is only set if the type is 'fanFundingEvent'."
+    },
+    "hasDisplayContent": {
+     "type": "boolean",
+     "description": "Whether the message has display content that should be displayed to users."
+    },
+    "liveChatId": {
+     "type": "string"
+    },
+    "publishedAt": {
+     "type": "string",
+     "description": "The date and time when the message was orignally published. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
+    },
+    "textMessageDetails": {
+     "$ref": "LiveChatTextMessageDetails",
+     "description": "Details about the text message, this is only set if the type is 'textMessageEvent'."
+    },
+    "type": {
+     "type": "string",
+     "description": "The type of message, this will always be present, it determines the contents of the message as well as which fields will be present.",
+     "enum": [
+      "chatEndedEvent",
+      "fanFundingEvent",
+      "newSponsorEvent",
+      "sponsorOnlyModeEndedEvent",
+      "sponsorOnlyModeStartedEvent",
+      "textMessageEvent",
+      "tombstone"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "LiveChatModerator": {
+   "id": "LiveChatModerator",
+   "type": "object",
+   "description": "A liveChatModerator resource represents a moderator for a YouTube live chat. A chat moderator has the ability to ban/unban users from a chat, remove message, etc.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube assigns to uniquely identify the moderator."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveChatModerator\".",
+     "default": "youtube#liveChatModerator"
+    },
+    "snippet": {
+     "$ref": "LiveChatModeratorSnippet",
+     "description": "The snippet object contains basic details about the moderator."
+    }
+   }
+  },
+  "LiveChatModeratorListResponse": {
+   "id": "LiveChatModeratorListResponse",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of moderators that match the request criteria.",
+     "items": {
+      "$ref": "LiveChatModerator"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#liveChatModeratorListResponse\".",
+     "default": "youtube#liveChatModeratorListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
+    },
+    "pageInfo": {
+     "$ref": "PageInfo"
+    },
+    "prevPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
+    }
+   }
+  },
+  "LiveChatModeratorSnippet": {
+   "id": "LiveChatModeratorSnippet",
+   "type": "object",
+   "properties": {
+    "liveChatId": {
+     "type": "string",
+     "description": "The ID of the live chat this moderator can act on."
+    },
+    "moderatorDetails": {
+     "$ref": "ChannelProfileDetails",
+     "description": "Details about the moderator."
+    }
+   }
+  },
+  "LiveChatTextMessageDetails": {
+   "id": "LiveChatTextMessageDetails",
+   "type": "object",
+   "properties": {
+    "messageText": {
+     "type": "string",
+     "description": "The user's message."
     }
    }
   },
@@ -4927,6 +5403,89 @@
     "title": {
      "type": "string",
      "description": "The title of the search result."
+    }
+   }
+  },
+  "Sponsor": {
+   "id": "Sponsor",
+   "type": "object",
+   "description": "A sponsor resource represents a sponsor for a YouTube channel. A sponsor provides recurring monetary support to a creator and receives special benefits.",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "id": {
+     "type": "string",
+     "description": "The ID that YouTube assigns to uniquely identify the sponsor."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#sponsor\".",
+     "default": "youtube#sponsor"
+    },
+    "snippet": {
+     "$ref": "SponsorSnippet",
+     "description": "The snippet object contains basic details about the sponsor."
+    }
+   }
+  },
+  "SponsorListResponse": {
+   "id": "SponsorListResponse",
+   "type": "object",
+   "properties": {
+    "etag": {
+     "type": "string",
+     "description": "Etag of this resource."
+    },
+    "eventId": {
+     "type": "string",
+     "description": "Serialized EventId of the request which produced this response."
+    },
+    "items": {
+     "type": "array",
+     "description": "A list of sponsors that match the request criteria.",
+     "items": {
+      "$ref": "Sponsor"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#sponsorListResponse\".",
+     "default": "youtube#sponsorListResponse"
+    },
+    "nextPageToken": {
+     "type": "string",
+     "description": "The token that can be used as the value of the pageToken parameter to retrieve the next page in the result set."
+    },
+    "pageInfo": {
+     "$ref": "PageInfo"
+    },
+    "tokenPagination": {
+     "$ref": "TokenPagination"
+    },
+    "visitorId": {
+     "type": "string",
+     "description": "The visitorId identifies the visitor."
+    }
+   }
+  },
+  "SponsorSnippet": {
+   "id": "SponsorSnippet",
+   "type": "object",
+   "properties": {
+    "channelId": {
+     "type": "string",
+     "description": "The id of the channel being sponsored."
+    },
+    "sponsorDetails": {
+     "$ref": "ChannelProfileDetails",
+     "description": "Details about the sponsor."
+    },
+    "sponsorSince": {
+     "type": "string",
+     "description": "The date and time when the user became a sponsor. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.",
+     "format": "date-time"
     }
    }
   },
@@ -7470,6 +8029,54 @@
     }
    }
   },
+  "fanFundingEvents": {
+   "methods": {
+    "list": {
+     "id": "youtube.fanFundingEvents.list",
+     "path": "fanFundingEvents",
+     "httpMethod": "GET",
+     "description": "Lists fan funding events for a channel.",
+     "parameters": {
+      "hl": {
+       "type": "string",
+       "description": "The hl parameter instructs the API to retrieve localized resource metadata for a specific application language that the YouTube website supports. The parameter value must be a language code included in the list returned by the i18nLanguages.list method.\n\nIf localized resource details are available in that language, the resource's snippet.localized object will contain the localized values. However, if localized details are not available, the snippet.localized object will contain resource details in the resource's default language.",
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.",
+       "default": "5",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "50",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the fanFundingEvent resource parts that the API response will include. Supported values are id and snippet.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "response": {
+      "$ref": "FanFundingEventListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl",
+      "https://www.googleapis.com/auth/youtube.readonly"
+     ]
+    }
+   }
+  },
   "guideCategories": {
    "methods": {
     "list": {
@@ -7785,6 +8392,22 @@
        ],
        "location": "query"
       },
+      "broadcastType": {
+       "type": "string",
+       "description": "The broadcastType parameter filters the API response to only include broadcasts with the specified type. This is only compatible with the mine filter for now.",
+       "default": "BROADCAST_TYPE_FILTER_EVENT",
+       "enum": [
+        "all",
+        "event",
+        "persistent"
+       ],
+       "enumDescriptions": [
+        "Return all broadcasts.",
+        "Return only scheduled event broadcasts.",
+        "Return only persistent broadcasts."
+       ],
+       "location": "query"
+      },
       "id": {
        "type": "string",
        "description": "The id parameter specifies a comma-separated list of YouTube broadcast IDs that identify the broadcasts being retrieved. In a liveBroadcast resource, the id property specifies the broadcast's ID.",
@@ -7931,6 +8554,267 @@
      "scopes": [
       "https://www.googleapis.com/auth/youtube",
       "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    }
+   }
+  },
+  "liveChatBans": {
+   "methods": {
+    "delete": {
+     "id": "youtube.liveChatBans.delete",
+     "path": "liveChat/bans",
+     "httpMethod": "DELETE",
+     "description": "Removes a chat ban.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter identifies the chat ban to remove. The value uniquely identifies both the ban and the chat.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "insert": {
+     "id": "youtube.liveChatBans.insert",
+     "path": "liveChat/bans",
+     "httpMethod": "POST",
+     "description": "Adds a new ban to the chat.",
+     "parameters": {
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response returns. Set the parameter value to snippet.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "LiveChatBan"
+     },
+     "response": {
+      "$ref": "LiveChatBan"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    }
+   }
+  },
+  "liveChatMessages": {
+   "methods": {
+    "delete": {
+     "id": "youtube.liveChatMessages.delete",
+     "path": "liveChat/messages",
+     "httpMethod": "DELETE",
+     "description": "Deletes a chat message.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter specifies the YouTube chat message ID of the resource that is being deleted.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "insert": {
+     "id": "youtube.liveChatMessages.insert",
+     "path": "liveChat/messages",
+     "httpMethod": "POST",
+     "description": "Adds a message to a live chat.",
+     "parameters": {
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes. It identifies the properties that the write operation will set as well as the properties that the API response will include. Set the parameter value to snippet.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "LiveChatMessage"
+     },
+     "response": {
+      "$ref": "LiveChatMessage"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "list": {
+     "id": "youtube.liveChatMessages.list",
+     "path": "liveChat/messages",
+     "httpMethod": "GET",
+     "description": "Lists live chat messages for a specific chat.",
+     "parameters": {
+      "hl": {
+       "type": "string",
+       "description": "The hl parameter instructs the API to retrieve localized resource metadata for a specific application language that the YouTube website supports. The parameter value must be a language code included in the list returned by the i18nLanguages.list method.\n\nIf localized resource details are available in that language, the resource's snippet.localized object will contain the localized values. However, if localized details are not available, the snippet.localized object will contain resource details in the resource's default language.",
+       "location": "query"
+      },
+      "liveChatId": {
+       "type": "string",
+       "description": "The liveChatId parameter specifies the ID of the chat whose messages will be returned.",
+       "required": true,
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maxResults parameter specifies the maximum number of messages that should be returned in the result set.",
+       "default": "200",
+       "format": "uint32",
+       "minimum": "200",
+       "maximum": "2000",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken property identify other pages that could be retrieved.",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the liveChatComment resource parts that the API response will include. Supported values are id and snippet.",
+       "required": true,
+       "location": "query"
+      },
+      "profileImageSize": {
+       "type": "integer",
+       "description": "The profileImageSize parameter specifies the size of the user profile pictures that should be returned in the result set. Default: 88.",
+       "format": "uint32",
+       "minimum": "16",
+       "maximum": "720",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "liveChatId",
+      "part"
+     ],
+     "response": {
+      "$ref": "LiveChatMessageListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl",
+      "https://www.googleapis.com/auth/youtube.readonly"
+     ]
+    }
+   }
+  },
+  "liveChatModerators": {
+   "methods": {
+    "delete": {
+     "id": "youtube.liveChatModerators.delete",
+     "path": "liveChat/moderators",
+     "httpMethod": "DELETE",
+     "description": "Removes a chat moderator.",
+     "parameters": {
+      "id": {
+       "type": "string",
+       "description": "The id parameter identifies the chat moderator to remove. The value uniquely identifies both the moderator and the chat.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "insert": {
+     "id": "youtube.liveChatModerators.insert",
+     "path": "liveChat/moderators",
+     "httpMethod": "POST",
+     "description": "Adds a new moderator for the chat.",
+     "parameters": {
+      "part": {
+       "type": "string",
+       "description": "The part parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response returns. Set the parameter value to snippet.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "request": {
+      "$ref": "LiveChatModerator"
+     },
+     "response": {
+      "$ref": "LiveChatModerator"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl"
+     ]
+    },
+    "list": {
+     "id": "youtube.liveChatModerators.list",
+     "path": "liveChat/moderators",
+     "httpMethod": "GET",
+     "description": "Lists moderators for a live chat.",
+     "parameters": {
+      "liveChatId": {
+       "type": "string",
+       "description": "The liveChatId parameter specifies the YouTube live chat for which the API should return moderators.",
+       "required": true,
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.",
+       "default": "5",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "50",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the liveChatModerator resource parts that the API response will include. Supported values are id and snippet.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "liveChatId",
+      "part"
+     ],
+     "response": {
+      "$ref": "LiveChatModeratorListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl",
+      "https://www.googleapis.com/auth/youtube.readonly"
      ]
     }
    }
@@ -8729,6 +9613,63 @@
       "https://www.googleapis.com/auth/youtube.force-ssl",
       "https://www.googleapis.com/auth/youtube.readonly",
       "https://www.googleapis.com/auth/youtubepartner"
+     ]
+    }
+   }
+  },
+  "sponsors": {
+   "methods": {
+    "list": {
+     "id": "youtube.sponsors.list",
+     "path": "sponsors",
+     "httpMethod": "GET",
+     "description": "Lists sponsors for a channel.",
+     "parameters": {
+      "filter": {
+       "type": "string",
+       "description": "The filter parameter specifies which channel sponsors to return.",
+       "default": "POLL_NEWEST",
+       "enum": [
+        "all",
+        "newest"
+       ],
+       "enumDescriptions": [
+        "Return all sponsors, from newest to oldest.",
+        "Return the most recent sponsors, from newest to oldest."
+       ],
+       "location": "query"
+      },
+      "maxResults": {
+       "type": "integer",
+       "description": "The maxResults parameter specifies the maximum number of items that should be returned in the result set.",
+       "default": "5",
+       "format": "uint32",
+       "minimum": "0",
+       "maximum": "50",
+       "location": "query"
+      },
+      "pageToken": {
+       "type": "string",
+       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
+       "location": "query"
+      },
+      "part": {
+       "type": "string",
+       "description": "The part parameter specifies the sponsor resource parts that the API response will include. Supported values are id and snippet.",
+       "required": true,
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "part"
+     ],
+     "response": {
+      "$ref": "SponsorListResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/youtube",
+      "https://www.googleapis.com/auth/youtube.force-ssl",
+      "https://www.googleapis.com/auth/youtube.readonly"
      ]
     }
    }

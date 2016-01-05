@@ -623,10 +623,27 @@ func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ActivitiesListCall) QuotaUser(quotaUser string) *ActivitiesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartTime sets the optional parameter "startTime": Return events
 // which occured at or after this time.
 func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
 	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ActivitiesListCall) UserIP(userIP string) *ActivitiesListCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -864,10 +881,27 @@ func (c *ActivitiesWatchCall) PageToken(pageToken string) *ActivitiesWatchCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ActivitiesWatchCall) QuotaUser(quotaUser string) *ActivitiesWatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
 // StartTime sets the optional parameter "startTime": Return events
 // which occured at or after this time.
 func (c *ActivitiesWatchCall) StartTime(startTime string) *ActivitiesWatchCall {
 	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ActivitiesWatchCall) UserIP(userIP string) *ActivitiesWatchCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1047,6 +1081,23 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 	return c
 }
 
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *ChannelsStopCall) QuotaUser(quotaUser string) *ChannelsStopCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *ChannelsStopCall) UserIP(userIP string) *ChannelsStopCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1147,6 +1198,23 @@ func (c *CustomerUsageReportsGetCall) PageToken(pageToken string) *CustomerUsage
 // app_name1:param_name1, app_name2:param_name2.
 func (c *CustomerUsageReportsGetCall) Parameters(parameters string) *CustomerUsageReportsGetCall {
 	c.urlParams_.Set("parameters", parameters)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *CustomerUsageReportsGetCall) QuotaUser(quotaUser string) *CustomerUsageReportsGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *CustomerUsageReportsGetCall) UserIP(userIP string) *CustomerUsageReportsGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1327,6 +1395,23 @@ func (c *UserUsageReportGetCall) PageToken(pageToken string) *UserUsageReportGet
 // app_name1:param_name1, app_name2:param_name2.
 func (c *UserUsageReportGetCall) Parameters(parameters string) *UserUsageReportGetCall {
 	c.urlParams_.Set("parameters", parameters)
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *UserUsageReportGetCall) QuotaUser(quotaUser string) *UserUsageReportGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *UserUsageReportGetCall) UserIP(userIP string) *UserUsageReportGetCall {
+	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 

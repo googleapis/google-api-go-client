@@ -66,6 +66,8 @@ func New(client *http.Client) (*Service, error) {
 	s.Installs = NewInstallsService(s)
 	s.Permissions = NewPermissionsService(s)
 	s.Products = NewProductsService(s)
+	s.Storelayoutclusters = NewStorelayoutclustersService(s)
+	s.Storelayoutpages = NewStorelayoutpagesService(s)
 	s.Users = NewUsersService(s)
 	return s, nil
 }
@@ -94,6 +96,10 @@ type Service struct {
 	Permissions *PermissionsService
 
 	Products *ProductsService
+
+	Storelayoutclusters *StorelayoutclustersService
+
+	Storelayoutpages *StorelayoutpagesService
 
 	Users *UsersService
 }
@@ -192,6 +198,24 @@ func NewProductsService(s *Service) *ProductsService {
 }
 
 type ProductsService struct {
+	s *Service
+}
+
+func NewStorelayoutclustersService(s *Service) *StorelayoutclustersService {
+	rs := &StorelayoutclustersService{s: s}
+	return rs
+}
+
+type StorelayoutclustersService struct {
+	s *Service
+}
+
+func NewStorelayoutpagesService(s *Service) *StorelayoutpagesService {
+	rs := &StorelayoutpagesService{s: s}
+	return rs
+}
+
+type StorelayoutpagesService struct {
 	s *Service
 }
 
@@ -1056,6 +1080,29 @@ func (s *InstallsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// LocalizedText: A localized string with its locale.
+type LocalizedText struct {
+	// Locale: The BCP47 tag for a locale. (e.g. "en-US", "de").
+	Locale string `json:"locale,omitempty"`
+
+	// Text: The text localized in the associated locale.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Locale") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *LocalizedText) MarshalJSON() ([]byte, error) {
+	type noMethod LocalizedText
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Permission: A permission represents some extra capability, to be
 // granted to an Android app, which requires explicit consent. An
 // enterprise admin must consent to these permissions on behalf of their
@@ -1316,6 +1363,199 @@ func (s *ProductsGenerateApprovalUrlResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// StoreCluster: Definition of a Google Play for Work store cluster, a
+// list of products displayed as part of a store page.
+type StoreCluster struct {
+	// Id: Unique ID of this cluster. Assigned by the server. Immutable once
+	// assigned.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#storeCluster".
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Ordered list of localized strings giving the name of this page.
+	// The text displayed is the one that best matches the user locale, or
+	// the first entry if there is no good match. There needs to be at least
+	// one entry.
+	Name []*LocalizedText `json:"name,omitempty"`
+
+	// OrderInPage: String (US-ASCII only) used to determine order of this
+	// cluster within the parent page's elements. Page elements are sorted
+	// in lexicographic order of this field. Duplicated values are allowed,
+	// but ordering between elements with duplicate order is undefined.
+	//
+	// The value of this field is never visible to a user, it is used solely
+	// for the purpose of defining an ordering. Maximum length is 20
+	// characters.
+	OrderInPage string `json:"orderInPage,omitempty"`
+
+	// ProductId: List of products in the order they are displayed in the
+	// cluster. There should not be duplicates within a cluster.
+	ProductId []string `json:"productId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StoreCluster) MarshalJSON() ([]byte, error) {
+	type noMethod StoreCluster
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// StoreLayout: General setting for the Google Play for Work store
+// layout, currently only specifying the page to display the first time
+// the store is opened.
+type StoreLayout struct {
+	// HomepageId: The ID of the store page to be used as the homepage. The
+	// homepage will be used as the first page shown in the Google Play for
+	// Work store.
+	//
+	// If there is no homepage set, an empty store is shown. The homepage
+	// can be unset (by not specifying it) to empty the store.
+	//
+	// If there exists at least one page, this field must be set to the ID
+	// of a valid page.
+	HomepageId string `json:"homepageId,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#storeLayout".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "HomepageId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StoreLayout) MarshalJSON() ([]byte, error) {
+	type noMethod StoreLayout
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// StoreLayoutClustersListResponse: The store page resources for the
+// enterprise.
+type StoreLayoutClustersListResponse struct {
+	// Cluster: A store cluster of an enterprise.
+	Cluster []*StoreCluster `json:"cluster,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#storeLayoutClustersListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Cluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StoreLayoutClustersListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod StoreLayoutClustersListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// StoreLayoutPagesListResponse: The store page resources for the
+// enterprise.
+type StoreLayoutPagesListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#storeLayoutPagesListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// Page: A store page of an enterprise.
+	Page []*StorePage `json:"page,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StoreLayoutPagesListResponse) MarshalJSON() ([]byte, error) {
+	type noMethod StoreLayoutPagesListResponse
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// StorePage: Definition of a Google Play for Work store page, made of a
+// localized name and links to other pages. A page also contains
+// clusters defined as a subcollection.
+type StorePage struct {
+	// Id: Unique ID of this page. Assigned by the server. Immutable once
+	// assigned.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#storePage".
+	Kind string `json:"kind,omitempty"`
+
+	// Link: Ordered list of pages a user should be able to reach from this
+	// page. The pages must exist, must not be this page, and once a link is
+	// created the page linked to cannot be deleted until all links to it
+	// are removed. It is recommended that the basic pages are created
+	// first, before adding the links between pages.
+	//
+	// No attempt is made to verify that all pages are reachable from the
+	// homepage.
+	Link []string `json:"link,omitempty"`
+
+	// Name: Ordered list of localized strings giving the name of this page.
+	// The text displayed is the one that best matches the user locale, or
+	// the first entry if there is no good match. There needs to be at least
+	// one entry.
+	Name []*LocalizedText `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *StorePage) MarshalJSON() ([]byte, error) {
+	type noMethod StorePage
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // User: A user resource represents an individual user within the
 // enterprise's domain.
 //
@@ -1337,6 +1577,8 @@ type User struct {
 	Kind string `json:"kind,omitempty"`
 
 	// PrimaryEmail: The user's primary email, e.g. "jsmith@example.com".
+	// Will always be set for Google managed users and not set for EMM
+	// managed users.
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4017,6 +4259,146 @@ func (c *EnterprisesGetCall) Do() (*Enterprise, error) {
 
 }
 
+// method id "androidenterprise.enterprises.getStoreLayout":
+
+type EnterprisesGetStoreLayoutCall struct {
+	s            *Service
+	enterpriseId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// GetStoreLayout: Returns the store layout resource.
+func (r *EnterprisesService) GetStoreLayout(enterpriseId string) *EnterprisesGetStoreLayoutCall {
+	c := &EnterprisesGetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EnterprisesGetStoreLayoutCall) QuotaUser(quotaUser string) *EnterprisesGetStoreLayoutCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EnterprisesGetStoreLayoutCall) UserIP(userIP string) *EnterprisesGetStoreLayoutCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesGetStoreLayoutCall) Fields(s ...googleapi.Field) *EnterprisesGetStoreLayoutCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EnterprisesGetStoreLayoutCall) IfNoneMatch(entityTag string) *EnterprisesGetStoreLayoutCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesGetStoreLayoutCall) Context(ctx context.Context) *EnterprisesGetStoreLayoutCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EnterprisesGetStoreLayoutCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.enterprises.getStoreLayout" call.
+// Exactly one of *StoreLayout or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StoreLayout.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *EnterprisesGetStoreLayoutCall) Do() (*StoreLayout, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StoreLayout{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the store layout resource.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.enterprises.getStoreLayout",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout",
+	//   "response": {
+	//     "$ref": "StoreLayout"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
 // method id "androidenterprise.enterprises.insert":
 
 type EnterprisesInsertCall struct {
@@ -4549,6 +4931,143 @@ func (c *EnterprisesSetAccountCall) Do() (*EnterpriseAccount, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "EnterpriseAccount"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.enterprises.setStoreLayout":
+
+type EnterprisesSetStoreLayoutCall struct {
+	s            *Service
+	enterpriseId string
+	storelayout  *StoreLayout
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// SetStoreLayout: Sets the store layout resource.
+func (r *EnterprisesService) SetStoreLayout(enterpriseId string, storelayout *StoreLayout) *EnterprisesSetStoreLayoutCall {
+	c := &EnterprisesSetStoreLayoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.storelayout = storelayout
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *EnterprisesSetStoreLayoutCall) QuotaUser(quotaUser string) *EnterprisesSetStoreLayoutCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *EnterprisesSetStoreLayoutCall) UserIP(userIP string) *EnterprisesSetStoreLayoutCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesSetStoreLayoutCall) Fields(s ...googleapi.Field) *EnterprisesSetStoreLayoutCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesSetStoreLayoutCall) Context(ctx context.Context) *EnterprisesSetStoreLayoutCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *EnterprisesSetStoreLayoutCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storelayout)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.enterprises.setStoreLayout" call.
+// Exactly one of *StoreLayout or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StoreLayout.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *EnterprisesSetStoreLayoutCall) Do() (*StoreLayout, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StoreLayout{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the store layout resource.",
+	//   "httpMethod": "PUT",
+	//   "id": "androidenterprise.enterprises.setStoreLayout",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout",
+	//   "request": {
+	//     "$ref": "StoreLayout"
+	//   },
+	//   "response": {
+	//     "$ref": "StoreLayout"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"
@@ -7735,6 +8254,1727 @@ func (c *ProductsUpdatePermissionsCall) Do() (*ProductPermissions, error) {
 
 }
 
+// method id "androidenterprise.storelayoutclusters.delete":
+
+type StorelayoutclustersDeleteCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	clusterId    string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Delete: Deletes a cluster.
+func (r *StorelayoutclustersService) Delete(enterpriseId string, pageId string, clusterId string) *StorelayoutclustersDeleteCall {
+	c := &StorelayoutclustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	c.clusterId = clusterId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutclustersDeleteCall) QuotaUser(quotaUser string) *StorelayoutclustersDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutclustersDeleteCall) UserIP(userIP string) *StorelayoutclustersDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutclustersDeleteCall) Fields(s ...googleapi.Field) *StorelayoutclustersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutclustersDeleteCall) Context(ctx context.Context) *StorelayoutclustersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutclustersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+		"clusterId":    c.clusterId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutclusters.delete" call.
+func (c *StorelayoutclustersDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a cluster.",
+	//   "httpMethod": "DELETE",
+	//   "id": "androidenterprise.storelayoutclusters.delete",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId",
+	//     "clusterId"
+	//   ],
+	//   "parameters": {
+	//     "clusterId": {
+	//       "description": "The ID of the cluster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutclusters.get":
+
+type StorelayoutclustersGetCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	clusterId    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Retrieves details of a cluster.
+func (r *StorelayoutclustersService) Get(enterpriseId string, pageId string, clusterId string) *StorelayoutclustersGetCall {
+	c := &StorelayoutclustersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	c.clusterId = clusterId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutclustersGetCall) QuotaUser(quotaUser string) *StorelayoutclustersGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutclustersGetCall) UserIP(userIP string) *StorelayoutclustersGetCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutclustersGetCall) Fields(s ...googleapi.Field) *StorelayoutclustersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StorelayoutclustersGetCall) IfNoneMatch(entityTag string) *StorelayoutclustersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutclustersGetCall) Context(ctx context.Context) *StorelayoutclustersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutclustersGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+		"clusterId":    c.clusterId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutclusters.get" call.
+// Exactly one of *StoreCluster or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StoreCluster.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StorelayoutclustersGetCall) Do() (*StoreCluster, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StoreCluster{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves details of a cluster.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.storelayoutclusters.get",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId",
+	//     "clusterId"
+	//   ],
+	//   "parameters": {
+	//     "clusterId": {
+	//       "description": "The ID of the cluster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+	//   "response": {
+	//     "$ref": "StoreCluster"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutclusters.insert":
+
+type StorelayoutclustersInsertCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	storecluster *StoreCluster
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Insert: Inserts a new cluster in a page.
+func (r *StorelayoutclustersService) Insert(enterpriseId string, pageId string, storecluster *StoreCluster) *StorelayoutclustersInsertCall {
+	c := &StorelayoutclustersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	c.storecluster = storecluster
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutclustersInsertCall) QuotaUser(quotaUser string) *StorelayoutclustersInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutclustersInsertCall) UserIP(userIP string) *StorelayoutclustersInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutclustersInsertCall) Fields(s ...googleapi.Field) *StorelayoutclustersInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutclustersInsertCall) Context(ctx context.Context) *StorelayoutclustersInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutclustersInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storecluster)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutclusters.insert" call.
+// Exactly one of *StoreCluster or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StoreCluster.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StorelayoutclustersInsertCall) Do() (*StoreCluster, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StoreCluster{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new cluster in a page.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.storelayoutclusters.insert",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
+	//   "request": {
+	//     "$ref": "StoreCluster"
+	//   },
+	//   "response": {
+	//     "$ref": "StoreCluster"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutclusters.list":
+
+type StorelayoutclustersListCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Retrieves the details of all clusters on the specified page.
+func (r *StorelayoutclustersService) List(enterpriseId string, pageId string) *StorelayoutclustersListCall {
+	c := &StorelayoutclustersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutclustersListCall) QuotaUser(quotaUser string) *StorelayoutclustersListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutclustersListCall) UserIP(userIP string) *StorelayoutclustersListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutclustersListCall) Fields(s ...googleapi.Field) *StorelayoutclustersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StorelayoutclustersListCall) IfNoneMatch(entityTag string) *StorelayoutclustersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutclustersListCall) Context(ctx context.Context) *StorelayoutclustersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutclustersListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutclusters.list" call.
+// Exactly one of *StoreLayoutClustersListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *StoreLayoutClustersListResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *StorelayoutclustersListCall) Do() (*StoreLayoutClustersListResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StoreLayoutClustersListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the details of all clusters on the specified page.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.storelayoutclusters.list",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters",
+	//   "response": {
+	//     "$ref": "StoreLayoutClustersListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutclusters.patch":
+
+type StorelayoutclustersPatchCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	clusterId    string
+	storecluster *StoreCluster
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Patch: Updates a cluster. This method supports patch semantics.
+func (r *StorelayoutclustersService) Patch(enterpriseId string, pageId string, clusterId string, storecluster *StoreCluster) *StorelayoutclustersPatchCall {
+	c := &StorelayoutclustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	c.clusterId = clusterId
+	c.storecluster = storecluster
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutclustersPatchCall) QuotaUser(quotaUser string) *StorelayoutclustersPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutclustersPatchCall) UserIP(userIP string) *StorelayoutclustersPatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutclustersPatchCall) Fields(s ...googleapi.Field) *StorelayoutclustersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutclustersPatchCall) Context(ctx context.Context) *StorelayoutclustersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutclustersPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storecluster)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+		"clusterId":    c.clusterId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutclusters.patch" call.
+// Exactly one of *StoreCluster or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StoreCluster.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StorelayoutclustersPatchCall) Do() (*StoreCluster, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StoreCluster{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a cluster. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "androidenterprise.storelayoutclusters.patch",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId",
+	//     "clusterId"
+	//   ],
+	//   "parameters": {
+	//     "clusterId": {
+	//       "description": "The ID of the cluster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+	//   "request": {
+	//     "$ref": "StoreCluster"
+	//   },
+	//   "response": {
+	//     "$ref": "StoreCluster"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutclusters.update":
+
+type StorelayoutclustersUpdateCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	clusterId    string
+	storecluster *StoreCluster
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Update: Updates a cluster.
+func (r *StorelayoutclustersService) Update(enterpriseId string, pageId string, clusterId string, storecluster *StoreCluster) *StorelayoutclustersUpdateCall {
+	c := &StorelayoutclustersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	c.clusterId = clusterId
+	c.storecluster = storecluster
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutclustersUpdateCall) QuotaUser(quotaUser string) *StorelayoutclustersUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutclustersUpdateCall) UserIP(userIP string) *StorelayoutclustersUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutclustersUpdateCall) Fields(s ...googleapi.Field) *StorelayoutclustersUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutclustersUpdateCall) Context(ctx context.Context) *StorelayoutclustersUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutclustersUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storecluster)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+		"clusterId":    c.clusterId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutclusters.update" call.
+// Exactly one of *StoreCluster or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StoreCluster.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StorelayoutclustersUpdateCall) Do() (*StoreCluster, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StoreCluster{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a cluster.",
+	//   "httpMethod": "PUT",
+	//   "id": "androidenterprise.storelayoutclusters.update",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId",
+	//     "clusterId"
+	//   ],
+	//   "parameters": {
+	//     "clusterId": {
+	//       "description": "The ID of the cluster.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}/clusters/{clusterId}",
+	//   "request": {
+	//     "$ref": "StoreCluster"
+	//   },
+	//   "response": {
+	//     "$ref": "StoreCluster"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutpages.delete":
+
+type StorelayoutpagesDeleteCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Delete: Deletes a store page.
+func (r *StorelayoutpagesService) Delete(enterpriseId string, pageId string) *StorelayoutpagesDeleteCall {
+	c := &StorelayoutpagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutpagesDeleteCall) QuotaUser(quotaUser string) *StorelayoutpagesDeleteCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutpagesDeleteCall) UserIP(userIP string) *StorelayoutpagesDeleteCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutpagesDeleteCall) Fields(s ...googleapi.Field) *StorelayoutpagesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutpagesDeleteCall) Context(ctx context.Context) *StorelayoutpagesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutpagesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutpages.delete" call.
+func (c *StorelayoutpagesDeleteCall) Do() error {
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a store page.",
+	//   "httpMethod": "DELETE",
+	//   "id": "androidenterprise.storelayoutpages.delete",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutpages.get":
+
+type StorelayoutpagesGetCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// Get: Retrieves details of a store page.
+func (r *StorelayoutpagesService) Get(enterpriseId string, pageId string) *StorelayoutpagesGetCall {
+	c := &StorelayoutpagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutpagesGetCall) QuotaUser(quotaUser string) *StorelayoutpagesGetCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutpagesGetCall) UserIP(userIP string) *StorelayoutpagesGetCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutpagesGetCall) Fields(s ...googleapi.Field) *StorelayoutpagesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StorelayoutpagesGetCall) IfNoneMatch(entityTag string) *StorelayoutpagesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutpagesGetCall) Context(ctx context.Context) *StorelayoutpagesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutpagesGetCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutpages.get" call.
+// Exactly one of *StorePage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StorePage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StorelayoutpagesGetCall) Do() (*StorePage, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StorePage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves details of a store page.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.storelayoutpages.get",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+	//   "response": {
+	//     "$ref": "StorePage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutpages.insert":
+
+type StorelayoutpagesInsertCall struct {
+	s            *Service
+	enterpriseId string
+	storepage    *StorePage
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Insert: Inserts a new store page.
+func (r *StorelayoutpagesService) Insert(enterpriseId string, storepage *StorePage) *StorelayoutpagesInsertCall {
+	c := &StorelayoutpagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.storepage = storepage
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutpagesInsertCall) QuotaUser(quotaUser string) *StorelayoutpagesInsertCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutpagesInsertCall) UserIP(userIP string) *StorelayoutpagesInsertCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutpagesInsertCall) Fields(s ...googleapi.Field) *StorelayoutpagesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutpagesInsertCall) Context(ctx context.Context) *StorelayoutpagesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutpagesInsertCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storepage)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutpages.insert" call.
+// Exactly one of *StorePage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StorePage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StorelayoutpagesInsertCall) Do() (*StorePage, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StorePage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new store page.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.storelayoutpages.insert",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages",
+	//   "request": {
+	//     "$ref": "StorePage"
+	//   },
+	//   "response": {
+	//     "$ref": "StorePage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutpages.list":
+
+type StorelayoutpagesListCall struct {
+	s            *Service
+	enterpriseId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+}
+
+// List: Retrieves the details of all pages in the store.
+func (r *StorelayoutpagesService) List(enterpriseId string) *StorelayoutpagesListCall {
+	c := &StorelayoutpagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutpagesListCall) QuotaUser(quotaUser string) *StorelayoutpagesListCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutpagesListCall) UserIP(userIP string) *StorelayoutpagesListCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutpagesListCall) Fields(s ...googleapi.Field) *StorelayoutpagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *StorelayoutpagesListCall) IfNoneMatch(entityTag string) *StorelayoutpagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutpagesListCall) Context(ctx context.Context) *StorelayoutpagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutpagesListCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		req.Header.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutpages.list" call.
+// Exactly one of *StoreLayoutPagesListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *StoreLayoutPagesListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *StorelayoutpagesListCall) Do() (*StoreLayoutPagesListResponse, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StoreLayoutPagesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the details of all pages in the store.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.storelayoutpages.list",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages",
+	//   "response": {
+	//     "$ref": "StoreLayoutPagesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutpages.patch":
+
+type StorelayoutpagesPatchCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	storepage    *StorePage
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Patch: Updates the content of a store page. This method supports
+// patch semantics.
+func (r *StorelayoutpagesService) Patch(enterpriseId string, pageId string, storepage *StorePage) *StorelayoutpagesPatchCall {
+	c := &StorelayoutpagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	c.storepage = storepage
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutpagesPatchCall) QuotaUser(quotaUser string) *StorelayoutpagesPatchCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutpagesPatchCall) UserIP(userIP string) *StorelayoutpagesPatchCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutpagesPatchCall) Fields(s ...googleapi.Field) *StorelayoutpagesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutpagesPatchCall) Context(ctx context.Context) *StorelayoutpagesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutpagesPatchCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storepage)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutpages.patch" call.
+// Exactly one of *StorePage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StorePage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StorelayoutpagesPatchCall) Do() (*StorePage, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StorePage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the content of a store page. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "androidenterprise.storelayoutpages.patch",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+	//   "request": {
+	//     "$ref": "StorePage"
+	//   },
+	//   "response": {
+	//     "$ref": "StorePage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.storelayoutpages.update":
+
+type StorelayoutpagesUpdateCall struct {
+	s            *Service
+	enterpriseId string
+	pageId       string
+	storepage    *StorePage
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+}
+
+// Update: Updates the content of a store page.
+func (r *StorelayoutpagesService) Update(enterpriseId string, pageId string, storepage *StorePage) *StorelayoutpagesUpdateCall {
+	c := &StorelayoutpagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.pageId = pageId
+	c.storepage = storepage
+	return c
+}
+
+// QuotaUser sets the optional parameter "quotaUser": Available to use
+// for quota purposes for server-side applications. Can be any arbitrary
+// string assigned to a user, but should not exceed 40 characters.
+// Overrides userIp if both are provided.
+func (c *StorelayoutpagesUpdateCall) QuotaUser(quotaUser string) *StorelayoutpagesUpdateCall {
+	c.urlParams_.Set("quotaUser", quotaUser)
+	return c
+}
+
+// UserIP sets the optional parameter "userIp": IP address of the site
+// where the request originates. Use this if you want to enforce
+// per-user limits.
+func (c *StorelayoutpagesUpdateCall) UserIP(userIP string) *StorelayoutpagesUpdateCall {
+	c.urlParams_.Set("userIp", userIP)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *StorelayoutpagesUpdateCall) Fields(s ...googleapi.Field) *StorelayoutpagesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *StorelayoutpagesUpdateCall) Context(ctx context.Context) *StorelayoutpagesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *StorelayoutpagesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.storepage)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/storeLayout/pages/{pageId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"pageId":       c.pageId,
+	})
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "androidenterprise.storelayoutpages.update" call.
+// Exactly one of *StorePage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StorePage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *StorelayoutpagesUpdateCall) Do() (*StorePage, error) {
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StorePage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the content of a store page.",
+	//   "httpMethod": "PUT",
+	//   "id": "androidenterprise.storelayoutpages.update",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "pageId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageId": {
+	//       "description": "The ID of the page.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/storeLayout/pages/{pageId}",
+	//   "request": {
+	//     "$ref": "StorePage"
+	//   },
+	//   "response": {
+	//     "$ref": "StorePage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
 // method id "androidenterprise.users.generateToken":
 
 type UsersGenerateTokenCall struct {
@@ -8184,7 +10424,8 @@ type UsersListCall struct {
 	ctx_         context.Context
 }
 
-// List: Looks up a user by email address.
+// List: Looks up a user by email address. This only works for Google
+// managed users.
 func (r *UsersService) List(enterpriseId string, email string) *UsersListCall {
 	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.enterpriseId = enterpriseId
@@ -8290,7 +10531,7 @@ func (c *UsersListCall) Do() (*UsersListResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up a user by email address.",
+	//   "description": "Looks up a user by email address. This only works for Google managed users.",
 	//   "httpMethod": "GET",
 	//   "id": "androidenterprise.users.list",
 	//   "parameterOrder": [

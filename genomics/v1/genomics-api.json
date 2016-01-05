@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/EoXbbZpW2PXOVb6Lqhz2m9Zhc3U\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ewiu4-KDgktNGSp-rUGcHtmrieI\"",
  "discoveryVersion": "v1",
  "id": "genomics:v1",
  "name": "genomics",
  "version": "v1",
- "revision": "20151210",
+ "revision": "20151219",
  "title": "Genomics API",
  "description": "An API to store, process, explore, and share genomic data. It supports reference-based alignements, genetic variants, and reference genomes. This API provides an implementation of the Global Alliance for Genomics and Health (GA4GH) v0.5.1 API as well as several extensions.",
  "ownerDomain": "google.com",
@@ -190,7 +190,7 @@
    "properties": {
     "version": {
      "type": "integer",
-     "description": "Version of the `Policy`. The default version is 0. 0 = resourcemanager_projects only support legacy roles. 1 = supports non-legacy roles 2 = supports AuditConfig",
+     "description": "Version of the `Policy`. The default version is 0.",
      "format": "int32"
     },
     "bindings": {
@@ -202,7 +202,7 @@
     },
     "etag": {
      "type": "string",
-     "description": "The etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the etag in the read-modify-write cycle to perform policy updates in order to avoid race conditions: Etags are returned in the response to GetIamPolicy, and systems are expected to put that etag in the request to SetIamPolicy to ensure that their change will be applied to the same version of the policy. If no etag is provided in the call to SetIamPolicy, then the existing policy is overwritten blindly.",
+     "description": "`etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An `etag` is returned in the response to `getIamPolicy`, and systems are expected to put that etag in the request to `setIamPolicy` to ensure that their change will be applied to the same version of the policy. If no `etag` is provided in the call to `setIamPolicy`, then the existing policy is overwritten blindly.",
      "format": "byte"
     }
    }
@@ -218,7 +218,7 @@
     },
     "members": {
      "type": "array",
-     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following formats: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`. * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+     "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`. * `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
      "items": {
       "type": "string"
      }
@@ -2057,31 +2057,6 @@
      "request": {
       "$ref": "CancelOperationRequest"
      },
-     "response": {
-      "$ref": "Empty"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/cloud-platform",
-      "https://www.googleapis.com/auth/genomics"
-     ]
-    },
-    "delete": {
-     "id": "genomics.operations.delete",
-     "path": "v1/{+name}",
-     "httpMethod": "DELETE",
-     "description": "This method is not implemented. To cancel an operation, please use Operations.CancelOperation.",
-     "parameters": {
-      "name": {
-       "type": "string",
-       "description": "The name of the operation resource to be deleted.",
-       "required": true,
-       "pattern": "^operations/.*$",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "name"
-     ],
      "response": {
       "$ref": "Empty"
      },

@@ -3220,8 +3220,8 @@ func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3803,8 +3803,8 @@ func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -4304,8 +4304,8 @@ func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, e
 	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

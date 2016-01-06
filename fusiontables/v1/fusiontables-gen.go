@@ -3550,7 +3550,7 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
-		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3559,7 +3559,7 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	})
 	if c.protocol_ == "resumable" {
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
@@ -3811,14 +3811,14 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" {
-		cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
 		if c.mediaType_ == "" {
-			c.mediaType_ = googleapi.DetectMediaType(c.resumable_)
+			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}

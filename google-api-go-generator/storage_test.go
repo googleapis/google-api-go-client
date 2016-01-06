@@ -272,8 +272,7 @@ func TestMediaErrHandling(t *testing.T) {
 	const body = "fake media data"
 	f := strings.NewReader(body)
 	// The combination of TimeoutReader and OneByteReader causes the first byte to
-	// be successfully delivered, but then a timeout error is reported.  This
-	// allows us to test the goroutine within the getMediaType function.
+	// be successfully delivered, but then a timeout error is reported.
 	r := iotest.TimeoutReader(iotest.OneByteReader(f))
 	o := &storage.Object{
 		Bucket:          "mybucket",

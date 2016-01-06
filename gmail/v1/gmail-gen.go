@@ -1371,8 +1371,8 @@ func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2070,8 +2070,8 @@ func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -2302,8 +2302,8 @@ func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -3943,8 +3943,8 @@ func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) 
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4227,8 +4227,8 @@ func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) 
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -4835,8 +4835,8 @@ func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

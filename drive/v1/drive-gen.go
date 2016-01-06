@@ -559,8 +559,8 @@ func (c *FilesInsertCall) doRequest(alt string) (*http.Response, error) {
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -989,8 +989,8 @@ func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("PUT", urls, body)

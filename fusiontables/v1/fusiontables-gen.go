@@ -3549,8 +3549,8 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3810,8 +3810,8 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

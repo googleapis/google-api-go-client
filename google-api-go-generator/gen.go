@@ -1823,8 +1823,8 @@ func (meth *Method) generateCode() {
 			pn(`ctype := "application/json"`)
 			hasContentType = true
 		}
-		pn(`if c.protocol_ != "resumable" {`)
-		pn("  cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
+		pn(`if c.protocol_ != "resumable" && c.media_ != nil {`)
+		pn("  cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)")
 		pn("  defer cancel()")
 		pn("}")
 	}

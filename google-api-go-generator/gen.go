@@ -1824,7 +1824,7 @@ func (meth *Method) generateCode() {
 			hasContentType = true
 		}
 		pn(`if c.protocol_ != "resumable" {`)
-		pn("  cancel := googleapi.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
+		pn("  cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)")
 		pn("  defer cancel()")
 		pn("}")
 	}
@@ -1846,7 +1846,7 @@ func (meth *Method) generateCode() {
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
 		pn(` if c.mediaType_ == "" {`)
-		pn("  c.mediaType_ = googleapi.DetectMediaType(c.resumable_)")
+		pn("  c.mediaType_ = gensupport.DetectMediaType(c.resumable_)")
 		pn(" }")
 		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
 		pn("}")

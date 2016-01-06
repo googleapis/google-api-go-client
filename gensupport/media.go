@@ -5,7 +5,6 @@
 package gensupport
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
 	"io"
@@ -86,7 +85,6 @@ func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string
 	if media == nil {
 		return func() {}
 	}
-	// Get the media type, which might return a different reader instance.
 	var mediaType string
 	media, mediaType = getMediaType(media)
 
@@ -135,24 +133,14 @@ func getMediaType(media io.Reader) (io.Reader, string) {
 		return media, typer.ContentType()
 	}
 
-	pr, pw := io.Pipe()
-	typ := "application/octet-stream"
-	buf, err := ioutil.ReadAll(io.LimitReader(media, 512))
-	if err != nil {
-		pw.CloseWithError(fmt.Errorf("error reading media: %v", err))
-		return pr, typ
+	sniffer := NewContentSniffer(media)
+	typ, ok := sniffer.ContentType()
+	if !ok {
+		// TODO(mcgreevy): Remove this default.  It maintains the semantics of the existing code,
+		// but should not be relied on.
+		typ = "application/octet-stream"
 	}
-	typ = http.DetectContentType(buf)
-	mr := io.MultiReader(bytes.NewReader(buf), media)
-	go func() {
-		_, err = io.Copy(pw, mr)
-		if err != nil {
-			pw.CloseWithError(fmt.Errorf("error reading media: %v", err))
-			return
-		}
-		pw.Close()
-	}()
-	return pr, typ
+	return sniffer, typ
 }
 
 // DetectMediaType detects and returns the content type of the provided media.

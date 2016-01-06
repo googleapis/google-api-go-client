@@ -19,11 +19,20 @@ import (
 	storage "google.golang.org/api/storage/v1"
 )
 
+type object struct {
+	name, contents string
+}
+
 var (
-	projectID  string
-	bucket     string
-	contents   = make(map[string]string)
-	objects    = []string{"obj1", "obj2", "obj/with/slashes", "resumable"}
+	projectID string
+	bucket    string
+	objects   = []object{
+		{"obj1", testContents},
+		{"obj2", testContents},
+		{"obj/with/slashes", testContents},
+		{"resumable", testContents},
+		{"large", strings.Repeat("a", 514)}, // larger than the first section of content that is sniffed by ContentSniffer.
+	}
 	aclObjects = []string{"acl1", "acl2"}
 	copyObj    = "copy-object"
 )
@@ -77,7 +86,7 @@ const defaultType = "text/plain; charset=utf-8"
 // writeObject writes some data and default metadata to the specified object.
 // Resumable upload is used if resumable is true.
 // The written data is returned.
-func writeObject(s *storage.Service, bucket, obj string, resumable bool) (string, error) {
+func writeObject(s *storage.Service, bucket, obj string, resumable bool, contents string) error {
 	o := &storage.Object{
 		Bucket:          bucket,
 		Name:            obj,
@@ -86,16 +95,15 @@ func writeObject(s *storage.Service, bucket, obj string, resumable bool) (string
 		ContentLanguage: "en",
 		Metadata:        map[string]string{"foo": "bar"},
 	}
-	c := testContents
-	f := strings.NewReader(c)
+	f := strings.NewReader(contents)
 	insert := s.Objects.Insert(bucket, o)
 	if resumable {
-		insert.ResumableMedia(context.Background(), f, int64(len(c)), defaultType)
+		insert.ResumableMedia(context.Background(), f, int64(len(contents)), defaultType)
 	} else {
 		insert.Media(f)
 	}
 	_, err := insert.Do()
-	return c, err
+	return err
 }
 
 func checkMetadata(t *testing.T, s *storage.Service, bucket, obj string) {
@@ -158,27 +166,28 @@ func TestFunctions(t *testing.T) {
 	}
 
 	for _, obj := range objects {
-		t.Logf("Writing %q", obj)
-		c, err := writeObject(s, bucket, obj, obj == "resumable")
+		t.Logf("Writing %q", obj.name)
+		// TODO(mcgreevy): stop relying on "resumable" name to determine whether to
+		// do an resumable upload.
+		err := writeObject(s, bucket, obj.name, obj.name == "resumable", obj.contents)
 		if err != nil {
-			t.Fatalf("unable to insert object %q: %v", obj, err)
+			t.Fatalf("unable to insert object %q: %v", obj.name, err)
 		}
-		contents[obj] = c
 	}
 
 	for _, obj := range objects {
-		t.Logf("Reading %q", obj)
-		resp, err := s.Objects.Get(bucket, obj).Download()
+		t.Logf("Reading %q", obj.name)
+		resp, err := s.Objects.Get(bucket, obj.name).Download()
 		if err != nil {
-			t.Fatalf("unable to get object %q: %v", obj, err)
+			t.Fatalf("unable to get object %q: %v", obj.name, err)
 		}
 		slurp, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			t.Errorf("unable to read response body %q: %v", obj, err)
+			t.Errorf("unable to read response body %q: %v", obj.name, err)
 		}
 		resp.Body.Close()
-		if got, want := string(slurp), contents[obj]; got != want {
-			t.Errorf("contents of %q = %q; want %q", obj, got, want)
+		if got, want := string(slurp), obj.contents; got != want {
+			t.Errorf("contents of %q = %q; want %q", obj.name, got, want)
 		}
 	}
 
@@ -190,11 +199,11 @@ func TestFunctions(t *testing.T) {
 	}
 
 	for _, obj := range objects {
-		t.Logf("Checking %q metadata", obj)
-		checkMetadata(t, s, bucket, obj)
+		t.Logf("Checking %q metadata", obj.name)
+		checkMetadata(t, s, bucket, obj.name)
 	}
 
-	name = objects[0]
+	name = objects[0].name
 
 	t.Logf("Rewriting %q to %q", name, copyObj)
 	copy, err := s.Objects.Rewrite(bucket, name, bucket, copyObj, nil).Do()

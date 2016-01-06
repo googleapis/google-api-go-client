@@ -231,10 +231,6 @@ func DetectMediaType(media io.ReaderAt) string {
 	return typ
 }
 
-type Lengther interface {
-	Len() int
-}
-
 // endingWithErrorReader from r until it returns an error.  If the
 // final error from r is io.EOF and e is non-nil, e is used instead.
 type endingWithErrorReader struct {

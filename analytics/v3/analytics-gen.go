@@ -14548,8 +14548,8 @@ func (c *ManagementUploadsUploadDataCall) doRequest(alt string) (*http.Response,
 	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	if c.protocol_ != "resumable" {
-		cancel := gensupport.ConditionallyIncludeMedia(c.media_, &body, &ctype)
+	if c.protocol_ != "resumable" && c.media_ != nil {
+		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

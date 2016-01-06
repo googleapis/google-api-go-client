@@ -70,7 +70,7 @@ func (sct *ContentSniffer) ContentType() (string, bool) {
 	return sct.ctype, true
 }
 
-// ConditionallyIncludeMedia does nothing if media is nil.
+// IncludeMedia combines an existing http body with media content to create a multipart/related http body.
 //
 // bodyp is an in/out parameter.  It should initially point to the
 // reader of the application/json (or whatever) payload to send in the
@@ -81,10 +81,7 @@ func (sct *ContentSniffer) ContentType() (string, bool) {
 // to the "multipart/related" content type, with random boundary.
 //
 // The return value is a function that can be used to close the bodyp Reader with an error.
-func ConditionallyIncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) func() {
-	if media == nil {
-		return func() {}
-	}
+func IncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) func() {
 	var mediaType string
 	media, mediaType = getMediaType(media)
 

@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4a719752_4da3591b",
+        "filename": "gensupport/media.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-07T04:29:17Z",
+      "side": 1,
+      "message": "\"\" is invalid, but I think of that as an implementation detail.  And it\u0027s nice if clients don\u0027t have to think about how to interpret the string to tell if it\u0027s valid.",
+      "parentUuid": "4a719752_2d4b6d36",
+      "range": {
+        "startLine": 57,
+        "startChar": 27,
+        "endLine": 57,
+        "endChar": 55
+      },
+      "revId": "ab5ae8500e226452c453ab75c27e8e2c71121583",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a719752_ed9325d2",
         "filename": "gensupport/media_test.go",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "writtenOn": "2016-01-07T04:17:55Z",
       "side": 1,
       "message": "%q might be better for these?",
+      "range": {
+        "startLine": 98,
+        "startChar": 41,
+        "endLine": 98,
+        "endChar": 43
+      },
+      "revId": "ab5ae8500e226452c453ab75c27e8e2c71121583",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a719752_0dad5104",
+        "filename": "gensupport/media_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-07T04:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a719752_ed9325d2",
       "range": {
         "startLine": 98,
         "startChar": 41,

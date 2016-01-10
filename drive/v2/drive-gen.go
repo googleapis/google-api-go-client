@@ -9539,7 +9539,8 @@ type PropertiesInsertCall struct {
 	ctx_       context.Context
 }
 
-// Insert: Adds a property to a file.
+// Insert: Adds a property to a file, or updates it if it already
+// exists.
 func (r *PropertiesService) Insert(fileId string, property *Property) *PropertiesInsertCall {
 	c := &PropertiesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9638,7 +9639,7 @@ func (c *PropertiesInsertCall) Do() (*Property, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Adds a property to a file.",
+	//   "description": "Adds a property to a file, or updates it if it already exists.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.properties.insert",
 	//   "parameterOrder": [
@@ -9826,7 +9827,8 @@ type PropertiesPatchCall struct {
 	ctx_        context.Context
 }
 
-// Patch: Updates a property. This method supports patch semantics.
+// Patch: Updates a property, or adds it if it doesn't exist. This
+// method supports patch semantics.
 func (r *PropertiesService) Patch(fileId string, propertyKey string, property *Property) *PropertiesPatchCall {
 	c := &PropertiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -9934,7 +9936,7 @@ func (c *PropertiesPatchCall) Do() (*Property, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a property. This method supports patch semantics.",
+	//   "description": "Updates a property, or adds it if it doesn't exist. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "drive.properties.patch",
 	//   "parameterOrder": [
@@ -9989,7 +9991,7 @@ type PropertiesUpdateCall struct {
 	ctx_        context.Context
 }
 
-// Update: Updates a property.
+// Update: Updates a property, or adds it if it doesn't exist.
 func (r *PropertiesService) Update(fileId string, propertyKey string, property *Property) *PropertiesUpdateCall {
 	c := &PropertiesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -10097,7 +10099,7 @@ func (c *PropertiesUpdateCall) Do() (*Property, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a property.",
+	//   "description": "Updates a property, or adds it if it doesn't exist.",
 	//   "httpMethod": "PUT",
 	//   "id": "drive.properties.update",
 	//   "parameterOrder": [

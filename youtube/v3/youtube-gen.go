@@ -7208,6 +7208,15 @@ func (s *VideoListResponse) MarshalJSON() ([]byte, error) {
 
 // VideoLiveStreamingDetails: Details about the live streaming metadata.
 type VideoLiveStreamingDetails struct {
+	// ActiveLiveChatId: The ID of the currently active live chat attached
+	// to this video. This field is filled only if the video is a currently
+	// live broadcast that has live chat. Once the broadcast transitions to
+	// complete this field will be removed and the live chat closed down.
+	// For persistent broadcasts that live chat id will no longer be tied to
+	// this video but rather to the new video being displayed at the
+	// persistent page.
+	ActiveLiveChatId string `json:"activeLiveChatId,omitempty"`
+
 	// ActualEndTime: The time that the broadcast actually ended. The value
 	// is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format. This value
 	// will not be available until the broadcast is over.
@@ -7238,7 +7247,7 @@ type VideoLiveStreamingDetails struct {
 	// format.
 	ScheduledStartTime string `json:"scheduledStartTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ActualEndTime") to
+	// ForceSendFields is a list of field names (e.g. "ActiveLiveChatId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the

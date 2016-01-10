@@ -2205,8 +2205,8 @@
    "id": "webmasters:v3",
    "name": "webmasters",
    "version": "v3",
-   "title": "Webmaster Tools API",
-   "description": "Lets you view Google Webmaster Tools data for your verified sites.",
+   "title": "Search Console API",
+   "description": "Lets you view Google Search Console data for your verified sites.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/webmasters/v3/rest",
    "discoveryLink": "./apis/webmasters/v3/rest",
    "icons": {

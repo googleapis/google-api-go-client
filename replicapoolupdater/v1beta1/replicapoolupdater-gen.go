@@ -262,7 +262,7 @@ type Operation struct {
 	// Region: [Output Only] URL of the region where the operation resides.
 	Region string `json:"region,omitempty"`
 
-	// SelfLink: [Output Only] Server defined URL for the resource.
+	// SelfLink: [Output Only] The fully qualified URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// StartTime: [Output Only] The time that this operation was started by
@@ -417,13 +417,13 @@ type OperationList struct {
 	Items []*Operation `json:"items,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
-	// replicapoolupdater#operations for Operations resource.
+	// replicapoolupdater#operationList for OperationList resources.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: [Output Only] A token used to continue a truncate.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SelfLink: [Output Only] Server-defined URL for this resource.
+	// SelfLink: [Output Only] The fully qualified URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/KtqCKKlfySHCYvaa1N2v5uwbP6M\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fKMbe2SrHaXxYf-uUNHbWFry5hs\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20151209",
+ "revision": "20151230",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -3636,7 +3636,7 @@
      "id": "drive.properties.insert",
      "path": "files/{fileId}/properties",
      "httpMethod": "POST",
-     "description": "Adds a property to a file.",
+     "description": "Adds a property to a file, or updates it if it already exists.",
      "parameters": {
       "fileId": {
        "type": "string",
@@ -3694,7 +3694,7 @@
      "id": "drive.properties.patch",
      "path": "files/{fileId}/properties/{propertyKey}",
      "httpMethod": "PATCH",
-     "description": "Updates a property. This method supports patch semantics.",
+     "description": "Updates a property, or adds it if it doesn't exist. This method supports patch semantics.",
      "parameters": {
       "fileId": {
        "type": "string",
@@ -3736,7 +3736,7 @@
      "id": "drive.properties.update",
      "path": "files/{fileId}/properties/{propertyKey}",
      "httpMethod": "PUT",
-     "description": "Updates a property.",
+     "description": "Updates a property, or adds it if it doesn't exist.",
      "parameters": {
       "fileId": {
        "type": "string",

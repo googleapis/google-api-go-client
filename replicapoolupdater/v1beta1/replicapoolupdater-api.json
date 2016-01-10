@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/a9_NhKO1DW_f-K-sZ0-h8ToME8I\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/cN5Jn3vD0yxbhTVxORmW5Ig63JA\"",
  "discoveryVersion": "v1",
  "id": "replicapoolupdater:v1beta1",
  "name": "replicapoolupdater",
  "version": "v1beta1",
- "revision": "20150904",
+ "revision": "20160107",
  "title": "Google Compute Engine Instance Group Updater API",
  "description": "The Google Compute Engine Instance Group Updater API provides services for updating groups of Compute Engine Instances.",
  "ownerDomain": "google.com",
@@ -237,7 +237,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server defined URL for the resource."
+     "description": "[Output Only] The fully qualified URL for the resource."
     },
     "startTime": {
      "type": "string",
@@ -320,7 +320,7 @@
     },
     "kind": {
      "type": "string",
-     "description": "[Output Only] Type of resource. Always replicapoolupdater#operations for Operations resource.",
+     "description": "[Output Only] Type of resource. Always replicapoolupdater#operationList for OperationList resources.",
      "default": "replicapoolupdater#operationList"
     },
     "nextPageToken": {
@@ -329,7 +329,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server-defined URL for this resource."
+     "description": "[Output Only] The fully qualified URL for the resource."
     }
    }
   },

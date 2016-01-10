@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/hVDCl-9ESst1gd4-rcx-OJNX4DE\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/eiYk9-Fs-RzXRrghmljT9cKlm2s\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20151116",
+ "revision": "20160104",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -567,10 +567,6 @@
      "$ref": "JobConfigurationExtract",
      "description": "[Pick one] Configures an extract job."
     },
-    "link": {
-     "$ref": "JobConfigurationLink",
-     "description": "[Pick one] Configures a link job."
-    },
     "load": {
      "$ref": "JobConfigurationLoad",
      "description": "[Pick one] Configures a load job."
@@ -619,31 +615,6 @@
     }
    }
   },
-  "JobConfigurationLink": {
-   "id": "JobConfigurationLink",
-   "type": "object",
-   "properties": {
-    "createDisposition": {
-     "type": "string",
-     "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion."
-    },
-    "destinationTable": {
-     "$ref": "TableReference",
-     "description": "[Required] The destination table of the link job."
-    },
-    "sourceUri": {
-     "type": "array",
-     "description": "[Required] URI of source table to link.",
-     "items": {
-      "type": "string"
-     }
-    },
-    "writeDisposition": {
-     "type": "string",
-     "description": "[Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion."
-    }
-   }
-  },
   "JobConfigurationLoad": {
    "id": "JobConfigurationLoad",
    "type": "object",
@@ -670,7 +641,7 @@
     },
     "fieldDelimiter": {
      "type": "string",
-     "description": "[Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence \"\\t\" to specify a tab separator. The default value is a comma (',')."
+     "description": "[Optional] The separator for fields in a CSV file. The separator can be any ISO-8859-1 single-byte character. To use a character in the range 128-255, you must encode the character as UTF8. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence \"\\t\" to specify a tab separator. The default value is a comma (',')."
     },
     "ignoreUnknownValues": {
      "type": "boolean",
@@ -696,7 +667,7 @@
     },
     "schema": {
      "$ref": "TableSchema",
-     "description": "[Optional] The schema for the destination table. The schema can be omitted if the destination table already exists or if the schema can be inferred from the loaded data."
+     "description": "[Optional] The schema for the destination table. The schema can be omitted if the destination table already exists, or if you're loading data from Google Cloud Datastore."
     },
     "schemaInline": {
      "type": "string",
@@ -752,6 +723,12 @@
      "type": "boolean",
      "description": "[Optional] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false.",
      "default": "true"
+    },
+    "maximumBillingTier": {
+     "type": "integer",
+     "description": "[Optional] Limits the billing tier for this job. Queries that have resource usage beyond this tier will fail (without incurring a charge). If unspecified, this will be set to your project default.",
+     "default": "1",
+     "format": "int32"
     },
     "preserveNulls": {
      "type": "boolean",
@@ -1315,7 +1292,7 @@
     },
     "type": {
      "type": "string",
-     "description": "[Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. The default value is TABLE."
+     "description": "[Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. EXTERNAL: A table that references data stored in an external storage system, such as Google Cloud Storage. The default value is TABLE."
     },
     "view": {
      "$ref": "ViewDefinition",
@@ -1368,7 +1345,7 @@
     },
     "templateSuffix": {
      "type": "string",
-     "description": "[Experimental] If specified, treats the destination table as a base template, and inserts the rows into an instance table named \"\". BigQuery will manage creation of the instance table, using the schema of the base template table."
+     "description": "[Optional] If specified, treats the destination table as a base template, and inserts the rows into an instance table named \"{destination}{templateSuffix}\". BigQuery will manage creation of the instance table, using the schema of the base template table. See https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables for considerations when working with templates tables."
     }
    }
   },
@@ -1825,13 +1802,13 @@
      "parameters": {
       "jobId": {
        "type": "string",
-       "description": "Job ID of the job to cancel",
+       "description": "[Required] Job ID of the job to cancel",
        "required": true,
        "location": "path"
       },
       "projectId": {
        "type": "string",
-       "description": "Project ID of the job to cancel",
+       "description": "[Required] Project ID of the job to cancel",
        "required": true,
        "location": "path"
       }
@@ -1856,13 +1833,13 @@
      "parameters": {
       "jobId": {
        "type": "string",
-       "description": "Job ID of the requested job",
+       "description": "[Required] Job ID of the requested job",
        "required": true,
        "location": "path"
       },
       "projectId": {
        "type": "string",
-       "description": "Project ID of the requested job",
+       "description": "[Required] Project ID of the requested job",
        "required": true,
        "location": "path"
       }
@@ -1888,7 +1865,7 @@
      "parameters": {
       "jobId": {
        "type": "string",
-       "description": "Job ID of the query job",
+       "description": "[Required] Job ID of the query job",
        "required": true,
        "location": "path"
       },
@@ -1905,7 +1882,7 @@
       },
       "projectId": {
        "type": "string",
-       "description": "Project ID of the query job",
+       "description": "[Required] Project ID of the query job",
        "required": true,
        "location": "path"
       },

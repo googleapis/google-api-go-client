@@ -769,9 +769,6 @@ type JobConfiguration struct {
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
 
-	// Link: [Pick one] Configures a link job.
-	Link *JobConfigurationLink `json:"link,omitempty"`
-
 	// Load: [Pick one] Configures a load job.
 	Load *JobConfigurationLoad `json:"load,omitempty"`
 
@@ -842,49 +839,6 @@ func (s *JobConfigurationExtract) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-type JobConfigurationLink struct {
-	// CreateDisposition: [Optional] Specifies whether the job is allowed to
-	// create new tables. The following values are supported:
-	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
-	// table. CREATE_NEVER: The table must already exist. If it does not, a
-	// 'notFound' error is returned in the job result. The default value is
-	// CREATE_IF_NEEDED. Creation, truncation and append actions occur as
-	// one atomic update upon job completion.
-	CreateDisposition string `json:"createDisposition,omitempty"`
-
-	// DestinationTable: [Required] The destination table of the link job.
-	DestinationTable *TableReference `json:"destinationTable,omitempty"`
-
-	// SourceUri: [Required] URI of source table to link.
-	SourceUri []string `json:"sourceUri,omitempty"`
-
-	// WriteDisposition: [Optional] Specifies the action that occurs if the
-	// destination table already exists. The following values are supported:
-	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
-	// table data. WRITE_APPEND: If the table already exists, BigQuery
-	// appends the data to the table. WRITE_EMPTY: If the table already
-	// exists and contains data, a 'duplicate' error is returned in the job
-	// result. The default value is WRITE_EMPTY. Each action is atomic and
-	// only occurs if BigQuery is able to complete the job successfully.
-	// Creation, truncation and append actions occur as one atomic update
-	// upon job completion.
-	WriteDisposition string `json:"writeDisposition,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateDisposition")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-}
-
-func (s *JobConfigurationLink) MarshalJSON() ([]byte, error) {
-	type noMethod JobConfigurationLink
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields)
-}
-
 type JobConfigurationLoad struct {
 	// AllowJaggedRows: [Optional] Accept rows that are missing trailing
 	// optional columns. The missing values are treated as nulls. If false,
@@ -919,9 +873,11 @@ type JobConfigurationLoad struct {
 	Encoding string `json:"encoding,omitempty"`
 
 	// FieldDelimiter: [Optional] The separator for fields in a CSV file.
-	// BigQuery converts the string to ISO-8859-1 encoding, and then uses
-	// the first byte of the encoded string to split the data in its raw,
-	// binary state. BigQuery also supports the escape sequence "\t" to
+	// The separator can be any ISO-8859-1 single-byte character. To use a
+	// character in the range 128-255, you must encode the character as
+	// UTF8. BigQuery converts the string to ISO-8859-1 encoding, and then
+	// uses the first byte of the encoded string to split the data in its
+	// raw, binary state. BigQuery also supports the escape sequence "\t" to
 	// specify a tab separator. The default value is a comma (',').
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
@@ -963,8 +919,8 @@ type JobConfigurationLoad struct {
 	Quote *string `json:"quote,omitempty"`
 
 	// Schema: [Optional] The schema for the destination table. The schema
-	// can be omitted if the destination table already exists or if the
-	// schema can be inferred from the loaded data.
+	// can be omitted if the destination table already exists, or if you're
+	// loading data from Google Cloud Datastore.
 	Schema *TableSchema `json:"schema,omitempty"`
 
 	// SchemaInline: [Deprecated] The inline schema. For CSV schemas,
@@ -1050,6 +1006,14 @@ type JobConfigurationQuery struct {
 	//
 	// Default: true
 	FlattenResults *bool `json:"flattenResults,omitempty"`
+
+	// MaximumBillingTier: [Optional] Limits the billing tier for this job.
+	// Queries that have resource usage beyond this tier will fail (without
+	// incurring a charge). If unspecified, this will be set to your project
+	// default.
+	//
+	// Default: 1
+	MaximumBillingTier *int64 `json:"maximumBillingTier,omitempty"`
 
 	// PreserveNulls: [Deprecated] This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
@@ -1729,7 +1693,9 @@ type Table struct {
 
 	// Type: [Output-only] Describes the table type. The following values
 	// are supported: TABLE: A normal BigQuery table. VIEW: A virtual table
-	// defined by a SQL query. The default value is TABLE.
+	// defined by a SQL query. EXTERNAL: A table that references data stored
+	// in an external storage system, such as Google Cloud Storage. The
+	// default value is TABLE.
 	Type string `json:"type,omitempty"`
 
 	// View: [Optional] The view definition.
@@ -1789,10 +1755,12 @@ type TableDataInsertAllRequest struct {
 	// entire request to fail if any invalid rows exist.
 	SkipInvalidRows bool `json:"skipInvalidRows,omitempty"`
 
-	// TemplateSuffix: [Experimental] If specified, treats the destination
-	// table as a base template, and inserts the rows into an instance table
-	// named "". BigQuery will manage creation of the instance table, using
-	// the schema of the base template table.
+	// TemplateSuffix: [Optional] If specified, treats the destination table
+	// as a base template, and inserts the rows into an instance table named
+	// "{destination}{templateSuffix}". BigQuery will manage creation of the
+	// instance table, using the schema of the base template table. See
+	// https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables for considerations when working with templates
+	// tables.
 	TemplateSuffix string `json:"templateSuffix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IgnoreUnknownValues")
@@ -3154,13 +3122,13 @@ func (c *JobsCancelCall) Do() (*JobCancelResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Job ID of the job to cancel",
+	//       "description": "[Required] Job ID of the job to cancel",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the job to cancel",
+	//       "description": "[Required] Project ID of the job to cancel",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3307,13 +3275,13 @@ func (c *JobsGetCall) Do() (*Job, error) {
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Job ID of the requested job",
+	//       "description": "[Required] Job ID of the requested job",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the requested job",
+	//       "description": "[Required] Project ID of the requested job",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3489,7 +3457,7 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "Job ID of the query job",
+	//       "description": "[Required] Job ID of the query job",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3506,7 +3474,7 @@ func (c *JobsGetQueryResultsCall) Do() (*GetQueryResultsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the query job",
+	//       "description": "[Required] Project ID of the query job",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

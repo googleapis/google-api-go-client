@@ -1,4 +1,4 @@
-// Package webmasters provides access to the Webmaster Tools API.
+// Package webmasters provides access to the Search Console API.
 //
 // See https://developers.google.com/webmaster-tools/
 //

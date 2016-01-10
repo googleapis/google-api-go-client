@@ -1316,6 +1316,9 @@ type PartialGroupByKeyInstruction struct {
 	// the input PTable.
 	InputElementCodec PartialGroupByKeyInstructionInputElementCodec `json:"inputElementCodec,omitempty"`
 
+	// SideInputs: Zero or more side inputs.
+	SideInputs []*SideInputInfo `json:"sideInputs,omitempty"`
+
 	// ValueCombiningFn: The value combining function to invoke.
 	ValueCombiningFn PartialGroupByKeyInstructionValueCombiningFn `json:"valueCombiningFn,omitempty"`
 
@@ -2446,6 +2449,10 @@ type TopologyConfig struct {
 	// DataDiskAssignments: The disks assigned to a streaming Dataflow job.
 	DataDiskAssignments []*DataDiskAssignment `json:"dataDiskAssignments,omitempty"`
 
+	// ForwardingKeyBits: The size (in bits) of keys that will be assigned
+	// to source messages.
+	ForwardingKeyBits int64 `json:"forwardingKeyBits,omitempty"`
+
 	// UserStageToComputationNameMap: Maps user stage names to stable
 	// computation names.
 	UserStageToComputationNameMap map[string]string `json:"userStageToComputationNameMap,omitempty"`
@@ -2673,6 +2680,11 @@ func (s *WorkItemStatus) MarshalJSON() ([]byte, error) {
 // health of a worker. The VM should be identified by the labels
 // attached to the WorkerMessage that this health ping belongs to.
 type WorkerHealthReport struct {
+	// Pods: The pods running on the worker. See:
+	// http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#_v1_pod This field is used by the worker to send the status of the indvidual containers running on each
+	// worker.
+	Pods []WorkerHealthReportPods `json:"pods,omitempty"`
+
 	// ReportInterval: The interval at which the worker is sending health
 	// reports. The default value of 0 should be interpreted as the field is
 	// not being explicitly set by the worker.
@@ -2684,7 +2696,7 @@ type WorkerHealthReport struct {
 	// VmStartupTime: The time the VM was booted.
 	VmStartupTime string `json:"vmStartupTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ReportInterval") to
+	// ForceSendFields is a list of field names (e.g. "Pods") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2698,6 +2710,8 @@ func (s *WorkerHealthReport) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
+
+type WorkerHealthReportPods interface{}
 
 // WorkerHealthReportResponse: WorkerHealthReportResponse contains
 // information returned to the worker in response to a health ping.
@@ -2740,6 +2754,9 @@ type WorkerMessage struct {
 	// WorkerHealthReport: The health of a worker.
 	WorkerHealthReport *WorkerHealthReport `json:"workerHealthReport,omitempty"`
 
+	// WorkerMessageCode: A worker message code.
+	WorkerMessageCode *WorkerMessageCode `json:"workerMessageCode,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2754,6 +2771,54 @@ func (s *WorkerMessage) MarshalJSON() ([]byte, error) {
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
+
+// WorkerMessageCode: A message code is used to report status and error
+// messages to the service. The message codes are intended to be machine
+// readable. The service will take care of translating these into user
+// understandable messages if necessary. Example use cases: 1. Worker
+// processes reporting successful startup. 2. Worker processes reporting
+// specific errors (e.g. package staging failure).
+type WorkerMessageCode struct {
+	// Code: The code is a string intended for consumption by a machine that
+	// identifies the type of message being sent. Examples: 1.
+	// "HARNESS_STARTED" might be used to indicate the worker harness has
+	// started. 2. "GCS_DOWNLOAD_ERROR" might be used to indicate an error
+	// downloading a GCS file as part of the boot process of one of the
+	// worker containers. This is a string and not an enum to make it easy
+	// to add new codes without waiting for an API change.
+	Code string `json:"code,omitempty"`
+
+	// Parameters: Parameters contains specific information about the code.
+	// This is a struct to allow parameters of different types. Examples: 1.
+	// For a "HARNESS_STARTED" message parameters might provide the name of
+	// the worker and additional data like timing information. 2. For a
+	// "GCS_DOWNLOAD_ERROR" parameters might contain fields listing the GCS
+	// objects being downloaded and fields containing errors. In general
+	// complex data structures should be avoided. If a worker needs to send
+	// a specific and complicated data structure then please consider
+	// defining a new proto and adding it to the data oneof in
+	// WorkerMessageResponse. Conventions: Parameters should only be used
+	// for information that isn't typically passed as a label. hostname and
+	// other worker identifiers should almost always be passed as labels
+	// since they will be included on most messages.
+	Parameters WorkerMessageCodeParameters `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *WorkerMessageCode) MarshalJSON() ([]byte, error) {
+	type noMethod WorkerMessageCode
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+type WorkerMessageCodeParameters interface{}
 
 // WorkerMessageResponse: A worker_message response allows the server to
 // pass information to the sender.

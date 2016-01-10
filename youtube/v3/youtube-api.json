@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/spk7xr6rzUEmvb04KWe62ZvWOpM\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rAeglxtdeyhwqqUXexq32kOU_zQ\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20151216",
+ "revision": "20160106",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -6414,6 +6414,10 @@
    "type": "object",
    "description": "Details about the live streaming metadata.",
    "properties": {
+    "activeLiveChatId": {
+     "type": "string",
+     "description": "The ID of the currently active live chat attached to this video. This field is filled only if the video is a currently live broadcast that has live chat. Once the broadcast transitions to complete this field will be removed and the live chat closed down. For persistent broadcasts that live chat id will no longer be tied to this video but rather to the new video being displayed at the persistent page."
+    },
     "actualEndTime": {
      "type": "string",
      "description": "The time that the broadcast actually ended. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ) format. This value will not be available until the broadcast is over.",

@@ -174,7 +174,7 @@ type HttpRequest struct {
 	// without validation).
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// Referer: The referer(sic) URL of the request, as defined in [HTTP/1.1
+	// Referer: The referer URL of the request, as defined in [HTTP/1.1
 	// Header Field
 	// Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
 	Referer string `json:"referer,omitempty"`
@@ -212,7 +212,7 @@ type HttpRequest struct {
 
 	// ValidatedWithOriginServer: Whether or not the response was validated
 	// with the origin server before being served from cache. This field is
-	// only meaningful if cache_hit is True.
+	// only meaningful if `cache_hit` is True.
 	ValidatedWithOriginServer bool `json:"validatedWithOriginServer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheHit") to
@@ -281,7 +281,7 @@ type ListLogEntriesRequest struct {
 
 	// PageSize: Optional. The maximum number of results to return from this
 	// request. Fewer results might be returned. You must check for the
-	// 'nextPageToken` result to determine if additional results are
+	// `nextPageToken` result to determine if additional results are
 	// available, which you can retrieve by passing the `nextPageToken`
 	// value in the `pageToken` parameter to the next request.
 	PageSize int64 `json:"pageSize,omitempty"`
@@ -540,7 +540,7 @@ type LogEntryOperation struct {
 	// operation.
 	Last bool `json:"last,omitempty"`
 
-	// Producer: Required. A arbitrary producer identifier. The combination
+	// Producer: Required. An arbitrary producer identifier. The combination
 	// of `id` and `producer` must be globally unique. Examples for
 	// `producer`: "MyDivision.MyBigCompany.com",
 	// "github.com/MyProject/MyApplication".
@@ -563,10 +563,10 @@ func (s *LogEntryOperation) MarshalJSON() ([]byte, error) {
 
 // LogLine: Application log line emitted while processing a request.
 type LogLine struct {
-	// LogMessage: App provided log message.
+	// LogMessage: App-provided log message.
 	LogMessage string `json:"logMessage,omitempty"`
 
-	// Severity: Severity of log.
+	// Severity: Severity of this log entry.
 	//
 	// Possible values:
 	//   "DEFAULT"
@@ -580,10 +580,11 @@ type LogLine struct {
 	//   "EMERGENCY"
 	Severity string `json:"severity,omitempty"`
 
-	// SourceLocation: Line of code that generated this log message.
+	// SourceLocation: Where in the source code this log message was
+	// written.
 	SourceLocation *SourceLocation `json:"sourceLocation,omitempty"`
 
-	// Time: Time when log entry was made. May be inaccurate.
+	// Time: Approximate time when this log entry was made.
 	Time string `json:"time,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LogMessage") to
@@ -757,40 +758,36 @@ func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// RequestLog: Complete log information about a single request to an
-// application.
+// RequestLog: Complete log information about a single HTTP request to
+// an App Engine application.
 type RequestLog struct {
-	// AppEngineRelease: App Engine release version string.
+	// AppEngineRelease: App Engine release version.
 	AppEngineRelease string `json:"appEngineRelease,omitempty"`
 
-	// AppId: Identifies the application that handled this request.
+	// AppId: Application that handled this request.
 	AppId string `json:"appId,omitempty"`
 
 	// Cost: An indication of the relative cost of serving this request.
 	Cost float64 `json:"cost,omitempty"`
 
-	// EndTime: Time at which request was known to end processing.
+	// EndTime: Time when the request finished.
 	EndTime string `json:"endTime,omitempty"`
 
-	// Finished: If true, represents a finished request. Otherwise, the
-	// request is active.
+	// Finished: Whether this request is finished or active.
 	Finished bool `json:"finished,omitempty"`
 
-	// Host: The Internet host and port number of the resource being
-	// requested.
+	// Host: Internet host and port number of the resource being requested.
 	Host string `json:"host,omitempty"`
 
-	// HttpVersion: HTTP version of request.
+	// HttpVersion: HTTP version of request. Example: "HTTP/1.1".
 	HttpVersion string `json:"httpVersion,omitempty"`
 
-	// InstanceId: An opaque identifier for the instance that handled the
-	// request.
+	// InstanceId: An identifier for the instance that handled the request.
 	InstanceId string `json:"instanceId,omitempty"`
 
-	// InstanceIndex: If the instance that processed this request was
-	// individually addressable (i.e. belongs to a manually scaled module),
-	// this is the 0 based index of the instance, otherwise this value is
-	// -1.
+	// InstanceIndex: If the instance processing this request belongs to a
+	// manually scaled module, then this is the 0-based index of the
+	// instance. Otherwise, this value is -1.
 	InstanceIndex int64 `json:"instanceIndex,omitempty"`
 
 	// Ip: Origin IP address.
@@ -799,47 +796,45 @@ type RequestLog struct {
 	// Latency: Latency of the request.
 	Latency string `json:"latency,omitempty"`
 
-	// Line: List of log lines emitted by the application while serving this
-	// request, if requested.
+	// Line: A list of log lines emitted by the application while serving
+	// this request.
 	Line []*LogLine `json:"line,omitempty"`
 
 	// MegaCycles: Number of CPU megacycles used to process request.
 	MegaCycles int64 `json:"megaCycles,omitempty,string"`
 
-	// Method: Request method, such as `GET`, `HEAD`, `PUT`, `POST`, or
-	// `DELETE`.
+	// Method: Request method. Example: "GET", "HEAD", "PUT",
+	// "POST", "DELETE".
 	Method string `json:"method,omitempty"`
 
-	// ModuleId: Identifies the module of the application that handled this
-	// request.
+	// ModuleId: Module of the application that handled this request.
 	ModuleId string `json:"moduleId,omitempty"`
 
-	// Nickname: A string that identifies a logged-in user who made this
-	// request, or empty if the user is not logged in. Most likely, this is
-	// the part of the user's email before the '@' sign. The field value is
-	// the same for different requests from the same user, but different
-	// users may have a similar name. This information is also available to
-	// the application via Users API. This field will be populated starting
-	// with App Engine 1.9.21.
+	// Nickname: The logged-in user who made the request. Most likely, this
+	// is the part of the user's email before the `@` sign. The field value
+	// is the same for different requests from the same user, but different
+	// users can have similar names. This information is also available to
+	// the application via the App Engine Users API. This field will be
+	// populated starting with App Engine 1.9.21.
 	Nickname string `json:"nickname,omitempty"`
 
-	// PendingTime: Time this request spent in the pending request queue, if
-	// it was pending at all.
+	// PendingTime: Time this request spent in the pending request queue.
 	PendingTime string `json:"pendingTime,omitempty"`
 
 	// Referrer: Referrer URL of request.
 	Referrer string `json:"referrer,omitempty"`
 
-	// RequestId: Globally unique identifier for a request, based on request
-	// start time. Request IDs for requests which started later will compare
-	// greater as strings than those for requests which started earlier.
+	// RequestId: Globally unique identifier for a request, which is based
+	// on the request start time. Request IDs for requests which started
+	// later will compare greater as strings than those for requests which
+	// started earlier.
 	RequestId string `json:"requestId,omitempty"`
 
 	// Resource: Contains the path and query portion of the URL that was
 	// requested. For example, if the URL was
 	// "http://example.com/app?name=val", the resource would be
-	// "/app?name=val". Any trailing fragment (separated by a '#' character)
-	// will not be included.
+	// "/app?name=val". The fragment identifier, which is identified by the
+	// `#` character, is not included.
 	Resource string `json:"resource,omitempty"`
 
 	// ResponseSize: Size in bytes sent back to client by request.
@@ -851,34 +846,34 @@ type RequestLog struct {
 	// repositories.
 	SourceReference []*SourceReference `json:"sourceReference,omitempty"`
 
-	// StartTime: Time at which request was known to have begun processing.
+	// StartTime: Time when the request started.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Status: Response status of request.
+	// Status: HTTP response status code. Example: 200, 404.
 	Status int64 `json:"status,omitempty"`
 
-	// TaskName: Task name of the request (for an offline request).
+	// TaskName: Task name of the request, in the case of an offline
+	// request.
 	TaskName string `json:"taskName,omitempty"`
 
-	// TaskQueueName: Queue name of the request (for an offline request).
+	// TaskQueueName: Queue name of the request, in the case of an offline
+	// request.
 	TaskQueueName string `json:"taskQueueName,omitempty"`
 
-	// TraceId: Cloud Trace identifier of the trace for this request.
+	// TraceId: Cloud Trace identifier for this request.
 	TraceId string `json:"traceId,omitempty"`
 
-	// UrlMapEntry: File or class within URL mapping used for request.
-	// Useful for tracking down the source code which was responsible for
-	// managing request. Especially for multiply mapped handlers.
+	// UrlMapEntry: File or class that handled the request.
 	UrlMapEntry string `json:"urlMapEntry,omitempty"`
 
-	// UserAgent: User agent used for making request.
+	// UserAgent: User agent that made the request.
 	UserAgent string `json:"userAgent,omitempty"`
 
 	// VersionId: Version of the application that handled this request.
 	VersionId string `json:"versionId,omitempty"`
 
-	// WasLoadingRequest: Was this request a loading request for this
-	// instance?
+	// WasLoadingRequest: Whether this was a loading request for the
+	// instance.
 	WasLoadingRequest bool `json:"wasLoadingRequest,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppEngineRelease") to
@@ -896,18 +891,18 @@ func (s *RequestLog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
-// SourceLocation: Specifies a location in a source file.
+// SourceLocation: Specifies a location in a source code file.
 type SourceLocation struct {
-	// File: Source file name. May or may not be a fully qualified name,
-	// depending on the runtime environment.
+	// File: Source file name. Depending on the runtime environment, this
+	// might be a simple name or a fully-qualified name.
 	File string `json:"file,omitempty"`
 
 	// FunctionName: Human-readable name of the function or method being
-	// invoked, with optional context such as the class or package name, for
-	// use in contexts such as the logs viewer where file:line number is
-	// less meaningful. This may vary by language, for example: in Java:
-	// qual.if.ied.Class.method in Go: dir/package.func in Python: function
-	// ...
+	// invoked, with optional context such as the class or package name.
+	// This information is used in contexts such as the logs viewer, where a
+	// file and line number are less meaningful. The format can vary by
+	// language. For example: `qual.if.ied.Class.method` (Java),
+	// `dir/package.func` (Go), `function` (Python).
 	FunctionName string `json:"functionName,omitempty"`
 
 	// Line: Line within the source file.
@@ -935,7 +930,7 @@ type SourceReference struct {
 	// Example: "https://github.com/GoogleCloudPlatform/kubernetes.git"
 	Repository string `json:"repository,omitempty"`
 
-	// RevisionId: The canonical (and persistent) identifier of the deployed
+	// RevisionId: The canonical and persistent identifier of the deployed
 	// revision. Example (git): "0035781c50ec7aa23385dc841529ce8a4b70db1b"
 	RevisionId string `json:"revisionId,omitempty"`
 
@@ -962,7 +957,7 @@ type WriteLogEntriesRequest struct {
 
 	// Labels: Optional. User-defined `key:value` items that are added to
 	// the `labels` field of each log entry in `entries`, except when a log
-	// entry specifies its own 'key:value' item with the same key. Example:
+	// entry specifies its own `key:value` item with the same key. Example:
 	// `{ "size": "large", "color":"red" }`
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -1006,9 +1001,9 @@ type EntriesListCall struct {
 	ctx_                  context.Context
 }
 
-// List: Lists log entries. Use this method to examine log entries from
-// Cloud Logging. See [Exporting Logs](/logging/docs/export) for other
-// ways to copy log entries out of Cloud Logging.
+// List: Lists log entries. Use this method to retrieve log entries from
+// Cloud Logging. For ways to export log entries, see [Exporting
+// Logs](/logging/docs/export).
 func (r *EntriesService) List(listlogentriesrequest *ListLogEntriesRequest) *EntriesListCall {
 	c := &EntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.listlogentriesrequest = listlogentriesrequest
@@ -1095,7 +1090,7 @@ func (c *EntriesListCall) Do() (*ListLogEntriesResponse, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists log entries. Use this method to examine log entries from Cloud Logging. See [Exporting Logs](/logging/docs/export) for other ways to copy log entries out of Cloud Logging.",
+	//   "description": "Lists log entries. Use this method to retrieve log entries from Cloud Logging. For ways to export log entries, see [Exporting Logs](/logging/docs/export).",
 	//   "httpMethod": "POST",
 	//   "id": "logging.entries.list",
 	//   "path": "v2beta1/entries:list",
@@ -1249,7 +1244,7 @@ func (r *MonitoredResourceDescriptorsService) List() *MonitoredResourceDescripto
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return from this request. Fewer results might be
-// returned. You must check for the 'nextPageToken` result to determine
+// returned. You must check for the `nextPageToken` result to determine
 // if additional results are available, which you can retrieve by
 // passing the `nextPageToken` value in the `pageToken` parameter to the
 // next request.
@@ -1362,7 +1357,7 @@ func (c *MonitoredResourceDescriptorsListCall) Do() (*ListMonitoredResourceDescr
 	//   "id": "logging.monitoredResourceDescriptors.list",
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request. Fewer results might be returned. You must check for the 'nextPageToken` result to determine if additional results are available, which you can retrieve by passing the `nextPageToken` value in the `pageToken` parameter to the next request.",
+	//       "description": "Optional. The maximum number of results to return from this request. Fewer results might be returned. You must check for the `nextPageToken` result to determine if additional results are available, which you can retrieve by passing the `nextPageToken` value in the `pageToken` parameter to the next request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1912,7 +1907,7 @@ func (r *ProjectsMetricsService) List(projectName string) *ProjectsMetricsListCa
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return from this request. Fewer results might be
-// returned. You must check for the 'nextPageToken` result to determine
+// returned. You must check for the `nextPageToken` result to determine
 // if additional results are available, which you can retrieve by
 // passing the `nextPageToken` value in the `pageToken` parameter to the
 // next request.
@@ -2029,7 +2024,7 @@ func (c *ProjectsMetricsListCall) Do() (*ListLogMetricsResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request. Fewer results might be returned. You must check for the 'nextPageToken` result to determine if additional results are available, which you can retrieve by passing the `nextPageToken` value in the `pageToken` parameter to the next request.",
+	//       "description": "Optional. The maximum number of results to return from this request. Fewer results might be returned. You must check for the `nextPageToken` result to determine if additional results are available, which you can retrieve by passing the `nextPageToken` value in the `pageToken` parameter to the next request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2040,7 +2035,7 @@ func (c *ProjectsMetricsListCall) Do() (*ListLogMetricsResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name for the project whose metrics are wanted. Example: `\"projects/my-project-id\"`.",
+	//       "description": "Required. The resource name of the project containing the metrics. Example: `\"projects/my-project-id\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,
@@ -2595,7 +2590,7 @@ func (r *ProjectsSinksService) List(projectName string) *ProjectsSinksListCall {
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return from this request. Fewer results might be
-// returned. You must check for the 'nextPageToken` result to determine
+// returned. You must check for the `nextPageToken` result to determine
 // if additional results are available, which you can retrieve by
 // passing the `nextPageToken` value in the `pageToken` parameter to the
 // next request.
@@ -2712,7 +2707,7 @@ func (c *ProjectsSinksListCall) Do() (*ListSinksResponse, error) {
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request. Fewer results might be returned. You must check for the 'nextPageToken` result to determine if additional results are available, which you can retrieve by passing the `nextPageToken` value in the `pageToken` parameter to the next request.",
+	//       "description": "Optional. The maximum number of results to return from this request. Fewer results might be returned. You must check for the `nextPageToken` result to determine if additional results are available, which you can retrieve by passing the `nextPageToken` value in the `pageToken` parameter to the next request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2723,7 +2718,7 @@ func (c *ProjectsSinksListCall) Do() (*ListSinksResponse, error) {
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name of the project owning the sinks. Example: `\"projects/my-logging-project\"`, `\"projects/01234567890\"`.",
+	//       "description": "Required. The resource name of the project containing the sinks. Example: `\"projects/my-logging-project\"`, `\"projects/01234567890\"`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]*$",
 	//       "required": true,

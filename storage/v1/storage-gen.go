@@ -1249,6 +1249,7 @@ func (c *BucketAccessControlsDeleteCall) Do() error {
 	//   },
 	//   "path": "b/{bucket}/acl/{entity}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -1400,6 +1401,7 @@ func (c *BucketAccessControlsGetCall) Do() (*BucketAccessControl, error) {
 	//     "$ref": "BucketAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -1537,6 +1539,7 @@ func (c *BucketAccessControlsInsertCall) Do() (*BucketAccessControl, error) {
 	//     "$ref": "BucketAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -1677,6 +1680,7 @@ func (c *BucketAccessControlsListCall) Do() (*BucketAccessControls, error) {
 	//     "$ref": "BucketAccessControls"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -1825,6 +1829,7 @@ func (c *BucketAccessControlsPatchCall) Do() (*BucketAccessControl, error) {
 	//     "$ref": "BucketAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -1972,6 +1977,7 @@ func (c *BucketAccessControlsUpdateCall) Do() (*BucketAccessControl, error) {
 	//     "$ref": "BucketAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -3498,6 +3504,7 @@ func (c *DefaultObjectAccessControlsDeleteCall) Do() error {
 	//   },
 	//   "path": "b/{bucket}/defaultObjectAcl/{entity}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -3649,6 +3656,7 @@ func (c *DefaultObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) 
 	//     "$ref": "ObjectAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -3787,6 +3795,7 @@ func (c *DefaultObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, erro
 	//     "$ref": "ObjectAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -3956,6 +3965,7 @@ func (c *DefaultObjectAccessControlsListCall) Do() (*ObjectAccessControls, error
 	//     "$ref": "ObjectAccessControls"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -4104,6 +4114,7 @@ func (c *DefaultObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error
 	//     "$ref": "ObjectAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -4251,6 +4262,7 @@ func (c *DefaultObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, erro
 	//     "$ref": "ObjectAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -4385,6 +4397,7 @@ func (c *ObjectAccessControlsDeleteCall) Do() error {
 	//   },
 	//   "path": "b/{bucket}/o/{object}/acl/{entity}",
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -4560,6 +4573,7 @@ func (c *ObjectAccessControlsGetCall) Do() (*ObjectAccessControl, error) {
 	//     "$ref": "ObjectAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -4721,6 +4735,7 @@ func (c *ObjectAccessControlsInsertCall) Do() (*ObjectAccessControl, error) {
 	//     "$ref": "ObjectAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -4885,6 +4900,7 @@ func (c *ObjectAccessControlsListCall) Do() (*ObjectAccessControls, error) {
 	//     "$ref": "ObjectAccessControls"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -5057,6 +5073,7 @@ func (c *ObjectAccessControlsPatchCall) Do() (*ObjectAccessControl, error) {
 	//     "$ref": "ObjectAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }
@@ -5228,6 +5245,7 @@ func (c *ObjectAccessControlsUpdateCall) Do() (*ObjectAccessControl, error) {
 	//     "$ref": "ObjectAccessControl"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/devstorage.full_control"
 	//   ]
 	// }

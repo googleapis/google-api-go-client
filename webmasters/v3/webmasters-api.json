@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/7TyaeniToMAAPVYC9dRmCQ0J2v8\"",
+ "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/g5Rm2y52IL4WkXbQgxJG82q8rSI\"",
  "discoveryVersion": "v1",
  "id": "webmasters:v3",
  "name": "webmasters",
  "version": "v3",
- "revision": "20151102",
- "title": "Webmaster Tools API",
- "description": "Lets you view Google Webmaster Tools data for your verified sites.",
+ "revision": "20151229",
+ "title": "Search Console API",
+ "description": "Lets you view Google Search Console data for your verified sites.",
  "ownerDomain": "google.com",
  "ownerName": "Google",
  "icons": {

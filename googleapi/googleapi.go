@@ -471,3 +471,29 @@ func CombineFields(s []Field) string {
 	}
 	return strings.Join(r, ",")
 }
+
+// A CallOption is an optional argument to an API call.
+// It should be treated as an opaque value by users of Google APIs.
+type CallOption interface {
+	Get() (key, value string)
+}
+
+// QuotaUser returns a CallOption that will set the quota user for a call.
+// The quota user can be used by server-side applications to control accounting.
+// It can be an arbitrary string up to 40 characters, and will override UserIP
+// if both are provided.
+func QuotaUser(u string) CallOption { return quotaUser(u) }
+
+type quotaUser string
+
+func (q quotaUser) Get() (string, string) { return "quotaUser", string(q) }
+
+// UserIP returns a CallOption that will set the "userIp" parameter of a call.
+// This should be the IP address of the originating request.
+func UserIP(ip string) CallOption { return userIP(ip) }
+
+type userIP string
+
+func (i userIP) Get() (string, string) { return "userIp", string(i) }
+
+// TODO: Fields too

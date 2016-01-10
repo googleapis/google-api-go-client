@@ -200,23 +200,6 @@ func (r *LicenseAssignmentsService) Delete(productId string, skuId string, userI
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LicenseAssignmentsDeleteCall) QuotaUser(quotaUser string) *LicenseAssignmentsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LicenseAssignmentsDeleteCall) UserIP(userIP string) *LicenseAssignmentsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -252,7 +235,8 @@ func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "licensing.licenseAssignments.delete" call.
-func (c *LicenseAssignmentsDeleteCall) Do() error {
+func (c *LicenseAssignmentsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -321,23 +305,6 @@ func (r *LicenseAssignmentsService) Get(productId string, skuId string, userId s
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LicenseAssignmentsGetCall) QuotaUser(quotaUser string) *LicenseAssignmentsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LicenseAssignmentsGetCall) UserIP(userIP string) *LicenseAssignmentsGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -392,7 +359,8 @@ func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LicenseAssignmentsGetCall) Do() (*LicenseAssignment, error) {
+func (c *LicenseAssignmentsGetCall) Do(opts ...googleapi.CallOption) (*LicenseAssignment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -480,23 +448,6 @@ func (r *LicenseAssignmentsService) Insert(productId string, skuId string, licen
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LicenseAssignmentsInsertCall) QuotaUser(quotaUser string) *LicenseAssignmentsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LicenseAssignmentsInsertCall) UserIP(userIP string) *LicenseAssignmentsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -543,7 +494,8 @@ func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, er
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LicenseAssignmentsInsertCall) Do() (*LicenseAssignment, error) {
+func (c *LicenseAssignmentsInsertCall) Do(opts ...googleapi.CallOption) (*LicenseAssignment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -641,23 +593,6 @@ func (c *LicenseAssignmentsListForProductCall) PageToken(pageToken string) *Lice
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LicenseAssignmentsListForProductCall) QuotaUser(quotaUser string) *LicenseAssignmentsListForProductCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LicenseAssignmentsListForProductCall) UserIP(userIP string) *LicenseAssignmentsListForProductCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -710,7 +645,8 @@ func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Resp
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LicenseAssignmentsListForProductCall) Do() (*LicenseAssignmentList, error) {
+func (c *LicenseAssignmentsListForProductCall) Do(opts ...googleapi.CallOption) (*LicenseAssignmentList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -822,23 +758,6 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) PageToken(pageToken string)
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LicenseAssignmentsListForProductAndSkuCall) QuotaUser(quotaUser string) *LicenseAssignmentsListForProductAndSkuCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LicenseAssignmentsListForProductAndSkuCall) UserIP(userIP string) *LicenseAssignmentsListForProductAndSkuCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -892,7 +811,8 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*htt
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LicenseAssignmentsListForProductAndSkuCall) Do() (*LicenseAssignmentList, error) {
+func (c *LicenseAssignmentsListForProductAndSkuCall) Do(opts ...googleapi.CallOption) (*LicenseAssignmentList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -997,23 +917,6 @@ func (r *LicenseAssignmentsService) Patch(productId string, skuId string, userId
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LicenseAssignmentsPatchCall) QuotaUser(quotaUser string) *LicenseAssignmentsPatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LicenseAssignmentsPatchCall) UserIP(userIP string) *LicenseAssignmentsPatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1061,7 +964,8 @@ func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, err
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LicenseAssignmentsPatchCall) Do() (*LicenseAssignment, error) {
+func (c *LicenseAssignmentsPatchCall) Do(opts ...googleapi.CallOption) (*LicenseAssignment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1154,23 +1058,6 @@ func (r *LicenseAssignmentsService) Update(productId string, skuId string, userI
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LicenseAssignmentsUpdateCall) QuotaUser(quotaUser string) *LicenseAssignmentsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LicenseAssignmentsUpdateCall) UserIP(userIP string) *LicenseAssignmentsUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1218,7 +1105,8 @@ func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, er
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LicenseAssignmentsUpdateCall) Do() (*LicenseAssignment, error) {
+func (c *LicenseAssignmentsUpdateCall) Do(opts ...googleapi.CallOption) (*LicenseAssignment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

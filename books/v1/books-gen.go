@@ -3395,27 +3395,10 @@ func (r *BookshelvesService) Get(userId string, shelf string) *BookshelvesGetCal
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *BookshelvesGetCall) QuotaUser(quotaUser string) *BookshelvesGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *BookshelvesGetCall) Source(source string) *BookshelvesGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *BookshelvesGetCall) UserIP(userIP string) *BookshelvesGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3472,7 +3455,8 @@ func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *BookshelvesGetCall) Do() (*Bookshelf, error) {
+func (c *BookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshelf, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3555,27 +3539,10 @@ func (r *BookshelvesService) List(userId string) *BookshelvesListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *BookshelvesListCall) QuotaUser(quotaUser string) *BookshelvesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *BookshelvesListCall) Source(source string) *BookshelvesListCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *BookshelvesListCall) UserIP(userIP string) *BookshelvesListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3631,7 +3598,8 @@ func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *BookshelvesListCall) Do() (*Bookshelves, error) {
+func (c *BookshelvesListCall) Do(opts ...googleapi.CallOption) (*Bookshelves, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3717,15 +3685,6 @@ func (c *BookshelvesVolumesListCall) MaxResults(maxResults int64) *BookshelvesVo
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *BookshelvesVolumesListCall) QuotaUser(quotaUser string) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *BookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *BookshelvesVolumesListCall {
@@ -3744,14 +3703,6 @@ func (c *BookshelvesVolumesListCall) Source(source string) *BookshelvesVolumesLi
 // first element to return (starts at 0)
 func (c *BookshelvesVolumesListCall) StartIndex(startIndex int64) *BookshelvesVolumesListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *BookshelvesVolumesListCall) UserIP(userIP string) *BookshelvesVolumesListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3808,7 +3759,8 @@ func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, erro
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *BookshelvesVolumesListCall) Do() (*Volumes, error) {
+func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3928,26 +3880,9 @@ func (c *CloudloadingAddBookCall) Name(name string) *CloudloadingAddBookCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CloudloadingAddBookCall) QuotaUser(quotaUser string) *CloudloadingAddBookCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // UploadClientToken sets the optional parameter "upload_client_token":
 func (c *CloudloadingAddBookCall) UploadClientToken(uploadClientToken string) *CloudloadingAddBookCall {
 	c.urlParams_.Set("upload_client_token", uploadClientToken)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CloudloadingAddBookCall) UserIP(userIP string) *CloudloadingAddBookCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3988,7 +3923,8 @@ func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) 
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CloudloadingAddBookCall) Do() (*BooksCloudloadingResource, error) {
+func (c *CloudloadingAddBookCall) Do(opts ...googleapi.CallOption) (*BooksCloudloadingResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4067,23 +4003,6 @@ func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBoo
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CloudloadingDeleteBookCall) QuotaUser(quotaUser string) *CloudloadingDeleteBookCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CloudloadingDeleteBookCall) UserIP(userIP string) *CloudloadingDeleteBookCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4115,7 +4034,8 @@ func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "books.cloudloading.deleteBook" call.
-func (c *CloudloadingDeleteBookCall) Do() error {
+func (c *CloudloadingDeleteBookCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -4164,23 +4084,6 @@ func (r *CloudloadingService) UpdateBook(bookscloudloadingresource *BooksCloudlo
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CloudloadingUpdateBookCall) QuotaUser(quotaUser string) *CloudloadingUpdateBookCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CloudloadingUpdateBookCall) UserIP(userIP string) *CloudloadingUpdateBookCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4224,7 +4127,8 @@ func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, erro
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CloudloadingUpdateBookCall) Do() (*BooksCloudloadingResource, error) {
+func (c *CloudloadingUpdateBookCall) Do(opts ...googleapi.CallOption) (*BooksCloudloadingResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4287,23 +4191,6 @@ func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListO
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *DictionaryListOfflineMetadataCall) QuotaUser(quotaUser string) *DictionaryListOfflineMetadataCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *DictionaryListOfflineMetadataCall) UserIP(userIP string) *DictionaryListOfflineMetadataCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4354,7 +4241,8 @@ func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Respons
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *DictionaryListOfflineMetadataCall) Do() (*Metadata, error) {
+func (c *DictionaryListOfflineMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4434,27 +4322,10 @@ func (c *LayersGetCall) ContentVersion(contentVersion string) *LayersGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LayersGetCall) QuotaUser(quotaUser string) *LayersGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersGetCall) Source(source string) *LayersGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LayersGetCall) UserIP(userIP string) *LayersGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4511,7 +4382,8 @@ func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *LayersGetCall) Do() (*Layersummary, error) {
+func (c *LayersGetCall) Do(opts ...googleapi.CallOption) (*Layersummary, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4620,27 +4492,10 @@ func (c *LayersListCall) PageToken(pageToken string) *LayersListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LayersListCall) QuotaUser(quotaUser string) *LayersListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersListCall) Source(source string) *LayersListCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LayersListCall) UserIP(userIP string) *LayersListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4696,7 +4551,8 @@ func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LayersListCall) Do() (*Layersummaries, error) {
+func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4818,15 +4674,6 @@ func (c *LayersAnnotationDataGetCall) Locale(locale string) *LayersAnnotationDat
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LayersAnnotationDataGetCall) QuotaUser(quotaUser string) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Scale sets the optional parameter "scale": The requested scale for
 // the image.
 func (c *LayersAnnotationDataGetCall) Scale(scale int64) *LayersAnnotationDataGetCall {
@@ -4838,14 +4685,6 @@ func (c *LayersAnnotationDataGetCall) Scale(scale int64) *LayersAnnotationDataGe
 // originator of this request.
 func (c *LayersAnnotationDataGetCall) Source(source string) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LayersAnnotationDataGetCall) UserIP(userIP string) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4910,7 +4749,8 @@ func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, err
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LayersAnnotationDataGetCall) Do() (*Annotationdata, error) {
+func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Annotationdata, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5076,15 +4916,6 @@ func (c *LayersAnnotationDataListCall) PageToken(pageToken string) *LayersAnnota
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LayersAnnotationDataListCall) QuotaUser(quotaUser string) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Scale sets the optional parameter "scale": The requested scale for
 // the image.
 func (c *LayersAnnotationDataListCall) Scale(scale int64) *LayersAnnotationDataListCall {
@@ -5112,14 +4943,6 @@ func (c *LayersAnnotationDataListCall) UpdatedMax(updatedMax string) *LayersAnno
 // (inclusive).
 func (c *LayersAnnotationDataListCall) UpdatedMin(updatedMin string) *LayersAnnotationDataListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LayersAnnotationDataListCall) UserIP(userIP string) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5183,7 +5006,8 @@ func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, er
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LayersAnnotationDataListCall) Do() (*Annotationsdata, error) {
+func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annotationsdata, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5338,27 +5162,10 @@ func (c *LayersVolumeAnnotationsGetCall) Locale(locale string) *LayersVolumeAnno
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LayersVolumeAnnotationsGetCall) QuotaUser(quotaUser string) *LayersVolumeAnnotationsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *LayersVolumeAnnotationsGetCall) Source(source string) *LayersVolumeAnnotationsGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LayersVolumeAnnotationsGetCall) UserIP(userIP string) *LayersVolumeAnnotationsGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5416,7 +5223,8 @@ func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, 
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LayersVolumeAnnotationsGetCall) Do() (*Volumeannotation, error) {
+func (c *LayersVolumeAnnotationsGetCall) Do(opts ...googleapi.CallOption) (*Volumeannotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5550,15 +5358,6 @@ func (c *LayersVolumeAnnotationsListCall) PageToken(pageToken string) *LayersVol
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LayersVolumeAnnotationsListCall) QuotaUser(quotaUser string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ShowDeleted sets the optional parameter "showDeleted": Set to true to
 // return deleted annotations. updatedMin must be in the request to use
 // this. Defaults to false.
@@ -5601,14 +5400,6 @@ func (c *LayersVolumeAnnotationsListCall) UpdatedMax(updatedMax string) *LayersV
 // (inclusive).
 func (c *LayersVolumeAnnotationsListCall) UpdatedMin(updatedMin string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LayersVolumeAnnotationsListCall) UserIP(userIP string) *LayersVolumeAnnotationsListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5673,7 +5464,8 @@ func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response,
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LayersVolumeAnnotationsListCall) Do() (*Volumeannotations, error) {
+func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Volumeannotations, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5819,23 +5611,6 @@ func (r *MyconfigService) GetUserSettings() *MyconfigGetUserSettingsCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MyconfigGetUserSettingsCall) QuotaUser(quotaUser string) *MyconfigGetUserSettingsCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MyconfigGetUserSettingsCall) UserIP(userIP string) *MyconfigGetUserSettingsCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5886,7 +5661,8 @@ func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, err
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *MyconfigGetUserSettingsCall) Do() (*Usersettings, error) {
+func (c *MyconfigGetUserSettingsCall) Do(opts ...googleapi.CallOption) (*Usersettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5952,27 +5728,10 @@ func (c *MyconfigReleaseDownloadAccessCall) Locale(locale string) *MyconfigRelea
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MyconfigReleaseDownloadAccessCall) QuotaUser(quotaUser string) *MyconfigReleaseDownloadAccessCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigReleaseDownloadAccessCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MyconfigReleaseDownloadAccessCall) UserIP(userIP string) *MyconfigReleaseDownloadAccessCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6013,7 +5772,8 @@ func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Respons
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *MyconfigReleaseDownloadAccessCall) Do() (*DownloadAccesses, error) {
+func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*DownloadAccesses, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -6122,23 +5882,6 @@ func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccess
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MyconfigRequestAccessCall) QuotaUser(quotaUser string) *MyconfigRequestAccessCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MyconfigRequestAccessCall) UserIP(userIP string) *MyconfigRequestAccessCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6176,7 +5919,8 @@ func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *MyconfigRequestAccessCall) Do() (*RequestAccess, error) {
+func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAccess, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -6306,27 +6050,10 @@ func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolu
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MyconfigSyncVolumeLicensesCall) QuotaUser(quotaUser string) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.Set("showPreorders", fmt.Sprint(showPreorders))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MyconfigSyncVolumeLicensesCall) UserIP(userIP string) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6374,7 +6101,8 @@ func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, 
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *MyconfigSyncVolumeLicensesCall) Do() (*Volumes, error) {
+func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -6488,23 +6216,6 @@ func (r *MyconfigService) UpdateUserSettings(usersettings *Usersettings) *Myconf
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MyconfigUpdateUserSettingsCall) QuotaUser(quotaUser string) *MyconfigUpdateUserSettingsCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MyconfigUpdateUserSettingsCall) UserIP(userIP string) *MyconfigUpdateUserSettingsCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6548,7 +6259,8 @@ func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, 
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *MyconfigUpdateUserSettingsCall) Do() (*Usersettings, error) {
+func (c *MyconfigUpdateUserSettingsCall) Do(opts ...googleapi.CallOption) (*Usersettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -6610,27 +6322,10 @@ func (r *MylibraryAnnotationsService) Delete(annotationId string) *MylibraryAnno
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryAnnotationsDeleteCall) QuotaUser(quotaUser string) *MylibraryAnnotationsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsDeleteCall) Source(source string) *MylibraryAnnotationsDeleteCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryAnnotationsDeleteCall) UserIP(userIP string) *MylibraryAnnotationsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6667,7 +6362,8 @@ func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "books.mylibrary.annotations.delete" call.
-func (c *MylibraryAnnotationsDeleteCall) Do() error {
+func (c *MylibraryAnnotationsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -6728,15 +6424,6 @@ func (c *MylibraryAnnotationsInsertCall) Country(country string) *MylibraryAnnot
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryAnnotationsInsertCall) QuotaUser(quotaUser string) *MylibraryAnnotationsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ShowOnlySummaryInResponse sets the optional parameter
 // "showOnlySummaryInResponse": Requests that only the summary of the
 // specified layer be provided in the response.
@@ -6749,14 +6436,6 @@ func (c *MylibraryAnnotationsInsertCall) ShowOnlySummaryInResponse(showOnlySumma
 // originator of this request.
 func (c *MylibraryAnnotationsInsertCall) Source(source string) *MylibraryAnnotationsInsertCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryAnnotationsInsertCall) UserIP(userIP string) *MylibraryAnnotationsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -6803,7 +6482,8 @@ func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, 
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *MylibraryAnnotationsInsertCall) Do() (*Annotation, error) {
+func (c *MylibraryAnnotationsInsertCall) Do(opts ...googleapi.CallOption) (*Annotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -6916,15 +6596,6 @@ func (c *MylibraryAnnotationsListCall) PageToken(pageToken string) *MylibraryAnn
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryAnnotationsListCall) QuotaUser(quotaUser string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ShowDeleted sets the optional parameter "showDeleted": Set to true to
 // return deleted annotations. updatedMin must be in the request to use
 // this. Defaults to false.
@@ -6953,14 +6624,6 @@ func (c *MylibraryAnnotationsListCall) UpdatedMax(updatedMax string) *MylibraryA
 // (inclusive).
 func (c *MylibraryAnnotationsListCall) UpdatedMin(updatedMin string) *MylibraryAnnotationsListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryAnnotationsListCall) UserIP(userIP string) *MylibraryAnnotationsListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -7021,7 +6684,8 @@ func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, er
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *MylibraryAnnotationsListCall) Do() (*Annotations, error) {
+func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annotations, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -7136,23 +6800,6 @@ func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryAnnotationsSummaryCall) QuotaUser(quotaUser string) *MylibraryAnnotationsSummaryCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryAnnotationsSummaryCall) UserIP(userIP string) *MylibraryAnnotationsSummaryCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7190,7 +6837,8 @@ func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response,
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *MylibraryAnnotationsSummaryCall) Do() (*AnnotationsSummary, error) {
+func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*AnnotationsSummary, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -7270,27 +6918,10 @@ func (r *MylibraryAnnotationsService) Update(annotationId string, annotation *An
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryAnnotationsUpdateCall) QuotaUser(quotaUser string) *MylibraryAnnotationsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryAnnotationsUpdateCall) Source(source string) *MylibraryAnnotationsUpdateCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryAnnotationsUpdateCall) UserIP(userIP string) *MylibraryAnnotationsUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -7339,7 +6970,8 @@ func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, 
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *MylibraryAnnotationsUpdateCall) Do() (*Annotation, error) {
+func (c *MylibraryAnnotationsUpdateCall) Do(opts ...googleapi.CallOption) (*Annotation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -7418,15 +7050,6 @@ func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryBookshelvesAddVolumeCall) QuotaUser(quotaUser string) *MylibraryBookshelvesAddVolumeCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Reason sets the optional parameter "reason": The reason for which the
 // book is added to the library.
 //
@@ -7443,14 +7066,6 @@ func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBook
 // originator of this request.
 func (c *MylibraryBookshelvesAddVolumeCall) Source(source string) *MylibraryBookshelvesAddVolumeCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryBookshelvesAddVolumeCall) UserIP(userIP string) *MylibraryBookshelvesAddVolumeCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -7487,7 +7102,8 @@ func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "books.mylibrary.bookshelves.addVolume" call.
-func (c *MylibraryBookshelvesAddVolumeCall) Do() error {
+func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -7563,27 +7179,10 @@ func (r *MylibraryBookshelvesService) ClearVolumes(shelf string) *MylibraryBooks
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryBookshelvesClearVolumesCall) QuotaUser(quotaUser string) *MylibraryBookshelvesClearVolumesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesClearVolumesCall) Source(source string) *MylibraryBookshelvesClearVolumesCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryBookshelvesClearVolumesCall) UserIP(userIP string) *MylibraryBookshelvesClearVolumesCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -7620,7 +7219,8 @@ func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "books.mylibrary.bookshelves.clearVolumes" call.
-func (c *MylibraryBookshelvesClearVolumesCall) Do() error {
+func (c *MylibraryBookshelvesClearVolumesCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -7676,27 +7276,10 @@ func (r *MylibraryBookshelvesService) Get(shelf string) *MylibraryBookshelvesGet
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryBookshelvesGetCall) QuotaUser(quotaUser string) *MylibraryBookshelvesGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesGetCall) Source(source string) *MylibraryBookshelvesGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryBookshelvesGetCall) UserIP(userIP string) *MylibraryBookshelvesGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -7752,7 +7335,8 @@ func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, err
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *MylibraryBookshelvesGetCall) Do() (*Bookshelf, error) {
+func (c *MylibraryBookshelvesGetCall) Do(opts ...googleapi.CallOption) (*Bookshelf, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -7827,27 +7411,10 @@ func (r *MylibraryBookshelvesService) List() *MylibraryBookshelvesListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryBookshelvesListCall) QuotaUser(quotaUser string) *MylibraryBookshelvesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesListCall) Source(source string) *MylibraryBookshelvesListCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryBookshelvesListCall) UserIP(userIP string) *MylibraryBookshelvesListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -7901,7 +7468,8 @@ func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, er
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *MylibraryBookshelvesListCall) Do() (*Bookshelves, error) {
+func (c *MylibraryBookshelvesListCall) Do(opts ...googleapi.CallOption) (*Bookshelves, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -7969,27 +7537,10 @@ func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, 
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryBookshelvesMoveVolumeCall) QuotaUser(quotaUser string) *MylibraryBookshelvesMoveVolumeCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryBookshelvesMoveVolumeCall) Source(source string) *MylibraryBookshelvesMoveVolumeCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryBookshelvesMoveVolumeCall) UserIP(userIP string) *MylibraryBookshelvesMoveVolumeCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -8026,7 +7577,8 @@ func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "books.mylibrary.bookshelves.moveVolume" call.
-func (c *MylibraryBookshelvesMoveVolumeCall) Do() error {
+func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -8096,15 +7648,6 @@ func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryBookshelvesRemoveVolumeCall) QuotaUser(quotaUser string) *MylibraryBookshelvesRemoveVolumeCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Reason sets the optional parameter "reason": The reason for which the
 // book is removed from the library.
 //
@@ -8119,14 +7662,6 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryB
 // originator of this request.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryBookshelvesRemoveVolumeCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryBookshelvesRemoveVolumeCall) UserIP(userIP string) *MylibraryBookshelvesRemoveVolumeCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -8163,7 +7698,8 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "books.mylibrary.bookshelves.removeVolume" call.
-func (c *MylibraryBookshelvesRemoveVolumeCall) Do() error {
+func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -8268,15 +7804,6 @@ func (c *MylibraryBookshelvesVolumesListCall) Q(q string) *MylibraryBookshelvesV
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryBookshelvesVolumesListCall) QuotaUser(quotaUser string) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MylibraryBookshelvesVolumesListCall) ShowPreorders(showPreorders bool) *MylibraryBookshelvesVolumesListCall {
@@ -8295,14 +7822,6 @@ func (c *MylibraryBookshelvesVolumesListCall) Source(source string) *MylibraryBo
 // first element to return (starts at 0)
 func (c *MylibraryBookshelvesVolumesListCall) StartIndex(startIndex int64) *MylibraryBookshelvesVolumesListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryBookshelvesVolumesListCall) UserIP(userIP string) *MylibraryBookshelvesVolumesListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -8358,7 +7877,8 @@ func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Respo
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *MylibraryBookshelvesVolumesListCall) Do() (*Volumes, error) {
+func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -8483,27 +8003,10 @@ func (c *MylibraryReadingpositionsGetCall) ContentVersion(contentVersion string)
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryReadingpositionsGetCall) QuotaUser(quotaUser string) *MylibraryReadingpositionsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryReadingpositionsGetCall) Source(source string) *MylibraryReadingpositionsGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryReadingpositionsGetCall) UserIP(userIP string) *MylibraryReadingpositionsGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -8559,7 +8062,8 @@ func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *MylibraryReadingpositionsGetCall) Do() (*ReadingPosition, error) {
+func (c *MylibraryReadingpositionsGetCall) Do(opts ...googleapi.CallOption) (*ReadingPosition, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -8670,27 +8174,10 @@ func (c *MylibraryReadingpositionsSetPositionCall) DeviceCookie(deviceCookie str
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MylibraryReadingpositionsSetPositionCall) QuotaUser(quotaUser string) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryReadingpositionsSetPositionCall) Source(source string) *MylibraryReadingpositionsSetPositionCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MylibraryReadingpositionsSetPositionCall) UserIP(userIP string) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -8727,7 +8214,8 @@ func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "books.mylibrary.readingpositions.setPosition" call.
-func (c *MylibraryReadingpositionsSetPositionCall) Do() error {
+func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -8834,27 +8322,10 @@ func (c *NotificationGetCall) Locale(locale string) *NotificationGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *NotificationGetCall) QuotaUser(quotaUser string) *NotificationGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *NotificationGetCall) Source(source string) *NotificationGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *NotificationGetCall) UserIP(userIP string) *NotificationGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -8908,7 +8379,8 @@ func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *NotificationGetCall) Do() (*Notification, error) {
+func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -8994,23 +8466,6 @@ func (c *OnboardingListCategoriesCall) Locale(locale string) *OnboardingListCate
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OnboardingListCategoriesCall) QuotaUser(quotaUser string) *OnboardingListCategoriesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OnboardingListCategoriesCall) UserIP(userIP string) *OnboardingListCategoriesCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9061,7 +8516,8 @@ func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, er
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *OnboardingListCategoriesCall) Do() (*Category, error) {
+func (c *OnboardingListCategoriesCall) Do(opts ...googleapi.CallOption) (*Category, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -9168,23 +8624,6 @@ func (c *OnboardingListCategoryVolumesCall) PageToken(pageToken string) *Onboard
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OnboardingListCategoryVolumesCall) QuotaUser(quotaUser string) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OnboardingListCategoryVolumesCall) UserIP(userIP string) *OnboardingListCategoryVolumesCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9235,7 +8674,8 @@ func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Respons
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *OnboardingListCategoryVolumesCall) Do() (*Volume2, error) {
+func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*Volume2, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -9351,27 +8791,10 @@ func (c *PersonalizedstreamGetCall) MaxAllowedMaturityRating(maxAllowedMaturityR
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *PersonalizedstreamGetCall) QuotaUser(quotaUser string) *PersonalizedstreamGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *PersonalizedstreamGetCall) Source(source string) *PersonalizedstreamGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *PersonalizedstreamGetCall) UserIP(userIP string) *PersonalizedstreamGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -9425,7 +8848,8 @@ func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *PersonalizedstreamGetCall) Do() (*Discoveryclusters, error) {
+func (c *PersonalizedstreamGetCall) Do(opts ...googleapi.CallOption) (*Discoveryclusters, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -9544,26 +8968,9 @@ func (c *PromoofferAcceptCall) Product(product string) *PromoofferAcceptCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *PromoofferAcceptCall) QuotaUser(quotaUser string) *PromoofferAcceptCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferAcceptCall) Serial(serial string) *PromoofferAcceptCall {
 	c.urlParams_.Set("serial", serial)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *PromoofferAcceptCall) UserIP(userIP string) *PromoofferAcceptCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -9605,7 +9012,8 @@ func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "books.promooffer.accept" call.
-func (c *PromoofferAcceptCall) Do() error {
+func (c *PromoofferAcceptCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -9719,26 +9127,9 @@ func (c *PromoofferDismissCall) Product(product string) *PromoofferDismissCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *PromoofferDismissCall) QuotaUser(quotaUser string) *PromoofferDismissCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferDismissCall) Serial(serial string) *PromoofferDismissCall {
 	c.urlParams_.Set("serial", serial)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *PromoofferDismissCall) UserIP(userIP string) *PromoofferDismissCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -9773,7 +9164,8 @@ func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "books.promooffer.dismiss" call.
-func (c *PromoofferDismissCall) Do() error {
+func (c *PromoofferDismissCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -9878,26 +9270,9 @@ func (c *PromoofferGetCall) Product(product string) *PromoofferGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *PromoofferGetCall) QuotaUser(quotaUser string) *PromoofferGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Serial sets the optional parameter "serial": device serial
 func (c *PromoofferGetCall) Serial(serial string) *PromoofferGetCall {
 	c.urlParams_.Set("serial", serial)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *PromoofferGetCall) UserIP(userIP string) *PromoofferGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -9951,7 +9326,8 @@ func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *PromoofferGetCall) Do() (*Offers, error) {
+func (c *PromoofferGetCall) Do(opts ...googleapi.CallOption) (*Offers, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -10042,23 +9418,6 @@ func (r *SeriesService) Get(seriesId []string) *SeriesGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *SeriesGetCall) QuotaUser(quotaUser string) *SeriesGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *SeriesGetCall) UserIP(userIP string) *SeriesGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10109,7 +9468,8 @@ func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *SeriesGetCall) Do() (*Series, error) {
+func (c *SeriesGetCall) Do(opts ...googleapi.CallOption) (*Series, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -10194,23 +9554,6 @@ func (c *SeriesMembershipGetCall) PageToken(pageToken string) *SeriesMembershipG
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *SeriesMembershipGetCall) QuotaUser(quotaUser string) *SeriesMembershipGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *SeriesMembershipGetCall) UserIP(userIP string) *SeriesMembershipGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10261,7 +9604,8 @@ func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) 
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *SeriesMembershipGetCall) Do() (*Seriesmembership, error) {
+func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembership, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -10368,27 +9712,10 @@ func (c *VolumesGetCall) Projection(projection string) *VolumesGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *VolumesGetCall) QuotaUser(quotaUser string) *VolumesGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesGetCall) Source(source string) *VolumesGetCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *VolumesGetCall) UserIP(userIP string) *VolumesGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -10451,7 +9778,8 @@ func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *VolumesGetCall) Do() (*Volume, error) {
+func (c *VolumesGetCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -10641,15 +9969,6 @@ func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *VolumesListCall) QuotaUser(quotaUser string) *VolumesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show books available for preorder. Defaults to false.
 func (c *VolumesListCall) ShowPreorders(showPreorders bool) *VolumesListCall {
@@ -10668,14 +9987,6 @@ func (c *VolumesListCall) Source(source string) *VolumesListCall {
 // first result to return (starts at 0)
 func (c *VolumesListCall) StartIndex(startIndex int64) *VolumesListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *VolumesListCall) UserIP(userIP string) *VolumesListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -10729,7 +10040,8 @@ func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *VolumesListCall) Do() (*Volumes, error) {
+func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -10952,27 +10264,10 @@ func (c *VolumesAssociatedListCall) MaxAllowedMaturityRating(maxAllowedMaturityR
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *VolumesAssociatedListCall) QuotaUser(quotaUser string) *VolumesAssociatedListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesAssociatedListCall) Source(source string) *VolumesAssociatedListCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *VolumesAssociatedListCall) UserIP(userIP string) *VolumesAssociatedListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -11028,7 +10323,8 @@ func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *VolumesAssociatedListCall) Do() (*Volumes, error) {
+func (c *VolumesAssociatedListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -11179,15 +10475,6 @@ func (c *VolumesMybooksListCall) ProcessingState(processingState ...string) *Vol
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *VolumesMybooksListCall) QuotaUser(quotaUser string) *VolumesMybooksListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesMybooksListCall) Source(source string) *VolumesMybooksListCall {
@@ -11199,14 +10486,6 @@ func (c *VolumesMybooksListCall) Source(source string) *VolumesMybooksListCall {
 // first result to return (starts at 0)
 func (c *VolumesMybooksListCall) StartIndex(startIndex int64) *VolumesMybooksListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *VolumesMybooksListCall) UserIP(userIP string) *VolumesMybooksListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -11260,7 +10539,8 @@ func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *VolumesMybooksListCall) Do() (*Volumes, error) {
+func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -11406,15 +10686,6 @@ func (c *VolumesRecommendedListCall) MaxAllowedMaturityRating(maxAllowedMaturity
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *VolumesRecommendedListCall) QuotaUser(quotaUser string) *VolumesRecommendedListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesRecommendedListCall) Source(source string) *VolumesRecommendedListCall {
@@ -11430,14 +10701,6 @@ func (c *VolumesRecommendedListCall) TargetIds(targetIds ...int64) *VolumesRecom
 		targetIds_ = append(targetIds_, fmt.Sprint(v))
 	}
 	c.urlParams_.SetMulti("targetIds", targetIds_)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *VolumesRecommendedListCall) UserIP(userIP string) *VolumesRecommendedListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -11491,7 +10754,8 @@ func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, erro
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *VolumesRecommendedListCall) Do() (*Volumes, error) {
+func (c *VolumesRecommendedListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -11590,27 +10854,10 @@ func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRa
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *VolumesRecommendedRateCall) QuotaUser(quotaUser string) *VolumesRecommendedRateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesRecommendedRateCall) Source(source string) *VolumesRecommendedRateCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *VolumesRecommendedRateCall) UserIP(userIP string) *VolumesRecommendedRateCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -11652,7 +10899,8 @@ func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, erro
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *VolumesRecommendedRateCall) Do() (*BooksVolumesRecommendedRateResponse, error) {
+func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVolumesRecommendedRateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -11773,15 +11021,6 @@ func (c *VolumesUseruploadedListCall) ProcessingState(processingState ...string)
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *VolumesUseruploadedListCall) QuotaUser(quotaUser string) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesUseruploadedListCall) Source(source string) *VolumesUseruploadedListCall {
@@ -11793,14 +11032,6 @@ func (c *VolumesUseruploadedListCall) Source(source string) *VolumesUseruploaded
 // first result to return (starts at 0)
 func (c *VolumesUseruploadedListCall) StartIndex(startIndex int64) *VolumesUseruploadedListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *VolumesUseruploadedListCall) UserIP(userIP string) *VolumesUseruploadedListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -11862,7 +11093,8 @@ func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, err
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *VolumesUseruploadedListCall) Do() (*Volumes, error) {
+func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

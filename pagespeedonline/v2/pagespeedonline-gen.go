@@ -481,15 +481,6 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *PagespeedapiRunpagespeedCall) QuotaUser(quotaUser string) *PagespeedapiRunpagespeedCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Rule sets the optional parameter "rule": A PageSpeed rule to run; if
 // none are given, all rules are run
 func (c *PagespeedapiRunpagespeedCall) Rule(rule ...string) *PagespeedapiRunpagespeedCall {
@@ -512,14 +503,6 @@ func (c *PagespeedapiRunpagespeedCall) Screenshot(screenshot bool) *Pagespeedapi
 //   "mobile" - Fetch and analyze the URL for mobile devices
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.Set("strategy", strategy)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *PagespeedapiRunpagespeedCall) UserIP(userIP string) *PagespeedapiRunpagespeedCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -573,7 +556,8 @@ func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, er
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *PagespeedapiRunpagespeedCall) Do() (*Result, error) {
+func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Result, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

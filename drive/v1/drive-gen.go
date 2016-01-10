@@ -307,28 +307,11 @@ func (c *FilesGetCall) Projection(projection string) *FilesGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *FilesGetCall) QuotaUser(quotaUser string) *FilesGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // UpdateViewedDate sets the optional parameter "updateViewedDate":
 // Whether to update the view date after successfully retrieving the
 // file.
 func (c *FilesGetCall) UpdateViewedDate(updateViewedDate bool) *FilesGetCall {
 	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *FilesGetCall) UserIP(userIP string) *FilesGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -384,7 +367,8 @@ func (c *FilesGetCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *FilesGetCall) Do() (*File, error) {
+func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -476,23 +460,6 @@ type FilesInsertCall struct {
 func (r *FilesService) Insert(file *File) *FilesInsertCall {
 	c := &FilesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.file = file
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *FilesInsertCall) QuotaUser(quotaUser string) *FilesInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *FilesInsertCall) UserIP(userIP string) *FilesInsertCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -593,7 +560,8 @@ func (c *FilesInsertCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *FilesInsertCall) Do() (*File, error) {
+func (c *FilesInsertCall) Do(opts ...googleapi.CallOption) (*File, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -711,15 +679,6 @@ func (c *FilesPatchCall) NewRevision(newRevision bool) *FilesPatchCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *FilesPatchCall) QuotaUser(quotaUser string) *FilesPatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // UpdateModifiedDate sets the optional parameter "updateModifiedDate":
 // Controls updating the modified date of the file. If true, the
 // modified date will be updated to the current time, regardless of
@@ -735,14 +694,6 @@ func (c *FilesPatchCall) UpdateModifiedDate(updateModifiedDate bool) *FilesPatch
 // Whether to update the view date after successfully updating the file.
 func (c *FilesPatchCall) UpdateViewedDate(updateViewedDate bool) *FilesPatchCall {
 	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *FilesPatchCall) UserIP(userIP string) *FilesPatchCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -791,7 +742,8 @@ func (c *FilesPatchCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *FilesPatchCall) Do() (*File, error) {
+func (c *FilesPatchCall) Do(opts ...googleapi.CallOption) (*File, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -901,15 +853,6 @@ func (c *FilesUpdateCall) NewRevision(newRevision bool) *FilesUpdateCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *FilesUpdateCall) QuotaUser(quotaUser string) *FilesUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // UpdateModifiedDate sets the optional parameter "updateModifiedDate":
 // Controls updating the modified date of the file. If true, the
 // modified date will be updated to the current time, regardless of
@@ -925,14 +868,6 @@ func (c *FilesUpdateCall) UpdateModifiedDate(updateModifiedDate bool) *FilesUpda
 // Whether to update the view date after successfully updating the file.
 func (c *FilesUpdateCall) UpdateViewedDate(updateViewedDate bool) *FilesUpdateCall {
 	c.urlParams_.Set("updateViewedDate", fmt.Sprint(updateViewedDate))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *FilesUpdateCall) UserIP(userIP string) *FilesUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1035,7 +970,8 @@ func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *FilesUpdateCall) Do() (*File, error) {
+func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

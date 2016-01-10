@@ -163,15 +163,6 @@ func (r *WebfontsService) List() *WebfontsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *WebfontsListCall) QuotaUser(quotaUser string) *WebfontsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Sort sets the optional parameter "sort": Enables sorting of the list
 //
 // Possible values:
@@ -182,14 +173,6 @@ func (c *WebfontsListCall) QuotaUser(quotaUser string) *WebfontsListCall {
 //   "trending" - Sort by trending
 func (c *WebfontsListCall) Sort(sort string) *WebfontsListCall {
 	c.urlParams_.Set("sort", sort)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *WebfontsListCall) UserIP(userIP string) *WebfontsListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -243,7 +226,8 @@ func (c *WebfontsListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *WebfontsListCall) Do() (*WebfontList, error) {
+func (c *WebfontsListCall) Do(opts ...googleapi.CallOption) (*WebfontList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

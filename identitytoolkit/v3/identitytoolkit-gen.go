@@ -1234,23 +1234,6 @@ func (r *RelyingpartyService) CreateAuthUri(identitytoolkitrelyingpartycreateaut
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyCreateAuthUriCall) QuotaUser(quotaUser string) *RelyingpartyCreateAuthUriCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyCreateAuthUriCall) UserIP(userIP string) *RelyingpartyCreateAuthUriCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1294,7 +1277,8 @@ func (c *RelyingpartyCreateAuthUriCall) doRequest(alt string) (*http.Response, e
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyCreateAuthUriCall) Do() (*CreateAuthUriResponse, error) {
+func (c *RelyingpartyCreateAuthUriCall) Do(opts ...googleapi.CallOption) (*CreateAuthUriResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1353,23 +1337,6 @@ func (r *RelyingpartyService) DeleteAccount(identitytoolkitrelyingpartydeleteacc
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyDeleteAccountCall) QuotaUser(quotaUser string) *RelyingpartyDeleteAccountCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyDeleteAccountCall) UserIP(userIP string) *RelyingpartyDeleteAccountCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1413,7 +1380,8 @@ func (c *RelyingpartyDeleteAccountCall) doRequest(alt string) (*http.Response, e
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyDeleteAccountCall) Do() (*DeleteAccountResponse, error) {
+func (c *RelyingpartyDeleteAccountCall) Do(opts ...googleapi.CallOption) (*DeleteAccountResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1472,23 +1440,6 @@ func (r *RelyingpartyService) DownloadAccount(identitytoolkitrelyingpartydownloa
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyDownloadAccountCall) QuotaUser(quotaUser string) *RelyingpartyDownloadAccountCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyDownloadAccountCall) UserIP(userIP string) *RelyingpartyDownloadAccountCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1532,7 +1483,8 @@ func (c *RelyingpartyDownloadAccountCall) doRequest(alt string) (*http.Response,
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyDownloadAccountCall) Do() (*DownloadAccountResponse, error) {
+func (c *RelyingpartyDownloadAccountCall) Do(opts ...googleapi.CallOption) (*DownloadAccountResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1591,23 +1543,6 @@ func (r *RelyingpartyService) GetAccountInfo(identitytoolkitrelyingpartygetaccou
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyGetAccountInfoCall) QuotaUser(quotaUser string) *RelyingpartyGetAccountInfoCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyGetAccountInfoCall) UserIP(userIP string) *RelyingpartyGetAccountInfoCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1651,7 +1586,8 @@ func (c *RelyingpartyGetAccountInfoCall) doRequest(alt string) (*http.Response, 
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyGetAccountInfoCall) Do() (*GetAccountInfoResponse, error) {
+func (c *RelyingpartyGetAccountInfoCall) Do(opts ...googleapi.CallOption) (*GetAccountInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1710,23 +1646,6 @@ func (r *RelyingpartyService) GetOobConfirmationCode(relyingparty *Relyingparty)
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyGetOobConfirmationCodeCall) QuotaUser(quotaUser string) *RelyingpartyGetOobConfirmationCodeCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyGetOobConfirmationCodeCall) UserIP(userIP string) *RelyingpartyGetOobConfirmationCodeCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1770,7 +1689,8 @@ func (c *RelyingpartyGetOobConfirmationCodeCall) doRequest(alt string) (*http.Re
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyGetOobConfirmationCodeCall) Do() (*GetOobConfirmationCodeResponse, error) {
+func (c *RelyingpartyGetOobConfirmationCodeCall) Do(opts ...googleapi.CallOption) (*GetOobConfirmationCodeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1828,23 +1748,6 @@ func (r *RelyingpartyService) GetProjectConfig() *RelyingpartyGetProjectConfigCa
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyGetProjectConfigCall) QuotaUser(quotaUser string) *RelyingpartyGetProjectConfigCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyGetProjectConfigCall) UserIP(userIP string) *RelyingpartyGetProjectConfigCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1897,7 +1800,8 @@ func (c *RelyingpartyGetProjectConfigCall) doRequest(alt string) (*http.Response
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *RelyingpartyGetProjectConfigCall) Do() (*IdentitytoolkitRelyingpartyGetProjectConfigResponse, error) {
+func (c *RelyingpartyGetProjectConfigCall) Do(opts ...googleapi.CallOption) (*IdentitytoolkitRelyingpartyGetProjectConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1952,23 +1856,6 @@ func (r *RelyingpartyService) GetPublicKeys() *RelyingpartyGetPublicKeysCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyGetPublicKeysCall) QuotaUser(quotaUser string) *RelyingpartyGetPublicKeysCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyGetPublicKeysCall) UserIP(userIP string) *RelyingpartyGetPublicKeysCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2013,7 +1900,8 @@ func (c *RelyingpartyGetPublicKeysCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "identitytoolkit.relyingparty.getPublicKeys" call.
-func (c *RelyingpartyGetPublicKeysCall) Do() (map[string]string, error) {
+func (c *RelyingpartyGetPublicKeysCall) Do(opts ...googleapi.CallOption) (map[string]string, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err
@@ -2051,23 +1939,6 @@ type RelyingpartyGetRecaptchaParamCall struct {
 // GetRecaptchaParam: Get recaptcha secure param.
 func (r *RelyingpartyService) GetRecaptchaParam() *RelyingpartyGetRecaptchaParamCall {
 	c := &RelyingpartyGetRecaptchaParamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyGetRecaptchaParamCall) QuotaUser(quotaUser string) *RelyingpartyGetRecaptchaParamCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyGetRecaptchaParamCall) UserIP(userIP string) *RelyingpartyGetRecaptchaParamCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2121,7 +1992,8 @@ func (c *RelyingpartyGetRecaptchaParamCall) doRequest(alt string) (*http.Respons
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyGetRecaptchaParamCall) Do() (*GetRecaptchaParamResponse, error) {
+func (c *RelyingpartyGetRecaptchaParamCall) Do(opts ...googleapi.CallOption) (*GetRecaptchaParamResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2177,23 +2049,6 @@ func (r *RelyingpartyService) ResetPassword(identitytoolkitrelyingpartyresetpass
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyResetPasswordCall) QuotaUser(quotaUser string) *RelyingpartyResetPasswordCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyResetPasswordCall) UserIP(userIP string) *RelyingpartyResetPasswordCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2237,7 +2092,8 @@ func (c *RelyingpartyResetPasswordCall) doRequest(alt string) (*http.Response, e
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyResetPasswordCall) Do() (*ResetPasswordResponse, error) {
+func (c *RelyingpartyResetPasswordCall) Do(opts ...googleapi.CallOption) (*ResetPasswordResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2296,23 +2152,6 @@ func (r *RelyingpartyService) SetAccountInfo(identitytoolkitrelyingpartysetaccou
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartySetAccountInfoCall) QuotaUser(quotaUser string) *RelyingpartySetAccountInfoCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartySetAccountInfoCall) UserIP(userIP string) *RelyingpartySetAccountInfoCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2356,7 +2195,8 @@ func (c *RelyingpartySetAccountInfoCall) doRequest(alt string) (*http.Response, 
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartySetAccountInfoCall) Do() (*SetAccountInfoResponse, error) {
+func (c *RelyingpartySetAccountInfoCall) Do(opts ...googleapi.CallOption) (*SetAccountInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2415,23 +2255,6 @@ func (r *RelyingpartyService) SignOutUser(identitytoolkitrelyingpartysignoutuser
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartySignOutUserCall) QuotaUser(quotaUser string) *RelyingpartySignOutUserCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartySignOutUserCall) UserIP(userIP string) *RelyingpartySignOutUserCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2477,7 +2300,8 @@ func (c *RelyingpartySignOutUserCall) doRequest(alt string) (*http.Response, err
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *RelyingpartySignOutUserCall) Do() (*IdentitytoolkitRelyingpartySignOutUserResponse, error) {
+func (c *RelyingpartySignOutUserCall) Do(opts ...googleapi.CallOption) (*IdentitytoolkitRelyingpartySignOutUserResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2536,23 +2360,6 @@ func (r *RelyingpartyService) UploadAccount(identitytoolkitrelyingpartyuploadacc
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyUploadAccountCall) QuotaUser(quotaUser string) *RelyingpartyUploadAccountCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyUploadAccountCall) UserIP(userIP string) *RelyingpartyUploadAccountCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2596,7 +2403,8 @@ func (c *RelyingpartyUploadAccountCall) doRequest(alt string) (*http.Response, e
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyUploadAccountCall) Do() (*UploadAccountResponse, error) {
+func (c *RelyingpartyUploadAccountCall) Do(opts ...googleapi.CallOption) (*UploadAccountResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2655,23 +2463,6 @@ func (r *RelyingpartyService) VerifyAssertion(identitytoolkitrelyingpartyverifya
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyVerifyAssertionCall) QuotaUser(quotaUser string) *RelyingpartyVerifyAssertionCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyVerifyAssertionCall) UserIP(userIP string) *RelyingpartyVerifyAssertionCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2715,7 +2506,8 @@ func (c *RelyingpartyVerifyAssertionCall) doRequest(alt string) (*http.Response,
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyVerifyAssertionCall) Do() (*VerifyAssertionResponse, error) {
+func (c *RelyingpartyVerifyAssertionCall) Do(opts ...googleapi.CallOption) (*VerifyAssertionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2774,23 +2566,6 @@ func (r *RelyingpartyService) VerifyCustomToken(identitytoolkitrelyingpartyverif
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyVerifyCustomTokenCall) QuotaUser(quotaUser string) *RelyingpartyVerifyCustomTokenCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyVerifyCustomTokenCall) UserIP(userIP string) *RelyingpartyVerifyCustomTokenCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2834,7 +2609,8 @@ func (c *RelyingpartyVerifyCustomTokenCall) doRequest(alt string) (*http.Respons
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyVerifyCustomTokenCall) Do() (*VerifyCustomTokenResponse, error) {
+func (c *RelyingpartyVerifyCustomTokenCall) Do(opts ...googleapi.CallOption) (*VerifyCustomTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2893,23 +2669,6 @@ func (r *RelyingpartyService) VerifyPassword(identitytoolkitrelyingpartyverifypa
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RelyingpartyVerifyPasswordCall) QuotaUser(quotaUser string) *RelyingpartyVerifyPasswordCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RelyingpartyVerifyPasswordCall) UserIP(userIP string) *RelyingpartyVerifyPasswordCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2953,7 +2712,8 @@ func (c *RelyingpartyVerifyPasswordCall) doRequest(alt string) (*http.Response, 
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RelyingpartyVerifyPasswordCall) Do() (*VerifyPasswordResponse, error) {
+func (c *RelyingpartyVerifyPasswordCall) Do(opts ...googleapi.CallOption) (*VerifyPasswordResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

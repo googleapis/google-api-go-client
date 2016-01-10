@@ -454,23 +454,6 @@ func (r *RegionViewsService) Addresources(projectName string, region string, res
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RegionViewsAddresourcesCall) QuotaUser(quotaUser string) *RegionViewsAddresourcesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RegionViewsAddresourcesCall) UserIP(userIP string) *RegionViewsAddresourcesCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -512,7 +495,8 @@ func (c *RegionViewsAddresourcesCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "resourceviews.regionViews.addresources" call.
-func (c *RegionViewsAddresourcesCall) Do() error {
+func (c *RegionViewsAddresourcesCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -584,23 +568,6 @@ func (r *RegionViewsService) Delete(projectName string, region string, resourceV
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RegionViewsDeleteCall) QuotaUser(quotaUser string) *RegionViewsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RegionViewsDeleteCall) UserIP(userIP string) *RegionViewsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -636,7 +603,8 @@ func (c *RegionViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "resourceviews.regionViews.delete" call.
-func (c *RegionViewsDeleteCall) Do() error {
+func (c *RegionViewsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -706,23 +674,6 @@ func (r *RegionViewsService) Get(projectName string, region string, resourceView
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RegionViewsGetCall) QuotaUser(quotaUser string) *RegionViewsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RegionViewsGetCall) UserIP(userIP string) *RegionViewsGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -777,7 +728,8 @@ func (c *RegionViewsGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *RegionViewsGetCall) Do() (*ResourceView, error) {
+func (c *RegionViewsGetCall) Do(opts ...googleapi.CallOption) (*ResourceView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -870,23 +822,6 @@ func (r *RegionViewsService) Insert(projectName string, region string, resourcev
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RegionViewsInsertCall) QuotaUser(quotaUser string) *RegionViewsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RegionViewsInsertCall) UserIP(userIP string) *RegionViewsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -933,7 +868,8 @@ func (c *RegionViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RegionViewsInsertCall) Do() (*RegionViewsInsertResponse, error) {
+func (c *RegionViewsInsertCall) Do(opts ...googleapi.CallOption) (*RegionViewsInsertResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1035,23 +971,6 @@ func (c *RegionViewsListCall) PageToken(pageToken string) *RegionViewsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RegionViewsListCall) QuotaUser(quotaUser string) *RegionViewsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RegionViewsListCall) UserIP(userIP string) *RegionViewsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1105,7 +1024,8 @@ func (c *RegionViewsListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RegionViewsListCall) Do() (*RegionViewsListResponse, error) {
+func (c *RegionViewsListCall) Do(opts ...googleapi.CallOption) (*RegionViewsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1222,23 +1142,6 @@ func (c *RegionViewsListresourcesCall) PageToken(pageToken string) *RegionViewsL
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RegionViewsListresourcesCall) QuotaUser(quotaUser string) *RegionViewsListresourcesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RegionViewsListresourcesCall) UserIP(userIP string) *RegionViewsListresourcesCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1280,7 +1183,8 @@ func (c *RegionViewsListresourcesCall) doRequest(alt string) (*http.Response, er
 // a response was returned at all) in error.(*googleapi.Error).Header.
 // Use googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RegionViewsListresourcesCall) Do() (*RegionViewsListResourcesResponse, error) {
+func (c *RegionViewsListresourcesCall) Do(opts ...googleapi.CallOption) (*RegionViewsListResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1389,23 +1293,6 @@ func (r *RegionViewsService) Removeresources(projectName string, region string, 
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RegionViewsRemoveresourcesCall) QuotaUser(quotaUser string) *RegionViewsRemoveresourcesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RegionViewsRemoveresourcesCall) UserIP(userIP string) *RegionViewsRemoveresourcesCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1447,7 +1334,8 @@ func (c *RegionViewsRemoveresourcesCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "resourceviews.regionViews.removeresources" call.
-func (c *RegionViewsRemoveresourcesCall) Do() error {
+func (c *RegionViewsRemoveresourcesCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1521,23 +1409,6 @@ func (r *ZoneViewsService) Addresources(projectName string, zone string, resourc
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ZoneViewsAddresourcesCall) QuotaUser(quotaUser string) *ZoneViewsAddresourcesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ZoneViewsAddresourcesCall) UserIP(userIP string) *ZoneViewsAddresourcesCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1579,7 +1450,8 @@ func (c *ZoneViewsAddresourcesCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "resourceviews.zoneViews.addresources" call.
-func (c *ZoneViewsAddresourcesCall) Do() error {
+func (c *ZoneViewsAddresourcesCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1651,23 +1523,6 @@ func (r *ZoneViewsService) Delete(projectName string, zone string, resourceViewN
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ZoneViewsDeleteCall) QuotaUser(quotaUser string) *ZoneViewsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ZoneViewsDeleteCall) UserIP(userIP string) *ZoneViewsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1703,7 +1558,8 @@ func (c *ZoneViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "resourceviews.zoneViews.delete" call.
-func (c *ZoneViewsDeleteCall) Do() error {
+func (c *ZoneViewsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1773,23 +1629,6 @@ func (r *ZoneViewsService) Get(projectName string, zone string, resourceViewName
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ZoneViewsGetCall) QuotaUser(quotaUser string) *ZoneViewsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ZoneViewsGetCall) UserIP(userIP string) *ZoneViewsGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1844,7 +1683,8 @@ func (c *ZoneViewsGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ZoneViewsGetCall) Do() (*ResourceView, error) {
+func (c *ZoneViewsGetCall) Do(opts ...googleapi.CallOption) (*ResourceView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1937,23 +1777,6 @@ func (r *ZoneViewsService) Insert(projectName string, zone string, resourceview 
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ZoneViewsInsertCall) QuotaUser(quotaUser string) *ZoneViewsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ZoneViewsInsertCall) UserIP(userIP string) *ZoneViewsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2000,7 +1823,8 @@ func (c *ZoneViewsInsertCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ZoneViewsInsertCall) Do() (*ZoneViewsInsertResponse, error) {
+func (c *ZoneViewsInsertCall) Do(opts ...googleapi.CallOption) (*ZoneViewsInsertResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2102,23 +1926,6 @@ func (c *ZoneViewsListCall) PageToken(pageToken string) *ZoneViewsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ZoneViewsListCall) QuotaUser(quotaUser string) *ZoneViewsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ZoneViewsListCall) UserIP(userIP string) *ZoneViewsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2172,7 +1979,8 @@ func (c *ZoneViewsListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ZoneViewsListCall) Do() (*ZoneViewsListResponse, error) {
+func (c *ZoneViewsListCall) Do(opts ...googleapi.CallOption) (*ZoneViewsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2289,23 +2097,6 @@ func (c *ZoneViewsListresourcesCall) PageToken(pageToken string) *ZoneViewsListr
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ZoneViewsListresourcesCall) QuotaUser(quotaUser string) *ZoneViewsListresourcesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ZoneViewsListresourcesCall) UserIP(userIP string) *ZoneViewsListresourcesCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2347,7 +2138,8 @@ func (c *ZoneViewsListresourcesCall) doRequest(alt string) (*http.Response, erro
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ZoneViewsListresourcesCall) Do() (*ZoneViewsListResourcesResponse, error) {
+func (c *ZoneViewsListresourcesCall) Do(opts ...googleapi.CallOption) (*ZoneViewsListResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2456,23 +2248,6 @@ func (r *ZoneViewsService) Removeresources(projectName string, zone string, reso
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ZoneViewsRemoveresourcesCall) QuotaUser(quotaUser string) *ZoneViewsRemoveresourcesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ZoneViewsRemoveresourcesCall) UserIP(userIP string) *ZoneViewsRemoveresourcesCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2514,7 +2289,8 @@ func (c *ZoneViewsRemoveresourcesCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "resourceviews.zoneViews.removeresources" call.
-func (c *ZoneViewsRemoveresourcesCall) Do() error {
+func (c *ZoneViewsRemoveresourcesCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err

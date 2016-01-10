@@ -151,23 +151,6 @@ func (r *MailService) Insert(userKey string, mailitem *MailItem) *MailInsertCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *MailInsertCall) QuotaUser(quotaUser string) *MailInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *MailInsertCall) UserIP(userIP string) *MailInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
 func (c *MailInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *MailInsertCall {
@@ -261,7 +244,8 @@ func (c *MailInsertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "emailMigration.mail.insert" call.
-func (c *MailInsertCall) Do() error {
+func (c *MailInsertCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err

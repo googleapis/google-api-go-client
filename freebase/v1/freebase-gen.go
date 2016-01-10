@@ -268,23 +268,6 @@ func (c *ReconcileCall) Prop(prop ...string) *ReconcileCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ReconcileCall) QuotaUser(quotaUser string) *ReconcileCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ReconcileCall) UserIP(userIP string) *ReconcileCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -335,7 +318,8 @@ func (c *ReconcileCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ReconcileCall) Do() (*ReconcileGet, error) {
+func (c *ReconcileCall) Do(opts ...googleapi.CallOption) (*ReconcileGet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -574,15 +558,6 @@ func (c *SearchCall) Query(query string) *SearchCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *SearchCall) QuotaUser(quotaUser string) *SearchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Scoring sets the optional parameter "scoring": Relevance scoring
 // algorithm to use.
 //
@@ -620,14 +595,6 @@ func (c *SearchCall) Stemmed(stemmed bool) *SearchCall {
 // Freebase type id.
 func (c *SearchCall) Type(type_ ...string) *SearchCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *SearchCall) UserIP(userIP string) *SearchCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -690,7 +657,8 @@ func (c *SearchCall) doRequest(alt string) (*http.Response, error) {
 // Download fetches the API endpoint's "media" value, instead of the normal
 // API response value. If the returned error is nil, the Response is guaranteed to
 // have a 2xx status code. Callers must close the Response.Body as usual.
-func (c *SearchCall) Download() (*http.Response, error) {
+func (c *SearchCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("media")
 	if err != nil {
 		return nil, err
@@ -703,7 +671,8 @@ func (c *SearchCall) Download() (*http.Response, error) {
 }
 
 // Do executes the "freebase.search" call.
-func (c *SearchCall) Do() error {
+func (c *SearchCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err

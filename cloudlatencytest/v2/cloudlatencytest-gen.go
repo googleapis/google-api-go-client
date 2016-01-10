@@ -244,23 +244,6 @@ func (r *StatscollectionService) Updateaggregatedstats(aggregatedstats *Aggregat
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *StatscollectionUpdateaggregatedstatsCall) QuotaUser(quotaUser string) *StatscollectionUpdateaggregatedstatsCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *StatscollectionUpdateaggregatedstatsCall) UserIP(userIP string) *StatscollectionUpdateaggregatedstatsCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -304,7 +287,8 @@ func (c *StatscollectionUpdateaggregatedstatsCall) doRequest(alt string) (*http.
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *StatscollectionUpdateaggregatedstatsCall) Do() (*AggregatedStatsReply, error) {
+func (c *StatscollectionUpdateaggregatedstatsCall) Do(opts ...googleapi.CallOption) (*AggregatedStatsReply, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -366,23 +350,6 @@ func (r *StatscollectionService) Updatestats(stats *Stats) *StatscollectionUpdat
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *StatscollectionUpdatestatsCall) QuotaUser(quotaUser string) *StatscollectionUpdatestatsCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *StatscollectionUpdatestatsCall) UserIP(userIP string) *StatscollectionUpdatestatsCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -426,7 +393,8 @@ func (c *StatscollectionUpdatestatsCall) doRequest(alt string) (*http.Response, 
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *StatscollectionUpdatestatsCall) Do() (*StatsReply, error) {
+func (c *StatscollectionUpdatestatsCall) Do(opts ...googleapi.CallOption) (*StatsReply, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

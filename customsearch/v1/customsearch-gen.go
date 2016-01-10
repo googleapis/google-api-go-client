@@ -741,15 +741,6 @@ func (c *CseListCall) OrTerms(orTerms string) *CseListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CseListCall) QuotaUser(quotaUser string) *CseListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // RelatedSite sets the optional parameter "relatedSite": Specifies that
 // all search results should be pages that are related to the specified
 // URL
@@ -821,14 +812,6 @@ func (c *CseListCall) Start(start int64) *CseListCall {
 	return c
 }
 
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CseListCall) UserIP(userIP string) *CseListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -879,7 +862,8 @@ func (c *CseListCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *CseListCall) Do() (*Search, error) {
+func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

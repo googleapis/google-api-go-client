@@ -1075,14 +1075,6 @@ func (r *ControllerDebuggeesService) Register(registerdebuggeerequest *RegisterD
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ControllerDebuggeesRegisterCall) QuotaUser(quotaUser string) *ControllerDebuggeesRegisterCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1126,7 +1118,8 @@ func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response,
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ControllerDebuggeesRegisterCall) Do() (*RegisterDebuggeeResponse, error) {
+func (c *ControllerDebuggeesRegisterCall) Do(opts ...googleapi.CallOption) (*RegisterDebuggeeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1197,14 +1190,6 @@ type ControllerDebuggeesBreakpointsListCall struct {
 func (r *ControllerDebuggeesBreakpointsService) List(debuggeeId string) *ControllerDebuggeesBreakpointsListCall {
 	c := &ControllerDebuggeesBreakpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.debuggeeId = debuggeeId
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ControllerDebuggeesBreakpointsListCall) QuotaUser(quotaUser string) *ControllerDebuggeesBreakpointsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1280,7 +1265,8 @@ func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Re
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ControllerDebuggeesBreakpointsListCall) Do() (*ListActiveBreakpointsResponse, error) {
+func (c *ControllerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption) (*ListActiveBreakpointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1372,14 +1358,6 @@ func (r *ControllerDebuggeesBreakpointsService) Update(debuggeeId string, id str
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ControllerDebuggeesBreakpointsUpdateCall) QuotaUser(quotaUser string) *ControllerDebuggeesBreakpointsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1426,7 +1404,8 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ControllerDebuggeesBreakpointsUpdateCall) Do() (*UpdateActiveBreakpointResponse, error) {
+func (c *ControllerDebuggeesBreakpointsUpdateCall) Do(opts ...googleapi.CallOption) (*UpdateActiveBreakpointResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1521,14 +1500,6 @@ func (c *DebuggerDebuggeesListCall) Project(project string) *DebuggerDebuggeesLi
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *DebuggerDebuggeesListCall) QuotaUser(quotaUser string) *DebuggerDebuggeesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1579,7 +1550,8 @@ func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *DebuggerDebuggeesListCall) Do() (*ListDebuggeesResponse, error) {
+func (c *DebuggerDebuggeesListCall) Do(opts ...googleapi.CallOption) (*ListDebuggeesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1653,14 +1625,6 @@ func (r *DebuggerDebuggeesBreakpointsService) Delete(debuggeeId string, breakpoi
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *DebuggerDebuggeesBreakpointsDeleteCall) QuotaUser(quotaUser string) *DebuggerDebuggeesBreakpointsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1701,7 +1665,8 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Re
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do() (*Empty, error) {
+func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1782,14 +1747,6 @@ func (r *DebuggerDebuggeesBreakpointsService) Get(debuggeeId string, breakpointI
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *DebuggerDebuggeesBreakpointsGetCall) QuotaUser(quotaUser string) *DebuggerDebuggeesBreakpointsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1843,7 +1800,8 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Respo
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *DebuggerDebuggeesBreakpointsGetCall) Do() (*GetBreakpointResponse, error) {
+func (c *DebuggerDebuggeesBreakpointsGetCall) Do(opts ...googleapi.CallOption) (*GetBreakpointResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1949,14 +1907,6 @@ func (c *DebuggerDebuggeesBreakpointsListCall) IncludeInactive(includeInactive b
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *DebuggerDebuggeesBreakpointsListCall) QuotaUser(quotaUser string) *DebuggerDebuggeesBreakpointsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // StripResults sets the optional parameter "stripResults": When set to
 // `true`, the response breakpoints are stripped of the results fields:
 // `stack_frames`, `evaluated_expressions` and `variable_table`.
@@ -2028,7 +1978,8 @@ func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Resp
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *DebuggerDebuggeesBreakpointsListCall) Do() (*ListBreakpointsResponse, error) {
+func (c *DebuggerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption) (*ListBreakpointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2130,14 +2081,6 @@ func (r *DebuggerDebuggeesBreakpointsService) Set(debuggeeId string, breakpoint 
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *DebuggerDebuggeesBreakpointsSetCall) QuotaUser(quotaUser string) *DebuggerDebuggeesBreakpointsSetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2183,7 +2126,8 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Respo
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *DebuggerDebuggeesBreakpointsSetCall) Do() (*SetBreakpointResponse, error) {
+func (c *DebuggerDebuggeesBreakpointsSetCall) Do(opts ...googleapi.CallOption) (*SetBreakpointResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

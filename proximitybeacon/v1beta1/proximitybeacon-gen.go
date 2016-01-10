@@ -772,14 +772,6 @@ func (r *BeaconinfoService) Getforobserved(getinfoforobservedbeaconsrequest *Get
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconinfoGetforobservedCall) QuotaUser(quotaUser string) *BeaconinfoGetforobservedCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -824,7 +816,8 @@ func (c *BeaconinfoGetforobservedCall) doRequest(alt string) (*http.Response, er
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *BeaconinfoGetforobservedCall) Do() (*GetInfoForObservedBeaconsResponse, error) {
+func (c *BeaconinfoGetforobservedCall) Do(opts ...googleapi.CallOption) (*GetInfoForObservedBeaconsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -886,14 +879,6 @@ func (r *BeaconsService) Activate(beaconName string) *BeaconsActivateCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsActivateCall) QuotaUser(quotaUser string) *BeaconsActivateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -933,7 +918,8 @@ func (c *BeaconsActivateCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *BeaconsActivateCall) Do() (*Empty, error) {
+func (c *BeaconsActivateCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1005,14 +991,6 @@ func (r *BeaconsService) Deactivate(beaconName string) *BeaconsDeactivateCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsDeactivateCall) QuotaUser(quotaUser string) *BeaconsDeactivateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1052,7 +1030,8 @@ func (c *BeaconsDeactivateCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *BeaconsDeactivateCall) Do() (*Empty, error) {
+func (c *BeaconsDeactivateCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1123,14 +1102,6 @@ func (r *BeaconsService) Decommission(beaconName string) *BeaconsDecommissionCal
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsDecommissionCall) QuotaUser(quotaUser string) *BeaconsDecommissionCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1170,7 +1141,8 @@ func (c *BeaconsDecommissionCall) doRequest(alt string) (*http.Response, error) 
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *BeaconsDecommissionCall) Do() (*Empty, error) {
+func (c *BeaconsDecommissionCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1239,14 +1211,6 @@ func (r *BeaconsService) Get(beaconName string) *BeaconsGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsGetCall) QuotaUser(quotaUser string) *BeaconsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1299,7 +1263,8 @@ func (c *BeaconsGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *BeaconsGetCall) Do() (*Beacon, error) {
+func (c *BeaconsGetCall) Do(opts ...googleapi.CallOption) (*Beacon, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1435,14 +1400,6 @@ func (c *BeaconsListCall) Q(q string) *BeaconsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsListCall) QuotaUser(quotaUser string) *BeaconsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1493,7 +1450,8 @@ func (c *BeaconsListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *BeaconsListCall) Do() (*ListBeaconsResponse, error) {
+func (c *BeaconsListCall) Do(opts ...googleapi.CallOption) (*ListBeaconsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1569,14 +1527,6 @@ func (r *BeaconsService) Register(beacon *Beacon) *BeaconsRegisterCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsRegisterCall) QuotaUser(quotaUser string) *BeaconsRegisterCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1620,7 +1570,8 @@ func (c *BeaconsRegisterCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *BeaconsRegisterCall) Do() (*Beacon, error) {
+func (c *BeaconsRegisterCall) Do(opts ...googleapi.CallOption) (*Beacon, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1687,14 +1638,6 @@ func (r *BeaconsService) Update(beaconName string, beacon *Beacon) *BeaconsUpdat
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsUpdateCall) QuotaUser(quotaUser string) *BeaconsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1740,7 +1683,8 @@ func (c *BeaconsUpdateCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *BeaconsUpdateCall) Do() (*Beacon, error) {
+func (c *BeaconsUpdateCall) Do(opts ...googleapi.CallOption) (*Beacon, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1825,14 +1769,6 @@ func (c *BeaconsAttachmentsBatchDeleteCall) NamespacedType(namespacedType string
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsAttachmentsBatchDeleteCall) QuotaUser(quotaUser string) *BeaconsAttachmentsBatchDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1872,7 +1808,8 @@ func (c *BeaconsAttachmentsBatchDeleteCall) doRequest(alt string) (*http.Respons
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *BeaconsAttachmentsBatchDeleteCall) Do() (*DeleteAttachmentsResponse, error) {
+func (c *BeaconsAttachmentsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*DeleteAttachmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1955,14 +1892,6 @@ func (r *BeaconsAttachmentsService) Create(beaconName string, beaconattachment *
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsAttachmentsCreateCall) QuotaUser(quotaUser string) *BeaconsAttachmentsCreateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2008,7 +1937,8 @@ func (c *BeaconsAttachmentsCreateCall) doRequest(alt string) (*http.Response, er
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *BeaconsAttachmentsCreateCall) Do() (*BeaconAttachment, error) {
+func (c *BeaconsAttachmentsCreateCall) Do(opts ...googleapi.CallOption) (*BeaconAttachment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2083,14 +2013,6 @@ func (r *BeaconsAttachmentsService) Delete(attachmentName string) *BeaconsAttach
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsAttachmentsDeleteCall) QuotaUser(quotaUser string) *BeaconsAttachmentsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2130,7 +2052,8 @@ func (c *BeaconsAttachmentsDeleteCall) doRequest(alt string) (*http.Response, er
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *BeaconsAttachmentsDeleteCall) Do() (*Empty, error) {
+func (c *BeaconsAttachmentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2213,14 +2136,6 @@ func (c *BeaconsAttachmentsListCall) NamespacedType(namespacedType string) *Beac
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsAttachmentsListCall) QuotaUser(quotaUser string) *BeaconsAttachmentsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2273,7 +2188,8 @@ func (c *BeaconsAttachmentsListCall) doRequest(alt string) (*http.Response, erro
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *BeaconsAttachmentsListCall) Do() (*ListBeaconAttachmentsResponse, error) {
+func (c *BeaconsAttachmentsListCall) Do(opts ...googleapi.CallOption) (*ListBeaconAttachmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2377,14 +2293,6 @@ func (c *BeaconsDiagnosticsListCall) PageToken(pageToken string) *BeaconsDiagnos
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BeaconsDiagnosticsListCall) QuotaUser(quotaUser string) *BeaconsDiagnosticsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2437,7 +2345,8 @@ func (c *BeaconsDiagnosticsListCall) doRequest(alt string) (*http.Response, erro
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *BeaconsDiagnosticsListCall) Do() (*ListDiagnosticsResponse, error) {
+func (c *BeaconsDiagnosticsListCall) Do(opts ...googleapi.CallOption) (*ListDiagnosticsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2528,14 +2437,6 @@ func (r *NamespacesService) List() *NamespacesListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *NamespacesListCall) QuotaUser(quotaUser string) *NamespacesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2586,7 +2487,8 @@ func (c *NamespacesListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *NamespacesListCall) Do() (*ListNamespacesResponse, error) {
+func (c *NamespacesListCall) Do(opts ...googleapi.CallOption) (*ListNamespacesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

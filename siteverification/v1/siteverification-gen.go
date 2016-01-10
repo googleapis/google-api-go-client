@@ -267,23 +267,6 @@ func (r *WebResourceService) Delete(id string) *WebResourceDeleteCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *WebResourceDeleteCall) QuotaUser(quotaUser string) *WebResourceDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *WebResourceDeleteCall) UserIP(userIP string) *WebResourceDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -317,7 +300,8 @@ func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "siteVerification.webResource.delete" call.
-func (c *WebResourceDeleteCall) Do() error {
+func (c *WebResourceDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -364,23 +348,6 @@ type WebResourceGetCall struct {
 func (r *WebResourceService) Get(id string) *WebResourceGetCall {
 	c := &WebResourceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *WebResourceGetCall) QuotaUser(quotaUser string) *WebResourceGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *WebResourceGetCall) UserIP(userIP string) *WebResourceGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -437,7 +404,8 @@ func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *WebResourceGetCall) Do() (*SiteVerificationWebResourceResource, error) {
+func (c *WebResourceGetCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -508,23 +476,6 @@ func (r *WebResourceService) GetToken(siteverificationwebresourcegettokenrequest
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *WebResourceGetTokenCall) QuotaUser(quotaUser string) *WebResourceGetTokenCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *WebResourceGetTokenCall) UserIP(userIP string) *WebResourceGetTokenCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -570,7 +521,8 @@ func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) 
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *WebResourceGetTokenCall) Do() (*SiteVerificationWebResourceGettokenResponse, error) {
+func (c *WebResourceGetTokenCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceGettokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -634,23 +586,6 @@ func (r *WebResourceService) Insert(verificationMethod string, siteverificationw
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *WebResourceInsertCall) QuotaUser(quotaUser string) *WebResourceInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *WebResourceInsertCall) UserIP(userIP string) *WebResourceInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -695,7 +630,8 @@ func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *WebResourceInsertCall) Do() (*SiteVerificationWebResourceResource, error) {
+func (c *WebResourceInsertCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -768,23 +704,6 @@ func (r *WebResourceService) List() *WebResourceListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *WebResourceListCall) QuotaUser(quotaUser string) *WebResourceListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *WebResourceListCall) UserIP(userIP string) *WebResourceListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -836,7 +755,8 @@ func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 // a response was returned at all) in error.(*googleapi.Error).Header.
 // Use googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *WebResourceListCall) Do() (*SiteVerificationWebResourceListResponse, error) {
+func (c *WebResourceListCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -898,23 +818,6 @@ func (r *WebResourceService) Patch(id string, siteverificationwebresourceresourc
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *WebResourcePatchCall) QuotaUser(quotaUser string) *WebResourcePatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *WebResourcePatchCall) UserIP(userIP string) *WebResourcePatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -961,7 +864,8 @@ func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *WebResourcePatchCall) Do() (*SiteVerificationWebResourceResource, error) {
+func (c *WebResourcePatchCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1036,23 +940,6 @@ func (r *WebResourceService) Update(id string, siteverificationwebresourceresour
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *WebResourceUpdateCall) QuotaUser(quotaUser string) *WebResourceUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *WebResourceUpdateCall) UserIP(userIP string) *WebResourceUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1099,7 +986,8 @@ func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *WebResourceUpdateCall) Do() (*SiteVerificationWebResourceResource, error) {
+func (c *WebResourceUpdateCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

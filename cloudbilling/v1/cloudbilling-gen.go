@@ -278,14 +278,6 @@ func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BillingAccountsGetCall) QuotaUser(quotaUser string) *BillingAccountsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -338,7 +330,8 @@ func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *BillingAccountsGetCall) Do() (*BillingAccount, error) {
+func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -426,14 +419,6 @@ func (c *BillingAccountsListCall) PageToken(pageToken string) *BillingAccountsLi
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BillingAccountsListCall) QuotaUser(quotaUser string) *BillingAccountsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -484,7 +469,8 @@ func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) 
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *BillingAccountsListCall) Do() (*ListBillingAccountsResponse, error) {
+func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBillingAccountsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -576,14 +562,6 @@ func (c *BillingAccountsProjectsListCall) PageToken(pageToken string) *BillingAc
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *BillingAccountsProjectsListCall) QuotaUser(quotaUser string) *BillingAccountsProjectsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -636,7 +614,8 @@ func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response,
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *BillingAccountsProjectsListCall) Do() (*ListProjectBillingInfoResponse, error) {
+func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*ListProjectBillingInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -722,14 +701,6 @@ func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCal
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsGetBillingInfoCall) QuotaUser(quotaUser string) *ProjectsGetBillingInfoCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -782,7 +753,8 @@ func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, erro
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsGetBillingInfoCall) Do() (*ProjectBillingInfo, error) {
+func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectBillingInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -882,14 +854,6 @@ func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *Pro
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsUpdateBillingInfoCall) QuotaUser(quotaUser string) *ProjectsUpdateBillingInfoCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -935,7 +899,8 @@ func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, e
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsUpdateBillingInfoCall) Do() (*ProjectBillingInfo, error) {
+func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectBillingInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

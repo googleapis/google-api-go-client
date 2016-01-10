@@ -1230,14 +1230,6 @@ func (r *ClientMessagesService) Log(logmessagerequest *LogMessageRequest) *Clien
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ClientMessagesLogCall) QuotaUser(quotaUser string) *ClientMessagesLogCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1281,7 +1273,8 @@ func (c *ClientMessagesLogCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ClientMessagesLogCall) Do() (*LogMessageResponse, error) {
+func (c *ClientMessagesLogCall) Do(opts ...googleapi.CallOption) (*LogMessageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1365,14 +1358,6 @@ func (c *CompaniesGetCall) CurrencyCode(currencyCode string) *CompaniesGetCall {
 // given address respectively.
 func (c *CompaniesGetCall) OrderBy(orderBy string) *CompaniesGetCall {
 	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *CompaniesGetCall) QuotaUser(quotaUser string) *CompaniesGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -1495,7 +1480,8 @@ func (c *CompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CompaniesGetCall) Do() (*GetCompanyResponse, error) {
+func (c *CompaniesGetCall) Do(opts ...googleapi.CallOption) (*GetCompanyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1761,14 +1747,6 @@ func (c *CompaniesListCall) PageToken(pageToken string) *CompaniesListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *CompaniesListCall) QuotaUser(quotaUser string) *CompaniesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // RequestMetadataExperimentIds sets the optional parameter
 // "requestMetadata.experimentIds": Experiment IDs the current request
 // belongs to.
@@ -1908,7 +1886,8 @@ func (c *CompaniesListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CompaniesListCall) Do() (*ListCompaniesResponse, error) {
+func (c *CompaniesListCall) Do(opts ...googleapi.CallOption) (*ListCompaniesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2129,14 +2108,6 @@ func (r *CompaniesLeadsService) Create(companyId string, createleadrequest *Crea
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *CompaniesLeadsCreateCall) QuotaUser(quotaUser string) *CompaniesLeadsCreateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2182,7 +2153,8 @@ func (c *CompaniesLeadsCreateCall) doRequest(alt string) (*http.Response, error)
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CompaniesLeadsCreateCall) Do() (*CreateLeadResponse, error) {
+func (c *CompaniesLeadsCreateCall) Do(opts ...googleapi.CallOption) (*CreateLeadResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2252,14 +2224,6 @@ func (r *UserEventsService) Log(logusereventrequest *LogUserEventRequest) *UserE
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *UserEventsLogCall) QuotaUser(quotaUser string) *UserEventsLogCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2303,7 +2267,8 @@ func (c *UserEventsLogCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *UserEventsLogCall) Do() (*LogUserEventResponse, error) {
+func (c *UserEventsLogCall) Do(opts ...googleapi.CallOption) (*LogUserEventResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2358,14 +2323,6 @@ type UserStatesListCall struct {
 // List: Lists states for current user.
 func (r *UserStatesService) List() *UserStatesListCall {
 	c := &UserStatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *UserStatesListCall) QuotaUser(quotaUser string) *UserStatesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -2475,7 +2432,8 @@ func (c *UserStatesListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *UserStatesListCall) Do() (*ListUserStatesResponse, error) {
+func (c *UserStatesListCall) Do(opts ...googleapi.CallOption) (*ListUserStatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

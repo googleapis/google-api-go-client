@@ -401,23 +401,6 @@ func (r *HostedmodelsService) Predict(hostedModelName string, input *Input) *Hos
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *HostedmodelsPredictCall) QuotaUser(quotaUser string) *HostedmodelsPredictCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *HostedmodelsPredictCall) UserIP(userIP string) *HostedmodelsPredictCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -463,7 +446,8 @@ func (c *HostedmodelsPredictCall) doRequest(alt string) (*http.Response, error) 
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *HostedmodelsPredictCall) Do() (*Output, error) {
+func (c *HostedmodelsPredictCall) Do(opts ...googleapi.CallOption) (*Output, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -536,23 +520,6 @@ func (r *TrainedmodelsService) Delete(id string) *TrainedmodelsDeleteCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TrainedmodelsDeleteCall) QuotaUser(quotaUser string) *TrainedmodelsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TrainedmodelsDeleteCall) UserIP(userIP string) *TrainedmodelsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -586,7 +553,8 @@ func (c *TrainedmodelsDeleteCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "prediction.trainedmodels.delete" call.
-func (c *TrainedmodelsDeleteCall) Do() error {
+func (c *TrainedmodelsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -633,23 +601,6 @@ type TrainedmodelsGetCall struct {
 func (r *TrainedmodelsService) Get(id string) *TrainedmodelsGetCall {
 	c := &TrainedmodelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TrainedmodelsGetCall) QuotaUser(quotaUser string) *TrainedmodelsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TrainedmodelsGetCall) UserIP(userIP string) *TrainedmodelsGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -705,7 +656,8 @@ func (c *TrainedmodelsGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TrainedmodelsGetCall) Do() (*Training, error) {
+func (c *TrainedmodelsGetCall) Do(opts ...googleapi.CallOption) (*Training, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -775,23 +727,6 @@ func (r *TrainedmodelsService) Insert(training *Training) *TrainedmodelsInsertCa
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TrainedmodelsInsertCall) QuotaUser(quotaUser string) *TrainedmodelsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TrainedmodelsInsertCall) UserIP(userIP string) *TrainedmodelsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -835,7 +770,8 @@ func (c *TrainedmodelsInsertCall) doRequest(alt string) (*http.Response, error) 
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TrainedmodelsInsertCall) Do() (*Training, error) {
+func (c *TrainedmodelsInsertCall) Do(opts ...googleapi.CallOption) (*Training, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -902,23 +838,6 @@ func (r *TrainedmodelsService) Predict(id string, input *Input) *TrainedmodelsPr
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TrainedmodelsPredictCall) QuotaUser(quotaUser string) *TrainedmodelsPredictCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TrainedmodelsPredictCall) UserIP(userIP string) *TrainedmodelsPredictCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -964,7 +883,8 @@ func (c *TrainedmodelsPredictCall) doRequest(alt string) (*http.Response, error)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *TrainedmodelsPredictCall) Do() (*Output, error) {
+func (c *TrainedmodelsPredictCall) Do(opts ...googleapi.CallOption) (*Output, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1039,23 +959,6 @@ func (r *TrainedmodelsService) Update(id string, update *Update) *TrainedmodelsU
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TrainedmodelsUpdateCall) QuotaUser(quotaUser string) *TrainedmodelsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TrainedmodelsUpdateCall) UserIP(userIP string) *TrainedmodelsUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1101,7 +1004,8 @@ func (c *TrainedmodelsUpdateCall) doRequest(alt string) (*http.Response, error) 
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TrainedmodelsUpdateCall) Do() (*Training, error) {
+func (c *TrainedmodelsUpdateCall) Do(opts ...googleapi.CallOption) (*Training, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

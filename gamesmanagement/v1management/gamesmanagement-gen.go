@@ -654,23 +654,6 @@ func (r *AchievementsService) Reset(achievementId string) *AchievementsResetCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementsResetCall) QuotaUser(quotaUser string) *AchievementsResetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementsResetCall) UserIP(userIP string) *AchievementsResetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -710,7 +693,8 @@ func (c *AchievementsResetCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AchievementsResetCall) Do() (*AchievementResetResponse, error) {
+func (c *AchievementsResetCall) Do(opts ...googleapi.CallOption) (*AchievementResetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -781,23 +765,6 @@ func (r *AchievementsService) ResetAll() *AchievementsResetAllCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementsResetAllCall) QuotaUser(quotaUser string) *AchievementsResetAllCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementsResetAllCall) UserIP(userIP string) *AchievementsResetAllCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -835,7 +802,8 @@ func (c *AchievementsResetAllCall) doRequest(alt string) (*http.Response, error)
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AchievementsResetAllCall) Do() (*AchievementResetAllResponse, error) {
+func (c *AchievementsResetAllCall) Do(opts ...googleapi.CallOption) (*AchievementResetAllResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -895,23 +863,6 @@ func (r *AchievementsService) ResetAllForAllPlayers() *AchievementsResetAllForAl
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementsResetAllForAllPlayersCall) QuotaUser(quotaUser string) *AchievementsResetAllForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementsResetAllForAllPlayersCall) UserIP(userIP string) *AchievementsResetAllForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -943,7 +894,8 @@ func (c *AchievementsResetAllForAllPlayersCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "gamesManagement.achievements.resetAllForAllPlayers" call.
-func (c *AchievementsResetAllForAllPlayersCall) Do() error {
+func (c *AchievementsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -984,23 +936,6 @@ func (r *AchievementsService) ResetForAllPlayers(achievementId string) *Achievem
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementsResetForAllPlayersCall) QuotaUser(quotaUser string) *AchievementsResetForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementsResetForAllPlayersCall) UserIP(userIP string) *AchievementsResetForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1034,7 +969,8 @@ func (c *AchievementsResetForAllPlayersCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "gamesManagement.achievements.resetForAllPlayers" call.
-func (c *AchievementsResetForAllPlayersCall) Do() error {
+func (c *AchievementsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1086,23 +1022,6 @@ func (r *AchievementsService) ResetMultipleForAllPlayers(achievementresetmultipl
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementsResetMultipleForAllPlayersCall) QuotaUser(quotaUser string) *AchievementsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementsResetMultipleForAllPlayersCall) UserIP(userIP string) *AchievementsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1140,7 +1059,8 @@ func (c *AchievementsResetMultipleForAllPlayersCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "gamesManagement.achievements.resetMultipleForAllPlayers" call.
-func (c *AchievementsResetMultipleForAllPlayersCall) Do() error {
+func (c *AchievementsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1201,23 +1121,6 @@ func (c *ApplicationsListHiddenCall) PageToken(pageToken string) *ApplicationsLi
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ApplicationsListHiddenCall) QuotaUser(quotaUser string) *ApplicationsListHiddenCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ApplicationsListHiddenCall) UserIP(userIP string) *ApplicationsListHiddenCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1270,7 +1173,8 @@ func (c *ApplicationsListHiddenCall) doRequest(alt string) (*http.Response, erro
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ApplicationsListHiddenCall) Do() (*HiddenPlayerList, error) {
+func (c *ApplicationsListHiddenCall) Do(opts ...googleapi.CallOption) (*HiddenPlayerList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1357,23 +1261,6 @@ func (r *EventsService) Reset(eventId string) *EventsResetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *EventsResetCall) QuotaUser(quotaUser string) *EventsResetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *EventsResetCall) UserIP(userIP string) *EventsResetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1407,7 +1294,8 @@ func (c *EventsResetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gamesManagement.events.reset" call.
-func (c *EventsResetCall) Do() error {
+func (c *EventsResetCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1458,23 +1346,6 @@ func (r *EventsService) ResetAll() *EventsResetAllCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *EventsResetAllCall) QuotaUser(quotaUser string) *EventsResetAllCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *EventsResetAllCall) UserIP(userIP string) *EventsResetAllCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1506,7 +1377,8 @@ func (c *EventsResetAllCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gamesManagement.events.resetAll" call.
-func (c *EventsResetAllCall) Do() error {
+func (c *EventsResetAllCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1545,23 +1417,6 @@ func (r *EventsService) ResetAllForAllPlayers() *EventsResetAllForAllPlayersCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *EventsResetAllForAllPlayersCall) QuotaUser(quotaUser string) *EventsResetAllForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *EventsResetAllForAllPlayersCall) UserIP(userIP string) *EventsResetAllForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1593,7 +1448,8 @@ func (c *EventsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "gamesManagement.events.resetAllForAllPlayers" call.
-func (c *EventsResetAllForAllPlayersCall) Do() error {
+func (c *EventsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1635,23 +1491,6 @@ func (r *EventsService) ResetForAllPlayers(eventId string) *EventsResetForAllPla
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *EventsResetForAllPlayersCall) QuotaUser(quotaUser string) *EventsResetForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *EventsResetForAllPlayersCall) UserIP(userIP string) *EventsResetForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1685,7 +1524,8 @@ func (c *EventsResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "gamesManagement.events.resetForAllPlayers" call.
-func (c *EventsResetForAllPlayersCall) Do() error {
+func (c *EventsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1738,23 +1578,6 @@ func (r *EventsService) ResetMultipleForAllPlayers(eventsresetmultipleforallrequ
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *EventsResetMultipleForAllPlayersCall) QuotaUser(quotaUser string) *EventsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *EventsResetMultipleForAllPlayersCall) UserIP(userIP string) *EventsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1792,7 +1615,8 @@ func (c *EventsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "gamesManagement.events.resetMultipleForAllPlayers" call.
-func (c *EventsResetMultipleForAllPlayersCall) Do() error {
+func (c *EventsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1838,23 +1662,6 @@ func (r *PlayersService) Hide(applicationId string, playerId string) *PlayersHid
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *PlayersHideCall) QuotaUser(quotaUser string) *PlayersHideCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *PlayersHideCall) UserIP(userIP string) *PlayersHideCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1889,7 +1696,8 @@ func (c *PlayersHideCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gamesManagement.players.hide" call.
-func (c *PlayersHideCall) Do() error {
+func (c *PlayersHideCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1950,23 +1758,6 @@ func (r *PlayersService) Unhide(applicationId string, playerId string) *PlayersU
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *PlayersUnhideCall) QuotaUser(quotaUser string) *PlayersUnhideCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *PlayersUnhideCall) UserIP(userIP string) *PlayersUnhideCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2001,7 +1792,8 @@ func (c *PlayersUnhideCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gamesManagement.players.unhide" call.
-func (c *PlayersUnhideCall) Do() error {
+func (c *PlayersUnhideCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2060,23 +1852,6 @@ func (r *QuestsService) Reset(questId string) *QuestsResetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *QuestsResetCall) QuotaUser(quotaUser string) *QuestsResetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *QuestsResetCall) UserIP(userIP string) *QuestsResetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2110,7 +1885,8 @@ func (c *QuestsResetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gamesManagement.quests.reset" call.
-func (c *QuestsResetCall) Do() error {
+func (c *QuestsResetCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2160,23 +1936,6 @@ func (r *QuestsService) ResetAll() *QuestsResetAllCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *QuestsResetAllCall) QuotaUser(quotaUser string) *QuestsResetAllCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *QuestsResetAllCall) UserIP(userIP string) *QuestsResetAllCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2208,7 +1967,8 @@ func (c *QuestsResetAllCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gamesManagement.quests.resetAll" call.
-func (c *QuestsResetAllCall) Do() error {
+func (c *QuestsResetAllCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2246,23 +2006,6 @@ func (r *QuestsService) ResetAllForAllPlayers() *QuestsResetAllForAllPlayersCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *QuestsResetAllForAllPlayersCall) QuotaUser(quotaUser string) *QuestsResetAllForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *QuestsResetAllForAllPlayersCall) UserIP(userIP string) *QuestsResetAllForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2294,7 +2037,8 @@ func (c *QuestsResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "gamesManagement.quests.resetAllForAllPlayers" call.
-func (c *QuestsResetAllForAllPlayersCall) Do() error {
+func (c *QuestsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2335,23 +2079,6 @@ func (r *QuestsService) ResetForAllPlayers(questId string) *QuestsResetForAllPla
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *QuestsResetForAllPlayersCall) QuotaUser(quotaUser string) *QuestsResetForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *QuestsResetForAllPlayersCall) UserIP(userIP string) *QuestsResetForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2385,7 +2112,8 @@ func (c *QuestsResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "gamesManagement.quests.resetForAllPlayers" call.
-func (c *QuestsResetForAllPlayersCall) Do() error {
+func (c *QuestsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2437,23 +2165,6 @@ func (r *QuestsService) ResetMultipleForAllPlayers(questsresetmultipleforallrequ
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *QuestsResetMultipleForAllPlayersCall) QuotaUser(quotaUser string) *QuestsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *QuestsResetMultipleForAllPlayersCall) UserIP(userIP string) *QuestsResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2491,7 +2202,8 @@ func (c *QuestsResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "gamesManagement.quests.resetMultipleForAllPlayers" call.
-func (c *QuestsResetMultipleForAllPlayersCall) Do() error {
+func (c *QuestsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2533,23 +2245,6 @@ func (r *RoomsService) Reset() *RoomsResetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RoomsResetCall) QuotaUser(quotaUser string) *RoomsResetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RoomsResetCall) UserIP(userIP string) *RoomsResetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2581,7 +2276,8 @@ func (c *RoomsResetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gamesManagement.rooms.reset" call.
-func (c *RoomsResetCall) Do() error {
+func (c *RoomsResetCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2620,23 +2316,6 @@ func (r *RoomsService) ResetForAllPlayers() *RoomsResetForAllPlayersCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RoomsResetForAllPlayersCall) QuotaUser(quotaUser string) *RoomsResetForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RoomsResetForAllPlayersCall) UserIP(userIP string) *RoomsResetForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2668,7 +2347,8 @@ func (c *RoomsResetForAllPlayersCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "gamesManagement.rooms.resetForAllPlayers" call.
-func (c *RoomsResetForAllPlayersCall) Do() error {
+func (c *RoomsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2706,23 +2386,6 @@ type ScoresResetCall struct {
 func (r *ScoresService) Reset(leaderboardId string) *ScoresResetCall {
 	c := &ScoresResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ScoresResetCall) QuotaUser(quotaUser string) *ScoresResetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ScoresResetCall) UserIP(userIP string) *ScoresResetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2765,7 +2428,8 @@ func (c *ScoresResetCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ScoresResetCall) Do() (*PlayerScoreResetResponse, error) {
+func (c *ScoresResetCall) Do(opts ...googleapi.CallOption) (*PlayerScoreResetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2836,23 +2500,6 @@ func (r *ScoresService) ResetAll() *ScoresResetAllCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ScoresResetAllCall) QuotaUser(quotaUser string) *ScoresResetAllCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ScoresResetAllCall) UserIP(userIP string) *ScoresResetAllCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2890,7 +2537,8 @@ func (c *ScoresResetAllCall) doRequest(alt string) (*http.Response, error) {
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ScoresResetAllCall) Do() (*PlayerScoreResetAllResponse, error) {
+func (c *ScoresResetAllCall) Do(opts ...googleapi.CallOption) (*PlayerScoreResetAllResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2950,23 +2598,6 @@ func (r *ScoresService) ResetAllForAllPlayers() *ScoresResetAllForAllPlayersCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ScoresResetAllForAllPlayersCall) QuotaUser(quotaUser string) *ScoresResetAllForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ScoresResetAllForAllPlayersCall) UserIP(userIP string) *ScoresResetAllForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2998,7 +2629,8 @@ func (c *ScoresResetAllForAllPlayersCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "gamesManagement.scores.resetAllForAllPlayers" call.
-func (c *ScoresResetAllForAllPlayersCall) Do() error {
+func (c *ScoresResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -3039,23 +2671,6 @@ func (r *ScoresService) ResetForAllPlayers(leaderboardId string) *ScoresResetFor
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ScoresResetForAllPlayersCall) QuotaUser(quotaUser string) *ScoresResetForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ScoresResetForAllPlayersCall) UserIP(userIP string) *ScoresResetForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3089,7 +2704,8 @@ func (c *ScoresResetForAllPlayersCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "gamesManagement.scores.resetForAllPlayers" call.
-func (c *ScoresResetForAllPlayersCall) Do() error {
+func (c *ScoresResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -3142,23 +2758,6 @@ func (r *ScoresService) ResetMultipleForAllPlayers(scoresresetmultipleforallrequ
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ScoresResetMultipleForAllPlayersCall) QuotaUser(quotaUser string) *ScoresResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ScoresResetMultipleForAllPlayersCall) UserIP(userIP string) *ScoresResetMultipleForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3196,7 +2795,8 @@ func (c *ScoresResetMultipleForAllPlayersCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "gamesManagement.scores.resetMultipleForAllPlayers" call.
-func (c *ScoresResetMultipleForAllPlayersCall) Do() error {
+func (c *ScoresResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -3237,23 +2837,6 @@ func (r *TurnBasedMatchesService) Reset() *TurnBasedMatchesResetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TurnBasedMatchesResetCall) QuotaUser(quotaUser string) *TurnBasedMatchesResetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TurnBasedMatchesResetCall) UserIP(userIP string) *TurnBasedMatchesResetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3285,7 +2868,8 @@ func (c *TurnBasedMatchesResetCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "gamesManagement.turnBasedMatches.reset" call.
-func (c *TurnBasedMatchesResetCall) Do() error {
+func (c *TurnBasedMatchesResetCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -3325,23 +2909,6 @@ func (r *TurnBasedMatchesService) ResetForAllPlayers() *TurnBasedMatchesResetFor
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TurnBasedMatchesResetForAllPlayersCall) QuotaUser(quotaUser string) *TurnBasedMatchesResetForAllPlayersCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TurnBasedMatchesResetForAllPlayersCall) UserIP(userIP string) *TurnBasedMatchesResetForAllPlayersCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3373,7 +2940,8 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "gamesManagement.turnBasedMatches.resetForAllPlayers" call.
-func (c *TurnBasedMatchesResetForAllPlayersCall) Do() error {
+func (c *TurnBasedMatchesResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err

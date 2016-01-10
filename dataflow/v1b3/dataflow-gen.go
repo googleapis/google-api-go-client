@@ -3041,14 +3041,6 @@ func (r *ProjectsService) WorkerMessages(projectId string, sendworkermessagesreq
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsWorkerMessagesCall) QuotaUser(quotaUser string) *ProjectsWorkerMessagesCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3094,7 +3086,8 @@ func (c *ProjectsWorkerMessagesCall) doRequest(alt string) (*http.Response, erro
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsWorkerMessagesCall) Do() (*SendWorkerMessagesResponse, error) {
+func (c *ProjectsWorkerMessagesCall) Do(opts ...googleapi.CallOption) (*SendWorkerMessagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3170,14 +3163,6 @@ func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCr
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsJobsCreateCall) QuotaUser(quotaUser string) *ProjectsJobsCreateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ReplaceJobId sets the optional parameter "replaceJobId": DEPRECATED.
 // This field is now on the Job message.
 func (c *ProjectsJobsCreateCall) ReplaceJobId(replaceJobId string) *ProjectsJobsCreateCall {
@@ -3242,7 +3227,8 @@ func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ProjectsJobsCreateCall) Do() (*Job, error) {
+func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3334,14 +3320,6 @@ func (r *ProjectsJobsService) Get(projectId string, jobId string) *ProjectsJobsG
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsJobsGetCall) QuotaUser(quotaUser string) *ProjectsJobsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // View sets the optional parameter "view": Level of information
 // requested in response.
 //
@@ -3407,7 +3385,8 @@ func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ProjectsJobsGetCall) Do() (*Job, error) {
+func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3498,14 +3477,6 @@ func (r *ProjectsJobsService) GetMetrics(projectId string, jobId string) *Projec
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsJobsGetMetricsCall) QuotaUser(quotaUser string) *ProjectsJobsGetMetricsCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // StartTime sets the optional parameter "startTime": Return only metric
 // data that has changed since this time. Default is to return all
 // information about all metrics for the job.
@@ -3567,7 +3538,8 @@ func (c *ProjectsJobsGetMetricsCall) doRequest(alt string) (*http.Response, erro
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsJobsGetMetricsCall) Do() (*JobMetrics, error) {
+func (c *ProjectsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (*JobMetrics, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3668,14 +3640,6 @@ func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsJobsListCall) QuotaUser(quotaUser string) *ProjectsJobsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // View sets the optional parameter "view": Level of information
 // requested in response. Default is SUMMARY.
 //
@@ -3740,7 +3704,8 @@ func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsJobsListCall) Do() (*ListJobsResponse, error) {
+func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3836,14 +3801,6 @@ func (r *ProjectsJobsService) Update(projectId string, jobId string, job *Job) *
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsJobsUpdateCall) QuotaUser(quotaUser string) *ProjectsJobsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3890,7 +3847,8 @@ func (c *ProjectsJobsUpdateCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ProjectsJobsUpdateCall) Do() (*Job, error) {
+func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4014,14 +3972,6 @@ func (c *ProjectsJobsMessagesListCall) PageToken(pageToken string) *ProjectsJobs
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsJobsMessagesListCall) QuotaUser(quotaUser string) *ProjectsJobsMessagesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // StartTime sets the optional parameter "startTime": If specified,
 // return only messages with timestamps >= start_time. The default is
 // the job creation time (i.e. beginning of messages).
@@ -4083,7 +4033,8 @@ func (c *ProjectsJobsMessagesListCall) doRequest(alt string) (*http.Response, er
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsJobsMessagesListCall) Do() (*ListJobMessagesResponse, error) {
+func (c *ProjectsJobsMessagesListCall) Do(opts ...googleapi.CallOption) (*ListJobMessagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4199,14 +4150,6 @@ func (r *ProjectsJobsWorkItemsService) Lease(projectId string, jobId string, lea
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsJobsWorkItemsLeaseCall) QuotaUser(quotaUser string) *ProjectsJobsWorkItemsLeaseCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4253,7 +4196,8 @@ func (c *ProjectsJobsWorkItemsLeaseCall) doRequest(alt string) (*http.Response, 
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsJobsWorkItemsLeaseCall) Do() (*LeaseWorkItemResponse, error) {
+func (c *ProjectsJobsWorkItemsLeaseCall) Do(opts ...googleapi.CallOption) (*LeaseWorkItemResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4339,14 +4283,6 @@ func (r *ProjectsJobsWorkItemsService) ReportStatus(projectId string, jobId stri
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *ProjectsJobsWorkItemsReportStatusCall) QuotaUser(quotaUser string) *ProjectsJobsWorkItemsReportStatusCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4393,7 +4329,8 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) doRequest(alt string) (*http.Res
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsJobsWorkItemsReportStatusCall) Do() (*ReportWorkItemStatusResponse, error) {
+func (c *ProjectsJobsWorkItemsReportStatusCall) Do(opts ...googleapi.CallOption) (*ReportWorkItemStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

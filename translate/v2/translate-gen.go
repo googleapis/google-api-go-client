@@ -265,23 +265,6 @@ func (r *DetectionsService) List(q []string) *DetectionsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *DetectionsListCall) QuotaUser(quotaUser string) *DetectionsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *DetectionsListCall) UserIP(userIP string) *DetectionsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -332,7 +315,8 @@ func (c *DetectionsListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
+func (c *DetectionsListCall) Do(opts ...googleapi.CallOption) (*DetectionsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -399,27 +383,10 @@ func (r *LanguagesService) List() *LanguagesListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LanguagesListCall) QuotaUser(quotaUser string) *LanguagesListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Target sets the optional parameter "target": the language and
 // collation in which the localized results should be returned
 func (c *LanguagesListCall) Target(target string) *LanguagesListCall {
 	c.urlParams_.Set("target", target)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LanguagesListCall) UserIP(userIP string) *LanguagesListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -473,7 +440,8 @@ func (c *LanguagesListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LanguagesListCall) Do() (*LanguagesListResponse, error) {
+func (c *LanguagesListCall) Do(opts ...googleapi.CallOption) (*LanguagesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -554,27 +522,10 @@ func (c *TranslationsListCall) Format(format string) *TranslationsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TranslationsListCall) QuotaUser(quotaUser string) *TranslationsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Source sets the optional parameter "source": The source language of
 // the text
 func (c *TranslationsListCall) Source(source string) *TranslationsListCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TranslationsListCall) UserIP(userIP string) *TranslationsListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -628,7 +579,8 @@ func (c *TranslationsListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
+func (c *TranslationsListCall) Do(opts ...googleapi.CallOption) (*TranslationsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

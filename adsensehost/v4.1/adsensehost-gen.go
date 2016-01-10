@@ -896,23 +896,6 @@ func (r *AccountsService) Get(accountId string) *AccountsGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsGetCall) QuotaUser(quotaUser string) *AccountsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsGetCall) UserIP(userIP string) *AccountsGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -965,7 +948,8 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsGetCall) Do() (*Account, error) {
+func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1036,23 +1020,6 @@ func (r *AccountsService) List(filterAdClientId []string) *AccountsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsListCall) QuotaUser(quotaUser string) *AccountsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsListCall) UserIP(userIP string) *AccountsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1103,7 +1070,8 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *AccountsListCall) Do() (*Accounts, error) {
+func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*Accounts, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1178,23 +1146,6 @@ func (r *AccountsAdclientsService) Get(accountId string, adClientId string) *Acc
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdclientsGetCall) QuotaUser(quotaUser string) *AccountsAdclientsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdclientsGetCall) UserIP(userIP string) *AccountsAdclientsGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1248,7 +1199,8 @@ func (c *AccountsAdclientsGetCall) doRequest(alt string) (*http.Response, error)
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *AccountsAdclientsGetCall) Do() (*AdClient, error) {
+func (c *AccountsAdclientsGetCall) Do(opts ...googleapi.CallOption) (*AdClient, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1342,23 +1294,6 @@ func (c *AccountsAdclientsListCall) PageToken(pageToken string) *AccountsAdclien
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdclientsListCall) QuotaUser(quotaUser string) *AccountsAdclientsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdclientsListCall) UserIP(userIP string) *AccountsAdclientsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1411,7 +1346,8 @@ func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *AccountsAdclientsListCall) Do() (*AdClients, error) {
+func (c *AccountsAdclientsListCall) Do(opts ...googleapi.CallOption) (*AdClients, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1499,23 +1435,6 @@ func (r *AccountsAdunitsService) Delete(accountId string, adClientId string, adU
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdunitsDeleteCall) QuotaUser(quotaUser string) *AccountsAdunitsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdunitsDeleteCall) UserIP(userIP string) *AccountsAdunitsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1557,7 +1476,8 @@ func (c *AccountsAdunitsDeleteCall) doRequest(alt string) (*http.Response, error
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsAdunitsDeleteCall) Do() (*AdUnit, error) {
+func (c *AccountsAdunitsDeleteCall) Do(opts ...googleapi.CallOption) (*AdUnit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1646,23 +1566,6 @@ func (r *AccountsAdunitsService) Get(accountId string, adClientId string, adUnit
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdunitsGetCall) QuotaUser(quotaUser string) *AccountsAdunitsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdunitsGetCall) UserIP(userIP string) *AccountsAdunitsGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1717,7 +1620,8 @@ func (c *AccountsAdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsAdunitsGetCall) Do() (*AdUnit, error) {
+func (c *AccountsAdunitsGetCall) Do(opts ...googleapi.CallOption) (*AdUnit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1814,23 +1718,6 @@ func (c *AccountsAdunitsGetAdCodeCall) HostCustomChannelId(hostCustomChannelId .
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdunitsGetAdCodeCall) QuotaUser(quotaUser string) *AccountsAdunitsGetAdCodeCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdunitsGetAdCodeCall) UserIP(userIP string) *AccountsAdunitsGetAdCodeCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1885,7 +1772,8 @@ func (c *AccountsAdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, er
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsAdunitsGetAdCodeCall) Do() (*AdCode, error) {
+func (c *AccountsAdunitsGetAdCodeCall) Do(opts ...googleapi.CallOption) (*AdCode, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1980,23 +1868,6 @@ func (r *AccountsAdunitsService) Insert(accountId string, adClientId string, adu
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdunitsInsertCall) QuotaUser(quotaUser string) *AccountsAdunitsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdunitsInsertCall) UserIP(userIP string) *AccountsAdunitsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2043,7 +1914,8 @@ func (c *AccountsAdunitsInsertCall) doRequest(alt string) (*http.Response, error
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsAdunitsInsertCall) Do() (*AdUnit, error) {
+func (c *AccountsAdunitsInsertCall) Do(opts ...googleapi.CallOption) (*AdUnit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2149,23 +2021,6 @@ func (c *AccountsAdunitsListCall) PageToken(pageToken string) *AccountsAdunitsLi
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdunitsListCall) QuotaUser(quotaUser string) *AccountsAdunitsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdunitsListCall) UserIP(userIP string) *AccountsAdunitsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2219,7 +2074,8 @@ func (c *AccountsAdunitsListCall) doRequest(alt string) (*http.Response, error) 
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsAdunitsListCall) Do() (*AdUnits, error) {
+func (c *AccountsAdunitsListCall) Do(opts ...googleapi.CallOption) (*AdUnits, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2320,23 +2176,6 @@ func (r *AccountsAdunitsService) Patch(accountId string, adClientId string, adUn
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdunitsPatchCall) QuotaUser(quotaUser string) *AccountsAdunitsPatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdunitsPatchCall) UserIP(userIP string) *AccountsAdunitsPatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2383,7 +2222,8 @@ func (c *AccountsAdunitsPatchCall) doRequest(alt string) (*http.Response, error)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsAdunitsPatchCall) Do() (*AdUnit, error) {
+func (c *AccountsAdunitsPatchCall) Do(opts ...googleapi.CallOption) (*AdUnit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2475,23 +2315,6 @@ func (r *AccountsAdunitsService) Update(accountId string, adClientId string, adu
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsAdunitsUpdateCall) QuotaUser(quotaUser string) *AccountsAdunitsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsAdunitsUpdateCall) UserIP(userIP string) *AccountsAdunitsUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2538,7 +2361,8 @@ func (c *AccountsAdunitsUpdateCall) doRequest(alt string) (*http.Response, error
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsAdunitsUpdateCall) Do() (*AdUnit, error) {
+func (c *AccountsAdunitsUpdateCall) Do(opts ...googleapi.CallOption) (*AdUnit, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2659,15 +2483,6 @@ func (c *AccountsReportsGenerateCall) Metric(metric ...string) *AccountsReportsG
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AccountsReportsGenerateCall) QuotaUser(quotaUser string) *AccountsReportsGenerateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Sort sets the optional parameter "sort": The name of a dimension or
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
@@ -2681,14 +2496,6 @@ func (c *AccountsReportsGenerateCall) Sort(sort ...string) *AccountsReportsGener
 // first row of report data to return.
 func (c *AccountsReportsGenerateCall) StartIndex(startIndex int64) *AccountsReportsGenerateCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AccountsReportsGenerateCall) UserIP(userIP string) *AccountsReportsGenerateCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2744,7 +2551,8 @@ func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, err
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *AccountsReportsGenerateCall) Do() (*Report, error) {
+func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) (*Report, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2882,23 +2690,6 @@ func (r *AdclientsService) Get(adClientId string) *AdclientsGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AdclientsGetCall) QuotaUser(quotaUser string) *AdclientsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AdclientsGetCall) UserIP(userIP string) *AdclientsGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2951,7 +2742,8 @@ func (c *AdclientsGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *AdclientsGetCall) Do() (*AdClient, error) {
+func (c *AdclientsGetCall) Do(opts ...googleapi.CallOption) (*AdClient, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3036,23 +2828,6 @@ func (c *AdclientsListCall) PageToken(pageToken string) *AdclientsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AdclientsListCall) QuotaUser(quotaUser string) *AdclientsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AdclientsListCall) UserIP(userIP string) *AdclientsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3103,7 +2878,8 @@ func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *AdclientsListCall) Do() (*AdClients, error) {
+func (c *AdclientsListCall) Do(opts ...googleapi.CallOption) (*AdClients, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3179,23 +2955,6 @@ func (r *AssociationsessionsService) Start(productCode []string, websiteUrl stri
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AssociationsessionsStartCall) QuotaUser(quotaUser string) *AssociationsessionsStartCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AssociationsessionsStartCall) UserIP(userIP string) *AssociationsessionsStartCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // UserLocale sets the optional parameter "userLocale": The preferred
 // locale of the user.
 func (c *AssociationsessionsStartCall) UserLocale(userLocale string) *AssociationsessionsStartCall {
@@ -3260,7 +3019,8 @@ func (c *AssociationsessionsStartCall) doRequest(alt string) (*http.Response, er
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AssociationsessionsStartCall) Do() (*AssociationSession, error) {
+func (c *AssociationsessionsStartCall) Do(opts ...googleapi.CallOption) (*AssociationSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3363,23 +3123,6 @@ func (r *AssociationsessionsService) Verify(token string) *AssociationsessionsVe
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AssociationsessionsVerifyCall) QuotaUser(quotaUser string) *AssociationsessionsVerifyCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AssociationsessionsVerifyCall) UserIP(userIP string) *AssociationsessionsVerifyCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3430,7 +3173,8 @@ func (c *AssociationsessionsVerifyCall) doRequest(alt string) (*http.Response, e
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AssociationsessionsVerifyCall) Do() (*AssociationSession, error) {
+func (c *AssociationsessionsVerifyCall) Do(opts ...googleapi.CallOption) (*AssociationSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3503,23 +3247,6 @@ func (r *CustomchannelsService) Delete(adClientId string, customChannelId string
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CustomchannelsDeleteCall) QuotaUser(quotaUser string) *CustomchannelsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CustomchannelsDeleteCall) UserIP(userIP string) *CustomchannelsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3560,7 +3287,8 @@ func (c *CustomchannelsDeleteCall) doRequest(alt string) (*http.Response, error)
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CustomchannelsDeleteCall) Do() (*CustomChannel, error) {
+func (c *CustomchannelsDeleteCall) Do(opts ...googleapi.CallOption) (*CustomChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3640,23 +3368,6 @@ func (r *CustomchannelsService) Get(adClientId string, customChannelId string) *
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CustomchannelsGetCall) QuotaUser(quotaUser string) *CustomchannelsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CustomchannelsGetCall) UserIP(userIP string) *CustomchannelsGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3710,7 +3421,8 @@ func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CustomchannelsGetCall) Do() (*CustomChannel, error) {
+func (c *CustomchannelsGetCall) Do(opts ...googleapi.CallOption) (*CustomChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3789,23 +3501,6 @@ func (r *CustomchannelsService) Insert(adClientId string, customchannel *CustomC
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CustomchannelsInsertCall) QuotaUser(quotaUser string) *CustomchannelsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CustomchannelsInsertCall) UserIP(userIP string) *CustomchannelsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3851,7 +3546,8 @@ func (c *CustomchannelsInsertCall) doRequest(alt string) (*http.Response, error)
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CustomchannelsInsertCall) Do() (*CustomChannel, error) {
+func (c *CustomchannelsInsertCall) Do(opts ...googleapi.CallOption) (*CustomChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3942,23 +3638,6 @@ func (c *CustomchannelsListCall) PageToken(pageToken string) *CustomchannelsList
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CustomchannelsListCall) QuotaUser(quotaUser string) *CustomchannelsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CustomchannelsListCall) UserIP(userIP string) *CustomchannelsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4011,7 +3690,8 @@ func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CustomchannelsListCall) Do() (*CustomChannels, error) {
+func (c *CustomchannelsListCall) Do(opts ...googleapi.CallOption) (*CustomChannels, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4098,23 +3778,6 @@ func (r *CustomchannelsService) Patch(adClientId string, customChannelId string,
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CustomchannelsPatchCall) QuotaUser(quotaUser string) *CustomchannelsPatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CustomchannelsPatchCall) UserIP(userIP string) *CustomchannelsPatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4160,7 +3823,8 @@ func (c *CustomchannelsPatchCall) doRequest(alt string) (*http.Response, error) 
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CustomchannelsPatchCall) Do() (*CustomChannel, error) {
+func (c *CustomchannelsPatchCall) Do(opts ...googleapi.CallOption) (*CustomChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4242,23 +3906,6 @@ func (r *CustomchannelsService) Update(adClientId string, customchannel *CustomC
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *CustomchannelsUpdateCall) QuotaUser(quotaUser string) *CustomchannelsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *CustomchannelsUpdateCall) UserIP(userIP string) *CustomchannelsUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4304,7 +3951,8 @@ func (c *CustomchannelsUpdateCall) doRequest(alt string) (*http.Response, error)
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *CustomchannelsUpdateCall) Do() (*CustomChannel, error) {
+func (c *CustomchannelsUpdateCall) Do(opts ...googleapi.CallOption) (*CustomChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4416,15 +4064,6 @@ func (c *ReportsGenerateCall) Metric(metric ...string) *ReportsGenerateCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ReportsGenerateCall) QuotaUser(quotaUser string) *ReportsGenerateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Sort sets the optional parameter "sort": The name of a dimension or
 // metric to sort the resulting report on, optionally prefixed with "+"
 // to sort ascending or "-" to sort descending. If no prefix is
@@ -4438,14 +4077,6 @@ func (c *ReportsGenerateCall) Sort(sort ...string) *ReportsGenerateCall {
 // first row of report data to return.
 func (c *ReportsGenerateCall) StartIndex(startIndex int64) *ReportsGenerateCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ReportsGenerateCall) UserIP(userIP string) *ReportsGenerateCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4499,7 +4130,8 @@ func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ReportsGenerateCall) Do() (*Report, error) {
+func (c *ReportsGenerateCall) Do(opts ...googleapi.CallOption) (*Report, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4630,23 +4262,6 @@ func (r *UrlchannelsService) Delete(adClientId string, urlChannelId string) *Url
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *UrlchannelsDeleteCall) QuotaUser(quotaUser string) *UrlchannelsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *UrlchannelsDeleteCall) UserIP(userIP string) *UrlchannelsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4687,7 +4302,8 @@ func (c *UrlchannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *UrlchannelsDeleteCall) Do() (*UrlChannel, error) {
+func (c *UrlchannelsDeleteCall) Do(opts ...googleapi.CallOption) (*UrlChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4766,23 +4382,6 @@ func (r *UrlchannelsService) Insert(adClientId string, urlchannel *UrlChannel) *
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *UrlchannelsInsertCall) QuotaUser(quotaUser string) *UrlchannelsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *UrlchannelsInsertCall) UserIP(userIP string) *UrlchannelsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4828,7 +4427,8 @@ func (c *UrlchannelsInsertCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *UrlchannelsInsertCall) Do() (*UrlChannel, error) {
+func (c *UrlchannelsInsertCall) Do(opts ...googleapi.CallOption) (*UrlChannel, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4918,23 +4518,6 @@ func (c *UrlchannelsListCall) PageToken(pageToken string) *UrlchannelsListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *UrlchannelsListCall) QuotaUser(quotaUser string) *UrlchannelsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *UrlchannelsListCall) UserIP(userIP string) *UrlchannelsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4987,7 +4570,8 @@ func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *UrlchannelsListCall) Do() (*UrlChannels, error) {
+func (c *UrlchannelsListCall) Do(opts ...googleapi.CallOption) (*UrlChannels, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

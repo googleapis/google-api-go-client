@@ -246,14 +246,6 @@ func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *MediaDownloadCall) QuotaUser(quotaUser string) *MediaDownloadCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -302,7 +294,8 @@ func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 // Download fetches the API endpoint's "media" value, instead of the normal
 // API response value. If the returned error is nil, the Response is guaranteed to
 // have a 2xx status code. Callers must close the Response.Body as usual.
-func (c *MediaDownloadCall) Download() (*http.Response, error) {
+func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("media")
 	if err != nil {
 		return nil, err
@@ -321,7 +314,8 @@ func (c *MediaDownloadCall) Download() (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *MediaDownloadCall) Do() (*Media, error) {
+func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -401,14 +395,6 @@ func (r *MediaService) Upload(resourceName string, media *Media) *MediaUploadCal
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
 	c.media = media
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *MediaUploadCall) QuotaUser(quotaUser string) *MediaUploadCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
 	return c
 }
 
@@ -511,7 +497,8 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *MediaUploadCall) Do() (*Media, error) {
+func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

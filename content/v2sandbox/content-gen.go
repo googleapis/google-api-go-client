@@ -1876,23 +1876,6 @@ func (r *OrdersService) Acknowledge(merchantId uint64, orderId string, ordersack
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersAcknowledgeCall) QuotaUser(quotaUser string) *OrdersAcknowledgeCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersAcknowledgeCall) UserIP(userIP string) *OrdersAcknowledgeCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1939,7 +1922,8 @@ func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersAcknowledgeCall) Do() (*OrdersAcknowledgeResponse, error) {
+func (c *OrdersAcknowledgeCall) Do(opts ...googleapi.CallOption) (*OrdersAcknowledgeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2023,23 +2007,6 @@ func (r *OrdersService) Advancetestorder(merchantId uint64, orderId string) *Ord
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersAdvancetestorderCall) QuotaUser(quotaUser string) *OrdersAdvancetestorderCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersAdvancetestorderCall) UserIP(userIP string) *OrdersAdvancetestorderCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2080,7 +2047,8 @@ func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, erro
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersAdvancetestorderCall) Do() (*OrdersAdvanceTestOrderResponse, error) {
+func (c *OrdersAdvancetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersAdvanceTestOrderResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2162,23 +2130,6 @@ func (r *OrdersService) Cancel(merchantId uint64, orderId string, orderscancelre
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersCancelCall) QuotaUser(quotaUser string) *OrdersCancelCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersCancelCall) UserIP(userIP string) *OrdersCancelCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2225,7 +2176,8 @@ func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersCancelCall) Do() (*OrdersCancelResponse, error) {
+func (c *OrdersCancelCall) Do(opts ...googleapi.CallOption) (*OrdersCancelResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2310,23 +2262,6 @@ func (r *OrdersService) Cancellineitem(merchantId uint64, orderId string, orders
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersCancellineitemCall) QuotaUser(quotaUser string) *OrdersCancellineitemCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersCancellineitemCall) UserIP(userIP string) *OrdersCancellineitemCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2373,7 +2308,8 @@ func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error)
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersCancellineitemCall) Do() (*OrdersCancelLineItemResponse, error) {
+func (c *OrdersCancellineitemCall) Do(opts ...googleapi.CallOption) (*OrdersCancelLineItemResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2456,23 +2392,6 @@ func (r *OrdersService) Createtestorder(merchantId uint64, orderscreatetestorder
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersCreatetestorderCall) QuotaUser(quotaUser string) *OrdersCreatetestorderCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersCreatetestorderCall) UserIP(userIP string) *OrdersCreatetestorderCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2518,7 +2437,8 @@ func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersCreatetestorderCall) Do() (*OrdersCreateTestOrderResponse, error) {
+func (c *OrdersCreatetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersCreateTestOrderResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2593,23 +2513,6 @@ func (r *OrdersService) Custombatch(orderscustombatchrequest *OrdersCustomBatchR
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersCustombatchCall) QuotaUser(quotaUser string) *OrdersCustombatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersCustombatchCall) UserIP(userIP string) *OrdersCustombatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2653,7 +2556,8 @@ func (c *OrdersCustombatchCall) doRequest(alt string) (*http.Response, error) {
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersCustombatchCall) Do() (*OrdersCustomBatchResponse, error) {
+func (c *OrdersCustombatchCall) Do(opts ...googleapi.CallOption) (*OrdersCustomBatchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2718,23 +2622,6 @@ func (r *OrdersService) Get(merchantId uint64, orderId string) *OrdersGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersGetCall) QuotaUser(quotaUser string) *OrdersGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersGetCall) UserIP(userIP string) *OrdersGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2788,7 +2675,8 @@ func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *OrdersGetCall) Do() (*Order, error) {
+func (c *OrdersGetCall) Do(opts ...googleapi.CallOption) (*Order, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2869,23 +2757,6 @@ func (r *OrdersService) Getbymerchantorderid(merchantId uint64, merchantOrderId 
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersGetbymerchantorderidCall) QuotaUser(quotaUser string) *OrdersGetbymerchantorderidCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersGetbymerchantorderidCall) UserIP(userIP string) *OrdersGetbymerchantorderidCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2940,7 +2811,8 @@ func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, 
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *OrdersGetbymerchantorderidCall) Do() (*OrdersGetByMerchantOrderIdResponse, error) {
+func (c *OrdersGetbymerchantorderidCall) Do(opts ...googleapi.CallOption) (*OrdersGetByMerchantOrderIdResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3022,23 +2894,6 @@ func (r *OrdersService) Gettestordertemplate(merchantId uint64, templateName str
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersGettestordertemplateCall) QuotaUser(quotaUser string) *OrdersGettestordertemplateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersGettestordertemplateCall) UserIP(userIP string) *OrdersGettestordertemplateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3093,7 +2948,8 @@ func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, 
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *OrdersGettestordertemplateCall) Do() (*OrdersGetTestOrderTemplateResponse, error) {
+func (c *OrdersGettestordertemplateCall) Do(opts ...googleapi.CallOption) (*OrdersGetTestOrderTemplateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3240,15 +3096,6 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersListCall) QuotaUser(quotaUser string) *OrdersListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Statuses sets the optional parameter "statuses": Obtains orders that
 // match any of the specified statuses. Multiple values can be specified
 // with comma separation. Additionally, please note that active is a
@@ -3270,14 +3117,6 @@ func (c *OrdersListCall) QuotaUser(quotaUser string) *OrdersListCall {
 //   "shipped"
 func (c *OrdersListCall) Statuses(statuses ...string) *OrdersListCall {
 	c.urlParams_.SetMulti("statuses", append([]string{}, statuses...))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersListCall) UserIP(userIP string) *OrdersListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3333,7 +3172,8 @@ func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersListCall) Do() (*OrdersListResponse, error) {
+func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3479,23 +3319,6 @@ func (r *OrdersService) Refund(merchantId uint64, orderId string, ordersrefundre
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersRefundCall) QuotaUser(quotaUser string) *OrdersRefundCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersRefundCall) UserIP(userIP string) *OrdersRefundCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3542,7 +3365,8 @@ func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersRefundCall) Do() (*OrdersRefundResponse, error) {
+func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) (*OrdersRefundResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3627,23 +3451,6 @@ func (r *OrdersService) Returnlineitem(merchantId uint64, orderId string, orders
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersReturnlineitemCall) QuotaUser(quotaUser string) *OrdersReturnlineitemCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersReturnlineitemCall) UserIP(userIP string) *OrdersReturnlineitemCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3690,7 +3497,8 @@ func (c *OrdersReturnlineitemCall) doRequest(alt string) (*http.Response, error)
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersReturnlineitemCall) Do() (*OrdersReturnLineItemResponse, error) {
+func (c *OrdersReturnlineitemCall) Do(opts ...googleapi.CallOption) (*OrdersReturnLineItemResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3775,23 +3583,6 @@ func (r *OrdersService) Shiplineitems(merchantId uint64, orderId string, orderss
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersShiplineitemsCall) QuotaUser(quotaUser string) *OrdersShiplineitemsCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersShiplineitemsCall) UserIP(userIP string) *OrdersShiplineitemsCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3838,7 +3629,8 @@ func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) 
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersShiplineitemsCall) Do() (*OrdersShipLineItemsResponse, error) {
+func (c *OrdersShiplineitemsCall) Do(opts ...googleapi.CallOption) (*OrdersShipLineItemsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3924,23 +3716,6 @@ func (r *OrdersService) Updatemerchantorderid(merchantId uint64, orderId string,
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersUpdatemerchantorderidCall) QuotaUser(quotaUser string) *OrdersUpdatemerchantorderidCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersUpdatemerchantorderidCall) UserIP(userIP string) *OrdersUpdatemerchantorderidCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3988,7 +3763,8 @@ func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response,
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *OrdersUpdatemerchantorderidCall) Do() (*OrdersUpdateMerchantOrderIdResponse, error) {
+func (c *OrdersUpdatemerchantorderidCall) Do(opts ...googleapi.CallOption) (*OrdersUpdateMerchantOrderIdResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4074,23 +3850,6 @@ func (r *OrdersService) Updateshipment(merchantId uint64, orderId string, orders
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *OrdersUpdateshipmentCall) QuotaUser(quotaUser string) *OrdersUpdateshipmentCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *OrdersUpdateshipmentCall) UserIP(userIP string) *OrdersUpdateshipmentCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4137,7 +3896,8 @@ func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error)
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OrdersUpdateshipmentCall) Do() (*OrdersUpdateShipmentResponse, error) {
+func (c *OrdersUpdateshipmentCall) Do(opts ...googleapi.CallOption) (*OrdersUpdateShipmentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

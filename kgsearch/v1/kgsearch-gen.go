@@ -169,14 +169,6 @@ func (c *EntitiesSearchCall) Query(query string) *EntitiesSearchCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-func (c *EntitiesSearchCall) QuotaUser(quotaUser string) *EntitiesSearchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Types sets the optional parameter "types": Restricts returned
 // entities with these types, e.g. Person (as defined in
 // http://schema.org/Person).
@@ -235,7 +227,8 @@ func (c *EntitiesSearchCall) doRequest(alt string) (*http.Response, error) {
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *EntitiesSearchCall) Do() (*SearchResponse, error) {
+func (c *EntitiesSearchCall) Do(opts ...googleapi.CallOption) (*SearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

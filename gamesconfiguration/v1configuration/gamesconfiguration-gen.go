@@ -541,23 +541,6 @@ func (r *AchievementConfigurationsService) Delete(achievementId string) *Achieve
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementConfigurationsDeleteCall) QuotaUser(quotaUser string) *AchievementConfigurationsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementConfigurationsDeleteCall) UserIP(userIP string) *AchievementConfigurationsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -591,7 +574,8 @@ func (c *AchievementConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "gamesConfiguration.achievementConfigurations.delete" call.
-func (c *AchievementConfigurationsDeleteCall) Do() error {
+func (c *AchievementConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -639,23 +623,6 @@ type AchievementConfigurationsGetCall struct {
 func (r *AchievementConfigurationsService) Get(achievementId string) *AchievementConfigurationsGetCall {
 	c := &AchievementConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementId = achievementId
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementConfigurationsGetCall) QuotaUser(quotaUser string) *AchievementConfigurationsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementConfigurationsGetCall) UserIP(userIP string) *AchievementConfigurationsGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -711,7 +678,8 @@ func (c *AchievementConfigurationsGetCall) doRequest(alt string) (*http.Response
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AchievementConfigurationsGetCall) Do() (*AchievementConfiguration, error) {
+func (c *AchievementConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*AchievementConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -783,23 +751,6 @@ func (r *AchievementConfigurationsService) Insert(applicationId string, achievem
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementConfigurationsInsertCall) QuotaUser(quotaUser string) *AchievementConfigurationsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementConfigurationsInsertCall) UserIP(userIP string) *AchievementConfigurationsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -845,7 +796,8 @@ func (c *AchievementConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AchievementConfigurationsInsertCall) Do() (*AchievementConfiguration, error) {
+func (c *AchievementConfigurationsInsertCall) Do(opts ...googleapi.CallOption) (*AchievementConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -936,23 +888,6 @@ func (c *AchievementConfigurationsListCall) PageToken(pageToken string) *Achieve
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementConfigurationsListCall) QuotaUser(quotaUser string) *AchievementConfigurationsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementConfigurationsListCall) UserIP(userIP string) *AchievementConfigurationsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1006,7 +941,8 @@ func (c *AchievementConfigurationsListCall) doRequest(alt string) (*http.Respons
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *AchievementConfigurationsListCall) Do() (*AchievementConfigurationListResponse, error) {
+func (c *AchievementConfigurationsListCall) Do(opts ...googleapi.CallOption) (*AchievementConfigurationListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1092,23 +1028,6 @@ func (r *AchievementConfigurationsService) Patch(achievementId string, achieveme
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementConfigurationsPatchCall) QuotaUser(quotaUser string) *AchievementConfigurationsPatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementConfigurationsPatchCall) UserIP(userIP string) *AchievementConfigurationsPatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1154,7 +1073,8 @@ func (c *AchievementConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AchievementConfigurationsPatchCall) Do() (*AchievementConfiguration, error) {
+func (c *AchievementConfigurationsPatchCall) Do(opts ...googleapi.CallOption) (*AchievementConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1230,23 +1150,6 @@ func (r *AchievementConfigurationsService) Update(achievementId string, achievem
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *AchievementConfigurationsUpdateCall) QuotaUser(quotaUser string) *AchievementConfigurationsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *AchievementConfigurationsUpdateCall) UserIP(userIP string) *AchievementConfigurationsUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1292,7 +1195,8 @@ func (c *AchievementConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, error) {
+func (c *AchievementConfigurationsUpdateCall) Do(opts ...googleapi.CallOption) (*AchievementConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1370,23 +1274,6 @@ func (r *ImageConfigurationsService) Upload(resourceId string, imageType string)
 	c := &ImageConfigurationsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceId = resourceId
 	c.imageType = imageType
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ImageConfigurationsUploadCall) QuotaUser(quotaUser string) *ImageConfigurationsUploadCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ImageConfigurationsUploadCall) UserIP(userIP string) *ImageConfigurationsUploadCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1487,7 +1374,8 @@ func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, e
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
+func (c *ImageConfigurationsUploadCall) Do(opts ...googleapi.CallOption) (*ImageConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1613,23 +1501,6 @@ func (r *LeaderboardConfigurationsService) Delete(leaderboardId string) *Leaderb
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LeaderboardConfigurationsDeleteCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LeaderboardConfigurationsDeleteCall) UserIP(userIP string) *LeaderboardConfigurationsDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1663,7 +1534,8 @@ func (c *LeaderboardConfigurationsDeleteCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "gamesConfiguration.leaderboardConfigurations.delete" call.
-func (c *LeaderboardConfigurationsDeleteCall) Do() error {
+func (c *LeaderboardConfigurationsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1711,23 +1583,6 @@ type LeaderboardConfigurationsGetCall struct {
 func (r *LeaderboardConfigurationsService) Get(leaderboardId string) *LeaderboardConfigurationsGetCall {
 	c := &LeaderboardConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.leaderboardId = leaderboardId
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LeaderboardConfigurationsGetCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LeaderboardConfigurationsGetCall) UserIP(userIP string) *LeaderboardConfigurationsGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1783,7 +1638,8 @@ func (c *LeaderboardConfigurationsGetCall) doRequest(alt string) (*http.Response
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LeaderboardConfigurationsGetCall) Do() (*LeaderboardConfiguration, error) {
+func (c *LeaderboardConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*LeaderboardConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1855,23 +1711,6 @@ func (r *LeaderboardConfigurationsService) Insert(applicationId string, leaderbo
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LeaderboardConfigurationsInsertCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LeaderboardConfigurationsInsertCall) UserIP(userIP string) *LeaderboardConfigurationsInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1917,7 +1756,8 @@ func (c *LeaderboardConfigurationsInsertCall) doRequest(alt string) (*http.Respo
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LeaderboardConfigurationsInsertCall) Do() (*LeaderboardConfiguration, error) {
+func (c *LeaderboardConfigurationsInsertCall) Do(opts ...googleapi.CallOption) (*LeaderboardConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2008,23 +1848,6 @@ func (c *LeaderboardConfigurationsListCall) PageToken(pageToken string) *Leaderb
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LeaderboardConfigurationsListCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LeaderboardConfigurationsListCall) UserIP(userIP string) *LeaderboardConfigurationsListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2078,7 +1901,8 @@ func (c *LeaderboardConfigurationsListCall) doRequest(alt string) (*http.Respons
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *LeaderboardConfigurationsListCall) Do() (*LeaderboardConfigurationListResponse, error) {
+func (c *LeaderboardConfigurationsListCall) Do(opts ...googleapi.CallOption) (*LeaderboardConfigurationListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2164,23 +1988,6 @@ func (r *LeaderboardConfigurationsService) Patch(leaderboardId string, leaderboa
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LeaderboardConfigurationsPatchCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsPatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LeaderboardConfigurationsPatchCall) UserIP(userIP string) *LeaderboardConfigurationsPatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2226,7 +2033,8 @@ func (c *LeaderboardConfigurationsPatchCall) doRequest(alt string) (*http.Respon
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LeaderboardConfigurationsPatchCall) Do() (*LeaderboardConfiguration, error) {
+func (c *LeaderboardConfigurationsPatchCall) Do(opts ...googleapi.CallOption) (*LeaderboardConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2302,23 +2110,6 @@ func (r *LeaderboardConfigurationsService) Update(leaderboardId string, leaderbo
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *LeaderboardConfigurationsUpdateCall) QuotaUser(quotaUser string) *LeaderboardConfigurationsUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *LeaderboardConfigurationsUpdateCall) UserIP(userIP string) *LeaderboardConfigurationsUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2364,7 +2155,8 @@ func (c *LeaderboardConfigurationsUpdateCall) doRequest(alt string) (*http.Respo
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *LeaderboardConfigurationsUpdateCall) Do() (*LeaderboardConfiguration, error) {
+func (c *LeaderboardConfigurationsUpdateCall) Do(opts ...googleapi.CallOption) (*LeaderboardConfiguration, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

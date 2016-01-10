@@ -998,23 +998,6 @@ func (c *DivisionsSearchCall) Query(query string) *DivisionsSearchCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *DivisionsSearchCall) QuotaUser(quotaUser string) *DivisionsSearchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *DivisionsSearchCall) UserIP(userIP string) *DivisionsSearchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1065,7 +1048,8 @@ func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *DivisionsSearchCall) Do() (*DivisionSearchResponse, error) {
+func (c *DivisionsSearchCall) Do(opts ...googleapi.CallOption) (*DivisionSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1127,23 +1111,6 @@ func (r *ElectionsService) ElectionQuery() *ElectionsElectionQueryCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ElectionsElectionQueryCall) QuotaUser(quotaUser string) *ElectionsElectionQueryCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ElectionsElectionQueryCall) UserIP(userIP string) *ElectionsElectionQueryCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1194,7 +1161,8 @@ func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, erro
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ElectionsElectionQueryCall) Do() (*ElectionsQueryResponse, error) {
+func (c *ElectionsElectionQueryCall) Do(opts ...googleapi.CallOption) (*ElectionsQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1266,23 +1234,6 @@ func (c *ElectionsVoterInfoQueryCall) OfficialOnly(officialOnly bool) *Elections
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ElectionsVoterInfoQueryCall) QuotaUser(quotaUser string) *ElectionsVoterInfoQueryCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ElectionsVoterInfoQueryCall) UserIP(userIP string) *ElectionsVoterInfoQueryCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1333,7 +1284,8 @@ func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, err
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ElectionsVoterInfoQueryCall) Do() (*VoterInfoResponse, error) {
+func (c *ElectionsVoterInfoQueryCall) Do(opts ...googleapi.CallOption) (*VoterInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1448,15 +1400,6 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Levels(levels ...string
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RepresentativesRepresentativeInfoByAddressCall) QuotaUser(quotaUser string) *RepresentativesRepresentativeInfoByAddressCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Roles sets the optional parameter "roles": A list of office roles to
 // filter by. Only offices fulfilling one of these roles will be
 // returned. Divisions that don't contain a matching office will not be
@@ -1476,14 +1419,6 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) QuotaUser(quotaUser str
 //   "specialPurposeOfficer"
 func (c *RepresentativesRepresentativeInfoByAddressCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByAddressCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RepresentativesRepresentativeInfoByAddressCall) UserIP(userIP string) *RepresentativesRepresentativeInfoByAddressCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1537,7 +1472,8 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RepresentativesRepresentativeInfoByAddressCall) Do() (*RepresentativeInfoResponse, error) {
+func (c *RepresentativesRepresentativeInfoByAddressCall) Do(opts ...googleapi.CallOption) (*RepresentativeInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1688,15 +1624,6 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Levels(levels ...strin
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *RepresentativesRepresentativeInfoByDivisionCall) QuotaUser(quotaUser string) *RepresentativesRepresentativeInfoByDivisionCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Recursive sets the optional parameter "recursive": If true,
 // information about all divisions contained in the division requested
 // will be included as well. For example, if querying
@@ -1726,14 +1653,6 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Recursive(recursive bo
 //   "specialPurposeOfficer"
 func (c *RepresentativesRepresentativeInfoByDivisionCall) Roles(roles ...string) *RepresentativesRepresentativeInfoByDivisionCall {
 	c.urlParams_.SetMulti("roles", append([]string{}, roles...))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *RepresentativesRepresentativeInfoByDivisionCall) UserIP(userIP string) *RepresentativesRepresentativeInfoByDivisionCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1789,7 +1708,8 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) 
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *RepresentativesRepresentativeInfoByDivisionCall) Do() (*RepresentativeInfoData, error) {
+func (c *RepresentativesRepresentativeInfoByDivisionCall) Do(opts ...googleapi.CallOption) (*RepresentativeInfoData, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

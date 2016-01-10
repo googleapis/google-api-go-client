@@ -1035,23 +1035,6 @@ func (r *ColumnService) Delete(tableId string, columnId string) *ColumnDeleteCal
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ColumnDeleteCall) QuotaUser(quotaUser string) *ColumnDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ColumnDeleteCall) UserIP(userIP string) *ColumnDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1086,7 +1069,8 @@ func (c *ColumnDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "fusiontables.column.delete" call.
-func (c *ColumnDeleteCall) Do() error {
+func (c *ColumnDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -1145,23 +1129,6 @@ func (r *ColumnService) Get(tableId string, columnId string) *ColumnGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ColumnGetCall) QuotaUser(quotaUser string) *ColumnGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ColumnGetCall) UserIP(userIP string) *ColumnGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1215,7 +1182,8 @@ func (c *ColumnGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ColumnGetCall) Do() (*Column, error) {
+func (c *ColumnGetCall) Do(opts ...googleapi.CallOption) (*Column, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1295,23 +1263,6 @@ func (r *ColumnService) Insert(tableId string, column *Column) *ColumnInsertCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ColumnInsertCall) QuotaUser(quotaUser string) *ColumnInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ColumnInsertCall) UserIP(userIP string) *ColumnInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1357,7 +1308,8 @@ func (c *ColumnInsertCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ColumnInsertCall) Do() (*Column, error) {
+func (c *ColumnInsertCall) Do(opts ...googleapi.CallOption) (*Column, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1445,23 +1397,6 @@ func (c *ColumnListCall) PageToken(pageToken string) *ColumnListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ColumnListCall) QuotaUser(quotaUser string) *ColumnListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ColumnListCall) UserIP(userIP string) *ColumnListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1514,7 +1449,8 @@ func (c *ColumnListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ColumnListCall) Do() (*ColumnList, error) {
+func (c *ColumnListCall) Do(opts ...googleapi.CallOption) (*ColumnList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1602,23 +1538,6 @@ func (r *ColumnService) Patch(tableId string, columnId string, column *Column) *
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ColumnPatchCall) QuotaUser(quotaUser string) *ColumnPatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ColumnPatchCall) UserIP(userIP string) *ColumnPatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1665,7 +1584,8 @@ func (c *ColumnPatchCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ColumnPatchCall) Do() (*Column, error) {
+func (c *ColumnPatchCall) Do(opts ...googleapi.CallOption) (*Column, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1749,23 +1669,6 @@ func (r *ColumnService) Update(tableId string, columnId string, column *Column) 
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ColumnUpdateCall) QuotaUser(quotaUser string) *ColumnUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ColumnUpdateCall) UserIP(userIP string) *ColumnUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1812,7 +1715,8 @@ func (c *ColumnUpdateCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ColumnUpdateCall) Do() (*Column, error) {
+func (c *ColumnUpdateCall) Do(opts ...googleapi.CallOption) (*Column, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -1905,28 +1809,11 @@ func (c *QuerySqlCall) Hdrs(hdrs bool) *QuerySqlCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *QuerySqlCall) QuotaUser(quotaUser string) *QuerySqlCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Typed sets the optional parameter "typed": Whether typed values are
 // returned in the (JSON) response: numbers for numeric values and
 // parsed geometries for KML values. Default is true.
 func (c *QuerySqlCall) Typed(typed bool) *QuerySqlCall {
 	c.urlParams_.Set("typed", fmt.Sprint(typed))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *QuerySqlCall) UserIP(userIP string) *QuerySqlCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -1963,7 +1850,8 @@ func (c *QuerySqlCall) doRequest(alt string) (*http.Response, error) {
 // Download fetches the API endpoint's "media" value, instead of the normal
 // API response value. If the returned error is nil, the Response is guaranteed to
 // have a 2xx status code. Callers must close the Response.Body as usual.
-func (c *QuerySqlCall) Download() (*http.Response, error) {
+func (c *QuerySqlCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("media")
 	if err != nil {
 		return nil, err
@@ -1982,7 +1870,8 @@ func (c *QuerySqlCall) Download() (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *QuerySqlCall) Do() (*Sqlresponse, error) {
+func (c *QuerySqlCall) Do(opts ...googleapi.CallOption) (*Sqlresponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2075,28 +1964,11 @@ func (c *QuerySqlGetCall) Hdrs(hdrs bool) *QuerySqlGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *QuerySqlGetCall) QuotaUser(quotaUser string) *QuerySqlGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // Typed sets the optional parameter "typed": Whether typed values are
 // returned in the (JSON) response: numbers for numeric values and
 // parsed geometries for KML values. Default is true.
 func (c *QuerySqlGetCall) Typed(typed bool) *QuerySqlGetCall {
 	c.urlParams_.Set("typed", fmt.Sprint(typed))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *QuerySqlGetCall) UserIP(userIP string) *QuerySqlGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -2146,7 +2018,8 @@ func (c *QuerySqlGetCall) doRequest(alt string) (*http.Response, error) {
 // Download fetches the API endpoint's "media" value, instead of the normal
 // API response value. If the returned error is nil, the Response is guaranteed to
 // have a 2xx status code. Callers must close the Response.Body as usual.
-func (c *QuerySqlGetCall) Download() (*http.Response, error) {
+func (c *QuerySqlGetCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("media")
 	if err != nil {
 		return nil, err
@@ -2165,7 +2038,8 @@ func (c *QuerySqlGetCall) Download() (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *QuerySqlGetCall) Do() (*Sqlresponse, error) {
+func (c *QuerySqlGetCall) Do(opts ...googleapi.CallOption) (*Sqlresponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2250,23 +2124,6 @@ func (r *StyleService) Delete(tableId string, styleId int64) *StyleDeleteCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *StyleDeleteCall) QuotaUser(quotaUser string) *StyleDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *StyleDeleteCall) UserIP(userIP string) *StyleDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2301,7 +2158,8 @@ func (c *StyleDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "fusiontables.style.delete" call.
-func (c *StyleDeleteCall) Do() error {
+func (c *StyleDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -2361,23 +2219,6 @@ func (r *StyleService) Get(tableId string, styleId int64) *StyleGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *StyleGetCall) QuotaUser(quotaUser string) *StyleGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *StyleGetCall) UserIP(userIP string) *StyleGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2431,7 +2272,8 @@ func (c *StyleGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *StyleGetCall) Do() (*StyleSetting, error) {
+func (c *StyleGetCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2512,23 +2354,6 @@ func (r *StyleService) Insert(tableId string, stylesetting *StyleSetting) *Style
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *StyleInsertCall) QuotaUser(quotaUser string) *StyleInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *StyleInsertCall) UserIP(userIP string) *StyleInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2574,7 +2399,8 @@ func (c *StyleInsertCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *StyleInsertCall) Do() (*StyleSetting, error) {
+func (c *StyleInsertCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2662,23 +2488,6 @@ func (c *StyleListCall) PageToken(pageToken string) *StyleListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *StyleListCall) QuotaUser(quotaUser string) *StyleListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *StyleListCall) UserIP(userIP string) *StyleListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2731,7 +2540,8 @@ func (c *StyleListCall) doRequest(alt string) (*http.Response, error) {
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *StyleListCall) Do() (*StyleSettingList, error) {
+func (c *StyleListCall) Do(opts ...googleapi.CallOption) (*StyleSettingList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2819,23 +2629,6 @@ func (r *StyleService) Patch(tableId string, styleId int64, stylesetting *StyleS
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *StylePatchCall) QuotaUser(quotaUser string) *StylePatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *StylePatchCall) UserIP(userIP string) *StylePatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2882,7 +2675,8 @@ func (c *StylePatchCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *StylePatchCall) Do() (*StyleSetting, error) {
+func (c *StylePatchCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -2967,23 +2761,6 @@ func (r *StyleService) Update(tableId string, styleId int64, stylesetting *Style
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *StyleUpdateCall) QuotaUser(quotaUser string) *StyleUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *StyleUpdateCall) UserIP(userIP string) *StyleUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3030,7 +2807,8 @@ func (c *StyleUpdateCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *StyleUpdateCall) Do() (*StyleSetting, error) {
+func (c *StyleUpdateCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3118,23 +2896,6 @@ func (c *TableCopyCall) CopyPresentation(copyPresentation bool) *TableCopyCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableCopyCall) QuotaUser(quotaUser string) *TableCopyCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableCopyCall) UserIP(userIP string) *TableCopyCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3174,7 +2935,8 @@ func (c *TableCopyCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *TableCopyCall) Do() (*Table, error) {
+func (c *TableCopyCall) Do(opts ...googleapi.CallOption) (*Table, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3250,23 +3012,6 @@ func (r *TableService) Delete(tableId string) *TableDeleteCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableDeleteCall) QuotaUser(quotaUser string) *TableDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableDeleteCall) UserIP(userIP string) *TableDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3300,7 +3045,8 @@ func (c *TableDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "fusiontables.table.delete" call.
-func (c *TableDeleteCall) Do() error {
+func (c *TableDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -3347,23 +3093,6 @@ type TableGetCall struct {
 func (r *TableService) Get(tableId string) *TableGetCall {
 	c := &TableGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
-	return c
-}
-
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableGetCall) QuotaUser(quotaUser string) *TableGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableGetCall) UserIP(userIP string) *TableGetCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3419,7 +3148,8 @@ func (c *TableGetCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *TableGetCall) Do() (*Table, error) {
+func (c *TableGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3528,27 +3258,10 @@ func (c *TableImportRowsCall) IsStrict(isStrict bool) *TableImportRowsCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableImportRowsCall) QuotaUser(quotaUser string) *TableImportRowsCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // StartLine sets the optional parameter "startLine": The index of the
 // first line from which to start importing, inclusive. Default is 0.
 func (c *TableImportRowsCall) StartLine(startLine int64) *TableImportRowsCall {
 	c.urlParams_.Set("startLine", fmt.Sprint(startLine))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableImportRowsCall) UserIP(userIP string) *TableImportRowsCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -3648,7 +3361,8 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *TableImportRowsCall) Do() (*Import, error) {
+func (c *TableImportRowsCall) Do(opts ...googleapi.CallOption) (*Import, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -3806,23 +3520,6 @@ func (c *TableImportTableCall) Encoding(encoding string) *TableImportTableCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableImportTableCall) QuotaUser(quotaUser string) *TableImportTableCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableImportTableCall) UserIP(userIP string) *TableImportTableCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
 func (c *TableImportTableCall) Media(r io.Reader, options ...googleapi.MediaOption) *TableImportTableCall {
@@ -3917,7 +3614,8 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *TableImportTableCall) Do() (*Table, error) {
+func (c *TableImportTableCall) Do(opts ...googleapi.CallOption) (*Table, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4038,23 +3736,6 @@ func (r *TableService) Insert(table *Table) *TableInsertCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableInsertCall) QuotaUser(quotaUser string) *TableInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableInsertCall) UserIP(userIP string) *TableInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4098,7 +3779,8 @@ func (c *TableInsertCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *TableInsertCall) Do() (*Table, error) {
+func (c *TableInsertCall) Do(opts ...googleapi.CallOption) (*Table, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4173,23 +3855,6 @@ func (c *TableListCall) PageToken(pageToken string) *TableListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableListCall) QuotaUser(quotaUser string) *TableListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableListCall) UserIP(userIP string) *TableListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4240,7 +3905,8 @@ func (c *TableListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TableListCall) Do() (*TableList, error) {
+func (c *TableListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4318,29 +3984,12 @@ func (r *TableService) Patch(tableId string, table *Table) *TablePatchCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TablePatchCall) QuotaUser(quotaUser string) *TablePatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ReplaceViewDefinition sets the optional parameter
 // "replaceViewDefinition": Whether the view definition is also updated.
 // The specified view definition replaces the existing one. Only a view
 // can be updated with a new definition.
 func (c *TablePatchCall) ReplaceViewDefinition(replaceViewDefinition bool) *TablePatchCall {
 	c.urlParams_.Set("replaceViewDefinition", fmt.Sprint(replaceViewDefinition))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TablePatchCall) UserIP(userIP string) *TablePatchCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4389,7 +4038,8 @@ func (c *TablePatchCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *TablePatchCall) Do() (*Table, error) {
+func (c *TablePatchCall) Do(opts ...googleapi.CallOption) (*Table, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4508,27 +4158,10 @@ func (c *TableReplaceRowsCall) IsStrict(isStrict bool) *TableReplaceRowsCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableReplaceRowsCall) QuotaUser(quotaUser string) *TableReplaceRowsCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // StartLine sets the optional parameter "startLine": The index of the
 // first line from which to start importing, inclusive. Default is 0.
 func (c *TableReplaceRowsCall) StartLine(startLine int64) *TableReplaceRowsCall {
 	c.urlParams_.Set("startLine", fmt.Sprint(startLine))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableReplaceRowsCall) UserIP(userIP string) *TableReplaceRowsCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4628,7 +4261,8 @@ func (c *TableReplaceRowsCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *TableReplaceRowsCall) Do() (*Task, error) {
+func (c *TableReplaceRowsCall) Do(opts ...googleapi.CallOption) (*Task, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4769,29 +4403,12 @@ func (r *TableService) Update(tableId string, table *Table) *TableUpdateCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TableUpdateCall) QuotaUser(quotaUser string) *TableUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // ReplaceViewDefinition sets the optional parameter
 // "replaceViewDefinition": Whether the view definition is also updated.
 // The specified view definition replaces the existing one. Only a view
 // can be updated with a new definition.
 func (c *TableUpdateCall) ReplaceViewDefinition(replaceViewDefinition bool) *TableUpdateCall {
 	c.urlParams_.Set("replaceViewDefinition", fmt.Sprint(replaceViewDefinition))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TableUpdateCall) UserIP(userIP string) *TableUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -4840,7 +4457,8 @@ func (c *TableUpdateCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *TableUpdateCall) Do() (*Table, error) {
+func (c *TableUpdateCall) Do(opts ...googleapi.CallOption) (*Table, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -4921,23 +4539,6 @@ func (r *TaskService) Delete(tableId string, taskId string) *TaskDeleteCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TaskDeleteCall) QuotaUser(quotaUser string) *TaskDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TaskDeleteCall) UserIP(userIP string) *TaskDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4972,7 +4573,8 @@ func (c *TaskDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "fusiontables.task.delete" call.
-func (c *TaskDeleteCall) Do() error {
+func (c *TaskDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -5031,23 +4633,6 @@ func (r *TaskService) Get(tableId string, taskId string) *TaskGetCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TaskGetCall) QuotaUser(quotaUser string) *TaskGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TaskGetCall) UserIP(userIP string) *TaskGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5101,7 +4686,8 @@ func (c *TaskGetCall) doRequest(alt string) (*http.Response, error) {
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *TaskGetCall) Do() (*Task, error) {
+func (c *TaskGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5194,27 +4780,10 @@ func (c *TaskListCall) PageToken(pageToken string) *TaskListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TaskListCall) QuotaUser(quotaUser string) *TaskListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
 // StartIndex sets the optional parameter "startIndex": Index of the
 // first result returned in the current page.
 func (c *TaskListCall) StartIndex(startIndex int64) *TaskListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TaskListCall) UserIP(userIP string) *TaskListCall {
-	c.urlParams_.Set("userIp", userIP)
 	return c
 }
 
@@ -5270,7 +4839,8 @@ func (c *TaskListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TaskListCall) Do() (*TaskList, error) {
+func (c *TaskListCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5361,23 +4931,6 @@ func (r *TemplateService) Delete(tableId string, templateId int64) *TemplateDele
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TemplateDeleteCall) QuotaUser(quotaUser string) *TemplateDeleteCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TemplateDeleteCall) UserIP(userIP string) *TemplateDeleteCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5412,7 +4965,8 @@ func (c *TemplateDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "fusiontables.template.delete" call.
-func (c *TemplateDeleteCall) Do() error {
+func (c *TemplateDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err
@@ -5472,23 +5026,6 @@ func (r *TemplateService) Get(tableId string, templateId int64) *TemplateGetCall
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TemplateGetCall) QuotaUser(quotaUser string) *TemplateGetCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TemplateGetCall) UserIP(userIP string) *TemplateGetCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5542,7 +5079,8 @@ func (c *TemplateGetCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TemplateGetCall) Do() (*Template, error) {
+func (c *TemplateGetCall) Do(opts ...googleapi.CallOption) (*Template, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5623,23 +5161,6 @@ func (r *TemplateService) Insert(tableId string, template *Template) *TemplateIn
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TemplateInsertCall) QuotaUser(quotaUser string) *TemplateInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TemplateInsertCall) UserIP(userIP string) *TemplateInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5685,7 +5206,8 @@ func (c *TemplateInsertCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TemplateInsertCall) Do() (*Template, error) {
+func (c *TemplateInsertCall) Do(opts ...googleapi.CallOption) (*Template, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5773,23 +5295,6 @@ func (c *TemplateListCall) PageToken(pageToken string) *TemplateListCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TemplateListCall) QuotaUser(quotaUser string) *TemplateListCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TemplateListCall) UserIP(userIP string) *TemplateListCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5842,7 +5347,8 @@ func (c *TemplateListCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TemplateListCall) Do() (*TemplateList, error) {
+func (c *TemplateListCall) Do(opts ...googleapi.CallOption) (*TemplateList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -5930,23 +5436,6 @@ func (r *TemplateService) Patch(tableId string, templateId int64, template *Temp
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TemplatePatchCall) QuotaUser(quotaUser string) *TemplatePatchCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TemplatePatchCall) UserIP(userIP string) *TemplatePatchCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5993,7 +5482,8 @@ func (c *TemplatePatchCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TemplatePatchCall) Do() (*Template, error) {
+func (c *TemplatePatchCall) Do(opts ...googleapi.CallOption) (*Template, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -6078,23 +5568,6 @@ func (r *TemplateService) Update(tableId string, templateId int64, template *Tem
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *TemplateUpdateCall) QuotaUser(quotaUser string) *TemplateUpdateCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *TemplateUpdateCall) UserIP(userIP string) *TemplateUpdateCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6141,7 +5614,8 @@ func (c *TemplateUpdateCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *TemplateUpdateCall) Do() (*Template, error) {
+func (c *TemplateUpdateCall) Do(opts ...googleapi.CallOption) (*Template, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

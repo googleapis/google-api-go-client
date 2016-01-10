@@ -132,23 +132,6 @@ func (r *ArchiveService) Insert(groupId string) *ArchiveInsertCall {
 	return c
 }
 
-// QuotaUser sets the optional parameter "quotaUser": Available to use
-// for quota purposes for server-side applications. Can be any arbitrary
-// string assigned to a user, but should not exceed 40 characters.
-// Overrides userIp if both are provided.
-func (c *ArchiveInsertCall) QuotaUser(quotaUser string) *ArchiveInsertCall {
-	c.urlParams_.Set("quotaUser", quotaUser)
-	return c
-}
-
-// UserIP sets the optional parameter "userIp": IP address of the site
-// where the request originates. Use this if you want to enforce
-// per-user limits.
-func (c *ArchiveInsertCall) UserIP(userIP string) *ArchiveInsertCall {
-	c.urlParams_.Set("userIp", userIP)
-	return c
-}
-
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
 func (c *ArchiveInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *ArchiveInsertCall {
@@ -245,7 +228,8 @@ func (c *ArchiveInsertCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *ArchiveInsertCall) Do() (*Groups, error) {
+func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

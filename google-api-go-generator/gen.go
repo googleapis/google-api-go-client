@@ -50,18 +50,6 @@ var (
 	googleapiPkg   = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
 )
 
-// commonParamsWhitelist is the list of common API parameters that should be exposed to users via method Call objects.
-var commonParamsWhitelist = []string{"quotaUser", "userIp"}
-
-func commonParamWhitelisted(name string) bool {
-	for _, whitelisted := range commonParamsWhitelist {
-		if name == whitelisted {
-			return true
-		}
-	}
-	return false
-}
-
 // API represents an API to generate, as well as its state while it's
 // generating.
 type API struct {
@@ -1501,27 +1489,9 @@ func (m *Method) supportsMediaDownload() bool {
 func (m *Method) Params() []*Param {
 	if m.params == nil {
 		parameters := jobj(m.m, "parameters")
-		// We construct the list of Method parameters as the union of
-		// * the method parameters from the JSON config, and
-		// * a set of parameters that are common across all the methods in the API.
-		// We first make a copy of parameters, so that the original method-specific
-		// parameter list is left untouched.
 		paramMap := make(map[string]interface{})
 		for k, v := range parameters {
 			paramMap[k] = v
-		}
-
-		commonParams := jobj(m.api.m, "parameters")
-		for ck, cv := range commonParams {
-			if !commonParamWhitelisted(ck) {
-				continue
-			}
-			if _, ok := paramMap[ck]; ok {
-				msgTemplate := "parameter %q of method %q in api %q conflicts with common API parameter of the same name."
-				log.Printf(msgTemplate, ck, m.name, m.api.ID)
-			} else {
-				paramMap[ck] = cv
-			}
 		}
 
 		for _, name := range sortedKeys(paramMap) {
@@ -1882,7 +1852,8 @@ func (meth *Method) generateCode() {
 		pn("\n// Download fetches the API endpoint's \"media\" value, instead of the normal")
 		pn("// API response value. If the returned error is nil, the Response is guaranteed to")
 		pn("// have a 2xx status code. Callers must close the Response.Body as usual.")
-		pn("func (c *%s) Download() (*http.Response, error) {", callName)
+		pn("func (c *%s) Download(opts ...googleapi.CallOption) (*http.Response, error) {", callName)
+		pn(`gensupport.SetOptions(c.urlParams_, opts...)`)
 		pn(`res, err := c.doRequest("media")`)
 		pn("if err != nil { return nil, err }")
 		pn("if err := googleapi.CheckMediaResponse(res); err != nil {")
@@ -1905,11 +1876,12 @@ func (meth *Method) generateCode() {
 		comment := fmt.Sprintf(commentFmtStr, retType, retType)
 		p("%s", asComment("", comment))
 	}
-	pn("func (c *%s) Do() (%serror) {", callName, retTypeComma)
+	pn("func (c *%s) Do(opts ...googleapi.CallOption) (%serror) {", callName, retTypeComma)
 	nilRet := ""
 	if retTypeComma != "" {
 		nilRet = "nil, "
 	}
+	pn(`gensupport.SetOptions(c.urlParams_, opts...)`)
 	pn(`res, err := c.doRequest("json")`)
 	if retTypeComma != "" && !mapRetType {
 		pn("if res != nil && res.StatusCode == http.StatusNotModified {")

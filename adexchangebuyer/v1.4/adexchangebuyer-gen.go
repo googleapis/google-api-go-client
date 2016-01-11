@@ -4132,6 +4132,27 @@ func (c *CreativesListCall) Do(opts ...googleapi.CallOption) (*CreativesList, er
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CreativesListCall) Pages(ctx context.Context, f func(*CreativesList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "adexchangebuyer.creatives.removeDeal":
 
 type CreativesRemoveDealCall struct {

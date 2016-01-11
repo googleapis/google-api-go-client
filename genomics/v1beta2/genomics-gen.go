@@ -5703,6 +5703,27 @@ func (c *DatasetsListCall) Do(opts ...googleapi.CallOption) (*ListDatasetsRespon
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *DatasetsListCall) Pages(ctx context.Context, f func(*ListDatasetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "genomics.datasets.patch":
 
 type DatasetsPatchCall struct {
@@ -7508,6 +7529,27 @@ func (c *ReadgroupsetsCoveragebucketsListCall) Do(opts ...googleapi.CallOption) 
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ReadgroupsetsCoveragebucketsListCall) Pages(ctx context.Context, f func(*ListCoverageBucketsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "genomics.reads.search":
 
 type ReadsSearchCall struct {
@@ -8054,6 +8096,27 @@ func (c *ReferencesBasesListCall) Do(opts ...googleapi.CallOption) (*ListBasesRe
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ReferencesBasesListCall) Pages(ctx context.Context, f func(*ListBasesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "genomics.referencesets.get":

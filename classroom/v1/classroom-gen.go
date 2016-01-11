@@ -1169,6 +1169,27 @@ func (c *CoursesListCall) Do(opts ...googleapi.CallOption) (*ListCoursesResponse
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesListCall) Pages(ctx context.Context, f func(*ListCoursesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "classroom.courses.patch":
 
 type CoursesPatchCall struct {
@@ -1843,6 +1864,27 @@ func (c *CoursesAliasesListCall) Do(opts ...googleapi.CallOption) (*ListCourseAl
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesAliasesListCall) Pages(ctx context.Context, f func(*ListCourseAliasesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "classroom.courses.students.create":
 
 type CoursesStudentsCreateCall struct {
@@ -2412,6 +2454,27 @@ func (c *CoursesStudentsListCall) Do(opts ...googleapi.CallOption) (*ListStudent
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesStudentsListCall) Pages(ctx context.Context, f func(*ListStudentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "classroom.courses.teachers.create":
 
 type CoursesTeachersCreateCall struct {
@@ -2965,6 +3028,27 @@ func (c *CoursesTeachersListCall) Do(opts ...googleapi.CallOption) (*ListTeacher
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesTeachersListCall) Pages(ctx context.Context, f func(*ListTeachersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "classroom.invitations.accept":
@@ -3609,6 +3693,27 @@ func (c *InvitationsListCall) Do(opts ...googleapi.CallOption) (*ListInvitations
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *InvitationsListCall) Pages(ctx context.Context, f func(*ListInvitationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "classroom.userProfiles.get":

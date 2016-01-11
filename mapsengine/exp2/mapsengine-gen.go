@@ -3416,6 +3416,27 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*AssetsListResponse, 
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AssetsListCall) Pages(ctx context.Context, f func(*AssetsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "mapsengine.assets.parents.list":
 
 type AssetsParentsListCall struct {
@@ -3567,6 +3588,27 @@ func (c *AssetsParentsListCall) Do(opts ...googleapi.CallOption) (*ParentsListRe
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AssetsParentsListCall) Pages(ctx context.Context, f func(*ParentsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.assets.permissions.list":
@@ -4604,6 +4646,27 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*LayersListResponse, 
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LayersListCall) Pages(ctx context.Context, f func(*LayersListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "mapsengine.layers.listPublished":
 
 type LayersListPublishedCall struct {
@@ -4770,6 +4833,27 @@ func (c *LayersListPublishedCall) Do(opts ...googleapi.CallOption) (*PublishedLa
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LayersListPublishedCall) Pages(ctx context.Context, f func(*PublishedLayersListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.layers.patch":
@@ -5361,6 +5445,27 @@ func (c *LayersParentsListCall) Do(opts ...googleapi.CallOption) (*ParentsListRe
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LayersParentsListCall) Pages(ctx context.Context, f func(*ParentsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.layers.permissions.batchDelete":
@@ -6545,6 +6650,27 @@ func (c *MapsListCall) Do(opts ...googleapi.CallOption) (*MapsListResponse, erro
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *MapsListCall) Pages(ctx context.Context, f func(*MapsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "mapsengine.maps.listPublished":
 
 type MapsListPublishedCall struct {
@@ -6711,6 +6837,27 @@ func (c *MapsListPublishedCall) Do(opts ...googleapi.CallOption) (*PublishedMaps
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *MapsListPublishedCall) Pages(ctx context.Context, f func(*PublishedMapsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.maps.patch":
@@ -8048,6 +8195,27 @@ func (c *ProjectsIconsListCall) Do(opts ...googleapi.CallOption) (*IconsListResp
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsIconsListCall) Pages(ctx context.Context, f func(*IconsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "mapsengine.rasterCollections.cancelProcessing":
 
 type RasterCollectionsCancelProcessingCall struct {
@@ -8792,6 +8960,27 @@ func (c *RasterCollectionsListCall) Do(opts ...googleapi.CallOption) (*RasterCol
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RasterCollectionsListCall) Pages(ctx context.Context, f func(*RasterCollectionsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "mapsengine.rasterCollections.patch":
 
 type RasterCollectionsPatchCall struct {
@@ -9147,6 +9336,27 @@ func (c *RasterCollectionsParentsListCall) Do(opts ...googleapi.CallOption) (*Pa
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RasterCollectionsParentsListCall) Pages(ctx context.Context, f func(*ParentsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.rasterCollections.permissions.batchDelete":
@@ -10063,6 +10273,27 @@ func (c *RasterCollectionsRastersListCall) Do(opts ...googleapi.CallOption) (*Ra
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RasterCollectionsRastersListCall) Pages(ctx context.Context, f func(*RasterCollectionsRastersListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "mapsengine.rasters.delete":
 
 type RastersDeleteCall struct {
@@ -10584,6 +10815,27 @@ func (c *RastersListCall) Do(opts ...googleapi.CallOption) (*RastersListResponse
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RastersListCall) Pages(ctx context.Context, f func(*RastersListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.rasters.patch":
@@ -11241,6 +11493,27 @@ func (c *RastersParentsListCall) Do(opts ...googleapi.CallOption) (*ParentsListR
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RastersParentsListCall) Pages(ctx context.Context, f func(*ParentsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.rasters.permissions.batchDelete":
@@ -12269,6 +12542,27 @@ func (c *TablesListCall) Do(opts ...googleapi.CallOption) (*TablesListResponse, 
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TablesListCall) Pages(ctx context.Context, f func(*TablesListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.tables.patch":
@@ -13326,6 +13620,27 @@ func (c *TablesFeaturesListCall) Do(opts ...googleapi.CallOption) (*FeaturesList
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TablesFeaturesListCall) Pages(ctx context.Context, f func(*FeaturesListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "mapsengine.tables.files.insert":
 
 type TablesFilesInsertCall struct {
@@ -13674,6 +13989,27 @@ func (c *TablesParentsListCall) Do(opts ...googleapi.CallOption) (*ParentsListRe
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TablesParentsListCall) Pages(ctx context.Context, f func(*ParentsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "mapsengine.tables.permissions.batchDelete":

@@ -1055,6 +1055,27 @@ func (c *AccountsAvailsListCall) Do(opts ...googleapi.CallOption) (*ListAvailsRe
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsAvailsListCall) Pages(ctx context.Context, f func(*ListAvailsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "playmoviespartner.accounts.experienceLocales.get":
 
 type AccountsExperienceLocalesGetCall struct {
@@ -1447,6 +1468,27 @@ func (c *AccountsExperienceLocalesListCall) Do(opts ...googleapi.CallOption) (*L
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsExperienceLocalesListCall) Pages(ctx context.Context, f func(*ListExperienceLocalesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "playmoviespartner.accounts.orders.get":
 
 type AccountsOrdersGetCall struct {
@@ -1813,6 +1855,27 @@ func (c *AccountsOrdersListCall) Do(opts ...googleapi.CallOption) (*ListOrdersRe
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsOrdersListCall) Pages(ctx context.Context, f func(*ListOrdersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "playmoviespartner.accounts.storeInfos.list":
 
 type AccountsStoreInfosListCall struct {
@@ -2040,6 +2103,27 @@ func (c *AccountsStoreInfosListCall) Do(opts ...googleapi.CallOption) (*ListStor
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsStoreInfosListCall) Pages(ctx context.Context, f func(*ListStoreInfosResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "playmoviespartner.accounts.storeInfos.country.get":

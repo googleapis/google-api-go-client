@@ -5133,6 +5133,27 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LayersAnnotationDataListCall) Pages(ctx context.Context, f func(*Annotationsdata) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "books.layers.volumeAnnotations.get":
 
 type LayersVolumeAnnotationsGetCall struct {
@@ -5594,6 +5615,27 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LayersVolumeAnnotationsListCall) Pages(ctx context.Context, f func(*Volumeannotations) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "books.myconfig.getUserSettings":
@@ -6782,6 +6824,27 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *MylibraryAnnotationsListCall) Pages(ctx context.Context, f func(*Annotations) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "books.mylibrary.annotations.summary":
@@ -8753,6 +8816,27 @@ func (c *OnboardingListCategoryVolumesCall) Do(opts ...googleapi.CallOption) (*V
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OnboardingListCategoryVolumesCall) Pages(ctx context.Context, f func(*Volume2) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "books.personalizedstream.get":

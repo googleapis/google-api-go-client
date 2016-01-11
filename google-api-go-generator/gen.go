@@ -1477,6 +1477,11 @@ func (m *Method) Id() string {
 	return jstr(m.m, "id")
 }
 
+func (m *Method) responseType() *Schema {
+	ref := jstr(jobj(m.m, "response"), "$ref")
+	return m.api.schemas[ref]
+}
+
 func (m *Method) supportsMediaUpload() bool {
 	return jobj(m.m, "mediaUpload") != nil
 }
@@ -1496,6 +1501,43 @@ func (m *Method) supportsMediaDownload() bool {
 		return v
 	}
 	return false
+}
+
+func (m *Method) supportsPaging() (callField, respField string, ok bool) {
+	if jstr(m.m, "httpMethod") != "GET" {
+		// Probably a POST, like "calendar.acl.watch",
+		// which, despite having a pageToken parameter,
+		// isn't actually a paged method.
+		return "", "", false
+	}
+	if pt := jobj(jobj(m.m, "parameters"), "pageToken"); pt == nil {
+		return "", "", false
+	} else if jbool(pt, "required") {
+		// Page token is in the method, not Do.
+		return "", "", false
+	}
+
+	// Check that the response type has the next page token.
+	// It may appear under different names.
+	s := m.responseType()
+	if s == nil || !s.Type().IsStruct() {
+		return "", "", false
+	}
+	props := s.properties()
+
+	opts := [...]string{
+		"nextPageToken",
+		"pageToken",
+	}
+	for _, n := range opts {
+		for _, prop := range props {
+			if prop.apiName == n && prop.Type().apiType() == "string" {
+				return "PageToken", prop.GoName(), true
+			}
+		}
+	}
+
+	return "", "", false
 }
 
 func (m *Method) Params() []*Param {
@@ -1954,6 +1996,23 @@ func (meth *Method) generateCode() {
 	bs, _ := json.MarshalIndent(meth.m, "\t// ", "  ")
 	pn("// %s\n", string(bs))
 	pn("}")
+
+	if cname, rname, ok := meth.supportsPaging(); ok {
+		// We can assume retType is non-empty.
+		pn("")
+		pn("// Pages invokes f for each page of results.")
+		pn("// A non-nil error returned from f will halt the iteration.")
+		pn("func (c *%s) Pages(ctx context.Context, f func(%s) error) error {", callName, retType)
+		pn("c.ctx_ = ctx")
+		pn("for {")
+		pn("x, err := c.Do()")
+		pn("if err != nil { return err }")
+		pn("if err := f(x); err != nil { return err }")
+		pn(`if x.%s == "" { return nil }`, rname)
+		pn("c.%s(x.%s)", cname, rname)
+		pn("}")
+		pn("}")
+	}
 }
 
 // A Field provides methods that describe the characteristics of a Param or Property.
@@ -2370,6 +2429,13 @@ func jstr(m map[string]interface{}, key string) string {
 		return s
 	}
 	return ""
+}
+
+func jbool(m map[string]interface{}, key string) bool {
+	if b, ok := m[key].(bool); ok {
+		return b
+	}
+	return false
 }
 
 func sortedKeys(m map[string]interface{}) (keys []string) {

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "aa869394_60629216",
+        "filename": "calendar/v3/calendar-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-11T04:02:11Z",
+      "side": 1,
+      "message": "Do (via doRequest) sets a couple of things such as the \"alt\" parameter in urlParams, and the mediaType for resumable uploads, but these values will be the same if the object is re-used, so there is no visible effect.\n\nThe only thing I can see that prevents reusing a Call object is that any reader supplied via Media will be advanced.\n\nAs I mentioned above, we don\u0027t promise anywhere that Call objects can be reused, but as far as I can tell, the only case where they can\u0027t is when Media is used.\n\nIn fact, your implementation of Pages assumes that the call object can be reused, because it does just that every time the for loop is executed.",
+      "parentUuid": "aa869394_a073baef",
+      "range": {
+        "startLine": 2181,
+        "startChar": 2,
+        "endLine": 2181,
+        "endChar": 13
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa869394_002546e6",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1

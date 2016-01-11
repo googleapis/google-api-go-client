@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa869394_a08c9a23",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-01-11T03:13:17Z",
+      "side": 1,
+      "message": "My thinking was that they could use something like io.EOF if they want to stop paging, and then it\u0027s easy to check from the caller of Pages. Alternatively, I considered f returning `bool` instead, but figured that if you\u0027re stopping paging then you might be doing more complex processing of the elements, and it would be more convenient to return an intact error.",
+      "parentUuid": "aa869394_e01f829d",
+      "range": {
+        "startLine": 2004,
+        "startChar": 9,
+        "endLine": 2004,
+        "endChar": 24
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa869394_203a4a0a",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-11T03:07:25Z",
       "side": 1,
       "message": "Should this rely on the Context method, as Do does?",
+      "range": {
+        "startLine": 2005,
+        "startChar": 25,
+        "endLine": 2005,
+        "endChar": 44
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa869394_e096a231",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-01-11T03:13:17Z",
+      "side": 1,
+      "message": "I\u0027d actually like to change Do to take a Context (and drop the Context method). That\u0027s how we\u0027d do this if we were starting from scratch. I think it\u0027s better to take a Context arg here, rather than not taking one and adding one later.",
+      "parentUuid": "aa869394_203a4a0a",
       "range": {
         "startLine": 2005,
         "startChar": 25,

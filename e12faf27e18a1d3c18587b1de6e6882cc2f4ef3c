@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa869394_a073baef",
+        "filename": "calendar/v3/calendar-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-01-11T03:43:57Z",
+      "side": 1,
+      "message": "I considered making a copy, but figured that that was redundant for the normal use case and the methods here already modify the call in-place (e.g. Do will add things to it). I thought calls were already not re-usable; is that not the case?",
+      "parentUuid": "aa869394_608b7206",
+      "range": {
+        "startLine": 2181,
+        "startChar": 2,
+        "endLine": 2181,
+        "endChar": 13
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa869394_002546e6",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-11T03:31:50Z",
       "side": 1,
       "message": "Can you rephrase this? I\u0027m not sure what \"Do\" refers to here.",
+      "range": {
+        "startLine": 1516,
+        "startChar": 5,
+        "endLine": 1516,
+        "endChar": 40
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa869394_20688af6",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-01-11T03:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa869394_002546e6",
       "range": {
         "startLine": 1516,
         "startChar": 5,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "aa869394_c078bece",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-01-11T03:43:57Z",
+      "side": 1,
+      "message": "What does that buy us here? There\u0027s no string substitutions (so nothing needs escaping), and it is well under 70 chars.",
+      "parentUuid": "aa869394_8031562b",
+      "range": {
+        "startLine": 2003,
+        "startChar": 2,
+        "endLine": 2004,
+        "endChar": 67
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa869394_203a4a0a",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -176,6 +248,30 @@
       "writtenOn": "2016-01-11T03:31:50Z",
       "side": 1,
       "message": "Please indent for readability, like most of the other quoted code in this file.  One space per indent is fine.\n\ne.g. pn(\" x, err :\u003d c.Do()\")",
+      "range": {
+        "startLine": 2008,
+        "startChar": 2,
+        "endLine": 2008,
+        "endChar": 24
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa869394_e06dc209",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-01-11T03:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa869394_20816ae6",
       "range": {
         "startLine": 2008,
         "startChar": 2,

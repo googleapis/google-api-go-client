@@ -3283,6 +3283,27 @@ func (c *TimelineListCall) Do(opts ...googleapi.CallOption) (*TimelineListRespon
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *TimelineListCall) Pages(ctx context.Context, f func(*TimelineListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "mirror.timeline.patch":
 
 type TimelinePatchCall struct {

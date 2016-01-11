@@ -1509,6 +1509,27 @@ func (c *BeaconsListCall) Do(opts ...googleapi.CallOption) (*ListBeaconsResponse
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BeaconsListCall) Pages(ctx context.Context, f func(*ListBeaconsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "proximitybeacon.beacons.register":
 
 type BeaconsRegisterCall struct {
@@ -2417,6 +2438,27 @@ func (c *BeaconsDiagnosticsListCall) Do(opts ...googleapi.CallOption) (*ListDiag
 	//   }
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BeaconsDiagnosticsListCall) Pages(ctx context.Context, f func(*ListDiagnosticsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "proximitybeacon.namespaces.list":

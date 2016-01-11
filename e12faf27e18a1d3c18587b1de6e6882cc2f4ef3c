@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa869394_e01f829d",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-11T03:07:25Z",
+      "side": 1,
+      "message": "It might be nice to define an error var (StopErr or similar) that the developer can return which wouldn\u0027t be propagated out but would stop the paging.",
+      "range": {
+        "startLine": 2004,
+        "startChar": 9,
+        "endLine": 2004,
+        "endChar": 24
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa869394_203a4a0a",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-11T03:07:25Z",
+      "side": 1,
+      "message": "Should this rely on the Context method, as Do does?",
+      "range": {
+        "startLine": 2005,
+        "startChar": 25,
+        "endLine": 2005,
+        "endChar": 44
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

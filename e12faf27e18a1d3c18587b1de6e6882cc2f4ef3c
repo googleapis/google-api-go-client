@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa869394_608b7206",
+        "filename": "calendar/v3/calendar-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2181,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-11T03:31:50Z",
+      "side": 1,
+      "message": "This will modify the state of the pageToken parameter in the call object, such that calling Pages again (or Do, for that matter) will yield a different result. I don\u0027t think re-using a call object has a defined behaviour at the moment, but I believe it\u0027s safe to do with the current implementation, and each invocation will yield the same result.  Having Pages change the state of the call object via the pageToken parameter changes this.  I think this is OK if we document that call objects should not be reused, but we should consider if that is a restriction that we want to impose. \n\nNote that if a user decides to early-abort Pages by returning an error from f, they would have no way to restart the paging process unless they re-use the call object, as they do not have access to the page token.",
+      "range": {
+        "startLine": 2181,
+        "startChar": 2,
+        "endLine": 2181,
+        "endChar": 13
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa869394_002546e6",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-11T03:31:50Z",
+      "side": 1,
+      "message": "Can you rephrase this? I\u0027m not sure what \"Do\" refers to here.",
+      "range": {
+        "startLine": 1516,
+        "startChar": 5,
+        "endLine": 1516,
+        "endChar": 40
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa869394_e01f829d",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -49,6 +95,29 @@
     },
     {
       "key": {
+        "uuid": "aa869394_8031562b",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2004,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-11T03:31:50Z",
+      "side": 1,
+      "message": "can you please use asComment for this?",
+      "range": {
+        "startLine": 2003,
+        "startChar": 2,
+        "endLine": 2004,
+        "endChar": 67
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa869394_203a4a0a",
         "filename": "google-api-go-generator/gen.go",
         "patchSetId": 1
@@ -89,6 +158,29 @@
         "startChar": 25,
         "endLine": 2005,
         "endChar": 44
+      },
+      "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa869394_20816ae6",
+        "filename": "google-api-go-generator/gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-11T03:31:50Z",
+      "side": 1,
+      "message": "Please indent for readability, like most of the other quoted code in this file.  One space per indent is fine.\n\ne.g. pn(\" x, err :\u003d c.Do()\")",
+      "range": {
+        "startLine": 2008,
+        "startChar": 2,
+        "endLine": 2008,
+        "endChar": 24
       },
       "revId": "e12faf27e18a1d3c18587b1de6e6882cc2f4ef3c",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",

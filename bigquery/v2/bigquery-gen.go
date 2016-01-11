@@ -2641,6 +2641,26 @@ func (c *DatasetsListCall) Do(opts ...googleapi.CallOption) (*DatasetList, error
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *DatasetsListCall) Pages(ctx context.Context, f func(*DatasetList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "bigquery.datasets.patch":
 
 type DatasetsPatchCall struct {
@@ -3361,6 +3381,26 @@ func (c *JobsGetQueryResultsCall) Do(opts ...googleapi.CallOption) (*GetQueryRes
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *JobsGetQueryResultsCall) Pages(ctx context.Context, f func(*GetQueryResultsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.PageToken == "" {
+			return nil
+		}
+		c.PageToken(x.PageToken)
+	}
+}
+
 // method id "bigquery.jobs.insert":
 
 type JobsInsertCall struct {
@@ -3805,6 +3845,26 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*JobList, error) {
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *JobsListCall) Pages(ctx context.Context, f func(*JobList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "bigquery.jobs.query":
 
 type JobsQueryCall struct {
@@ -4066,6 +4126,26 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ProjectList, error
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *ProjectsListCall) Pages(ctx context.Context, f func(*ProjectList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "bigquery.tabledata.insertAll":
@@ -4395,6 +4475,26 @@ func (c *TabledataListCall) Do(opts ...googleapi.CallOption) (*TableDataList, er
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *TabledataListCall) Pages(ctx context.Context, f func(*TableDataList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.PageToken == "" {
+			return nil
+		}
+		c.PageToken(x.PageToken)
+	}
 }
 
 // method id "bigquery.tables.delete":
@@ -4942,6 +5042,26 @@ func (c *TablesListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
 	//   ]
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *TablesListCall) Pages(ctx context.Context, f func(*TableList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "bigquery.tables.patch":

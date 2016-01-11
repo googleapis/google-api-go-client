@@ -2163,6 +2163,26 @@ func (c *AclListCall) Do() (*Acl, error) {
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *AclListCall) Pages(ctx context.Context, f func(*Acl) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken("") // reset call to start of iteration
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "calendar.acl.patch":
 
 type AclPatchCall struct {
@@ -3274,6 +3294,26 @@ func (c *CalendarListListCall) Do() (*CalendarList, error) {
 	//   "supportsSubscription": true
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *CalendarListListCall) Pages(ctx context.Context, f func(*CalendarList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken("") // reset call to start of iteration
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "calendar.calendarList.patch":
@@ -5706,6 +5746,26 @@ func (c *EventsInstancesCall) Do() (*Events, error) {
 
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *EventsInstancesCall) Pages(ctx context.Context, f func(*Events) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken("") // reset call to start of iteration
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "calendar.events.list":
 
 type EventsListCall struct {
@@ -6128,6 +6188,26 @@ func (c *EventsListCall) Do() (*Events, error) {
 	//   "supportsSubscription": true
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *EventsListCall) Pages(ctx context.Context, f func(*Events) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken("") // reset call to start of iteration
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "calendar.events.move":
@@ -7706,6 +7786,26 @@ func (c *SettingsListCall) Do() (*Settings, error) {
 	//   "supportsSubscription": true
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+func (c *SettingsListCall) Pages(ctx context.Context, f func(*Settings) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken("") // reset call to start of iteration
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "calendar.settings.watch":

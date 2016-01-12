@@ -14455,6 +14455,7 @@ type ManagementUploadsUploadDataCall struct {
 	customDataSourceId string
 	urlParams_         gensupport.URLParams
 	media_             io.Reader
+	mediaType_         string
 	resumable_         googleapi.SizeReaderAt
 	mediaType_         string
 	protocol_          string
@@ -14490,8 +14491,9 @@ func (c *ManagementUploadsUploadDataCall) UserIP(userIP string) *ManagementUploa
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *ManagementUploadsUploadDataCall) Media(r io.Reader) *ManagementUploadsUploadDataCall {
-	c.media_ = r
+func (c *ManagementUploadsUploadDataCall) Media(r io.Reader, options ...googleapi.MediaOption) *ManagementUploadsUploadDataCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -14549,7 +14551,7 @@ func (c *ManagementUploadsUploadDataCall) doRequest(alt string) (*http.Response,
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

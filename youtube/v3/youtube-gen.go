@@ -8645,6 +8645,7 @@ type CaptionsInsertCall struct {
 	caption          *Caption
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -8719,8 +8720,9 @@ func (c *CaptionsInsertCall) UserIP(userIP string) *CaptionsInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *CaptionsInsertCall) Media(r io.Reader) *CaptionsInsertCall {
-	c.media_ = r
+func (c *CaptionsInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *CaptionsInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -8781,7 +8783,7 @@ func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -9126,6 +9128,7 @@ type CaptionsUpdateCall struct {
 	caption          *Caption
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -9201,8 +9204,9 @@ func (c *CaptionsUpdateCall) UserIP(userIP string) *CaptionsUpdateCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *CaptionsUpdateCall) Media(r io.Reader) *CaptionsUpdateCall {
-	c.media_ = r
+func (c *CaptionsUpdateCall) Media(r io.Reader, options ...googleapi.MediaOption) *CaptionsUpdateCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -9263,7 +9267,7 @@ func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -9409,6 +9413,7 @@ type ChannelBannersInsertCall struct {
 	channelbannerresource *ChannelBannerResource
 	urlParams_            gensupport.URLParams
 	media_                io.Reader
+	mediaType_            string
 	resumable_            googleapi.SizeReaderAt
 	mediaType_            string
 	protocol_             string
@@ -9471,8 +9476,9 @@ func (c *ChannelBannersInsertCall) UserIP(userIP string) *ChannelBannersInsertCa
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *ChannelBannersInsertCall) Media(r io.Reader) *ChannelBannersInsertCall {
-	c.media_ = r
+func (c *ChannelBannersInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *ChannelBannersInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -9533,7 +9539,7 @@ func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error)
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -19256,6 +19262,7 @@ type ThumbnailsSetCall struct {
 	s                *Service
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -19309,8 +19316,9 @@ func (c *ThumbnailsSetCall) UserIP(userIP string) *ThumbnailsSetCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *ThumbnailsSetCall) Media(r io.Reader) *ThumbnailsSetCall {
-	c.media_ = r
+func (c *ThumbnailsSetCall) Media(r io.Reader, options ...googleapi.MediaOption) *ThumbnailsSetCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -19368,7 +19376,7 @@ func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -20123,6 +20131,7 @@ type VideosInsertCall struct {
 	video            *Video
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -20231,8 +20240,9 @@ func (c *VideosInsertCall) UserIP(userIP string) *VideosInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *VideosInsertCall) Media(r io.Reader) *VideosInsertCall {
-	c.media_ = r
+func (c *VideosInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *VideosInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -20293,7 +20303,7 @@ func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -21176,6 +21186,7 @@ type WatermarksSetCall struct {
 	invideobranding  *InvideoBranding
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -21228,8 +21239,9 @@ func (c *WatermarksSetCall) UserIP(userIP string) *WatermarksSetCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *WatermarksSetCall) Media(r io.Reader) *WatermarksSetCall {
-	c.media_ = r
+func (c *WatermarksSetCall) Media(r io.Reader, options ...googleapi.MediaOption) *WatermarksSetCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -21290,7 +21302,7 @@ func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

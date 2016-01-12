@@ -6330,6 +6330,7 @@ type ObjectsInsertCall struct {
 	object           *Object
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -6449,8 +6450,9 @@ func (c *ObjectsInsertCall) UserIP(userIP string) *ObjectsInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *ObjectsInsertCall) Media(r io.Reader) *ObjectsInsertCall {
-	c.media_ = r
+func (c *ObjectsInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *ObjectsInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -6511,7 +6513,7 @@ func (c *ObjectsInsertCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

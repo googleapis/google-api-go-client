@@ -3413,6 +3413,7 @@ type TableImportRowsCall struct {
 	tableId          string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -3491,8 +3492,9 @@ func (c *TableImportRowsCall) UserIP(userIP string) *TableImportRowsCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *TableImportRowsCall) Media(r io.Reader) *TableImportRowsCall {
-	c.media_ = r
+func (c *TableImportRowsCall) Media(r io.Reader, options ...googleapi.MediaOption) *TableImportRowsCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -3550,7 +3552,7 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3703,6 +3705,7 @@ type TableImportTableCall struct {
 	s                *Service
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -3752,8 +3755,9 @@ func (c *TableImportTableCall) UserIP(userIP string) *TableImportTableCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *TableImportTableCall) Media(r io.Reader) *TableImportTableCall {
-	c.media_ = r
+func (c *TableImportTableCall) Media(r io.Reader, options ...googleapi.MediaOption) *TableImportTableCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -3811,7 +3815,7 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

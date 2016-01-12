@@ -1626,6 +1626,7 @@ func (meth *Method) generateCode() {
 	}
 	if meth.supportsMediaUpload() {
 		pn(" media_     io.Reader")
+		pn(" mediaType_ string")
 		pn(" resumable_ googleapi.SizeReaderAt")
 		pn(" mediaType_ string")
 		pn(" protocol_  string")
@@ -1721,10 +1722,11 @@ func (meth *Method) generateCode() {
 		// TODO(mcgreevy): Ensure that r is always closed before Do returns, and document this.
 		// See comments on https://code-review.googlesource.com/#/c/3970/
 		p("\n%s", asComment("", comment))
-		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
-		pn("c.media_ = r")
-		pn(`c.protocol_ = "multipart"`)
-		pn("return c")
+		pn("func (c *%s) Media(r io.Reader, options ...googleapi.MediaOption) *%s {", callName, callName)
+		pn(" opts := googleapi.ProcessMediaOptions(options)")
+		pn(" c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)")
+		pn(` c.protocol_ = "multipart"`)
+		pn(" return c")
 		pn("}")
 		comment = "ResumableMedia specifies the media to upload in chunks and can be canceled with ctx. " +
 			"At most one of Media and ResumableMedia may be set. " +
@@ -1824,7 +1826,7 @@ func (meth *Method) generateCode() {
 			hasContentType = true
 		}
 		pn(`if c.protocol_ != "resumable" && c.media_ != nil {`)
-		pn("  cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)")
+		pn("  cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)")
 		pn("  defer cancel()")
 		pn("}")
 	}

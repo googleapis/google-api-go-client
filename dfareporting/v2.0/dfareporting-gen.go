@@ -18174,6 +18174,7 @@ type CreativeAssetsInsertCall struct {
 	creativeassetmetadata *CreativeAssetMetadata
 	urlParams_            gensupport.URLParams
 	media_                io.Reader
+	mediaType_            string
 	resumable_            googleapi.SizeReaderAt
 	mediaType_            string
 	protocol_             string
@@ -18209,8 +18210,9 @@ func (c *CreativeAssetsInsertCall) UserIP(userIP string) *CreativeAssetsInsertCa
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *CreativeAssetsInsertCall) Media(r io.Reader) *CreativeAssetsInsertCall {
-	c.media_ = r
+func (c *CreativeAssetsInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *CreativeAssetsInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -18271,7 +18273,7 @@ func (c *CreativeAssetsInsertCall) doRequest(alt string) (*http.Response, error)
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

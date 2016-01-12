@@ -3126,6 +3126,7 @@ type TimelineInsertCall struct {
 	timelineitem     *TimelineItem
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -3159,8 +3160,9 @@ func (c *TimelineInsertCall) UserIP(userIP string) *TimelineInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *TimelineInsertCall) Media(r io.Reader) *TimelineInsertCall {
-	c.media_ = r
+func (c *TimelineInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *TimelineInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -3221,7 +3223,7 @@ func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -3708,6 +3710,7 @@ type TimelineUpdateCall struct {
 	timelineitem     *TimelineItem
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -3742,8 +3745,9 @@ func (c *TimelineUpdateCall) UserIP(userIP string) *TimelineUpdateCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *TimelineUpdateCall) Media(r io.Reader) *TimelineUpdateCall {
-	c.media_ = r
+func (c *TimelineUpdateCall) Media(r io.Reader, options ...googleapi.MediaOption) *TimelineUpdateCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -3804,7 +3808,7 @@ func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -4213,6 +4217,7 @@ type TimelineAttachmentsInsertCall struct {
 	itemId           string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -4246,8 +4251,9 @@ func (c *TimelineAttachmentsInsertCall) UserIP(userIP string) *TimelineAttachmen
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *TimelineAttachmentsInsertCall) Media(r io.Reader) *TimelineAttachmentsInsertCall {
-	c.media_ = r
+func (c *TimelineAttachmentsInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *TimelineAttachmentsInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -4305,7 +4311,7 @@ func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, e
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

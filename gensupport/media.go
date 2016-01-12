@@ -5,7 +5,6 @@
 package gensupport
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -99,57 +98,70 @@ func DetermineContentType(media io.Reader, ctype string) (io.Reader, string) {
 	return sniffer, ""
 }
 
-// IncludeMedia combines an existing HTTP body with media content to create a multipart/related HTTP body.
-//
-// bodyp is an in/out parameter.  It should initially point to the
-// reader of the application/json (or whatever) payload to send in the
-// API request.  It's updated to point to the multipart body reader.
-//
-// ctypep is an in/out parameter.  It should initially point to the
-// content type of the bodyp, usually "application/json".  It's updated
-// to the "multipart/related" content type, with random boundary.
-//
-// The return value is a function that can be used to close the bodyp Reader with an error.
-func IncludeMedia(media io.Reader, mediaContentType string, bodyp *io.Reader, ctypep *string) func() {
-	body, bodyType := *bodyp, *ctypep
+type typeReader struct {
+	io.Reader
+	typ string
+}
 
-	pr, pw := io.Pipe()
+// multipartReader combines the contents of multiple readers to creat a multipart/related HTTP body.
+// Close must be called if reads from the multipartReader are abandoned before reaching EOF.
+type multipartReader struct {
+	pr       *io.PipeReader
+	pipeOpen bool
+	ctype    string
+}
+
+func newMultipartReader(parts []typeReader) *multipartReader {
+	mp := &multipartReader{pipeOpen: true}
+	var pw *io.PipeWriter
+	mp.pr, pw = io.Pipe()
 	mpw := multipart.NewWriter(pw)
-	*bodyp = pr
-	*ctypep = "multipart/related; boundary=" + mpw.Boundary()
+	mp.ctype = "multipart/related; boundary=" + mpw.Boundary()
 	go func() {
-		w, err := mpw.CreatePart(typeHeader(bodyType))
-		if err != nil {
-			mpw.Close()
-			pw.CloseWithError(fmt.Errorf("googleapi: body CreatePart failed: %v", err))
-			return
-		}
-		_, err = io.Copy(w, body)
-		if err != nil {
-			mpw.Close()
-			pw.CloseWithError(fmt.Errorf("googleapi: body Copy failed: %v", err))
-			return
+		for _, part := range parts {
+			w, err := mpw.CreatePart(typeHeader(part.typ))
+			if err != nil {
+				mpw.Close()
+				pw.CloseWithError(fmt.Errorf("googleapi: CreatePart failed: %v", err))
+				return
+			}
+			_, err = io.Copy(w, part.Reader)
+			if err != nil {
+				mpw.Close()
+				pw.CloseWithError(fmt.Errorf("googleapi: Copy failed: %v", err))
+				return
+			}
 		}
 
-		w, err = mpw.CreatePart(typeHeader(mediaContentType))
-		if err != nil {
-			mpw.Close()
-			pw.CloseWithError(fmt.Errorf("googleapi: media CreatePart failed: %v", err))
-			return
-		}
-		_, err = io.Copy(w, media)
-		if err != nil {
-			mpw.Close()
-			pw.CloseWithError(fmt.Errorf("googleapi: media Copy failed: %v", err))
-			return
-		}
 		mpw.Close()
 		pw.Close()
 	}()
-	return func() { pw.CloseWithError(errAborted) }
+	return mp
 }
 
-var errAborted = errors.New("googleapi: upload aborted")
+func (mp *multipartReader) Read(data []byte) (n int, err error) {
+	return mp.pr.Read(data)
+}
+
+func (mp *multipartReader) Close() error {
+	if !mp.pipeOpen {
+		return nil
+	}
+	mp.pipeOpen = false
+	return mp.pr.Close()
+}
+
+// CombineBodyMedia combines a json body with media content to create a multipart/related HTTP body.
+// It returns a ReadCloser containing the combined body, and the overall "multipart/related" content type, with random boundary.
+//
+// The caller must call Close on the returned ReadCloser if reads are abandoned before reaching EOF.
+func CombineBodyMedia(body io.Reader, bodyContentType string, media io.Reader, mediaContentType string) (io.ReadCloser, string) {
+	mp := newMultipartReader([]typeReader{
+		{body, bodyContentType},
+		{media, mediaContentType},
+	})
+	return mp, mp.ctype
+}
 
 // DetectMediaType detects and returns the content type of the provided media.
 // If the type can not be determined, "application/octet-stream" is returned.

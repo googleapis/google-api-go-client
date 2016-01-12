@@ -89,7 +89,7 @@ func TestAll(t *testing.T) {
 	} {
 		er := &errReader{buf: tc.data, err: tc.finalErr}
 
-		sct := NewContentSniffer(er)
+		sct := newContentSniffer(er)
 
 		// Even if was an error during the first 512 bytes, we should still be able to read those bytes.
 		buf, err := ioutil.ReadAll(sct)

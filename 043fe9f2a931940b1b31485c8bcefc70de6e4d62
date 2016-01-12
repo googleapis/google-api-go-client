@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7d6ce0a_4000ae1d",
+        "filename": "gensupport/media.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-12T05:58:57Z",
+      "side": 1,
+      "message": "I considered this, but then thought about what would happen if Read were subsequently called.  I\u0027d rather have the underlying reader create an error, than detecting nil and generaring my own error.",
+      "parentUuid": "a7d6ce0a_c0e2febd",
+      "range": {
+        "startLine": 147,
+        "startChar": 8,
+        "endLine": 147,
+        "endChar": 16
+      },
+      "revId": "043fe9f2a931940b1b31485c8bcefc70de6e4d62",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7d6ce0a_00edc6aa",
         "filename": "gmail/v1/gmail-gen.go",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-12T05:49:27Z",
       "side": 1,
       "message": "Why do you need \"combined\"?\n\nbody, ctype \u003d gensupport.Etc()\ndefer body.Close()",
+      "range": {
+        "startLine": 2080,
+        "startChar": 6,
+        "endLine": 2080,
+        "endChar": 14
+      },
+      "revId": "043fe9f2a931940b1b31485c8bcefc70de6e4d62",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7d6ce0a_60f5b272",
+        "filename": "gmail/v1/gmail-gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 2080,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-12T05:58:57Z",
+      "side": 1,
+      "message": "body is declared as an io.Reader on line 2066.",
+      "parentUuid": "a7d6ce0a_00edc6aa",
       "range": {
         "startLine": 2080,
         "startChar": 6,

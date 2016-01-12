@@ -32,42 +32,69 @@ type ContentSniffer struct {
 	sniffed bool   // set to true on first sniff.
 }
 
-func (sct *ContentSniffer) Read(p []byte) (n int, err error) {
+func (cs *ContentSniffer) Read(p []byte) (n int, err error) {
 	// Ensure that the content type is sniffed before any data is consumed from Reader.
-	_, _ = sct.ContentType()
+	_, _ = cs.ContentType()
 
-	if len(sct.start) > 0 {
-		n := copy(p, sct.start)
-		sct.start = sct.start[n:]
+	if len(cs.start) > 0 {
+		n := copy(p, cs.start)
+		cs.start = cs.start[n:]
 		return n, nil
 	}
 
 	// We may have read some bytes into start while sniffing, even if the read ended in an error.
 	// We should first return those bytes, then the error.
-	if sct.err != nil {
-		return 0, sct.err
+	if cs.err != nil {
+		return 0, cs.err
 	}
 
 	// Now we have handled all bytes that were buffered while sniffing.  Now just delegate to the underlying reader.
-	return sct.r.Read(p)
+	return cs.r.Read(p)
 }
 
 // ContentType returns the sniffed content type, and whether the content type was succesfully sniffed.
-func (sct *ContentSniffer) ContentType() (string, bool) {
-	if sct.sniffed {
-		return sct.ctype, sct.ctype != ""
+func (cs *ContentSniffer) ContentType() (string, bool) {
+	if cs.sniffed {
+		return cs.ctype, cs.ctype != ""
 	}
-	sct.sniffed = true
+	cs.sniffed = true
 	// If ReadAll hits EOF, it returns err==nil.
-	sct.start, sct.err = ioutil.ReadAll(io.LimitReader(sct.r, sniffBuffSize))
+	cs.start, cs.err = ioutil.ReadAll(io.LimitReader(cs.r, sniffBuffSize))
 
 	// Don't try to detect the content type based on possibly incomplete data.
-	if sct.err != nil {
+	if cs.err != nil {
 		return "", false
 	}
 
-	sct.ctype = http.DetectContentType(sct.start)
-	return sct.ctype, true
+	cs.ctype = http.DetectContentType(cs.start)
+	return cs.ctype, true
+}
+
+// DetectContentType determines the content type of the supplied reader.
+// The following tests are executed in-order.  The first that results in a non-empty content type
+// is used:
+// 1. Is ctype non-empty?
+// 2. Does media implement googleapi.ContentTyper (deprecated)
+// 3. Content is sniffed.
+// After calling DetectContentType the caller must not perform an more reads on media, but rather
+// read from the Reader that is returned.
+func DetectContentType(media io.Reader, ctype string) (r io.Reader, ctype string) {
+	if ctype != "" {
+		return media, ctype
+	}
+
+	// For backwards compatability, allow clients to set content
+	// type by providing a ContentTyper for media.
+	if typer, ok := media.(googleapi.ContentTyper); ok {
+		return media, typer.ContentType()
+	}
+
+	sniffer := gensupport.NewContentSniffer(r)
+	if ctype, ok := sniffer.ContentType(); ok {
+		return sniffer, ctype
+	}
+	// If content type could not be sniffed, reads from sniffer will eventually fail with an error.
+	return sniffer, ""
 }
 
 // IncludeMedia combines an existing HTTP body with media content to create a multipart/related HTTP body.
@@ -81,10 +108,7 @@ func (sct *ContentSniffer) ContentType() (string, bool) {
 // to the "multipart/related" content type, with random boundary.
 //
 // The return value is a function that can be used to close the bodyp Reader with an error.
-func IncludeMedia(media io.Reader, bodyp *io.Reader, ctypep *string) func() {
-	var mediaType string
-	media, mediaType = getMediaType(media)
-
+func IncludeMedia(media io.Reader, mediaType string, bodyp *io.Reader, ctypep *string) func() {
 	body, bodyType := *bodyp, *ctypep
 
 	pr, pw := io.Pipe()

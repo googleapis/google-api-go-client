@@ -1357,6 +1357,7 @@ type ImageConfigurationsUploadCall struct {
 	imageType        string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	mediaType_       string
 	resumable_       googleapi.SizeReaderAt
 	mediaType_       string
 	protocol_        string
@@ -1392,8 +1393,9 @@ func (c *ImageConfigurationsUploadCall) UserIP(userIP string) *ImageConfiguratio
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *ImageConfigurationsUploadCall) Media(r io.Reader) *ImageConfigurationsUploadCall {
-	c.media_ = r
+func (c *ImageConfigurationsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ImageConfigurationsUploadCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetectContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -1451,7 +1453,7 @@ func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, e
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)

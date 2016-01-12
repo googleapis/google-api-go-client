@@ -217,6 +217,36 @@ func (w countingWriter) Write(p []byte) (int, error) {
 // The remaining usable pieces of resumable uploads is exposed in each auto-generated API.
 type ProgressUpdater func(current, total int64)
 
+type MediaOption interface {
+	setOptions(o *MediaOptions)
+}
+
+type contentTypeOption string
+
+func (mt contentTypeOption) setOptions(o *MediaOptions) {
+	o.ContentType = string(mt)
+}
+
+// ContentType returns a MediaOption which sets the content type of data to be uploaded.
+func ContentType(ctype string) MediaOption {
+	return contentTypeOption(ctype)
+}
+
+// MediaOptions stores options for customizing media upload.  It is not used by developers directly.
+type MediaOptions struct {
+	ContentType string
+}
+
+// ProcessMediaOptions stores options from opts in a MediaOptions.
+// It is not used by developers directly.
+func ProcessMediaOptions(opts []MediaOption) *MediaOptions {
+	mo := &MediaOptions{}
+	for _, o := range opts {
+		o.setOptions(mo)
+	}
+	return mo
+}
+
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
 // It is not used by developers directly.
 type ResumableUpload struct {

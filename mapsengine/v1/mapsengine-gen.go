@@ -7983,16 +7983,17 @@ func (c *ProjectsListCall) Do() (*ProjectsListResponse, error) {
 // method id "mapsengine.projects.icons.create":
 
 type ProjectsIconsCreateCall struct {
-	s                *Service
-	projectId        string
-	icon             *Icon
-	urlParams_       gensupport.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s                   *Service
+	projectId           string
+	icon                *Icon
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Create: Create an icon.
@@ -8022,8 +8023,9 @@ func (c *ProjectsIconsCreateCall) UserIP(userIP string) *ProjectsIconsCreateCall
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *ProjectsIconsCreateCall) Media(r io.Reader) *ProjectsIconsCreateCall {
-	c.media_ = r
+func (c *ProjectsIconsCreateCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsIconsCreateCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -8037,7 +8039,7 @@ func (c *ProjectsIconsCreateCall) Media(r io.Reader) *ProjectsIconsCreateCall {
 func (c *ProjectsIconsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsIconsCreateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -8084,7 +8086,7 @@ func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) 
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -8092,10 +8094,10 @@ func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) 
 		"projectId": c.projectId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -8137,7 +8139,7 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -11714,15 +11716,16 @@ func (c *RastersUploadCall) Do() (*Raster, error) {
 // method id "mapsengine.rasters.files.insert":
 
 type RastersFilesInsertCall struct {
-	s                *Service
-	id               string
-	urlParams_       gensupport.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s                   *Service
+	id                  string
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Insert: Upload a file to a raster asset.
@@ -11752,8 +11755,9 @@ func (c *RastersFilesInsertCall) UserIP(userIP string) *RastersFilesInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *RastersFilesInsertCall) Media(r io.Reader) *RastersFilesInsertCall {
-	c.media_ = r
+func (c *RastersFilesInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *RastersFilesInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -11767,7 +11771,7 @@ func (c *RastersFilesInsertCall) Media(r io.Reader) *RastersFilesInsertCall {
 func (c *RastersFilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *RastersFilesInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -11811,7 +11815,7 @@ func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -11819,10 +11823,10 @@ func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -11849,7 +11853,7 @@ func (c *RastersFilesInsertCall) Do() error {
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -14406,15 +14410,16 @@ func (c *TablesFeaturesListCall) Do() (*FeaturesListResponse, error) {
 // method id "mapsengine.tables.files.insert":
 
 type TablesFilesInsertCall struct {
-	s                *Service
-	id               string
-	urlParams_       gensupport.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s                   *Service
+	id                  string
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Insert: Upload a file to a placeholder table asset. See Table Upload
@@ -14447,8 +14452,9 @@ func (c *TablesFilesInsertCall) UserIP(userIP string) *TablesFilesInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *TablesFilesInsertCall) Media(r io.Reader) *TablesFilesInsertCall {
-	c.media_ = r
+func (c *TablesFilesInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *TablesFilesInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -14462,7 +14468,7 @@ func (c *TablesFilesInsertCall) Media(r io.Reader) *TablesFilesInsertCall {
 func (c *TablesFilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TablesFilesInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -14506,7 +14512,7 @@ func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -14514,10 +14520,10 @@ func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -14544,7 +14550,7 @@ func (c *TablesFilesInsertCall) Do() error {
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {

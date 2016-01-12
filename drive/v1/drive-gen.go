@@ -460,15 +460,16 @@ func (c *FilesGetCall) Do() (*File, error) {
 // method id "drive.files.insert":
 
 type FilesInsertCall struct {
-	s                *Service
-	file             *File
-	urlParams_       gensupport.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s                   *Service
+	file                *File
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Insert: Inserts a file, and any settable metadata or blob content
@@ -498,8 +499,9 @@ func (c *FilesInsertCall) UserIP(userIP string) *FilesInsertCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *FilesInsertCall) Media(r io.Reader) *FilesInsertCall {
-	c.media_ = r
+func (c *FilesInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *FilesInsertCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -513,7 +515,7 @@ func (c *FilesInsertCall) Media(r io.Reader) *FilesInsertCall {
 func (c *FilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *FilesInsertCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -560,16 +562,16 @@ func (c *FilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -611,7 +613,7 @@ func (c *FilesInsertCall) Do() (*File, error) {
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -859,16 +861,17 @@ func (c *FilesPatchCall) Do() (*File, error) {
 // method id "drive.files.update":
 
 type FilesUpdateCall struct {
-	s                *Service
-	id               string
-	file             *File
-	urlParams_       gensupport.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s                   *Service
+	id                  string
+	file                *File
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Update: Updates file metadata and/or content
@@ -928,8 +931,9 @@ func (c *FilesUpdateCall) UserIP(userIP string) *FilesUpdateCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *FilesUpdateCall) Media(r io.Reader) *FilesUpdateCall {
-	c.media_ = r
+func (c *FilesUpdateCall) Media(r io.Reader, options ...googleapi.MediaOption) *FilesUpdateCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -943,7 +947,7 @@ func (c *FilesUpdateCall) Media(r io.Reader) *FilesUpdateCall {
 func (c *FilesUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *FilesUpdateCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -990,7 +994,7 @@ func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("PUT", urls, body)
@@ -998,10 +1002,10 @@ func (c *FilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1043,7 +1047,7 @@ func (c *FilesUpdateCall) Do() (*File, error) {
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {

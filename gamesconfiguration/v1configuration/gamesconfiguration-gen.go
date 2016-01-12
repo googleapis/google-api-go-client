@@ -1352,16 +1352,17 @@ func (c *AchievementConfigurationsUpdateCall) Do() (*AchievementConfiguration, e
 // method id "gamesConfiguration.imageConfigurations.upload":
 
 type ImageConfigurationsUploadCall struct {
-	s                *Service
-	resourceId       string
-	imageType        string
-	urlParams_       gensupport.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s                   *Service
+	resourceId          string
+	imageType           string
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Upload: Uploads an image for a resource with the given ID and image
@@ -1392,8 +1393,9 @@ func (c *ImageConfigurationsUploadCall) UserIP(userIP string) *ImageConfiguratio
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *ImageConfigurationsUploadCall) Media(r io.Reader) *ImageConfigurationsUploadCall {
-	c.media_ = r
+func (c *ImageConfigurationsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ImageConfigurationsUploadCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -1407,7 +1409,7 @@ func (c *ImageConfigurationsUploadCall) Media(r io.Reader) *ImageConfigurationsU
 func (c *ImageConfigurationsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ImageConfigurationsUploadCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -1451,7 +1453,7 @@ func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, e
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
+		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
 		defer cancel()
 	}
 	req, _ := http.NewRequest("POST", urls, body)
@@ -1460,10 +1462,10 @@ func (c *ImageConfigurationsUploadCall) doRequest(alt string) (*http.Response, e
 		"imageType":  c.imageType,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -1505,7 +1507,7 @@ func (c *ImageConfigurationsUploadCall) Do() (*ImageConfiguration, error) {
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {

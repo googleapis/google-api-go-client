@@ -1624,10 +1624,13 @@ func (meth *Method) generateCode() {
 	if httpMethod == "GET" {
 		pn(" ifNoneMatch_ string")
 	}
+
+	// TODO(mcgreevy): remove resumable_ and resumableMediaType in favor of media_ and mediaType_
 	if meth.supportsMediaUpload() {
 		pn(" media_     io.Reader")
-		pn(" resumable_ googleapi.SizeReaderAt")
 		pn(" mediaType_ string")
+		pn(" resumable_ googleapi.SizeReaderAt")
+		pn(" resumableMediaType_ string")
 		pn(" protocol_  string")
 		pn(" progressUpdater_  googleapi.ProgressUpdater")
 	}
@@ -1721,10 +1724,11 @@ func (meth *Method) generateCode() {
 		// TODO(mcgreevy): Ensure that r is always closed before Do returns, and document this.
 		// See comments on https://code-review.googlesource.com/#/c/3970/
 		p("\n%s", asComment("", comment))
-		pn("func (c *%s) Media(r io.Reader) *%s {", callName, callName)
-		pn("c.media_ = r")
-		pn(`c.protocol_ = "multipart"`)
-		pn("return c")
+		pn("func (c *%s) Media(r io.Reader, options ...googleapi.MediaOption) *%s {", callName, callName)
+		pn(" opts := googleapi.ProcessMediaOptions(options)")
+		pn(" c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)")
+		pn(` c.protocol_ = "multipart"`)
+		pn(" return c")
 		pn("}")
 		comment = "ResumableMedia specifies the media to upload in chunks and can be canceled with ctx. " +
 			"At most one of Media and ResumableMedia may be set. " +
@@ -1736,7 +1740,7 @@ func (meth *Method) generateCode() {
 		pn("func (c *%s) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *%s {", callName, callName)
 		pn("c.ctx_ = ctx")
 		pn("c.resumable_ = io.NewSectionReader(r, 0, size)")
-		pn("c.mediaType_ = mediaType")
+		pn("c.resumableMediaType_ = mediaType")
 		pn(`c.protocol_ = "resumable"`)
 		pn("return c")
 		pn("}")
@@ -1824,8 +1828,10 @@ func (meth *Method) generateCode() {
 			hasContentType = true
 		}
 		pn(`if c.protocol_ != "resumable" && c.media_ != nil {`)
-		pn("  cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)")
-		pn("  defer cancel()")
+		pn("  var combined io.ReadCloser")
+		pn("  combined, ctype = gensupport.CombineBodyMedia(c.media_, c.mediaType_, body, ctype)")
+		pn("  defer combined.Close()")
+		pn("  body = combined")
 		pn("}")
 	}
 	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)
@@ -1845,10 +1851,10 @@ func (meth *Method) generateCode() {
 
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
-		pn(` if c.mediaType_ == "" {`)
-		pn("  c.mediaType_ = gensupport.DetectMediaType(c.resumable_)")
+		pn(` if c.resumableMediaType_ == "" {`)
+		pn("  c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)")
 		pn(" }")
-		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
+		pn(` req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)`)
 		pn("}")
 	}
 
@@ -1921,7 +1927,7 @@ func (meth *Method) generateCode() {
 		pn("  UserAgent:     c.s.userAgent(),")
 		pn("  URI:           loc,")
 		pn("  Media:         c.resumable_,")
-		pn("  MediaType:     c.mediaType_,")
+		pn("  MediaType:     c.resumableMediaType_,")
 		pn("  ContentLength: c.resumable_.Size(),")
 		pn("  Callback:      func(curr int64){")
 		pn("   if c.progressUpdater_ != nil {")

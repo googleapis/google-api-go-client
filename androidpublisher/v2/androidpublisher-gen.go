@@ -3357,16 +3357,17 @@ func (c *EditsApksListCall) Do() (*ApksListResponse, error) {
 // method id "androidpublisher.edits.apks.upload":
 
 type EditsApksUploadCall struct {
-	s                *Service
-	packageNameid    string
-	editId           string
-	urlParams_       gensupport.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s                   *Service
+	packageNameid       string
+	editId              string
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Upload:
@@ -3396,8 +3397,9 @@ func (c *EditsApksUploadCall) UserIP(userIP string) *EditsApksUploadCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *EditsApksUploadCall) Media(r io.Reader) *EditsApksUploadCall {
-	c.media_ = r
+func (c *EditsApksUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *EditsApksUploadCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -3411,7 +3413,7 @@ func (c *EditsApksUploadCall) Media(r io.Reader) *EditsApksUploadCall {
 func (c *EditsApksUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *EditsApksUploadCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -3455,8 +3457,10 @@ func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
-		defer cancel()
+		var combined io.ReadCloser
+		combined, ctype = gensupport.CombineBodyMedia(c.media_, c.mediaType_, body, ctype)
+		defer combined.Close()
+		body = combined
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -3464,10 +3468,10 @@ func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3509,7 +3513,7 @@ func (c *EditsApksUploadCall) Do() (*Apk, error) {
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -4564,18 +4568,19 @@ func (c *EditsExpansionfilesUpdateCall) Do() (*ExpansionFile, error) {
 // method id "androidpublisher.edits.expansionfiles.upload":
 
 type EditsExpansionfilesUploadCall struct {
-	s                 *Service
-	packageNameid     string
-	editId            string
-	apkVersionCode    int64
-	expansionFileType string
-	urlParams_        gensupport.URLParams
-	media_            io.Reader
-	resumable_        googleapi.SizeReaderAt
-	mediaType_        string
-	protocol_         string
-	progressUpdater_  googleapi.ProgressUpdater
-	ctx_              context.Context
+	s                   *Service
+	packageNameid       string
+	editId              string
+	apkVersionCode      int64
+	expansionFileType   string
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Upload: Uploads and attaches a new Expansion File to the APK
@@ -4608,8 +4613,9 @@ func (c *EditsExpansionfilesUploadCall) UserIP(userIP string) *EditsExpansionfil
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *EditsExpansionfilesUploadCall) Media(r io.Reader) *EditsExpansionfilesUploadCall {
-	c.media_ = r
+func (c *EditsExpansionfilesUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *EditsExpansionfilesUploadCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -4623,7 +4629,7 @@ func (c *EditsExpansionfilesUploadCall) Media(r io.Reader) *EditsExpansionfilesU
 func (c *EditsExpansionfilesUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *EditsExpansionfilesUploadCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -4667,8 +4673,10 @@ func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, e
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
-		defer cancel()
+		var combined io.ReadCloser
+		combined, ctype = gensupport.CombineBodyMedia(c.media_, c.mediaType_, body, ctype)
+		defer combined.Close()
+		body = combined
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -4678,10 +4686,10 @@ func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, e
 		"expansionFileType": c.expansionFileType,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4723,7 +4731,7 @@ func (c *EditsExpansionfilesUploadCall) Do() (*ExpansionFilesUploadResponse, err
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -5351,18 +5359,19 @@ func (c *EditsImagesListCall) Do() (*ImagesListResponse, error) {
 // method id "androidpublisher.edits.images.upload":
 
 type EditsImagesUploadCall struct {
-	s                *Service
-	packageNameid    string
-	editId           string
-	language         string
-	imageType        string
-	urlParams_       gensupport.URLParams
-	media_           io.Reader
-	resumable_       googleapi.SizeReaderAt
-	mediaType_       string
-	protocol_        string
-	progressUpdater_ googleapi.ProgressUpdater
-	ctx_             context.Context
+	s                   *Service
+	packageNameid       string
+	editId              string
+	language            string
+	imageType           string
+	urlParams_          gensupport.URLParams
+	media_              io.Reader
+	mediaType_          string
+	resumable_          googleapi.SizeReaderAt
+	resumableMediaType_ string
+	protocol_           string
+	progressUpdater_    googleapi.ProgressUpdater
+	ctx_                context.Context
 }
 
 // Upload: Uploads a new image and adds it to the list of images for the
@@ -5395,8 +5404,9 @@ func (c *EditsImagesUploadCall) UserIP(userIP string) *EditsImagesUploadCall {
 
 // Media specifies the media to upload in a single chunk. At most one of
 // Media and ResumableMedia may be set.
-func (c *EditsImagesUploadCall) Media(r io.Reader) *EditsImagesUploadCall {
-	c.media_ = r
+func (c *EditsImagesUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *EditsImagesUploadCall {
+	opts := googleapi.ProcessMediaOptions(options)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
 	c.protocol_ = "multipart"
 	return c
 }
@@ -5410,7 +5420,7 @@ func (c *EditsImagesUploadCall) Media(r io.Reader) *EditsImagesUploadCall {
 func (c *EditsImagesUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *EditsImagesUploadCall {
 	c.ctx_ = ctx
 	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.mediaType_ = mediaType
+	c.resumableMediaType_ = mediaType
 	c.protocol_ = "resumable"
 	return c
 }
@@ -5454,8 +5464,10 @@ func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 	body = new(bytes.Buffer)
 	ctype := "application/json"
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, &body, &ctype)
-		defer cancel()
+		var combined io.ReadCloser
+		combined, ctype = gensupport.CombineBodyMedia(c.media_, c.mediaType_, body, ctype)
+		defer combined.Close()
+		body = combined
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{
@@ -5465,10 +5477,10 @@ func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 		"imageType":   c.imageType,
 	})
 	if c.protocol_ == "resumable" {
-		if c.mediaType_ == "" {
-			c.mediaType_ = gensupport.DetectMediaType(c.resumable_)
+		if c.resumableMediaType_ == "" {
+			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
 		}
-		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -5510,7 +5522,7 @@ func (c *EditsImagesUploadCall) Do() (*ImagesUploadResponse, error) {
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
 			Media:         c.resumable_,
-			MediaType:     c.mediaType_,
+			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {

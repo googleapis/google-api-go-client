@@ -33,7 +33,7 @@ func (er *errReader) Read(p []byte) (int, error) {
 	return n, nil
 }
 
-func TestAll(t *testing.T) {
+func TestContentSniffing(t *testing.T) {
 	type testCase struct {
 		data     []byte // the data to read from the Reader
 		finalErr error  // error to return after data has been read
@@ -89,7 +89,7 @@ func TestAll(t *testing.T) {
 	} {
 		er := &errReader{buf: tc.data, err: tc.finalErr}
 
-		sct := NewContentSniffer(er)
+		sct := newContentSniffer(er)
 
 		// Even if was an error during the first 512 bytes, we should still be able to read those bytes.
 		buf, err := ioutil.ReadAll(sct)
@@ -108,6 +108,56 @@ func TestAll(t *testing.T) {
 		}
 		if ok && ct != tc.wantContentType {
 			t.Fatalf("Content type got: %q; want: %q", ct, tc.wantContentType)
+		}
+	}
+}
+
+type staticContentTyper struct {
+	io.Reader
+}
+
+func (sct staticContentTyper) ContentType() string {
+	return "static content type"
+}
+
+func TestDetermineContentType(t *testing.T) {
+	data := []byte("abc")
+	rdr := func() io.Reader {
+		return bytes.NewBuffer(data)
+	}
+
+	type testCase struct {
+		r                  io.Reader
+		explicitConentType string
+		wantContentType    string
+	}
+
+	for _, tc := range []testCase{
+		{
+			r:               rdr(),
+			wantContentType: "text/plain; charset=utf-8",
+		},
+		{
+			r:               staticContentTyper{rdr()},
+			wantContentType: "static content type",
+		},
+		{
+			r:                  staticContentTyper{rdr()},
+			explicitConentType: "explicit",
+			wantContentType:    "explicit",
+		},
+	} {
+		r, ctype := DetermineContentType(tc.r, tc.explicitConentType)
+		got, err := ioutil.ReadAll(r)
+		if err != nil {
+			t.Fatalf("Failed reading buffer: %v", err)
+		}
+		if !reflect.DeepEqual(got, data) {
+			t.Fatalf("Failed reading buffer: got: %q; want:%q", got, data)
+		}
+
+		if ctype != tc.wantContentType {
+			t.Fatalf("Content type got: %q; want: %q", ctype, tc.wantContentType)
 		}
 	}
 }

@@ -151,21 +151,6 @@ func IncludeMedia(media io.Reader, mediaContentType string, bodyp *io.Reader, ct
 
 var errAborted = errors.New("googleapi: upload aborted")
 
-func getMediaType(media io.Reader) (io.Reader, string) {
-	if typer, ok := media.(googleapi.ContentTyper); ok {
-		return media, typer.ContentType()
-	}
-
-	sniffer := newContentSniffer(media)
-	typ, ok := sniffer.ContentType()
-	if !ok {
-		// TODO(mcgreevy): Remove this default.  It maintains the semantics of the existing code,
-		// but should not be relied on.
-		typ = "application/octet-stream"
-	}
-	return sniffer, typ
-}
-
 // DetectMediaType detects and returns the content type of the provided media.
 // If the type can not be determined, "application/octet-stream" is returned.
 func DetectMediaType(media io.ReaderAt) string {

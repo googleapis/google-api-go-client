@@ -1828,8 +1828,10 @@ func (meth *Method) generateCode() {
 			hasContentType = true
 		}
 		pn(`if c.protocol_ != "resumable" && c.media_ != nil {`)
-		pn("  cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)")
-		pn("  defer cancel()")
+		pn("  var combined io.ReadCloser")
+		pn("  combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)")
+		pn("  defer combined.Close()")
+		pn("  body = combined")
 		pn("}")
 	}
 	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)

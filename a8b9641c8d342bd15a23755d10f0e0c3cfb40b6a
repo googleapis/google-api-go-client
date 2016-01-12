@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7d6ce0a_008786f9",
+        "filename": "gensupport/media.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-12T05:16:34Z",
+      "side": 1,
+      "message": "In a follow change, ctypep will changed to be an input-only parameter, and renamed to bodyContentType.\n\nI\u0027ll rename mediaType to mediaContentType.  It\u0027s an ugly name, but at least its analogous.  I could create a type just to hold a {reader,contenttype} pair to make this read a bit more nicely, but I think it would be overkill.",
+      "parentUuid": "a7d6ce0a_e05b827c",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 44
+      },
+      "revId": "a8b9641c8d342bd15a23755d10f0e0c3cfb40b6a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7d6ce0a_00594684",
         "filename": "googleapi/googleapi.go",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-12T04:55:27Z",
       "side": 1,
       "message": "setOptions? process?",
+      "range": {
+        "startLine": 221,
+        "startChar": 1,
+        "endLine": 221,
+        "endChar": 15
+      },
+      "revId": "a8b9641c8d342bd15a23755d10f0e0c3cfb40b6a",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7d6ce0a_407a6ec4",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-12T05:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7d6ce0a_00594684",
       "range": {
         "startLine": 221,
         "startChar": 1,

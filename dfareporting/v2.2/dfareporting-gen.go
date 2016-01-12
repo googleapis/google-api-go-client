@@ -19796,8 +19796,10 @@ func (c *CreativeAssetsInsertCall) doRequest(alt string) (*http.Response, error)
 	}
 	urls += "?" + c.urlParams_.Encode()
 	if c.protocol_ != "resumable" && c.media_ != nil {
-		cancel := gensupport.IncludeMedia(c.media_, c.mediaType_, &body, &ctype)
-		defer cancel()
+		var combined io.ReadCloser
+		combined, ctype = gensupport.CombineBodyMedia(c.media_, c.mediaType_, body, ctype)
+		defer combined.Close()
+		body = combined
 	}
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.Expand(req.URL, map[string]string{

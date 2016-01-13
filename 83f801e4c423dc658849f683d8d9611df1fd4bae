@@ -1,0 +1,6 @@
+Code-Review+2: Dave Day <djd@golang.org>
+Submitted-by: Michael McGreevy <mcgreevy@golang.org>
+Submitted-at: Wed, 13 Jan 2016 00:26:24 +0000
+Reviewed-on: https://code-review.googlesource.com/4004
+Project: google-api-go-client
+Branch: refs/heads/master

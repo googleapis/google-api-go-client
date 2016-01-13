@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/oJdgpnD6rHroNHEnOQr3BBW0A-k\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/L0xc6p-gR1O4iwA7mMPQ4x5HaTE\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2beta2",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager",
  "version": "v2beta2",
- "revision": "20151213",
+ "revision": "20160104",
  "title": "Google Cloud Deployment Manager API",
  "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -305,7 +305,7 @@
     },
     "httpErrorStatusCode": {
      "type": "integer",
-     "description": "[Output Only] If the operation fails, this field contains the HTTP error message that was returned. For example, a 404 means the resource was not found.",
+     "description": "[Output Only] If the operation fails, this field contains the HTTP error status code that was returned. For example, a 404 means the resource was not found.",
      "format": "int32"
     },
     "id": {

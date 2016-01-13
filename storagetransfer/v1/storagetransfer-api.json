@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/YnaUc-cj9ChhpJCT0y2OALoDn9Q\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/fmXUMBI6Gn2x3crK-Doz-fh96kI\"",
  "discoveryVersion": "v1",
  "id": "storagetransfer:v1",
  "name": "storagetransfer",
@@ -17,10 +17,11 @@
  "documentationLink": "https://cloud.google.com/storage/transfer",
  "protocol": "rest",
  "baseUrl": "https://storagetransfer.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://storagetransfer.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
+ "version_module": true,
  "parameters": {
   "access_token": {
    "type": "string",

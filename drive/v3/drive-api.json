@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/jFfT_5FQxY4swYRA_Wr05M6Vn5o\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/kMe6GnQrpKgv7JoYUMGicoxkGCc\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20151209",
+ "revision": "20151230",
  "title": "Drive API",
  "description": "The API to interact with Drive.",
  "ownerDomain": "google.com",
@@ -1687,6 +1687,7 @@
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsMediaDownload": true,
+     "useMediaDownloadService": true,
      "supportsSubscription": true
     },
     "list": {
@@ -1866,6 +1867,7 @@
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsMediaDownload": true,
+     "useMediaDownloadService": true,
      "supportsSubscription": true
     }
    }
@@ -2331,7 +2333,8 @@
       "https://www.googleapis.com/auth/drive.photos.readonly",
       "https://www.googleapis.com/auth/drive.readonly"
      ],
-     "supportsMediaDownload": true
+     "supportsMediaDownload": true,
+     "useMediaDownloadService": true
     },
     "list": {
      "id": "drive.revisions.list",

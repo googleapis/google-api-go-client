@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/zzkCy2O-Agowk5lRoMuWDbJW1wc\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/1cY2H5CSq5iYOAXHFbJnjHbrVqw\"",
  "discoveryVersion": "v1",
  "id": "fusiontables:v2",
  "name": "fusiontables",
  "version": "v2",
- "revision": "20150226",
+ "revision": "20150618",
  "title": "Fusion Tables API",
  "description": "API for working with Fusion Tables data.",
  "ownerDomain": "google.com",
@@ -1030,7 +1030,8 @@
       "https://www.googleapis.com/auth/fusiontables",
       "https://www.googleapis.com/auth/fusiontables.readonly"
      ],
-     "supportsMediaDownload": true
+     "supportsMediaDownload": true,
+     "useMediaDownloadService": true
     },
     "sqlGet": {
      "id": "fusiontables.query.sqlGet",
@@ -1065,7 +1066,8 @@
       "https://www.googleapis.com/auth/fusiontables",
       "https://www.googleapis.com/auth/fusiontables.readonly"
      ],
-     "supportsMediaDownload": true
+     "supportsMediaDownload": true,
+     "useMediaDownloadService": true
     }
    }
   },

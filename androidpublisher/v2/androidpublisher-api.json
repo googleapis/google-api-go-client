@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/QvChBL9zzkcDEEIqZpwPMr9_TRs\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/cxP0mtBkWIA4ZdoBuvl7SgC3-Gc\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v2",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v2",
- "revision": "20150910",
+ "revision": "20160111",
  "title": "Google Play Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",
@@ -474,7 +474,7 @@
     },
     "subscriptionPeriod": {
      "type": "string",
-     "description": "Subscription period, specified in ISO 8601 format. Acceptable values are \"P1W\" (one week), \"P1M\" (one month) and \"P1Y\" (one year)."
+     "description": "Subscription period, specified in ISO 8601 format. Acceptable values are \"P1W\" (one week), \"P1M\" (one month), \"P3M\" (three months), \"P6M\" (six months), and \"P1Y\" (one year)."
     },
     "trialPeriod": {
      "type": "string",
@@ -739,6 +739,20 @@
     }
    }
   },
+  "Prorate": {
+   "id": "Prorate",
+   "type": "object",
+   "properties": {
+    "defaultPrice": {
+     "$ref": "Price",
+     "description": "Default price cannot be zero and must be less than the full subscription price. Default price is always in the developer's Checkout merchant currency. Targeted countries have their prices set automatically based on the default_price."
+    },
+    "start": {
+     "$ref": "MonthDay",
+     "description": "Defines the first day on which the price takes effect."
+    }
+   }
+  },
   "Season": {
    "id": "Season",
    "type": "object",
@@ -746,6 +760,13 @@
     "end": {
      "$ref": "MonthDay",
      "description": "Inclusive end date of the recurrence period."
+    },
+    "prorations": {
+     "type": "array",
+     "description": "Optionally present list of prorations for the season. Each proration is a one-off discounted entry into a subscription. Each proration contains the first date on which the discount is available and the new pricing information.",
+     "items": {
+      "$ref": "Prorate"
+     }
     },
     "start": {
      "$ref": "MonthDay",

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/naX8yNJ_bY3dR5Ft8Kwm0spj_ao\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/EU3C4gpLCUA7tQGVmbBda1n2_q0\"",
  "discoveryVersion": "v1",
  "id": "script:v1",
  "name": "script",
@@ -17,7 +17,7 @@
  "documentationLink": "https://developers.google.com/apps-script/execution/rest/v1/run",
  "protocol": "rest",
  "baseUrl": "https://script.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://script.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

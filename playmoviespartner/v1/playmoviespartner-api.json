@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Noghpi7BSoFye2xNzlRkY-iDh3I\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/z6DDJOj93G2k5mJ-2ciqK3fHbRY\"",
  "discoveryVersion": "v1",
  "id": "playmoviespartner:v1",
  "name": "playmoviespartner",
@@ -17,7 +17,7 @@
  "documentationLink": "https://developers.google.com/playmoviespartner/",
  "protocol": "rest",
  "baseUrl": "https://playmoviespartner.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://playmoviespartner.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

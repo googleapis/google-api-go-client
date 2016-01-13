@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fVcgFu0Lq8I-aoFx8Xf80n0dU1w\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/hv7wO9t243cZnlaNc4LDNLDlWOU\"",
  "discoveryVersion": "v1",
  "id": "cloudtrace:v1",
  "name": "cloudtrace",
@@ -17,10 +17,11 @@
  "documentationLink": "https://cloud.google.com/tools/cloud-trace",
  "protocol": "rest",
  "baseUrl": "https://cloudtrace.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://cloudtrace.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
+ "version_module": true,
  "parameters": {
   "access_token": {
    "type": "string",

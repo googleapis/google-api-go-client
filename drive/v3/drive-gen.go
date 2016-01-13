@@ -4004,7 +4004,8 @@ func (c *FilesGetCall) Do() (*File, error) {
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsMediaDownload": true,
-	//   "supportsSubscription": true
+	//   "supportsSubscription": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }
@@ -4713,7 +4714,8 @@ func (c *FilesWatchCall) Do() (*Channel, error) {
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
 	//   "supportsMediaDownload": true,
-	//   "supportsSubscription": true
+	//   "supportsSubscription": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }
@@ -6562,7 +6564,8 @@ func (c *RevisionsGetCall) Do() (*Revision, error) {
 	//     "https://www.googleapis.com/auth/drive.photos.readonly",
 	//     "https://www.googleapis.com/auth/drive.readonly"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }

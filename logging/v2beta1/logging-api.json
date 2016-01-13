@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/HC6cV45pVNq_awYIVZcAdR0rM0I\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/wmRq-yRsUWybxv4zTNUlygH9dXc\"",
  "discoveryVersion": "v1",
  "id": "logging:v2beta1",
  "name": "logging",
@@ -17,10 +17,11 @@
  "documentationLink": "https://cloud.google.com/logging/docs/",
  "protocol": "rest",
  "baseUrl": "https://logging.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://logging.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
+ "version_module": true,
  "parameters": {
   "access_token": {
    "type": "string",

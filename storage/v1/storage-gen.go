@@ -5483,7 +5483,8 @@ func (c *ObjectsComposeCall) Do() (*Object, error) {
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }
@@ -5868,7 +5869,8 @@ func (c *ObjectsCopyCall) Do() (*Object, error) {
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }
@@ -6317,7 +6319,8 @@ func (c *ObjectsGetCall) Do() (*Object, error) {
 	//     "https://www.googleapis.com/auth/devstorage.read_only",
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }
@@ -6703,7 +6706,8 @@ func (c *ObjectsInsertCall) Do() (*Object, error) {
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ],
 	//   "supportsMediaDownload": true,
-	//   "supportsMediaUpload": true
+	//   "supportsMediaUpload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }
@@ -7934,7 +7938,8 @@ func (c *ObjectsUpdateCall) Do() (*Object, error) {
 	//     "https://www.googleapis.com/auth/devstorage.full_control",
 	//     "https://www.googleapis.com/auth/devstorage.read_write"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/mDGqMWzlnlqf9O9YEtohZgmVN08\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/jndj-e3v8fWTvNDjkWe-g8eW-mQ\"",
  "discoveryVersion": "v1",
  "id": "dataproc:v1alpha1",
  "name": "dataproc",
@@ -17,7 +17,7 @@
  "documentationLink": "https://cloud.google.com/dataproc/",
  "protocol": "rest",
  "baseUrl": "https://dataproc.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://dataproc.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

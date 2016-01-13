@@ -807,8 +807,8 @@ type InAppProduct struct {
 	Status string `json:"status,omitempty"`
 
 	// SubscriptionPeriod: Subscription period, specified in ISO 8601
-	// format. Acceptable values are "P1W" (one week), "P1M" (one month) and
-	// "P1Y" (one year).
+	// format. Acceptable values are "P1W" (one week), "P1M" (one month),
+	// "P3M" (three months), "P6M" (six months), and "P1Y" (one year).
 	SubscriptionPeriod string `json:"subscriptionPeriod,omitempty"`
 
 	// TrialPeriod: Trial period, specified in ISO 8601 format. Acceptable
@@ -1225,9 +1225,40 @@ func (s *ProductPurchase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+type Prorate struct {
+	// DefaultPrice: Default price cannot be zero and must be less than the
+	// full subscription price. Default price is always in the developer's
+	// Checkout merchant currency. Targeted countries have their prices set
+	// automatically based on the default_price.
+	DefaultPrice *Price `json:"defaultPrice,omitempty"`
+
+	// Start: Defines the first day on which the price takes effect.
+	Start *MonthDay `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DefaultPrice") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Prorate) MarshalJSON() ([]byte, error) {
+	type noMethod Prorate
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 type Season struct {
 	// End: Inclusive end date of the recurrence period.
 	End *MonthDay `json:"end,omitempty"`
+
+	// Prorations: Optionally present list of prorations for the season.
+	// Each proration is a one-off discounted entry into a subscription.
+	// Each proration contains the first date on which the discount is
+	// available and the new pricing information.
+	Prorations []*Prorate `json:"prorations,omitempty"`
 
 	// Start: Inclusive start date of the recurrence period.
 	Start *MonthDay `json:"start,omitempty"`

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/ZeC-oWzDKj1E5_H69LVDW5wAByE\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/5AQpW1lJHfcDZmUKJzrzEbI6GXM\"",
  "discoveryVersion": "v1",
  "id": "appsactivity:v1",
  "name": "appsactivity",
  "version": "v1",
- "revision": "20150326",
+ "revision": "20150723",
  "title": "Google Apps Activity API",
  "description": "Provides a historical view of activity.",
  "ownerDomain": "google.com",
@@ -398,7 +398,7 @@
     },
     "photo": {
      "$ref": "Photo",
-     "description": "The profile photo of the user."
+     "description": "The profile photo of the user. Not present if the user has no profile photo."
     }
    }
   }

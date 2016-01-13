@@ -6,32 +6,11 @@ package gensupport
 
 import (
 	"bytes"
-	"errors"
 	"io"
 	"io/ioutil"
 	"reflect"
 	"testing"
 )
-
-// errReader reads out of a buffer until it is empty, then returns the specified error.
-type errReader struct {
-	buf []byte
-	err error
-}
-
-var errBang error = errors.New("bang")
-
-func (er *errReader) Read(p []byte) (int, error) {
-	if len(er.buf) == 0 {
-		if er.err == nil {
-			return 0, io.EOF
-		}
-		return 0, er.err
-	}
-	n := copy(p, er.buf)
-	er.buf = er.buf[n:]
-	return n, nil
-}
 
 func TestContentSniffing(t *testing.T) {
 	type testCase struct {
@@ -57,7 +36,7 @@ func TestContentSniffing(t *testing.T) {
 		},
 		{
 			data:                  []byte(""),
-			finalErr:              errBang,
+			finalErr:              io.ErrUnexpectedEOF,
 			wantContentType:       "text/plain; charset=utf-8",
 			wantContentTypeResult: false,
 		},
@@ -69,7 +48,7 @@ func TestContentSniffing(t *testing.T) {
 		},
 		{
 			data:                  []byte("abc"),
-			finalErr:              errBang,
+			finalErr:              io.ErrUnexpectedEOF,
 			wantContentType:       "text/plain; charset=utf-8",
 			wantContentTypeResult: false,
 		},
@@ -82,7 +61,7 @@ func TestContentSniffing(t *testing.T) {
 		},
 		{
 			data:                  bytes.Repeat([]byte("a"), 513),
-			finalErr:              errBang,
+			finalErr:              io.ErrUnexpectedEOF,
 			wantContentType:       "text/plain; charset=utf-8",
 			wantContentTypeResult: true, // true because error is after first 512 bytes.
 		},

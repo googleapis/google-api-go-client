@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "676db610_cb3795d8",
+        "filename": "appengine/v1beta4/appengine-api.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5155
+      },
+      "writtenOn": "2016-01-13T00:11:11Z",
+      "side": 1,
+      "message": "We normally filter out all updates where only the etag changes.",
+      "revId": "c3031ea911847c12c3f7864d6df414934658986c",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/fKMbe2SrHaXxYf-uUNHbWFry5hs\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/jOk06y8CuVOP1R4ptQhNmTri8bg\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
@@ -2614,6 +2614,7 @@
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsMediaDownload": true,
+     "useMediaDownloadService": true,
      "supportsSubscription": true
     },
     "insert": {
@@ -3180,6 +3181,7 @@
       "https://www.googleapis.com/auth/drive.readonly"
      ],
      "supportsMediaDownload": true,
+     "useMediaDownloadService": true,
      "supportsSubscription": true
     }
    }

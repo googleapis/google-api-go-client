@@ -6030,6 +6030,7 @@ type Quota struct {
 	// Metric: [Output Only] Name of the quota metric.
 	//
 	// Possible values:
+	//   "AUTOSCALERS"
 	//   "BACKEND_SERVICES"
 	//   "CPUS"
 	//   "DISKS_TOTAL_GB"

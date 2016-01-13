@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/pdss05SnljaLiKLzp8lAQh6dn78\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/ALGPA_KnBMWi8ED2AhMEce_HO4k\"",
  "discoveryVersion": "v1",
  "id": "dataflow:v1b3",
  "name": "dataflow",
@@ -17,7 +17,7 @@
  "documentationLink": "https://cloud.google.com/dataflow",
  "protocol": "rest",
  "baseUrl": "https://dataflow.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://dataflow.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

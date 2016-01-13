@@ -576,6 +576,22 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "compute:beta",
+   "name": "compute",
+   "version": "beta",
+   "title": "Compute Engine API",
+   "description": "API for the Google Compute Engine service.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/compute/beta/rest",
+   "discoveryLink": "./apis/compute/beta/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
+    "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
+   },
+   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "compute:v1",
    "name": "compute",
    "version": "v1",

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/r1f0Nexh7MJdNKQx__uZHdGaioY\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/ADTy4sSpOyGMZnWzo4Bh1noM0eo\"",
  "discoveryVersion": "v1",
  "id": "clouddebugger:v2",
  "name": "clouddebugger",
@@ -17,10 +17,11 @@
  "documentationLink": "https://cloud.google.com/tools/cloud-debugger",
  "protocol": "rest",
  "baseUrl": "https://clouddebugger.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://clouddebugger.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
+ "version_module": true,
  "parameters": {
   "access_token": {
    "type": "string",

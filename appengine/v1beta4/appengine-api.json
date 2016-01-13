@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/_N6P2yp_iYSGpgtP_LUuoaI39to\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/vvUD0_smJPc-NyKG_6O2ek_mUZ0\"",
  "discoveryVersion": "v1",
  "id": "appengine:v1beta4",
  "name": "appengine",
@@ -17,7 +17,7 @@
  "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
  "protocol": "rest",
  "baseUrl": "https://appengine.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://appengine.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

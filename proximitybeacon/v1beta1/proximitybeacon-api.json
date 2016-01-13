@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/qiwkKULZKsE5qLcb8g90X8kbnl8\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/yXdK3yTv0tZKHHrFGHjFzQPnyUw\"",
  "discoveryVersion": "v1",
  "id": "proximitybeacon:v1beta1",
  "name": "proximitybeacon",
@@ -17,10 +17,11 @@
  "documentationLink": "https://developers.google.com/beacons/proximity/",
  "protocol": "rest",
  "baseUrl": "https://proximitybeacon.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://proximitybeacon.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
+ "version_module": true,
  "parameters": {
   "access_token": {
    "type": "string",

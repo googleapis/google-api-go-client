@@ -437,7 +437,8 @@ type User struct {
 	// Name: The displayable name of the user.
 	Name string `json:"name,omitempty"`
 
-	// Photo: The profile photo of the user.
+	// Photo: The profile photo of the user. Not present if the user has no
+	// profile photo.
 	Photo *Photo `json:"photo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to

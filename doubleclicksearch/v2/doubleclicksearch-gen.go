@@ -2066,7 +2066,8 @@ func (c *ReportsGetFileCall) Do() error {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/doubleclicksearch"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }

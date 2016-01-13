@@ -467,8 +467,8 @@ type Operation struct {
 	HttpErrorMessage string `json:"httpErrorMessage,omitempty"`
 
 	// HttpErrorStatusCode: [Output Only] If the operation fails, this field
-	// contains the HTTP error message that was returned. For example, a 404
-	// means the resource was not found.
+	// contains the HTTP error status code that was returned. For example, a
+	// 404 means the resource was not found.
 	HttpErrorStatusCode int64 `json:"httpErrorStatusCode,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This

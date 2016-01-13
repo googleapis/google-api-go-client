@@ -1980,7 +1980,8 @@ func (c *QuerySqlCall) Do() (*Sqlresponse, error) {
 	//     "https://www.googleapis.com/auth/fusiontables",
 	//     "https://www.googleapis.com/auth/fusiontables.readonly"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }
@@ -2159,7 +2160,8 @@ func (c *QuerySqlGetCall) Do() (*Sqlresponse, error) {
 	//     "https://www.googleapis.com/auth/fusiontables",
 	//     "https://www.googleapis.com/auth/fusiontables.readonly"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }

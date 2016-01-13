@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/njb5DNRcbHdTyTXyicgJdM-q5O4\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/y6j1IphvxRtosL1eW9T-mwhgo2U\"",
  "discoveryVersion": "v1",
  "id": "cloudresourcemanager:v1beta1",
  "name": "cloudresourcemanager",
@@ -17,7 +17,7 @@
  "documentationLink": "https://cloud.google.com/resource-manager",
  "protocol": "rest",
  "baseUrl": "https://cloudresourcemanager.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://cloudresourcemanager.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

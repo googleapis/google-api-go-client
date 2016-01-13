@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/RGkzhqSB3FajvpNvflV8YsVuejw\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/q7HuPi4zz1Oz_O1187etqiN47V4\"",
  "discoveryVersion": "v1",
  "id": "youtubereporting:v1",
  "name": "youtubereporting",
@@ -18,7 +18,7 @@
  "documentationLink": "https://developers.google.com/youtube/reporting/v1/reports/",
  "protocol": "rest",
  "baseUrl": "https://youtubereporting.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://youtubereporting.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",

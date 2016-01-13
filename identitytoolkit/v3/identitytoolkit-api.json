@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/e32oSFoZ2KakZjHNn-XHFVe6R6o\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/kKOq-C8AmUn0DMuhP1kcesa3f-U\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20151109",
+ "revision": "20160108",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -387,6 +387,10 @@
      "type": "string",
      "description": "The GITKit token of the authenticated user."
     },
+    "instanceId": {
+     "type": "string",
+     "description": "Instance id token of the app."
+    },
     "localId": {
      "type": "string",
      "description": "The local ID of the user."
@@ -414,6 +418,32 @@
      "type": "string",
      "description": "Timestamp in seconds for valid login token.",
      "format": "int64"
+    }
+   }
+  },
+  "IdentitytoolkitRelyingpartySignOutUserRequest": {
+   "id": "IdentitytoolkitRelyingpartySignOutUserRequest",
+   "type": "object",
+   "description": "Request to sign out user.",
+   "properties": {
+    "instanceId": {
+     "type": "string",
+     "description": "Instance id token of the app."
+    },
+    "localId": {
+     "type": "string",
+     "description": "The local ID of the user."
+    }
+   }
+  },
+  "IdentitytoolkitRelyingpartySignOutUserResponse": {
+   "id": "IdentitytoolkitRelyingpartySignOutUserResponse",
+   "type": "object",
+   "description": "Response of signing out user.",
+   "properties": {
+    "localId": {
+     "type": "string",
+     "description": "The local ID of the user."
     }
    }
   },
@@ -460,6 +490,10 @@
    "type": "object",
    "description": "Request to verify the IDP assertion.",
    "properties": {
+    "instanceId": {
+     "type": "string",
+     "description": "Instance id token of the app."
+    },
     "pendingIdToken": {
      "type": "string",
      "description": "The GITKit token for the non-trusted IDP pending to be confirmed by the user."
@@ -482,6 +516,21 @@
     }
    }
   },
+  "IdentitytoolkitRelyingpartyVerifyCustomTokenRequest": {
+   "id": "IdentitytoolkitRelyingpartyVerifyCustomTokenRequest",
+   "type": "object",
+   "description": "Request to verify a custom token",
+   "properties": {
+    "instanceId": {
+     "type": "string",
+     "description": "Instance id token of the app."
+    },
+    "token": {
+     "type": "string",
+     "description": "The custom token to verify"
+    }
+   }
+  },
   "IdentitytoolkitRelyingpartyVerifyPasswordRequest": {
    "id": "IdentitytoolkitRelyingpartyVerifyPasswordRequest",
    "type": "object",
@@ -498,6 +547,10 @@
     "email": {
      "type": "string",
      "description": "The email of the user."
+    },
+    "instanceId": {
+     "type": "string",
+     "description": "Instance id token of the app."
     },
     "password": {
      "type": "string",
@@ -885,6 +938,22 @@
     }
    }
   },
+  "VerifyCustomTokenResponse": {
+   "id": "VerifyCustomTokenResponse",
+   "type": "object",
+   "description": "Response from verifying a custom token",
+   "properties": {
+    "idToken": {
+     "type": "string",
+     "description": "The GITKit token for authenticated user."
+    },
+    "kind": {
+     "type": "string",
+     "description": "The fixed string \"identitytoolkit#VerifyCustomTokenResponse\".",
+     "default": "identitytoolkit#VerifyCustomTokenResponse"
+    }
+   }
+  },
   "VerifyPasswordResponse": {
    "id": "VerifyPasswordResponse",
    "type": "object",
@@ -1049,6 +1118,18 @@
       "$ref": "SetAccountInfoResponse"
      }
     },
+    "signOutUser": {
+     "id": "identitytoolkit.relyingparty.signOutUser",
+     "path": "signOutUser",
+     "httpMethod": "POST",
+     "description": "Sign out user.",
+     "request": {
+      "$ref": "IdentitytoolkitRelyingpartySignOutUserRequest"
+     },
+     "response": {
+      "$ref": "IdentitytoolkitRelyingpartySignOutUserResponse"
+     }
+    },
     "uploadAccount": {
      "id": "identitytoolkit.relyingparty.uploadAccount",
      "path": "uploadAccount",
@@ -1071,6 +1152,18 @@
      },
      "response": {
       "$ref": "VerifyAssertionResponse"
+     }
+    },
+    "verifyCustomToken": {
+     "id": "identitytoolkit.relyingparty.verifyCustomToken",
+     "path": "verifyCustomToken",
+     "httpMethod": "POST",
+     "description": "Verifies the developer asserted ID token.",
+     "request": {
+      "$ref": "IdentitytoolkitRelyingpartyVerifyCustomTokenRequest"
+     },
+     "response": {
+      "$ref": "VerifyCustomTokenResponse"
      }
     },
     "verifyPassword": {

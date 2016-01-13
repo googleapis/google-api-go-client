@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/Z1ZjKJtkBj9ZEYgBJhjBFfjbM3I\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/IsLtDjyeCcVcrLheR4Lh75k5EO4\"",
  "discoveryVersion": "v1",
  "id": "partners:v2",
  "name": "partners",
  "version": "v2",
- "revision": "20150915",
+ "revision": "20151009",
  "title": "Google Partners API",
  "description": "Lets advertisers search certified companies and create contact leads with them, and also audits the usage of clients.",
  "ownerDomain": "google.com",
@@ -17,10 +17,11 @@
  "documentationLink": "https://developers.google.com/partners/",
  "protocol": "rest",
  "baseUrl": "https://partners.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://partners.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
+ "version_module": true,
  "parameters": {
   "access_token": {
    "type": "string",

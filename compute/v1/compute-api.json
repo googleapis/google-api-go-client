@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/nyxAZHxFLt8oJVpLaKjE9TIYD_A\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/aU2RyGSEMbRxHCIqylkOho4GK2M\"",
  "discoveryVersion": "v1",
  "id": "compute:v1",
  "name": "compute",
  "version": "v1",
- "revision": "20151208",
+ "revision": "20160107",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -4180,6 +4180,7 @@
      "type": "string",
      "description": "[Output Only] Name of the quota metric.",
      "enum": [
+      "AUTOSCALERS",
       "BACKEND_SERVICES",
       "CPUS",
       "DISKS_TOTAL_GB",
@@ -4208,6 +4209,7 @@
       "VPN_TUNNELS"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/IXvtW-5i1_Xf_TVOX3SQ254yI4M\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/MyGIPHuwU0Ku04gaZJZTvYYLLEQ\"",
  "discoveryVersion": "v1",
  "id": "kgsearch:v1",
  "name": "kgsearch",
@@ -17,10 +17,11 @@
  "documentationLink": "https://developers.google.com/knowledge-graph/",
  "protocol": "rest",
  "baseUrl": "https://kgsearch.googleapis.com/",
- "basePath": "/",
+ "basePath": "",
  "rootUrl": "https://kgsearch.googleapis.com/",
  "servicePath": "",
  "batchPath": "batch",
+ "version_module": true,
  "parameters": {
   "access_token": {
    "type": "string",

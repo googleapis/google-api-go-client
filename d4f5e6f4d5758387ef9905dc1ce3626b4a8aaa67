@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a7d6ce0a_20af2abc",
+        "filename": "gensupport/buffer.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-14T00:10:55Z",
+      "side": 1,
+      "message": "I\u0027ve updated buffer_test to also run each test with the supplied reader wrapped in an iotest.OneByteReader.",
+      "parentUuid": "a7d6ce0a_a0d97a79",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "d4f5e6f4d5758387ef9905dc1ce3626b4a8aaa67",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7d6ce0a_60d0524f",
         "filename": "gensupport/buffer.go",
         "patchSetId": 1

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7d6ce0a_a0d97a79",
+        "filename": "gensupport/buffer.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-14T00:04:57Z",
+      "side": 1,
+      "message": "Yes, io.Reader may return less than the requested amount of data.  That\u0027s what io.ReadFull is for:\n\n\"ReadFull reads exactly len(buf) bytes from r into buf. It returns the number of bytes copied and an error if fewer bytes were read. The error is EOF only if no bytes were read. If an EOF happens after reading some but not all the bytes, ReadFull returns ErrUnexpectedEOF. On return, n \u003d\u003d len(buf) if and only if err \u003d\u003d nil.\"\n\nMy understanding of this is that ReadFull will make multiple Read calls to the underlying reader until it fills the supplied buffer.",
+      "parentUuid": "a7d6ce0a_40cb4ea1",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "d4f5e6f4d5758387ef9905dc1ce3626b4a8aaa67",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7d6ce0a_60d0524f",
         "filename": "gensupport/buffer.go",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2016-01-13T23:50:54Z",
       "side": 1,
       "message": "Do you really need both Chunk() and Next()?",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "d4f5e6f4d5758387ef9905dc1ce3626b4a8aaa67",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7d6ce0a_c0d67e48",
+        "filename": "gensupport/buffer.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-14T00:04:57Z",
+      "side": 1,
+      "message": "Yes, I need to be able to access chunks multiple times, so that I can resend the chunk on failure.  So I don\u0027t want a single method that reads a chunk and advances to the next.\n\nresumableBuffer does actually have two responsibilities here: 1. reading from media in chunks of chunkSize\n2. buffering the most recent chunk so that it can be reused.\n\nI could split these responsibilities into separate types, but I\u0027m not sure it\u0027s worth it. WDYT?",
+      "parentUuid": "a7d6ce0a_60d0524f",
       "range": {
         "startLine": 48,
         "startChar": 27,

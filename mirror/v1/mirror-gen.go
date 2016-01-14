@@ -3122,16 +3122,15 @@ func (c *TimelineGetCall) Do() (*TimelineItem, error) {
 // method id "mirror.timeline.insert":
 
 type TimelineInsertCall struct {
-	s                   *Service
-	timelineitem        *TimelineItem
-	urlParams_          gensupport.URLParams
-	media_              io.Reader
-	mediaType_          string
-	resumable_          googleapi.SizeReaderAt
-	resumableMediaType_ string
-	protocol_           string
-	progressUpdater_    googleapi.ProgressUpdater
-	ctx_                context.Context
+	s                *Service
+	timelineitem     *TimelineItem
+	urlParams_       gensupport.URLParams
+	media_           io.Reader
+	mediaType_       string
+	protocol_        string
+	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // Insert: Inserts a new item into the timeline.
@@ -3175,8 +3174,9 @@ func (c *TimelineInsertCall) Media(r io.Reader, options ...googleapi.MediaOption
 // Context method.
 func (c *TimelineInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TimelineInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.resumableMediaType_ = mediaType
+	rdr := gensupport.ReaderAtToReader(r, size)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.mediaSize_ = size
 	c.protocol_ = "resumable"
 	return c
 }
@@ -3217,7 +3217,7 @@ func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
@@ -3231,10 +3231,7 @@ func (c *TimelineInsertCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
-		if c.resumableMediaType_ == "" {
-			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
-		}
-		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3272,17 +3269,15 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 	if c.protocol_ == "resumable" {
 		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
-		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
-			MediaType:     c.resumableMediaType_,
-			ContentLength: c.resumable_.Size(),
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			URI:       loc,
+			Media:     gensupport.NewResumableBuffer(c.media_, chunkSize),
+			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
-					c.progressUpdater_(curr, c.resumable_.Size())
+					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
 		}
@@ -3709,17 +3704,16 @@ func (c *TimelinePatchCall) Do() (*TimelineItem, error) {
 // method id "mirror.timeline.update":
 
 type TimelineUpdateCall struct {
-	s                   *Service
-	id                  string
-	timelineitem        *TimelineItem
-	urlParams_          gensupport.URLParams
-	media_              io.Reader
-	mediaType_          string
-	resumable_          googleapi.SizeReaderAt
-	resumableMediaType_ string
-	protocol_           string
-	progressUpdater_    googleapi.ProgressUpdater
-	ctx_                context.Context
+	s                *Service
+	id               string
+	timelineitem     *TimelineItem
+	urlParams_       gensupport.URLParams
+	media_           io.Reader
+	mediaType_       string
+	protocol_        string
+	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // Update: Updates a timeline item in place.
@@ -3764,8 +3758,9 @@ func (c *TimelineUpdateCall) Media(r io.Reader, options ...googleapi.MediaOption
 // Context method.
 func (c *TimelineUpdateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TimelineUpdateCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.resumableMediaType_ = mediaType
+	rdr := gensupport.ReaderAtToReader(r, size)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.mediaSize_ = size
 	c.protocol_ = "resumable"
 	return c
 }
@@ -3806,7 +3801,7 @@ func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{id}")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
@@ -3822,10 +3817,7 @@ func (c *TimelineUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"id": c.id,
 	})
 	if c.protocol_ == "resumable" {
-		if c.resumableMediaType_ == "" {
-			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
-		}
-		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3863,17 +3855,15 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 	if c.protocol_ == "resumable" {
 		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
-		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
-			MediaType:     c.resumableMediaType_,
-			ContentLength: c.resumable_.Size(),
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			URI:       loc,
+			Media:     gensupport.NewResumableBuffer(c.media_, chunkSize),
+			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
-					c.progressUpdater_(curr, c.resumable_.Size())
+					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
 		}
@@ -4221,16 +4211,15 @@ func (c *TimelineAttachmentsGetCall) Do() (*Attachment, error) {
 // method id "mirror.timeline.attachments.insert":
 
 type TimelineAttachmentsInsertCall struct {
-	s                   *Service
-	itemId              string
-	urlParams_          gensupport.URLParams
-	media_              io.Reader
-	mediaType_          string
-	resumable_          googleapi.SizeReaderAt
-	resumableMediaType_ string
-	protocol_           string
-	progressUpdater_    googleapi.ProgressUpdater
-	ctx_                context.Context
+	s                *Service
+	itemId           string
+	urlParams_       gensupport.URLParams
+	media_           io.Reader
+	mediaType_       string
+	protocol_        string
+	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // Insert: Adds a new attachment to a timeline item.
@@ -4274,8 +4263,9 @@ func (c *TimelineAttachmentsInsertCall) Media(r io.Reader, options ...googleapi.
 // Context method.
 func (c *TimelineAttachmentsInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TimelineAttachmentsInsertCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.resumableMediaType_ = mediaType
+	rdr := gensupport.ReaderAtToReader(r, size)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.mediaSize_ = size
 	c.protocol_ = "resumable"
 	return c
 }
@@ -4311,7 +4301,7 @@ func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "timeline/{itemId}/attachments")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
@@ -4329,10 +4319,7 @@ func (c *TimelineAttachmentsInsertCall) doRequest(alt string) (*http.Response, e
 		"itemId": c.itemId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.resumableMediaType_ == "" {
-			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
-		}
-		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -4370,17 +4357,15 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 	if c.protocol_ == "resumable" {
 		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
-		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
-			MediaType:     c.resumableMediaType_,
-			ContentLength: c.resumable_.Size(),
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			URI:       loc,
+			Media:     gensupport.NewResumableBuffer(c.media_, chunkSize),
+			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
-					c.progressUpdater_(curr, c.resumable_.Size())
+					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
 		}

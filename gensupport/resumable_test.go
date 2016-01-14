@@ -156,7 +156,9 @@ func TestInterruptedTransferChunks(t *testing.T) {
 			Callback:  pr.ProgressUpdate,
 		}
 		res, err := rx.Upload(context.Background())
-		res.Body.Close()
+		if err == nil {
+			res.Body.Close()
+		}
 		if err != nil || res == nil || res.StatusCode != http.StatusOK {
 			if res == nil {
 				t.Errorf("Upload not successful, res=nil: %v", err)

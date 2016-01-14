@@ -5,14 +5,10 @@
 package gensupport
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"reflect"
-	"regexp"
-	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -26,229 +22,160 @@ func (unexpectedReader) Read([]byte) (int, error) {
 	return 0, fmt.Errorf("unexpected read in test")
 }
 
-var contentRangeRE = regexp.MustCompile(`^bytes (\d+)\-(\d+)/(\d+)$`)
-
-func (t *testTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-	t.req = req
-	if rng := req.Header.Get("Content-Range"); rng != "" && !strings.HasPrefix(rng, "bytes */") { // Read the data
-		m := contentRangeRE.FindStringSubmatch(rng)
-		if len(m) != 4 {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
-		}
-		start, err := strconv.ParseInt(m[1], 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
-		}
-		end, err := strconv.ParseInt(m[2], 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
-		}
-		totalSize, err := strconv.ParseInt(m[3], 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
-		}
-		partialSize := end - start + 1
-		t.buf, err = ioutil.ReadAll(req.Body)
-		if err != nil || int64(len(t.buf)) != partialSize {
-			return nil, fmt.Errorf("unable to read %v bytes from request data, n=%v: %v", partialSize, len(t.buf), err)
-		}
-		if totalSize == end+1 {
-			t.statusCode = 200 // signify completion of transfer
-		}
-	}
-	f := ioutil.NopCloser(unexpectedReader{})
-	res := &http.Response{
-		Body:       f,
-		StatusCode: t.statusCode,
-		Header:     http.Header{},
-	}
-	if t.rangeVal != "" {
-		res.Header.Set("Range", t.rangeVal)
-	}
-	return res, nil
+// event is an expected request/response pair
+type event struct {
+	// the byte range header that should be present in a request.
+	byteRange string
+	// the http status code to send in response.
+	responseStatus int
 }
 
-type testTransport struct {
-	req        *http.Request
-	statusCode int
-	rangeVal   string
-	want       int64
-	buf        []byte
+// interruptibleTransport is configured with a canned set of requests/responses.
+// it records the incoming data, unless the corresponding event is configured to return
+// http.StatusServiceUnavailable.
+type interruptibleTransport struct {
+	events []event
+	buf    []byte
 }
 
-var statusTests = []*testTransport{
-	&testTransport{statusCode: 308, want: 0},
-	&testTransport{statusCode: 308, rangeVal: "bytes=0-0", want: 1},
-	&testTransport{statusCode: 308, rangeVal: "bytes=0-42", want: 43},
-}
-
-func TestTransferStatus(t *testing.T) {
-	ctx := context.Background()
-	for _, tr := range statusTests {
-		rx := &ResumableUpload{
-			Client: &http.Client{Transport: tr},
-		}
-		g, _, err := rx.transferStatus(ctx)
-		if err != nil {
-			t.Error(err)
-		}
-		if g != tr.want {
-			t.Errorf("transferStatus got %v, want %v", g, tr.want)
-		}
+func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	ev := t.events[0]
+	t.events = t.events[1:]
+	if got, want := req.Header.Get("Content-Range"), ev.byteRange; got != want {
+		return nil, fmt.Errorf("byte range: got %s; want %s", got, want)
 	}
-}
 
-func (t *interruptedTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-	t.req = req
-	if rng := req.Header.Get("Content-Range"); rng != "" && !strings.HasPrefix(rng, "bytes */") {
-		t.interruptCount += 1
-		if t.interruptCount%7 == 0 { // Respond with a "service unavailable" error
-			res := &http.Response{
-				StatusCode: http.StatusServiceUnavailable,
-				Header:     http.Header{},
-			}
-			t.rangeVal = fmt.Sprintf("bytes=0-%v", len(t.buf)-1) // Set the response for next time
-			return res, nil
-		}
-		m := contentRangeRE.FindStringSubmatch(rng)
-		if len(m) != 4 {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
-		}
-		start, err := strconv.ParseInt(m[1], 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
-		}
-		end, err := strconv.ParseInt(m[2], 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
-		}
-		totalSize, err := strconv.ParseInt(m[3], 10, 64)
-		if err != nil {
-			return nil, fmt.Errorf("unable to parse content range: %v", rng)
-		}
-		partialSize := end - start + 1
+	if ev.responseStatus != http.StatusServiceUnavailable {
 		buf, err := ioutil.ReadAll(req.Body)
-		if err != nil || int64(len(buf)) != partialSize {
-			return nil, fmt.Errorf("unable to read %v bytes from request data, n=%v: %v", partialSize, len(buf), err)
+		if err != nil {
+			return nil, fmt.Errorf("error reading from request data: %v", err)
 		}
 		t.buf = append(t.buf, buf...)
-		if totalSize == end+1 {
-			t.statusCode = 200 // signify completion of transfer
-		}
 	}
+
 	f := ioutil.NopCloser(unexpectedReader{})
 	res := &http.Response{
-		Body:       f,
-		StatusCode: t.statusCode,
+		StatusCode: ev.responseStatus,
 		Header:     http.Header{},
-	}
-	if t.rangeVal != "" {
-		res.Header.Set("Range", t.rangeVal)
+		Body:       f,
 	}
 	return res, nil
 }
 
-type interruptedTransport struct {
-	req             *http.Request
-	statusCode      int
-	rangeVal        string
-	interruptCount  int
-	buf             []byte
-	progressUpdates []int64
+type progressRecorder struct {
+	updates []int64
 }
 
-func (tr *interruptedTransport) ProgressUpdate(current int64) {
-	tr.progressUpdates = append(tr.progressUpdates, current)
+func (pr *progressRecorder) ProgressUpdate(current int64) {
+	pr.updates = append(pr.updates, current)
 }
 
 func TestInterruptedTransferChunks(t *testing.T) {
-	// TODO(mcgreevy): don't read from the filesystem here.
-	f, err := os.Open("resumable.go")
-	if err != nil {
-		t.Fatalf("unable to open resumable.go: %v", err)
+	type testCase struct {
+		data         string
+		chunkSize    int
+		events       []event
+		wantProgress []int64
 	}
-	defer f.Close()
-	slurp, err := ioutil.ReadAll(f)
-	if err != nil {
-		t.Fatalf("unable to slurp file: %v", err)
-	}
-	st, err := f.Stat()
-	if err != nil {
-		t.Fatalf("unable to stat resumable.go: %v", err)
-	}
-	tr := &interruptedTransport{
-		statusCode: 308,
-		buf:        make([]byte, 0, st.Size()),
-	}
-	oldChunkSize := chunkSize
-	defer func() { chunkSize = oldChunkSize }()
-	chunkSize = 100 // override to process small chunks for test.
 
-	sleep = func(time.Duration) {} // override time.Sleep
-	rx := &ResumableUpload{
-		Client:        &http.Client{Transport: tr},
-		Media:         f,
-		MediaType:     "text/plain",
-		ContentLength: st.Size(),
-		Callback:      tr.ProgressUpdate,
-	}
-	res, err := rx.Upload(context.Background())
-	if err != nil || res == nil || res.StatusCode != http.StatusOK {
-		if res == nil {
-			t.Errorf("transferChunks not successful, res=nil: %v", err)
-		} else {
-			t.Errorf("transferChunks not successful, statusCode=%v: %v", res.StatusCode, err)
+	for _, tc := range []testCase{
+		{
+			data:      strings.Repeat("a", 300),
+			chunkSize: 90,
+			events: []event{
+				{"bytes 0-89/*", http.StatusServiceUnavailable},
+				{"bytes 0-89/*", 308},
+				{"bytes 90-179/*", 308},
+				{"bytes 180-269/*", http.StatusServiceUnavailable},
+				{"bytes 180-269/*", 308},
+				{"bytes 270-299/300", 200},
+			},
+
+			wantProgress: []int64{90, 180, 270, 300},
+		},
+		{
+			data:      strings.Repeat("a", 20),
+			chunkSize: 10,
+			events: []event{
+				{"bytes 0-9/*", http.StatusServiceUnavailable},
+				{"bytes 0-9/*", 308},
+				{"bytes 10-19/*", http.StatusServiceUnavailable},
+				{"bytes 10-19/*", 308},
+				// 0 byte final request demands a byte range with leading asterix.
+				{"bytes */20", http.StatusServiceUnavailable},
+				{"bytes */20", 200},
+			},
+
+			wantProgress: []int64{10, 20},
+		},
+	} {
+		media := strings.NewReader(tc.data)
+
+		tr := &interruptibleTransport{
+			buf:    make([]byte, 0, len(tc.data)),
+			events: tc.events,
 		}
-	}
-	if len(tr.buf) != len(slurp) || bytes.Compare(tr.buf, slurp) != 0 {
-		t.Errorf("transferred file corrupted:\ngot %s\nwant %s", tr.buf, slurp)
-	}
-	want := []int64{}
-	for i := chunkSize; i <= st.Size(); i += chunkSize {
-		want = append(want, i)
-	}
-	if st.Size()%chunkSize != 0 {
-		want = append(want, st.Size())
-	}
-	if !reflect.DeepEqual(tr.progressUpdates, want) {
-		t.Errorf("progress update error, got %v, want %v", tr.progressUpdates, want)
+
+		// TODO(mcgreevy): replace this sleep with something cleaner.
+		sleep = func(time.Duration) {} // override time.Sleep
+		pr := progressRecorder{}
+		rx := &ResumableUpload{
+			Client:    &http.Client{Transport: tr},
+			Media:     NewResumableBuffer(media, tc.chunkSize),
+			MediaType: "text/plain",
+			Callback:  pr.ProgressUpdate,
+		}
+		res, err := rx.Upload(context.Background())
+		if err != nil || res == nil || res.StatusCode != http.StatusOK {
+			if res == nil {
+				t.Errorf("Upload not successful, res=nil: %v", err)
+			} else {
+				t.Errorf("Upload not successful, statusCode=%v: %v", res.StatusCode, err)
+			}
+		}
+		if !reflect.DeepEqual(tr.buf, []byte(tc.data)) {
+			t.Errorf("transferred contents:\ngot %s\nwant %s", tr.buf, tc.data)
+		}
+
+		if !reflect.DeepEqual(pr.updates, tc.wantProgress) {
+			t.Errorf("progress updates: got %v, want %v", pr.updates, tc.wantProgress)
+		}
+
+		if len(tr.events) > 0 {
+			t.Errorf("did not observe all expected events.  leftover events: %v", tr.events)
+		}
 	}
 }
 
 func TestCancelUpload(t *testing.T) {
-	f, err := os.Open("resumable.go")
-	if err != nil {
-		t.Fatalf("unable to open resumable.go: %v", err)
-	}
-	defer f.Close()
-	st, err := f.Stat()
-	if err != nil {
-		t.Fatalf("unable to stat resumable.go: %v", err)
-	}
-	tr := &interruptedTransport{
-		statusCode: 308,
-		buf:        make([]byte, 0, st.Size()),
-	}
-	oldChunkSize := chunkSize
-	defer func() { chunkSize = oldChunkSize }()
-	chunkSize = 100 // override to process small chunks for test.
+	chunkSize := 90
+	mediaSize := 300
+	media := strings.NewReader(strings.Repeat("a", mediaSize))
 
+	tr := &interruptibleTransport{
+		buf: make([]byte, 0, mediaSize),
+	}
+
+	// TODO(mcgreevy): replace this sleep with something cleaner.
+	// At that time, test cancelling upload at some point other than before it starts.
 	sleep = func(time.Duration) {} // override time.Sleep
+	pr := progressRecorder{}
 	rx := &ResumableUpload{
-		Client:        &http.Client{Transport: tr},
-		Media:         f,
-		MediaType:     "text/plain",
-		ContentLength: st.Size(),
-		Callback:      tr.ProgressUpdate,
+		Client:    &http.Client{Transport: tr},
+		Media:     NewResumableBuffer(media, chunkSize),
+		MediaType: "text/plain",
+		Callback:  pr.ProgressUpdate,
 	}
 	ctx, cancelFunc := context.WithCancel(context.Background())
 	cancelFunc() // stop the upload that hasn't started yet
 	res, err := rx.Upload(ctx)
-	if err == nil || res == nil || res.StatusCode != http.StatusRequestTimeout {
-		if res == nil {
-			t.Errorf("transferChunks not successful, got res=nil, err=%v, want StatusRequestTimeout", err)
-		} else {
-			t.Errorf("transferChunks not successful, got statusCode=%v, err=%v, want StatusRequestTimeout", res.StatusCode, err)
-		}
+	if err != context.Canceled {
+		t.Errorf("Upload err: got: %v; want: context cancelled", err)
+	}
+	if res != nil {
+		t.Errorf("Upload result: got: %v; want: nil", res)
+	}
+	if pr.updates != nil {
+		t.Errorf("progress updates: got %v; want: nil", pr.updates)
 	}
 }

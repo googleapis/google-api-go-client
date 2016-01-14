@@ -57,3 +57,7 @@ func (rb *ResumableBuffer) Next() {
 	rb.off += int64(len(rb.chunk))
 	rb.chunk = rb.chunk[0:0]
 }
+
+func ReaderAtToReader(ra io.ReaderAt, size int64) io.Reader {
+	return io.NewSectionReader(ra, 0, size)
+}

@@ -1852,6 +1852,7 @@ func (meth *Method) generateCode() {
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
 		pn(` if c.resumableMediaType_ == "" {`)
+		// TODO(mcgreeevy): remove this use of DetectMediaType.  Then resumable_ can be an io.Reader insted of a ReaderAt.
 		pn("  c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)")
 		pn(" }")
 		pn(` req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)`)
@@ -1921,12 +1922,14 @@ func (meth *Method) generateCode() {
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
+		pn(" chunkSize := 1 << 23") // TODO(mcgreevy): make this configurable
 		pn(` loc := res.Header.Get("Location")`)
+		pn(" mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())")
 		pn(" rx := &gensupport.ResumableUpload{")
 		pn("  Client:        c.s.client,")
 		pn("  UserAgent:     c.s.userAgent(),")
 		pn("  URI:           loc,")
-		pn("  Media:         c.resumable_,")
+		pn("  Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),")
 		pn("  MediaType:     c.resumableMediaType_,")
 		pn("  ContentLength: c.resumable_.Size(),")
 		pn("  Callback:      func(curr int64){")

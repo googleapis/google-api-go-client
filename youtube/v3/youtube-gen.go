@@ -8830,12 +8830,14 @@ func (c *CaptionsInsertCall) Do() (*Caption, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
+		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
+		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
 			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
@@ -9316,12 +9318,14 @@ func (c *CaptionsUpdateCall) Do() (*Caption, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
+		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
+		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
 			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
@@ -9590,12 +9594,14 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
+		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
+		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
 			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
@@ -19429,12 +19435,14 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
+		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
+		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
 			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
@@ -20358,12 +20366,14 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 		return nil, err
 	}
 	if c.protocol_ == "resumable" {
+		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
+		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
 			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {
@@ -21344,12 +21354,14 @@ func (c *WatermarksSetCall) Do() error {
 		return err
 	}
 	if c.protocol_ == "resumable" {
+		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
+		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
-			Media:         c.resumable_,
+			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
 			MediaType:     c.resumableMediaType_,
 			ContentLength: c.resumable_.Size(),
 			Callback: func(curr int64) {

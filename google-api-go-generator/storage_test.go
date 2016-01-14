@@ -129,6 +129,7 @@ func TestResumableMedia(t *testing.T) {
 	s.BasePath = server.URL
 
 	const data = "fake resumable media data"
+	mediaSize := len(data)
 	f := strings.NewReader(data)
 	o := &storage.Object{
 		Bucket:          "mybucket",
@@ -157,13 +158,13 @@ func TestResumableMedia(t *testing.T) {
 	if w, k := "google-api-go-client/0.5", "User-Agent"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
 	}
-	if k := "Content-Type"; len(g.Header[k]) != 0 {
-		t.Errorf("header %q = %#v; want nil", k, g.Header[k])
+	if want, got := []string{"text/plain"}, g.Header["Content-Type"]; !reflect.DeepEqual(got, want) {
+		t.Errorf("header Content-Type got: %#v; want: %#v", got, want)
 	}
 	if w, k := "gzip", "Accept-Encoding"; len(g.Header[k]) != 1 || g.Header[k][0] != w {
 		t.Errorf("header %q = %#v; want %q", k, g.Header[k], w)
 	}
-	if w := int64(0); g.ContentLength != w {
+	if w := int64(mediaSize); g.ContentLength != w {
 		t.Errorf("ContentLength = %v; want %v", g.ContentLength, w)
 	}
 	if len(g.TransferEncoding) != 0 {

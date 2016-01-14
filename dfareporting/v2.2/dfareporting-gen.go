@@ -19847,7 +19847,7 @@ func (c *CreativeAssetsInsertCall) Do() (*CreativeAssetMetadata, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,

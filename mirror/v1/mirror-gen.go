@@ -3271,7 +3271,7 @@ func (c *TimelineInsertCall) Do() (*TimelineItem, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -3860,7 +3860,7 @@ func (c *TimelineUpdateCall) Do() (*TimelineItem, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -4365,7 +4365,7 @@ func (c *TimelineAttachmentsInsertCall) Do() (*Attachment, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,

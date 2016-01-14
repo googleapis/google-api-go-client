@@ -1922,7 +1922,7 @@ func (meth *Method) generateCode() {
 	if meth.supportsMediaUpload() {
 		pn(`if c.protocol_ == "resumable" {`)
 		pn(` loc := res.Header.Get("Location")`)
-		pn(" rx := &googleapi.ResumableUpload{")
+		pn(" rx := &gensupport.ResumableUpload{")
 		pn("  Client:        c.s.client,")
 		pn("  UserAgent:     c.s.userAgent(),")
 		pn("  URI:           loc,")

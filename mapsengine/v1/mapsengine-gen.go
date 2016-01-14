@@ -8136,7 +8136,7 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -11852,7 +11852,7 @@ func (c *RastersFilesInsertCall) Do() error {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -14551,7 +14551,7 @@ func (c *TablesFilesInsertCall) Do() error {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,

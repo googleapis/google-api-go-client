@@ -8831,7 +8831,7 @@ func (c *CaptionsInsertCall) Do() (*Caption, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -9317,7 +9317,7 @@ func (c *CaptionsUpdateCall) Do() (*Caption, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -9591,7 +9591,7 @@ func (c *ChannelBannersInsertCall) Do() (*ChannelBannerResource, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -19430,7 +19430,7 @@ func (c *ThumbnailsSetCall) Do() (*ThumbnailSetResponse, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -20359,7 +20359,7 @@ func (c *VideosInsertCall) Do() (*Video, error) {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,
@@ -21345,7 +21345,7 @@ func (c *WatermarksSetCall) Do() error {
 	}
 	if c.protocol_ == "resumable" {
 		loc := res.Header.Get("Location")
-		rx := &googleapi.ResumableUpload{
+		rx := &gensupport.ResumableUpload{
 			Client:        c.s.client,
 			UserAgent:     c.s.userAgent(),
 			URI:           loc,

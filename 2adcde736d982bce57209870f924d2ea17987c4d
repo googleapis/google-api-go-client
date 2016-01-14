@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f08edd_b0f118c1",
+        "filename": "gensupport/buffer.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T04:14:45Z",
+      "side": 1,
+      "message": "// Successive calls to Chunk return the same chunk between calls to Next. ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 55
+      },
+      "revId": "2adcde736d982bce57209870f924d2ea17987c4d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f08edd_d0ec9ce6",
+        "filename": "gensupport/buffer.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T04:14:45Z",
+      "side": 1,
+      "message": "Check rb.err !\u003d nil at the start and early out.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "2adcde736d982bce57209870f924d2ea17987c4d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f08edd_90f614b5",
+        "filename": "gensupport/buffer.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T04:14:45Z",
+      "side": 1,
+      "message": "Next causes the next call to Chunk to progress to the next chunk? Or something? I just don\u0027t like the bit about uploading, since this buffer really doesn\u0027t know anything about that kind of thing.",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 54,
+        "endChar": 71
+      },
+      "revId": "2adcde736d982bce57209870f924d2ea17987c4d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

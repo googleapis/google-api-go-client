@@ -350,16 +350,17 @@ func (c *DetectionsListCall) Do() (*DetectionsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &DetectionsListResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
+	var ret struct {
+		Data DetectionsListResponse
 	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
-	return ret, nil
+	ret.Data.ServerResponse = googleapi.ServerResponse{
+		Header:         res.Header,
+		HTTPStatusCode: res.StatusCode,
+	}
+	return &ret.Data, nil
 	// {
 	//   "description": "Detect the language of text.",
 	//   "httpMethod": "GET",
@@ -646,16 +647,17 @@ func (c *TranslationsListCall) Do() (*TranslationsListResponse, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &TranslationsListResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
+	var ret struct {
+		Data TranslationsListResponse
 	}
 	if err := json.NewDecoder(res.Body).Decode(&ret); err != nil {
 		return nil, err
 	}
-	return ret, nil
+	ret.Data.ServerResponse = googleapi.ServerResponse{
+		Header:         res.Header,
+		HTTPStatusCode: res.StatusCode,
+	}
+	return &ret.Data, nil
 	// {
 	//   "description": "Returns text translations from one language to another.",
 	//   "httpMethod": "GET",

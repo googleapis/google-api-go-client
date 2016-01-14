@@ -163,23 +163,6 @@ func CombineBodyMedia(body io.Reader, bodyContentType string, media io.Reader, m
 	return mp, mp.ctype
 }
 
-// DetectMediaType detects and returns the content type of the provided media.
-// If the type can not be determined, "application/octet-stream" is returned.
-func DetectMediaType(media io.ReaderAt) string {
-	if typer, ok := media.(googleapi.ContentTyper); ok {
-		return typer.ContentType()
-	}
-
-	typ := "application/octet-stream"
-	buf := make([]byte, 1024)
-	n, err := media.ReadAt(buf, 0)
-	buf = buf[:n]
-	if err == nil || err == io.EOF {
-		typ = http.DetectContentType(buf)
-	}
-	return typ
-}
-
 func typeHeader(contentType string) textproto.MIMEHeader {
 	h := make(textproto.MIMEHeader)
 	h.Set("Content-Type", contentType)

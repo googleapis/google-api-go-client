@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f08edd_f03d600c",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T04:13:24Z",
+      "side": 1,
+      "message": "I\u0027m worried about making this a default. Until it\u0027s configurable, can we change it to something more reasonable like 1 \u003c\u003c 23 ?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "a80a006805ad5228303d19d4988ac6f8f9784c06",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f08edd_10fc6487",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T04:13:24Z",
+      "side": 1,
+      "message": "must?",
+      "range": {
+        "startLine": 52,
+        "startChar": 78,
+        "endLine": 52,
+        "endChar": 84
+      },
+      "revId": "a80a006805ad5228303d19d4988ac6f8f9784c06",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f08edd_30ff6880",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T04:13:24Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 54,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 10
+      },
+      "revId": "a80a006805ad5228303d19d4988ac6f8f9784c06",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f08edd_904cd4c7",
+        "filename": "gensupport/resumable_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T04:13:24Z",
+      "side": 1,
+      "message": "no full stop",
+      "range": {
+        "startLine": 26,
+        "startChar": 46,
+        "endLine": 26,
+        "endChar": 47
+      },
+      "revId": "a80a006805ad5228303d19d4988ac6f8f9784c06",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

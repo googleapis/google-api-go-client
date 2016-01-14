@@ -5,11 +5,14 @@
 package gensupport
 
 import (
+	"bytes"
 	"io"
 	"io/ioutil"
 	"reflect"
 	"testing"
 	"testing/iotest"
+
+	"google.golang.org/api/googleapi"
 )
 
 // getChunkAsString reads a chunk from rb, but does not call Next.
@@ -171,4 +174,114 @@ func TestPos(t *testing.T) {
 	expectChunkAtOffset(7, io.EOF)
 	rb.Next()
 	expectChunkAtOffset(7, io.EOF)
+}
+
+// bytes.Reader implements both Reader and ReaderAt.  The following types
+// implement various combinations of Reader, ReaderAt and ContentTyper, by
+// wrapping bytes.Reader.  All implement at least ReaderAt, so they can be
+// passed to ReaderAtToReader.  The following table summarizes which types
+// implement which interfaces:
+//
+//                 ReaderAt	Reader	ContentTyper
+// reader              x          x
+// typerReader         x          x          x
+// readerAt            x
+// typerReaderAt       x                     x
+
+// reader implements Reader, in addition to ReaderAt.
+type reader struct {
+	r *bytes.Reader
+}
+
+func (r *reader) ReadAt(b []byte, off int64) (n int, err error) {
+	return r.r.ReadAt(b, off)
+}
+
+func (r *reader) Read(b []byte) (n int, err error) {
+	return r.r.Read(b)
+}
+
+// typerReader implements Reader and ContentTyper, in addition to ReaderAt.
+type typerReader struct {
+	r *bytes.Reader
+}
+
+func (tr *typerReader) ReadAt(b []byte, off int64) (n int, err error) {
+	return tr.r.ReadAt(b, off)
+}
+
+func (tr *typerReader) Read(b []byte) (n int, err error) {
+	return tr.r.Read(b)
+}
+
+func (tr *typerReader) ContentType() string {
+	return "ctype"
+}
+
+// readerAt implements only ReaderAt.
+type readerAt struct {
+	r *bytes.Reader
+}
+
+func (ra *readerAt) ReadAt(b []byte, off int64) (n int, err error) {
+	return ra.r.ReadAt(b, off)
+}
+
+// typerReaderAt implements ContentTyper, in addition to ReaderAt.
+type typerReaderAt struct {
+	r *bytes.Reader
+}
+
+func (tra *typerReaderAt) ReadAt(b []byte, off int64) (n int, err error) {
+	return tra.r.ReadAt(b, off)
+}
+
+func (tra *typerReaderAt) ContentType() string {
+	return "ctype"
+}
+
+func TestAdapter(t *testing.T) {
+	data := "abc"
+
+	type testCase struct {
+		from      io.ReaderAt
+		wantTyper bool
+	}
+	for _, tc := range []testCase{
+		{
+			from:      &reader{bytes.NewReader([]byte(data))},
+			wantTyper: false,
+		},
+		{
+			// Reader and ContentTyper
+			from:      &typerReader{bytes.NewReader([]byte(data))},
+			wantTyper: true,
+		},
+		{
+			// ReaderAt
+			from:      &readerAt{bytes.NewReader([]byte(data))},
+			wantTyper: false,
+		},
+		{
+			// ReaderAt and ContentTyper
+			from:      &typerReaderAt{bytes.NewReader([]byte(data))},
+			wantTyper: true,
+		},
+	} {
+		to := ReaderAtToReader(tc.from, len(data))
+
+		if _, ok := to.(googleapi.ContentTyper); ok != tc.wantTyper {
+			t.Errorf("reader implements typer? got: %v; want: %v", ok, tc.wantTyper)
+		}
+		if typer, ok := to.(googleapi.ContentTyper); ok && typer.ContentType() != "ctype" {
+			t.Errorf("content type: got: %s; want: ctype", typer.ContentType())
+		}
+		buf, err := ioutil.ReadAll(to)
+		if err != nil {
+			t.Errorf("error reading data: %v", err)
+		}
+		if !reflect.DeepEqual(buf, []byte(data)) {
+			t.Errorf("failed reading data: got: %s; want: %s", buf, data)
+		}
+	}
 }

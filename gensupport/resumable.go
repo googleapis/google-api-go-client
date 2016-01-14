@@ -35,8 +35,6 @@ type ResumableUpload struct {
 	Media *ResumableBuffer
 	// MediaType defines the media type, e.g. "image/jpeg".
 	MediaType string
-	// ContentLength is the full size of the object being uploaded.
-	ContentLength int64
 
 	mu       sync.Mutex // guards progress
 	progress int64      // number of bytes uploaded so far

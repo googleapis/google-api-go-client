@@ -3411,16 +3411,15 @@ func (c *TableGetCall) Do() (*Table, error) {
 // method id "fusiontables.table.importRows":
 
 type TableImportRowsCall struct {
-	s                   *Service
-	tableId             string
-	urlParams_          gensupport.URLParams
-	media_              io.Reader
-	mediaType_          string
-	resumable_          googleapi.SizeReaderAt
-	resumableMediaType_ string
-	protocol_           string
-	progressUpdater_    googleapi.ProgressUpdater
-	ctx_                context.Context
+	s                *Service
+	tableId          string
+	urlParams_       gensupport.URLParams
+	media_           io.Reader
+	mediaType_       string
+	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // ImportRows: Import more rows into a table.
@@ -3509,8 +3508,9 @@ func (c *TableImportRowsCall) Media(r io.Reader, options ...googleapi.MediaOptio
 // Context method.
 func (c *TableImportRowsCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableImportRowsCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.resumableMediaType_ = mediaType
+	rdr := gensupport.ReaderAtToReader(r, size)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.mediaSize_ = size
 	c.protocol_ = "resumable"
 	return c
 }
@@ -3546,7 +3546,7 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/import")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
@@ -3564,10 +3564,7 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 	})
 	if c.protocol_ == "resumable" {
-		if c.resumableMediaType_ == "" {
-			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
-		}
-		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3605,17 +3602,15 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 	if c.protocol_ == "resumable" {
 		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
-		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
-			MediaType:     c.resumableMediaType_,
-			ContentLength: c.resumable_.Size(),
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			URI:       loc,
+			Media:     gensupport.NewResumableBuffer(c.media_, chunkSize),
+			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
-					c.progressUpdater_(curr, c.resumable_.Size())
+					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
 		}
@@ -3708,15 +3703,14 @@ func (c *TableImportRowsCall) Do() (*Import, error) {
 // method id "fusiontables.table.importTable":
 
 type TableImportTableCall struct {
-	s                   *Service
-	urlParams_          gensupport.URLParams
-	media_              io.Reader
-	mediaType_          string
-	resumable_          googleapi.SizeReaderAt
-	resumableMediaType_ string
-	protocol_           string
-	progressUpdater_    googleapi.ProgressUpdater
-	ctx_                context.Context
+	s                *Service
+	urlParams_       gensupport.URLParams
+	media_           io.Reader
+	mediaType_       string
+	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
+	protocol_        string
+	progressUpdater_ googleapi.ProgressUpdater
+	ctx_             context.Context
 }
 
 // ImportTable: Import a new table.
@@ -3776,8 +3770,9 @@ func (c *TableImportTableCall) Media(r io.Reader, options ...googleapi.MediaOpti
 // Context method.
 func (c *TableImportTableCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableImportTableCall {
 	c.ctx_ = ctx
-	c.resumable_ = io.NewSectionReader(r, 0, size)
-	c.resumableMediaType_ = mediaType
+	rdr := gensupport.ReaderAtToReader(r, size)
+	c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.mediaSize_ = size
 	c.protocol_ = "resumable"
 	return c
 }
@@ -3813,7 +3808,7 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/import")
-	if c.media_ != nil || c.resumable_ != nil {
+	if c.media_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
 		c.urlParams_.Set("uploadType", c.protocol_)
 	}
@@ -3829,10 +3824,7 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	req, _ := http.NewRequest("POST", urls, body)
 	googleapi.SetOpaque(req.URL)
 	if c.protocol_ == "resumable" {
-		if c.resumableMediaType_ == "" {
-			c.resumableMediaType_ = gensupport.DetectMediaType(c.resumable_)
-		}
-		req.Header.Set("X-Upload-Content-Type", c.resumableMediaType_)
+		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
 	req.Header.Set("User-Agent", c.s.userAgent())
@@ -3870,17 +3862,15 @@ func (c *TableImportTableCall) Do() (*Table, error) {
 	if c.protocol_ == "resumable" {
 		chunkSize := 1 << 23
 		loc := res.Header.Get("Location")
-		mediaReader := gensupport.ReaderAtToReader(c.resumable_, c.resumable_.Size())
 		rx := &gensupport.ResumableUpload{
-			Client:        c.s.client,
-			UserAgent:     c.s.userAgent(),
-			URI:           loc,
-			Media:         gensupport.NewResumableBuffer(mediaReader, chunkSize),
-			MediaType:     c.resumableMediaType_,
-			ContentLength: c.resumable_.Size(),
+			Client:    c.s.client,
+			UserAgent: c.s.userAgent(),
+			URI:       loc,
+			Media:     gensupport.NewResumableBuffer(c.media_, chunkSize),
+			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
-					c.progressUpdater_(curr, c.resumable_.Size())
+					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
 		}

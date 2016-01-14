@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e7e60628_f299e894",
+        "filename": "gensupport/buffer.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T00:29:57Z",
+      "side": 1,
+      "message": "My bad, I misread the implementation of ReadFull. For loops, how do they work?\n\nI\u0027m still  worried about ignoring/promoting ErrUnexpectedEOF though. For example http://play.golang.org/p/obEMzdRy1L: here we wouldn\u0027t realise that the reader we\u0027d been given (r) had actually failed.\n\nI think it\u0027s necessary for us to be able to differentiate between not filling up the last chunk and the underlying reader failing.",
+      "parentUuid": "a7d6ce0a_a0d97a79",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "d4f5e6f4d5758387ef9905dc1ce3626b4a8aaa67",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7d6ce0a_60d0524f",
         "filename": "gensupport/buffer.go",
         "patchSetId": 1
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "Yes, I need to be able to access chunks multiple times, so that I can resend the chunk on failure.  So I don\u0027t want a single method that reads a chunk and advances to the next.\n\nresumableBuffer does actually have two responsibilities here: 1. reading from media in chunks of chunkSize\n2. buffering the most recent chunk so that it can be reused.\n\nI could split these responsibilities into separate types, but I\u0027m not sure it\u0027s worth it. WDYT?",
       "parentUuid": "a7d6ce0a_60d0524f",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "d4f5e6f4d5758387ef9905dc1ce3626b4a8aaa67",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47aa7254_88621714",
+        "filename": "gensupport/buffer.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-14T00:29:57Z",
+      "side": 1,
+      "message": "Yeah, I was thinking that the caller of the code could keep hold of the Chunk until it\u0027s ready, but I guess then Chunk would need to return a []byte or some kind or resettable reader. I think the way you have this now is fine.",
+      "parentUuid": "a7d6ce0a_c0d67e48",
       "range": {
         "startLine": 48,
         "startChar": 27,

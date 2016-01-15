@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f08edd_3042c842",
+        "filename": "google-api-go-generator/storage_test.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-01-15T04:14:08Z",
+      "side": 1,
+      "message": "This test was previously expecting the transferstatus request, but now it\u0027s recording the first resumable upload chunk request.  I\u0027m not sure how useful this test is, but I\u0027m leaving it in for now.",
+      "range": {
+        "startLine": 161,
+        "startChar": 1,
+        "endLine": 161,
+        "endChar": 98
+      },
+      "revId": "588b07a91b237fa767c5fb5cfc323aa97e9bfd78",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

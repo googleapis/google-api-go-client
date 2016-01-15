@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "a7f08edd_d0e01c4c",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-15T05:32:37Z",
+      "side": 1,
+      "message": "I think this looks much cleaner. Is it possible for res \u003d\u003d nil or res.Body \u003d\u003d nil at this point? (I think the answer is \"yes\" if the request failed altogether.)\n\nSorry for the nitpicking, but this is subtle and I want to make sure we\u0027re getting it right.",
+      "parentUuid": "a7f08edd_f0768070",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 3
+      },
+      "revId": "bf48b0eb6524ed6c7596027c594a95f58167e444",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f08edd_f0e9e066",
         "filename": "gensupport/resumable.go",
         "patchSetId": 2

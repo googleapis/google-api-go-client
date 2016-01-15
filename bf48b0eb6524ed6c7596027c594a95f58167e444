@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a7f08edd_304f6842",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-15T04:44:36Z",
+      "side": 1,
+      "message": "I\u0027d actually move this straight up above, and make the ctx.Done() case below return nil. In general, I think the contact  about closing the response only applies to the case where err \u003d\u003d nil, so it would be good to carry that throughout.",
+      "parentUuid": "a7f08edd_702cd069",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 3
+      },
+      "revId": "bf48b0eb6524ed6c7596027c594a95f58167e444",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f08edd_f0e9e066",
         "filename": "gensupport/resumable.go",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "How\u0027s this?",
       "parentUuid": "a7f08edd_f0e9e066",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 20
+      },
+      "revId": "bf48b0eb6524ed6c7596027c594a95f58167e444",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f08edd_5052eced",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-15T04:44:36Z",
+      "side": 1,
+      "message": "Perfect. (I presume a future CL will make this do proper exp. back off)",
+      "parentUuid": "a7f08edd_303648bc",
       "range": {
         "startLine": 128,
         "startChar": 2,

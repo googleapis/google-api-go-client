@@ -168,3 +168,25 @@ func typeHeader(contentType string) textproto.MIMEHeader {
 	h.Set("Content-Type", contentType)
 	return h
 }
+
+// PrepareUpload determines whether the data in the supplied reader should be uploaded in a single request,
+// or in sequential chunks.  Either media or rb will be non-nil.
+// After PrepareUpload has been called, r should no longer be used.  The media content should be accessed either via media or rb.
+func PrepareUpload(r io.Reader, chunkSize int) (media io.Reader, rb *ResumableBuffer) {
+	if chunkSize == 0 { // do not chunk
+		return r, nil
+	}
+
+	rb = NewResumableBuffer(r, chunkSize)
+	rdr, _, _, err := rb.Chunk()
+
+	if err == io.EOF { // we can upload this in a single request
+		return rdr, nil
+	}
+
+	// err is either nil, or a non-EOF error.
+	// In the former case, we return the ResumableBuffer, to enable chunked uploading.
+	// In the latter case, we also return a ResumableBuffer, to ensure that
+	// the error is not dropped.
+	return nil, rb
+}

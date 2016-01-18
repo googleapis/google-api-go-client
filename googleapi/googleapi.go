@@ -49,6 +49,13 @@ const (
 
 	// UserAgent is the header string used to identify this package.
 	UserAgent = "google-api-go-client/" + Version
+
+	// The default chunk size to use for resumable uplods if not specified by the user.
+	DefaultUploadChunkSize = 8 * 1024 * 1024
+
+	// The minimum chunk size that can be used for resumable uploads.  All
+	// user-specified chunk sizes must be multiple of this value.
+	MinUploadChunkSize = 256 * 1024
 )
 
 // Error contains an error response from the server.
@@ -211,8 +218,8 @@ type MediaOption interface {
 
 type contentTypeOption string
 
-func (mt contentTypeOption) setOptions(o *MediaOptions) {
-	o.ContentType = string(mt)
+func (ct contentTypeOption) setOptions(o *MediaOptions) {
+	o.ContentType = string(ct)
 }
 
 // ContentType returns a MediaOption which sets the content type of data to be uploaded.
@@ -220,15 +227,35 @@ func ContentType(ctype string) MediaOption {
 	return contentTypeOption(ctype)
 }
 
+type chunkSizeOption int
+
+func (cs chunkSizeOption) setOptions(o *MediaOptions) {
+	size := int(cs)
+	if size%MinUploadChunkSize != 0 {
+		size += MinUploadChunkSize - (size % MinUploadChunkSize)
+	}
+	o.ChunkSize = size
+}
+
+// ChunkSize returns a MediaOption which sets the chunk size for media uploads.
+// size will be rounded up to the nearest multiple of 256K.
+// Media which contains fewer than size bytes will be uploaded in a single request.
+// Media which contains size bytes or more will be uploaded in separate chunks.
+// If size is zero, media will be uploaded in a single request.
+func ChunkSize(size int) MediaOption {
+	return chunkSizeOption(size)
+}
+
 // MediaOptions stores options for customizing media upload.  It is not used by developers directly.
 type MediaOptions struct {
 	ContentType string
+	ChunkSize   int
 }
 
 // ProcessMediaOptions stores options from opts in a MediaOptions.
 // It is not used by developers directly.
 func ProcessMediaOptions(opts []MediaOption) *MediaOptions {
-	mo := &MediaOptions{}
+	mo := &MediaOptions{ChunkSize: DefaultUploadChunkSize}
 	for _, o := range opts {
 		o.setOptions(mo)
 	}

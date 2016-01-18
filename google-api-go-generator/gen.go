@@ -1625,12 +1625,12 @@ func (meth *Method) generateCode() {
 		pn(" ifNoneMatch_ string")
 	}
 
-	// TODO(mcgreevy): remove resumable_ and resumableMediaType in favor of media_ and mediaType_
 	if meth.supportsMediaUpload() {
+		// At most one of media_ and resumbableBuffer_ will be set.
 		pn(" media_     io.Reader")
+		pn(" resumableBuffer_ *gensupport.ResumableBuffer")
 		pn(" mediaType_ string")
 		pn(" mediaSize_  int64 // mediaSize, if known.  Used only for calls to progressUpdater_.")
-		pn(" protocol_  string")
 		pn(" progressUpdater_  googleapi.ProgressUpdater")
 	}
 	pn(" ctx_ context.Context")
@@ -1725,11 +1725,13 @@ func (meth *Method) generateCode() {
 		p("\n%s", asComment("", comment))
 		pn("func (c *%s) Media(r io.Reader, options ...googleapi.MediaOption) *%s {", callName, callName)
 		pn(" opts := googleapi.ProcessMediaOptions(options)")
-		pn(" c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)")
-		pn(` c.protocol_ = "multipart"`)
+		pn(" chunkSize := opts.ChunkSize")
+		pn(" r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)")
+		pn(" c.media_, c.resumableBuffer_ = gensupport.PrepareUpload(r, chunkSize)")
 		pn(" return c")
 		pn("}")
 		comment = "ResumableMedia specifies the media to upload in chunks and can be canceled with ctx. " +
+			"ResumableMedia is deprecated in favour of Media. " +
 			"At most one of Media and ResumableMedia may be set. " +
 			`mediaType identifies the MIME media type of the upload, such as "image/png". ` +
 			`If mediaType is "", it will be auto-detected. ` +
@@ -1739,9 +1741,10 @@ func (meth *Method) generateCode() {
 		pn("func (c *%s) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *%s {", callName, callName)
 		pn(" c.ctx_ = ctx")
 		pn(" rdr := gensupport.ReaderAtToReader(r, size)")
-		pn(" c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)")
+		pn(" rdr, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)")
+		pn(" c.resumableBuffer_ = gensupport.NewResumableBuffer(rdr, googleapi.DefaultUploadChunkSize)")
+		pn(" c.media_ = nil")
 		pn(" c.mediaSize_ = size")
-		pn(` c.protocol_ = "resumable"`)
 		pn(" return c")
 		pn("}")
 		comment = "ProgressUpdater provides a callback function that will be called after every chunk. " +
@@ -1812,12 +1815,16 @@ func (meth *Method) generateCode() {
 
 	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", jstr(meth.m, "path"))
 	if meth.supportsMediaUpload() {
-		pn("if c.media_ != nil {")
+		pn("if c.media_ != nil || c.resumableBuffer_ != nil{")
 		// Hack guess, since we get a 404 otherwise:
 		//pn("urls = googleapi.ResolveRelative(%q, %q)", a.apiBaseURL(), meth.mediaUploadPath())
 		// Further hack.  Discovery doc is wrong?
-		pn("urls = strings.Replace(urls, %q, %q, 1)", "https://www.googleapis.com/", "https://www.googleapis.com/upload/")
-		pn(`c.urlParams_.Set("uploadType", c.protocol_)`)
+		pn("  urls = strings.Replace(urls, %q, %q, 1)", "https://www.googleapis.com/", "https://www.googleapis.com/upload/")
+		pn(`  protocol := "multipart"`)
+		pn("  if c.resumableBuffer_ != nil {")
+		pn(`   protocol = "resumable"`)
+		pn("  }")
+		pn(`  c.urlParams_.Set("uploadType", protocol)`)
 		pn("}")
 	}
 	pn("urls += \"?\" + c.urlParams_.Encode()")
@@ -1827,7 +1834,7 @@ func (meth *Method) generateCode() {
 			pn(`ctype := "application/json"`)
 			hasContentType = true
 		}
-		pn(`if c.protocol_ != "resumable" && c.media_ != nil {`)
+		pn(`if c.media_ != nil {`)
 		pn("  var combined io.ReadCloser")
 		pn("  combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)")
 		pn("  defer combined.Close()")
@@ -1850,7 +1857,7 @@ func (meth *Method) generateCode() {
 	}
 
 	if meth.supportsMediaUpload() {
-		pn(`if c.protocol_ == "resumable" {`)
+		pn(`if c.resumableBuffer_ != nil {`)
 		pn(` req.Header.Set("X-Upload-Content-Type", c.mediaType_)`)
 		pn("}")
 	}
@@ -1917,14 +1924,13 @@ func (meth *Method) generateCode() {
 	pn("defer googleapi.CloseBody(res)")
 	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
 	if meth.supportsMediaUpload() {
-		pn(`if c.protocol_ == "resumable" {`)
-		pn(" chunkSize := 1 << 23") // TODO(mcgreevy): make this configurable
+		pn("if c.resumableBuffer_ != nil {")
 		pn(` loc := res.Header.Get("Location")`)
 		pn(" rx := &gensupport.ResumableUpload{")
 		pn("  Client:        c.s.client,")
 		pn("  UserAgent:     c.s.userAgent(),")
 		pn("  URI:           loc,")
-		pn("  Media:         gensupport.NewResumableBuffer(c.media_, chunkSize),")
+		pn("  Media:         c.resumableBuffer_,")
 		pn("  MediaType:     c.mediaType_,")
 		pn("  Callback:      func(curr int64){")
 		pn("   if c.progressUpdater_ != nil {")
@@ -1932,7 +1938,12 @@ func (meth *Method) generateCode() {
 		pn("   }")
 		pn("  },")
 		pn(" }")
-		pn(" res, err = rx.Upload(c.ctx_)")
+		pn(" ctx := c.ctx_")
+		pn(" if ctx == nil {")
+		// TODO(mcgreevy): Require context when calling Media, or Do.
+		pn("  ctx = context.TODO()")
+		pn(" }")
+		pn(" res, err = rx.Upload(ctx)")
 		pn(" if err != nil { return %serr }", nilRet)
 		pn(" defer res.Body.Close()")
 		pn("}")

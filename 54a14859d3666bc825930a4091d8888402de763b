@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f08edd_f399ea94",
+        "filename": "gensupport/media.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-18T05:53:56Z",
+      "side": 1,
+      "message": "This is about more verbose than might be necessary\n\n// err might be a non-EOF error. If it is, the first call to rb.Chunk() will blah blah?",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 42
+      },
+      "revId": "54a14859d3666bc825930a4091d8888402de763b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f08edd_d39ee67a",
+        "filename": "gmail/v1/gmail-gen.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 1317,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-18T05:53:56Z",
+      "side": 1,
+      "message": "Constant? (It might be nice to export it so developers can use it too)",
+      "revId": "54a14859d3666bc825930a4091d8888402de763b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7f08edd_b3a362bd",
+        "filename": "googleapi/googleapi.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-18T05:53:56Z",
+      "side": 1,
+      "message": "You could set this to the default in :256 and avoid needing the set boolean. That might be nice, since this package could then have the exported constant which defines what the default is.",
+      "range": {
+        "startLine": 249,
+        "startChar": 1,
+        "endLine": 249,
+        "endChar": 10
+      },
+      "revId": "54a14859d3666bc825930a4091d8888402de763b",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

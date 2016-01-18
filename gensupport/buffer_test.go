@@ -268,7 +268,7 @@ func TestAdapter(t *testing.T) {
 			wantTyper: true,
 		},
 	} {
-		to := ReaderAtToReader(tc.from, len(data))
+		to := ReaderAtToReader(tc.from, int64(len(data)))
 
 		if _, ok := to.(googleapi.ContentTyper); ok != tc.wantTyper {
 			t.Errorf("reader implements typer? got: %v; want: %v", ok, tc.wantTyper)

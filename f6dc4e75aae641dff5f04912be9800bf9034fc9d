@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f08edd_1068e431",
+        "filename": "gensupport/media.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-01-18T05:53:56Z",
+      "side": 1,
+      "message": "Document chunkSize \u003d\u003d 0",
+      "revId": "f6dc4e75aae641dff5f04912be9800bf9034fc9d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

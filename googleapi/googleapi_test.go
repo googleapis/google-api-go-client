@@ -359,3 +359,22 @@ func TestConvertVariant(t *testing.T) {
 		}
 	}
 }
+
+func TestRoundChunkSize(t *testing.T) {
+	type testCase struct {
+		in   int
+		want int
+	}
+	for _, tc := range []testCase{
+		{0, 0},
+		{256*1024 - 1, 256 * 1024},
+		{256 * 1024, 256 * 1024},
+		{256*1024 + 1, 2 * 256 * 1024},
+	} {
+		mo := &MediaOptions{}
+		ChunkSize(tc.in).setOptions(mo)
+		if got := mo.ChunkSize; got != tc.want {
+			t.Errorf("rounding chunk size: got: %v; want %v", got, tc.want)
+		}
+	}
+}

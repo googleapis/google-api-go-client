@@ -8042,9 +8042,9 @@ type ProjectsIconsCreateCall struct {
 	icon             *Icon
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	resumableBuffer_ *gensupport.ResumableBuffer
 	mediaType_       string
 	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
-	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
 	ctx_             context.Context
 }
@@ -8078,23 +8078,28 @@ func (c *ProjectsIconsCreateCall) UserIP(userIP string) *ProjectsIconsCreateCall
 // Media and ResumableMedia may be set.
 func (c *ProjectsIconsCreateCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsIconsCreateCall {
 	opts := googleapi.ProcessMediaOptions(options)
-	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
-	c.protocol_ = "multipart"
+	chunkSize := opts.ChunkSize
+	if !opts.ChunkSizeSet {
+		chunkSize = 8388608
+	}
+	r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
+	c.media_, c.resumableBuffer_ = gensupport.PrepareUpload(r, chunkSize)
 	return c
 }
 
 // ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// canceled with ctx. ResumableMedia is deprecated in favour of Media.
+// At most one of Media and ResumableMedia may be set. mediaType
+// identifies the MIME media type of the upload, such as "image/png". If
+// mediaType is "", it will be auto-detected. The provided ctx will
+// supersede any context previously provided to the Context method.
 func (c *ProjectsIconsCreateCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsIconsCreateCall {
 	c.ctx_ = ctx
 	rdr := gensupport.ReaderAtToReader(r, size)
-	c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	rdr, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.resumableBuffer_ = gensupport.NewResumableBuffer(rdr, 8388608)
+	c.media_ = nil
 	c.mediaSize_ = size
-	c.protocol_ = "resumable"
 	return c
 }
 
@@ -8134,12 +8139,16 @@ func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) 
 	ctype := "application/json"
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/icons")
-	if c.media_ != nil {
+	if c.media_ != nil || c.resumableBuffer_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		protocol := "multipart"
+		if c.resumableBuffer_ != nil {
+			protocol = "resumable"
+		}
+		c.urlParams_.Set("uploadType", protocol)
 	}
 	urls += "?" + c.urlParams_.Encode()
-	if c.protocol_ != "resumable" && c.media_ != nil {
+	if c.media_ != nil {
 		var combined io.ReadCloser
 		combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)
 		defer combined.Close()
@@ -8149,7 +8158,7 @@ func (c *ProjectsIconsCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	if c.protocol_ == "resumable" {
+	if c.resumableBuffer_ != nil {
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -8185,14 +8194,13 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	if c.protocol_ == "resumable" {
-		chunkSize := 1 << 23
+	if c.resumableBuffer_ != nil {
 		loc := res.Header.Get("Location")
 		rx := &gensupport.ResumableUpload{
 			Client:    c.s.client,
 			UserAgent: c.s.userAgent(),
 			URI:       loc,
-			Media:     gensupport.NewResumableBuffer(c.media_, chunkSize),
+			Media:     c.resumableBuffer_,
 			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -8200,7 +8208,11 @@ func (c *ProjectsIconsCreateCall) Do() (*Icon, error) {
 				}
 			},
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -11773,9 +11785,9 @@ type RastersFilesInsertCall struct {
 	id               string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	resumableBuffer_ *gensupport.ResumableBuffer
 	mediaType_       string
 	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
-	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
 	ctx_             context.Context
 }
@@ -11809,23 +11821,28 @@ func (c *RastersFilesInsertCall) UserIP(userIP string) *RastersFilesInsertCall {
 // Media and ResumableMedia may be set.
 func (c *RastersFilesInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *RastersFilesInsertCall {
 	opts := googleapi.ProcessMediaOptions(options)
-	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
-	c.protocol_ = "multipart"
+	chunkSize := opts.ChunkSize
+	if !opts.ChunkSizeSet {
+		chunkSize = 8388608
+	}
+	r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
+	c.media_, c.resumableBuffer_ = gensupport.PrepareUpload(r, chunkSize)
 	return c
 }
 
 // ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// canceled with ctx. ResumableMedia is deprecated in favour of Media.
+// At most one of Media and ResumableMedia may be set. mediaType
+// identifies the MIME media type of the upload, such as "image/png". If
+// mediaType is "", it will be auto-detected. The provided ctx will
+// supersede any context previously provided to the Context method.
 func (c *RastersFilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *RastersFilesInsertCall {
 	c.ctx_ = ctx
 	rdr := gensupport.ReaderAtToReader(r, size)
-	c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	rdr, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.resumableBuffer_ = gensupport.NewResumableBuffer(rdr, 8388608)
+	c.media_ = nil
 	c.mediaSize_ = size
-	c.protocol_ = "resumable"
 	return c
 }
 
@@ -11860,14 +11877,18 @@ func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "rasters/{id}/files")
-	if c.media_ != nil {
+	if c.media_ != nil || c.resumableBuffer_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		protocol := "multipart"
+		if c.resumableBuffer_ != nil {
+			protocol = "resumable"
+		}
+		c.urlParams_.Set("uploadType", protocol)
 	}
 	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	if c.protocol_ != "resumable" && c.media_ != nil {
+	if c.media_ != nil {
 		var combined io.ReadCloser
 		combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)
 		defer combined.Close()
@@ -11877,7 +11898,7 @@ func (c *RastersFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.protocol_ == "resumable" {
+	if c.resumableBuffer_ != nil {
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -11898,14 +11919,13 @@ func (c *RastersFilesInsertCall) Do() error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
-	if c.protocol_ == "resumable" {
-		chunkSize := 1 << 23
+	if c.resumableBuffer_ != nil {
 		loc := res.Header.Get("Location")
 		rx := &gensupport.ResumableUpload{
 			Client:    c.s.client,
 			UserAgent: c.s.userAgent(),
 			URI:       loc,
-			Media:     gensupport.NewResumableBuffer(c.media_, chunkSize),
+			Media:     c.resumableBuffer_,
 			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -11913,7 +11933,11 @@ func (c *RastersFilesInsertCall) Do() error {
 				}
 			},
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return err
 		}
@@ -14466,9 +14490,9 @@ type TablesFilesInsertCall struct {
 	id               string
 	urlParams_       gensupport.URLParams
 	media_           io.Reader
+	resumableBuffer_ *gensupport.ResumableBuffer
 	mediaType_       string
 	mediaSize_       int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
-	protocol_        string
 	progressUpdater_ googleapi.ProgressUpdater
 	ctx_             context.Context
 }
@@ -14505,23 +14529,28 @@ func (c *TablesFilesInsertCall) UserIP(userIP string) *TablesFilesInsertCall {
 // Media and ResumableMedia may be set.
 func (c *TablesFilesInsertCall) Media(r io.Reader, options ...googleapi.MediaOption) *TablesFilesInsertCall {
 	opts := googleapi.ProcessMediaOptions(options)
-	c.media_, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
-	c.protocol_ = "multipart"
+	chunkSize := opts.ChunkSize
+	if !opts.ChunkSizeSet {
+		chunkSize = 8388608
+	}
+	r, c.mediaType_ = gensupport.DetermineContentType(r, opts.ContentType)
+	c.media_, c.resumableBuffer_ = gensupport.PrepareUpload(r, chunkSize)
 	return c
 }
 
 // ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx. At most one of Media and ResumableMedia may be
-// set. mediaType identifies the MIME media type of the upload, such as
-// "image/png". If mediaType is "", it will be auto-detected. The
-// provided ctx will supersede any context previously provided to the
-// Context method.
+// canceled with ctx. ResumableMedia is deprecated in favour of Media.
+// At most one of Media and ResumableMedia may be set. mediaType
+// identifies the MIME media type of the upload, such as "image/png". If
+// mediaType is "", it will be auto-detected. The provided ctx will
+// supersede any context previously provided to the Context method.
 func (c *TablesFilesInsertCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TablesFilesInsertCall {
 	c.ctx_ = ctx
 	rdr := gensupport.ReaderAtToReader(r, size)
-	c.media_, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	rdr, c.mediaType_ = gensupport.DetermineContentType(rdr, mediaType)
+	c.resumableBuffer_ = gensupport.NewResumableBuffer(rdr, 8388608)
+	c.media_ = nil
 	c.mediaSize_ = size
-	c.protocol_ = "resumable"
 	return c
 }
 
@@ -14556,14 +14585,18 @@ func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{id}/files")
-	if c.media_ != nil {
+	if c.media_ != nil || c.resumableBuffer_ != nil {
 		urls = strings.Replace(urls, "https://www.googleapis.com/", "https://www.googleapis.com/upload/", 1)
-		c.urlParams_.Set("uploadType", c.protocol_)
+		protocol := "multipart"
+		if c.resumableBuffer_ != nil {
+			protocol = "resumable"
+		}
+		c.urlParams_.Set("uploadType", protocol)
 	}
 	urls += "?" + c.urlParams_.Encode()
 	body = new(bytes.Buffer)
 	ctype := "application/json"
-	if c.protocol_ != "resumable" && c.media_ != nil {
+	if c.media_ != nil {
 		var combined io.ReadCloser
 		combined, ctype = gensupport.CombineBodyMedia(body, ctype, c.media_, c.mediaType_)
 		defer combined.Close()
@@ -14573,7 +14606,7 @@ func (c *TablesFilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"id": c.id,
 	})
-	if c.protocol_ == "resumable" {
+	if c.resumableBuffer_ != nil {
 		req.Header.Set("X-Upload-Content-Type", c.mediaType_)
 	}
 	req.Header.Set("Content-Type", ctype)
@@ -14594,14 +14627,13 @@ func (c *TablesFilesInsertCall) Do() error {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return err
 	}
-	if c.protocol_ == "resumable" {
-		chunkSize := 1 << 23
+	if c.resumableBuffer_ != nil {
 		loc := res.Header.Get("Location")
 		rx := &gensupport.ResumableUpload{
 			Client:    c.s.client,
 			UserAgent: c.s.userAgent(),
 			URI:       loc,
-			Media:     gensupport.NewResumableBuffer(c.media_, chunkSize),
+			Media:     c.resumableBuffer_,
 			MediaType: c.mediaType_,
 			Callback: func(curr int64) {
 				if c.progressUpdater_ != nil {
@@ -14609,7 +14641,11 @@ func (c *TablesFilesInsertCall) Do() error {
 				}
 			},
 		}
-		res, err = rx.Upload(c.ctx_)
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
 		if err != nil {
 			return err
 		}

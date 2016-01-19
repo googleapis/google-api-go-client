@@ -186,7 +186,8 @@ func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "adsense.accounts.reports.generate" call.
-func (c *AccountsReportsGenerateCall) Do() error {
+func (c *AccountsReportsGenerateCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return err

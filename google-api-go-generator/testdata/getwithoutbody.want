@@ -221,7 +221,8 @@ func (c *MetricDescriptorsListCall) doRequest(alt string) (*http.Response, error
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *MetricDescriptorsListCall) Do() (*ListMetricResponse, error) {
+func (c *MetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*ListMetricResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

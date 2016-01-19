@@ -165,7 +165,8 @@ func (c *AtlasGetMapCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "mapofstrings.getMap" call.
-func (c *AtlasGetMapCall) Do() (map[string]string, error) {
+func (c *AtlasGetMapCall) Do(opts ...googleapi.CallOption) (map[string]string, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if err != nil {
 		return nil, err

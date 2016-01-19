@@ -152,7 +152,8 @@ func (c *EventsMoveCall) doRequest(alt string) (*http.Response, error) {
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
-func (c *EventsMoveCall) Do() (*Event, error) {
+func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {
@@ -285,7 +286,8 @@ func (c *ReportsQueryCall) doRequest(alt string) (*http.Response, error) {
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ReportsQueryCall) Do() (*ResultTable, error) {
+func (c *ReportsQueryCall) Do(opts ...googleapi.CallOption) (*ResultTable, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
 		if res.Body != nil {

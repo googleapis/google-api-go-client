@@ -80,6 +80,8 @@ type ErrorItem struct {
 	Reason string `json:"reason"`
 	// Message is the human-readable description of the error.
 	Message string `json:"message"`
+	// Domain is the scope of the error. For example: "usageLimits".
+	Domain string `json:"domain"`
 }
 
 func (e *Error) Error() string {
@@ -115,6 +117,14 @@ func CheckResponse(res *http.Response) error {
 	if res.StatusCode >= 200 && res.StatusCode <= 299 {
 		return nil
 	}
+	return ParseErrorResponse(res)
+}
+
+// ParseErrorResponse returns a non-nil *Error from an API response,
+// without checking the reponse code.
+// It tries to parse the body as a json first, and returns a
+// generic error if the response is not parsable as an API error.
+func ParseErrorResponse(res *http.Response) *Error {
 	slurp, err := ioutil.ReadAll(res.Body)
 	if err == nil {
 		jerr := new(errorReply)

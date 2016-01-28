@@ -13,6 +13,7 @@ import (
 
 	"golang.org/x/net/context"
 	"golang.org/x/net/context/ctxhttp"
+	"google.golang.org/api/googleapi"
 )
 
 const (
@@ -153,6 +154,18 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 		}
 
 		resp, err = rx.transferChunk(ctx)
+		// Google APIs can return a 4xx error on a valid resumable session for multiple reasons:
+		// - invalid parameters (400 / reason=badRequestn not sure it can happen for chunk upload)
+		// - token expired between the session start and the chunk upload (401 / reason=authError)
+		// - when updating, resource is not writable by the caller (403 / reason=insufficientFilePermissions)
+		// - different kinds of rate limits (403 / domain=usageLimits)
+		// The domain=usageLimits errors are retried, all others stop the upload loop.
+		if err == nil && resp.StatusCode/100 == 4 {
+			apiErr := googleapi.ParseErrorResponse(resp)
+			if len(apiErr.Errors) == 0 || apiErr.Errors[0].Domain != "usageLimits" {
+				err = apiErr
+			}
+		}
 		// It's possible for err and resp to both be non-nil here, but we expose a simpler
 		// contract to our callers: exactly one of resp and err will be non-nil.  This means
 		// that any response body must be closed here before returning a non-nil error.

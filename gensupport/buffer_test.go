@@ -243,6 +243,23 @@ func (tra *typerReaderAt) ContentType() string {
 func TestAdapter(t *testing.T) {
 	data := "abc"
 
+	checkConversion := func(to io.Reader, wantTyper bool) {
+		if _, ok := to.(googleapi.ContentTyper); ok != wantTyper {
+			t.Errorf("reader implements typer? got: %v; want: %v", ok, wantTyper)
+		}
+		if typer, ok := to.(googleapi.ContentTyper); ok && typer.ContentType() != "ctype" {
+			t.Errorf("content type: got: %s; want: ctype", typer.ContentType())
+		}
+		buf, err := ioutil.ReadAll(to)
+		if err != nil {
+			t.Errorf("error reading data: %v", err)
+			return
+		}
+		if !bytes.Equal(buf, []byte(data)) {
+			t.Errorf("failed reading data: got: %s; want: %s", buf, data)
+		}
+	}
+
 	type testCase struct {
 		from      io.ReaderAt
 		wantTyper bool
@@ -269,19 +286,11 @@ func TestAdapter(t *testing.T) {
 		},
 	} {
 		to := ReaderAtToReader(tc.from, int64(len(data)))
-
-		if _, ok := to.(googleapi.ContentTyper); ok != tc.wantTyper {
-			t.Errorf("reader implements typer? got: %v; want: %v", ok, tc.wantTyper)
-		}
-		if typer, ok := to.(googleapi.ContentTyper); ok && typer.ContentType() != "ctype" {
-			t.Errorf("content type: got: %s; want: ctype", typer.ContentType())
-		}
-		buf, err := ioutil.ReadAll(to)
-		if err != nil {
-			t.Errorf("error reading data: %v", err)
-		}
-		if !reflect.DeepEqual(buf, []byte(data)) {
-			t.Errorf("failed reading data: got: %s; want: %s", buf, data)
-		}
+		checkConversion(to, tc.wantTyper)
+		// tc.from is a ReaderAt, and should be treated like one, even
+		// if it also implements Reader.  Specifically, it can be
+		// reused and read from the beginning.
+		to = ReaderAtToReader(tc.from, int64(len(data)))
+		checkConversion(to, tc.wantTyper)
 	}
 }

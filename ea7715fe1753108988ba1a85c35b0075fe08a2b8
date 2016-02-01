@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51f79447_9d0243e9",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-02-01T06:10:34Z",
+      "side": 1,
+      "message": "maybe there should be a reasonable default? say, the existing 1s fixed pause time?",
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51f79447_1df75342",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-02-01T06:10:34Z",
+      "side": 1,
+      "message": "drop parens",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51f79447_fdfb8728",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-02-01T06:10:34Z",
+      "side": 1,
+      "message": "err",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51f79447_ddf8cb2e",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-02-01T06:10:34Z",
+      "side": 1,
+      "message": "this isn\u0027t a particularly accurate name. It\u0027s only telling you whether the context is done, which could be because it was canceled, or its deadline was exceeded, or perhaps even some other reason.\n\ncontextDone would be more accurate.",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 21
+      },
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51f79447_bd05fff4",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-02-01T06:10:34Z",
+      "side": 1,
+      "message": "Why not initialise pause to something like 10µs instead of doing this double checking?",
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}

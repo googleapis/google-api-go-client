@@ -1904,6 +1904,7 @@ func (meth *Method) generateCode() {
 		pn("    c.progressUpdater_(curr, c.mediaSize_)")
 		pn("   }")
 		pn("  },")
+		pn("  Backoff: &gensupport.ExponentialBackoff{BasePause:gensupport.BaseRetryPause},")
 		pn(" }")
 		pn(" ctx := c.ctx_")
 		pn(" if ctx == nil {")

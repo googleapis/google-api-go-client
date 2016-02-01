@@ -260,6 +260,7 @@ func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {

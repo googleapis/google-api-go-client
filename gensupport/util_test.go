@@ -4,7 +4,10 @@
 
 package gensupport
 
-import "io"
+import (
+	"io"
+	"time"
+)
 
 // errReader reads out of a buffer until it is empty, then returns the specified error.
 type errReader struct {
@@ -22,4 +25,13 @@ func (er *errReader) Read(p []byte) (int, error) {
 	n := copy(p, er.buf)
 	er.buf = er.buf[n:]
 	return n, nil
+}
+
+// NoPauseStrategy implements BackoffStrategy 0-length pauses.
+type NoPauseStrategy struct{}
+
+func (np NoPauseStrategy) Pause() time.Duration {
+	return 0
+}
+func (np NoPauseStrategy) Reset() {
 }

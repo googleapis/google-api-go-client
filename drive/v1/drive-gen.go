@@ -592,6 +592,7 @@ func (c *FilesInsertCall) Do(opts ...googleapi.CallOption) (*File, error) {
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -1002,6 +1003,7 @@ func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {

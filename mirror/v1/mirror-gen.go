@@ -3013,6 +3013,7 @@ func (c *TimelineInsertCall) Do(opts ...googleapi.CallOption) (*TimelineItem, er
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -3560,6 +3561,7 @@ func (c *TimelineUpdateCall) Do(opts ...googleapi.CallOption) (*TimelineItem, er
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -4024,6 +4026,7 @@ func (c *TimelineAttachmentsInsertCall) Do(opts ...googleapi.CallOption) (*Attac
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {

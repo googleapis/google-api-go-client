@@ -7622,6 +7622,7 @@ func (c *ProjectsIconsCreateCall) Do(opts ...googleapi.CallOption) (*Icon, error
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -10977,6 +10978,7 @@ func (c *RastersFilesInsertCall) Do(opts ...googleapi.CallOption) error {
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -13410,6 +13412,7 @@ func (c *TablesFilesInsertCall) Do(opts ...googleapi.CallOption) error {
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {

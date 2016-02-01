@@ -1374,6 +1374,7 @@ func (c *UsersDraftsCreateCall) Do(opts ...googleapi.CallOption) (*Draft, error)
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -2019,6 +2020,7 @@ func (c *UsersDraftsSendCall) Do(opts ...googleapi.CallOption) (*Message, error)
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -2246,6 +2248,7 @@ func (c *UsersDraftsUpdateCall) Do(opts ...googleapi.CallOption) (*Draft, error)
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -3736,6 +3739,7 @@ func (c *UsersMessagesImportCall) Do(opts ...googleapi.CallOption) (*Message, er
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -4014,6 +4018,7 @@ func (c *UsersMessagesInsertCall) Do(opts ...googleapi.CallOption) (*Message, er
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {
@@ -4584,6 +4589,7 @@ func (c *UsersMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, erro
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {

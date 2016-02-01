@@ -3516,6 +3516,7 @@ func (c *JobsInsertCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 					c.progressUpdater_(curr, c.mediaSize_)
 				}
 			},
+			Backoff: &gensupport.ExponentialBackoff{BasePause: gensupport.BaseRetryPause},
 		}
 		ctx := c.ctx_
 		if ctx == nil {

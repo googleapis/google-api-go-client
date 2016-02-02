@@ -1547,15 +1547,6 @@ func convertMultiParams(a *API, param string) string {
 	return param + "_"
 }
 
-// overrideParameterName transforms a hard-coded list of non-idiomatic-Go names into idiomatic Go names.
-func overrideParameterName(name string) string {
-	// TODO(mcgreevy): make this more general.
-	if name == "userIp" {
-		return "userIP"
-	}
-	return name
-}
-
 func (meth *Method) generateCode() {
 	res := meth.r // may be nil if a top-level method
 	a := meth.api
@@ -1650,7 +1641,7 @@ func (meth *Method) generateCode() {
 		if opt.Location() != "query" {
 			panicf("optional parameter has unsupported location %q", opt.Location())
 		}
-		setter := initialCap(overrideParameterName(opt.name))
+		setter := initialCap(opt.name)
 		des := jstr(opt.m, "description")
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
@@ -1658,7 +1649,7 @@ func (meth *Method) generateCode() {
 		addFieldValueComments(p, opt, "", true)
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
-		paramName := np.Get(validGoIdentifer(overrideParameterName(opt.name)))
+		paramName := np.Get(validGoIdentifer(opt.name))
 		typePrefix := ""
 		if opt.IsRepeated() {
 			typePrefix = "..."

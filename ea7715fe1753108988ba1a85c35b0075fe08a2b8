@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51f79447_ddb7ab3d",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-02T00:54:20Z",
+      "side": 1,
+      "message": "I\u0027ve added a default (in ResumableUpload.Upload), but made it exponential backoff, because there\u0027s no reason to prefer to fixed to exponential.",
+      "parentUuid": "51f79447_9d0243e9",
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51f79447_1df75342",
         "filename": "gensupport/resumable.go",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2016-02-01T06:10:34Z",
       "side": 1,
       "message": "drop parens",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51f79447_3dc1efaa",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-02T00:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51f79447_1df75342",
       "range": {
         "startLine": 82,
         "startChar": 4,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "51f79447_5dccbbe2",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-02T00:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51f79447_fdfb8728",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51f79447_ddf8cb2e",
         "filename": "gensupport/resumable.go",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "51f79447_7dc777c2",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-02T00:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51f79447_ddf8cb2e",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 21
+      },
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51f79447_bd05fff4",
         "filename": "gensupport/resumable.go",
         "patchSetId": 4
@@ -99,6 +189,24 @@
       "writtenOn": "2016-02-01T06:10:34Z",
       "side": 1,
       "message": "Why not initialise pause to something like 10µs instead of doing this double checking?",
+      "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51f79447_9dd803a0",
+        "filename": "gensupport/resumable.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 5505
+      },
+      "writtenOn": "2016-02-02T00:54:20Z",
+      "side": 1,
+      "message": "What if more than 10µs elapses between invoking After, and when the select determines which channels are ready?\n\nProbably 10µs safe, but I\u0027d rather be exact than guess.",
+      "parentUuid": "51f79447_bd05fff4",
       "revId": "ea7715fe1753108988ba1a85c35b0075fe08a2b8",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false

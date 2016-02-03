@@ -22,6 +22,30 @@
       "revId": "a50a065e2728718fdbe0037aff1415fdf5073d55",
       "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f19a4877_b209c048",
+        "filename": "calendar/v3/calendar-gen.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 2106,
+      "author": {
+        "id": 5170
+      },
+      "writtenOn": "2016-02-03T23:18:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f19a4877_f2e428fc",
+      "range": {
+        "startLine": 2106,
+        "startChar": 19,
+        "endLine": 2106,
+        "endChar": 21
+      },
+      "revId": "a50a065e2728718fdbe0037aff1415fdf5073d55",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
     }
   ]
 }

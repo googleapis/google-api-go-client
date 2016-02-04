@@ -6850,7 +6850,8 @@ type ReadgroupsetsImportCall struct {
 // - Comments (@CO) in the input file header are not imported
 // - Original order of reference headers is not preserved
 // - Any reverse stranded unmapped reads will be reverse complemented,
-// and their qualities (and "BQ" tag, if any) will be reversed
+// and their qualities (also the "BQ" and "OQ" tags, if any) will be
+// reversed
 // - Unmapped reads will be stripped of positional information
 // (referenceName and position)
 func (r *ReadgroupsetsService) Import(importreadgroupsetsrequest *ImportReadGroupSetsRequest) *ReadgroupsetsImportCall {
@@ -6932,7 +6933,7 @@ func (c *ReadgroupsetsImportCall) Do(opts ...googleapi.CallOption) (*ImportReadG
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates read group sets by asynchronously importing the provided information. The caller must have WRITE permissions to the dataset.\n\nNotes on BAM import:  \n- Tags will be converted to strings - tag types are not preserved\n- Comments (@CO) in the input file header are not imported\n- Original order of reference headers is not preserved\n- Any reverse stranded unmapped reads will be reverse complemented, and their qualities (and \"BQ\" tag, if any) will be reversed\n- Unmapped reads will be stripped of positional information (referenceName and position)",
+	//   "description": "Creates read group sets by asynchronously importing the provided information. The caller must have WRITE permissions to the dataset.\n\nNotes on BAM import:  \n- Tags will be converted to strings - tag types are not preserved\n- Comments (@CO) in the input file header are not imported\n- Original order of reference headers is not preserved\n- Any reverse stranded unmapped reads will be reverse complemented, and their qualities (also the \"BQ\" and \"OQ\" tags, if any) will be reversed\n- Unmapped reads will be stripped of positional information (referenceName and position)",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.readgroupsets.import",
 	//   "path": "readgroupsets/import",

@@ -57,7 +57,7 @@ type API struct {
 	Name          string `json:"name"`
 	Version       string `json:"version"`
 	Title         string `json:"title"`
-	DiscoveryLink string `json:"discoveryLink"` // relative
+	DiscoveryLink string `json:"discoveryRestUrl"` // absolute
 	RootURL       string `json:"rootUrl"`
 	ServicePath   string `json:"servicePath"`
 	Preferred     bool   `json:"preferred"`
@@ -93,10 +93,9 @@ func (all *AllAPIs) addAPI(api string) {
 	apiName := parts[0]
 	apiVersion := parts[1]
 	all.Items = append(all.Items, &API{
-		ID:            api,
-		Name:          apiName,
-		Version:       apiVersion,
-		DiscoveryLink: fmt.Sprintf("./apis/%s/%s/rest", apiName, apiVersion),
+		ID:      api,
+		Name:    apiName,
+		Version: apiVersion,
 	})
 }
 
@@ -216,11 +215,6 @@ func getAPIs() []*API {
 	}
 	if !*publicOnly && *apiToGenerate != "*" {
 		all.addAPI(*apiToGenerate)
-	}
-	if *apiToGenerate == "*" && *apisURL == googleDiscoveryURL {
-		// Force generation of compute:beta which doesn't appear in the
-		// directory for some reason, but they've asked us to include it.
-		all.addAPI("compute:beta")
 	}
 	return all.Items
 }
@@ -362,12 +356,7 @@ func (a *API) DiscoveryURL() string {
 	if a.DiscoveryLink == "" {
 		log.Fatalf("API %s has no DiscoveryLink", a.ID)
 	}
-	base, _ := url.Parse(*apisURL)
-	u, err := base.Parse(a.DiscoveryLink)
-	if err != nil {
-		log.Fatalf("API %s has bogus DiscoveryLink %s: %v", a.ID, a.DiscoveryLink, err)
-	}
-	return u.String()
+	return a.DiscoveryLink
 }
 
 func (a *API) Package() string {

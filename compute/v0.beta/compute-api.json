@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/4pHyTlOuQI4TXNZMSSftZD1DFAE\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/4d2gO2u2XoUkLnhU3hGWJa3ZXEk\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20160107",
+ "revision": "20160120",
  "title": "Compute Engine API",
  "description": "API for the Google Compute Engine service.",
  "ownerDomain": "google.com",
@@ -766,12 +766,12 @@
     },
     "maxRate": {
      "type": "integer",
-     "description": "The max RPS of the group. Can be used with either balancing mode, but required if RATE mode. For RATE mode, either maxRate or maxRatePerInstance must be set.",
+     "description": "The max requests per second (RPS) of the group. Can be used with either balancing mode, but required if RATE mode. For RATE mode, either maxRate or maxRatePerInstance must be set.",
      "format": "int32"
     },
     "maxRatePerInstance": {
      "type": "number",
-     "description": "The max RPS that a single backed instance can handle. This is used to calculate the capacity of the group. Can be used in either balancing mode. For RATE mode, either maxRate or maxRatePerInstance must be set.",
+     "description": "The max requests per second (RPS) that a single backed instance can handle. This is used to calculate the capacity of the group. Can be used in either balancing mode. For RATE mode, either maxRate or maxRatePerInstance must be set.",
      "format": "float"
     },
     "maxUtilization": {
@@ -784,7 +784,7 @@
   "BackendService": {
    "id": "BackendService",
    "type": "object",
-   "description": "A BackendService resource. This resource defines a group of backend virtual machines together with their serving capacity.",
+   "description": "A BackendService resource. This resource defines a group of backend virtual machines and their serving capacity.",
    "properties": {
     "backends": {
      "type": "array",
@@ -830,7 +830,7 @@
     },
     "port": {
      "type": "integer",
-     "description": "Deprecated in favor of port name. The TCP port to connect on the backend. The default value is 80.",
+     "description": "Deprecated in favor of portName. The TCP port to connect on the backend. The default value is 80.",
      "format": "int32"
     },
     "portName": {
@@ -854,7 +854,7 @@
     },
     "timeoutSec": {
      "type": "integer",
-     "description": "How many seconds to wait for the backend before considering it a failed request. Default is 30 seconds.",
+     "description": "How many seconds to wait for the backend before considering it a failed request. Default is 30 seconds. Valid range is [1, 86400].",
      "format": "int32"
     }
    }
@@ -1491,7 +1491,7 @@
     },
     "network": {
      "type": "string",
-     "description": "URL of the network resource for this firewall rule. This field is required for creating an instance but optional when creating a firewall rule. If not specified when creating a firewall rule, the default network is used:\nglobal/networks/default\nIf you choose to specify this property, you can specify the network as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network \n- projects/myproject/global/networks/my-network \n- global/networks/default"
+     "description": "URL of the network resource for this firewall rule. If not specified when creating a firewall rule, the default network is used:\nglobal/networks/default\nIf you choose to specify this property, you can specify the network as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network \n- projects/myproject/global/networks/my-network \n- global/networks/default"
     },
     "selfLink": {
      "type": "string",
@@ -1615,7 +1615,7 @@
     },
     "target": {
      "type": "string",
-     "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global TargetHttpProxy or TargetHttpsProxy resource."
+     "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global TargetHttpProxy or TargetHttpsProxy resource. The forwarded traffic must be of a type appropriate to the target object. For example, TargetHttpProxy requires HTTP traffic, and TargetHttpsProxy requires HTTPS traffic."
     }
    }
   },
@@ -2196,7 +2196,7 @@
     },
     "description": {
      "type": "string",
-     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+     "description": "An optional description of this resource. Provide this property when you create the resource."
     },
     "disks": {
      "type": "array",
@@ -2207,7 +2207,7 @@
     },
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. This identifier is defined by the server.",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
      "format": "uint64"
     },
     "kind": {
@@ -2242,7 +2242,7 @@
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash."
+     "description": "The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash."
     },
     "networkInterfaces": {
      "type": "array",
@@ -2257,7 +2257,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server defined URL for this resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     },
     "serviceAccounts": {
      "type": "array",
@@ -2327,11 +2327,11 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server defined URL for this resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -2391,6 +2391,10 @@
      "type": "integer",
      "description": "[Output Only] The total number of instances in the instance group.",
      "format": "int32"
+    },
+    "subnetwork": {
+     "type": "string",
+     "description": "[Output Only] The URL of the subnetwork to which all instances in the instance group belong."
     },
     "zone": {
      "type": "string",
@@ -2577,7 +2581,7 @@
     },
     "creating": {
      "type": "integer",
-     "description": "[Output Only] The number of instances in the managed instance group that are scheduled to be created or are currently being created.",
+     "description": "[Output Only] The number of instances in the managed instance group that are scheduled to be created or are currently being created. If the group fails to create one of these instances, it tries again until it creates the instance successfully.",
      "format": "int32"
     },
     "deleting": {
@@ -3043,11 +3047,11 @@
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server defined URL for this resource."
+     "description": "[Output Only] Server-defined URL for this resource."
     }
    }
   },
@@ -3573,7 +3577,7 @@
    "properties": {
     "currentAction": {
      "type": "string",
-     "description": "[Output Only] The current action that the managed instance group has scheduled for the instance. Possible values: \n- NONE The instance is running, and the managed instance group does not have any scheduled actions for this instance. \n- CREATING The managed instance group is creating this instance. \n- RECREATING The managed instance group is recreating this instance. \n- DELETING The managed instance group is permanently deleting this instance. \n- ABANDONING The managed instance group is abandoning this instance. The instance will be removed from the instance group and from any target pools that are associated with this group. \n- RESTARTING The managed instance group is restarting the instance. \n- REFRESHING The managed instance group is applying configuration changes to the instance without stopping it. For example, the group can update the target pool list for an instance without stopping that instance.",
+     "description": "[Output Only] The current action that the managed instance group has scheduled for the instance. Possible values: \n- NONE The instance is running, and the managed instance group does not have any scheduled actions for this instance. \n- CREATING The managed instance group is creating this instance. If the group fails to create this instance, it will try again until it is successful. \n- CREATING_WITHOUT_RETRIES The managed instance group is attempting to create this instance only once. If the group fails to create this instance, it does not try again and the group's target_size value is decreased. \n- RECREATING The managed instance group is recreating this instance. \n- DELETING The managed instance group is permanently deleting this instance. \n- ABANDONING The managed instance group is abandoning this instance. The instance will be removed from the instance group and from any target pools that are associated with this group. \n- RESTARTING The managed instance group is restarting the instance. \n- REFRESHING The managed instance group is applying configuration changes to the instance without stopping it. For example, the group can update the target pool list for an instance without stopping that instance.",
      "enum": [
       "ABANDONING",
       "CREATING",
@@ -3740,7 +3744,7 @@
     },
     "autoCreateSubnetworks": {
      "type": "boolean",
-     "description": "When set to true, the subnetwork is created in \"auto subnet mode\". When set to false, the subnetwork is in \"custom subnet mode\".\n\nIn \"auto subnet mode\", a newly created network is assigned the default CIDR of 10.128.0.0/9 and it automatically creates one subnetwork per region."
+     "description": "When set to true, the network is created in \"auto subnet mode\". When set to false, the network is in \"custom subnet mode\".\n\nIn \"auto subnet mode\", a newly created network is assigned the default CIDR of 10.128.0.0/9 and it automatically creates one subnetwork per region."
     },
     "creationTimestamp": {
      "type": "string",
@@ -3819,7 +3823,7 @@
     },
     "subnetwork": {
      "type": "string",
-     "description": "URL of the subnetwork resource for this instance. This should not be provided if the network resource is in legacy mode. If the network is in auto subnet mode, providing the subnetwork is optional. If the network is in custom subnet mode then the field should be specified. If you specify this property, you can specify the subnetwork as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/subnetworks/subnetwork \n- projects/project/zones/zone/networks/network"
+     "description": "The URL of the Subnetwork resource for this instance. If the network resource is in legacy mode, do not provide this property. If the network is in auto subnet mode, providing the subnetwork is optional. If the network is in custom subnet mode, then this field should be specified. If you specify this property, you can specify the subnetwork as a full or partial URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/subnetworks/subnetwork \n- zones/zone/subnetworks/subnetwork"
     }
    }
   },
@@ -3908,7 +3912,7 @@
     },
     "httpErrorStatusCode": {
      "type": "integer",
-     "description": "[Output Only] If the operation fails, this field contains the HTTP error message that was returned. For example, a 404 means the resource was not found.",
+     "description": "[Output Only] If the operation fails, this field contains the HTTP error status code that was returned. For example, a 404 means the resource was not found.",
      "format": "int32"
     },
     "id": {
@@ -3935,12 +3939,12 @@
     },
     "progress": {
      "type": "integer",
-     "description": "[Output Only] An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess at when the operation will be complete. This number should monotonically increase as the operation progresses.",
+     "description": "[Output Only] An optional progress indicator that ranges from 0 to 100. There is no requirement that this be linear or support any granularity of operations. This should not be used to guess when the operation will be complete. This number should monotonically increase as the operation progresses.",
      "format": "int32"
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the operation resides. Only applicable for regional resources."
+     "description": "[Output Only] URL of the region where the operation resides. Only available when performing regional operations."
     },
     "selfLink": {
      "type": "string",
@@ -4049,7 +4053,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "[Output Only] URL of the zone where the operation resides."
+     "description": "[Output Only] URL of the zone where the operation resides. Only available when performing per-zone operations."
     }
    }
   },
@@ -4198,7 +4202,7 @@
    "properties": {
     "defaultService": {
      "type": "string",
-     "description": "The URL to the BackendService resource. This will be used if none of the pathRules defined by this PathMatcher is met by the URL's path portion."
+     "description": "The full or partial URL to the BackendService resource. This will be used if none of the pathRules defined by this PathMatcher is matched by the URL's path portion. For example, the following are all valid URLs to a BackendService resource:  \n- https://www.googleapis.com/compute/v1/projects/project/global/backendServices/backendService \n- compute/v1/projects/project/global/backendServices/backendService \n- global/backendServices/backendService"
     },
     "description": {
      "type": "string",
@@ -4286,7 +4290,7 @@
     },
     "usageExportLocation": {
      "$ref": "UsageExportLocation",
-     "description": "The location in Cloud Storage and naming method of the daily usage report."
+     "description": "The naming prefix for daily usage reports and the Google Cloud Storage bucket where they are stored."
     }
    }
   },
@@ -4478,7 +4482,7 @@
   "Route": {
    "id": "Route",
    "type": "object",
-   "description": "The route resource. A Route is a rule that specifies how certain packets should be handled by the virtual network. Routes are associated with instances by tag and the set of Routes for a particular instance is called its routing table. For each packet leaving a instance, the system searches that instance's routing table for a single best matching Route. Routes match packets by destination IP address, preferring smaller or more specific ranges over larger ones. If there is a tie, the system selects the Route with the smallest priority value. If there is still a tie, it uses the layer three and four packet headers to select just one of the remaining matching Routes. The packet is then forwarded as specified by the nextHop field of the winning Route -- either to another instance destination, a instance gateway or a Google Compute Engien-operated gateway. Packets that do not match any Route in the sending instance's routing table are dropped.",
+   "description": "The route resource. A Route is a rule that specifies how certain packets should be handled by the virtual network. Routes are associated with instances by tags and the set of Routes for a particular instance is called its routing table. For each packet leaving a instance, the system searches that instance's routing table for a single best matching Route. Routes match packets by destination IP address, preferring smaller or more specific ranges over larger ones. If there is a tie, the system selects the Route with the smallest priority value. If there is still a tie, it uses the layer three and four packet headers to select just one of the remaining matching Routes. The packet is then forwarded as specified by the nextHop field of the winning Route -- either to another instance destination, a instance gateway or a Google Compute Engien-operated gateway. Packets that do not match any Route in the sending instance's routing table are dropped.",
    "properties": {
     "creationTimestamp": {
      "type": "string",
@@ -4528,11 +4532,11 @@
     },
     "nextHopGateway": {
      "type": "string",
-     "description": "The URL to a gateway that should handle matching packets. Currently, this is only the internet gateway:  projects/\u003cproject-id\u003e/global/gateways/default-internet-gateway"
+     "description": "The URL to a gateway that should handle matching packets. You can only specify the internet gateway using a full or partial valid URL:  projects/\u003cproject-id\u003e/global/gateways/default-internet-gateway"
     },
     "nextHopInstance": {
      "type": "string",
-     "description": "The fully-qualified URL to an instance that should handle matching packets. For example:\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/"
+     "description": "The URL to an instance that should handle matching packets. You can specify this as a full or partial URL. For example:\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/"
     },
     "nextHopIp": {
      "type": "string",
@@ -4548,7 +4552,7 @@
     },
     "priority": {
      "type": "integer",
-     "description": "Breaks ties between Routes of equal specificity. Routes with smaller values win when tied with routes with larger values. Default value is 1000. A valid range is between 0 and 65535.",
+     "description": "The priority of this route. Priority is used to break ties in cases where there is more than one matching route of equal prefix length. In the case of two routes with equal prefix length, the one with the lowest-numbered priority value wins. Default value is 1000. Valid range is 0 through 65535.",
      "format": "uint32",
      "annotations": {
       "required": [
@@ -4651,7 +4655,7 @@
     },
     "items": {
      "type": "array",
-     "description": "A list of Route resources.",
+     "description": "[Output Only] A list of Route resources.",
      "items": {
       "$ref": "Route"
      }
@@ -4714,7 +4718,7 @@
     },
     "selfLink": {
      "type": "string",
-     "description": "[Output Only] Server defined URL for the resource."
+     "description": "[Output Only] Server-defined URL for the resource."
     }
    }
   },
@@ -4786,7 +4790,7 @@
     },
     "sourceDisk": {
      "type": "string",
-     "description": "The source disk used to create this snapshot."
+     "description": "[Output Only] The source disk used to create this snapshot."
     },
     "sourceDiskEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
@@ -4844,7 +4848,7 @@
     },
     "items": {
      "type": "array",
-     "description": "A list of Snapshot resources.",
+     "description": "[Output Only] A list of Snapshot resources.",
      "items": {
       "$ref": "Snapshot"
      }
@@ -4867,7 +4871,7 @@
   "SslCertificate": {
    "id": "SslCertificate",
    "type": "object",
-   "description": "An SslCertificate resource. This resource provides a mechanism to upload an SSL key and certificate to global HTTPS loadbalancer to serve secure connections.",
+   "description": "An SslCertificate resource. This resource provides a mechanism to upload an SSL key and certificate to the load balancer to serve secure connections from the user.",
    "properties": {
     "certificate": {
      "type": "string",
@@ -4948,34 +4952,34 @@
     },
     "description": {
      "type": "string",
-     "description": "An optional textual description of the resource; provided by the client when the resource is created."
+     "description": "An optional description of this resource. Provide this property when you create the resource."
     },
     "gatewayAddress": {
      "type": "string",
-     "description": "[Output Only] Gateway address for default routes to addresses outside this Subnetwork."
+     "description": "[Output Only] The gateway address for default routes to reach destination addresses outside this subnetwork."
     },
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
      "format": "uint64"
     },
     "ipCidrRange": {
      "type": "string",
-     "description": "The range of internal addresses that are owned by this Subnetwork; provided by the client when the Subnetwork is created."
+     "description": "The range of internal addresses that are owned by this subnetwork. Provide this property when you create the subnetwork. For example, 10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and non-overlapping within a network."
     },
     "kind": {
      "type": "string",
-     "description": "Type of the resource.",
+     "description": "[Output Only] Type of the resource. Always compute#subnetwork for Subnetwork resources.",
      "default": "compute#subnetwork"
     },
     "name": {
      "type": "string",
-     "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "description": "The name of the resource, provided by the client when initially creating the resource. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
      "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
     },
     "network": {
      "type": "string",
-     "description": "URL of the network to which this Subnetwork belongs; provided by the client when the Subnetwork is created. Only networks that are in the distributed mode can have Subnetworks."
+     "description": "The URL of the network to which this subnetwork belongs, provided by the client when initially creating the subnetwork. Only networks that are in the distributed mode can have subnetworks."
     },
     "region": {
      "type": "string",
@@ -4993,11 +4997,11 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource; defined by the server."
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
     },
     "items": {
      "type": "object",
-     "description": "A map of scoped Subnetwork lists.",
+     "description": "[Output] A map of scoped Subnetwork lists.",
      "additionalProperties": {
       "$ref": "SubnetworksScopedList",
       "description": "Name of the scope containing this set of Subnetworks."
@@ -5005,12 +5009,12 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#subnetworkAggregatedList for aggregated lists of subnetworks.",
      "default": "compute#subnetworkAggregatedList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -5025,7 +5029,7 @@
    "properties": {
     "id": {
      "type": "string",
-     "description": "[Output Only] Unique identifier for the resource. Defined by the server."
+     "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server."
     },
     "items": {
      "type": "array",
@@ -5036,12 +5040,12 @@
     },
     "kind": {
      "type": "string",
-     "description": "Type of resource.",
+     "description": "[Output Only] Type of resource. Always compute#subnetworkList for lists of subnetworks.",
      "default": "compute#subnetworkList"
     },
     "nextPageToken": {
      "type": "string",
-     "description": "[Output Only] A token used to continue a truncated list request."
+     "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results."
     },
     "selfLink": {
      "type": "string",
@@ -5055,14 +5059,14 @@
    "properties": {
     "subnetworks": {
      "type": "array",
-     "description": "List of Subnetworks contained in this scope.",
+     "description": "List of subnetworks contained in this scope.",
      "items": {
       "$ref": "Subnetwork"
      }
     },
     "warning": {
      "type": "object",
-     "description": "Informational warning which replaces the list of addresses when the list is empty.",
+     "description": "An informational warning that appears when the list of addresses is empty.",
      "properties": {
       "code": {
        "type": "string",
@@ -5260,7 +5264,7 @@
     },
     "sslCertificates": {
      "type": "array",
-     "description": "URLs to SslCertificate resources that are used to authenticate connections to Backends. Currently exactly one SSL certificate must be specified.",
+     "description": "URLs to SslCertificate resources that are used to authenticate connections between users and the load balancer. Currently exactly one SSL certificate must be specified.",
      "items": {
       "type": "string"
      }
@@ -6200,7 +6204,7 @@
    "properties": {
     "bucketName": {
      "type": "string",
-     "description": "The name of an existing bucket in Cloud Storage where the usage report object is stored. The Google Service Account is granted write access to this bucket. This is just the bucket name, with no gs:// or https://storage.googleapis.com/ in front of it."
+     "description": "The name of an existing bucket in Cloud Storage where the usage report object is stored. The Google Service Account is granted write access to this bucket. This can either be the bucket name by itself, such as example-bucket, or the bucket name with gs:// or https://storage.googleapis.com/ in front of it, such as gs://example-bucket."
     },
     "reportNamePrefix": {
      "type": "string",
@@ -6241,7 +6245,7 @@
     },
     "localTrafficSelector": {
      "type": "array",
-     "description": "IKE networks to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint.",
+     "description": "Local traffic selector to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint.",
      "items": {
       "type": "string"
      }
@@ -6270,7 +6274,7 @@
     },
     "sharedSecret": {
      "type": "string",
-     "description": "Shared secret used to set the secure session between the GCE VPN gateway and the peer VPN gateway."
+     "description": "Shared secret used to set the secure session between the Cloud VPN gateway and the peer VPN gateway."
     },
     "sharedSecretHash": {
      "type": "string",
@@ -6572,7 +6576,7 @@
      "id": "compute.addresses.aggregatedList",
      "path": "{project}/aggregated/addresses",
      "httpMethod": "GET",
-     "description": "Retrieves the list of addresses grouped by scope.",
+     "description": "Retrieves an aggregated list of addresses.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -6741,7 +6745,7 @@
      "id": "compute.addresses.list",
      "path": "{project}/regions/{region}/addresses",
      "httpMethod": "GET",
-     "description": "Retrieves the list of address resources contained within the specified region.",
+     "description": "Retrieves a list of address resources contained within the specified region.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -6803,7 +6807,7 @@
      "id": "compute.autoscalers.aggregatedList",
      "path": "{project}/aggregated/autoscalers",
      "httpMethod": "GET",
-     "description": "Retrieves the list of autoscalers grouped by scope.",
+     "description": "Retrieves an aggregated list of autoscalers.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -6972,7 +6976,7 @@
      "id": "compute.autoscalers.list",
      "path": "{project}/zones/{zone}/autoscalers",
      "httpMethod": "GET",
-     "description": "Retrieves the list of autoscaler resources contained within the specified zone.",
+     "description": "Retrieves a list of autoscaler resources contained within the specified zone.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -7223,7 +7227,7 @@
      "id": "compute.backendServices.insert",
      "path": "{project}/global/backendServices",
      "httpMethod": "POST",
-     "description": "Creates a BackendService resource in the specified project using the data included in the request.",
+     "description": "Creates a BackendService resource in the specified project using the data included in the request. There are several restrictions and guidelines to keep in mind when creating a backend service. Read  Restrictions and Guidelines for more information.",
      "parameters": {
       "project": {
        "type": "string",
@@ -7301,7 +7305,7 @@
      "id": "compute.backendServices.patch",
      "path": "{project}/global/backendServices/{backendService}",
      "httpMethod": "PATCH",
-     "description": "Update the entire content of the BackendService resource. This method supports patch semantics.",
+     "description": "Updates the entire content of the BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information. This method supports patch semantics.",
      "parameters": {
       "backendService": {
        "type": "string",
@@ -7337,7 +7341,7 @@
      "id": "compute.backendServices.update",
      "path": "{project}/global/backendServices/{backendService}",
      "httpMethod": "PUT",
-     "description": "Update the entire content of the BackendService resource.",
+     "description": "Updates the entire content of the BackendService resource. There are several restrictions and guidelines to keep in mind when updating a backend service. Read  Restrictions and Guidelines for more information.",
      "parameters": {
       "backendService": {
        "type": "string",
@@ -7377,7 +7381,7 @@
      "id": "compute.diskTypes.aggregatedList",
      "path": "{project}/aggregated/diskTypes",
      "httpMethod": "GET",
-     "description": "Retrieves the list of disk type resources grouped by scope.",
+     "description": "Retrieves an aggregated list of disk type resources.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -7469,7 +7473,7 @@
      "id": "compute.diskTypes.list",
      "path": "{project}/zones/{zone}/diskTypes",
      "httpMethod": "GET",
-     "description": "Retrieves the list of disk type resources available to the specified project.",
+     "description": "Retrieves a list of disk type resources available to the specified project.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -7531,7 +7535,7 @@
      "id": "compute.disks.aggregatedList",
      "path": "{project}/aggregated/disks",
      "httpMethod": "GET",
-     "description": "Retrieves the list of persistent disks grouped by scope.",
+     "description": "Retrieves an aggregated list of persistent disks.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -7749,7 +7753,7 @@
      "id": "compute.disks.list",
      "path": "{project}/zones/{zone}/disks",
      "httpMethod": "GET",
-     "description": "Retrieves the list of persistent disks contained within the specified zone.",
+     "description": "Retrieves a list of persistent disks contained within the specified zone.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -8076,7 +8080,7 @@
      "id": "compute.forwardingRules.aggregatedList",
      "path": "{project}/aggregated/forwardingRules",
      "httpMethod": "GET",
-     "description": "Retrieves the list of forwarding rules grouped by scope.",
+     "description": "Retrieves an aggregated list of forwarding rules.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -8245,7 +8249,7 @@
      "id": "compute.forwardingRules.list",
      "path": "{project}/regions/{region}/forwardingRules",
      "httpMethod": "GET",
-     "description": "Retrieves the list of ForwardingRule resources available to the specified project and region.",
+     "description": "Retrieves a list of ForwardingRule resources available to the specified project and region.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -8446,7 +8450,7 @@
      "id": "compute.globalAddresses.list",
      "path": "{project}/global/addresses",
      "httpMethod": "GET",
-     "description": "Retrieves the list of global address resources.",
+     "description": "Retrieves a list of global address resources.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -8595,7 +8599,7 @@
      "id": "compute.globalForwardingRules.list",
      "path": "{project}/global/forwardingRules",
      "httpMethod": "GET",
-     "description": "Retrieves the list of ForwardingRule resources available to the specified project.",
+     "description": "Retrieves a list of ForwardingRule resources available to the specified project.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -8685,7 +8689,7 @@
      "id": "compute.globalOperations.aggregatedList",
      "path": "{project}/aggregated/operations",
      "httpMethod": "GET",
-     "description": "Retrieves the list of all operations grouped by scope.",
+     "description": "Retrieves an aggregated list of all operations.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -8799,7 +8803,7 @@
      "id": "compute.globalOperations.list",
      "path": "{project}/global/operations",
      "httpMethod": "GET",
-     "description": "Retrieves the list of Operation resources contained within the specified project.",
+     "description": "Retrieves a list of Operation resources contained within the specified project.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -9575,7 +9579,7 @@
      "id": "compute.instanceGroupManagers.delete",
      "path": "{project}/zones/{zone}/instanceGroupManagers/{instanceGroupManager}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified managed instance group and all of the instances in that group.",
+     "description": "Deletes the specified managed instance group and all of the instances in that group. Note that the instance group must not belong to a backend service. Read  Deleting an instance group for more information.",
      "parameters": {
       "instanceGroupManager": {
        "type": "string",
@@ -10047,7 +10051,7 @@
      "id": "compute.instanceGroups.addInstances",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}/addInstances",
      "httpMethod": "POST",
-     "description": "Adds a list of instances to the specified instance group. All of the instances in the instance group must be in the same network/subnetwork.",
+     "description": "Adds a list of instances to the specified instance group. Read  Adding instances for more information.",
      "parameters": {
       "instanceGroup": {
        "type": "string",
@@ -10139,7 +10143,7 @@
      "id": "compute.instanceGroups.delete",
      "path": "{project}/zones/{zone}/instanceGroups/{instanceGroup}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified instance group. The instances in the group are not deleted.",
+     "description": "Deletes the specified instance group. The instances in the group are not deleted. Note that instance group must not belong to a backend service. Read  Deleting an instance group for more information.",
      "parameters": {
       "instanceGroup": {
        "type": "string",
@@ -10532,7 +10536,7 @@
      "id": "compute.instanceTemplates.insert",
      "path": "{project}/global/instanceTemplates",
      "httpMethod": "POST",
-     "description": "Creates an instance template in the specified project using the data that is included in the request.",
+     "description": "Creates an instance template in the specified project using the data that is included in the request. If you are creating a new template to update an existing instance group, your new instance template must use the same network or, if applicable, the same subnetwork as the original template.",
      "parameters": {
       "project": {
        "type": "string",
@@ -11408,7 +11412,7 @@
      "id": "compute.instances.start",
      "path": "{project}/zones/{zone}/instances/{instance}/start",
      "httpMethod": "POST",
-     "description": "This method starts an instance that was stopped using the using the instances().stop method. For more information, see Restart an instance.",
+     "description": "Starts an instance that was stopped using the using the instances().stop method. For more information, see Restart an instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -11449,7 +11453,7 @@
      "id": "compute.instances.stop",
      "path": "{project}/zones/{zone}/instances/{instance}/stop",
      "httpMethod": "POST",
-     "description": "This method stops a running instance, shutting it down cleanly, and allows you to restart the instance at a later time. Stopped instances do not incur per-minute, virtual machine usage charges while they are stopped, but any resources that the virtual machine is using, such as persistent disks and static IP addresses,will continue to be charged until they are deleted. For more information, see Stopping an instance.",
+     "description": "Stops a running instance, shutting it down cleanly, and allows you to restart the instance at a later time. Stopped instances do not incur per-minute, virtual machine usage charges while they are stopped, but any resources that the virtual machine is using, such as persistent disks and static IP addresses, will continue to be charged until they are deleted. For more information, see Stopping an instance.",
      "parameters": {
       "instance": {
        "type": "string",
@@ -11532,7 +11536,7 @@
      "id": "compute.machineTypes.aggregatedList",
      "path": "{project}/aggregated/machineTypes",
      "httpMethod": "GET",
-     "description": "Retrieves the list of machine type resources grouped by scope.",
+     "description": "Retrieves an aggregated list of machine type resources.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -11624,7 +11628,7 @@
      "id": "compute.machineTypes.list",
      "path": "{project}/zones/{zone}/machineTypes",
      "httpMethod": "GET",
-     "description": "Retrieves the list of machine type resources available to the specified project.",
+     "description": "Retrieves a list of machine type resources available to the specified project.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -11915,36 +11919,6 @@
       "https://www.googleapis.com/auth/devstorage.read_only",
       "https://www.googleapis.com/auth/devstorage.read_write"
      ]
-    },
-    "setUsageExportCloudStorageBucket": {
-     "id": "compute.projects.setUsageExportCloudStorageBucket",
-     "path": "{project}/setUsageExportCloudStorageBucket",
-     "httpMethod": "POST",
-     "description": "[Deprecated] Use setUsageExportBucket instead.",
-     "parameters": {
-      "project": {
-       "type": "string",
-       "description": "Project ID for this request.",
-       "required": true,
-       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-       "location": "path"
-      }
-     },
-     "parameterOrder": [
-      "project"
-     ],
-     "request": {
-      "$ref": "UsageExportLocation"
-     },
-     "response": {
-      "$ref": "Operation"
-     },
-     "scopes": [
-      "https://www.googleapis.com/auth/compute",
-      "https://www.googleapis.com/auth/devstorage.full_control",
-      "https://www.googleapis.com/auth/devstorage.read_only",
-      "https://www.googleapis.com/auth/devstorage.read_write"
-     ]
     }
    }
   },
@@ -12010,7 +11984,7 @@
       },
       "region": {
        "type": "string",
-       "description": "Name of the zone scoping this request.",
+       "description": "Name of the region scoping this request.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -12034,7 +12008,7 @@
      "id": "compute.regionOperations.list",
      "path": "{project}/regions/{region}/operations",
      "httpMethod": "GET",
-     "description": "Retrieves the list of Operation resources contained within the specified region.",
+     "description": "Retrieves a list of Operation resources contained within the specified region.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -12603,7 +12577,7 @@
      "id": "compute.subnetworks.aggregatedList",
      "path": "{project}/aggregated/subnetworks",
      "httpMethod": "GET",
-     "description": "Retrieves the list of Subnetworks grouped by scope.",
+     "description": "Retrieves an aggregated list of subnetworks.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -12653,7 +12627,7 @@
      "id": "compute.subnetworks.delete",
      "path": "{project}/regions/{region}/subnetworks/{subnetwork}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified Subnetwork resource.",
+     "description": "Deletes the specified subnetwork.",
      "parameters": {
       "project": {
        "type": "string",
@@ -12694,7 +12668,7 @@
      "id": "compute.subnetworks.get",
      "path": "{project}/regions/{region}/subnetworks/{subnetwork}",
      "httpMethod": "GET",
-     "description": "Returns the specified Subnetwork resource.",
+     "description": "Returns the specified subnetwork.",
      "parameters": {
       "project": {
        "type": "string",
@@ -12736,7 +12710,7 @@
      "id": "compute.subnetworks.insert",
      "path": "{project}/regions/{region}/subnetworks",
      "httpMethod": "POST",
-     "description": "Creates a Subnetwork resource in the specified project using the data included in the request.",
+     "description": "Creates a subnetwork in the specified project using the data included in the request.",
      "parameters": {
       "project": {
        "type": "string",
@@ -12772,7 +12746,7 @@
      "id": "compute.subnetworks.list",
      "path": "{project}/regions/{region}/subnetworks",
      "httpMethod": "GET",
-     "description": "Retrieves the list of Subnetwork resources available to the specified project.",
+     "description": "Retrieves a list of subnetworks available to the specified project.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -13240,7 +13214,7 @@
      "id": "compute.targetInstances.aggregatedList",
      "path": "{project}/aggregated/targetInstances",
      "httpMethod": "GET",
-     "description": "Retrieves the list of target instances grouped by scope.",
+     "description": "Retrieves an aggregated list of target instances.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -13409,7 +13383,7 @@
      "id": "compute.targetInstances.list",
      "path": "{project}/zones/{zone}/targetInstances",
      "httpMethod": "GET",
-     "description": "Retrieves the list of TargetInstance resources available to the specified project and zone.",
+     "description": "Retrieves a list of TargetInstance resources available to the specified project and zone.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -13557,7 +13531,7 @@
      "id": "compute.targetPools.aggregatedList",
      "path": "{project}/aggregated/targetPools",
      "httpMethod": "GET",
-     "description": "Retrieves the list of target pools grouped by scope.",
+     "description": "Retrieves an aggregated list of target pools.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -13690,7 +13664,7 @@
      "id": "compute.targetPools.getHealth",
      "path": "{project}/regions/{region}/targetPools/{targetPool}/getHealth",
      "httpMethod": "POST",
-     "description": "Gets the most recent health check results for each IP for the given instance that is referenced by given TargetPool.",
+     "description": "Gets the most recent health check results for each IP for the given instance that is referenced by the given TargetPool.",
      "parameters": {
       "project": {
        "type": "string",
@@ -13770,7 +13744,7 @@
      "id": "compute.targetPools.list",
      "path": "{project}/regions/{region}/targetPools",
      "httpMethod": "GET",
-     "description": "Retrieves the list of TargetPool resources available to the specified project and region.",
+     "description": "Retrieves a list of TargetPool resources available to the specified project and region.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -13968,7 +13942,7 @@
      "id": "compute.targetVpnGateways.aggregatedList",
      "path": "{project}/aggregated/targetVpnGateways",
      "httpMethod": "GET",
-     "description": "Retrieves the list of target VPN gateways grouped by scope.",
+     "description": "Retrieves an aggregated list of target VPN gateways .",
      "parameters": {
       "filter": {
        "type": "string",
@@ -14137,7 +14111,7 @@
      "id": "compute.targetVpnGateways.list",
      "path": "{project}/regions/{region}/targetVpnGateways",
      "httpMethod": "GET",
-     "description": "Retrieves the list of TargetVpnGateway resources available to the specified project and region.",
+     "description": "Retrieves a list of TargetVpnGateway resources available to the specified project and region.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -14344,7 +14318,7 @@
      "id": "compute.urlMaps.patch",
      "path": "{project}/global/urlMaps/{urlMap}",
      "httpMethod": "PATCH",
-     "description": "Update the entire content of the UrlMap resource. This method supports patch semantics.",
+     "description": "Updates the entire content of the UrlMap resource. This method supports patch semantics.",
      "parameters": {
       "project": {
        "type": "string",
@@ -14380,7 +14354,7 @@
      "id": "compute.urlMaps.update",
      "path": "{project}/global/urlMaps/{urlMap}",
      "httpMethod": "PUT",
-     "description": "Update the entire content of the UrlMap resource.",
+     "description": "Updates the entire content of the UrlMap resource.",
      "parameters": {
       "project": {
        "type": "string",
@@ -14416,7 +14390,7 @@
      "id": "compute.urlMaps.validate",
      "path": "{project}/global/urlMaps/{urlMap}/validate",
      "httpMethod": "POST",
-     "description": "Run static validation for the UrlMap. In particular, the tests of the provided UrlMap will be run. Calling this method does NOT create the UrlMap.",
+     "description": "Runs static validation for the UrlMap. In particular, the tests of the provided UrlMap will be run. Calling this method does NOT create the UrlMap.",
      "parameters": {
       "project": {
        "type": "string",
@@ -14456,7 +14430,7 @@
      "id": "compute.vpnTunnels.aggregatedList",
      "path": "{project}/aggregated/vpnTunnels",
      "httpMethod": "GET",
-     "description": "Retrieves the list of VPN tunnels grouped by scope.",
+     "description": "Retrieves an aggregated list of VPN tunnels.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -14625,7 +14599,7 @@
      "id": "compute.vpnTunnels.list",
      "path": "{project}/regions/{region}/vpnTunnels",
      "httpMethod": "GET",
-     "description": "Retrieves the list of VpnTunnel resources contained in the specified project and region.",
+     "description": "Retrieves a list of VpnTunnel resources contained in the specified project and region.",
      "parameters": {
       "filter": {
        "type": "string",
@@ -14767,7 +14741,7 @@
      "id": "compute.zoneOperations.list",
      "path": "{project}/zones/{zone}/operations",
      "httpMethod": "GET",
-     "description": "Retrieves the list of Operation resources contained within the specified zone.",
+     "description": "Retrieves a list of Operation resources contained within the specified zone.",
      "parameters": {
       "filter": {
        "type": "string",

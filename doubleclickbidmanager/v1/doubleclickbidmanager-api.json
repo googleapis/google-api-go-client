@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/mAPHdimW0pvTGXzTTcUsJfk40xQ\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/KspyYaNMMXkE18eGep174M1_JMc\"",
  "discoveryVersion": "v1",
  "id": "doubleclickbidmanager:v1",
  "name": "doubleclickbidmanager",
  "canonicalName": "DoubleClick Bid Manager",
  "version": "v1",
- "revision": "20150925",
+ "revision": "20160120",
  "title": "DoubleClick Bid Manager API",
  "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
  "ownerDomain": "google.com",
@@ -165,6 +165,7 @@
       "FILTER_DATA_PROVIDER",
       "FILTER_DATE",
       "FILTER_DAY_OF_WEEK",
+      "FILTER_DFP_ORDER_ID",
       "FILTER_DMA",
       "FILTER_EXCHANGE_ID",
       "FILTER_FLOODLIGHT_PIXEL_ID",
@@ -202,7 +203,14 @@
       "FILTER_SITE_LANGUAGE",
       "FILTER_TARGETED_USER_LIST",
       "FILTER_TIME_OF_DAY",
+      "FILTER_TRUEVIEW_AD_GROUP_AD_ID",
+      "FILTER_TRUEVIEW_AD_GROUP_ID",
+      "FILTER_TRUEVIEW_AGE",
       "FILTER_TRUEVIEW_CONVERSION_TYPE",
+      "FILTER_TRUEVIEW_GENDER",
+      "FILTER_TRUEVIEW_INTEREST",
+      "FILTER_TRUEVIEW_PARENTAL_STATUS",
+      "FILTER_TRUEVIEW_REMARKETING_LIST",
       "FILTER_UNKNOWN",
       "FILTER_USER_LIST",
       "FILTER_USER_LIST_FIRST_PARTY",
@@ -225,6 +233,14 @@
       "FILTER_ZIP_CODE"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -352,6 +368,65 @@
     }
    }
   },
+  "Note": {
+   "id": "Note",
+   "type": "object",
+   "description": "Publisher comment from Rubicon.",
+   "properties": {
+    "id": {
+     "type": "string",
+     "description": "Note id.",
+     "format": "int64"
+    },
+    "message": {
+     "type": "string",
+     "description": "Message from publisher."
+    },
+    "source": {
+     "type": "string",
+     "description": "Equals \"publisher\" for notification from Rubicon."
+    },
+    "timestamp": {
+     "type": "string",
+     "description": "Time when the note was added, e.g. \"2015-12-16T17:25:35.000-08:00\"."
+    },
+    "username": {
+     "type": "string",
+     "description": "Publisher user name."
+    }
+   }
+  },
+  "NotifyProposalChangeRequest": {
+   "id": "NotifyProposalChangeRequest",
+   "type": "object",
+   "description": "NotifyProposalChange request.",
+   "properties": {
+    "action": {
+     "type": "string",
+     "description": "Action taken by publisher. One of: Accept, Decline, Append"
+    },
+    "href": {
+     "type": "string",
+     "description": "URL to access proposal detail."
+    },
+    "id": {
+     "type": "string",
+     "description": "Below are contents of notification from Rubicon. Proposal id.",
+     "format": "int64"
+    },
+    "notes": {
+     "type": "array",
+     "description": "Notes from publisher",
+     "items": {
+      "$ref": "Note"
+     }
+    },
+    "token": {
+     "type": "string",
+     "description": "Deal token, available when proposal is accepted by publisher."
+    }
+   }
+  },
   "Parameters": {
    "id": "Parameters",
    "type": "object",
@@ -393,6 +468,7 @@
        "FILTER_DATA_PROVIDER",
        "FILTER_DATE",
        "FILTER_DAY_OF_WEEK",
+       "FILTER_DFP_ORDER_ID",
        "FILTER_DMA",
        "FILTER_EXCHANGE_ID",
        "FILTER_FLOODLIGHT_PIXEL_ID",
@@ -430,7 +506,14 @@
        "FILTER_SITE_LANGUAGE",
        "FILTER_TARGETED_USER_LIST",
        "FILTER_TIME_OF_DAY",
+       "FILTER_TRUEVIEW_AD_GROUP_AD_ID",
+       "FILTER_TRUEVIEW_AD_GROUP_ID",
+       "FILTER_TRUEVIEW_AGE",
        "FILTER_TRUEVIEW_CONVERSION_TYPE",
+       "FILTER_TRUEVIEW_GENDER",
+       "FILTER_TRUEVIEW_INTEREST",
+       "FILTER_TRUEVIEW_PARENTAL_STATUS",
+       "FILTER_TRUEVIEW_REMARKETING_LIST",
        "FILTER_UNKNOWN",
        "FILTER_USER_LIST",
        "FILTER_USER_LIST_FIRST_PARTY",
@@ -453,6 +536,14 @@
        "FILTER_ZIP_CODE"
       ],
       "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
+       "",
        "",
        "",
        "",
@@ -1119,6 +1210,9 @@
       "TYPE_NIELSEN_SITE",
       "TYPE_ORDER_ID",
       "TYPE_PAGE_CATEGORY",
+      "TYPE_PETRA_NIELSEN_AUDIENCE_PROFILE",
+      "TYPE_PETRA_NIELSEN_DAILY_REACH_BUILD",
+      "TYPE_PETRA_NIELSEN_ONLINE_GLOBAL_MARKET",
       "TYPE_PIXEL_LOAD",
       "TYPE_REACH_AND_FREQUENCY",
       "TYPE_THIRD_PARTY_DATA_PROVIDER",
@@ -1128,6 +1222,9 @@
       "TYPE_YOUTUBE_VERTICAL"
      ],
      "enumDescriptions": [
+      "",
+      "",
+      "",
       "",
       "",
       "",
@@ -1798,6 +1895,19 @@
      ],
      "response": {
       "$ref": "ListReportsResponse"
+     }
+    }
+   }
+  },
+  "rubicon": {
+   "methods": {
+    "notifyproposalchange": {
+     "id": "doubleclickbidmanager.rubicon.notifyproposalchange",
+     "path": "rubicon/notifyproposalchange",
+     "httpMethod": "POST",
+     "description": "Update proposal upon actions of Rubicon publisher.",
+     "request": {
+      "$ref": "NotifyProposalChangeRequest"
      }
     }
    }

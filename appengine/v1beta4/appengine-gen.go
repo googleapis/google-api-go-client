@@ -204,6 +204,10 @@ type Application struct {
 	// deployment commands. @OutputOnly
 	CodeBucket string `json:"codeBucket,omitempty"`
 
+	// DefaultBucket: A Google Cloud Storage bucket which can be used by the
+	// application to store content. @OutputOnly
+	DefaultBucket string `json:"defaultBucket,omitempty"`
+
 	// DispatchRules: HTTP path dispatch rules for requests to the app that
 	// do not explicitly target a module or version. The rules are
 	// order-dependent.
@@ -892,6 +896,42 @@ func (s *OperationMetadata1) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// OperationMetadataV1Beta5: Metadata for the given
+// google.longrunning.Operation.
+type OperationMetadataV1Beta5 struct {
+	// EndTime: Timestamp that this operation was completed. (Not present if
+	// the operation is still in progress.) @OutputOnly
+	EndTime string `json:"endTime,omitempty"`
+
+	// InsertTime: Timestamp that this operation was received. @OutputOnly
+	InsertTime string `json:"insertTime,omitempty"`
+
+	// Method: API method name that initiated the operation. Example:
+	// "google.appengine.v1beta5.Version.CreateVersion". @OutputOnly
+	Method string `json:"method,omitempty"`
+
+	// Target: Resource that this operation is acting on. Example:
+	// "apps/myapp/services/default". @OutputOnly
+	Target string `json:"target,omitempty"`
+
+	// User: The user who requested this operation. @OutputOnly
+	User string `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *OperationMetadataV1Beta5) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadataV1Beta5
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // RequestUtilization: Target scaling by request utilization (for VM
 // runtimes only).
 type RequestUtilization struct {
@@ -1527,8 +1567,9 @@ func (r *AppsService) Get(appsId string) *AppsGetCall {
 // "ensureResourcesExist": Certain resources associated with an
 // application are created on-demand. Controls whether these resources
 // should be created when performing the `GET` operation. If specified
-// and any resources cloud not be created, the request will fail with an
-// error code.
+// and any resources could not be created, the request will fail with an
+// error code. Additionally, this parameter can cause the request to
+// take longer to complete.
 func (c *AppsGetCall) EnsureResourcesExist(ensureResourcesExist bool) *AppsGetCall {
 	c.urlParams_.Set("ensureResourcesExist", fmt.Sprint(ensureResourcesExist))
 	return c
@@ -1630,7 +1671,7 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 	//       "type": "string"
 	//     },
 	//     "ensureResourcesExist": {
-	//       "description": "Certain resources associated with an application are created on-demand. Controls whether these resources should be created when performing the `GET` operation. If specified and any resources cloud not be created, the request will fail with an error code.",
+	//       "description": "Certain resources associated with an application are created on-demand. Controls whether these resources should be created when performing the `GET` operation. If specified and any resources could not be created, the request will fail with an error code. Additionally, this parameter can cause the request to take longer to complete.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

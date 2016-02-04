@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/br2-l-bf1sPuAY7avjIbfF8eZQ8\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/q1MspFL9-q_qXuq3qZY7Fq7Dpuk\"",
  "discoveryVersion": "v1",
  "id": "plus:v1",
  "name": "plus",
  "version": "v1",
- "revision": "20160102",
+ "revision": "20160201",
  "title": "Google+ API",
  "description": "The Google+ API enables developers to build on top of the Google+ platform.",
  "ownerDomain": "google.com",
@@ -70,7 +70,7 @@
   "oauth2": {
    "scopes": {
     "https://www.googleapis.com/auth/plus.login": {
-     "description": "Know your basic profile info and list of people in your circles."
+     "description": "Know the list of people in your circles, your age range, and language"
     },
     "https://www.googleapis.com/auth/plus.me": {
      "description": "Know who you are on Google"

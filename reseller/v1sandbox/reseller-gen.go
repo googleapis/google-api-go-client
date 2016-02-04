@@ -638,8 +638,7 @@ func (r *CustomersService) Insert(customer *Customer) *CustomersInsertCall {
 
 // CustomerAuthToken sets the optional parameter "customerAuthToken": An
 // auth token needed for inserting a customer for which domain already
-// exists. Can be generated at
-// https://www.google.com/a/cpanel//TransferToken.
+// exists. Can be generated at https://admin.google.com/TransferToken.
 func (c *CustomersInsertCall) CustomerAuthToken(customerAuthToken string) *CustomersInsertCall {
 	c.urlParams_.Set("customerAuthToken", customerAuthToken)
 	return c
@@ -723,7 +722,7 @@ func (c *CustomersInsertCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	//   "id": "reseller.customers.insert",
 	//   "parameters": {
 	//     "customerAuthToken": {
-	//       "description": "An auth token needed for inserting a customer for which domain already exists. Can be generated at https://www.google.com/a/cpanel//TransferToken. Optional.",
+	//       "description": "An auth token needed for inserting a customer for which domain already exists. Can be generated at https://admin.google.com/TransferToken. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

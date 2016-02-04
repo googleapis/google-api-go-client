@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/rAeglxtdeyhwqqUXexq32kOU_zQ\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/6wAqwYsI7XAGaEBx_b4jOSvwXg4\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20160106",
+ "revision": "20160201",
  "title": "YouTube Data API",
  "description": "Programmatic access to YouTube features.",
  "ownerDomain": "google.com",
@@ -974,15 +974,6 @@
     }
    }
   },
-  "ChannelId": {
-   "id": "ChannelId",
-   "type": "object",
-   "properties": {
-    "value": {
-     "type": "string"
-    }
-   }
-  },
   "ChannelListResponse": {
    "id": "ChannelListResponse",
    "type": "object",
@@ -1534,7 +1525,7 @@
    "description": "Basic details about a comment, such as its author and text.",
    "properties": {
     "authorChannelId": {
-     "$ref": "ChannelId",
+     "type": "any",
      "description": "The id of the author's YouTube channel, if any."
     },
     "authorChannelUrl": {
@@ -1743,7 +1734,7 @@
   "ContentRating": {
    "id": "ContentRating",
    "type": "object",
-   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 66",
+   "description": "Ratings schemes. The country-specific ratings are mostly for movies and shows. NEXT_ID: 67",
    "properties": {
     "acbRating": {
      "type": "string",
@@ -2206,6 +2197,32 @@
       ]
      }
     },
+    "ecbmctRating": {
+     "type": "string",
+     "description": "Rating system in Turkey - Evaluation and Classification Board of the Ministry of Culture and Tourism",
+     "enum": [
+      "ecbmct13a",
+      "ecbmct13plus",
+      "ecbmct15a",
+      "ecbmct15plus",
+      "ecbmct18plus",
+      "ecbmct7a",
+      "ecbmct7plus",
+      "ecbmctG",
+      "ecbmctUnrated"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
     "eefilmRating": {
      "type": "string",
      "description": "The video's rating in Estonia.",
@@ -2338,6 +2355,7 @@
      "type": "string",
      "description": "The video's rating from South Africa's Film and Publication Board.",
      "enum": [
+      "fpb10",
       "fpb1012Pg",
       "fpb13",
       "fpb16",
@@ -2350,6 +2368,7 @@
       "fpbXx"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -5327,6 +5346,9 @@
      "type": "string",
      "description": "The token that can be used as the value of the pageToken parameter to retrieve the previous page in the result set."
     },
+    "regionCode": {
+     "type": "string"
+    },
     "tokenPagination": {
      "$ref": "TokenPagination"
     },
@@ -5754,10 +5776,6 @@
      "$ref": "VideoContentDetails",
      "description": "The contentDetails object contains information about the video content, including the length of the video and its aspect ratio."
     },
-    "conversionPings": {
-     "$ref": "VideoConversionPings",
-     "description": "The conversionPings object encapsulates information about url pings that need to be respected by the App in different video contexts."
-    },
     "etag": {
      "type": "string",
      "description": "Etag of this resource."
@@ -6135,45 +6153,6 @@
      "description": "A list of region codes that identify countries where the video is blocked. If this property is present and a country is not listed in its value, then the video is viewable in that country. If this property is present and contains an empty list, the video is viewable in all countries.",
      "items": {
       "type": "string"
-     }
-    }
-   }
-  },
-  "VideoConversionPing": {
-   "id": "VideoConversionPing",
-   "type": "object",
-   "properties": {
-    "context": {
-     "type": "string",
-     "description": "Defines the context of the ping.",
-     "enum": [
-      "comment",
-      "dislike",
-      "like",
-      "share"
-     ],
-     "enumDescriptions": [
-      "",
-      "",
-      "",
-      ""
-     ]
-    },
-    "conversionUrl": {
-     "type": "string",
-     "description": "The url (without the schema) that the app shall send the ping to. It's at caller's descretion to decide which schema to use (http vs https) Example of a returned url: //googleads.g.doubleclick.net/pagead/ viewthroughconversion/962985656/?data=path%3DtHe_path%3Btype%3D like%3Butuid%3DGISQtTNGYqaYl4sKxoVvKA%3Bytvid%3DUrIaJUvIQDg&labe=default The caller must append biscotti authentication (ms param in case of mobile, for example) to this ping."
-    }
-   }
-  },
-  "VideoConversionPings": {
-   "id": "VideoConversionPings",
-   "type": "object",
-   "properties": {
-    "pings": {
-     "type": "array",
-     "description": "Pings that the app shall fire for a video (authenticated by biscotti cookie). Each ping has a context, in which the app must fire the ping, and a url identifying the ping.",
-     "items": {
-      "$ref": "VideoConversionPing"
      }
     }
    }
@@ -8684,7 +8663,7 @@
       "maxResults": {
        "type": "integer",
        "description": "The maxResults parameter specifies the maximum number of messages that should be returned in the result set.",
-       "default": "200",
+       "default": "500",
        "format": "uint32",
        "minimum": "200",
        "maximum": "2000",

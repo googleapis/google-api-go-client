@@ -1189,6 +1189,10 @@ type Product struct {
 	// app:com.google.android.gm represents the Gmail app.
 	ProductId string `json:"productId,omitempty"`
 
+	// ProductPricing: Whether this product is free, free with in-app
+	// purchases, or paid.
+	ProductPricing string `json:"productPricing,omitempty"`
+
 	// RequiresContainerApp: Whether this app can only be installed on
 	// devices using the Android for Work container app.
 	RequiresContainerApp bool `json:"requiresContainerApp,omitempty"`

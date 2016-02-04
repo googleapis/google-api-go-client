@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/kKOq-C8AmUn0DMuhP1kcesa3f-U\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/xPOEaVu3pXCyFCLJNoRrVds6kh4\"",
  "discoveryVersion": "v1",
  "id": "identitytoolkit:v3",
  "name": "identitytoolkit",
  "canonicalName": "Identity Toolkit",
  "version": "v3",
- "revision": "20160108",
+ "revision": "20160125",
  "title": "Google Identity Toolkit API",
  "description": "Help the third party sites to implement federated login.",
  "ownerDomain": "google.com",
@@ -73,6 +73,13 @@
    "type": "object",
    "description": "Response of creating the IDP authentication URL.",
    "properties": {
+    "allProviders": {
+     "type": "array",
+     "description": "all providers the user has once used to do federated login",
+     "items": {
+      "type": "string"
+     }
+    },
     "authUri": {
      "type": "string",
      "description": "The URI used by the IDP to authenticate the user."
@@ -250,6 +257,11 @@
    "type": "object",
    "description": "Request to delete account.",
    "properties": {
+    "delegatedProjectNumber": {
+     "type": "string",
+     "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
+     "format": "int64"
+    },
     "localId": {
      "type": "string",
      "description": "The local ID of the user."
@@ -261,6 +273,11 @@
    "type": "object",
    "description": "Request to download user account in batch.",
    "properties": {
+    "delegatedProjectNumber": {
+     "type": "string",
+     "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
+     "format": "int64"
+    },
     "maxResults": {
      "type": "integer",
      "description": "The max number of results to return in the response.",
@@ -367,6 +384,11 @@
      "type": "string",
      "description": "Response to the captcha."
     },
+    "delegatedProjectNumber": {
+     "type": "string",
+     "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
+     "format": "int64"
+    },
     "disableUser": {
      "type": "boolean",
      "description": "Whether to disable the user."
@@ -452,6 +474,11 @@
    "type": "object",
    "description": "Request to upload user account in batch.",
    "properties": {
+    "delegatedProjectNumber": {
+     "type": "string",
+     "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
+     "format": "int64"
+    },
     "hashAlgorithm": {
      "type": "string",
      "description": "The password hash algorithm."
@@ -490,6 +517,11 @@
    "type": "object",
    "description": "Request to verify the IDP assertion.",
    "properties": {
+    "delegatedProjectNumber": {
+     "type": "string",
+     "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
+     "format": "int64"
+    },
     "instanceId": {
      "type": "string",
      "description": "Instance id token of the app."
@@ -543,6 +575,11 @@
     "captchaResponse": {
      "type": "string",
      "description": "Response to the captcha."
+    },
+    "delegatedProjectNumber": {
+     "type": "string",
+     "description": "GCP project number of the requesting delegated app. Currently only intended for Firebase V1 migration.",
+     "format": "int64"
     },
     "email": {
      "type": "string",

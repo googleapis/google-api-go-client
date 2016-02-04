@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/y6j1IphvxRtosL1eW9T-mwhgo2U\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/64r0Ra9DOl7BV1-32e4gD2NffS8\"",
  "discoveryVersion": "v1",
  "id": "cloudresourcemanager:v1beta1",
  "name": "cloudresourcemanager",
  "version": "v1beta1",
- "revision": "20151211",
+ "revision": "20160112",
  "title": "Google Cloud Resource Manager API",
  "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
  "ownerDomain": "google.com",
@@ -261,7 +261,7 @@
    "properties": {
     "permissions": {
      "type": "array",
-     "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as '*' or 'storage.*') are not allowed.",
+     "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as '*' or 'storage.*') are not allowed. For more information see IAM Overview.",
      "items": {
       "type": "string"
      }
@@ -488,7 +488,7 @@
      "parameters": {
       "resource": {
        "type": "string",
-       "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
        "required": true,
        "location": "path"
       }
@@ -515,7 +515,7 @@
      "parameters": {
       "resource": {
        "type": "string",
-       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
        "required": true,
        "location": "path"
       }
@@ -541,7 +541,7 @@
      "parameters": {
       "resource": {
        "type": "string",
-       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation. rpc.",
+       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
        "required": true,
        "location": "path"
       }
@@ -653,7 +653,7 @@
      "parameters": {
       "resource": {
        "type": "string",
-       "description": "REQUIRED: The resource for which policy is being specified. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
+       "description": "REQUIRED: The resource for which the policy is being specified. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `setIamPolicy` documentation.",
        "required": true,
        "location": "path"
       }
@@ -679,7 +679,7 @@
      "parameters": {
       "resource": {
        "type": "string",
-       "description": "REQUIRED: The resource for which policy is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
+       "description": "REQUIRED: The resource for which the policy is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `getIamPolicy` documentation.",
        "required": true,
        "location": "path"
       }
@@ -706,7 +706,7 @@
      "parameters": {
       "resource": {
        "type": "string",
-       "description": "REQUIRED: The resource for which policy detail is being requested. `resource` is usually specified as a path, such as, `projects/{project}/zones/{zone}/disks/{disk}`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation. rpc.",
+       "description": "REQUIRED: The resource for which the policy detail is being requested. `resource` is usually specified as a path, such as `projects/*project*/zones/*zone*/disks/*disk*`. The format for the path specified in this value is resource specific and is specified in the `testIamPermissions` documentation.",
        "required": true,
        "location": "path"
       }

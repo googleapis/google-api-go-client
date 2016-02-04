@@ -245,7 +245,8 @@ type Conversion struct {
 	QuantityMillis int64 `json:"quantityMillis,omitempty,string"`
 
 	// RevenueMicros: The revenue amount of this TRANSACTION conversion, in
-	// micros.
+	// micros (value multiplied by 1000, no decimal). For example, to
+	// specify a revenue value of "10" enter "10000" in your request.
 	RevenueMicros int64 `json:"revenueMicros,omitempty,string"`
 
 	// SegmentationId: The numeric segmentation identifier (for example,

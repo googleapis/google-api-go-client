@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/yoGXlEwGPLEAr1fmq3U4dFpyoyQ\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/0792tS8OXrtZA0Ibtc7HcL4LqGc\"",
  "discoveryVersion": "v1",
  "id": "adsensehost:v4.1",
  "name": "adsensehost",
  "canonicalName": "AdSense Host",
  "version": "v4.1",
- "revision": "20141229",
+ "revision": "20160202",
  "title": "AdSense Host API",
  "description": "Gives AdSense Hosts access to report generation, ad code generation, and publisher management capabilities.",
  "ownerDomain": "google.com",
@@ -260,7 +260,7 @@
     },
     "contentAdsSettings": {
      "type": "object",
-     "description": "Settings specific to content ads (AFC) and highend mobile content ads (AFMC).",
+     "description": "Settings specific to content ads (AFC) and highend mobile content ads (AFMC - deprecated).",
      "properties": {
       "backupOption": {
        "type": "object",
@@ -305,7 +305,7 @@
     },
     "mobileContentAdsSettings": {
      "type": "object",
-     "description": "Settings specific to WAP mobile content ads (AFMC).",
+     "description": "Settings specific to WAP mobile content ads (AFMC - deprecated).",
      "properties": {
       "markupLanguage": {
        "type": "string",
@@ -380,7 +380,7 @@
     },
     "productCodes": {
      "type": "array",
-     "description": "The products to associate with the user. Options: AFC, AFF, AFS, AFMC",
+     "description": "The products to associate with the user. Options: AFC, AFG, AFV, AFS (deprecated), AFMC (deprecated)",
      "items": {
       "type": "string"
      }
@@ -1138,8 +1138,8 @@
        "enumDescriptions": [
         "AdSense For Content",
         "AdSense For Games",
-        "AdSense For Mobile Content",
-        "AdSense For Search",
+        "AdSense For Mobile Content - deprecated",
+        "AdSense For Search - deprecated",
         "AdSense For Video"
        ],
        "repeated": true,

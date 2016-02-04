@@ -53,6 +53,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Lineitems = NewLineitemsService(s)
 	s.Queries = NewQueriesService(s)
 	s.Reports = NewReportsService(s)
+	s.Rubicon = NewRubiconService(s)
 	return s, nil
 }
 
@@ -66,6 +67,8 @@ type Service struct {
 	Queries *QueriesService
 
 	Reports *ReportsService
+
+	Rubicon *RubiconService
 }
 
 func (s *Service) userAgent() string {
@@ -99,6 +102,15 @@ func NewReportsService(s *Service) *ReportsService {
 }
 
 type ReportsService struct {
+	s *Service
+}
+
+func NewRubiconService(s *Service) *RubiconService {
+	rs := &RubiconService{s: s}
+	return rs
+}
+
+type RubiconService struct {
 	s *Service
 }
 
@@ -200,6 +212,7 @@ type FilterPair struct {
 	//   "FILTER_DATA_PROVIDER"
 	//   "FILTER_DATE"
 	//   "FILTER_DAY_OF_WEEK"
+	//   "FILTER_DFP_ORDER_ID"
 	//   "FILTER_DMA"
 	//   "FILTER_EXCHANGE_ID"
 	//   "FILTER_FLOODLIGHT_PIXEL_ID"
@@ -237,7 +250,14 @@ type FilterPair struct {
 	//   "FILTER_SITE_LANGUAGE"
 	//   "FILTER_TARGETED_USER_LIST"
 	//   "FILTER_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_AD_GROUP_AD_ID"
+	//   "FILTER_TRUEVIEW_AD_GROUP_ID"
+	//   "FILTER_TRUEVIEW_AGE"
 	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
+	//   "FILTER_TRUEVIEW_GENDER"
+	//   "FILTER_TRUEVIEW_INTEREST"
+	//   "FILTER_TRUEVIEW_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_REMARKETING_LIST"
 	//   "FILTER_UNKNOWN"
 	//   "FILTER_USER_LIST"
 	//   "FILTER_USER_LIST_FIRST_PARTY"
@@ -334,6 +354,71 @@ func (s *ListReportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields)
 }
 
+// Note: Publisher comment from Rubicon.
+type Note struct {
+	// Id: Note id.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Message: Message from publisher.
+	Message string `json:"message,omitempty"`
+
+	// Source: Equals "publisher" for notification from Rubicon.
+	Source string `json:"source,omitempty"`
+
+	// Timestamp: Time when the note was added, e.g.
+	// "2015-12-16T17:25:35.000-08:00".
+	Timestamp string `json:"timestamp,omitempty"`
+
+	// Username: Publisher user name.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *Note) MarshalJSON() ([]byte, error) {
+	type noMethod Note
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
+// NotifyProposalChangeRequest: NotifyProposalChange request.
+type NotifyProposalChangeRequest struct {
+	// Action: Action taken by publisher. One of: Accept, Decline, Append
+	Action string `json:"action,omitempty"`
+
+	// Href: URL to access proposal detail.
+	Href string `json:"href,omitempty"`
+
+	// Id: Below are contents of notification from Rubicon. Proposal id.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Notes: Notes from publisher
+	Notes []*Note `json:"notes,omitempty"`
+
+	// Token: Deal token, available when proposal is accepted by publisher.
+	Token string `json:"token,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+}
+
+func (s *NotifyProposalChangeRequest) MarshalJSON() ([]byte, error) {
+	type noMethod NotifyProposalChangeRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields)
+}
+
 // Parameters: Parameters of a query or report.
 type Parameters struct {
 	// Filters: Filters used to match traffic data in your report.
@@ -365,6 +450,7 @@ type Parameters struct {
 	//   "FILTER_DATA_PROVIDER"
 	//   "FILTER_DATE"
 	//   "FILTER_DAY_OF_WEEK"
+	//   "FILTER_DFP_ORDER_ID"
 	//   "FILTER_DMA"
 	//   "FILTER_EXCHANGE_ID"
 	//   "FILTER_FLOODLIGHT_PIXEL_ID"
@@ -402,7 +488,14 @@ type Parameters struct {
 	//   "FILTER_SITE_LANGUAGE"
 	//   "FILTER_TARGETED_USER_LIST"
 	//   "FILTER_TIME_OF_DAY"
+	//   "FILTER_TRUEVIEW_AD_GROUP_AD_ID"
+	//   "FILTER_TRUEVIEW_AD_GROUP_ID"
+	//   "FILTER_TRUEVIEW_AGE"
 	//   "FILTER_TRUEVIEW_CONVERSION_TYPE"
+	//   "FILTER_TRUEVIEW_GENDER"
+	//   "FILTER_TRUEVIEW_INTEREST"
+	//   "FILTER_TRUEVIEW_PARENTAL_STATUS"
+	//   "FILTER_TRUEVIEW_REMARKETING_LIST"
 	//   "FILTER_UNKNOWN"
 	//   "FILTER_USER_LIST"
 	//   "FILTER_USER_LIST_FIRST_PARTY"
@@ -727,6 +820,9 @@ type Parameters struct {
 	//   "TYPE_NIELSEN_SITE"
 	//   "TYPE_ORDER_ID"
 	//   "TYPE_PAGE_CATEGORY"
+	//   "TYPE_PETRA_NIELSEN_AUDIENCE_PROFILE"
+	//   "TYPE_PETRA_NIELSEN_DAILY_REACH_BUILD"
+	//   "TYPE_PETRA_NIELSEN_ONLINE_GLOBAL_MARKET"
 	//   "TYPE_PIXEL_LOAD"
 	//   "TYPE_REACH_AND_FREQUENCY"
 	//   "TYPE_THIRD_PARTY_DATA_PROVIDER"
@@ -2088,6 +2184,83 @@ func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 	//   "path": "queries/{queryId}/reports",
 	//   "response": {
 	//     "$ref": "ListReportsResponse"
+	//   }
+	// }
+
+}
+
+// method id "doubleclickbidmanager.rubicon.notifyproposalchange":
+
+type RubiconNotifyproposalchangeCall struct {
+	s                           *Service
+	notifyproposalchangerequest *NotifyProposalChangeRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+}
+
+// Notifyproposalchange: Update proposal upon actions of Rubicon
+// publisher.
+func (r *RubiconService) Notifyproposalchange(notifyproposalchangerequest *NotifyProposalChangeRequest) *RubiconNotifyproposalchangeCall {
+	c := &RubiconNotifyproposalchangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.notifyproposalchangerequest = notifyproposalchangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RubiconNotifyproposalchangeCall) Fields(s ...googleapi.Field) *RubiconNotifyproposalchangeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RubiconNotifyproposalchangeCall) Context(ctx context.Context) *RubiconNotifyproposalchangeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+func (c *RubiconNotifyproposalchangeCall) doRequest(alt string) (*http.Response, error) {
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notifyproposalchangerequest)
+	if err != nil {
+		return nil, err
+	}
+	ctype := "application/json"
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "rubicon/notifyproposalchange")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	googleapi.SetOpaque(req.URL)
+	req.Header.Set("Content-Type", ctype)
+	req.Header.Set("User-Agent", c.s.userAgent())
+	if c.ctx_ != nil {
+		return ctxhttp.Do(c.ctx_, c.s.client, req)
+	}
+	return c.s.client.Do(req)
+}
+
+// Do executes the "doubleclickbidmanager.rubicon.notifyproposalchange" call.
+func (c *RubiconNotifyproposalchangeCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Update proposal upon actions of Rubicon publisher.",
+	//   "httpMethod": "POST",
+	//   "id": "doubleclickbidmanager.rubicon.notifyproposalchange",
+	//   "path": "rubicon/notifyproposalchange",
+	//   "request": {
+	//     "$ref": "NotifyProposalChangeRequest"
 	//   }
 	// }
 

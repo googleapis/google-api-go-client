@@ -51,7 +51,7 @@ const (
 	// activity
 	GamesScope = "https://www.googleapis.com/auth/games"
 
-	// Know your basic profile info and list of people in your circles.
+	// Know the list of people in your circles, your age range, and language
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 )
 
@@ -472,6 +472,13 @@ type Player struct {
 	// Name: An object representation of the individual components of the
 	// player's name. For some players, these fields may not be present.
 	Name *PlayerName `json:"name,omitempty"`
+
+	// OriginalPlayerId: The player ID that was used for this player the
+	// first time they signed into the game in question. This is only
+	// populated for calls to player.get for the requesting player, only if
+	// the player ID has subsequently changed, and only to clients that
+	// support remapping player IDs.
+	OriginalPlayerId string `json:"originalPlayerId,omitempty"`
 
 	// PlayerId: The ID of the player.
 	PlayerId string `json:"playerId,omitempty"`

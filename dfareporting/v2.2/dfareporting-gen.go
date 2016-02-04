@@ -845,6 +845,14 @@ type Account struct {
 	// - "37" for PLN
 	// - "39" for INR
 	// - "40" for THB
+	// - "41" for IDR
+	// - "42" for CZK
+	// - "43" for RON
+	// - "44" for HUF
+	// - "45" for RUB
+	// - "46" for AED
+	// - "47" for BGN
+	// - "48" for HRK
 	CurrencyId int64 `json:"currencyId,omitempty,string"`
 
 	// DefaultCreativeSizeId: Default placement dimensions for this account.
@@ -2765,6 +2773,7 @@ type Creative struct {
 	// Possible values:
 	//   "ARTWORK_TYPE_FLASH"
 	//   "ARTWORK_TYPE_HTML5"
+	//   "ARTWORK_TYPE_IMAGE"
 	//   "ARTWORK_TYPE_MIXED"
 	ArtworkType string `json:"artworkType,omitempty"`
 
@@ -3214,6 +3223,7 @@ type CreativeAsset struct {
 	// Possible values:
 	//   "ARTWORK_TYPE_FLASH"
 	//   "ARTWORK_TYPE_HTML5"
+	//   "ARTWORK_TYPE_IMAGE"
 	//   "ARTWORK_TYPE_MIXED"
 	ArtworkType string `json:"artworkType,omitempty"`
 
@@ -3877,6 +3887,7 @@ type CreativeCustomEvent struct {
 	// Possible values:
 	//   "ARTWORK_TYPE_FLASH"
 	//   "ARTWORK_TYPE_HTML5"
+	//   "ARTWORK_TYPE_IMAGE"
 	//   "ARTWORK_TYPE_MIXED"
 	ArtworkType string `json:"artworkType,omitempty"`
 
@@ -4233,6 +4244,7 @@ type CreativeOptimizationConfiguration struct {
 	//   "POST_CLICK"
 	//   "POST_CLICK_AND_IMPRESSION"
 	//   "POST_IMPRESSION"
+	//   "VIDEO_COMPLETION"
 	OptimizationModel string `json:"optimizationModel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -4863,6 +4875,14 @@ type DirectorySite struct {
 	// - "37" for PLN
 	// - "39" for INR
 	// - "40" for THB
+	// - "41" for IDR
+	// - "42" for CZK
+	// - "43" for RON
+	// - "44" for HUF
+	// - "45" for RUB
+	// - "46" for AED
+	// - "47" for BGN
+	// - "48" for HRK
 	CurrencyId int64 `json:"currencyId,omitempty,string"`
 
 	// Description: Description of this directory site.
@@ -8618,11 +8638,17 @@ type RemarketingList struct {
 	// ListSource: Product from which this remarketing list was originated.
 	//
 	// Possible values:
+	//   "REMARKETING_LIST_SOURCE_ADX"
 	//   "REMARKETING_LIST_SOURCE_DBM"
 	//   "REMARKETING_LIST_SOURCE_DFA"
+	//   "REMARKETING_LIST_SOURCE_DFP"
 	//   "REMARKETING_LIST_SOURCE_DMP"
 	//   "REMARKETING_LIST_SOURCE_GA"
+	//   "REMARKETING_LIST_SOURCE_GPLUS"
 	//   "REMARKETING_LIST_SOURCE_OTHER"
+	//   "REMARKETING_LIST_SOURCE_PLAY_STORE"
+	//   "REMARKETING_LIST_SOURCE_XFP"
+	//   "REMARKETING_LIST_SOURCE_YOUTUBE"
 	ListSource string `json:"listSource,omitempty"`
 
 	// Name: Name of the remarketing list. This is a required field. Must be
@@ -9961,11 +9987,17 @@ type TargetableRemarketingList struct {
 	// originated.
 	//
 	// Possible values:
+	//   "REMARKETING_LIST_SOURCE_ADX"
 	//   "REMARKETING_LIST_SOURCE_DBM"
 	//   "REMARKETING_LIST_SOURCE_DFA"
+	//   "REMARKETING_LIST_SOURCE_DFP"
 	//   "REMARKETING_LIST_SOURCE_DMP"
 	//   "REMARKETING_LIST_SOURCE_GA"
+	//   "REMARKETING_LIST_SOURCE_GPLUS"
 	//   "REMARKETING_LIST_SOURCE_OTHER"
+	//   "REMARKETING_LIST_SOURCE_PLAY_STORE"
+	//   "REMARKETING_LIST_SOURCE_XFP"
+	//   "REMARKETING_LIST_SOURCE_YOUTUBE"
 	ListSource string `json:"listSource,omitempty"`
 
 	// Name: Name of the targetable remarketing list. Is no greater than 128
@@ -10128,7 +10160,9 @@ type ThirdPartyTrackingUrl struct {
 	//   "VIDEO_MIDPOINT"
 	//   "VIDEO_MUTE"
 	//   "VIDEO_PAUSE"
+	//   "VIDEO_PROGRESS"
 	//   "VIDEO_REWIND"
+	//   "VIDEO_SKIP"
 	//   "VIDEO_START"
 	//   "VIDEO_STOP"
 	//   "VIDEO_THIRD_QUARTILE"
@@ -17144,6 +17178,7 @@ func (c *ChangeLogsListCall) ObjectIds(objectIds ...int64) *ChangeLogsListCall {
 //   "OBJECT_MEDIA_ORDER"
 //   "OBJECT_PLACEMENT"
 //   "OBJECT_PLACEMENT_STRATEGY"
+//   "OBJECT_PLAYSTORE_LINK"
 //   "OBJECT_PROVIDED_LIST_CLIENT"
 //   "OBJECT_RATE_CARD"
 //   "OBJECT_REMARKETING_LIST"
@@ -17376,6 +17411,7 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//         "OBJECT_MEDIA_ORDER",
 	//         "OBJECT_PLACEMENT",
 	//         "OBJECT_PLACEMENT_STRATEGY",
+	//         "OBJECT_PLAYSTORE_LINK",
 	//         "OBJECT_PROVIDED_LIST_CLIENT",
 	//         "OBJECT_RATE_CARD",
 	//         "OBJECT_REMARKETING_LIST",
@@ -17388,6 +17424,7 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//         "OBJECT_USER_ROLE"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "",
 	//         "",
 	//         "",
@@ -19247,7 +19284,7 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "100MB",
+	//     "maxSize": "1024MB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

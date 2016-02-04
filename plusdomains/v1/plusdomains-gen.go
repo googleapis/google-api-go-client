@@ -55,7 +55,7 @@ const (
 	// publicly. People you add to circles can use Hangouts with you.
 	PlusCirclesWriteScope = "https://www.googleapis.com/auth/plus.circles.write"
 
-	// Know your basic profile info and list of people in your circles.
+	// Know the list of people in your circles, your age range, and language
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 
 	// Know who you are on Google

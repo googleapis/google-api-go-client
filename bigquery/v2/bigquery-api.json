@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/eiYk9-Fs-RzXRrghmljT9cKlm2s\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/KhBY9BAZ9f1xpe68E42latOsq24\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20160104",
+ "revision": "20160127",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -744,7 +744,7 @@
     },
     "tableDefinitions": {
      "type": "object",
-     "description": "[Experimental] If querying an external data source outside of BigQuery, describes the data format, location and other properties of the data source. By defining these properties, the data source can then be queried as if it were a standard BigQuery table.",
+     "description": "[Optional] If querying an external data source outside of BigQuery, describes the data format, location and other properties of the data source. By defining these properties, the data source can then be queried as if it were a standard BigQuery table.",
      "additionalProperties": {
       "$ref": "ExternalDataConfiguration"
      }
@@ -1240,7 +1240,7 @@
     },
     "externalDataConfiguration": {
      "$ref": "ExternalDataConfiguration",
-     "description": "[Experimental] Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table."
+     "description": "[Optional] Describes the data format, location, and other properties of a table stored outside of BigQuery. By defining these properties, the data source can then be queried as if it were a standard BigQuery table."
     },
     "friendlyName": {
      "type": "string",

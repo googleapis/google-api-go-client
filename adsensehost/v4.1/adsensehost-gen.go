@@ -435,7 +435,7 @@ type AdUnit struct {
 	Code string `json:"code,omitempty"`
 
 	// ContentAdsSettings: Settings specific to content ads (AFC) and
-	// highend mobile content ads (AFMC).
+	// highend mobile content ads (AFMC - deprecated).
 	ContentAdsSettings *AdUnitContentAdsSettings `json:"contentAdsSettings,omitempty"`
 
 	// CustomStyle: Custom style information specific to this ad unit.
@@ -450,7 +450,7 @@ type AdUnit struct {
 	Kind string `json:"kind,omitempty"`
 
 	// MobileContentAdsSettings: Settings specific to WAP mobile content ads
-	// (AFMC).
+	// (AFMC - deprecated).
 	MobileContentAdsSettings *AdUnitMobileContentAdsSettings `json:"mobileContentAdsSettings,omitempty"`
 
 	// Name: Name of this ad unit.
@@ -487,7 +487,7 @@ func (s *AdUnit) MarshalJSON() ([]byte, error) {
 }
 
 // AdUnitContentAdsSettings: Settings specific to content ads (AFC) and
-// highend mobile content ads (AFMC).
+// highend mobile content ads (AFMC - deprecated).
 type AdUnitContentAdsSettings struct {
 	// BackupOption: The backup option to be used in instances where no ad
 	// is available.
@@ -547,7 +547,7 @@ func (s *AdUnitContentAdsSettingsBackupOption) MarshalJSON() ([]byte, error) {
 }
 
 // AdUnitMobileContentAdsSettings: Settings specific to WAP mobile
-// content ads (AFMC).
+// content ads (AFMC - deprecated).
 type AdUnitMobileContentAdsSettings struct {
 	// MarkupLanguage: The markup language to use for this ad unit.
 	MarkupLanguage string `json:"markupLanguage,omitempty"`
@@ -623,7 +623,7 @@ type AssociationSession struct {
 	Kind string `json:"kind,omitempty"`
 
 	// ProductCodes: The products to associate with the user. Options: AFC,
-	// AFF, AFS, AFMC
+	// AFG, AFV, AFS (deprecated), AFMC (deprecated)
 	ProductCodes []string `json:"productCodes,omitempty"`
 
 	// RedirectUrl: Redirect URL of this association session. Used to
@@ -3132,8 +3132,8 @@ func (c *AssociationsessionsStartCall) Do(opts ...googleapi.CallOption) (*Associ
 	//       "enumDescriptions": [
 	//         "AdSense For Content",
 	//         "AdSense For Games",
-	//         "AdSense For Mobile Content",
-	//         "AdSense For Search",
+	//         "AdSense For Mobile Content - deprecated",
+	//         "AdSense For Search - deprecated",
 	//         "AdSense For Video"
 	//       ],
 	//       "location": "query",

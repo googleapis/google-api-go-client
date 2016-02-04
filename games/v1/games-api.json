@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"ye6orv2F-1npMW3u9suM3a7C5Bo/73GJPN3P2kptICUph8Z5MgNGZxg\"",
+ "etag": "\"bRFOOrZKfO9LweMbPqu0kcu6De8/5YhPCKzLNdEgK_jc0g8uwLvYt6A\"",
  "discoveryVersion": "v1",
  "id": "games:v1",
  "name": "games",
  "canonicalName": "Games",
  "version": "v1",
- "revision": "20151202",
+ "revision": "20160127",
  "title": "Google Play Game Services API",
  "description": "The API for Google Play Game Services.",
  "ownerDomain": "google.com",
@@ -77,7 +77,7 @@
      "description": "Share your Google+ profile information and view and manage your game activity"
     },
     "https://www.googleapis.com/auth/plus.login": {
-     "description": "Know your basic profile info and list of people in your circles."
+     "description": "Know the list of people in your circles, your age range, and language"
     }
    }
   }
@@ -1386,6 +1386,10 @@
        "description": "The given name of this player. In some places, this is known as the first name."
       }
      }
+    },
+    "originalPlayerId": {
+     "type": "string",
+     "description": "The player ID that was used for this player the first time they signed into the game in question. This is only populated for calls to player.get for the requesting player, only if the player ID has subsequently changed, and only to clients that support remapping player IDs."
     },
     "playerId": {
      "type": "string",
@@ -3589,12 +3593,14 @@
        "enum": [
         "connected",
         "playedWith",
-        "played_with"
+        "played_with",
+        "visible"
        ],
        "enumDescriptions": [
         "Retrieve a list of players that are also playing this game in reverse chronological order.",
         "(DEPRECATED: please use played_with!) Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently.",
-        "Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently."
+        "Retrieve a list of players you have played a multiplayer game (realtime or turn-based) with recently.",
+        "Retrieve a list of players in the user's social graph that are visible to this game."
        ],
        "location": "path"
       },

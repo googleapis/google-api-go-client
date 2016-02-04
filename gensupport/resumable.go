@@ -22,7 +22,10 @@ const (
 
 // DefaultBackoffStrategy returns a default strategy to use for retrying failed upload requests.
 func DefaultBackoffStrategy() BackoffStrategy {
-	return &ExponentialBackoff{BasePause: time.Second}
+	return &ExponentialBackoff{
+		Base: 250 * time.Millisecond,
+		Max:  16 * time.Second,
+	}
 }
 
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
@@ -130,7 +133,8 @@ func contextDone(ctx context.Context) bool {
 }
 
 // Upload starts the process of a resumable upload with a cancellable context.
-// It retries indefinitely (using exponential backoff) until cancelled.
+// It retries using the provided back off strategy until cancelled or the
+// strategy indicates to stop retrying.
 // It is called from the auto-generated API code and is not visible to the user.
 // rx is private to the auto-generated API code.
 // Exactly one of resp or err will be nil.  If resp is non-nil, the caller must call resp.Body.Close.
@@ -165,13 +169,18 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 		if resp.StatusCode == http.StatusCreated || resp.StatusCode == http.StatusOK {
 			return resp, nil
 		}
-		resp.Body.Close()
 
 		if resp.StatusCode == statusResumeIncomplete {
 			pause = 0
 			backoff.Reset()
 		} else {
-			pause = backoff.Pause()
+			var retry bool
+			pause, retry = backoff.Pause()
+			if !retry {
+				// Return the last response with its failing HTTP code.
+				return resp, nil
+			}
 		}
+		resp.Body.Close()
 	}
 }

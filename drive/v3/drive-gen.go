@@ -3112,6 +3112,9 @@ func (c *FilesCreateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &File{
 		ServerResponse: googleapi.ServerResponse{
@@ -4219,6 +4222,9 @@ func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &File{
 		ServerResponse: googleapi.ServerResponse{

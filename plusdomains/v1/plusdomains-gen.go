@@ -4513,6 +4513,9 @@ func (c *MediaInsertCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &Media{
 		ServerResponse: googleapi.ServerResponse{

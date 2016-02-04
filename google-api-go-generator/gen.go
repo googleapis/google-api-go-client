@@ -1939,6 +1939,7 @@ func (meth *Method) generateCode() {
 		pn(" res, err = rx.Upload(ctx)")
 		pn(" if err != nil { return %serr }", nilRet)
 		pn(" defer res.Body.Close()")
+		pn(" if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
 		pn("}")
 	}
 	if retTypeComma == "" {

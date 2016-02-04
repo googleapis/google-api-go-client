@@ -283,6 +283,9 @@ func (c *MailInsertCall) Do(opts ...googleapi.CallOption) error {
 			return err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return err
+		}
 	}
 	return nil
 	// {

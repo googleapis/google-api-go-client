@@ -3390,6 +3390,9 @@ func (c *TableImportRowsCall) Do(opts ...googleapi.CallOption) (*Import, error) 
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &Import{
 		ServerResponse: googleapi.ServerResponse{
@@ -3649,6 +3652,9 @@ func (c *TableImportTableCall) Do(opts ...googleapi.CallOption) (*Table, error) 
 			return nil, err
 		}
 		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, err
+		}
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{

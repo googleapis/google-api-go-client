@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f19a4877_d291e405",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 5997,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-04T02:08:59Z",
+      "side": 1,
+      "message": "\"may\" is a bit confusing. It would be better to express this as \"will … if\" (and mention what the default is?)",
+      "range": {
+        "startLine": 5996,
+        "startChar": 40,
+        "endLine": 5997,
+        "endChar": 19
+      },
+      "revId": "64aa30fe4adf0f1c51def07f23dee5f0c294601d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f19a4877_f28ee8e4",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 5999,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-04T02:08:59Z",
+      "side": 1,
+      "message": "Drop?",
+      "range": {
+        "startLine": 5998,
+        "startChar": 49,
+        "endLine": 5999,
+        "endChar": 33
+      },
+      "revId": "64aa30fe4adf0f1c51def07f23dee5f0c294601d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f19a4877_125d2c2e",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 6000,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-04T02:08:59Z",
+      "side": 1,
+      "message": "Can you document the retry behaviour too?",
+      "range": {
+        "startLine": 6000,
+        "startChar": 28,
+        "endLine": 6000,
+        "endChar": 33
+      },
+      "revId": "64aa30fe4adf0f1c51def07f23dee5f0c294601d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f19a4877_7283d8c2",
+        "filename": "storage/v1/storage-gen.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 6015,
+      "author": {
+        "id": 5140
+      },
+      "writtenOn": "2016-02-04T02:08:59Z",
+      "side": 1,
+      "message": "I\u0027d move this up so that it appears on its own line after the introductory sentence.\n(And add a full stop)",
+      "range": {
+        "startLine": 6015,
+        "startChar": 3,
+        "endLine": 6015,
+        "endChar": 32
+      },
+      "revId": "64aa30fe4adf0f1c51def07f23dee5f0c294601d",
+      "serverId": "c958e1eb-c711-3e17-a1d0-c94d35b2e5aa",
+      "unresolved": false
+    }
+  ]
+}
